@@ -1,0 +1,62 @@
+name: Deploy GitHub Pages
+
+# Publica o site da instância: a `main` na raiz (o que está em produção) e, ao lado,
+# cada branch de entrega ainda não mesclada — `sprint/<id>` em /sprint/<id>/,
+# `historia/<CHAVE>` em /historia/<CHAVE>/ —, para os requisitos em andamento serem
+# consultados no mesmo site até o merge (MASTER → ## Cadência de entrega).
+#
+# O Pages guarda um artefato só, substituído a cada deploy: por isso todo deploy remonta
+# tudo (scripts/monta-site-preview.mjs), venha o push da main ou de uma branch de
+# entrega. A branch mesclada sai do site no deploy seguinte.
+#
+# Pré-requisito (1x): Settings > Pages > Source = "GitHub Actions". Em Settings >
+# Environments > github-pages, libere as branches `sprint/*` e `historia/*` além da main
+# ("Deployment branches and tags") — sem isso o deploy disparado por elas é recusado.
+
+on:
+  push:
+    branches: [main, "sprint/**", "historia/**"]
+  delete:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Um deploy por vez, sem cancelar o que está em andamento.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main          # a raiz do site é sempre a main, venha o push de onde vier
+          fetch-depth: 0     # as branches de entrega e o histórico para saber quais já foram mescladas
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Montar o site — main + branches de entrega abertas
+        run: node scripts/monta-site-preview.mjs --out _site
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

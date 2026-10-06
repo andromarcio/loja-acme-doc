@@ -1,0 +1,26 @@
+{
+  "skill_name": "analise-impacto",
+  "evals": [
+    {
+      "id": 0,
+      "name": "analise-completa-sprint",
+      "prompt": "Leia o arquivo .claude/skills/analise-impacto/evals/fixtures/ANALISE_SP06_novas_vs_alteradas.md — é o levantamento do que a Sprint 6 entregou. Faz a análise de impacto disso na nossa spec e me entrega um relatório: quais features são impactadas, o que precisa ser criado, o que mexeu no data-model e o que ficou em aberto.",
+      "expected_output": "AIMs em Markdown em analise-impacto/ — uma por item (# AIM <CHAVE>, tipo: ticket, estado concluído) e a da sprint (# AIM <sprint>, tipo: sprint) —, com features alteradas e novas identificadas por ID real da spec, impacto no data-model ligando migração→tabela→ALI, decisões pendentes, e a reclassificação da HU-042 (marcada NOVA no levantamento, mas sem N3 na spec — de fato nova) e da HU-041 (alteração de CFG-TIP-06).",
+      "files": [".claude/skills/analise-impacto/evals/fixtures/ANALISE_SP06_novas_vs_alteradas.md"]
+    },
+    {
+      "id": 1,
+      "name": "dimensionamento-modelo",
+      "prompt": "A Sprint 6 mexeu em quatro coisas no modelo: V00034 acrescentou CD_CAMPO_CONDICIONANTE e DS_VALOR_CONDICAO em TB_FORMULARIO_CAMPO; V00035 acrescentou NR_VERSAO_RASCUNHO em TB_INSCRICAO; e V00036 criou a tabela TB_FORMULARIO_AUDITORIA, que é dependente de TB_FORMULARIO_CONFIG. Preciso dizer pra equipe de métricas quanto isso vale em ponto de função. O baseline está em arquivos/PIEL_BASELINE_PF_CD.xlsx.",
+      "expected_output": "Dimensionamento agrupado por função de dados (ALI), com PFB do baseline e PFL pela regra 50% de função alterada. A tabela nova deve ser tratada como entidade dependente (RLR de um ALI existente), NÃO como ALI novo. Deve distinguir os três níveis de 'novo' (coluna / tabela / função de dados) e citar o PFB correto lido da planilha.",
+      "files": ["arquivos/PIEL_BASELINE_PF_CD.xlsx"]
+    },
+    {
+      "id": 2,
+      "name": "delta-antes-depois",
+      "prompt": "A HU-041 da Sprint 6 alterou o formulário de inscrição: campo agora pode ter condição de exibição (vinculada à resposta de outro campo), a prévia ganhou alternância entre a visão do admin e a do participante, e alterar a condição fica bloqueado depois que as inscrições abrem. Quero registrar isso num quadro que eu possa mandar pro PO, mostrando o que mudou em relação ao que a spec já dizia. A feature é a CFG-TIP-06.",
+      "expected_output": "Quadro por feature em forma antes→depois: cada linha abre com o verbo da mudança (Inclusão/Alteração/Restrição) e contrasta explicitamente o comportamento publicado no N3 com o novo. Deve ter lido o N3 real de CFG-TIP-06 para extrair o 'antes', não descrever apenas o estado final.",
+      "files": ["modules/configuracao/tipos-participante/f-configurar-formulario.md"]
+    }
+  ]
+}
