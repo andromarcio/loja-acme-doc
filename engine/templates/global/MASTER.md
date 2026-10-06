@@ -181,8 +181,7 @@
 
 ## Identificadores únicos (IDs)
 
-Cada nível da hierarquia de documentação possui um ID único para rastreabilidade
-entre ferramentas externas (Jira, Azure DevOps, etc.).
+Cada nível da hierarquia de documentação possui um ID único para rastreabilidade entre ferramentas externas (Jira, Azure DevOps, etc.).
 
 | Nível | Formato | Exemplo |
 |---|---|---|
@@ -220,8 +219,7 @@ entre ferramentas externas (Jira, Azure DevOps, etc.).
 
 ### Rastreabilidade ponta a ponta (ticket → spec → código)
 
-Todo desenvolvimento começa por um ticket na ferramenta de origem e é
-rastreável até o código pela cadeia de IDs:
+Todo desenvolvimento começa por um ticket na ferramenta de origem e é rastreável até o código pela cadeia de IDs:
 
 ```
 Ticket ([tipo] [chave] — ex.: ServiceNow STRYxxxxxxx, issue ISSUE-123, experimento EXP-…)
@@ -230,25 +228,11 @@ Ticket ([tipo] [chave] — ex.: ServiceNow STRYxxxxxxx, issue ISSUE-123, experim
              └─ Código (commit/PR)    ← referencia a feature e o ticket
 ```
 
-- **Ticket → N3**: a chave de origem é registrada na seção `## Origem` de
-  cada feature, com o link da AIM; o elo recíproco é a `## Features` da AIM
-  (`analise-impacto/AIM-<CHAVE>.md`). Cada
-  critério de aceite é analisado e vira uma regra de negócio, um `## Cenário`
-  (Gherkin) ou ambos — rastreabilidade semântica, não só por ID.
-- **Critério de aceite → N3** *(quando a fonte numera)*: a coluna `Critérios
-  cobertos` do `## Origem` abre com as referências `CA-n`, no mesmo número que a
-  ferramenta de origem usa. É o elo que a **contagem por sprint** exige: cada
-  feature impactada sai com a chave do ticket **e** o número do critério. Quando a
-  fonte não numera os critérios, a coluna sai `—` e a rastreabilidade fica só pela
-  chave — não se inventa número.
+- **Ticket → N3**: a chave de origem é registrada na seção `## Origem` de cada feature, com o link da AIM; o elo recíproco é a `## Features` da AIM (`analise-impacto/AIM-<CHAVE>.md`). Cada critério de aceite é analisado e vira uma regra de negócio, um `## Cenário` (Gherkin) ou ambos — rastreabilidade semântica, não só por ID.
+- **Critério de aceite → N3** *(quando a fonte numera)*: a coluna `Critérios cobertos` do `## Origem` abre com as referências `CA-n`, no mesmo número que a ferramenta de origem usa. É o elo que a **contagem por sprint** exige: cada feature impactada sai com a chave do ticket **e** o número do critério. Quando a fonte não numera os critérios, a coluna sai `—` e a rastreabilidade fica só pela chave — não se inventa número.
 <!-- perfil:completo -->
-- **N3 → código**: seção `## Implementação` do N3 — a coluna **Repositório** é
-  definida já no 3B (nomes do inventário `repos/INDEX.md`), dizendo em qual repo
-  (MFE, microsserviço, back, front) cada parte da feature vive; caminho/branch
-  entram após o dev — + coluna na tabela `Rastreabilidade` do `modules/INDEX.md`.
-- **Convenção de commit/PR** *(fecha a cadeia no git)*:
-  `tipo([SIGLA]-[SFS]-[NN]): [resumo] ([origem] [chave])` — ex.:
-  `feat(CRM-CLI-01): cadastro de cliente (ServiceNow STRY0012345)`
+- **N3 → código**: seção `## Implementação` do N3 — a coluna **Repositório** é definida já no 3B (nomes do inventário `repos/INDEX.md`), dizendo em qual repo (MFE, microsserviço, back, front) cada parte da feature vive; caminho/branch entram após o dev — + coluna na tabela `Rastreabilidade` do `modules/INDEX.md`.
+- **Convenção de commit/PR** *(fecha a cadeia no git)*: `tipo([SIGLA]-[SFS]-[NN]): [resumo] ([origem] [chave])` — ex.: `feat(CRM-CLI-01): cadastro de cliente (ServiceNow STRY0012345)`
 
 <!-- /perfil:completo -->
 ---
@@ -278,10 +262,7 @@ Features são nomeadas sempre no **infinitivo**, seguindo o padrão:
 
 ## Nomenclatura de entidades e campos
 
-Entidades e campos são nomeados em **português**. A nomenclatura de campos segue
-três camadas com responsabilidades distintas.
-**A única fonte de verdade para Label Dev e campo banco é o `global/DATA-MODEL.md`.**
-Os N3 usam apenas Label PO — nunca duplicam as camadas técnicas.
+Entidades e campos são nomeados em **português**. A nomenclatura de campos segue três camadas com responsabilidades distintas. **A única fonte de verdade para Label Dev e campo banco é o `global/DATA-MODEL.md`.** Os N3 usam apenas Label PO — nunca duplicam as camadas técnicas.
 
 | Camada | Convenção | Exemplo | Onde aparece |
 |---|---|---|---|

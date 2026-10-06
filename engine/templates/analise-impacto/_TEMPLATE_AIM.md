@@ -59,8 +59,7 @@ aberta-em: [AAAA-MM-DD]
 
 ## Contexto
 
-[1–3 frases: o problema ou a oportunidade que motiva o ticket — o "porquê", em
-linguagem de negócio. É leitura sua, não da fonte.]
+[1–3 frases: o problema ou a oportunidade que motiva o ticket — o "porquê", em linguagem de negócio. É leitura sua, não da fonte.]
 
 ## Critérios de aceite
 
@@ -124,14 +123,15 @@ Scenario: [resultado esperado em linguagem de negócio]
 >
 > Invariantes (o `validate-impact` cobra): **C1** ao menos uma linha `N3`; **C2** toda
 > linha `funcional` tem uma linha `QA`; **C3** toda linha `não-funcional` tem `NFR`
-> **e** `QA`.
+> **e** `QA`. No perfil `requisitos` não há linha `QA` (sem checkpoint de testes): a falta
+> dela é aviso, e a linha de exemplo abaixo sai.
 
 | Artefato | Tipo | Operação | Seção | Natureza | O quê | Proveniência |
 |---|---|---|---|---|---|---|
 | `modules/<dom>/<fs>/f-<slug>.md` | N3 | alterar | Campos/Regras/Cenários | funcional | [o que muda] | derivado: âncora |
 | `qa/<dom>/<fs>/<slug>.md` | QA | criar | — | funcional | plano E2E | derivado: espelho do N3 |
 
-> Tipos: `N3 · QA · DATA-MODEL · FIELD-DICT · RULES-DICT · MESSAGE-DICT · ERROR-DICT ·
+> Tipos: `N1 · N2 · N3 · QA · DATA-MODEL · FIELD-DICT · RULES-DICT · MESSAGE-DICT · ERROR-DICT ·
 > NFR · PATTERNS · API-PATTERNS · MÉTRICA · PROTÓTIPO · REPOSITÓRIO`.
 > Operação: `criar | alterar | deprecar`.
 

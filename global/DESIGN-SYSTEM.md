@@ -17,9 +17,7 @@
 
 ## Layout geral
 
-**Layout default = extra large com sidebar OCULTA.** O conteúdo ocupa a largura
-total e o menu é acessado por um **hambúrguer (☰)** no header. Shell:
-`.dsc-app` › `.dsc-sidebar` / `.dsc-shell-main`.
+**Layout default = extra large com sidebar OCULTA.** O conteúdo ocupa a largura total e o menu é acessado por um **hambúrguer (☰)** no header. Shell: `.dsc-app` › `.dsc-sidebar` / `.dsc-shell-main`.
 
 - **Header** (`.dsc-header`): fixo no topo da área de conteúdo, altura **64px**, fundo `bg-neutral-1`, borda inferior `border-neutral-3`. À esquerda o botão **☰** (`.dsc-menu-toggle`); à direita as ações (alternar tema, perfil).
 - **Sidebar oculta por padrão** (`.dsc-sidebar` + `.dsc-menu`): largura **264px**, fundo `bg-neutral-1`. **Não aparece no carregamento** — abre como **drawer sobreposto** (`.is-menu-open`) pelo ☰, com **backdrop** (`.dsc-sidebar-backdrop`), e **recolhe ao acionar uma opção** / clicar fora / ESC. Vale em **qualquer tamanho (inclusive extra large)**. Marca no topo (`.dsc-sidebar-brand`); seções (`.dsc-menu-section`); item ativo (`.is-active`) em `bg-highlight-1` + texto `primary`. Toggle via `dscToggleMenu()` (ver README).

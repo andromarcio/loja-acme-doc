@@ -115,8 +115,7 @@ _(será preenchida na primeira execução de `scripts/gates.py promote`)_
 
 ## Legenda de status
 
-Estados da **esteira de checkpoints**, derivados dos `gates` no front-matter de cada N3.
-A próxima etapa só ocorre após a aprovação da anterior — ordem: requisitos → modelo-dados → testes → código.
+Estados da **esteira de checkpoints**, derivados dos `gates` no front-matter de cada N3. A próxima etapa só ocorre após a aprovação da anterior — ordem: requisitos → modelo-dados → testes → código.
 
 | Ícone | Estado | Checkpoint | Descrição |
 |---|---|---|---|

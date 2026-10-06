@@ -23,9 +23,7 @@ Antes de criar um NFR, classifique:
 
 ## Herança
 
-NFRs são **herdados** por todas as features — não se repetem nos N3. Um N3 só
-**referencia** um NFR quando precisa apontá-lo explicitamente (ex.: a seção
-`## AuditLog` aponta `→ ver NFR: AUD-01`). Nunca reescreva a qualidade no N3.
+NFRs são **herdados** por todas as features — não se repetem nos N3. Um N3 só **referencia** um NFR quando precisa apontá-lo explicitamente (ex.: a seção `## AuditLog` aponta `→ ver NFR: AUD-01`). Nunca reescreva a qualidade no N3.
 
 ---
 
@@ -51,24 +49,13 @@ NFRs são **herdados** por todas as features — não se repetem nos N3. Um N3 s
 
 ### SEG-01 — Autorização por funcionalidade
 
-**Requisito**: o acesso a cada funcionalidade (Feature N3) é controlado por
-perfil e **aplicado no servidor**. A funcionalidade é o átomo de autorização,
-identificada pelo ID da Feature (`[SIGLA]-[SFS]-[NN]`); o vínculo perfil↔
-funcionalidade é dado configurável, sem alteração de código. Modelo completo em
-`global/AUTHZ.md`.
+**Requisito**: o acesso a cada funcionalidade (Feature N3) é controlado por perfil e **aplicado no servidor**. A funcionalidade é o átomo de autorização, identificada pelo ID da Feature (`[SIGLA]-[SFS]-[NN]`); o vínculo perfil↔funcionalidade é dado configurável, sem alteração de código. Modelo completo em `global/AUTHZ.md`.
 
-**Critério de aceitação**: (a) toda requisição a um endpoint de funcionalidade é
-negada quando o perfil do usuário não tem a Feature vinculada — *nega por
-padrão*; (b) a ocultação no frontend é apenas UX e nunca a única barreira; (c) o
-perfil Administrador acessa toda Feature do Catálogo; (d) uma Feature globalmente
-desabilitada é inacessível a todos, independentemente de perfil.
+**Critério de aceitação**: (a) toda requisição a um endpoint de funcionalidade é negada quando o perfil do usuário não tem a Feature vinculada — *nega por padrão*; (b) a ocultação no frontend é apenas UX e nunca a única barreira; (c) o perfil Administrador acessa toda Feature do Catálogo; (d) uma Feature globalmente desabilitada é inacessível a todos, independentemente de perfil.
 
-**Verificação**: teste negativo que chama o endpoint com perfil sem vínculo e
-espera negação; teste que confirma acesso com vínculo; teste do *kill switch*
-global; revisão de que todo endpoint de funcionalidade declara o ID da Feature.
+**Verificação**: teste negativo que chama o endpoint com perfil sem vínculo e espera negação; teste que confirma acesso com vínculo; teste do *kill switch* global; revisão de que todo endpoint de funcionalidade declara o ID da Feature.
 
-**Exceções**: autenticação/identidade no login → SSO corporativo (fora do
-sistema); registro do acesso → ver NFR AUD-01.
+**Exceções**: autenticação/identidade no login → SSO corporativo (fora do sistema); registro do acesso → ver NFR AUD-01.
 
 > **Cobertura mínima recomendada (SEG)** — instancie via `PROMPT_NFR`, um item
 > canônico por tema, conforme se aplicar ao produto:
@@ -98,16 +85,11 @@ sistema); registro do acesso → ver NFR AUD-01.
 
 ### AUD-01 — Registro de auditoria
 
-**Requisito**: ações críticas (criação, alteração e exclusão de registros
-sensíveis) devem ser registradas em log de auditoria, com autor, data/hora e o
-que mudou.
+**Requisito**: ações críticas (criação, alteração e exclusão de registros sensíveis) devem ser registradas em log de auditoria, com autor, data/hora e o que mudou.
 
-**Critério de aceitação**: para toda ação marcada como auditável, existe um
-registro de auditoria recuperável contendo identificação do autor, timestamp e
-o delta (antes/depois) da operação.
+**Critério de aceitação**: para toda ação marcada como auditável, existe um registro de auditoria recuperável contendo identificação do autor, timestamp e o delta (antes/depois) da operação.
 
-**Verificação**: teste que executa a ação e confere a criação do registro de
-auditoria correspondente; revisão da cobertura de ações auditáveis.
+**Verificação**: teste que executa a ação e confere a criação do registro de auditoria correspondente; revisão da cobertura de ações auditáveis.
 
 ## USA — Usabilidade / Acessibilidade
 

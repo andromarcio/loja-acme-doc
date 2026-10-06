@@ -1,6 +1,6 @@
 # Mentoria docqui — Loja Acme
 
-Este repositório é uma instância real do framework **docqui**, montada para formar analistas no método. Ele roda a mesma engine das instâncias de produção (siesa-engine 6.0.0), com o perfil `requisitos` e a cadência `sprint`, e começa só com a identidade do sistema preenchida: a Loja Acme, sigla `LACME`. Todo o resto você escreve, do N0 à entrega da sprint, com os prompts conduzindo e os validadores conferindo.
+Este repositório é uma instância real do framework **docqui**, montada para formar analistas no método. Ele roda a mesma engine das instâncias de produção (siesa-engine 6.1.0), com o perfil `requisitos` e a cadência `sprint`, e começa só com a identidade do sistema preenchida: a Loja Acme, sigla `LACME`. Todo o resto você escreve, do N0 à entrega da sprint, com os prompts conduzindo e os validadores conferindo.
 
 | Arquivo | Para quê |
 |---|---|
@@ -42,7 +42,7 @@ Abra o PR da sprint como rascunho logo no planejamento: a CI (`spec-guard`) roda
 
 - **Um commit, um ticket.** O assunto do commit que toca a spec cita uma chave só: `docs(VND-CHK-01): Calcular Frete — 3A (ServiceNow STRY0013101)`. Nos commits da AIM da sprint, a chave é `SP07-<nome>`. Commit só com artefato regenerado por script (espelho da esteira, índice dos dicionários) vai marcado `[gerado]`, sem chave. Quem confere: `valida-commits-ticket`.
 - **A AIM antes da spec.** Nenhum N1, N2 ou N3 muda antes do aval do mentor no changeset (`avalizado-por` no front-matter da AIM). Quem confere: `validate-impact`.
-- **Um gate por PR**, com o artefato da etapa e o espelho do INDEX regenerado (`python3 scripts/gates.py promote --write`) no mesmo PR. Quem confere: o check *Esteira de gates — check*.
+- **Um gate por PR**, com o artefato da etapa e o espelho do INDEX regenerado (`python3 scripts/gates.py promote --write`) no mesmo PR. No PR da sprint, o mesmo check confere commit a commit: cada PR `cp/…` mesclado na branch aprova um gate só, na ordem. Quem confere: o check *Esteira de gates — check*.
 - **O elo nos três lugares.** O par ticket ↔ feature aparece na `## Origem` do N3, na `## Features` da AIM e no INDEX, com o mesmo Status. Quem confere: `audit-trace-links`, a cada gravação.
 - **A contagem nasce no N3.** A `## Métricas de tamanho` e a memória de cálculo (o bloco JSON) vêm primeiro; o `global/CONTAGEM-PF.md` só espelha. Quem confere: `valida-enumeracao-contagem` e `valida-contagem-consolidada`.
 - **Parágrafo numa linha só.** Rode `node scripts/verifica-texto-corrido.mjs <seus arquivos>`. Veja a linha de base abaixo antes de rodar na pasta inteira.
@@ -56,7 +56,7 @@ Os IDs e nomes esperados são os do simulador. Os passos citados são os do simu
 | 1 | A visão de produto, na `n0/<nome>` | **N0** | `global/N0_PRODUCT_VISION.md` preenchido, com os Major Feature Sets previstos (Vendas `VND`, Catálogo `CAT`), passando no `validate-doc` | passo 4 (`n0`) |
 | 2 | Planejar a SP07 | branch da sprint; copie `analise-impacto/_TEMPLATE_AIM_SPRINT.md` | `AIM-SP07-<nome>.md` em `rascunho`, com os três tickets do backlog | passo 5 (`sprint`) |
 | 3 | STRY0013101, da triagem ao N3 | **TR**, **AIM** (passos 1 a 6), **1A**, **2A**, **DM**, **3A** | a AIM avalizada; N1 Vendas, N2 Checkout, o modelo negocial de Vendas e o N3 de `VND-CHK-01` — Calcular Frete | passos 6 a 13 (`t1-triagem` … `t1-n3`) |
-| 4 | Os checkpoints e a contagem de `VND-CHK-01` — Calcular Frete | PRs `cp/…` para CP1 e CP2; **CT**; plano de testes em `qa/` | a feature em 📋 `especificado`; a contagem no N3 e no consolidado | passos 14 a 17 (`t1-cp1` … `t1-qa`) |
+| 4 | Os checkpoints, a contagem e o NFR de `VND-CHK-01` — Calcular Frete | PRs `cp/…` para CP1 e CP2; **CT**; **NF** | a feature em 📋 `especificado`; a contagem no N3 e no consolidado; o DES-01 no `global/NFR.md` | passos 14 a 17 (`t1-cp1` … `t1-qa`) |
 | 5 | STRY0013120: alterar e criar | **TR**, **AIM** com o `generate-impact-draft`, **4A**, **3A**, **DM**, PRs `cp/…`, **CT** | `VND-CHK-01` — Calcular Frete com o prazo; `VND-CHK-02` — Consultar Resumo do Pedido em 📋 `especificado` | passos 18 a 22 (`t2-triagem` … `t2-esteira`) |
 | 6 | STRY0013135: o cupom | **AIM**, **3A** | a AIM e o N3 de `VND-CHK-03` — Aplicar Cupom, em commits com a chave do ticket | passo 23 (`t3`) |
 | 7 | O fechamento da sprint | `reverte-ticket STRY0013135`; skill **analise-impacto** (as AIMs dos tickets e a da sprint); `gera-planilha-contagem.py --jira`; `valida-entrega` | as AIMs em `concluído`, a AIM da sprint conferida com as dos tickets, o portão verde | passos 25 a 31 (`relatorio` … `merge`) |
@@ -72,13 +72,9 @@ Depois da SP07, pratique com os dois tickets da segunda parte do `backlog.md`, s
 
 ## A linha de base: o que já vem do engine
 
-Confira estes números antes de concluir que um problema é seu.
+A instância começa limpa: o `verifica-texto-corrido` em `global/`, `modules/`, `analise-impacto/` e no `CLAUDE.md` não acusa nada, e as checagens da CI passam. Erro ou aviso que aparecer é do seu trabalho, com uma exceção esperada:
 
-- **`verifica-texto-corrido` sem argumentos acusa 72 quebras em 11 arquivos de `global/`.** Elas vêm dos modelos do engine, não de você. `modules/` começa limpo. Rode o verificador nos arquivos que você escreveu.
-- **O modelo da AIM** (`analise-impacto/_TEMPLATE_AIM.md`) traz o parágrafo de `## Contexto` quebrado em duas linhas. Ao trocar pelo seu texto, escreva numa linha só, ou a sua AIM herda a quebra.
-- **O `validate-impact` avisa `Tipo desconhecido "N1"` e `"N2"`** quando a AIM declara o N1 ou o N2 no changeset. Declare assim mesmo: na entrega, a branch só pode alterar o que algum ticket declarou. O aviso não reprova.
-- **O plano de testes no perfil `requisitos`.** O `validate-impact` exige uma linha de QA para toda mudança funcional (invariante C2), mas o perfil `requisitos` não tem a opção 5B nem o checkpoint de testes. Escreva o plano a partir dos cenários do N3, como no simulador (passo 17, `t1-qa`), e peça a revisão do mentor no PR.
-- **O *Esteira de gates — check* no PR da sprint** não confere as transições de gate: comparada com a base, a sprint acumula vários gates por feature, e o check reprovaria sempre. Por isso as transições valem nos PRs `cp/…`. O espelho do INDEX continua conferido no PR da sprint. Esta é uma adaptação desta instância (`.github/workflows/gate-check.yml`).
+- **O aviso do C2 na AIM.** No perfil `requisitos` não há a opção 5B nem o checkpoint de testes: o plano de testes fica com quem constrói. Por isso a AIM não declara linha `QA`, e o `validate-impact` avisa, em toda AIM com mudança funcional, que ela não tem essa linha. O aviso não reprova; não crie plano em `qa/`. A linha `NFR` continua obrigatória quando a mudança tem limiar de desempenho, segurança ou auditoria.
 
 ## Para o mentor
 
@@ -101,7 +97,7 @@ Confira estes números antes de concluir que um problema é seu.
 | Etapa | Confira |
 |---|---|
 | N0 | o escopo tem o que está fora; os Major Feature Sets previstos têm sigla de 3 letras; a sigla do subtítulo é a do MASTER |
-| AIM | a descrição está transcrita, não reescrita; `CA-n` só existe se a fonte numera; o changeset passa no C1 a C3; as linhas candidatas que não mudam foram podadas; N1 e N2 estão declarados quando o ticket os cria |
+| AIM | a descrição está transcrita, não reescrita; `CA-n` só existe se a fonte numera; o changeset passa no C1 a C3 (no perfil `requisitos`, a falta da linha `QA` só avisa); as linhas candidatas que não mudam foram podadas; N1 e N2 estão declarados quando o ticket os cria |
 | N1, N2, N3 | houve "Contexto verificado" antes de especificar; o N1 diz o que o domínio não faz; as permissões estão só no N2; a regra é invariante e a reação está no cenário; as mensagens saem do catálogo, com o marcador na linha antes do `Scenario:`; o verbo do nome da feature bate com o tipo dela (Consultar pede colunas do resultado) |
 | Checkpoints | um gate por PR; o `estado` é o derivado (no perfil `requisitos`, o CP2 leva a `especificado`); o espelho do INDEX e o Status na AIM e no INDEX acompanham |
 | Contagem | o número nasce no N3, com a memória de cálculo em bloco JSON de nomes; o consolidado espelha; a alteração que não muda o PF ainda fecha a pendência |

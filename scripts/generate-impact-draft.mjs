@@ -9,7 +9,7 @@
 //
 // Elos usados (todos já presentes nos artefatos):
 //   N3 âncora            → o próprio arquivo (cabeçalho `Nível 3` + `SIGLA-SFS-NN`)
-//   QA (plano E2E)       → espelho de path do N3: qa/<dom>/<fs>/<feature>.md
+//   QA (plano E2E)       → espelho de path do N3: qa/<dom>/<fs>/<feature>.md (não no perfil `requisitos`)
 //   DATA-MODEL           → seção `## Campos` toca coluna → data-model do domínio
 //   dicionários          → refs `→ ver/← (RULES|FIELD|MESSAGE|ERROR)-DICTIONARY`
 //   protótipo            → seção `## Superfície` (Tela própria ou Modal)
@@ -32,6 +32,7 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, relative, basename } from 'node:path';
 import { pesDoN3, chavePE, contado } from './lib/pe.mjs';
+import { perfilDa } from './lib/instancia.mjs';
 
 const args = process.argv.slice(2);
 const opt = (n, d = null) => { const i = args.indexOf(n); return i !== -1 && args[i + 1] ? args[i + 1] : d; };
@@ -111,7 +112,10 @@ if (!ancoras.length) { console.error(`✗ Nenhuma feature-âncora com N3: ${FEAT
 // row: { artefato, tipo, operacao, secao, natureza, oque, proveniencia }
 const rows = [];
 const jaTem = (artefato, secao) => rows.some((r) => r.artefato === artefato && r.secao === secao);
-const push = (r) => { const x = { secao: '—', ...r }; if (!jaTem(x.artefato, x.secao)) rows.push(x); };
+// No perfil `requisitos` não há plano de testes na instância (sem CP3 nem opção 5B; o plano
+// fica com quem constrói): as linhas QA — espelho e regressão — não são propostas.
+const semQA = perfilDa(ROOT) === 'requisitos';
+const push = (r) => { const x = { secao: '—', ...r }; if (semQA && x.tipo === 'QA') return; if (!jaTem(x.artefato, x.secao)) rows.push(x); };
 const opOf = (p) => (existsSync(join(ROOT, p)) ? 'alterar' : 'criar');
 const PES = new Map([...N3RAW].map(([p, r]) => [p, { id: idOf(r), pes: pesDoN3(r) }]));
 const caminhoDe = new Map([...PES].filter(([, v]) => v.id).map(([p, v]) => [v.id, p]));
@@ -242,7 +246,7 @@ push({ artefato: 'global/NFR.md', tipo: 'NFR', operacao: opOf('global/NFR.md'), 
 const cell = (s) => String(s).replace(/\|/g, '\\|');
 const CAB = ['| Artefato | Tipo | Operação | Seção | Natureza | O quê | Proveniência |', '|---|---|---|---|---|---|---|'];
 const linha = (r) => `| \`${cell(r.artefato)}\` | ${r.tipo} | ${r.operacao} | ${cell(r.secao)} | ${r.natureza} | ${cell(r.oque)} | ${r.proveniencia} |`;
-for (const f of semN3) console.error(`⚠️  ${f}: sem N3 ainda — acrescente à mão as linhas de criação (N3 e QA \`criar\`).`);
+for (const f of semN3) console.error(`⚠️  ${f}: sem N3 ainda — acrescente à mão as linhas de criação (${semQA ? 'N3' : 'N3 e QA'} \`criar\`).`);
 
 if (!aimPath) {
   process.stdout.write([...CAB, ...rows.map(linha)].join('\n') + '\n');

@@ -3,7 +3,7 @@
 # stamp.sh — insere ou atualiza o carimbo de versão (invisível) num artefato.
 #
 # O carimbo é um comentário HTML na primeira linha do arquivo:
-#   <!-- docqui: 6.0.0 | prompt: PROMPT_3A | atualizado: 2026-07-10 -->
+#   <!-- docqui: 6.1.0 | prompt: PROMPT_3A | atualizado: 2026-07-10 -->
 # Invisível no documento renderizado (PDF/HTML/preview), legível só no source .md.
 # Carimbos legados — `doc-template-engine:` (1.x) e `siesa-engine:` (< 2.0.0) — são
 # reconhecidos e migrados para o prefixo novo ao re-carimbar. Carimbos empilhados no

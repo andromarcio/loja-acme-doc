@@ -186,10 +186,7 @@ GET /api/v1/contacts?search=joão&tag=cliente&ownerId=uuid&cursor=...
 - Retorna o objeto atualizado completo com HTTP 200
 
 ### Campos imutáveis após criação
-Alguns campos não podem ser alterados via PATCH após a criação.
-O N3 de cada feature deve listar explicitamente quais são.
-Exemplos comuns: `createdAt`, `id`, e a chave de negócio (ex.: `isin`).
-Tentativa de alterar campo imutável retorna HTTP 422 com `code: FIELD_IMMUTABLE`.
+Alguns campos não podem ser alterados via PATCH após a criação. O N3 de cada feature deve listar explicitamente quais são. Exemplos comuns: `createdAt`, `id`, e a chave de negócio (ex.: `isin`). Tentativa de alterar campo imutável retorna HTTP 422 com `code: FIELD_IMMUTABLE`.
 
 ---
 
@@ -207,8 +204,7 @@ Se ausente ou inválido → HTTP 401:
 ```
 
 ### Autorização por role
-Cada endpoint declara no N3 quais roles têm acesso.
-Acesso negado → HTTP 403:
+Cada endpoint declara no N3 quais roles têm acesso. Acesso negado → HTTP 403:
 ```json
 {
   "data": null,
@@ -245,16 +241,13 @@ Formato: `DOMINIO_DESCRICAO` em screaming_snake_case.
 | TASK_ALREADY_COMPLETED  | 409  | Work         | Tarefa já foi concluída                 |
 | FORM_SLUG_TAKEN         | 409  | Capture      | Slug do formulário já em uso            |
 
-**Regra**: cada N3 define e documenta os códigos de erro específicos da sua feature.
-O índice do domínio (gerado na Etapa 5 do prompt de criação) consolida todos os códigos.
+**Regra**: cada N3 define e documenta os códigos de erro específicos da sua feature. O índice do domínio (gerado na Etapa 5 do prompt de criação) consolida todos os códigos.
 
 ---
 
 ## 10. Webhooks e eventos internos
 
-Quando uma ação deve disparar efeitos em outros módulos (ex: criação de contato
-via formulário dispara notificação para o responsável), o padrão é **evento interno**
-— nunca chamada direta entre módulos.
+Quando uma ação deve disparar efeitos em outros módulos (ex: criação de contato via formulário dispara notificação para o responsável), o padrão é **evento interno** — nunca chamada direta entre módulos.
 
 ```typescript
 // Publicar evento (lib/events.ts)
@@ -329,5 +322,4 @@ Ao atingir o limite, retornar HTTP 429 com o header `Retry-After: {segundos}`.
 
 ---
 
-*Todo novo endpoint deve ser revisado contra este arquivo antes de ir para review.
-Divergências devem ser justificadas no PR e, se aprovadas, incorporadas aqui.*
+*Todo novo endpoint deve ser revisado contra este arquivo antes de ir para review. Divergências devem ser justificadas no PR e, se aprovadas, incorporadas aqui.*

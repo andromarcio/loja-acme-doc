@@ -32,7 +32,7 @@ Cada **N3** carrega no front-matter a sua **esteira de gates**. Um gate é um
 
 | Mecanismo | Garante |
 |---|---|
-| `gate-check.yml` (status check obrigatório) | a **ordem** (não pular etapas, 1 gate por PR, `por`/`em` preenchidos), o **espelho do `INDEX.md` em dia** e o **artefato da etapa no PR** (CP3 → `qa/` · CP4 → `repos/`) |
+| `gate-check.yml` (status check obrigatório) | a **ordem** (não pular etapas, 1 gate por PR — no PR da branch de entrega, 1 por commit —, `por`/`em` preenchidos), o **espelho do `INDEX.md` em dia** e o **artefato da etapa no PR** (CP3 → `qa/` · CP4 → `repos/`) |
 | `CODEOWNERS` + branch protection | **quem** aprova cada checkpoint — o artefato-companheiro leva o dono certo ao review: CP1 `modules/` → PO · CP2 `DATA-MODEL` → DBA · CP3 `qa/` → QA · CP4 `repos/` → Tech Lead |
 | `promote-estado.yml` | rede de segurança pós-merge: **acusa** (sem push) espelho do `INDEX.md` defasado na `main` |
 

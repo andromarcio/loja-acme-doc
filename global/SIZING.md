@@ -56,8 +56,7 @@
 
 > **RLR** (Registro Lógico Referenciado) = IFPUG RET · **DER** (Dado Elementar Referenciado) = IFPUG DET. Ver glossário.
 
-**Como contar DER**: cada campo das entidades que formam o ALI/AIE, no fragmento `global/data-models/[dominio].md` = 1 DER — a função de dados se conta pelo data-model, não pela tela de uma feature.
-Campos globais técnicos (createdAt, updatedAt, deletedAt) e organizationId = **não contam**. **O identificador (`id`) conta como 1 DER, mas uma única vez por ALI** — não por tabela: quando o ALI agrupa mais de uma entidade (1:N com a filha dependente), o `id` da entidade-mãe **não** conta de novo como chave estrangeira na filha, porque é o mesmo dado reconhecido pelo usuário. Chave estrangeira que aponta para **outro** ALI continua valendo 1 DER (relacionamento requerido pelo usuário — CPM 5.4.4c).
+**Como contar DER**: cada campo das entidades que formam o ALI/AIE, no fragmento `global/data-models/[dominio].md` = 1 DER — a função de dados se conta pelo data-model, não pela tela de uma feature. Campos globais técnicos (createdAt, updatedAt, deletedAt) e organizationId = **não contam**. **O identificador (`id`) conta como 1 DER, mas uma única vez por ALI** — não por tabela: quando o ALI agrupa mais de uma entidade (1:N com a filha dependente), o `id` da entidade-mãe **não** conta de novo como chave estrangeira na filha, porque é o mesmo dado reconhecido pelo usuário. Chave estrangeira que aponta para **outro** ALI continua valendo 1 DER (relacionamento requerido pelo usuário — CPM 5.4.4c).
 **Como contar RLR**: subgrupos lógicos dentro da entidade. Na ausência de subgrupos explícitos, considerar RLR = 1.
 
 ### Critério de complexidade — Funções de Transação
@@ -239,24 +238,15 @@ Migração pressupõe um sistema/funcionalidade novo substituindo um existente, 
 
 ## Convenções de registro no N3
 
-Toda feature especificada no N3 deve ter a seção `## Métricas de tamanho` preenchida
-**após** a aprovação do N3 negocial e **antes** do início do desenvolvimento.
+Toda feature especificada no N3 deve ter a seção `## Métricas de tamanho` preenchida **após** a aprovação do N3 negocial e **antes** do início do desenvolvimento.
 
-A contagem é responsabilidade do Dev, revisada pelo Tech Lead, e pode ser auditada
-pelo PO com base nos campos e endpoints documentados no mesmo N3.
+A contagem é responsabilidade do Dev, revisada pelo Tech Lead, e pode ser auditada pelo PO com base nos campos e endpoints documentados no mesmo N3.
 
 ### Arquitetura BFF (Java + Angular) — a unidade de contagem é a feature, não o endpoint
 
-A fronteira da aplicação (CPM) é a interface conceitual entre o sistema e seus
-**usuários** — **não** a divisão técnica entre o Angular e o Java. Nesta arquitetura, o
-frontend Angular e o backend BFF são **camadas internas de uma mesma feature**: o BFF é
-apenas o backend.
+A fronteira da aplicação (CPM) é a interface conceitual entre o sistema e seus **usuários** — **não** a divisão técnica entre o Angular e o Java. Nesta arquitetura, o frontend Angular e o backend BFF são **camadas internas de uma mesma feature**: o BFF é apenas o backend.
 
-Por isso, **a unidade de análise é a feature (N3) inteira**, não o endpoint isolado. Uma
-feature começa na interação do usuário no front, percorre o BFF e devolve um resultado —
-isso é **uma transação completa** que cruza a fronteira usuário↔sistema. Logo, **cada
-feature (N3) é candidata a um processo elementar (PE)** e, se qualificada, conta como
-EE, SE ou CE.
+Por isso, **a unidade de análise é a feature (N3) inteira**, não o endpoint isolado. Uma feature começa na interação do usuário no front, percorre o BFF e devolve um resultado — isso é **uma transação completa** que cruza a fronteira usuário↔sistema. Logo, **cada feature (N3) é candidata a um processo elementar (PE)** e, se qualificada, conta como EE, SE ou CE.
 
 - ✅ **Correto:** avaliar a feature (front + BFF) como um PE candidato.
 - ❌ **Errado:** olhar o endpoint do BFF isoladamente e descartá-lo por ser "interno". O
@@ -272,14 +262,11 @@ EE, SE ou CE.
 > **Importante:** ter o backend em BFF interno **não** é, por si só, motivo para não
 > contar. O que decide é se a **feature** satisfaz as regras de PE do CPM.
 
-**Funções de Dados (ALI / AIE)** não são registradas na seção `## Métricas de tamanho`
-do N3 — vivem centralmente em `global/DATA-MODEL.md` e nos fragmentos
-`global/data-models/[dominio].md`. Ver seção *Como manter o registro de ALIs sincronizado*.
+**Funções de Dados (ALI / AIE)** não são registradas na seção `## Métricas de tamanho` do N3 — vivem centralmente em `global/DATA-MODEL.md` e nos fragmentos `global/data-models/[dominio].md`. Ver seção *Como manter o registro de ALIs sincronizado*.
 
 ### O que contar e o que não contar no N3
 
-Cada artefato N3 corresponde a uma única funcionalidade. Registre nele apenas
-as funções de transação geradas por essa funcionalidade:
+Cada artefato N3 corresponde a uma única funcionalidade. Registre nele apenas as funções de transação geradas por essa funcionalidade:
 
 | O que encontrar no N3 | Contar? | Como contar |
 |---|---|---|
@@ -364,9 +351,7 @@ O `modules/INDEX.md` deve manter os totais acumulados por feature, domínio e si
 | [Feature] | [Domínio] | ✅ Implementado | 12 | 18 |
 ```
 
-Totais de domínio e sistema são calculados por soma das features com status
-`📋 Especificado`, `🔄 Em desenvolvimento` e `✅ Implementado`.
-Features `❌ Deprecadas` são excluídas do total vigente mas mantidas no histórico.
+Totais de domínio e sistema são calculados por soma das features com status `📋 Especificado`, `🔄 Em desenvolvimento` e `✅ Implementado`. Features `❌ Deprecadas` são excluídas do total vigente mas mantidas no histórico.
 
 ---
 
@@ -401,8 +386,7 @@ Features `❌ Deprecadas` são excluídas do total vigente mas mantidas no hist�
 
 ## Como manter o registro de ALIs sincronizado
 
-O registro central de ALIs vive em `global/DATA-MODEL.md → ## Arquivos Lógicos (APF)`.
-A fonte de cálculo vive nos fragmentos `global/data-models/[dominio].md → ## Arquivos Lógicos deste domínio`.
+O registro central de ALIs vive em `global/DATA-MODEL.md → ## Arquivos Lógicos (APF)`. A fonte de cálculo vive nos fragmentos `global/data-models/[dominio].md → ## Arquivos Lógicos deste domínio`.
 
 Fluxo de atualização:
 
@@ -418,5 +402,4 @@ Nova entidade criada (PROMPT_3B)
           └─→ Atualizar linha correspondente em DATA-MODEL.md → ## Arquivos Lógicos (APF)
 ```
 
-Regra de ouro: **DATA-MODEL.md é o índice; os fragmentos são a fonte de cálculo.**
-Nunca atualizar um sem atualizar o outro.
+Regra de ouro: **DATA-MODEL.md é o índice; os fragmentos são a fonte de cálculo.** Nunca atualizar um sem atualizar o outro.

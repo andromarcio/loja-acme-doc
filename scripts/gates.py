@@ -13,7 +13,10 @@ seções geradas do framework (Pendências, Contagem-PF).
 Subcomandos
 -----------
   check     valida, num Pull Request, que nenhum gate foi pulado e que a
-            transição é legal (uso típico: workflow gate-check.yml).
+            transição é legal (uso típico: workflow gate-check.yml). No PR de
+            uma branch de entrega (`sprint/<id>`, `historia/<CHAVE>`), confere
+            commit a commit: a sprint acumula vários gates por feature, e a
+            regra vira um gate por commit, na ordem (ver `cmd_check`).
   status    imprime a esteira (readiness) de todas as features em stdout.
   promote   regenera a seção de gates do INDEX.md a partir dos N3
             (com --write, grava o arquivo; uso típico: promote-estado.yml).
@@ -379,8 +382,11 @@ def validar_estado(meta, rotulo, erros):
         )
 
 
-def validar_transicao(after, before, rotulo, erros):
-    """A transição deste PR é legal? (no máximo 1 gate novo, predecessor já na base)."""
+def validar_transicao(after, before, rotulo, erros, unidade="PR", onde="na base"):
+    """A transição é legal? (no máximo 1 gate novo, predecessor já aprovado antes).
+
+    `unidade`/`onde` só mudam a mensagem: no PR comum a unidade é o PR e o "antes" é a
+    base; na branch de entrega, o commit e os commits anteriores a ele."""
     novos = [
         g for g in GATE_ORDER
         if gate_aprovado(after, g) and not gate_aprovado(before, g)
@@ -388,7 +394,7 @@ def validar_transicao(after, before, rotulo, erros):
     if len(novos) > 1:
         erros.append(
             f"{rotulo}: {len(novos)} gates aprovados de uma vez ({', '.join(novos)}). "
-            "Cada checkpoint é uma aprovação humana separada — um gate por PR."
+            f"Cada checkpoint é uma aprovação humana separada — um gate por {unidade}."
         )
     for gate in novos:
         idx = GATE_ORDER.index(gate)
@@ -397,7 +403,7 @@ def validar_transicao(after, before, rotulo, erros):
             if not gate_aprovado(before, pred):
                 erros.append(
                     f"{rotulo}: gate '{gate}' está sendo aprovado, mas o anterior "
-                    f"('{pred}') ainda não foi aprovado na base. Não pule etapas."
+                    f"('{pred}') ainda não foi aprovado {onde}. Não pule etapas."
                 )
         info = after.get("gates", {}).get(gate, {})
         if not info.get("por"):
@@ -427,9 +433,112 @@ def validar_artefato_gate(after, before, alterados, rotulo, erros):
             )
 
 
+# Branch de unidade de entrega (Cadência no MASTER): espelha `unidadeDaBranch` de
+# scripts/lib/instancia.mjs.
+UNIDADE_RE = re.compile(r"^(?:refs/heads/|origin/)?(sprint|historia)/.+$")
+
+
+def branch_da_entrega(args):
+    """O nome da branch de entrega em verificação, ou None.
+
+    Ordem: `--branch`; `GITHUB_HEAD_REF` (no pull_request o checkout é o merge sintético,
+    com o HEAD destacado); a branch atual do git."""
+    nome = args.branch or os.environ.get("GITHUB_HEAD_REF") or ""
+    if not nome:
+        r = _git(["rev-parse", "--abbrev-ref", "HEAD"])
+        nome = r.stdout.strip() if r.returncode == 0 else ""
+    return nome if UNIDADE_RE.match(nome) else None
+
+
+def ponta_da_branch(args):
+    """O commit da ponta da branch. No pull_request o HEAD é o merge sintético da base com
+    a branch, e a ponta é o segundo pai dele — a menos que `--head` a diga."""
+    if args.head:
+        return args.head
+    if os.environ.get("GITHUB_HEAD_REF"):
+        r = _git(["rev-parse", "--verify", "--quiet", "HEAD^2"])
+        if r.returncode == 0 and r.stdout.strip():
+            return r.stdout.strip()
+    return "HEAD"
+
+
+def _n3_com_gates(paths):
+    for path in paths:
+        path = path.replace("\\", "/")
+        if path.startswith("modules/") and path.endswith(".md") and not _ignorar(path):
+            yield path
+
+
+def _uniao(a, b):
+    """Gates aprovados em `a` ou em `b` (o "antes" de um commit da branch de entrega
+    inclui o que a base já aprovou — um merge da main na branch não é aprovação nova)."""
+    gates = {}
+    for g in GATE_ORDER:
+        if gate_aprovado(a, g) or gate_aprovado(b, g):
+            gates[g] = {"aprovado": True}
+    return {"gates": gates}
+
+
+def cmd_check_entrega(args, branch):
+    """Na branch de entrega, a esteira é conferida commit a commit.
+
+    A sprint (ou a história) acumula vários checkpoints por feature, cada um no seu PR
+    para a branch de entrega; comparada de uma vez com a `main`, ela pareceria aprovar
+    dois gates juntos. Aqui cada passo da cadeia de primeiro pai — um commit direto ou o
+    merge de um PR de checkpoint — aprova no máximo um gate, na ordem, com `por`/`em`.
+    O estado final, a estrutura e o artefato de cada etapa (CP3 `qa/`, CP4 `repos/`) são
+    conferidos sobre a branch inteira."""
+    base, head = args.base, ponta_da_branch(args)
+    mb = _git(["merge-base", base, head])
+    if mb.returncode != 0:
+        return None  # sem git/base: o chamador cai no modo comum
+    mb = mb.stdout.strip()
+    commits = _git(["rev-list", "--reverse", "--first-parent", f"{mb}..{head}"]).stdout.split()
+    total = _git(["diff", "--name-only", "--diff-filter=d", mb, head]).stdout.splitlines()
+    erros, finais, anterior = [], [], mb
+    for c in commits:
+        assunto = _git(["log", "-1", "--format=%s", c]).stdout.strip()
+        passo = _git(["diff", "--name-only", "--diff-filter=d", anterior, c]).stdout.splitlines()
+        for path in _n3_com_gates(passo):
+            after = meta_no_ref(c, path)
+            if not has_gates(after):
+                continue
+            antes = meta_no_ref(anterior, path)
+            na_base = meta_no_ref(mb, path)
+            before = _uniao(antes if has_gates(antes) else {}, na_base if has_gates(na_base) else {})
+            validar_transicao(after, before, f"{path} @ {c[:8]} \"{assunto}\"", erros,
+                              unidade="commit", onde="nos commits anteriores")
+        anterior = c
+    for path in _n3_com_gates(total):
+        after = meta_no_ref(head, path)
+        if not has_gates(after):
+            continue
+        na_base = meta_no_ref(mb, path)
+        validar_estrutura(after, path, erros)
+        validar_prefixo(after, path, erros)
+        validar_estado(after, path, erros)
+        validar_artefato_gate(after, na_base if has_gates(na_base) else {"gates": {}}, total, path, erros)
+        finais.append((path, after))
+    return erros, finais, len(commits)
+
+
 def cmd_check(args):
     aplicar_perfil(args.root)
     base = args.base
+    branch = branch_da_entrega(args)
+    if branch:
+        r = cmd_check_entrega(args, branch)
+        if r is not None:
+            erros, finais, n = r
+            if not finais and not erros:
+                print(f"Nenhum N3 com gates alterado em `{branch}` — nada a validar. ✔")
+                return 0
+            if erros:
+                return _relatar_erros(args, erros)
+            print(f"✔ Esteira de gates: todas as transições são válidas — commit a commit em `{branch}` ({n} commit(s)).")
+            for path, after in finais:
+                print(f"  • {path}: estado → {estado_de_exibicao(after)}")
+            return 0
     alterados = arquivos_alterados(base)
     erros = []
 
@@ -469,21 +578,25 @@ def cmd_check(args):
             validar_artefato_gate(after, before, alterados, rotulo, erros)
 
     if erros:
-        papeis = carregar_papeis(args.root)
-        esteira = " → ".join(f"{g} ({papeis.get(g, '?')})" for g in GATE_ORDER)
-        print("❌ Esteira de gates: transição inválida\n")
-        for e in erros:
-            print(f"  • {e}")
-        print(
-            "\nRegra: a próxima etapa só ocorre após a aprovação da anterior.\n"
-            f"Ordem dos checkpoints: {esteira}."
-        )
-        return 1
+        return _relatar_erros(args, erros)
 
     print("✔ Esteira de gates: todas as transições são válidas.")
     for path, after, _ in alvos:
         print(f"  • {path}: estado → {estado_de_exibicao(after)}")
     return 0
+
+
+def _relatar_erros(args, erros):
+    papeis = carregar_papeis(args.root)
+    esteira = " → ".join(f"{g} ({papeis.get(g, '?')})" for g in GATE_ORDER)
+    print("❌ Esteira de gates: transição inválida\n")
+    for e in erros:
+        print(f"  • {e}")
+    print(
+        "\nRegra: a próxima etapa só ocorre após a aprovação da anterior.\n"
+        f"Ordem dos checkpoints: {esteira}."
+    )
+    return 1
 
 
 # ── status / promote ────────────────────────────────────────────────────────
@@ -618,6 +731,10 @@ def main(argv=None):
 
     pc = sub.add_parser("check", help="valida transições de gate num PR")
     pc.add_argument("--base", default="origin/main", help="ref base de comparação")
+    pc.add_argument("--head", default=None,
+                    help="ponta da branch do PR (no pull_request: o head.sha; default: HEAD, ou HEAD^2 no merge sintético)")
+    pc.add_argument("--branch", default=None,
+                    help="nome da branch do PR (default: GITHUB_HEAD_REF ou a branch atual); sprint/… e historia/… conferem commit a commit")
     pc.set_defaults(func=cmd_check)
 
     ps = sub.add_parser("status", help="imprime a esteira (readiness)")

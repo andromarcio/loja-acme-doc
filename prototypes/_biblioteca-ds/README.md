@@ -6,10 +6,7 @@
 > Recomenda-se regra de lint na CI do front proibindo `dsc-` em templates —
 > a presença denuncia cópia de protótipo.
 
-HTML/CSS **sem build e sem dependências** para os protótipos do docqui
-(classes `.dsc-*`, espelhando os componentes do Figma **CAIXA DS**). É consumida
-pelos prompts de protótipo (`6A`/`6B` FULL e `6C`/`6D` componente) e pela skill
-`/prototype` — todo protótipo gerado linka o `ds.css` daqui.
+HTML/CSS **sem build e sem dependências** para os protótipos do docqui (classes `.dsc-*`, espelhando os componentes do Figma **CAIXA DS**). É consumida pelos prompts de protótipo (`6A`/`6B` FULL e `6C`/`6D` componente) e pela skill `/prototype` — todo protótipo gerado linka o `ds.css` daqui.
 
 > ℹ️ **Template do kit.** Assim como o `global/DESIGN-SYSTEM.md` (a fonte desta
 > implementação), esta biblioteca vem preenchida com o CAIXA DS como referência.
@@ -38,8 +35,7 @@ O caminho relativo depende da profundidade do protótipo dentro de `prototypes/`
 
 ## O shell (protótipos FULL)
 
-Estrutura canônica — sidebar **oculta por padrão**, aberta como drawer pelo ☰
-(classe `is-menu-open` no `.dsc-app`); o backdrop fecha ao clicar fora:
+Estrutura canônica — sidebar **oculta por padrão**, aberta como drawer pelo ☰ (classe `is-menu-open` no `.dsc-app`); o backdrop fecha ao clicar fora:
 
 ```html
 <div class="dsc-app">
@@ -63,15 +59,13 @@ Estrutura canônica — sidebar **oculta por padrão**, aberta como drawer pelo 
 </script>
 ```
 
-**Protótipo sem shell** (Storybook, iframe, doc técnica — prompts `6C`/`6D`):
-troque o bloco `.dsc-app` por `<main class="dsc-component-only">…</main>`.
+**Protótipo sem shell** (Storybook, iframe, doc técnica — prompts `6C`/`6D`): troque o bloco `.dsc-app` por `<main class="dsc-component-only">…</main>`.
 
 **Tema escuro**: adicione a classe `app-dark` ao `<html>` ou `<body>`.
 
 ## Catálogo de classes
 
-O markup de exemplo de cada componente está no [`index.html`](index.html) —
-**não invente variações**: se algo não está aqui, não existe na biblioteca.
+O markup de exemplo de cada componente está no [`index.html`](index.html) — **não invente variações**: se algo não está aqui, não existe na biblioteca.
 
 | Grupo | Classes |
 |---|---|
@@ -89,7 +83,4 @@ O markup de exemplo de cada componente está no [`index.html`](index.html) —
 
 ## Fonte
 
-A **CAIXA Std** é proprietária e **não** vem embutida — sem `@font-face` ou
-instalação local, o navegador usa o fallback (`Segoe UI`/Roboto/system-ui).
-Para fidelidade total, embuta os arquivos da fonte e declare o `@font-face`
-apontando para `--dsc-font-family-1`.
+A **CAIXA Std** é proprietária e **não** vem embutida — sem `@font-face` ou instalação local, o navegador usa o fallback (`Segoe UI`/Roboto/system-ui). Para fidelidade total, embuta os arquivos da fonte e declare o `@font-face` apontando para `--dsc-font-family-1`.

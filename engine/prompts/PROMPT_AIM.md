@@ -30,9 +30,10 @@ avalizável**: o PO aprova a lista de artefatos ANTES de qualquer spec mudar, e 
 lista é **reconciliada** contra o que realmente mudou — o registro de auditoria do ticket.
 
 Só entram no changeset os artefatos que o **PO aprova** — documentação:
-`N3 · QA · DATA-MODEL · dicionários · NFR · PATTERNS · API-PATTERNS · MÉTRICA ·
+`N1 · N2 · N3 · QA · DATA-MODEL · dicionários · NFR · PATTERNS · API-PATTERNS · MÉTRICA ·
 PROTÓTIPO`. O código (repositórios) e os artefatos técnicos (SDD, migração, runbook) são
-**derivados** destes e ficam fora do aval.
+**derivados** destes e ficam fora do aval. No perfil `requisitos` o changeset não leva
+`QA`: a esteira dele não tem o checkpoint de testes, e o plano fica com quem constrói.
 
 ## Ciclo de vida
 
@@ -336,13 +337,13 @@ Cada linha nasce de um elo, **rotulado na coluna Proveniência**:
 | Linha | Elo |
 |---|---|
 | N3 âncora | cabeçalho `Nível 3` |
-| QA (plano E2E) | espelho de path `qa/<dom>/<fs>/<feature>.md` |
+| QA (plano E2E) | espelho de path `qa/<dom>/<fs>/<feature>.md` (não no perfil `requisitos`) |
 | DATA-MODEL + MÉTRICA | seção `## Campos` toca coluna → data-model do domínio → recontagem APF |
 | dicionários | refs `→ ver/← *-DICTIONARY` no N3 |
 | PROTÓTIPO | `## Superfície` (Tela própria ou Modal) |
 | API-PATTERNS | `## API` (rotas) |
 | REPOSITÓRIO | `## Implementação` |
-| regressão (QA) | **usado-em reverso**: quem mais usa a mesma regra canônica, e quem reutiliza um PE da âncora (`↪`) |
+| regressão (QA) | **usado-em reverso**: quem mais usa a mesma regra canônica, e quem reutiliza um PE da âncora (`↪`) (não no perfil `requisitos`) |
 
 Linhas que você já escreveu na seção ficam; o derivador só acrescenta as que faltam.
 
@@ -351,7 +352,8 @@ Depois, a **passada dimensional** com o PO/analista — o derivador **não adivi
 1. **Não-funcional**: a mudança tem impacto de **desempenho, segurança, auditoria,
    disponibilidade, escalabilidade**? Se sim, adicione/ajuste a linha `NFR` e torne o
    limiar **mensurável** (ex.: "rápido" → "p95 < 2 s sob carga X").
-2. **Teste não-funcional**: todo NFR novo/alterado exige a linha `QA` que o **verifique**.
+2. **Teste não-funcional**: todo NFR novo/alterado exige a linha `QA` que o **verifique**
+   (no perfil `requisitos`, não: o NFR fica, o teste é de quem constrói).
 3. **Ripples que o elo não pega**: integrações entre domínios, migração de dados
    existentes, mudança de contrato de evento. Registre como linha com a natureza correta.
 4. **Poda**: remova linhas `candidato` que a análise concluiu que **não** mudam.
@@ -374,7 +376,8 @@ node scripts/validate-impact.mjs analise-impacto/AIM-<CHAVE>.md --root .
 
 O validador cobra a estrutura e as invariantes: **C1** ao menos um `N3`; **C2** todo
 `funcional` tem `QA`; **C3** todo `não-funcional` tem `NFR` **e** `QA`; a existência dos
-caminhos; e o portão de estado.
+caminhos; e o portão de estado. No perfil `requisitos`, a falta da `QA` (C2 e metade do
+C3) é aviso; o `NFR` do C3 continua exigido.
 
 Com a AIM verde, **apresente-a ao PO**. No aval:
 - mude `estado:` para `escopo-aprovado`, preencha `avalizado-por:` e registre a versão no

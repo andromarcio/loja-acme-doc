@@ -24,10 +24,7 @@
 
 ## 1. O que entra aqui — e o que NÃO entra
 
-Este arquivo registra **padrões de projeto**: soluções estruturais reutilizáveis
-para um problema recorrente de design (Strategy, Repository, Facade, …). Cada
-entrada dá ao agente/dev um **vocabulário compartilhado** e uma realização única —
-para que a *feature 1* e a *feature 8* resolvam a mesma variabilidade do mesmo jeito.
+Este arquivo registra **padrões de projeto**: soluções estruturais reutilizáveis para um problema recorrente de design (Strategy, Repository, Facade, …). Cada entrada dá ao agente/dev um **vocabulário compartilhado** e uma realização única — para que a *feature 1* e a *feature 8* resolvam a mesma variabilidade do mesmo jeito.
 
 **NÃO entra aqui** (mora em outro lugar):
 
@@ -48,12 +45,8 @@ para que a *feature 1* e a *feature 8* resolvam a mesma variabilidade do mesmo j
 
 ## 2. Como o SDD consome este catálogo
 
-- No `PROMPT_SDD` §2.2 (*Padrão arquitetural adotado*) e nas seções de design
-  (serviços, repositórios, componentes), **referencie** a entrada:
-  `→ ver PATTERNS.md: [Padrão]` — não redescreva a mecânica do padrão.
-- Se o design de uma feature exigir um padrão **ainda não catalogado**, o SDD o
-  propõe como decisão 🏛️ e **sinaliza para promoção** a este arquivo (a decisão
-  de adotar é de arquitetura, como no FIELD/RULES-DICTIONARY).
+- No `PROMPT_SDD` §2.2 (*Padrão arquitetural adotado*) e nas seções de design (serviços, repositórios, componentes), **referencie** a entrada: `→ ver PATTERNS.md: [Padrão]` — não redescreva a mecânica do padrão.
+- Se o design de uma feature exigir um padrão **ainda não catalogado**, o SDD o propõe como decisão 🏛️ e **sinaliza para promoção** a este arquivo (a decisão de adotar é de arquitetura, como no FIELD/RULES-DICTIONARY).
 - Divergir do catálogo é permitido, mas é **decisão 🏛️ explícita** com justificativa.
 
 ---
@@ -127,8 +120,7 @@ Cada padrão é registrado com:
 
 ## 6. Convenções relacionadas (referência cruzada — não são deste arquivo)
 
-Liste aqui, com **link**, as convenções que andam junto dos padrões mas moram em
-outro lugar — para o dev achar rápido, sem duplicar a regra:
+Liste aqui, com **link**, as convenções que andam junto dos padrões mas moram em outro lugar — para o dev achar rápido, sem duplicar a regra:
 
 - Estratégia de change detection / renderização → `MASTER.md` (Convenções) ou `NFR.md`
 - Lazy loading / divisão de bundles → `MASTER.md` (Convenções)

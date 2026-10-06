@@ -36,8 +36,14 @@ jobs:
       - name: Dependências
         run: pip install pyyaml
 
+      # No PR de uma branch de entrega (sprint/… ou historia/…), o gates.py confere
+      # commit a commit — um gate por commit, na ordem —, pois a sprint acumula vários
+      # checkpoints por feature. O checkout é o merge sintético do PR; --head e --branch
+      # dizem qual é a ponta da branch e o nome dela.
       - name: Validar transições de gate
-        run: python scripts/gates.py check --base "origin/${{ github.base_ref }}"
+        run: >-
+          python scripts/gates.py check --base "origin/${{ github.base_ref }}"
+          --head "${{ github.event.pull_request.head.sha }}" --branch "${{ github.head_ref }}"
 
       # O espelho da esteira viaja DENTRO do PR: quem flipa um gate roda
       # `python scripts/gates.py promote --write` e inclui o modules/INDEX.md

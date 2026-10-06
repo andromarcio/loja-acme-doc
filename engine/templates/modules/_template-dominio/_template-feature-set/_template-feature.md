@@ -98,11 +98,9 @@ contagem:
   longe da entrega e as duas camadas se leem melhor juntas.
 -->
 
-[Descrição em 1-2 frases do que esta feature ENTREGA, em linguagem de negócio,
-para alguém que nunca viu o sistema.]
+[Descrição em 1-2 frases do que esta feature ENTREGA, em linguagem de negócio, para alguém que nunca viu o sistema.]
 
-[Uma ou duas frases de COMO SE USA: por onde se chega, o que se informa e o que
-se aciona — ou, em Job/CLI, o que dispara a execução.]
+[Uma ou duas frases de COMO SE USA: por onde se chega, o que se informa e o que se aciona — ou, em Job/CLI, o que dispara a execução.]
 
 ---
 
@@ -217,9 +215,7 @@ se aciona — ou, em Job/CLI, o que dispara a execução.]
   o TEXTO LITERAL no cenário (ou usar o marcador BASELINE de validação).
 -->
 
-1. [Regra específica desta feature em linguagem de negócio]
-   → ver RULES-DICTIONARY: [RC-NN] — [nome da regra] *(se for regra canônica)*
-   → ver [N1 do domínio]: Regras transversais de negócio: [N] *(se for regra de domínio)*
+1. [Regra específica desta feature em linguagem de negócio] → ver RULES-DICTIONARY: [RC-NN] — [nome da regra] *(se for regra canônica)* → ver [N1 do domínio]: Regras transversais de negócio: [N] *(se for regra de domínio)*
 
 2. [Regra específica]
 
@@ -396,8 +392,7 @@ Feature: [Nome da feature em linguagem natural]
 <!-- Obrigatória quando a Superfície é Tela própria/Modal/Ação em tela. Se a Superfície é CLI/Job/API, OMITA esta seção e preencha "## Execução e operação". -->
 
 ### Onde fica
-[Descrever em qual rota e componente a feature aparece:
-formulário em página própria, modal, botão em listagem, etc.]
+[Descrever em qual rota e componente a feature aparece: formulário em página própria, modal, botão em listagem, etc.]
 
 ### Estados da tela
 
@@ -652,10 +647,7 @@ logAction({
 |---|---|---|---|
 | [endpoint/componente/job] | [repo] | [caminho no repo] | `main` |
 
-**Status**: definido pela **esteira de checkpoints** no front-matter (`estado` + `gates`)
-no topo deste arquivo — não duplicar aqui. `📋 especificado` = pronto para desenvolvimento
-(CP1+CP2+CP3 aprovados); `✅ implementado` = CP4 (code review) aprovado. Para sinalizar
-trabalho em andamento, declare `estado: em-desenvolvimento`. Ver `docs` da esteira de gates.
+**Status**: definido pela **esteira de checkpoints** no front-matter (`estado` + `gates`) no topo deste arquivo — não duplicar aqui. `📋 especificado` = pronto para desenvolvimento (CP1+CP2+CP3 aprovados); `✅ implementado` = CP4 (code review) aprovado. Para sinalizar trabalho em andamento, declare `estado: em-desenvolvimento`. Ver `docs` da esteira de gates.
 
 <!--
   Elo spec → código. Para que a cadeia ticket → N3 → código fique completa,

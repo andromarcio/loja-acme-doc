@@ -17,15 +17,13 @@
 
 ## Propósito
 
-[Em um parágrafo: que problema este produto resolve e por que ele deve existir.
-Foque na dor real do usuário/negócio, não na solução técnica.]
+[Em um parágrafo: que problema este produto resolve e por que ele deve existir. Foque na dor real do usuário/negócio, não na solução técnica.]
 
 ---
 
 ## Proposta de valor
 
-[Uma a três frases que sintetizam o benefício central — o que o usuário ganha
-que justifica adotar este produto em vez de uma alternativa ou do status quo.]
+[Uma a três frases que sintetizam o benefício central — o que o usuário ganha que justifica adotar este produto em vez de uma alternativa ou do status quo.]
 
 ---
 

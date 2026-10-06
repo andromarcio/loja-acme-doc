@@ -21,9 +21,7 @@
 
 > **Artefato**: [dataset | cache | checkpoint | índice | relatório] — formato: [JSONL | binário + manifest JSON | safetensors | Parquet | …] · produzido por: [feature/estágio `SIGLA-SFS-NN`] · consumido por: [features/estágios]
 
-[1–2 frases: o que este artefato representa para o negócio do pipeline — ex.: "Cache
-de ativações do modelo-alvo que alimenta o treino; evita reprocessar o corpus a cada
-experimento".]
+[1–2 frases: o que este artefato representa para o negócio do pipeline — ex.: "Cache de ativações do modelo-alvo que alimenta o treino; evita reprocessar o corpus a cada experimento".]
 
 ### Estrutura
 
@@ -50,9 +48,7 @@ experimento".]
 
 ### Versionamento
 
-[Como versões são identificadas e onde: campo de versão no manifest, sufixo no path,
-hash do config gerador. O que muda a versão (mudança de formato ≠ regeneração com
-outros dados).]
+[Como versões são identificadas e onde: campo de versão no manifest, sufixo no path, hash do config gerador. O que muda a versão (mudança de formato ≠ regeneração com outros dados).]
 
 ### Ciclo de vida
 

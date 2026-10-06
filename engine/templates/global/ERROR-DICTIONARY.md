@@ -15,8 +15,7 @@
 
 ## 1. Erros globais (qualquer rota)
 
-Estes erros podem ocorrer em qualquer endpoint do sistema
-e não são específicos de um domínio. *(baseline reutilizável — ajuste conforme a stack)*
+Estes erros podem ocorrer em qualquer endpoint do sistema e não são específicos de um domínio. *(baseline reutilizável — ajuste conforme a stack)*
 
 | Código de erro | HTTP | Situação |
 |---|---|---|
@@ -44,8 +43,7 @@ e não são específicos de um domínio. *(baseline reutilizável — ajuste con
 
 ## Como adicionar novos erros
 
-Ao criar ou atualizar um N3 e identificar a necessidade de um código
-não listado acima, adicione-o à tabela do domínio correspondente:
+Ao criar ou atualizar um N3 e identificar a necessidade de um código não listado acima, adicione-o à tabela do domínio correspondente:
 
 ```markdown
 | `[DOMINIO]_[NOME]` | [HTTP] | [Situação que dispara o erro] |

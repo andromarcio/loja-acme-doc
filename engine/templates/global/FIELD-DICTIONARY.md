@@ -118,8 +118,7 @@ Scenario: Valor negativo
 
 ## Como adicionar um campo canônico
 
-Um campo vira canônico quando aparece, com a **mesma semântica de validação**,
-em **2+ features**. Para promovê-lo:
+Um campo vira canônico quando aparece, com a **mesma semântica de validação**, em **2+ features**. Para promovê-lo:
 
 1. Adicione uma linha ao **Índice** (Label PO, Label Dev, Tipo, resumo).
 2. Crie a **entrada** completa (validação, parâmetros em aberto, mensagem, cenários).

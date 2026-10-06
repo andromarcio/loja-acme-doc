@@ -32,7 +32,9 @@ const eEstrutural = (l) => {
   const t = l.trim();
   return t === '' || /^#{1,6} /.test(t) || /^(\||-{3,}|={3,}|\*{3,})/.test(t) ||
     /^([-*+] |\d+[.)] )/.test(t) || /^<!--/.test(t) || /-->$/.test(t) ||
-    /^(```|~~~)/.test(t) || /^<\/?\w/.test(t) || /^\[.*\]:/.test(t);
+    /^(```|~~~)/.test(t) || /^<\/?\w/.test(t) || /^\[.*\]:/.test(t) ||
+    // `@caminho` sozinho na linha é import do Claude Code (CLAUDE.md da instância): um por linha
+    /^@\S+$/.test(t);
 };
 
 // Ficha: linha `**Rótulo**: valor`. Duas seguidas são uma lista de campos, um por linha

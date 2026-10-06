@@ -90,8 +90,7 @@ Scenario: Exclusão de registro com vínculos
 
 ## Como adicionar uma regra canônica
 
-Uma regra vira canônica quando a **mesma invariante** aparece em **2+ features**
-(detectável via auditoria — ver `PROMPT_AUDIT_RULES_DEDUP.md`). Para promovê-la:
+Uma regra vira canônica quando a **mesma invariante** aparece em **2+ features** (detectável via auditoria — ver `PROMPT_AUDIT_RULES_DEDUP.md`). Para promovê-la:
 
 1. Atribua o próximo **`RC-NN`** (o maior já usado + 1 — nunca reaproveite) e adicione a linha ao **Índice** (ID, nome, invariante, parâmetros em aberto).
 2. Crie a **entrada** `### RC-NN — Nome` (invariante, parâmetros, mensagem, cenários).
