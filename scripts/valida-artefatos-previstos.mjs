@@ -21,17 +21,22 @@
 //
 // ONDE RODA: na CI do repo de CÓDIGO (é quando o código entra), com o repo de
 // doc em checkout ao lado. Cada CI enxerga só o seu repo — por isso a checagem
-// é POR REPO ACESSÍVEL: repo declarado ausente não reprova, só avisa. Descobre
-// backend/frontend por MAPA_BACKEND_DIR / MAPA_FRONTEND_DIR ou irmãos por prefixo
-// (ver lib/mapa-codigo). Se NENHUM repo de código estiver acessível, PULA.
+// é POR REPO ACESSÍVEL: repo declarado ausente não reprova, só avisa. Num sistema de
+// microsserviços, a CI de cada um diz quem ela é: `--repo <nome>=<dir>` (o nome como
+// está no inventário e na `## Implementação`). Também acha o par backend/frontend
+// (MAPA_BACKEND_DIR / MAPA_FRONTEND_DIR ou irmãos por prefixo) e os repositórios do
+// inventário `repos/INDEX.md` que estiverem no disco (ao lado do doc, ou em
+// `--repos-dir` / MAPA_REPOS_DIR) — ver lib/mapa-codigo. Se NENHUM repo de código
+// estiver acessível, PULA.
 //
 // Uso:
 //   node scripts/valida-artefatos-previstos.mjs [--doc-root <dir>]
+//        [--repo <nome>=<dir> …] [--repos-dir <dir>]
 //        [--backend <dir>] [--frontend <dir>] [--estado implementado,em-desenvolvimento]
 //   exit 0 = ok/pulado · 1 = feature previu e não entregou · 2 = erro de uso
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
-import { join, resolve, basename } from 'node:path';
+import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
 import { ligarCodigo } from './lib/mapa-codigo.mjs';
@@ -119,56 +124,59 @@ if (!alvos.length) {
 }
 
 // ---- liga cada feature ao código real (por token do ID) ----------------------
+// `--repo nome=dir` pode vir várias vezes: a CI de um microsserviço passa o dela.
+const explicitos = process.argv.flatMap((a, i) => (process.argv[i - 1] === '--repo' ? [a] : []))
+  .map((v) => { const k = v.indexOf('='); return k > 0 ? { nome: v.slice(0, k), dir: resolve(v.slice(k + 1)) } : null; })
+  .filter(Boolean);
 const cod = ligarCodigo({
   docRoot: DOC_ROOT,
+  repos: explicitos,
+  reposDir: argOf('--repos-dir') || undefined,
   backendRoot: argOf('--backend') || undefined,
   frontendRoot: argOf('--frontend') || undefined,
   featIds: alvos.map((a) => a.id),
 });
 
 if (!cod.ok) {
-  console.log('↷ Nenhum repositório de código acessível (backend/frontend) — verificação pulada.');
-  console.log('  (rode na CI do repo de código, com o repo de doc ao lado, ou aponte MAPA_BACKEND_DIR/MAPA_FRONTEND_DIR.)');
+  console.log('↷ Nenhum repositório de código acessível — verificação pulada.');
+  console.log('  (rode na CI do repo de código, com o repo de doc ao lado: --repo <nome>=<dir>; ou aponte MAPA_REPOS_DIR, MAPA_BACKEND_DIR/MAPA_FRONTEND_DIR.)');
   process.exit(0);
 }
 
-// repo declarado → qual lado do mapa-codigo e se está acessível
-const presentes = new Map(); // nome do repo (lower) → 'back' | 'front'
-if (cod.backend) presentes.set(cod.backend.toLowerCase(), 'back');
-if (cod.frontend) presentes.set(cod.frontend.toLowerCase(), 'front');
+// repo declarado → o repositório acessível de mesmo nome (sem diferença de caixa)
+const presentes = new Map(cod.repos.map((r) => [r.nome.toLowerCase(), r]));
 
 let erros = 0, avisos = 0;
-console.log(`Verificando ${alvos.length} feature(s) contra: ${[cod.backend, cod.frontend].filter(Boolean).join(', ')}\n`);
+console.log(`Verificando ${alvos.length} feature(s) contra: ${cod.repos.map((r) => r.nome).join(', ')}\n`);
 
 for (const a of alvos) {
-  const byFeat = cod.byFeat[a.id] || { back: [], front: [] };
-  const refCount = { back: byFeat.back.length, front: byFeat.front.length };
+  const porRepo = (cod.byFeat[a.id] || {}).porRepo || {};
+  const refs = (repo) => (porRepo[repo.nome] || []).length;
   const linhas = [];
 
   // A/B — cada repo DECLARADO e ACESSÍVEL precisa ter ≥1 arquivo referenciando o ID.
-  for (const repo of a.declaradosRepo) {
-    const lado = presentes.get(repo.toLowerCase());
-    if (!lado) { linhas.push(`  · ${repo}: declarado, ausente deste checkout — não verificado (aviso).`); avisos++; continue; }
-    if (refCount[lado] === 0) {
-      linhas.push(`  ✗ ${repo}: declarado em "## Implementação", presente no checkout, mas NENHUM arquivo referencia o ID ${a.id}.`);
+  for (const nome of a.declaradosRepo) {
+    const repo = presentes.get(nome.toLowerCase());
+    if (!repo) { linhas.push(`  · ${nome}: declarado, ausente deste checkout — não verificado (aviso).`); avisos++; continue; }
+    if (refs(repo) === 0) {
+      linhas.push(`  ✗ ${nome}: declarado em "## Implementação", presente no checkout, mas NENHUM arquivo referencia o ID ${a.id}.`);
       erros++;
     }
   }
 
   // C — repo ACESSÍVEL que referencia o ID mas NÃO foi declarado (aviso).
-  for (const [nome, lado] of presentes) {
-    if (refCount[lado] > 0 && !a.declaradosRepo.some((r) => r.toLowerCase() === nome)) {
-      linhas.push(`  ! ${nome}: referencia ${a.id} mas não está declarado na "## Implementação".`);
+  for (const [nome, repo] of presentes) {
+    if (refs(repo) > 0 && !a.declaradosRepo.some((r) => r.toLowerCase() === nome)) {
+      linhas.push(`  ! ${repo.nome}: referencia ${a.id} mas não está declarado na "## Implementação".`);
       avisos++;
     }
   }
 
   // Fase 2 (semeada) — caminho concreto declarado precisa existir sob o repo mapeado.
-  for (const { repo, path } of a.declaradosPath) {
-    const lado = presentes.get(repo.toLowerCase());
-    if (!lado) continue; // repo ausente — não verificável aqui
-    const root = lado === 'back' ? (argOf('--backend') || process.env.MAPA_BACKEND_DIR || join(DOC_ROOT, '..', `${basename(DOC_ROOT).replace(/-doc$/, '')}-backend`))
-                                 : (argOf('--frontend') || process.env.MAPA_FRONTEND_DIR || join(DOC_ROOT, '..', `${basename(DOC_ROOT).replace(/-doc$/, '')}-frontend`));
+  for (const { repo: nome, path } of a.declaradosPath) {
+    const repo = presentes.get(nome.toLowerCase());
+    if (!repo) continue; // repo ausente — não verificável aqui
+    const root = repo.root;
     let existe = false;
     try { statSync(join(root, path)); existe = true; } catch { /* não existe */ }
     if (!existe) { linhas.push(`  ✗ ${repo}:${path} — caminho declarado não existe no repositório.`); erros++; }

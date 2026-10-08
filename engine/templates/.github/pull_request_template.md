@@ -20,6 +20,8 @@ Qual checkpoint este PR conclui? (marque **um**)
 > A verificação automática **Esteira de gates — check** valida a ordem; o review
 > do CODEOWNER valida quem aprova.
 
+> **Ao mesclar na `main`:** use *Create a merge commit* e acrescente ao corpo da mensagem uma linha `Approved-by: Nome <email>` por aprovador. A mensagem padrão do GitHub não a traz, e o job `aprovacao` do `spec-guard` reprova, no push, o merge que toca `modules/` ou `global/` sem ela.
+
 ---
 
 **Feature(s):** `[SIGLA]-[SFS]-[NN]` · **Ticket:** `[STRYxxxxxxx]` — AIM em `analise-impacto/AIM-[CHAVE].md`

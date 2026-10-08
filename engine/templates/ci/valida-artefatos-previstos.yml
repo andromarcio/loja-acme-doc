@@ -1,6 +1,7 @@
 # valida-artefatos-previstos.yml — CI de conformidade previsto↔implementado (template).
 #
-# ONDE VIVE: no repositório de CÓDIGO ([x]-backend ou [x]-frontend), não no de doc.
+# ONDE VIVE: em cada repositório de CÓDIGO ([x]-backend, [x]-frontend ou cada um dos
+# microsserviços), não no de doc.
 # É o CP4 mecânico: quando um PR de código entra, confere que toda feature N3 marcada
 # `estado: implementado` na spec tem, no repositório declarado em "## Implementação",
 # ao menos um arquivo referenciando o ID da feature (convenção do mapa-codigo:
@@ -8,8 +9,10 @@
 #
 # COMO USAR:
 #   1. Copie para `.github/workflows/valida-artefatos-previstos.yml` neste repo de código.
-#   2. Ajuste as DUAS linhas marcadas com  ⟵ AJUSTE:  o slug do repo de doc e se este
-#      repo é --backend ou --frontend.
+#   2. Ajuste a linha marcada com  ⟵ AJUSTE:  o slug do repo de doc. Este repo se
+#      identifica pelo próprio nome (`--repo <nome>=code`), que precisa ser o mesmo do
+#      inventário `repos/INDEX.md` e da coluna Repositório da `## Implementação` — por
+#      isso o mesmo YAML serve a todos os microsserviços, sem ajuste por repositório.
 #   3. Torne o check obrigatório no branch protection para bloquear o merge.
 #
 # A lógica mora no script do engine (sincronizado no repo de doc); este YAML só o invoca
@@ -41,5 +44,5 @@ jobs:
         with: { node-version: "20" }
 
       - name: previsto ↔ implementado
-        # ⟵ AJUSTE: use --backend code  (repo de backend)  OU  --frontend code  (repo de frontend)
-        run: node doc/scripts/valida-artefatos-previstos.mjs --doc-root doc --backend code
+        # este repositório pelo nome dele no GitHub; os demais não estão no checkout e só avisam
+        run: node doc/scripts/valida-artefatos-previstos.mjs --doc-root doc --repo "${{ github.event.repository.name }}=code"

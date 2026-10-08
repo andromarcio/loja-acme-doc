@@ -6,7 +6,7 @@ Instância do framework **docqui** usada para formar analistas no método. A Loj
 
 | | |
 |---|---|
-| Engine | siesa-engine 6.1.0 (`VERSION`), sincronizado em `engine/` e `scripts/` — não edite essas pastas aqui |
+| Engine | siesa-engine 6.2.1 (`VERSION`), sincronizado em `engine/` e `scripts/` — não edite essas pastas aqui |
 | Perfil | `requisitos`: esteira CP1 → CP2, estado final 📋 `especificado` |
 | Cadência | `sprint`: o trabalho vive na branch da sprint até o fechamento |
 | Aprovador dos checkpoints | `@andromarcio` (`.github/CODEOWNERS`) |

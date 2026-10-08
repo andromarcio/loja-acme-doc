@@ -75,7 +75,7 @@ contagem:
 -->
 
 # [Nome da Feature]
-> **Nível 3** - Feature Set: [Nome do Feature Set] — Major Feature Set: [Nome do Domínio] - `[SIGLA]-[SFS]-[01]`
+> **Nível 3** - Feature Set: [Nome do Feature Set] — Major Feature Set: [Nome do Domínio] - `[SIGLA]-[SFS]-[NN]`
 > **Prioridade**: [P1 | P2 | P3] · **MVP**: [sim | não] *(P1 = entra no incremento mínimo; ordena as user stories na exportação ao spec-kit)*
 
 ## Descrição
@@ -636,11 +636,14 @@ logAction({
 
 <!--
   Onde o código desta feature vive. A coluna Repositório é preenchida no 3B
-  (PASSO 5) com nomes que EXISTEM em repos/INDEX.md — uma linha por parte da
-  feature (endpoint → repo do serviço; componente/tela → repo do front/MFE;
-  job → repo do pipeline). Caminho e Branch/Tag podem ficar como placeholder
-  até o dev. A partir de `estado: em-desenvolvimento`, o validate-doc.mjs
-  exige ao menos uma linha com repositório real (não placeholder).
+  (PASSO 5) — no perfil `requisitos`, no 3A, quando há o inventário — com nomes
+  que EXISTEM em repos/INDEX.md — uma linha por parte da feature (endpoint → repo
+  do serviço; componente/tela → repo do front/MFE; job → repo do pipeline; num
+  sistema de microsserviços, cada serviço que a realiza). Caminho e Branch/Tag
+  podem ficar como placeholder até o dev. A partir de `estado: em-desenvolvimento`,
+  o validate-doc.mjs exige ao menos uma linha com repositório real (não
+  placeholder). O índice reverso — as features de cada repositório — sai daqui:
+  `node scripts/gera-indice-repos.mjs` (seção gerada no repos/INDEX.md).
 -->
 
 | Item | Repositório | Caminho | Branch/Tag |

@@ -74,6 +74,12 @@ const PIPELINE = [
     cmd: ['node', ['scripts/gera-diagrama-er.mjs']],
   },
   {
+    nome: 'Índice de repositórios (repos/INDEX.md)',
+    quando: () => tem('scripts/gera-indice-repos.mjs') && tem('repos/INDEX.md'),
+    porQueAqui: 'escreve no repos/INDEX.md, que a árvore vai embutir',
+    cmd: ['node', ['scripts/gera-indice-repos.mjs']],
+  },
+  {
     nome: 'Índice de uso nos dicionários',
     quando: () => COM_DICIONARIOS && tem('scripts/generate-usage-index.mjs'),
     porQueAqui: 'ALTERA os dicionários — por isso é opt-in, com --com-dicionarios',

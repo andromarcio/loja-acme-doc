@@ -73,6 +73,11 @@ Faça esta pergunta e aguarde:
 Após receber a lista, pergunte:
 > "Recebo [N] repositórios. Está completa ou há outros que devo incluir?"
 
+**Muitos repositórios** (dezenas ou centenas — um sistema de microsserviços): peça a
+lista de uma vez, como tabela ou arquivo, em vez de um a um, e trabalhe por **prefixo
+de domínio** do nome quando ele existir (`pagamento-*`, `frete-*`): é o rascunho dos
+agrupamentos do passo 3.
+
 ---
 
 ## PASSO 3 — Análise de domínios
@@ -109,6 +114,19 @@ Apresente sua análise e pergunte **uma pergunta de cada vez**:
 > Atenção: repositório sem banco/UI cujo código **é o produto que os usuários
 > executam** (pipeline, CLI, biblioteca) **não** entra nessa lista — ele gera N1
 > normalmente."
+
+**Microsserviços — o domínio é de negócio, não um por serviço.** Um sistema com
+dezenas ou centenas de microsserviços continua sendo **uma sigla**: uma instância, uma
+fronteira de contagem. Agrupe os serviços em domínios de negócio — o *bounded context*,
+quando a arquitetura segue DDD; o prefixo do nome costuma dizê-lo — e **não** crie um
+N1 ou N2 por serviço: uma feature na visão do usuário atravessa vários deles (o BFF, o
+serviço de domínio, o worker), e organizada por serviço apareceria picada e contada
+duas vezes. O serviço entra pelo inventário e pela coluna Repositório da
+`## Implementação` de cada N3. Serviços técnicos — gateway, autenticação, configuração,
+observabilidade, bibliotecas internas — são apoio: entram no inventário (Tipo
+`técnico`) e nos globais (`PATTERNS`, `NFR`, `API-PATTERNS`), não viram feature.
+Chamada entre serviços da mesma sigla é interna à fronteira: não é AIE nem transação a
+mais na contagem (`SIZING.md`); AIE é dado de **outra sigla**.
 
 **Pergunta 3 — Repositório de frontend**
 > "Existe um repositório de frontend? Se sim, ele serve todas as features
@@ -160,14 +178,25 @@ Após aprovação do mapa, gere todos os arquivos de uma vez:
 ```markdown
 # Repositórios do sistema
 
-| Repositório | URL | Domínio | Responsabilidade | Stack | BD próprio |
-|---|---|---|---|---|---|
-| [repo] | [url] | [domínio] | [o que faz] | [stack] | [sim/não — qual] |
+| Repositório | URL | Domínio | Tipo | Responsabilidade | Stack | BD próprio |
+|---|---|---|---|---|---|---|
+| [repo] | [url] | [domínio] | [frontend · BFF · domínio · worker · integração · técnico] | [o que faz] | [stack] | [sim/não — qual] |
 ```
+
+O nome na coluna Repositório é **exatamente** o do git: é por ele que a
+`## Implementação` do N3 cita o repositório (o `validate-doc` cruza os dois), que a CI
+de cada repositório se identifica (`valida-artefatos-previstos --repo <nome>=…`) e que o
+`gera-indice-repos.mjs` monta, no fim deste arquivo, a seção gerada **Features por
+repositório** — o índice reverso, que não se escreve à mão.
 
 ---
 
-### 📄 `repos/[nome-repo].md` — um por repositório
+### 📄 `repos/[nome-repo].md` — um por repositório (com muitos, só os que pedem detalhe)
+
+Com dezenas ou centenas de repositórios, não gere uma ficha para cada: o inventário já
+diz o essencial, e ficha que ninguém lê envelhece. Gere a dos repositórios que têm
+estrutura própria a explicar (o BFF, o serviço com regra de negócio pesada, o que fala
+com sistema externo).
 
 ```markdown
 # Repositório: [nome]
@@ -186,10 +215,8 @@ Após aprovação do mapa, gere todos os arquivos de uma vez:
 [a preencher]
 
 ## Features implementadas neste repositório
-[a preencher após PROMPT_REVERSE_ENGINEERING]
-| Feature | N3 de referência | Status |
-|---|---|---|
-| — | — | 🔄 A documentar |
+→ ver `repos/INDEX.md` → *Features por repositório* (gerada do `## Implementação`
+dos N3 pelo `node scripts/gera-indice-repos.mjs` — não mantenha a lista aqui)
 ```
 
 ---

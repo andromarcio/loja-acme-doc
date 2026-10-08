@@ -1,11 +1,13 @@
 # Repositórios do sistema
 
-| Repositório | URL | Responsabilidade | Stack | Responsável |
-|---|---|---|---|---|
-| [nome-docs] | [URL] | Documentação e especificações | Markdown | [nome] |
-| [nome-backend] | [URL] | [responsabilidade] | [stack] | [nome] |
-| [nome-frontend] | [URL] | [responsabilidade] | [stack] | [nome] |
-| [nome-workers] | [URL] | [responsabilidade] | [stack] | [nome] |
+| Repositório | URL | Domínio | Tipo | Responsabilidade | Stack | Responsável |
+|---|---|---|---|---|---|---|
+| [nome-docs] | [URL] | — | documentação | Documentação e especificações | Markdown | [nome] |
+| [nome-backend] | [URL] | [domínio] | [frontend · BFF · domínio · worker · integração · técnico] | [responsabilidade] | [stack] | [nome] |
+| [nome-frontend] | [URL] | [domínio] | frontend | [responsabilidade] | [stack] | [nome] |
+| [nome-workers] | [URL] | [domínio] | worker | [responsabilidade] | [stack] | [nome] |
+
+> Uma linha por repositório — num sistema de microsserviços, uma por serviço, com o nome **exato** do git: é por ele que a `## Implementação` do N3 o cita e que a CI de cada repositório se identifica. **Domínio** é o N1 (o domínio de negócio, não um por serviço); **Tipo** separa os serviços de negócio dos técnicos, que não viram feature. As features de cada repositório não se listam aqui à mão: a seção *Features por repositório*, no fim deste arquivo, é gerada pelo `node scripts/gera-indice-repos.mjs`.
 
 ---
 
@@ -46,3 +48,16 @@
 | `feature/[nome]` | Nova feature | PR para develop |
 | `fix/[nome]` | Correção de bug | PR para develop |
 | `hotfix/[nome]` | Correção urgente | PR para main e develop |
+
+---
+
+<!-- REPOS-FEATURES:INICIO -->
+## Features por repositório
+
+> ⚙️ **Seção gerada por `scripts/gera-indice-repos.mjs` — não editar à mão.** O índice reverso do `## Implementação` dos N3: as features que cada repositório implementa — o que muda se ele mudar. A fonte é o N3; corrija lá e regenere.
+
+_Nenhum N3 declara repositório do inventário no `## Implementação` ainda._
+
+**Sem feature declarada** (0): —
+
+<!-- REPOS-FEATURES:FIM -->

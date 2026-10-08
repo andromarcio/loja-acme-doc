@@ -81,3 +81,13 @@ Ao escrever cenários/telas em um N3:
 > **Usado em (não escreva à mão)**: a seção `## Usado em (índice reverso)` ao final
 > é **gerada** por `scripts/generate-usage-index.mjs` a partir das referências
 > `→ ver`/`←` dos N3. Não edite à mão — rode o gerador (o CI valida que está fresco).
+
+<!-- usado-em:gerado -->
+## Usado em (índice reverso)
+
+> Gerado por `scripts/generate-usage-index.mjs` a partir das referências `→ ver`/`←` nos N3. **Não editar à mão.**
+
+| Entrada | Usado em |
+|---|---|
+| _(nenhuma referência encontrada)_ | — |
+<!-- /usado-em -->

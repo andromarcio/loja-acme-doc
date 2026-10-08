@@ -242,7 +242,7 @@ definir se é formulário, modal, botão em lista ou página própria.]
 ---
 
 ## Implementação
-*A ser preenchida após a implementação.*
+*Com o inventário `repos/INDEX.md`, preencha já Item e Repositório — o nome exato do inventário, uma linha por repositório que realiza a feature (num sistema de microsserviços, cada serviço). No perfil `requisitos`, que não tem 3B, esta é a única passada que liga a feature aos repositórios; no `completo`, o 3B (PASSO 5) confere e completa. Caminho e Branch/Tag ficam para depois da implementação. Sem inventário, deixe a linha de traços.*
 
 | Item | Repositório | Caminho | Branch/Tag |
 |---|---|---|---|

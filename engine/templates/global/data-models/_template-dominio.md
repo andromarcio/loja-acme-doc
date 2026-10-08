@@ -1,3 +1,4 @@
+<!-- docqui: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # Data Model: [Nome do Domínio]
 > Fragmento do DATA-MODEL.md — cole apenas este arquivo nas sessões
 > que envolvam o domínio [Nome do Domínio].

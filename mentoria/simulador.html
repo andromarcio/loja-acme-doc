@@ -111,16 +111,27 @@ strong { color: var(--fg); font-weight: 600; }
 .so-estreito { display: none; }
 
 /* ── Colunas ─────────────────────────────────────── */
-.cols { display: grid; grid-template-columns: 268px minmax(0, 1fr) 330px; align-items: start; }
-.rot, .inst {
+.cols { display: grid; grid-template-columns: var(--rot-w, 268px) 6px minmax(0, 1fr); align-items: start; }
+.rot, .alca {
   position: sticky; top: calc(var(--top-h) + env(safe-area-inset-top, 0px));
   max-height: calc(100dvh - var(--top-h) - var(--ctl-h) - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
-  overflow: auto; overscroll-behavior: contain;
 }
-.rot { border-right: 1px solid var(--line); padding: 14px 10px 24px 14px; }
-.inst { border-left: 1px solid var(--line); padding: 14px 14px 24px; background: var(--bg-2); }
+.rot { overflow: auto; overscroll-behavior: contain; padding: 14px 10px 24px 14px; }
+/* A alça entre o roteiro e o conteúdo: arraste (ou ← → com foco) muda a largura do roteiro. */
+.alca { height: 100dvh; border-left: 1px solid var(--line); cursor: col-resize; touch-action: none; }
+.alca:hover, .alca:focus-visible, .alca.arrastando { background: var(--line-2); outline: none; }
+body.arrastando-rot { user-select: none; cursor: col-resize; }
+/* O painel da instância é uma gaveta sobreposta: abre e fecha pelo botão do topo sem mexer no conteúdo.
+   Fica abaixo do rodapé (z-index 25), para os controles do passo seguirem à mão com ela aberta. */
+.inst {
+  position: fixed; z-index: 24; right: 0; top: calc(var(--top-real, var(--top-h)) + env(safe-area-inset-top, 0px)); bottom: 0;
+  width: min(340px, 92vw); overflow: auto; overscroll-behavior: contain;
+  padding: 14px 14px calc(var(--ctl-h) + 24px); background: var(--bg-2); border-left: 1px solid var(--line);
+  box-shadow: var(--shadow); transform: translateX(105%); transition: transform 0.2s; visibility: hidden;
+}
+.inst.aberto { transform: none; visibility: visible; }
 .stage { min-width: 0; padding: 22px 28px calc(var(--ctl-h) + 40px); }
-.stage-in { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+.stage-in { display: flex; flex-direction: column; gap: 16px; }
 
 /* ── Roteiro ─────────────────────────────────────── */
 .cap { margin: 10px 0 4px; }
@@ -337,6 +348,7 @@ th { font-weight: 600; color: var(--fg); background: var(--bg-2); font-size: 12.
 .ov-cab h2 { font-size: 18px; }
 .ov-cab .x { margin-left: auto; }
 .ov-corpo { overflow: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+.ov-corpo > * { flex: none; } /* sem encolher: as seções correm e só o corpo rola */
 .abas { display: flex; gap: 4px; }
 .abas button { border: 1px solid var(--line-2); background: var(--surface); border-radius: 999px; padding: 4px 12px; font-size: 13px; cursor: pointer; }
 .abas button[aria-selected="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
@@ -356,14 +368,13 @@ th { font-weight: 600; color: var(--fg); background: var(--bg-2); font-size: 12.
 .arq-meta { font-size: 12.5px; color: var(--fg-3); }
 
 @media (max-width: 1220px) {
-  .cols { grid-template-columns: minmax(0, 1fr) 300px; }
-  .rot { position: fixed; z-index: 30; left: 0; top: calc(var(--top-h) + env(safe-area-inset-top, 0px)); bottom: 0; width: min(320px, 88vw); max-height: none; background: var(--bg); box-shadow: var(--shadow); transform: translateX(-105%); transition: transform 0.2s; }
+  .cols { grid-template-columns: minmax(0, 1fr); }
+  .alca { display: none; }
+  .rot { position: fixed; z-index: 30; left: 0; top: calc(var(--top-real, var(--top-h)) + env(safe-area-inset-top, 0px)); bottom: 0; width: min(320px, 88vw); max-height: none; background: var(--bg); box-shadow: var(--shadow); transform: translateX(-105%); transition: transform 0.2s; }
   .rot.aberto { transform: none; }
   .so-estreito { display: inline-flex; }
 }
 @media (max-width: 860px) {
-  .cols { grid-template-columns: minmax(0, 1fr); }
-  .inst { position: static; max-height: none; border-left: 0; border-top: 1px solid var(--line); padding-bottom: calc(var(--ctl-h) + 40px); }
   .stage { padding: 16px 16px 28px; }
   .marca span, .chk { display: none; }
   .btn.prim { max-width: 60vw; }
@@ -384,12 +395,14 @@ th { font-weight: 600; color: var(--fg); background: var(--bg-2); font-size: 12.
   </div>
   <div class="espaco"></div>
   <div><span class="seg-rot">Perfil</span><span class="seg" role="group" aria-label="Perfil da instância"><button id="p-completo" aria-pressed="true">completo</button><button id="p-requisitos" aria-pressed="false">requisitos</button></span></div>
+  <button class="btn-top" id="b-inst" aria-controls="inst" aria-expanded="false" title="Estado da instância ao fim do passo">Instância</button>
   <button class="btn-top" id="b-mapa">Mapa</button>
   <button class="btn-top" id="b-tema" aria-label="Alternar tema">◐</button>
 </header>
 
 <div class="cols">
   <nav class="rot" id="roteiro" aria-label="Roteiro"></nav>
+  <div class="alca" id="alca" role="separator" aria-orientation="vertical" aria-controls="roteiro" aria-label="Largura do roteiro" aria-valuemin="200" aria-valuemax="560" aria-valuenow="268" tabindex="0" title="Arraste para ajustar a largura do roteiro (duplo clique: volta ao padrão)"></div>
   <main class="stage" id="stage"><div class="stage-in" id="stage-in"></div></main>
   <aside class="inst" id="inst" aria-label="Estado da instância"></aside>
 </div>
@@ -3624,6 +3637,59 @@ $('#c-tudo').addEventListener('change', (e) => { st.tudo = e.target.checked; try
 $('#b-mapa').addEventListener('click', () => { renderMapa(); abrir('ov-mapa'); });
 ['proc', 'val', 'arq'].forEach((a) => $('#a-' + a).addEventListener('click', () => { st.aba = a; renderMapa(); }));
 $('#b-rot').addEventListener('click', () => { const r = $('#roteiro'); r.classList.toggle('aberto'); $('#b-rot').setAttribute('aria-expanded', String(r.classList.contains('aberto'))); });
+
+/* As gavetas começam onde o topo termina — em tela estreita ele quebra em mais de uma
+   linha, e a altura fixa (--top-h) as poria por cima dos botões que as fecham. */
+new ResizeObserver(() => document.documentElement.style.setProperty('--top-real', $('.top').getBoundingClientRect().height + 'px')).observe($('.top'));
+
+/* ── Painel da instância: gaveta sobreposta, recolhida por padrão ──── */
+function painelInst(aberto) {
+  $('#inst').classList.toggle('aberto', aberto);
+  $('#b-inst').setAttribute('aria-expanded', String(aberto));
+  try { localStorage.setItem('docqui-sim-inst', aberto ? '1' : '0'); } catch (e) { /* sem storage */ }
+}
+$('#b-inst').addEventListener('click', () => painelInst(!$('#inst').classList.contains('aberto')));
+try { if (localStorage.getItem('docqui-sim-inst') === '1') painelInst(true); } catch (e) { /* sem storage */ }
+
+/* ── Roteiro com largura ajustável (arraste a alça; ← → com foco nela) ── */
+const ROT_PADRAO = 268;
+let rotW = ROT_PADRAO;
+function larguraRot(w) {
+  rotW = Math.round(Math.min(560, Math.max(200, w)));
+  $('.cols').style.setProperty('--rot-w', rotW + 'px');
+  $('#alca').setAttribute('aria-valuenow', String(rotW));
+}
+const guardaRot = () => { try { localStorage.setItem('docqui-sim-rot-w', String(rotW)); } catch (e) { /* sem storage */ } };
+try { const w = parseInt(localStorage.getItem('docqui-sim-rot-w'), 10); if (w) larguraRot(w); } catch (e) { /* sem storage */ }
+$('#alca').addEventListener('pointerdown', (ev) => {
+  ev.preventDefault();
+  const alca = ev.currentTarget;
+  const x0 = $('.cols').getBoundingClientRect().left;
+  alca.setPointerCapture(ev.pointerId);
+  alca.classList.add('arrastando');
+  document.body.classList.add('arrastando-rot');
+  const mover = (e) => larguraRot(e.clientX - x0);
+  const soltar = () => {
+    alca.removeEventListener('pointermove', mover);
+    alca.removeEventListener('pointerup', soltar);
+    alca.removeEventListener('pointercancel', soltar);
+    alca.classList.remove('arrastando');
+    document.body.classList.remove('arrastando-rot');
+    guardaRot();
+  };
+  alca.addEventListener('pointermove', mover);
+  alca.addEventListener('pointerup', soltar);
+  alca.addEventListener('pointercancel', soltar);
+});
+$('#alca').addEventListener('keydown', (ev) => {
+  const d = { ArrowLeft: -16, ArrowRight: 16 }[ev.key];
+  if (!d) return;
+  ev.preventDefault();
+  ev.stopPropagation();  // as setas, fora da alça, trocam de passo
+  larguraRot(rotW + d);
+  guardaRot();
+});
+$('#alca').addEventListener('dblclick', () => { larguraRot(ROT_PADRAO); guardaRot(); });
 $('#b-tema').addEventListener('click', () => {
   const root = document.documentElement;
   const escuro = root.getAttribute('data-theme') ? root.getAttribute('data-theme') === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
