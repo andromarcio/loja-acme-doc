@@ -46,6 +46,9 @@
 > replique o mesmo formato ao detalhar os demais do índice.
 
 ### CPF
+<!-- usado-em:gerado -->
+> **Usado em:** _(ainda não referenciado em N3)_
+<!-- /usado-em -->
 
 - **Label Dev**: `cpf`
 - **Tipo**: texto (11 dígitos, sem máscara no armazenamento)
@@ -67,6 +70,9 @@ Scenario: CPF com quantidade de dígitos diferente de 11
 ```
 
 ### E-mail
+<!-- usado-em:gerado -->
+> **Usado em:** _(ainda não referenciado em N3)_
+<!-- /usado-em -->
 
 - **Label Dev**: `email`
 - **Tipo**: texto
@@ -83,6 +89,9 @@ Scenario: E-mail em formato inválido
 ```
 
 ### Senha
+<!-- usado-em:gerado -->
+> **Usado em:** _(ainda não referenciado em N3)_
+<!-- /usado-em -->
 
 - **Label Dev**: `senha`
 - **Tipo**: texto (armazenado com hash — nunca em texto puro)
@@ -99,6 +108,9 @@ Scenario: Senha abaixo da política mínima
 ```
 
 ### Valor monetário
+<!-- usado-em:gerado -->
+> **Usado em:** _(ainda não referenciado em N3)_
+<!-- /usado-em -->
 
 - **Label Dev**: `valor`
 - **Tipo**: decimal (2 casas)

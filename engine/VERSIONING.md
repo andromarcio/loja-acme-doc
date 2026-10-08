@@ -11,7 +11,7 @@ framework que o produziu**.
 
 ## 1. Versão do framework
 
-- A versão vigente vive em [`../VERSION`](../VERSION) (uma linha, SemVer, ex.: `6.1.0`).
+- A versão vigente vive em [`../VERSION`](../VERSION) (uma linha, SemVer, ex.: `6.2.1`).
 - Toda evolução do engine registra uma entrada em [`../CHANGELOG.md`](../CHANGELOG.md)
   e faz o *bump* de `VERSION` conforme o impacto (MAJOR/MINOR/PATCH — ver o changelog).
 - `VERSION` é a **fonte única da verdade**. Nenhum prompt ou template embute o número
@@ -29,7 +29,7 @@ Todo artefato gerado **ou atualizado** por um prompt carrega, na **primeira linh
 um comentário HTML:
 
 ```
-<!-- docqui: 6.1.0 | prompt: PROMPT_3A | atualizado: 2026-06-23 -->
+<!-- docqui: 6.2.1 | prompt: PROMPT_3A | atualizado: 2026-06-23 -->
 ```
 
 ### Por que comentário HTML
@@ -44,7 +44,7 @@ um comentário HTML:
 
 | Campo | Conteúdo | Exemplo |
 |---|---|---|
-| versão | conteúdo de `VERSION` no momento da geração | `6.1.0` |
+| versão | conteúdo de `VERSION` no momento da geração | `6.2.1` |
 | `prompt` | ID do prompt que gerou/atualizou o artefato | `PROMPT_3A` |
 | `atualizado` | data da geração/atualização (`YYYY-MM-DD`) | `2026-06-23` |
 

@@ -1,8 +1,6 @@
 # Esteira de checkpoints (gates) — arquivos de adoção
 
-Estes arquivos são **templates** (parte do `engine/`). Eles **não** rodam aqui no
-`siesa-engine` — destinam-se à **instância** de documentação (o repositório
-onde vivem os N3 reais). Copie-os para a **raiz** do repositório de docs:
+Estes arquivos são **templates** (parte do `engine/`). Eles **não** rodam aqui no `siesa-engine` — destinam-se à **instância** de documentação (o repositório onde vivem os N3 reais). Copie-os para a **raiz** do repositório de docs:
 
 | Template (aqui no engine)                          | Destino (raiz da instância)      |
 |----------------------------------------------------|----------------------------------|
@@ -15,8 +13,7 @@ onde vivem os N3 reais). Copie-os para a **raiz** do repositório de docs:
 
 ## O modelo em uma frase
 
-Cada **N3** carrega no front-matter a sua **esteira de gates**. Um gate é um
-**checkpoint humano**; a próxima etapa só ocorre após a aprovação da anterior.
+Cada **N3** carrega no front-matter a sua **esteira de gates**. Um gate é um **checkpoint humano**; a próxima etapa só ocorre após a aprovação da anterior.
 
 ```
 🆕 → [CP1 requisitos · PO] → 📝 → [CP2 modelo-dados · DBA] → 🧱
@@ -44,9 +41,7 @@ Cada **N3** carrega no front-matter a sua **esteira de gates**. Um gate é um
    - *Require a pull request before merging*
    - *Require review from Code Owners*
    - *Require status checks to pass* → selecione **Esteira de gates — check**
-4. O **CP4 (código)** vive no(s) repositório(s) de implementação: replique lá um
-   `CODEOWNERS` apontando o review para o Tech Lead. O elo com o N3 é a chave do
-   ServiceNow + o ID da feature nos commits/PR (ver `## Implementação` do N3).
+4. O **CP4 (código)** vive no(s) repositório(s) de implementação: replique lá um `CODEOWNERS` apontando o review para o Tech Lead. O elo com o N3 é a chave do ServiceNow + o ID da feature nos commits/PR (ver `## Implementação` do N3).
 
 ## Como passar um gate (fluxo do dia a dia)
 
@@ -55,16 +50,10 @@ Cada **N3** carrega no front-matter a sua **esteira de gates**. Um gate é um
    ```yaml
    modelo-dados: { aprovado: true, por: "bru.dba", em: 2026-06-23, pr: 0 }
    ```
-   e ajuste `estado` para o derivado (ex.: `modelo-validado`).
-   **Inclua o artefato da etapa no mesmo PR** — é ele que torna o dono do
-   checkpoint revisor obrigatório: CP2 → `DATA-MODEL.md` · CP3 → plano de
-   testes em `qa/[dominio]/[feature-set]/[feature].md` · CP4 → registro em
-   `repos/`. Para CP3/CP4 o gate-check **exige** o artefato no diff.
+   e ajuste `estado` para o derivado (ex.: `modelo-validado`). **Inclua o artefato da etapa no mesmo PR** — é ele que torna o dono do checkpoint revisor obrigatório: CP2 → `DATA-MODEL.md` · CP3 → plano de testes em `qa/[dominio]/[feature-set]/[feature].md` · CP4 → registro em `repos/`. Para CP3/CP4 o gate-check **exige** o artefato no diff.
 3. Regenere o espelho e inclua-o **no mesmo PR** (o gate-check reprova espelho
    defasado): `python scripts/gates.py promote --write` → commit do `modules/INDEX.md`.
-4. Abra o PR. O **gate-check** valida ordem + espelho; o **CODEOWNER** aprova;
-   faça o merge. Nada é empurrado direto na `main` — o workflow de **drift**
-   (`promote-estado.yml`) só confirma, após o merge, que o espelho seguiu em dia.
+4. Abra o PR. O **gate-check** valida ordem + espelho; o **CODEOWNER** aprova; faça o merge. Nada é empurrado direto na `main` — o workflow de **drift** (`promote-estado.yml`) só confirma, após o merge, que o espelho seguiu em dia. No merge para a `main`, use *Create a merge commit* e acrescente ao corpo da mensagem `Approved-by: Nome <email>`: a mensagem padrão do GitHub não traz o trailer, e o job `aprovacao` do `spec-guard` reprova o push sem ele.
 
 ## Comandos locais
 

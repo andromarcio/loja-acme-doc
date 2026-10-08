@@ -205,7 +205,8 @@ const repoIndexPath = existsSync(join(root, 'repos', 'INDEX.md')) ? 'repos/INDEX
 let _remote = '';
 try { _remote = execFileSync('git', ['-C', root, 'remote', 'get-url', 'origin'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { /* sem git */ }
 const orgBase = _remote ? _remote.replace(/\.git$/, '').replace(/\/[^/]+$/, '/') : '';
-// Camada de código: liga cada feature aos ARQUIVOS reais ([x]-backend/[x]-frontend)
+// Camada de código: liga cada feature aos ARQUIVOS reais (o par [x]-backend/[x]-frontend
+// e os repositórios do inventário `repos/INDEX.md` que estiverem no disco)
 // — o "das features até o código". Sem os repos irmãos, byFeat vem vazio e o grafo
 // para no nó de repositório (scripts/lib/mapa-codigo.mjs é somente-leitura).
 const codLink = ligarCodigo({ docRoot: root, featIds: model.features.filter((x) => x.id).map((x) => x.id) });
@@ -254,8 +255,8 @@ for (const f of model.features.filter((x) => x.id)) {
   // é `implementa`. Garante o nó de repositório do arquivo (para link e filtro).
   const cod = codLink.byFeat[f.id];
   if (cod) {
-    for (const [repoName, arr] of [[codLink.backend, cod.back], [codLink.frontend, cod.front]]) {
-      if (!repoName) continue;
+    // Um par backend/frontend ou dezenas de microsserviços: todo repositório acessível.
+    for (const [repoName, arr] of Object.entries(cod.porRepo || {})) {
       if (!repoNodes.has(repoName)) {
         repoNodes.set(repoName, { id: repoName, type: 'repo', label: repoName, sub: 'Repositório', desc: '', path: repoIndexPath });
       }

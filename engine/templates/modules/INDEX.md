@@ -52,12 +52,9 @@
 <!-- GATES:INICIO -->
 ## Esteira de checkpoints (gates)
 
-> ⚙️ **Seção gerada por `scripts/gates.py` — não editar à mão.**
-> Espelha o estado de cada feature na esteira (CP1 requisitos → CP2 modelo de dados →
-> CP3 testes → CP4 código). Regenerada a cada merge na `main` pelo workflow
-> `promote-estado.yml`, ou sob demanda com `python scripts/gates.py promote --write`.
+> ⚙️ **Seção gerada por `scripts/gates.py` — não editar à mão.** Espelha o estado de cada feature na esteira (CP1 requisitos (PO/Negócio) → CP2 modelo-dados (DBA/Arquiteto) → CP3 testes (QA) → CP4 codigo (Tech Lead)). Reflete o estado em **[AAAA-MM-DD]**.
 
-_(será preenchida na primeira execução de `scripts/gates.py promote`)_
+_Nenhuma feature com esteira de gates ainda._
 <!-- GATES:FIM -->
 
 ---

@@ -45,6 +45,9 @@
 > Formato de cada regra. Abaixo, exemplos trabalhados; replique para as demais.
 
 ### RC-01 — Maioridade
+<!-- usado-em:gerado -->
+> **Usado em:** _(ainda não referenciado em N3)_
+<!-- /usado-em -->
 
 - **Invariante**: a pessoa associada ao registro deve ter pelo menos a idade mínima na data de referência.
 - **Parâmetros (por feature)**: idade mínima (ex.: 18); data de referência (cadastro / evento).
@@ -59,6 +62,9 @@ Scenario: Pessoa abaixo da idade mínima
 ```
 
 ### RC-08 — Arquivo com tamanho máximo
+<!-- usado-em:gerado -->
+> **Usado em:** _(ainda não referenciado em N3)_
+<!-- /usado-em -->
 
 - **Invariante**: o upload é aceito apenas se respeitar o tamanho e os tipos permitidos.
 - **Parâmetros (por feature)**: tamanho máximo (ex.: 5 MB); tipos aceitos (ex.: PDF, PNG).
@@ -73,6 +79,9 @@ Scenario: Arquivo acima do tamanho permitido
 ```
 
 ### RC-09 — Registro vinculado não pode ser excluído
+<!-- usado-em:gerado -->
+> **Usado em:** _(ainda não referenciado em N3)_
+<!-- /usado-em -->
 
 - **Invariante**: um registro referenciado por outros não pode ser removido enquanto houver vínculos.
 - **Parâmetros (por feature)**: entidade(s) vinculada(s); ação alternativa (inativar em vez de excluir).

@@ -1,6 +1,6 @@
 # Mentoria docqui — Loja Acme
 
-Este repositório é uma instância real do framework **docqui**, montada para formar analistas no método. Ele roda a mesma engine das instâncias de produção (siesa-engine 6.1.0), com o perfil `requisitos` e a cadência `sprint`, e começa só com a identidade do sistema preenchida: a Loja Acme, sigla `LACME`. Todo o resto você escreve, do N0 à entrega da sprint, com os prompts conduzindo e os validadores conferindo.
+Este repositório é uma instância real do framework **docqui**, montada para formar analistas no método. Ele roda a mesma engine das instâncias de produção (siesa-engine 6.2.1), com o perfil `requisitos` e a cadência `sprint`, e começa só com a identidade do sistema preenchida: a Loja Acme, sigla `LACME`. Todo o resto você escreve, do N0 à entrega da sprint, com os prompts conduzindo e os validadores conferindo.
 
 | Arquivo | Para quê |
 |---|---|
