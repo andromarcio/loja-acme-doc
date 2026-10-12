@@ -10,6 +10,7 @@ Instância do framework **Docqui Caixa** usada para formar analistas no método.
 | Perfil | `requisitos`: esteira CP1 → CP2, estado final 📋 `especificado` |
 | Cadência | `sprint`: o trabalho vive na branch da sprint até o fechamento |
 | Aprovador dos checkpoints | `@andromarcio` (`.github/CODEOWNERS`) |
+| Site | <https://andromarcio.github.io/loja-acme-doc/>: a `main` na raiz e cada `sprint/…` aberta em `/sprint/<id>/`; o seletor *Branch* no topo troca entre elas mantendo o arquivo aberto |
 
 | Pasta | O que guarda |
 |---|---|
