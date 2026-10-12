@@ -82,6 +82,7 @@ A instância começa limpa: o `verifica-texto-corrido` em `global/`, `modules/`,
 **Configuração no GitHub, uma vez:**
 
 - Dê aos analistas acesso de escrita ao repositório (Settings → Collaborators).
+- Em Settings → Pages, defina *Source = GitHub Actions*, e em Settings → Environments → `github-pages` libere as branches `sprint/*` e `historia/*` em *Deployment branches and tags*. A cada push, o site publica a `main` na raiz e a sprint de cada analista em `/sprint/SP07-<nome>/`, com a faixa de requisitos ainda não entregues; o seletor *Branch* no topo troca entre elas mantendo o arquivo aberto.
 - Em Settings → Branches, proteja a `main`: *Require a pull request before merging* e *Require review from Code Owners*. Nada é mesclado na `main` durante a mentoria; a regra só impede um push acidental no ponto de partida de todos.
 - O `CODEOWNERS` já aponta `@andromarcio` para todos os checkpoints: você é chamado como revisor em todo PR que toca `modules/`, `global/data-models/`, `global/DATA-MODEL.md`, `qa/` ou `repos/`.
 
