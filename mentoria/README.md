@@ -67,9 +67,9 @@ Depois da SP07, pratique com os dois tickets da segunda parte do `backlog.md`, s
 ## O que muda em relação ao simulador
 
 - A branch da sprint é `sprint/SP07-<nome>`, não `sprint/SP07`, e o PR dela vai para a sua `n0/<nome>`, não para a `main`. Ao rodar os scripts de entrega à mão, use essa base: `node scripts/valida-commits-ticket.mjs --base origin/n0/<nome>` e `node scripts/valida-entrega.mjs --base origin/n0/<nome>`.
-- Os checkpoints são PRs `cp/…` para a sua branch de sprint. No simulador eles aparecem só como o `gate-check` com `--base origin/sprint/SP07`.
+- Os checkpoints são PRs `cp/<nome>/<ID>-<gate>` para a sua branch de sprint. No simulador, em **GitHub · PRs**, eles aparecem como `checkpoint/<ticket>-<cp>` para `sprint/SP07`, e o terminal mostra o `gate-check` com `--base origin/sprint/SP07`.
 - O mentor faz o papel de todo aprovador: a PO no aval da AIM e no CP1, o DBA no CP2. No front-matter do N3, o `por:` de cada gate é `andromarcio`.
-- Não há merge na `main` no fim: o portão verde no PR da sprint é a entrega.
+- Não há merge na `main` no fim: o portão verde no PR da sprint é a entrega. No GitHub · PRs do simulador, o PR da preparação e o da entrega são mesclados na `main`; aqui, não.
 
 ## A linha de base: o que já vem do engine
 
