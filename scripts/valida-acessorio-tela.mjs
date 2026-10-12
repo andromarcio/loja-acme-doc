@@ -123,7 +123,7 @@ const IMPLICITA = /\(impl[íi]cita\)/i;
 const SEM_TELA = /^(a[çc][ãa]o em tela|job|api|cli|integra[çc][ãa]o|rotina|processo)/i;
 
 // ---------------------------------------------------------------------------
-const n3 = walk(join(ROOT, 'modules')).filter((p) => /\/f-[^/]+\.md$/.test(p));
+const n3 = walk(join(ROOT, 'modules')).filter((p) => /(?:^|[\\/])f-[^\\/]+\.md$/.test(p));
 const feats = new Map(); // id -> { sup, pes, arquivo } — os que têm Superfície (regra da tela)
 const todos = new Map(); // id -> { pes, distintos, estado, arquivo } — todo N3 com ID (uma vez na aplicação)
 let semSuperficie = 0;

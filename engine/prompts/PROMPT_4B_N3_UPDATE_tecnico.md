@@ -49,6 +49,15 @@ Regras da sessão:
 
 ## CONTEXTO DO PROJETO
 
+> **Pacote de contexto (6.3.0)** — em vez de colar os blocos abaixo, gere-o:
+> `node scripts/monta-contexto.mjs <ID da feature> --base main --out /tmp/contexto-<ID>.md`. Traz o
+> N3 e, de cada artefato global, só o que a feature usa (matriz de permissões do N2,
+> regras transversais do N1, entidades do data-model, entradas citadas dos dicionários,
+> NFR citados, features de `depende_de`, protótipos); o que o N3 cita e não existe vem
+> como ❓ — resolva antes de usar, não deduza. Os blocos abaixo ficam para o que o pacote
+> não cobre (MASTER, DESIGN-SYSTEM, API-PATTERNS) e para o modo copiar-colar.
+
+
 === MASTER.md ===
 [cole aqui o conteúdo do MASTER.md]
 

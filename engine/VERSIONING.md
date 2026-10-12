@@ -1,6 +1,6 @@
 # Versionamento e carimbo de artefatos
 
-Este documento define **como o siesa-engine é versionado** e **como cada
+Este documento define **como o Docqui Caixa é versionado** e **como cada
 artefato gerado pelos prompts registra, de forma invisível ao leitor, a versão do
 framework que o produziu**.
 
@@ -16,10 +16,11 @@ framework que o produziu**.
   e faz o *bump* de `VERSION` conforme o impacto (MAJOR/MINOR/PATCH — ver o changelog).
 - `VERSION` é a **fonte única da verdade**. Nenhum prompt ou template embute o número
   literal — todos leem `VERSION` no momento da geração.
-- **O site mostra a versão** num selo ao lado do nome, em toda página. Ele é servido só
+- **O site mostra a versão** num selo no topo, em toda página. Ele é servido só
   de `docs/` e não alcança o `VERSION`, então `docs/config.js` → `version` a espelha. No
   bump, troque os dois no mesmo commit e acrescente a seção da versão em
   `docs/content/novidades.md` — o eval 40 reprova a versão divergente ou sem seção.
+- **Na variante CAIXA**, atualize também a versão inicial do selo em `docs/index.html` e o `docs/engine-version.txt` local. O workflow Pages mantém esse arquivo sincronizado com `VERSION`; o eval específico da variante reprova um selo inicial em outra versão.
 
 ---
 
@@ -65,6 +66,8 @@ Ao chegar no estado terminal de geração de artefato (`[GERACAO_ARTEFATO]`,
 > Atalho determinístico (copy-paste/CLI): `scripts/stamp.sh <arquivo> <PROMPT_ID>`
 > insere ou atualiza o carimbo lendo `VERSION` e a data atual.
 
+O prefixo atual continua `docqui:`; o nome técnico `docqui-caixa-engine` não é um prefixo de carimbo. Desde a 6.2.2, o helper reconhece apenas `docqui:` e o legado `doc-template-engine:`. Comentários com outros prefixos são preservados abaixo do carimbo novo, sem migração automática.
+
 ---
 
 ## 4. Escopo
@@ -78,17 +81,18 @@ preenchido) seguem a mesma regra quando gerados por prompt.
 
 ## 5. Governança multi-repositório (canônico × instâncias)
 
-O `siesa-engine` é a **fonte única da verdade** de prompts, templates, skills e
+O **Docqui Caixa** (repositório `docqui-caixa-engine`) é a **fonte única da verdade** de prompts, templates, skills e
 scripts. As instâncias (`simpf-doc`, `desenvolve-ai`, `sifof-doc`, …) **consomem** o
 engine. Uma instância que precisa **só de requisitos** (negocial + data-model, sem as
 passadas técnicas) declara `Perfil: requisitos` no próprio `MASTER.md` (ver 2.7.0): a
 **redução de escopo é um flag no canônico**, não um fork.
 
-> **Não forke o engine para reduzir escopo.** O `docqui-caixa` foi a tentativa antiga
-> disso — uma variante negocial mantida em repositório à parte — e **apodreceu**:
-> congelou em pré-2.0.0 e nunca recebeu as evoluções seguintes, porque um segundo engine
-> só sobrevive se alguém o sincroniza a cada release, e ninguém sincroniza. Trate-o como
-> legado congelado; para novas instâncias só-requisitos, use o perfil.
+> **Não forke o engine para reduzir escopo.** Uma variante negocial antiga, mantida em
+> repositório à parte, foi a tentativa disso — e **apodreceu**: congelou em pré-2.0.0 e
+> nunca recebeu as evoluções seguintes, porque um segundo engine só sobrevive se alguém o
+> sincroniza a cada release, e ninguém sincroniza. Trate-a como legado congelado; para
+> novas instâncias só-requisitos, use o perfil. (Desde a 3.1.0, o nome **Docqui Caixa**
+> designa este engine canônico, e não aquela variante.)
 
 - **Evolução nasce no canônico** e é replicada às demais, respeitando o escopo de cada
   uma (uma instância `Perfil: requisitos` simplesmente não exercita os prompts técnicos).

@@ -14,8 +14,7 @@
 
 Antes de criar um NFR, classifique:
 
-- **É NFR** → uma **qualidade** do sistema: tempo de resposta, segurança,
-  disponibilidade, auditoria, usabilidade, restrição técnica. Registre aqui.
+- **É NFR** → uma **qualidade** do sistema: tempo de resposta, segurança, disponibilidade, auditoria, usabilidade, restrição técnica. Registre aqui.
 - **Não é NFR**:
   - **invariante de negócio** (*o quê* o sistema garante) → `RULES-DICTIONARY.md` (canônica) ou N1 (transversal de domínio) ou N3 (específica da feature);
   - **mensagem de UI** → `MESSAGE-DICTIONARY.md`;

@@ -1,6 +1,6 @@
 # Mentoria docqui — Loja Acme
 
-Este repositório é uma instância real do framework **docqui**, montada para formar analistas no método. Ele roda a mesma engine das instâncias de produção (siesa-engine 6.2.1), com o perfil `requisitos` e a cadência `sprint`, e começa só com a identidade do sistema preenchida: a Loja Acme, sigla `LACME`. Todo o resto você escreve, do N0 à entrega da sprint, com os prompts conduzindo e os validadores conferindo.
+Este repositório é uma instância real do framework **Docqui Caixa**, montada para formar analistas no método. Ele roda a mesma engine das instâncias de produção (docqui-caixa-engine 6.4.0), com o perfil `requisitos` e a cadência `sprint`, e começa só com a identidade do sistema preenchida: a Loja Acme, sigla `LACME`. Todo o resto você escreve, do N0 à entrega da sprint, com os prompts conduzindo e os validadores conferindo.
 
 | Arquivo | Para quê |
 |---|---|
@@ -90,7 +90,7 @@ A instância começa limpa: o `verifica-texto-corrido` em `global/`, `modules/`,
 - Aprovar um checkpoint é aprovar e mesclar o PR `cp/…` na branch de sprint do analista.
 - No fechamento, diga quais tickets foram entregues. O STRY0013135 não é: o analista o tira com o `reverte-ticket`.
 - Ao fim da turma, apague as branches `n0/`, `sprint/` e `cp/` dos analistas. A `main` continua pronta para a próxima.
-- Para atualizar a engine desta instância, rode, a partir de um checkout atualizado do siesa-engine, `node scripts/sync-instance.mjs ../loja-acme-doc` (relatório) e depois com `--write`. O engine sobe primeiro: só sincronize depois que a mudança estiver na `main` dele.
+- Para atualizar a engine desta instância, rode, a partir de um checkout atualizado do docqui-caixa-engine, `node scripts/sync-instance.mjs ../loja-acme-doc` (relatório) e depois com `--write`. O engine sobe primeiro: só sincronize depois que a mudança estiver na `main` dele.
 
 **O que conferir em cada etapa:**
 

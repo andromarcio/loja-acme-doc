@@ -10,6 +10,9 @@
 > na esteira; é o 📋 da seção *Esteira de checkpoints* do `modules/INDEX.md`
 > (`python3 scripts/gates.py status`). No modo alteração, o pré-requisito é o aval do PO
 > no escopo: a AIM do ticket em `escopo-aprovado` ou adiante, com `avalizado-por`
+> **Onde salvar**: `arquitetura/sdd/SDD-[SIGLA]-[SFS].md` (um por Feature Set) — no modo
+> alteração, `arquitetura/sdd/SDD-AIM-<CHAVE>.md`. O `validate-doc` reconhece o SDD pelo
+> título e confere as seções numeradas e a consolidação dos ❓ e 🏛️
 
 ---
 
@@ -37,6 +40,15 @@ seguir diretamente para implementar.
 > falta e não gere o design dele. O status da tabela de rastreabilidade não decide —
 > quem decide é a esteira.
 
+> **SDD retroativo — feature já em `em-desenvolvimento` ou `implementado`.** Só quando o
+> pedido é documentar o desenho que existe ou validar a especificação. Gere o SDD completo
+> com as 15 seções e diga na §1 que é retroativo e se o código foi consultado (qual
+> repositório e caminho) ou não. A §1.1 traz o estado real da spec, e a §14 vira a lista
+> de **defeitos da especificação**: o que o desenho precisou e o N3 não respondia, e o que
+> contradiz outro artefato (N2, dicionário, API-PATTERNS, protótipo). Decisão que só existe
+> em `PLANO-IMPLEMENTACAO.md` ou num registro de reconciliação é citada com a fonte — e
+> anotada na §14 como decisão fora da spec.
+
 ### Regras de geração
 
 > **Fidelidade ao protótipo:** para telas cuja feature (N3) declara `Fidelidade ao protótipo: obrigatória`, o design **referencia o protótipo aprovado** (`prototypes/…`) como fonte de verdade do layout, componentes e estados — não reinterprete a tela pelo texto; desvio vira decisão 🏛️ e exige aprovação.
@@ -50,7 +62,9 @@ seguir diretamente para implementar.
 
 1. **Referência, não repetição.** Sempre que uma regra ou campo já
    estiver definido nas specs, referencie o artefato de origem em vez
-   de copiar o conteúdo. Use a notação: `→ ver [arquivo]: [seção]`
+   de copiar o conteúdo. Use a notação: `→ ver [arquivo]: [seção]`. A regra da
+   feature se cita pelo ID: `[SIGLA]-[SFS]-NN/RN-NN` — no SDD e no comentário do
+   código que a implementa (`// → ADM-USR-04/RN-02`); nunca pela posição na lista.
 
 2. **Decisões explícitas.** Toda escolha de design que não esteja
    determinada pelas specs deve ser declarada como decisão, com
@@ -63,7 +77,8 @@ seguir diretamente para implementar.
 
 4. **Pseudocódigo quando necessário.** Para lógicas complexas
    (algoritmos, fluxos assíncronos, regras de negócio com múltiplas
-   condições), use pseudocódigo em TypeScript para eliminar ambiguidade.
+   condições), use pseudocódigo na linguagem da stack (Technical Context
+   do `MASTER.md`: Language/Version) para eliminar ambiguidade.
 
 5. **Sinalize lacunas.** Se alguma informação necessária para o design
    não estiver nas specs, sinalize com ❓ e liste ao final como
@@ -73,9 +88,32 @@ seguir diretamente para implementar.
    domínios, Feature Sets e features o SDD cobre, com base nos
    artefatos fornecidos.
 
+7. **A stack é a da instância.** Os exemplos da estrutura abaixo — `route.ts`,
+   Prisma, Zod, BullMQ, `organizationId`, `/api/v1`, `it('should…')` — ilustram
+   uma stack TypeScript. Camadas, pacotes, validação, migração, fila, nome do
+   tenant, prefixo de rota e framework de teste saem do Technical Context do
+   `MASTER.md`, do `PATTERNS.md` e do `API-PATTERNS.md` da instância. Onde a
+   instância não define (ex.: o nome dos pacotes), a escolha é 🏛️.
+
+8. **Tela ou consulta compartilhada.** Quando várias features do escopo usam a
+   mesma tela ou a mesma consulta (um GET que alimenta seções de features
+   diferentes), descreva-a uma vez — subseção *Telas e consultas compartilhadas*
+   na §4 ou na §7 — e aponte para ela das features. O contrato dela é ❓ se
+   nenhum N3 o define.
+
 ---
 
 ## CONTEXTO DO PROJETO
+
+> **Pacote de contexto (6.3.0)** — em vez de colar os blocos abaixo, gere-o:
+> `node scripts/monta-contexto.mjs <ID da feature> [--base main] --out /tmp/contexto-<ID>.md` — para o Feature Set inteiro, `--fs <SIGLA-SFS>` (N1, N2, entidades e
+> dicionários uma vez, em vez de repetidos por feature). Traz o
+> N3 e, de cada artefato global, só o que a feature usa (matriz de permissões do N2,
+> regras transversais do N1, entidades do data-model, entradas citadas dos dicionários,
+> NFR citados, features de `depende_de`, protótipos); o que o N3 cita e não existe vem
+> como ❓ — resolva antes de usar, não deduza. Os blocos abaixo ficam para o que o pacote
+> não cobre (MASTER, DESIGN-SYSTEM, API-PATTERNS) e para o modo copiar-colar.
+
 
 === MASTER.md ===
 [cole aqui o conteúdo do MASTER.md]
@@ -541,6 +579,7 @@ Ordem recomendada para implementar sem travar em dependências:
 | Integração | Endpoint: request → response com banco real | `[rota].integration.spec.ts` |
 | Integração | Job: processamento completo com casos de erro | `[job].worker.spec.ts` |
 | Integração | **Segurança**: cenários de abuso do N3 — sem permissão (SEG-01), fora do tenant, entrada maliciosa; para features que alimentam agentes de IA, os testes adversariais de injeção (SEG-08+) | `[rota].security.spec.ts` |
+| E2E | Caminho feliz e permissões pela tela — o plano de `qa/` (`PROMPT_QA`) | `[pasta de E2E do MASTER]/[dominio]/[feature].spec.ts` |
 
 ### Mapeamento cenários Gherkin → testes
 
@@ -548,7 +587,12 @@ Para cada grupo de cenários do N3:
 
 | Cenário Gherkin | Tipo de teste | Método de teste |
 |---|---|---|
-| [descrição do cenário] | Unitário / Integração | `it('[should...]')` |
+| [descrição do cenário] | Unitário / Integração / E2E | `[SIGLA]-[SFS]-NN/RN-NN — [o que verifica]` |
+
+O nome do teste cita a regra que o cenário verifica (`@RN-NN` no N3) — é o texto que o
+`valida-artefatos-previstos` procura no código. Cenário sem regra (técnico, de segurança)
+cita só o ID da feature. Cenário cujo "Então" acontece em outro módulo (a esteira, um
+agente) é testado pelo módulo dono: aponte a suíte dele em vez de duplicar o teste.
 
 ---
 
@@ -612,7 +656,8 @@ O dev deve marcar cada item ao concluir:
 | 1 | 🏛️ [decisão] | [justificativa] | [alternativa e por que não] |
 
 > Decisões com impacto sistêmico devem ser formalizadas em um ADR
-> na pasta `decisions/` do repositório de docs.
+> na pasta de ADRs do repositório de docs (`decisions/`, quando existir;
+> sem ela, a decisão fica registrada aqui e a criação do ADR vai para a §14).
 >
 > Padrão de projeto **novo** adotado aqui, ou divergência de uma entrada de
 > `global/PATTERNS.md`, deve ser propagado para o catálogo (a decisão de adotar/

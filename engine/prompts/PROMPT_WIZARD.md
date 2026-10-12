@@ -73,7 +73,9 @@ Regras da sessão:
   `## Regras de negócio` de cada N3, quebre regras compostas: condições independentes
   ligadas por "e" / "ou" / "além disso" viram **itens distintos**, cada um com **uma
   única restrição verificável**. A reação do sistema ("não avança", "exibe mensagem")
-  não é regra — vai para os **Cenários**.
+  não é regra — vai para os **Cenários**. Cada item começa por `**RN-NN** —` (sequencial
+  na feature, nunca reaproveitado), e ao menos um cenário o verifica com a tag `@RN-NN`
+  na linha acima do `Scenario:`.
 - **Quem pode vive só no N2.** Colete perfis e permissões por feature uma vez e
   registre-os apenas na matriz do `README.md` do Feature Set. Os N3 não trazem regra de
   permissão nem lista de perfis: no grupo **Restrições de acesso** eles descrevem só a

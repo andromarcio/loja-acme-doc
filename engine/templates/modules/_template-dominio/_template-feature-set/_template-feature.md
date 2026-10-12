@@ -213,11 +213,18 @@ contagem:
   "## Cenários". E "conforme o Design System" não é texto final: é gatilho
   para resolver a mensagem no MESSAGE-DICTIONARY/FIELD-DICTIONARY e escrever
   o TEXTO LITERAL no cenário (ou usar o marcador BASELINE de validação).
+
+  ID DA REGRA — `RN-NN` (6.3.0). Toda regra desta seção, inclusive a que só cita o
+  dicionário ou o N1, começa por `**RN-NN** —`: sequencial na feature e NUNCA
+  reaproveitado (a regra removida leva o número; a nova pega o próximo livre). É por ele
+  que o cenário diz o que verifica (tag `@RN-NN` em "## Cenários") e que o SDD, o código
+  e o teste citam a regra — fora do N3, com o ID da feature: `[SIGLA]-[SFS]-[NN]/RN-NN`.
+  Toda regra tem ao menos um cenário com a tag dela: node scripts/valida-regras-cenarios.mjs
 -->
 
-1. [Regra específica desta feature em linguagem de negócio] → ver RULES-DICTIONARY: [RC-NN] — [nome da regra] *(se for regra canônica)* → ver [N1 do domínio]: Regras transversais de negócio: [N] *(se for regra de domínio)*
+- **RN-01** — [Regra específica desta feature em linguagem de negócio] → ver RULES-DICTIONARY: [RC-NN] — [nome da regra] *(se for regra canônica)* → ver [N1 do domínio]: Regras transversais de negócio: [N] *(se for regra de domínio)*
 
-2. [Regra específica]
+- **RN-02** — [Regra específica]
 
 ---
 
@@ -236,7 +243,14 @@ contagem:
   SEM acesso tenta a ação: a mensagem literal do catálogo (NO_PERMISSION, ou uma
   específica) e o que fica bloqueado. Assim, mudar quem pode mexe só no N2, e o cenário
   continua certo.
+
+  TAG DA REGRA (6.3.0). O cenário que verifica uma regra de "## Regras de negócio" leva,
+  na linha logo acima dele, a tag `@RN-NN` dela (várias, se verifica mais de uma). Toda
+  regra tem ao menos um cenário com a sua tag; cenário sem tag é permitido (campo
+  obrigatório, formato, acesso). A tag vale só no cenário — no `Feature:` não cobre nada.
+  É ela que o teste herda (`[SIGLA]-[SFS]-[NN]/RN-NN` no nome ou na tag do teste).
 -->
+
 
 ```gherkin
 Feature: [Nome da feature em linguagem natural]
@@ -247,6 +261,7 @@ Feature: [Nome da feature em linguagem natural]
 
   # ── Caminho feliz ──────────────────────────────────────────────
 
+  @RN-01
   Scenario: [Descrição do cenário principal]
     Given [estado inicial em linguagem de negócio]
     When [ação do usuário]
@@ -267,6 +282,7 @@ Feature: [Nome da feature em linguagem natural]
 
   # ── Conflitos com dados existentes ────────────────────────────
 
+  @RN-02
   Scenario: [Duplicata ou conflito]
     Given que já existe [registro] com [dado conflitante]
     When o usuário tenta [ação]
@@ -384,7 +400,7 @@ Feature: [Nome da feature em linguagem natural]
 
 | Entidade | Papel | Por que a feature a toca |
 |---|---|---|
-| [Entidade] | [lê / grava / lê e grava] | [o que a feature faz com ela — ex.: "Recebe o status do processamento e o relatório de erros (regra 8)"] |
+| [Entidade] | [lê / grava / lê e grava] | [o que a feature faz com ela — ex.: "Recebe o status do processamento e o relatório de erros (RN-08)"] |
 
 ---
 
@@ -558,24 +574,29 @@ Por que cada ALR:
 ### [MÉTODO] /api/v1/[rota]
 **Acesso**: [público / autenticado — roles `[role1]`, `[role2]`]
 
-**Body / Query params**:
-```typescript
-{
-  [labelDev]: tipo        // Label PO: [Label PO] — obrigatório/opcional
-  [labelDev]?: tipo       // Label PO: [Label PO] — opcional
-}
-// Tipos e constraints completos: ver DATA-MODEL.md: Entidade [Nome]
-```
+<!--
+  CONTRATO EM TABELA (6.3.0). Requisição e resposta são tabelas de campos, não exemplo
+  JSON: o exemplo mostra UM caso e deixa tipo, obrigatoriedade e origem por conta de quem
+  lê — é ali que o agente que gera o código inventa campo. A coluna Label PO liga o campo
+  da API ao campo da feature (`## Campos`, `## Campos automáticos` ou `## Colunas do
+  resultado`); campo técnico (id, versão, paginação) leva `—`. Tipos e constraints
+  completos continuam no DATA-MODEL. O envelope (`data`/`meta`/`error`) é o do
+  API-PATTERNS e não se repete. Conferência: node scripts/valida-contrato-api.mjs
+  (também `endpoints`/`error_codes` do front-matter × esta seção × ERROR-DICTIONARY).
+-->
 
-**Resposta de sucesso** — HTTP [código]:
-```json
-{
-  "data": {
-    "id": "uuid"
-  },
-  "meta": null
-}
-```
+**Requisição** (body / query params):
+
+| Campo | Tipo | Obrigatório | Label PO |
+|---|---|---|---|
+| `[labelDev]` | [tipo] | sim / não | [Label PO de ## Campos] |
+
+**Resposta de sucesso** — HTTP [código] — em `data`:
+
+| Campo | Tipo | Label PO |
+|---|---|---|
+| `id` | uuid | — |
+| `[labelDev]` | [tipo] | [Label PO de ## Campos] |
 
 **Respostas de erro**:
 

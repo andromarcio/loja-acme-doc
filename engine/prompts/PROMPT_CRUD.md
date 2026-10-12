@@ -51,7 +51,9 @@ Regras da sessão:
   seção `## Regras de negócio` de cada N3, quebre regras compostas: condições
   independentes ligadas por "e" / "ou" / "além disso" viram **itens distintos**,
   cada um com **uma única restrição verificável**. A reação do sistema ("não
-  salva", "exibe mensagem") não é regra — vai para os **Cenários**.
+  salva", "exibe mensagem") não é regra — vai para os **Cenários**. Cada item
+  começa por `**RN-NN** —` (sequencial na feature, nunca reaproveitado), e ao menos
+  um cenário o verifica com a tag `@RN-NN` na linha acima do `Scenario:`.
 - **Nunca resuma uma contagem sem nomear os itens.** Se a frase disser "as N
   configurações/campos/grupos/abas…", liste os N itens ali mesmo (ou garanta
   que já estão numa tabela da mesma seção) — cada N3 é autocontido; quem lê

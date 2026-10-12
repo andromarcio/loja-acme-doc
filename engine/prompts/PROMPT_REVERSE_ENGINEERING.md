@@ -633,10 +633,12 @@ frontend); Trilha B: comando/entry point 📍 ou gatilho do estágio]
 
 ## Regras de negócio
 
-1. 🔍 [invariante extraída do código — só o "o quê"] — 📍 `[arquivo:linha]`
-2. 🔍 [regra canônica] → ver RULES-DICTIONARY: [RC-NN] — [nome]
-3. ⚠️ [inconsistência ou suspeita de bug]
-4. ❓ [invariante de negócio que o código não evidencia]
+- **RN-01** — 🔍 [invariante extraída do código — só o "o quê"] — 📍 `[arquivo:linha]`
+- **RN-02** — 🔍 [regra canônica] → ver RULES-DICTIONARY: [RC-NN] — [nome]
+- **RN-03** — ⚠️ [inconsistência ou suspeita de bug]
+- **RN-04** — ❓ [invariante de negócio que o código não evidencia]
+
+<!-- Toda regra tem ID `RN-NN` e ao menos um cenário com a tag `@RN-NN` (o teste existente que a exercita é a melhor fonte do cenário). -->
 
 ---
 

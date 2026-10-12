@@ -1,6 +1,6 @@
 # FEATURE-DEFINITION.md — o que é uma Feature (N3)
 
-> **Fonte única da definição de feature** no siesa-engine. O skill
+> **Fonte única da definição de feature** no Docqui Caixa. O skill
 > (`analista-requisitos`), os prompts (3A/CRUD/WIZARD/TRIAGEM) e o validador semântico
 > determinístico (`scripts/validate-feature-semantics.mjs`) derivam **deste arquivo** —
 > não redefina "feature" em outro lugar; referencie aqui.

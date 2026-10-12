@@ -1,4 +1,4 @@
-# spec-guard.yml — CI de integridade da especificação (template do siesa-engine).
+# spec-guard.yml — CI de integridade da especificação (template do docqui-caixa-engine).
 #
 # COMO USAR NA INSTÂNCIA: copie este arquivo para `.github/workflows/spec-guard.yml`
 # (a instância já carrega `scripts/` do engine). Com "branch protection" exigindo
@@ -54,6 +54,10 @@ jobs:
           if [ -z "$files" ]; then echo "Nenhum artefato de nível ainda — ok."; exit 0; fi
           # shellcheck disable=SC2086
           node scripts/validate-doc.mjs $files
+      - name: toda regra do N3 tem ID e cenário (RN-NN × @RN-NN)
+        run: node scripts/valida-regras-cenarios.mjs
+      - name: contrato da API do N3 (front-matter × API × ERROR-DICTIONARY × Campos)
+        run: node scripts/valida-contrato-api.mjs
       - name: diagrama ER está fresco
         run: node scripts/gera-diagrama-er.mjs --check
       - name: índice de repositórios está fresco

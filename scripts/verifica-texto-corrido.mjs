@@ -9,18 +9,24 @@
 // cabeçalho ou HTML), uma linha que NÃO termina o parágrafo (sem linha em branco
 // na sequência) é quebra dura — a continuação deveria estar na mesma linha.
 // Blockquotes contam: "> texto" seguido de "> continuação" também é quebra dura.
+// Item de lista também: "- texto" seguido de "  continuação" é o item quebrado.
+//
+// Pastas: ficam de fora `.git`, `.github`, `.claude` (ferramenta, não documento) e
+// `node_modules`. As demais pastas com ponto entram — a `.specify/` do spec-kit é
+// documento, e saía da conferência sem aviso (achado no siesa-doc, 2026-10-11).
 
 import fs from 'node:fs';
 import path from 'node:path';
 
 const alvos = process.argv.slice(2).length ? process.argv.slice(2) : ['global', 'modules'];
 const arquivos = [];
+const FORA = new Set(['.git', '.github', '.claude', 'node_modules']);
 for (const alvo of alvos) {
   const st = fs.statSync(alvo);
   if (st.isFile()) { arquivos.push(alvo); continue; }
   (function walk(dir) {
     for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-      if (e.name.startsWith('.') || e.name === 'node_modules') continue;
+      if (FORA.has(e.name)) continue;
       const p = path.join(dir, e.name);
       if (e.isDirectory()) walk(p);
       else if (e.name.endsWith('.md')) arquivos.push(p);
@@ -39,6 +45,8 @@ const eEstrutural = (l) => {
 
 // Ficha: linha `**Rótulo**: valor`. Duas seguidas são uma lista de campos, um por linha
 // — não um parágrafo quebrado (REP-035 do portal-compras).
+const eItemDeLista = (l) => /^\s*([-*+] |\d+[.)] )/.test(l);
+
 const eCampoDeFicha = (l) => /^\s*\*\*[^*]+\*\*\s*:/.test(l);
 
 let totalQuebras = 0, arquivosComQuebra = 0;
@@ -59,6 +67,12 @@ for (const arq of arquivos) {
     // regra protege — o interior fica de fora (os templates explicam o preenchimento ali)
     if (coment) { if (l.includes('-->')) coment = false; continue; }
     if (l.includes('<!--') && !l.slice(l.lastIndexOf('<!--')).includes('-->')) { coment = true; continue; }
+    // item de lista: a linha seguinte que não abre item, tabela, bloco nem cabeçalho é
+    // continuação do mesmo item — o item quebrado (achado no siesa-doc, 2026-10-11)
+    if (eItemDeLista(l)) {
+      if (!eEstrutural(prox) && !/^\s*>/.test(prox)) quebras.push(i + 1);
+      continue;
+    }
     if (eEstrutural(l) || l.trim().length < 20) continue;
     // Exige as DUAS linhas no formato, para não abrir exceção a um parágrafo comum que
     // por acaso comece com rótulo em negrito.

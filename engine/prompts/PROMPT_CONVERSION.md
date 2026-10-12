@@ -180,7 +180,9 @@ linha que começa com `#` seria lida como o título. Pontos de atenção por se�
 
 - **Cabeçalho/ID**: logo abaixo do título, a linha `> **Nível 3** - Feature Set: [Nome] — Major Feature Set: [Nome] - \`[SIGLA]-[SFS]-[NN]\`` (sem seção `## ID` separada; `[SFS]` é a sigla do Feature Set e `[NN]` o sequencial da feature dentro dele).
 - **Regras de negócio**: invariantes apenas (regra ≠ comportamento). Cada
-  uma com 📍 da origem. Regra canônica → apontar para RULES-DICTIONARY.
+  uma com 📍 da origem e o ID `**RN-NN** —` (sequencial na feature). Regra canônica →
+  apontar para RULES-DICTIONARY. Ao menos um cenário verifica cada regra, com a tag
+  `@RN-NN` na linha acima do `Scenario:`.
 - **Cenários (Gherkin)**: os cinco grupos do template — caminho feliz, erros de
   validação, conflitos, restrições de acesso e estados especiais. **Extraia dos testes
   quando existirem** (a fonte mais confiável de comportamento) e marque 🔍 nos cenários

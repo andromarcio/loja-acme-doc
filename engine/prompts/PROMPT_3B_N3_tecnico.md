@@ -48,6 +48,15 @@ Regras da sessão:
 
 ## CONTEXTO DO PROJETO
 
+> **Pacote de contexto (6.3.0)** — em vez de colar os blocos abaixo, gere-o:
+> `node scripts/monta-contexto.mjs <ID da feature> --out /tmp/contexto-<ID>.md`. Traz o
+> N3 e, de cada artefato global, só o que a feature usa (matriz de permissões do N2,
+> regras transversais do N1, entidades do data-model, entradas citadas dos dicionários,
+> NFR citados, features de `depende_de`, protótipos); o que o N3 cita e não existe vem
+> como ❓ — resolva antes de usar, não deduza. Os blocos abaixo ficam para o que o pacote
+> não cobre (MASTER, DESIGN-SYSTEM, API-PATTERNS) e para o modo copiar-colar.
+
+
 === MASTER.md ===
 [cole aqui o conteúdo do MASTER.md]
 
@@ -145,10 +154,14 @@ Com a resposta e seguindo rigorosamente o API-PATTERNS.md, defina
 para cada endpoint:
 - Método HTTP e rota
 - Acesso (público / autenticado; quais roles)
-- Body ou query params tipados em TypeScript
-  (usar Label Dev dos campos — ver DATA-MODEL.md para referência)
-- Exemplo de resposta de sucesso (JSON com HTTP status)
-- Tabela de respostas de erro (HTTP | code | situação)
+- **Requisição** em tabela `Campo | Tipo | Obrigatório | Label PO` (Campo = Label Dev
+  do DATA-MODEL; Label PO = o da feature em `## Campos`/`## Campos automáticos`/
+  `## Colunas do resultado`, ou `—` se o campo é técnico)
+- **Resposta de sucesso** — HTTP status e a tabela `Campo | Tipo | Label PO` do que vai
+  em `data` (o envelope é o do API-PATTERNS e não se repete). Tabela, não exemplo JSON:
+  o exemplo mostra um caso e deixa o tipo por conta de quem lê
+- Tabela de respostas de erro (HTTP | code | situação) — todo code no `## Mapeamento de
+  erros` e no ERROR-DICTIONARY (o novo, proposto com ⚠️)
 
 ---
 
@@ -431,7 +444,8 @@ Após aprovação, gere o arquivo completo:
 > em `estado`/`gates`: o ciclo de vida é governado pela esteira de checkpoints
 > (`scripts/gates.py`) — `estado: especificado` só é alcançado aprovando os gates
 > CP1→CP2→CP3, um por PR. Preserve a linha `> **Prioridade** … **MVP** …` do 3A. Esse
-> espelho é o que torna a exportação ao spec-kit (`PROMPT_SPECKIT_EXPORT`) determinística.
+> espelho é o que torna a exportação ao spec-kit (`PROMPT_SPECKIT_EXPORT`) determinística,
+> e é conferido: `node scripts/valida-contrato-api.mjs <N3>` (o hook roda a cada gravação).
 
 **Estrutura obrigatória** — esta ordem e estes headings, os mesmos do template do N3. Seção
 marcada "só se…" aparece apenas quando a condição vale. **Nenhuma seção negocial do 3A é

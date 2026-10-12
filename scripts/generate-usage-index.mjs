@@ -81,7 +81,18 @@ function keysFromTail(dict, tail) {
   return head
     .split(/\s*\/\s*|\s*,\s*/)
     .map((s) => s.trim())
-    .filter((s) => s && !/^ver$/i.test(s));
+    .filter((s) => /[\p{L}\d]/u.test(s) && !/^ver$/i.test(s));
+}
+// Ponteiro sem chave numa linha de tabela — `| CODIGO | 409 | … (→ ver ERROR-DICTIONARY) |`:
+// a chave é a primeira célula. Antes, o `)` que fecha o parêntese virava a chave (achado no
+// siesa-doc, 2026-10-11: uma linha `)` com 17 features no índice do ERROR-DICTIONARY, e os
+// códigos dessas linhas fora do índice).
+function keysFromRow(raw, idx) {
+  const ini = raw.lastIndexOf('\n', idx) + 1;
+  const linha = raw.slice(ini, raw.indexOf('\n', idx) < 0 ? undefined : raw.indexOf('\n', idx)).trim();
+  if (!linha.startsWith('|')) return [];
+  const cel = linha.replace(/^\|/, '').split('|')[0].replace(/[`*]/g, '').trim();
+  return cel && /[\p{L}\d]/u.test(cel) ? [cel] : [];
 }
 
 /* --------------- varre os N3 e monta o índice reverso --------------- */
@@ -96,7 +107,8 @@ for (const file of walk(join(ROOT, 'modules'))) {
   REF_RE.lastIndex = 0;
   while ((m = REF_RE.exec(raw))) {
     const dict = m[1];
-    for (const key of keysFromTail(dict, m[2])) {
+    const chaves = keysFromTail(dict, m[2]);
+    for (const key of chaves.length ? chaves : keysFromRow(raw, m.index)) {
       const nk = norm(key);
       if (!nk) continue;
       const bucket = usage[dict];

@@ -796,6 +796,48 @@ function checkDuplicateId(file, id, errors) {
   }
 }
 
+// SDD (PROMPT_SDD): as seções numeradas do template, na ordem — 15 no SDD completo, 7 no
+// de alteração — e o ❓/🏛️ usado no corpo com a seção que os consolida preenchida. Antes,
+// o SDD caía em "tipo não detectado" ou, com um "> **Nível 2**" citado, era lido como N2
+// (achado no siesa-doc, 2026-10-11).
+const SDD_SECOES = {
+  completo: ['Escopo deste documento', 'Visão geral da arquitetura', 'Modelo de dados', 'Design da API', 'Design dos serviços', 'Design dos repositórios', 'Design dos componentes de frontend', 'Design de jobs assíncronos', 'Design de eventos internos', 'Estrutura de arquivos', 'Sequência de implementação', 'Design de testes', 'Checklist de implementação', 'Pontos a resolver antes de implementar', 'Decisões de arquitetura registradas'],
+  alteracao: ['Escopo', 'O que muda, por camada', 'O que NÃO muda', 'Testes', 'Arquivos a alterar', 'Pontos a resolver antes de implementar', 'Decisões de arquitetura'],
+};
+function sddKind(titleLine) {
+  const t = (titleLine || '').trim();
+  if (/^#\s+SDD de alteração\b/.test(t)) return 'alteracao';
+  if (/^#\s+SDD\s+[—–-]/.test(t)) return 'completo';
+  return null;
+}
+function validateSDD(lines, kind, errors) {
+  const esperadas = SDD_SECOES[kind];
+  const achadas = [];
+  let cerca = false;
+  for (const [i, l] of lines.entries()) {
+    if (/^\s*(```|~~~)/.test(l)) cerca = !cerca;
+    const m = !cerca && l.match(/^##\s+(\d+)\.\s+(.+?)\s*$/);
+    if (m) achadas.push({ n: Number(m[1]), titulo: m[2], i });
+  }
+  esperadas.forEach((t, k) => {
+    const s = achadas.find((a) => a.n === k + 1);
+    if (!s) errors.push(`SDD sem a seção "## ${k + 1}. ${t}".`);
+    else if (!s.titulo.toLowerCase().startsWith(t.toLowerCase())) errors.push(`SDD: a seção ${k + 1} deveria ser "${t}" (está "${s.titulo}").`);
+  });
+  const nums = achadas.map((a) => a.n);
+  if (nums.some((n, k) => k && n <= nums[k - 1])) errors.push('SDD: seções numeradas fora de ordem.');
+  const corpoDe = (k) => {
+    const s = achadas.find((a) => a.n === k);
+    if (!s) return null;
+    const fim = achadas.find((a) => a.i > s.i);
+    return lines.slice(s.i + 1, fim ? fim.i : lines.length).filter((l) => l.trim() && !/^<!--/.test(l.trim()));
+  };
+  const nPend = esperadas.length - 1, nDec = esperadas.length;
+  const foraDe = (k) => { const s = achadas.find((a) => a.n === k); const fim = s && achadas.find((a) => a.i > s.i); return lines.filter((_, i) => !s || i <= s.i || (fim && i >= fim.i)); };
+  if (foraDe(nPend).some((l) => l.includes('❓')) && !(corpoDe(nPend) || []).length) errors.push(`SDD usa ❓ no corpo e a seção ${nPend} (Pontos a resolver) está vazia — todo ❓ é consolidado nela.`);
+  if (foraDe(nDec).some((l) => l.includes('🏛️')) && !(corpoDe(nDec) || []).length) errors.push(`SDD usa 🏛️ no corpo e a seção ${nDec} (Decisões) está vazia — toda decisão é registrada nela.`);
+}
+
 function validate(file) {
   const errors = [];
   const raw = readFileSync(file, 'utf8');
@@ -806,8 +848,10 @@ function validate(file) {
   const titleLine = lines.find((l) => l.trim().startsWith('# '));
   const dmKind = dataModelKind(titleLine);
   const isPatterns = titleLine && /^#\s+PATTERNS\.md\b/.test(titleLine.trim());
+  const sdd = sddKind(titleLine);
 
-  if (level === '0') validateN0(lines, raw, errors, file);
+  if (sdd) validateSDD(lines, sdd, errors);
+  else if (level === '0') validateN0(lines, raw, errors, file);
   else if (level === '1') validateN1(lines, raw, errors);
   else if (level === '2') validateN2(lines, raw, errors, file);
   else if (level === '3') validateN3(lines, raw, errors, file);
@@ -817,11 +861,11 @@ function validate(file) {
     else validateDataModel(lines, raw, dmKind, errors);
   }
   else if (isPatterns) validatePatterns(lines, raw, errors);
-  else errors.push('Tipo não detectado (falta o subtítulo "> **Nível 0|1|2|3**" ou o título "# Data Model: …" / "# PATTERNS.md").');
+  else errors.push('Tipo não detectado (falta o subtítulo "> **Nível 0|1|2|3**" ou o título "# Data Model: …" / "# PATTERNS.md" / "# SDD — …").');
 
-  const tag = level ? `N${level}` : dmKind ? (dmKind === 'index' ? 'DM-idx' : 'DM') : isPatterns ? 'PATTERNS' : '??';
-  if (tag !== '??') checkLocation(file, tag, errors);
-  if (['1', '2', '3'].includes(level)) checkDuplicateId(file, artifactId(lines), errors);
+  const tag = sdd ? 'SDD' : level ? `N${level}` : dmKind ? (dmKind === 'index' ? 'DM-idx' : 'DM') : isPatterns ? 'PATTERNS' : '??';
+  if (tag !== '??' && tag !== 'SDD') checkLocation(file, tag, errors);
+  if (!sdd && ['1', '2', '3'].includes(level)) checkDuplicateId(file, artifactId(lines), errors);
   return { tag, errors };
 }
 

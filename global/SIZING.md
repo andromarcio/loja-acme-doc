@@ -249,8 +249,7 @@ A fronteira da aplicação (CPM) é a interface conceitual entre o sistema e seu
 Por isso, **a unidade de análise é a feature (N3) inteira**, não o endpoint isolado. Uma feature começa na interação do usuário no front, percorre o BFF e devolve um resultado — isso é **uma transação completa** que cruza a fronteira usuário↔sistema. Logo, **cada feature (N3) é candidata a um processo elementar (PE)** e, se qualificada, conta como EE, SE ou CE.
 
 - ✅ **Correto:** avaliar a feature (front + BFF) como um PE candidato.
-- ❌ **Errado:** olhar o endpoint do BFF isoladamente e descartá-lo por ser "interno". O
-  BFF sozinho não é um PE — mas isso **não zera** a feature que ele atende.
+- ❌ **Errado:** olhar o endpoint do BFF isoladamente e descartá-lo por ser "interno". O BFF sozinho não é um PE — mas isso **não zera** a feature que ele atende.
 
 | Situação | Conta? |
 |---|---|

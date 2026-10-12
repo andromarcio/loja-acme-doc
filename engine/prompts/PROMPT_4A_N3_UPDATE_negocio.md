@@ -147,12 +147,17 @@ Para cada ponto com impacto, formule uma pergunta de esclarecimento —
   padrão; outra entidade / `externo:` / `derivado ↓` quando for o caso). Se a mudança
   cria um campo **calculado**, atualize a seção `## Derivações` (fórmula + campos-fonte
   com entidade). Entidade citada e ainda inexistente no data-model → `⚠️` + opção `DM`.
-- **Regras de negócio**: a mudança altera regras atuais ou insere uma nova?
+- **Regras de negócio**: a mudança altera regras atuais ou insere uma nova? A regra
+  nova pega o **próximo `RN-NN` livre**; a alterada mantém o ID; a removida sai com o
+  ID, que **não** é reaproveitado (registre no Changelog). N3 cujas regras ainda não têm
+  ID: rode antes `node scripts/migra-regras-rn.mjs <N3> --aplicar`.
 - **Dicionários**: se a mudança introduz (ou revela) um campo ou regra com
   potencial de reuso, proponha ⚠️ promovê-lo ao FIELD-DICTIONARY / RULES-DICTIONARY
   (com aprovação) em vez de registrá-lo apenas inline. Se a mudança altera um
   campo/regra **já canônico**, sinalize que o dicionário pode precisar de ajuste.
-- **Cenários**: quais novos cenários surgem? Quais ficam obsoletos?
+- **Cenários**: quais novos cenários surgem? Quais ficam obsoletos? Toda regra nova ou
+  alterada tem ao menos um cenário com a tag `@RN-NN`; a tag da regra removida sai do
+  cenário (`node scripts/valida-regras-cenarios.mjs <N3>`).
 - **Comportamento de tela**: a UI precisará de mudanças?
 - **Lista ou funcionalidade compartilhada**: se a mudança toca um PE que esta feature
   reutiliza — linha com `↪ [ID](…)` na `## Métricas de tamanho` (`SIZING.md` → *PE
