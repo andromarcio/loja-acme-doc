@@ -19,6 +19,15 @@
 // o repo mapeado. Como os N3 de hoje usam "mergeado na main", nada dispara —
 // vira checagem de nível de arquivo quando as specs passarem a declarar paths.
 //
+// Fase 3 (6.3.0) — o caminho de volta: o que a spec declara como dado chegou ao código.
+//   • toda regra `RN-NN` da feature aparece como `<ID>/RN-NN` em algum arquivo de TESTE
+//     (tag Cucumber `@ADM-USR-04/RN-02`, nome do teste, comentário) — o PROMPT_QA manda
+//     o teste herdar a tag do cenário;
+//   • todo código de `error_codes` aparece em algum arquivo de código.
+// Reprova só quando TODOS os repositórios declarados na "## Implementação" estão no
+// checkout — com algum ausente, o que falta pode estar nele: avisa. N3 cujas regras
+// ainda não têm ID (anterior à 6.3.0) não tem regra a conferir.
+//
 // ONDE RODA: na CI do repo de CÓDIGO (é quando o código entra), com o repo de
 // doc em checkout ao lado. Cada CI enxerga só o seu repo — por isso a checagem
 // é POR REPO ACESSÍVEL: repo declarado ausente não reprova, só avisa. Num sistema de
@@ -40,7 +49,9 @@ import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
 import { ligarCodigo } from './lib/mapa-codigo.mjs';
-import { frontMatter as lerFrontMatter } from './lib/front-matter.mjs';
+import { frontMatter as lerFrontMatter, frontMatterLista } from './lib/front-matter.mjs';
+import { regrasDoN3 } from './lib/regras.mjs';
+import { reposDaImplementacao } from './lib/repos.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 
@@ -75,12 +86,6 @@ function tableRows(lines, name) {
   const rows = slice.map((l) => l.trim()).filter((l) => l.startsWith('|'));
   return rows.filter((r) => !/^\|[\s:|-]+\|$/.test(r)).slice(1);
 }
-function isRealCell(cell) {
-  const t = (cell || '').trim();
-  if (!t || /^\[.*\]$/.test(t)) return false; // vazio ou placeholder [repo]
-  const v = t.replace(/[`[\]]/g, '').trim();
-  return Boolean(v) && !/^[—–-]+$/.test(v) && !/^repo$/i.test(v);
-}
 // Fase 2: a célula Caminho é um caminho de arquivo concreto (não prosa/placeholder)?
 function looksLikePath(cell) {
   const t = (cell || '').replace(/[`[\]]/g, '').trim();
@@ -105,17 +110,21 @@ walkN3(modulesDir, files);
 
 const alvos = [];
 for (const f of files) {
-  const lines = readFileSync(f, 'utf8').split(/\r?\n/);
+  const texto = readFileSync(f, 'utf8');
+  const lines = texto.split(/\r?\n/);
   const fm = frontMatter(lines);
   if (!fm.id || !ESTADOS.has(fm.estado)) continue;
-  const declaradosRepo = [];
+  // A mesma leitura do gera-indice-repos: a célula combinada ("a / b") são dois
+  // repositórios, e o citado em mais de uma linha conta uma vez.
+  const declaradosRepo = [...new Map(reposDaImplementacao(texto).map(({ nome }) => [nome.toLowerCase(), nome])).values()];
   const declaradosPath = [];
   for (const row of tableRows(lines, 'Implementação')) {
     const cells = splitRow(row);
-    if (isRealCell(cells[1])) declaradosRepo.push(cells[1].replace(/[`[\]]/g, '').trim());
     if (looksLikePath(cells[2])) declaradosPath.push({ repo: (cells[1] || '').replace(/[`[\]]/g, '').trim(), path: cells[2].replace(/[`[\]]/g, '').trim() });
   }
-  alvos.push({ file: f, id: fm.id, estado: fm.estado, declaradosRepo, declaradosPath });
+  const rns = regrasDoN3(lines).map((r) => r.id).filter(Boolean);
+  const codigos = (frontMatterLista(lines, 'error_codes') || []).filter((c) => !c.startsWith('['));
+  alvos.push({ file: f, id: fm.id, estado: fm.estado, declaradosRepo, declaradosPath, rns, codigos });
 }
 
 if (!alvos.length) {
@@ -145,6 +154,31 @@ if (!cod.ok) {
 
 // repo declarado → o repositório acessível de mesmo nome (sem diferença de caixa)
 const presentes = new Map(cod.repos.map((r) => [r.nome.toLowerCase(), r]));
+
+// Fase 3 — o texto dos repositórios acessíveis, lido uma vez: [{ repo, rel, teste, txt }].
+const EXT_TEXTO = /\.(java|kt|scala|go|py|cs|ts|tsx|js|jsx|vue|rb|php|sql|ya?ml|properties|feature|html)$/;
+const TESTE_RE = /(^|\/)(tests?|spec|specs|e2e|__tests__|cypress|features)\/|\.(spec|test|cy)\.[jt]sx?$|Tests?\.(java|kt|cs)$|_test\.(go|py)$|\.feature$/;
+const IGNORAR = new Set(['node_modules', 'target', 'build', 'dist', '.git', 'vendor', 'coverage']);
+const fontes = [];
+const precisaFase3 = alvos.some((a) => a.rns.length || a.codigos.length);
+for (const r of precisaFase3 ? cod.repos : []) {
+  const anda = (d) => {
+    let ents;
+    try { ents = readdirSync(d, { withFileTypes: true }); } catch { return; }
+    for (const e of ents) {
+      if (e.name.startsWith('.') || IGNORAR.has(e.name)) continue;
+      const p = join(d, e.name);
+      if (e.isDirectory()) anda(p);
+      else if (EXT_TEXTO.test(e.name)) {
+        const rel = p.slice(r.root.length + 1).replace(/\\/g, '/');
+        try { fontes.push({ repo: r.nome, rel, teste: TESTE_RE.test(rel), txt: readFileSync(p, 'utf8') }); } catch { /* ilegível */ }
+      }
+    }
+  };
+  anda(r.root);
+}
+
+const textoDeCodigo = fontes.filter((f) => !f.teste).map((f) => f.txt).join('\n');
 
 let erros = 0, avisos = 0;
 console.log(`Verificando ${alvos.length} feature(s) contra: ${cod.repos.map((r) => r.nome).join(', ')}\n`);
@@ -182,13 +216,27 @@ for (const a of alvos) {
     if (!existe) { linhas.push(`  ✗ ${repo}:${path} — caminho declarado não existe no repositório.`); erros++; }
   }
 
+  // Fase 3 — regra até o teste, código de erro até o código.
+  const todosPresentes = a.declaradosRepo.length > 0 && a.declaradosRepo.every((n) => presentes.has(n.toLowerCase()));
+  const falta = (msg) => {
+    if (todosPresentes) { linhas.push(`  ✗ ${msg}`); erros++; }
+    else { linhas.push(`  · ${msg} — algum repositório declarado está fora deste checkout (aviso).`); avisos++; }
+  };
+  for (const rn of a.rns) {
+    const tok = `${a.id}/${rn}`;
+    if (!fontes.some((f) => f.teste && f.txt.includes(tok))) falta(`${tok}: nenhum teste cita a regra — o teste do cenário @${rn} leva \`${tok}\` na tag ou no nome.`);
+  }
+  for (const c of a.codigos) {
+    if (!new RegExp(`\\b${c}\\b`).test(textoDeCodigo)) falta(`${c}: código de erro de \`error_codes\` que nenhum arquivo de código usa.`);
+  }
+
   if (linhas.length) console.log(`${a.id} (${a.file.replace(DOC_ROOT + '/', '')}):\n${linhas.join('\n')}`);
 }
 
 console.log('');
 if (erros) {
   console.log(`❌ ${erros} artefato(s) previsto(s) sem implementação correspondente${avisos ? ` · ${avisos} aviso(s)` : ''}.`);
-  console.log('   Cada feature `implementado` precisa que o código referencie o ID dela nos repositórios declarados.');
+  console.log('   Cada feature `implementado` precisa que o código referencie o ID dela nos repositórios declarados, que toda regra RN-NN tenha teste (`<ID>/RN-NN`) e que todo código de error_codes esteja no código.');
   process.exit(1);
 }
 console.log(`✓ Todo artefato previsto tem código correspondente${avisos ? ` · ${avisos} aviso(s)` : ''}.`);
