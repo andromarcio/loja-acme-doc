@@ -74,6 +74,29 @@ export function frontMatterBloco(lines, chave) {
   return achou ? out : null;
 }
 
+// Lista de topo — `chave: [a, "b"]` ou `chave:` com `  - a` abaixo — como array de
+// strings; null se o front-matter não tem a chave. (`endpoints`, `error_codes`, `depende_de`.)
+export function frontMatterLista(lines, chave) {
+  const r = frontMatterRange(lines);
+  if (!r) return null;
+  for (let k = r.open + 1; k < r.close; k++) {
+    const m = linha(lines[k]).match(/^([A-Za-z_][\w-]*):(?: +(.*))?$/);
+    if (!m || m[1] !== chave) continue;
+    const v = escalar(m[2]);
+    if (v.startsWith('[')) {
+      return v.replace(/^\[|\]$/g, '').split(',').map((x) => escalar(x)).filter(Boolean);
+    }
+    const out = [];
+    for (let j = k + 1; j < r.close; j++) {
+      const item = linha(lines[j]).match(/^\s+-\s+(.*)$/);
+      if (!item) break;
+      out.push(escalar(item[1]));
+    }
+    return out;
+  }
+  return null;
+}
+
 export function frontMatterEstado(lines) {
   const fm = frontMatter(lines);
   return fm && fm.estado ? fm.estado : null;

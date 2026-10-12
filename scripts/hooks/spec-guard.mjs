@@ -18,6 +18,11 @@
 //       F8 — enumeração da contagem (valida-enumeracao-contagem) em N3: cada processo
 //            elementar medido tem o bloco ```json de ALR e DER na memória de cálculo,
 //            com nomes (não comentários) e do tamanho da tabela.
+//       F9 — regras × cenários (valida-regras-cenarios) em N3: toda regra tem ID `RN-NN`
+//            e ao menos um cenário com a tag `@RN-NN` dela.
+//       F10 — contrato da API (valida-contrato-api) em N3: `endpoints`/`error_codes` do
+//            front-matter espelham `## API` e `## Mapeamento de erros`, todo código está
+//            no ERROR-DICTIONARY e todo campo das tabelas da API está em `## Campos`.
 //
 //   • PreToolUse (Bash) → F5: bloqueia comando git destrutivo (reset --hard, checkout --,
 //     restore, clean -f) enquanto houver alteração não commitada na árvore.
@@ -43,6 +48,8 @@ const N2_PATTERN = /(^|\/)modules\/[^/]+\/[^/]+\/README\.md$/;
 const CITACOES = join(HERE, '..', 'valida-citacoes-dicionario.mjs'); // `→ ver X-DICTIONARY:` que aponta para nada
 const FLUXO_PRINCIPAL = join(HERE, '..', 'valida-fluxo-principal.mjs'); // Fluxo Principal do N2 sem alguma feature da tabela
 const ENUMERACAO = join(HERE, '..', 'valida-enumeracao-contagem.mjs'); // ALR/DER do PE fora do bloco JSON da memória
+const REGRAS_CENARIOS = join(HERE, '..', 'valida-regras-cenarios.mjs'); // regra sem RN-NN ou sem cenário @RN-NN
+const CONTRATO_API = join(HERE, '..', 'valida-contrato-api.mjs'); // front-matter × API × ERROR-DICTIONARY × Campos
 
 // Só validamos artefatos de nível (N0–N3, DATA-MODEL). INDEX, AIMs, prompts,
 // scripts, README de projeto etc. passam batido. Padrões espelham LOCATION_RULES do validador.
@@ -149,6 +156,36 @@ function main() {
           'listas têm o tamanho do ALR e do DER da tabela. O porquê fica em prosa, fora do bloco\n' +
           '(node scripts/valida-enumeracao-contagem.mjs <arquivo>).\n\n' +
           `${en.stdout || ''}${en.stderr || ''}`.trim(),
+        );
+      }
+    }
+
+    // F9 — a regra tem ID e um cenário que a verifica: é o que o teste herda. Sem isso,
+    // quem gera o teste deduz qual cenário cobre qual regra.
+    if (N3_PATTERN.test(path) && existsSync(REGRAS_CENARIOS)) {
+      const rc = spawnSync('node', [REGRAS_CENARIOS, file], { encoding: 'utf8' });
+      if (rc.status && rc.status !== 0) {
+        problems.push(
+          'GATE DE REGRAS × CENÁRIOS (valida-regras-cenarios) reprovou: toda regra de "## Regras de negócio"\n' +
+          'começa por `**RN-NN** —` (sequencial, nunca reaproveitado) e ao menos um cenário a verifica, com a\n' +
+          'tag `@RN-NN` na linha logo acima do `Scenario:`. Marque o cenário que já verifica a regra; se\n' +
+          'nenhum verifica, escreva o cenário (node scripts/valida-regras-cenarios.mjs <arquivo>).\n\n' +
+          `${rc.stdout || ''}${rc.stderr || ''}`.trim(),
+        );
+      }
+    }
+
+    // F10 — o contrato da API é dado que o código copia: o front-matter espelha o corpo, e
+    // código de erro e campo da API apontam para o que existe.
+    if (N3_PATTERN.test(path) && existsSync(CONTRATO_API)) {
+      const ca = spawnSync('node', [CONTRATO_API, file], { encoding: 'utf8' });
+      if (ca.status && ca.status !== 0) {
+        problems.push(
+          'GATE DE CONTRATO DA API (valida-contrato-api) reprovou: `endpoints` e `error_codes` do front-matter\n' +
+          'espelham `## API` e `## Mapeamento de erros`; todo código de erro existe no ERROR-DICTIONARY (registre\n' +
+          'o novo lá); todo campo das tabelas de requisição e resposta tem o Label PO de `## Campos` (ou `—` se\n' +
+          'é técnico) (node scripts/valida-contrato-api.mjs <arquivo>).\n\n' +
+          `${ca.stdout || ''}${ca.stderr || ''}`.trim(),
         );
       }
     }

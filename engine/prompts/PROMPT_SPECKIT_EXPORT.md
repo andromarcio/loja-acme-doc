@@ -43,10 +43,27 @@ ele já lê. A geração de `tasks.md` e do código fica para os comandos vanill
 5. **Não gerar `tasks.md`.** É produzido pelo `/speckit.tasks` vanilla. Opcionalmente,
    anexe a "Sequência de implementação" e o "Design de testes" (estilo `PROMPT_SDD`)
    como *guidance* no `plan.md`, mas sem substituir o `/speckit.tasks`.
+6. **A regra viaja com o ID.** A regra `- **RN-NN** —` do N3 vira FR que cita
+   `[SIGLA]-[SFS]-NN/RN-NN` (`FR-003 — SIS-CAD-01/RN-02: …`), e o cenário marcado
+   `@RN-NN` leva a citação completa no Acceptance Scenario e no contrato — numa pasta
+   de várias features, `@RN-02` sozinho não diz de qual. É a cadeia regra → cenário →
+   teste que o `valida-artefatos-previstos` confere depois, no código gerado.
+7. **Toda seção do N3 tem destino.** Nada fica para trás porque o spec-kit não tem a
+   seção de mesmo nome — a tabela do PASSO 3 diz para onde cada uma vai.
 
 ---
 
 ## CONTEXTO DO PROJETO
+
+> **Pacote de contexto (6.3.0)** — em vez de colar os blocos abaixo, gere-o:
+> `node scripts/monta-contexto.mjs <ID da feature> --out /tmp/contexto-<ID>.md` — para o Feature Set inteiro, `--fs <SIGLA-SFS>` (N1, N2, entidades e
+> dicionários uma vez, em vez de repetidos por feature). Traz o
+> N3 e, de cada artefato global, só o que a feature usa (matriz de permissões do N2,
+> regras transversais do N1, entidades do data-model, entradas citadas dos dicionários,
+> NFR citados, features de `depende_de`, protótipos); o que o N3 cita e não existe vem
+> como ❓ — resolva antes de usar, não deduza. Os blocos abaixo ficam para o que o pacote
+> não cobre (MASTER, DESIGN-SYSTEM, API-PATTERNS) e para o modo copiar-colar.
+
 
 === Diretório de saída (raiz do projeto inicializado com spec-kit) ===
 [caminho onde existe (ou existirá) `.specify/` — ex.: `../meu-app` ou `examples/speckit-pilot/target`]
@@ -103,15 +120,26 @@ ele já lê. A geração de `tasks.md` e do código fica para os comandos vanill
 Se houver falhas, liste-as como **lacunas bloqueantes** (com o N3 e a seção de
 origem) e oriente: complete via `PROMPT_3B` / `PROMPT_4B` antes de reexportar.
 
+> **N3 já em `em-desenvolvimento` ou `implementado`** passa do item de estado — está além
+> de `especificado` —, mas a exportação muda de natureza: é **reconciliação**, não
+> geração. Diga no Summary do `plan.md` que o código existe (repositório e caminho da
+> `## Implementação`) e, nos próximos passos, troque o `/speckit.implement` pelo
+> `/speckit.analyze` contra o código — rodar o implement regeraria o que já está pronto.
+
 ---
 
 ## PASSO 1 — Resolver destino e numeração
 
-1. Defina o **short-name** do Feature Set em kebab-case (ex.: `Contatos` → `contatos`).
+1. Defina o **short-name** a partir do **nome** do Feature Set — o título
+   `# Feature Set: [Nome]` do N2 —, em kebab-case (ex.: `Contatos` → `contatos`). Não
+   use a pasta do N2 nem a sigla.
 2. Numere a pasta sequencialmente olhando `specs/` no diretório de saída
    (`001`, `002`, …). Resultado: `specs/NNN-[short-name]/`.
 3. Garanta a existência de `.specify/memory/` no diretório de saída (o projeto-alvo
    deve ter sido inicializado com `specify init`; se não, avise o usuário).
+4. **Vários Feature Sets na mesma execução**: uma pasta `specs/NNN-…` para cada, na
+   ordem de dependência; a `constitution.md` é uma só (gerada na primeira, **acrescida**
+   nas seguintes — nunca sobrescrita), e o `.specify/feature.json` aponta a última.
 
 ---
 
@@ -159,10 +187,25 @@ Para cada N3, na ordem P1 → P2 → P3:
 1. **Given** [...], **When** [...], **Then** [...]   ← cenários "Caminho feliz" + "Erros de validação" do N3
 ```
 
+### Destino de cada parte do N3
+
+| Do N3 | Vai para |
+|---|---|
+| Cenários dos grupos "Caminho feliz", "Caminho alternativo", "Erros de validação", "Restrições de acesso" | Acceptance Scenarios da user story |
+| Cenários dos grupos "Conflitos com dados existentes", "Estados especiais", "Ajustes relacionados" e outro grupo negocial | Edge Cases |
+| Cenários "Derivados das regras" ⚠️ (sem aval do PO) | Acceptance Scenarios, com `[NEEDS CLARIFICATION: cenário derivado, a confirmar pelo PO]` |
+| `## Cenários técnicos adicionais` | `contracts/` — o Gherkin no contrato do endpoint que ele exercita |
+| `## Regras de negócio` | FR-### com `<ID>/RN-NN` (regra 6) |
+| `## Campos`, `## Colunas do resultado`, `## Campos automáticos` | user story (o que o usuário informa e vê) e Assumptions; a validação de cada campo vira FR; Label Dev e banco vão para o `data-model.md` |
+| `## Dados lidos e gravados` | Key Entities — inclusive as de outros domínios, com o papel (lê / grava) — e o `data-model.md` |
+| `## Superfície`, `## Comportamento de tela`, protótipos | `plan.md` (UI), com o caminho do protótipo |
+| `## Critérios de sucesso` | Success Criteria |
+| `## Eventos`, `## AuditLog` | `contracts/eventos.md`; a auditoria também como FR |
+| `## Métricas de tamanho`, `## Dependências`, `## Implementação` | `plan.md` (tamanho em PF, ordem e o que já existe) |
+
 ### Edge Cases
 
-- Os grupos Gherkin **"Conflitos com dados existentes"** e **"Estados especiais"** de
-  todos os N3 → bullets de Edge Case.
+- Os grupos da tabela acima que vão para Edge Case, de todos os N3 → bullets.
 
 ### Requirements
 
@@ -190,10 +233,11 @@ Para cada N3, na ordem P1 → P2 → P3:
 Use `plan-template.md` do spec-kit:
 
 - **Summary**: objetivo do Feature Set (do N2) + abordagem técnica (da stack do MASTER).
-- **Technical Context**: copie **literalmente** o bloco "Technical Context" do
-  `MASTER.md` (Language/Version, Primary Dependencies, Storage, Testing, Target
-  Platform, Project Type, Performance Goals, Constraints, Scale/Scope). Campos sem
-  decisão → `NEEDS CLARIFICATION`.
+- **Technical Context**: copie o bloco "Technical Context" do `MASTER.md`
+  (Language/Version, Primary Dependencies, Storage, Testing, Target Platform, Project
+  Type, Performance Goals, Constraints, Scale/Scope), **resolvendo** os ponteiros
+  (`→ ver NFR: DES-*` vira o requisito — regra 1). Campos sem decisão, ou que apontam
+  para categoria vazia do NFR → `NEEDS CLARIFICATION`.
 - **Constitution Check**: liste os princípios do PASSO 2 como gates a respeitar.
 - **Project Structure**: derive da estrutura de pastas/repos do `MASTER.md` e da seção
   "Arquivos a criar ou alterar" dos N3 (estilo `PROMPT_SDD` seção 10).
@@ -218,10 +262,13 @@ Este é o arquivo que carrega Label Dev e campo banco — que o `spec.md` **não
 ## PASSO 6 — Gerar `specs/NNN-[short-name]/contracts/`
 
 **Features que expõem API** — um arquivo por endpoint (de `endpoints` no
-front-matter + seção `## API` do N3), **resolvendo** o `API-PATTERNS.md`:
+front-matter + seção `## API` do N3), **resolvendo** o `API-PATTERNS.md`. Se o
+`API-PATTERNS.md` da instância define o formato do contrato (ex.: OpenAPI 3.1), gere
+nele; senão, em markdown. As tabelas de campos do N3 (Campo | Tipo | Obrigatório |
+Label PO) e de erros (HTTP | code) vão como estão, e a rota é a do N3:
 
 ```markdown
-# [MÉTODO] /api/v1/[rota]
+# [MÉTODO] [rota do N3]
 
 **Acesso**: [autenticado — roles …]
 **Request** (body/query): [tipos com Label Dev — de ## API + data-model]
@@ -261,8 +308,9 @@ Antes de encerrar, rode a checagem e apresente o resultado:
 
 ```
 [ ] Cada N3 virou uma User Story priorizada no spec.md?
-[ ] Toda regra de negócio virou um FR-###?
-[ ] Todo cenário Gherkin virou Acceptance Scenario ou Edge Case?
+[ ] Toda regra de negócio virou um FR-### que cita <ID>/RN-NN?
+[ ] Todo cenário negocial virou Acceptance Scenario ou Edge Case, e todo técnico está em contracts/?
+[ ] Toda seção do N3 foi para o destino da tabela do PASSO 3?
 [ ] Todo campo resolve em data-model.md? Todo endpoint tem contract?
 [ ] Toda convenção (envelope, soft delete, isolamento, auditoria, erros) está na constitution?
 [ ] Nenhum ponteiro "→ ver global/…" sobrou nos artefatos emitidos?
@@ -274,7 +322,8 @@ Depois informe:
 > Agora, **no projeto-alvo** (vanilla), rode:
 > 1. `/speckit.tasks` — gera `tasks.md` organizado pelas user stories
 > 2. (opcional) `/speckit.analyze` — consistência cruzada spec/plan/tasks
-> 3. `/speckit.implement` — gera o código + testes
+> 3. `/speckit.implement` — gera o código + testes (na **reconciliação** — feature já
+>    implementada —, não: rode o `/speckit.analyze` contra o código existente)
 >
 > Escopo desta ponte: **código + testes**. CI, container e deploy ficam fora
 > (evolução futura)."

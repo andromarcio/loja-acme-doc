@@ -1,6 +1,6 @@
 # Mentoria docqui — Loja Acme
 
-Este repositório é uma instância real do framework **docqui**, montada para formar analistas no método. Ele roda a mesma engine das instâncias de produção (siesa-engine 6.2.1), com o perfil `requisitos` e a cadência `sprint`, e começa só com a identidade do sistema preenchida: a Loja Acme, sigla `LACME`. Todo o resto você escreve, do N0 à entrega da sprint, com os prompts conduzindo e os validadores conferindo.
+Este repositório é uma instância real do framework **Docqui Caixa**, montada para formar analistas no método. Ele roda a mesma engine das instâncias de produção (docqui-caixa-engine 6.4.0), com o perfil `requisitos` e a cadência `sprint`, e começa só com a identidade do sistema preenchida: a Loja Acme, sigla `LACME`. Todo o resto você escreve, do N0 à entrega da sprint, com os prompts conduzindo e os validadores conferindo.
 
 | Arquivo | Para quê |
 |---|---|
@@ -43,6 +43,7 @@ Abra o PR da sprint como rascunho logo no planejamento: a CI (`spec-guard`) roda
 - **Um commit, um ticket.** O assunto do commit que toca a spec cita uma chave só: `docs(VND-CHK-01): Calcular Frete — 3A (ServiceNow STRY0013101)`. Nos commits da AIM da sprint, a chave é `SP07-<nome>`. Commit só com artefato regenerado por script (espelho da esteira, índice dos dicionários) vai marcado `[gerado]`, sem chave. Quem confere: `valida-commits-ticket`.
 - **A AIM antes da spec.** Nenhum N1, N2 ou N3 muda antes do aval do mentor no changeset (`avalizado-por` no front-matter da AIM). Quem confere: `validate-impact`.
 - **Um gate por PR**, com o artefato da etapa e o espelho do INDEX regenerado (`python3 scripts/gates.py promote --write`) no mesmo PR. No PR da sprint, o mesmo check confere commit a commit: cada PR `cp/…` mesclado na branch aprova um gate só, na ordem. Quem confere: o check *Esteira de gates — check*.
+- **Regra com ID e cenário.** Cada regra específica do N3 é `- **RN-NN** — …`, numerada na feature e nunca reaproveitada, e ao menos um cenário a verifica, com a tag `@RN-NN`. Fora do N3, a regra se cita como `<ID>/RN-NN`. Quem confere: `valida-regras-cenarios`, a cada gravação.
 - **O elo nos três lugares.** O par ticket ↔ feature aparece na `## Origem` do N3, na `## Features` da AIM e no INDEX, com o mesmo Status. Quem confere: `audit-trace-links`, a cada gravação.
 - **A contagem nasce no N3.** A `## Métricas de tamanho` e a memória de cálculo (o bloco JSON) vêm primeiro; o `global/CONTAGEM-PF.md` só espelha. Quem confere: `valida-enumeracao-contagem` e `valida-contagem-consolidada`.
 - **Parágrafo numa linha só.** Rode `node scripts/verifica-texto-corrido.mjs <seus arquivos>`. Veja a linha de base abaixo antes de rodar na pasta inteira.
@@ -66,9 +67,9 @@ Depois da SP07, pratique com os dois tickets da segunda parte do `backlog.md`, s
 ## O que muda em relação ao simulador
 
 - A branch da sprint é `sprint/SP07-<nome>`, não `sprint/SP07`, e o PR dela vai para a sua `n0/<nome>`, não para a `main`. Ao rodar os scripts de entrega à mão, use essa base: `node scripts/valida-commits-ticket.mjs --base origin/n0/<nome>` e `node scripts/valida-entrega.mjs --base origin/n0/<nome>`.
-- Os checkpoints são PRs `cp/…` para a sua branch de sprint. No simulador eles aparecem só como o `gate-check` com `--base origin/sprint/SP07`.
+- Os checkpoints são PRs `cp/<nome>/<ID>-<gate>` para a sua branch de sprint. No simulador, em **GitHub · PRs**, eles aparecem como `checkpoint/<ticket>-<cp>` para `sprint/SP07`, e o terminal mostra o `gate-check` com `--base origin/sprint/SP07`.
 - O mentor faz o papel de todo aprovador: a PO no aval da AIM e no CP1, o DBA no CP2. No front-matter do N3, o `por:` de cada gate é `andromarcio`.
-- Não há merge na `main` no fim: o portão verde no PR da sprint é a entrega.
+- Não há merge na `main` no fim: o portão verde no PR da sprint é a entrega. No GitHub · PRs do simulador, o PR da preparação e o da entrega são mesclados na `main`; aqui, não.
 
 ## A linha de base: o que já vem do engine
 
@@ -90,7 +91,7 @@ A instância começa limpa: o `verifica-texto-corrido` em `global/`, `modules/`,
 - Aprovar um checkpoint é aprovar e mesclar o PR `cp/…` na branch de sprint do analista.
 - No fechamento, diga quais tickets foram entregues. O STRY0013135 não é: o analista o tira com o `reverte-ticket`.
 - Ao fim da turma, apague as branches `n0/`, `sprint/` e `cp/` dos analistas. A `main` continua pronta para a próxima.
-- Para atualizar a engine desta instância, rode, a partir de um checkout atualizado do siesa-engine, `node scripts/sync-instance.mjs ../loja-acme-doc` (relatório) e depois com `--write`. O engine sobe primeiro: só sincronize depois que a mudança estiver na `main` dele.
+- Para atualizar a engine desta instância, rode, a partir de um checkout atualizado do docqui-caixa-engine, `node scripts/sync-instance.mjs ../loja-acme-doc` (relatório) e depois com `--write`. O engine sobe primeiro: só sincronize depois que a mudança estiver na `main` dele.
 
 **O que conferir em cada etapa:**
 
@@ -98,7 +99,7 @@ A instância começa limpa: o `verifica-texto-corrido` em `global/`, `modules/`,
 |---|---|
 | N0 | o escopo tem o que está fora; os Major Feature Sets previstos têm sigla de 3 letras; a sigla do subtítulo é a do MASTER |
 | AIM | a descrição está transcrita, não reescrita; `CA-n` só existe se a fonte numera; o changeset passa no C1 a C3 (no perfil `requisitos`, a falta da linha `QA` só avisa); as linhas candidatas que não mudam foram podadas; N1 e N2 estão declarados quando o ticket os cria |
-| N1, N2, N3 | houve "Contexto verificado" antes de especificar; o N1 diz o que o domínio não faz; as permissões estão só no N2; a regra é invariante e a reação está no cenário; as mensagens saem do catálogo, com o marcador na linha antes do `Scenario:`; o verbo do nome da feature bate com o tipo dela (Consultar pede colunas do resultado) |
+| N1, N2, N3 | houve "Contexto verificado" antes de especificar; o N1 diz o que o domínio não faz; as permissões estão só no N2; a regra é invariante e a reação está no cenário; cada regra tem o seu `RN-NN` e um cenário com a tag `@RN-NN` que a verifica; as mensagens saem do catálogo, com o marcador na linha antes do `Scenario:`; o verbo do nome da feature bate com o tipo dela (Consultar pede colunas do resultado) |
 | Checkpoints | um gate por PR; o `estado` é o derivado (no perfil `requisitos`, o CP2 leva a `especificado`); o espelho do INDEX e o Status na AIM e no INDEX acompanham |
 | Contagem | o número nasce no N3, com a memória de cálculo em bloco JSON de nomes; o consolidado espelha; a alteração que não muda o PF ainda fecha a pendência |
 | Fechamento | a coluna Mudança diz o que mudou e de quê (*Antes* … *Agora* …); a reconciliação justifica cada divergência; na AIM da sprint, cada função entra uma vez e a natureza é a da sprint (incluída vence) |

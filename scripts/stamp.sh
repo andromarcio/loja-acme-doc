@@ -5,8 +5,8 @@
 # O carimbo é um comentário HTML na primeira linha do arquivo:
 #   <!-- docqui: 6.2.1 | prompt: PROMPT_3A | atualizado: 2026-07-10 -->
 # Invisível no documento renderizado (PDF/HTML/preview), legível só no source .md.
-# Carimbos legados — `doc-template-engine:` (1.x) e `siesa-engine:` (< 2.0.0) — são
-# reconhecidos e migrados para o prefixo novo ao re-carimbar. Carimbos empilhados no
+# Carimbos legados `doc-template-engine:` (1.x) são reconhecidos e migrados para
+# o prefixo atual ao re-carimbar. Carimbos empilhados no
 # topo (o que este script deixava ao não reconhecer o prefixo da 1.x) viram um só.
 # Ver engine/VERSIONING.md.
 #
@@ -47,7 +47,7 @@ VERSION="$(tr -d '[:space:]' < "$ENGINE_DIR/VERSION")"
 TODAY="$(date +%F)"
 STAMP="<!-- docqui: ${VERSION} | prompt: ${PROMPT_ID} | atualizado: ${TODAY} -->"
 
-RE_CARIMBO='^<!-- (docqui|siesa-engine|doc-template-engine):'
+RE_CARIMBO='^<!-- (docqui|doc-template-engine):'
 tmp="$(mktemp)"
 printf '%s\n' "$STAMP" > "$tmp"
 if head -n 1 "$FILE" | grep -qE "$RE_CARIMBO"; then

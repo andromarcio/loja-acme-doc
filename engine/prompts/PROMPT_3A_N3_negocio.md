@@ -486,6 +486,11 @@ Após receber as regras:
   "e" / "ou" / "além disso", separe em itens distintos — cada item deve carregar
   **uma única restrição verificável**. A reação do sistema ("não salva", "exibe
   mensagem") não é regra: vai para `## Cenários` (BLOCO D).
+- **ID da regra — `RN-NN`**: cada item de `## Regras de negócio` começa por
+  `**RN-NN** —`, sequencial na feature e nunca reaproveitado (a regra removida leva o
+  número; a nova pega o próximo livre). Vale também para o item que só cita o
+  RULES-DICTIONARY ou o N1. É por ele que o cenário, o SDD, o código e o teste citam a
+  regra (fora do N3: `[SIGLA]-[SFS]-NN/RN-NN`).
 - Verificar se alguma é canônica (maioridade, responsável ativo,
   período de vigência, aprovação antes de publicar, limite por organização,
   slug único público, reenvio com cooldown, arquivo com tamanho máximo,
@@ -656,9 +661,9 @@ contagem:                           # status APF — independente dos gates; só
 
 ## Regras de negócio
 
-1. [Regra específica desta feature]
-2. [Regra canônica] → ver RULES-DICTIONARY: [RC-NN] — [nome] (parâmetro: [valor])
-3. [Regra de domínio] → ver N1 [Major Feature Set]: Regras transversais de negócio: [N]
+- **RN-01** — [Regra específica desta feature]
+- **RN-02** — [Regra canônica] → ver RULES-DICTIONARY: [RC-NN] — [nome] (parâmetro: [valor])
+- **RN-03** — [Regra de domínio] → ver N1 [Major Feature Set]: Regras transversais de negócio: [N]
 
 ---
 
@@ -799,6 +804,7 @@ Feature: [Nome da feature em linguagem natural]
 
   # ── Caminho feliz ──────────────────────────────────────────────
 
+  @RN-01
   Scenario: [descrição]
     Given [estado inicial]
     When [ação]
@@ -945,8 +951,8 @@ Antes de apresentar cada feature, confira (todos os itens são obrigatórios):
 - [ ] `## Origem` presente **somente** se houver ticket de origem — ServiceNow, issue, experimento (senão, omitir a seção), com o link da AIM do ticket
 - [ ] `## Superfície`: **Tela própria** (rota `/...`) · **Modal** (feature/tela de origem) · **Ação em tela** (feature/tela de origem) · **CLI** (comando) · **Job/Pipeline** (gatilho) · **API** (consumidor)
 - [ ] `## Descrição`: **dois parágrafos** — 1º declara a **entrega** (única, tangível, negocial; 1-2 frases; sem placeholder, termos vagos "etc."/"de forma eficiente" ou técnicos, sem duplicar a descrição de outro N3 — é o que o FD-8 mede) · 2º é o **como se usa** (por onde se chega, o que se informa, o que se aciona; em Job/CLI, o que dispara)
-- [ ] `## Regras de negócio`: itens **atômicos** (uma invariante cada); a reação do sistema e o texto da mensagem **não** entram aqui (vão para Cenários); canônicas como `→ ver RULES-DICTIONARY: [RC-NN] — [nome]`
-- [ ] `## Cenários`: Gherkin com os grupos (Caminho feliz · Erros de validação · Conflitos com dados existentes · Restrições de acesso · Estados especiais), em Label PO, com os marcadores de importação dos canônicos
+- [ ] `## Regras de negócio`: itens **atômicos** (uma invariante cada); a reação do sistema e o texto da mensagem **não** entram aqui (vão para Cenários); canônicas como `→ ver RULES-DICTIONARY: [RC-NN] — [nome]`; **todo item com `**RN-NN** —`**
+- [ ] `## Cenários`: Gherkin com os grupos (Caminho feliz · Erros de validação · Conflitos com dados existentes · Restrições de acesso · Estados especiais), em Label PO, com os marcadores de importação dos canônicos; **toda regra com ao menos um cenário marcado `@RN-NN`** na linha acima do `Scenario:` (`node scripts/valida-regras-cenarios.mjs <N3>`)
 - [ ] Front-matter com o bloco `contagem` (`pendente: true`, `revisada_em` e `revisada_ate` vazios) e o PASSO 3.6 feito (a feature em `## Pendências de contagem` e no espelho da esteira, como ✏️ rascunho)
 - [ ] `## Campos`: 7 colunas (Label PO | Entidade | Preenchimento | Edição | Tipo | Obrigatório | Validação) — **apenas Label PO** (nunca Label Dev nem campo banco); **Entidade** em todo campo (`dado de código` para lista de valores fixos); canônicos como `→ ver FIELD-DICTIONARY: [nome]`
 - [ ] `## Derivações` presente se houver campo `derivado ↓` (fórmula em Label PO + campos-fonte com a entidade)

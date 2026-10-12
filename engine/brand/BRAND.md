@@ -1,6 +1,6 @@
-# docqui — guia da marca
+# Docqui Caixa — guia da marca
 
-Identidade visual do framework **docqui** (doc + aqui). Conceito: **preto no
+Identidade visual do framework **Docqui Caixa** (Docqui = doc + aqui). Conceito: **preto no
 branco, com grifo** — a spec é tinta sobre papel; o marca-texto amarelo destaca
 o que importa. Aprovada em 2026-07-10; a apresentação completa da proposta está
 arquivada em [`proposta-v1.html`](proposta-v1.html) (autocontida — claro por
@@ -8,8 +8,9 @@ padrão, modo Planta no botão do canto).
 
 ## Nome
 
-- Grafia oficial: **docqui**, sempre em caixa baixa (`Docqui` apenas em início
-  de frase). Nunca "Doqui", "Doki" ou "DocQui".
+- Nome oficial do framework na Caixa: **Docqui Caixa**.
+- Nome técnico do engine: `docqui-caixa-engine`. O repositório remoto permanece `CAIXA-EFRS/docqui-engine`.
+- O lettering do logotipo mantém **docqui** em caixa baixa; isso não altera o nome oficial do framework. Nunca "Doqui", "Doki" ou "DocQui".
 - Tagline: **especificação tintim por tintim** (por extenso, minúscula, nunca
   abreviada).
 - Bordão: *"Tá no Docqui."*
@@ -37,6 +38,27 @@ logotipo.
 
 - Área de respiro: a altura do "o" em todo o perímetro.
 - Mínimo do logotipo: 96 px de largura; abaixo disso, use só o símbolo.
+
+### Variação institucional Caixa
+
+`lockup-caixa.svg` é a assinatura horizontal **Docqui Caixa**. Ela preserva a
+geometria do doc-pin e do logotipo docqui, adotando o azul Caixa `#005CA9` como
+cor principal e o laranja Caixa `#F39200` como acento. O lettering Caixa vem do
+ativo oficial `CAIXA/CAIXA_2cores_positiva.png`; não o substitua por fonte
+genérica ou redesenho. Use-a apenas em materiais destinados à Caixa; não
+substitui a assinatura institucional oficial da Caixa.
+
+`lockup-caixa-acento.svg` é a variação da assinatura com o ponto do **i** de
+docqui em laranja Caixa. Use-a quando o acento precisa ganhar mais presença,
+sem alterar a geometria do logotipo.
+
+`lockup-caixa-q-acento.svg` é a variação com a perna do **q** em laranja Caixa.
+Ela dá mais protagonismo ao acento e preserva o restante do lettering docqui em
+azul.
+
+`lockup-caixa-c-acento.svg` é a variação com a letra **c** de docqui em laranja
+Caixa. Use-a quando o acento deve ocupar uma letra inteira, sem mudar a
+composição da assinatura.
 
 ## Cores
 

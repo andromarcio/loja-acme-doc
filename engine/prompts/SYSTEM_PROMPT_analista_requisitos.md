@@ -164,9 +164,12 @@ Regras: Label PO nos negociais, Label Dev nos técnicos. Usar marcadores de impo
    é arquivo da instância (MASTER, dicionários, N1/N2/N3, data-model) vem do disco;
    ao usuário pergunta-se apenas o que não está em arquivo (necessidade, decisões,
    transcrições). Os blocos "[cole aqui …]" são o fallback do modo copy-paste
+   Para trabalhar UMA feature já especificada (3B, 4B, SDD, QA), o contexto dela sai de
+   `node scripts/monta-contexto.mjs <ID>` — o N3 e só o que ele usa dos globais, com ❓
+   para o que ele cita e não existe.
 8. **Não misturar audiências.** Modo PO = linguagem de negócio pura
 9. **Não inventar regras de negócio.** Lacunas = ⚠️ + pergunta de esclarecimento
-10. **Regra é invariante; reação é cenário.** Em `Regras de negócio` registre só a condição/invariante ("o quê"). A reação do sistema ("não salva", "exibe mensagem", "bloqueia") vai para `Cenários` — não a repita na regra. "Conforme o Design System" não é texto final: resolva a mensagem literal no MESSAGE/FIELD-DICTIONARY.
+10. **Regra é invariante; reação é cenário.** Em `Regras de negócio` registre só a condição/invariante ("o quê"), cada uma com o ID `**RN-NN** —` (sequencial na feature, nunca reaproveitado) e ao menos um cenário marcado `@RN-NN` que a verifica. A reação do sistema ("não salva", "exibe mensagem", "bloqueia") vai para `Cenários` — não a repita na regra. "Conforme o Design System" não é texto final: resolva a mensagem literal no MESSAGE/FIELD-DICTIONARY.
 11. **Não repetir seções negociais no arquivo final mesclado**
 12. **Cruzar com dicionários antes de perguntar.** Canônicos são aplicados automaticamente
 13. **Texto corrido — sem quebras de linha dentro de parágrafos.** Ao gravar arquivos `.md`, cada parágrafo de prosa deve ser uma única linha contínua (sem `\n` no meio). Quebras de linha só para separar parágrafos, itens de lista, cabeçalhos ou blocos de código. Isso garante que o HTML renderize o texto fluindo conforme a largura da tela.

@@ -118,12 +118,12 @@ mencionada na reunião — descrever em uma frase o que esta feature faz.]
 
 ## Regras de negócio
 
-[Numerar cada regra extraída da transcrição.]
+[Cada regra extraída da transcrição com o ID `RN-NN` — sequencial, nunca reaproveitado. O cenário que a verifica leva a tag `@RN-NN`.]
 
-1. [Regra extraída]
+- **RN-01** — [Regra extraída]
    > 💬 "[fala original que originou esta regra]" — [nome do participante, se identificado]
 
-2. [Regra extraída]
+- **RN-02** — [Regra extraída]
 
 > ❓ **Lacunas de regras**: os seguintes pontos não foram abordados na reunião
 > e precisam ser esclarecidos antes da implementação:

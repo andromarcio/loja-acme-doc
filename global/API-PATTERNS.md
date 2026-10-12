@@ -287,12 +287,9 @@ Ao atingir o limite, retornar HTTP 429 com o header `Retry-After: {segundos}`.
 ## 12. Versionamento
 
 - Versão atual: `v1` (prefixo `/api/v1/`)
-- Uma nova versão (`v2`) só é criada quando há **breaking change** impossível de
-  fazer de forma retrocompatível
-- Adição de campos opcionais, novos endpoints e novos valores de enum
-  **não** constituem breaking change — não exigem nova versão
-- Remoção de campos, alteração de tipos e mudança de comportamento de campos
-  existentes **constituem** breaking change
+- Uma nova versão (`v2`) só é criada quando há **breaking change** impossível de fazer de forma retrocompatível
+- Adição de campos opcionais, novos endpoints e novos valores de enum **não** constituem breaking change — não exigem nova versão
+- Remoção de campos, alteração de tipos e mudança de comportamento de campos existentes **constituem** breaking change
 - Versões antigas são mantidas por mínimo 6 meses após lançamento da nova
 
 ---
@@ -314,11 +311,9 @@ Ao atingir o limite, retornar HTTP 429 com o header `Retry-After: {segundos}`.
 - **CORS**: permitir apenas origens da própria organização (subdomínio configurado)
 - **CSRF**: não aplicável (autenticação via cookie httpOnly + SameSite=lax)
 - **SQL Injection**: usar sempre queries parametrizadas (prepared statements / ORM) — nunca interpolação
-- **Logs**: nunca logar body de requisições que contenham campos sensíveis
-  (senha, token, dados de cartão). Logar sempre: método, rota, status, duração, `userId`
+- **Logs**: nunca logar body de requisições que contenham campos sensíveis (senha, token, dados de cartão). Logar sempre: método, rota, status, duração, `userId`
 - **Stack trace**: nunca expor em respostas de produção. Usar `INTERNAL_ERROR` genérico
-- **Campos sensíveis**: nunca retornar `password`, `passwordHash`, `refreshToken`
-  em nenhuma resposta, mesmo em rotas admin
+- **Campos sensíveis**: nunca retornar `password`, `passwordHash`, `refreshToken` em nenhuma resposta, mesmo em rotas admin
 
 ---
 

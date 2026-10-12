@@ -134,16 +134,14 @@ Um campo vira canônico quando aparece, com a **mesma semântica de validação*
 
 1. Adicione uma linha ao **Índice** (Label PO, Label Dev, Tipo, resumo).
 2. Crie a **entrada** completa (validação, parâmetros em aberto, mensagem, cenários).
-3. Nos N3 que já tratavam o campo inline, substitua a definição por
-   `→ ver FIELD-DICTIONARY: [nome]` e importe os cenários com o marcador.
+3. Nos N3 que já tratavam o campo inline, substitua a definição por `→ ver FIELD-DICTIONARY: [nome]` e importe os cenários com o marcador.
 
 ---
 
 ## Instrução para a LLM
 
 Ao especificar campos em um N3 (PROMPT_3A/3B):
-1. Verifique se o campo é canônico — se for, **não pergunte** sobre suas validações;
-   aplique automaticamente e pergunte apenas obrigatoriedade/unicidade.
+1. Verifique se o campo é canônico — se for, **não pergunte** sobre suas validações; aplique automaticamente e pergunte apenas obrigatoriedade/unicidade.
 2. Na tabela de campos, referencie `→ ver FIELD-DICTIONARY: [nome]`.
 3. Nos cenários, importe com `# ← FIELD-DICTIONARY: [nome]` — não reescreva os cenários daqui.
 4. Campo recorrente ainda não dicionarizado: proponha com ⚠️ e aguarde aprovação antes de promovê-lo.

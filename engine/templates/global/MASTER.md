@@ -122,7 +122,7 @@
 | Language/Version | [ex.: TypeScript 5.x / Java 17 — ou NEEDS CLARIFICATION] |
 | Primary Dependencies | [ex.: Next.js 14, Prisma, Zod / Spring Boot, JPA] |
 | Storage | [ex.: PostgreSQL 16 / Oracle — ou N/A] |
-| Testing | [ex.: Vitest + Playwright / JUnit + RestAssured] |
+| Testing | [ex.: Vitest + Playwright (E2E em `frontend/e2e/[dominio]/`) / JUnit + RestAssured] — a pasta de E2E é onde o `PROMPT_QA` põe o script |
 | Target Platform | [ex.: Linux server (container) / navegador / nó de GPU] |
 | Project Type | [single / web (frontend+backend) / mobile / ml-pipeline / cli] |
 | Performance Goals | [`→ ver NFR: DES-*` — ex.: p95 < 200ms] |

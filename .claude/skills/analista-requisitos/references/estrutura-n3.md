@@ -110,9 +110,11 @@ em Job/CLI, o que dispara a execução.]
 
 ## Regras de negócio
 
-1. [Regra específica desta feature — uma invariante; a reação do sistema vai para os Cenários]
-2. [Regra canônica] → ver RULES-DICTIONARY: [RC-NN] — [nome] (parâmetro: [valor])
-3. [Regra de domínio] → ver N1 [Major Feature Set]: Regras transversais do domínio: [N]
+- **RN-01** — [Regra específica desta feature — uma invariante; a reação do sistema vai para os Cenários]
+- **RN-02** — [Regra canônica] → ver RULES-DICTIONARY: [RC-NN] — [nome] (parâmetro: [valor])
+- **RN-03** — [Regra de domínio] → ver N1 [Major Feature Set]: Regras transversais do domínio: [N]
+
+<!-- ID `RN-NN`: sequencial na feature, nunca reaproveitado. Toda regra tem ao menos um cenário com a tag `@RN-NN` na linha acima do `Scenario:`. -->
 
 ---
 
@@ -129,6 +131,7 @@ Feature: [Nome da feature em linguagem natural]
 
   # ── Caminho feliz ──────────────────────────────────────────────
 
+  @RN-01
   Scenario: [descrição]
     Given [estado inicial]
     When [ação]
@@ -317,7 +320,7 @@ Por que cada ALR:
 ### [MÉTODO] /api/v1/[rota]
 **Acesso**: [público / autenticado — roles]
 
-**Body / Query params** · **Resposta de sucesso** · **Respostas de erro** (HTTP | Code | Situação)
+**Requisição** (tabela `Campo | Tipo | Obrigatório | Label PO`) · **Resposta de sucesso** (HTTP + tabela `Campo | Tipo | Label PO`) · **Respostas de erro** (HTTP | Code | Situação). Label PO = campo da feature, ou `—` se técnico; conferência: `node scripts/valida-contrato-api.mjs`
 
 ---
 

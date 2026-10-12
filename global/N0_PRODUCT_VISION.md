@@ -105,7 +105,5 @@
 
 Ao gerar ou alterar qualquer N1/N2/N3:
 1. Confronte o artefato com este N0 — escopo, objetivos e público-alvo.
-2. Sinalize com ⚠️ qualquer divergência (funcionalidade que extrapola a visão,
-   contradição de objetivo, persona não prevista).
-3. O N0 é documento de visão — **não o reestruture** para acomodar detalhes de
-   implementação. Proponha ajustes e peça aprovação antes de alterá-lo.
+2. Sinalize com ⚠️ qualquer divergência (funcionalidade que extrapola a visão, contradição de objetivo, persona não prevista).
+3. O N0 é documento de visão — **não o reestruture** para acomodar detalhes de implementação. Proponha ajustes e peça aprovação antes de alterá-lo.

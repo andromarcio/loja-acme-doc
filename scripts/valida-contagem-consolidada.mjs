@@ -119,7 +119,7 @@ function pfDoN3(raw) {
   return contou ? total : null;
 }
 
-const n3 = walk(join(ROOT, 'modules')).filter((p) => /\/f-[^/]+\.md$/.test(p));
+const n3 = walk(join(ROOT, 'modules')).filter((p) => /(?:^|[\\/])f-[^\\/]+\.md$/.test(p));
 const fonte = new Map(); // ID -> { pf, arquivo }
 const papeisFonte = new Map(); // ID -> { linhas | null, arquivo }
 const status = new Map(); // ID -> { pendente: 'true' | 'false', arquivo } — só com o bloco `contagem`

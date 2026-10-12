@@ -103,8 +103,7 @@ Uma regra vira canônica quando a **mesma invariante** aparece em **2+ features*
 
 1. Atribua o próximo **`RC-NN`** (o maior já usado + 1 — nunca reaproveite) e adicione a linha ao **Índice** (ID, nome, invariante, parâmetros em aberto).
 2. Crie a **entrada** `### RC-NN — Nome` (invariante, parâmetros, mensagem, cenários).
-3. Nos N3 que repetiam a regra inline, substitua por
-   `→ ver RULES-DICTIONARY: [RC-NN] — [nome]` e importe os cenários com o marcador.
+3. Nos N3 que repetiam a regra inline, substitua por `→ ver RULES-DICTIONARY: [RC-NN] — [nome]` e importe os cenários com o marcador.
 
 > Regra que vale só para um domínio (não para o sistema todo) **não** é canônica:
 > registre-a nas *Regras transversais* do N1 do domínio.
@@ -114,13 +113,10 @@ Uma regra vira canônica quando a **mesma invariante** aparece em **2+ features*
 ## Instrução para a LLM
 
 Ao especificar regras de negócio em um N3 (PROMPT_3A/3B):
-1. Verifique se a regra é canônica — se for, **não pergunte** sobre o comportamento;
-   aplique e pergunte apenas os parâmetros em aberto.
-2. Referencie `→ ver RULES-DICTIONARY: [RC-NN] — [nome] (parâmetro: [valor])` e importe os
-   cenários com `# ← RULES-DICTIONARY: [RC-NN] — [nome]`.
+1. Verifique se a regra é canônica — se for, **não pergunte** sobre o comportamento; aplique e pergunte apenas os parâmetros em aberto.
+2. Referencie `→ ver RULES-DICTIONARY: [RC-NN] — [nome] (parâmetro: [valor])` e importe os cenários com `# ← RULES-DICTIONARY: [RC-NN] — [nome]`.
 3. Regra recorrente ainda não dicionarizada: proponha com ⚠️ e aguarde aprovação.
-4. Se o que foi descrito é uma **qualidade do sistema** (não uma invariante de
-   negócio), encaminhe ao `global/NFR.md`.
+4. Se o que foi descrito é uma **qualidade do sistema** (não uma invariante de negócio), encaminhe ao `global/NFR.md`.
 
 > **Usado em (não escreva à mão)**: abaixo de cada `### <entrada>` há um bloco
 > `> **Usado em:** …` entre `<!-- usado-em:gerado -->` e `<!-- /usado-em -->`,

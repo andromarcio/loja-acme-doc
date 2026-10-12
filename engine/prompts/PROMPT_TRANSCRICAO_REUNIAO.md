@@ -63,7 +63,9 @@ linguagem de negócio, **sem perguntar durante a geração** (sinalize lacunas).
    (do N3 ou as transversais do N1), quebre as compostas: condições independentes
    ligadas por "e" / "ou" / "além disso" viram **itens distintos**, cada um com
    **uma única restrição verificável**. A reação do sistema ("não salva", "exibe
-   mensagem") não é regra — vai para os **Cenários**.
+   mensagem") não é regra — vai para os **Cenários**. No N3, cada item começa por
+   `**RN-NN** —` (sequencial na feature, nunca reaproveitado), e ao menos um cenário o
+   verifica com a tag `@RN-NN` na linha acima do `Scenario:`.
 
 ### Marcadores no artefato
 
