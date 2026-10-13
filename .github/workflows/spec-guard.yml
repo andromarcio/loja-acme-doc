@@ -91,8 +91,11 @@ jobs:
             exit 1
           fi
 
+  # PR da branch de entrega para a main, ou PR de checkpoint (branch de trabalho → sprint/…
+  # ou historia/…): nos dois, cada commit de spec cita a chave do ticket. O portão da
+  # entrega só roda no PR para a main ou para a n0/<nome> (abaixo).
   entrega:
-    if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'sprint/') || startsWith(github.head_ref, 'historia/'))
+    if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'sprint/') || startsWith(github.head_ref, 'historia/') || startsWith(github.base_ref, 'sprint/') || startsWith(github.base_ref, 'historia/'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

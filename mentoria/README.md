@@ -1,6 +1,6 @@
 # Mentoria docqui — Loja Acme
 
-Este repositório é uma instância real do framework **Docqui Caixa**, montada para formar analistas no método. Ele roda a mesma engine das instâncias de produção (docqui-caixa-engine 6.4.0), com o perfil `requisitos` e a cadência `sprint`, e começa só com a identidade do sistema preenchida: a Loja Acme, sigla `LACME`. Todo o resto você escreve, do N0 à entrega da sprint, com os prompts conduzindo e os validadores conferindo.
+Este repositório é uma instância real do framework **Docqui Caixa**, montada para formar analistas no método. Ele roda a mesma engine das instâncias de produção (docqui-caixa-engine 6.4.1), com o perfil `requisitos` e a cadência `sprint`, e começa só com a identidade do sistema preenchida: a Loja Acme, sigla `LACME`. Todo o resto você escreve, do N0 à entrega da sprint, com os prompts conduzindo e os validadores conferindo.
 
 | Arquivo | Para quê |
 |---|---|
@@ -40,7 +40,7 @@ Abra o PR da sprint como rascunho logo no planejamento: a CI (`spec-guard`) roda
 
 ## As regras que os validadores cobram
 
-- **Um commit, um ticket.** O assunto do commit que toca a spec cita uma chave só: `docs(VND-CHK-01): Calcular Frete — 3A (ServiceNow STRY0013101)`. Nos commits da AIM da sprint, a chave é `SP07-<nome>`. Commit só com artefato regenerado por script (espelho da esteira, índice dos dicionários) vai marcado `[gerado]`, sem chave. Quem confere: `valida-commits-ticket`.
+- **Um commit, um ticket.** O assunto do commit que toca a spec cita uma chave só: `docs(VND-CHK-01): Calcular Frete — 3A (ServiceNow STRY0013101)`. Nos commits da AIM da sprint, a chave é `SP07-<nome>`. Commit só com artefato regenerado por script (espelho da esteira, índice dos dicionários) vai marcado `[gerado]`, sem chave. Quem confere: `valida-commits-ticket`, já no PR `cp/…` para a branch da sprint e de novo no PR da sprint.
 - **A AIM antes da spec.** Nenhum N1, N2 ou N3 muda antes do aval do mentor no changeset (`avalizado-por` no front-matter da AIM). Quem confere: `validate-impact`.
 - **Um gate por PR**, com o artefato da etapa e o espelho do INDEX regenerado (`python3 scripts/gates.py promote --write`) no mesmo PR. No PR da sprint, o mesmo check confere commit a commit: cada PR `cp/…` mesclado na branch aprova um gate só, na ordem. Quem confere: o check *Esteira de gates — check*.
 - **Regra com ID e cenário.** Cada regra específica do N3 é `- **RN-NN** — …`, numerada na feature e nunca reaproveitada, e ao menos um cenário a verifica, com a tag `@RN-NN`. Fora do N3, a regra se cita como `<ID>/RN-NN`. Quem confere: `valida-regras-cenarios`, a cada gravação.
@@ -66,7 +66,7 @@ Depois da SP07, pratique com os dois tickets da segunda parte do `backlog.md`, s
 
 ## O que muda em relação ao simulador
 
-- A branch da sprint é `sprint/SP07-<nome>`, não `sprint/SP07`, e o PR dela vai para a sua `n0/<nome>`, não para a `main`. Ao rodar os scripts de entrega à mão, use essa base: `node scripts/valida-commits-ticket.mjs --base origin/n0/<nome>` e `node scripts/valida-entrega.mjs --base origin/n0/<nome>`.
+- A branch da sprint é `sprint/SP07-<nome>`, não `sprint/SP07`, e o PR dela vai para a sua `n0/<nome>`, não para a `main`. Ao rodar os scripts de entrega à mão, use essa base: `node scripts/valida-commits-ticket.mjs --base origin/n0/<nome>` e `node scripts/valida-entrega.mjs --base origin/n0/<nome>`. Na branch `cp/…`, antes do push: `node scripts/valida-commits-ticket.mjs --base origin/sprint/SP07-<nome>`.
 - Os checkpoints são PRs `cp/<nome>/<ID>-<gate>` para a sua branch de sprint. No simulador, em **GitHub · PRs**, eles aparecem como `checkpoint/<ticket>-<cp>` para `sprint/SP07`, e o terminal mostra o `gate-check` com `--base origin/sprint/SP07`.
 - O mentor faz o papel de todo aprovador: a PO no aval da AIM e no CP1, o DBA no CP2. No front-matter do N3, o `por:` de cada gate é `andromarcio`.
 - Não há merge na `main` no fim: o portão verde no PR da sprint é a entrega. No GitHub · PRs do simulador, o PR da preparação e o da entrega são mesclados na `main`; aqui, não.

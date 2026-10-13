@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Gerado de docqui-caixa-engine, docs/simulador/index.html (versão 6.4.0), num arquivo único para abrir direto no navegador: o CSS, as imagens, o docs/config.js e o github.js vão embutidos. Não edite aqui; gere de novo a partir do engine. -->
+<!-- Gerado de docqui-caixa-engine, docs/simulador/index.html (versão 6.4.1), num arquivo único para abrir direto no navegador: o CSS, as imagens, o docs/config.js e o github.js vão embutidos. Não edite aqui; gere de novo a partir do engine. -->
 <html lang="pt-BR" data-theme="light">
 <head>
 <meta charset="utf-8">
@@ -4158,418 +4158,7 @@ Para praticar: troque o perfil no topo e percorra a sprint de novo, ou abra o **
 </script>
 
 <script>
-/* =========================================================================
-   Configuração do site — Docqui Caixa
-   -------------------------------------------------------------------------
-   Este é o único arquivo que você precisa editar para adaptar o template:
-   troque o nome, o repositório e a árvore de navegação. Cada item aponta
-   para um arquivo Markdown em /content (sem a extensão .md), ou usa href
-   para uma página HTML relativa à raiz do site.
-   ========================================================================= */
-window.DOKU_CONFIG = {
-  /* Identidade do site */
-  name: "Docqui Caixa",
-  fullName: "Docqui Caixa",
-  repo: "https://github.com/caixa-efrs/docqui-engine",
-  branch: "main",
-  defaultPage: "introducao",
-
-  /* Versão do engine, no selo ao lado do nome (toda página) e na página inicial.
-     Espelha o VERSION da raiz, que o site — servido só de docs/ — não alcança. No
-     release, troque os dois no mesmo commit: o eval 40 reprova a divergência. */
-  version: "6.4.0",
-
-  /* Páginas renomeadas: o endereço antigo (link, favorito) leva ao novo. */
-  redirects: {
-    "historia-usuario": "ticket", // AIM única (3.0.0)
-  },
-
-  /* Ícones opcionais por item (chaves definidas em assets/js/app.js → ICONS) */
-  nav: [
-    {
-      section: "Comece aqui",
-      items: [
-        { title: "Início", page: "", icon: "home" },
-        { title: "Introdução", page: "introducao", icon: "book" },
-        { title: "Início rápido", page: "inicio-rapido", icon: "rocket" },
-        { title: "Simulador Docqui Caixa", href: "simulador/index.html", icon: "flow" },
-        { title: "Estrutura do repositório", page: "estrutura", icon: "folder" },
-        { title: "Novidades", page: "novidades", icon: "doc" },
-      ],
-    },
-    {
-      section: "Conceitos",
-      items: [
-        {
-          title: "Os quatro níveis",
-          page: "quatro-niveis",
-          icon: "layers",
-          children: [
-            { title: "N0 — Visão de Produto", page: "n0" },
-            { title: "N1 — Major Feature Set", page: "n1" },
-            { title: "N2 — Feature Set", page: "n2" },
-            { title: "N3 — Feature", page: "n3" },
-          ],
-        },
-        { title: "Negócio e Técnico", page: "negocio-tecnico", icon: "split" },
-      ],
-    },
-    {
-      section: "Fluxo de trabalho",
-      items: [
-        { title: "Como o método flui", page: "fluxo-de-trabalho", icon: "flow" },
-        { title: "Processo — atividades e atores", href: "processo/index.html", icon: "flow" },
-        { title: "Entrevista com o PO", page: "entrevista-po", icon: "book" },
-        { title: "Triagem", page: "triagem", icon: "search" },
-        { title: "Ticket (AIM)", page: "ticket", icon: "ticket" },
-        { title: "Rastreabilidade", page: "rastreabilidade", icon: "link" },
-        { title: "Mapa de rastreabilidade", page: "mapa-rastreabilidade", icon: "flow" },
-        { title: "Integração com o ServiceNow", page: "integracao-servicenow", icon: "git" },
-        { title: "Esteira de checkpoints", page: "esteira-checkpoints", icon: "flow" },
-        { title: "Cadência e entrega", page: "entrega", icon: "git" },
-      ],
-    },
-    {
-      section: "Medição e impacto",
-      items: [
-        { title: "Contagem de pontos de função", page: "contagem", icon: "layers" },
-        { title: "Análise de impacto", page: "analise-impacto", icon: "search" },
-      ],
-    },
-    {
-      section: "Referência",
-      items: [
-        { title: "Prompts", page: "prompts", icon: "terminal" },
-        { title: "Templates", page: "templates", icon: "file" },
-        { title: "Scripts", page: "scripts", icon: "terminal" },
-      ],
-    },
-    {
-      section: "Projeto",
-      items: [
-        { title: "Como usar", page: "como-usar", icon: "book" },
-        { title: "Aprendizado contínuo (retro)", page: "retro", icon: "doc" },
-        { title: "Contribuindo", page: "contribuindo", icon: "git" },
-      ],
-    },
-  ],
-};
-
-</script>
-<script>
-(() => {
-  'use strict';
-
-  const FRETE = 'modules/vendas/checkout/f-calcular-frete.md';
-  const RESUMO = 'modules/vendas/checkout/f-consultar-resumo-do-pedido.md';
-  const INDEX = 'modules/INDEX.md';
-  const AIM1 = 'analise-impacto/AIM-STRY0013101.md';
-  const AIM2 = 'analise-impacto/AIM-STRY0013120.md';
-  const MODELO = 'global/data-models/vendas.md';
-  const ANA = 'Ana (PO) <ana@acme.example>';
-  const CAIO = 'Caio (Tech Lead) <caio@acme.example>';
-  const cenas = [
-    { id: 'bootstrap', passo: 'n0', numero: 1, titulo: 'Preparação — instância e Visão de Produto', base: 'main', head: 'docs/bootstrap', revisor: 'Ana (PO)', aprovador: ANA, ticket: 'preparação', arquivos: ['global/MASTER.md', 'global/N0_PRODUCT_VISION.md', INDEX], descricao: 'A instância e o N0 entram na main antes da primeira sprint, por PR aprovado.' },
-    { id: 'sprint', passo: 'sprint', numero: 30, titulo: 'Entrega da sprint SP07', base: 'main', head: 'sprint/SP07', revisor: 'Ana (PO)', aprovador: ANA, ticket: 'SP07', draft: true, arquivos: ['analise-impacto/AIM-SP07.md'], descricao: 'Abra como Draft pull request durante o planejamento. A main só recebe a entrega, não o trabalho em andamento.' },
-    { id: 'cp1', passo: 't1-cp1', numero: 12, titulo: 'CP1 — requisitos de VND-CHK-01 — Calcular Frete', revisor: 'Ana (PO)', ticket: 'STRY0013101', arquivos: [FRETE, INDEX, AIM1], gate: 'requisitos', estado: 'requisitos-aprovados', problema: 'Dois gates no mesmo PR; modelo-dados sem por/em, antes da aprovação dos requisitos.', correcao: 'Retirar a aprovação antecipada de modelo-dados, manter só requisitos e atualizar Status na AIM e no INDEX.' },
-    { id: 'cp2', passo: 't1-cp2', numero: 14, titulo: 'CP2 — modelo de VND-CHK-01 — Calcular Frete', revisor: 'Bruno (DBA/Arquiteto)', ticket: 'STRY0013101', arquivos: [FRETE, MODELO, 'global/DATA-MODEL.md', INDEX, AIM1], gate: 'modelo-dados', estado: 'modelo-validado' },
-    { id: 'cp3', passo: 't1-qa', numero: 15, titulo: 'CP3 — testes de VND-CHK-01 — Calcular Frete', perfil: 'completo', revisor: 'Lia (QA)', ticket: 'STRY0013101', arquivos: [FRETE, 'qa/vendas/checkout/calcular-frete.md', INDEX, AIM1], gate: 'testes', estado: 'especificado', problema: 'O PR aprova testes, mas não inclui o plano em qa/.', correcao: 'Trazer o plano de testes no mesmo PR do gate, para o CODEOWNERS convocar a QA.' },
-    { id: 'codigo1', passo: 't1-dev', numero: 20, titulo: 'Código — VND-CHK-01 — Calcular Frete', perfil: 'completo', repo: 'loja-api', base: 'main', head: 'feature/STRY0013101-frete', revisor: 'Caio (Tech Lead)', aprovador: CAIO, ticket: 'STRY0013101', arquivos: ['src/checkout/frete/FreteService.java', 'src/test/checkout/frete/FreteServiceTest.java'], codigo: true, descricao: 'PR do repositório de código. Cada teste leva no nome a regra que verifica (VND-CHK-01/RN-NN). A revisão da implementação não substitui o PR do CP4 no repositório de docs.' },
-    { id: 'cp4', passo: 't1-dev', numero: 21, titulo: 'CP4 — registro de VND-CHK-01 — Calcular Frete', perfil: 'completo', revisor: 'Caio (Tech Lead)', ticket: 'STRY0013101', arquivos: [FRETE, 'repos/INDEX.md', INDEX, AIM1], gate: 'codigo', estado: 'implementado', problema: 'loja-api ainda não está no inventário repos/INDEX.md.', correcao: 'Registrar loja-api em repos/, preencher a Implementação do N3 e regenerar o índice de repositórios.' },
-    { id: 'cp1-resumo', passo: 't2-esteira', numero: 24, titulo: 'CP1 — requisitos de VND-CHK-02 — Consultar Resumo do Pedido', revisor: 'Ana (PO)', ticket: 'STRY0013120', arquivos: [RESUMO, INDEX, AIM2], gate: 'requisitos', estado: 'requisitos-aprovados' },
-    { id: 'cp2-resumo', passo: 't2-esteira', numero: 25, titulo: 'CP2 — modelo de VND-CHK-02 — Consultar Resumo do Pedido', revisor: 'Bruno (DBA/Arquiteto)', ticket: 'STRY0013120', arquivos: [RESUMO, MODELO, 'global/DATA-MODEL.md', INDEX, AIM2], gate: 'modelo-dados', estado: 'modelo-validado' },
-    { id: 'cp3-resumo', passo: 't2-esteira', numero: 26, titulo: 'CP3 — testes de VND-CHK-02 — Consultar Resumo do Pedido', perfil: 'completo', revisor: 'Lia (QA)', ticket: 'STRY0013120', arquivos: [RESUMO, 'qa/vendas/checkout/consultar-resumo-do-pedido.md', INDEX, AIM2], gate: 'testes', estado: 'especificado' },
-    { id: 'codigo2', passo: 't2-dev', numero: 22, titulo: 'Código — prazo e resumo do pedido', perfil: 'completo', repo: 'loja-api', base: 'main', head: 'feature/STRY0013120-prazo', revisor: 'Caio (Tech Lead)', aprovador: CAIO, ticket: 'STRY0013120', arquivos: ['src/checkout/frete/FreteService.java', 'src/checkout/pedido/ResumoService.java', 'src/test/checkout/frete/FreteServiceTest.java', 'src/test/checkout/pedido/ResumoServiceTest.java'], codigo: true, descricao: 'O diff implementa o delta de VND-CHK-01 — Calcular Frete e a nova VND-CHK-02 — Consultar Resumo do Pedido, com um teste por regra nova.' },
-    { id: 'cp4-resumo', passo: 't2-dev', numero: 28, titulo: 'CP4 — registro de VND-CHK-02 — Consultar Resumo do Pedido', perfil: 'completo', revisor: 'Caio (Tech Lead)', ticket: 'STRY0013120', arquivos: [RESUMO, 'repos/INDEX.md', INDEX, AIM2], gate: 'codigo', estado: 'implementado' },
-    { id: 'entrega', passo: 'merge', numero: 30, titulo: 'Entrega da sprint SP07', base: 'main', head: 'sprint/SP07', revisor: 'Ana (PO)', aprovador: ANA, ticket: 'SP07', entrega: true, arquivos: ['analise-impacto/AIM-SP07.md', AIM1, AIM2, FRETE, RESUMO, INDEX, 'global/CONTAGEM-PF.md'], descricao: 'AIMs concluídas, dois tickets entregues e cupom retirado da branch. Este é o mesmo PR #30 aberto como draft no planejamento, agora pronto para revisão e entrega.' },
-  ];
-  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const porPerfil = perfil => cenas.filter(c => !c.perfil || c.perfil === perfil);
-  let perfil, cena, estado, container, selecionar;
-
-  function configurar(original) {
-    const c = { repo: 'loja-doc', base: 'sprint/SP07', head: 'checkpoint/' + original.ticket + '-' + original.id, ...original };
-    if (perfil === 'requisitos' && c.gate === 'modelo-dados') {
-      c.estado = 'especificado';
-      if (c.id === 'cp2') {
-        c.problema = 'Estado modelo-validado pertence ao perfil completo; o CP2 de requisitos deve entregar especificado.';
-        c.correcao = 'Trocar estado para especificado e atualizar os espelhos da esteira e da rastreabilidade.';
-      }
-    }
-    if (!c.descricao) c.descricao = 'Um gate por PR: ' + c.gate + '. O checkpoint anterior já está aprovado na branch base. O artefato, o N3, a AIM e o INDEX viajam juntos.';
-    return c;
-  }
-
-  function mostrar(novoPerfil, id) {
-    perfil = novoPerfil;
-    const original = porPerfil(perfil).find(c => c.id === id);
-    if (!original) throw new Error('Cena GitHub indisponível para o perfil: ' + id);
-    cena = configurar(original);
-    estado = { aberto: false, checks: 'pending', corrigido: false, comparacao: 'pr', review: '', comentario: '', aba: 'conversation', confirmando: false, merged: false, aviso: '' };
-    render();
-  }
-
-  function checkRows() {
-    const nomes = cena.codigo ? ['CI do código', 'valida-artefatos-previstos']
-      : cena.entrega ? ['gate-check (commit a commit)', 'spec-guard', 'valida-commits-ticket', 'valida-entrega']
-      : cena.draft ? ['spec-guard', 'valida-entrega']
-      : cena.gate ? ['gate-check', 'spec-guard', 'audit-trace-links'] : ['spec-guard'];
-    return nomes.map((nome, i) => {
-      const falha = estado.checks === 'failure' && i === (cena.draft ? nomes.length - 1 : 0);
-      const classe = falha ? 'gh-error' : estado.checks === 'pending' ? 'gh-wait' : 'gh-ok';
-      const mensagem = falha ? (cena.draft ? 'Entrega ainda em planejamento; merge bloqueado.' : cena.problema)
-        : estado.checks === 'pending' ? 'Aguardando execução dos checks simulados.'
-        : nome === 'spec-guard' ? 'validate-doc, regras × cenários (valida-regras-cenarios), contrato da API (valida-contrato-api), elos e AIMs: aprovados na simulação.'
-        : nome === 'valida-artefatos-previstos' ? 'Nenhuma feature implementado neste PR: o caminho de volta (<ID>/RN-NN nos testes, error_codes no código) roda quando o CP4 a marcar.'
-        : 'Validação simulada aprovada.';
-      return '<div class="gh-check"><span class="' + classe + '">' + (falha ? '✗' : estado.checks === 'pending' ? '○' : '✓') + '</span><div><strong>' + esc(nome) + '</strong><small>' + esc(mensagem) + '</small></div></div>';
-    }).join('');
-  }
-
-  const botao = (acao, texto, bloqueado = false, primario = false) => '<button type="button" class="gh-btn' + (primario ? ' primary' : '') + '" data-gh-action="' + acao + '"' + (bloqueado ? ' disabled' : '') + '>' + texto + '</button>';
-  function checks() {
-    return '<section class="gh-panel"><div class="gh-panel-head">' +
-      (estado.checks === 'failure' ? 'Some checks were not successful' : estado.checks === 'success' ? 'All checks have passed' : 'Checks pending') +
-      '</div>' + checkRows() + '<div class="gh-panel-body">' +
-      botao('checks', estado.checks === 'pending' ? 'Executar checks (simulado)' : 'Reexecutar checks', estado.merged) +
-      (estado.checks === 'failure' && !cena.draft ? '<div class="gh-guide">' + esc(cena.correcao) + '</div>' + botao('fix', 'Aplicar correção e enviar commit (simulado)', estado.merged) : '') +
-      (estado.corrigido ? '<div class="gh-actions">' + botao('correction', 'Ver diff da correção em Files changed') + '</div>' : '') +
-      '</div></section>';
-  }
-
-  function estadoGate(corrigido) {
-    return cena.id === 'cp2' && perfil === 'requisitos' && !corrigido ? 'modelo-validado' : cena.estado;
-  }
-
-  function status(valor) {
-    return { rascunho: '✏️ Rascunho', 'requisitos-aprovados': '📝 Requisitos aprovados',
-      'modelo-validado': '🧱 Modelo validado', especificado: '📋 Especificado', implementado: '✅ Implementado' }[valor];
-  }
-
-  function diff(path, corrigido) {
-    const anterior = { requisitos: 'rascunho', 'modelo-dados': 'requisitos-aprovados', testes: 'modelo-validado', codigo: 'especificado' }[cena.gate];
-    const novo = estadoGate(corrigido);
-    if (path === FRETE || path === RESUMO) {
-      if (cena.gate) {
-        const usuario = { requisitos: 'ana.po', 'modelo-dados': 'bru.dba', testes: 'lia.qa', codigo: 'caio.tl' }[cena.gate];
-        const linhas = ['- estado: ' + anterior, '+ estado: ' + novo,
-          '+ ' + cena.gate + ': { aprovado: true, por: "' + usuario + '", em: 2026-10-08, pr: ' + cena.numero + ' }'];
-        if (cena.id === 'cp1') linhas.push(corrigido
-          ? '  modelo-dados: { aprovado: false, por: "", em: "", pr: "" }'
-          : '+ modelo-dados: { aprovado: true, por: "", em: "", pr: "" }');
-        return linhas;
-      }
-      return ['  ## Implementação', '+ | implementação entregue | loja-api | src/checkout | main |'];
-    }
-    if (path.startsWith('qa/')) {
-      const id = path.includes('resumo') ? 'VND-CHK-02' : 'VND-CHK-01';
-      return ['+ # Plano de testes — ' + id + ' — ' + (path.includes('resumo') ? 'Consultar Resumo do Pedido' : 'Calcular Frete'),
-        '+ ## Massa de teste', '+ ## Cobertura das regras', '+ | ' + id + '/RN-01 | cenário @RN-01 do N3 | `' + id + '/RN-01 — …` |',
-        '+ ## 📐 NFR aplicáveis', '+ ## Pontos a resolver (❓)'];
-    }
-    if (path.startsWith('src/test/')) {
-      const testes = { 'codigo1': ['VND-CHK-01/RN-01 — frete da faixa do CEP', 'VND-CHK-01/RN-02 — CEP fora das faixas', 'VND-CHK-01/RN-03 — CEP com menos de 8 dígitos'] }[cena.id]
-        || (path.includes('pedido') ? ['VND-CHK-02/RN-01 — prazo prometido no resumo'] : ['VND-CHK-01/RN-04 — prazo da faixa do CEP']);
-      return testes.map(n => '+ @Test @DisplayName("' + n + '")');
-    }
-    if (path === 'repos/INDEX.md') return ['+ | loja-api | https://git.acme/loja-api | Vendas | domínio | API do checkout | Java | Caio |'];
-    if (path.startsWith('src/')) return ['+ // Feature e ticket identificados no commit e no PR', '+ // ' + cena.ticket + ': implementação do comportamento especificado', '+ // Trecho didático; não é código executável da Loja Acme.'];
-    if (cena.gate && (path === INDEX || path.startsWith('analise-impacto/'))) {
-      const resumo = cena.arquivos.includes(RESUMO);
-      const feature = resumo ? 'VND-CHK-02: Consultar Resumo do Pedido' : 'VND-CHK-01: Calcular Frete';
-      const spec = (resumo ? RESUMO : FRETE).slice('modules/'.length);
-      const aim = resumo ? AIM2 : AIM1;
-      const linha = valor => path === INDEX
-        ? '| [`' + cena.ticket + '`](../' + aim + ') | [' + feature + '](./' + spec + ') | Vendas | ' + status(valor) + ' | 📋 | — | — | — |'
-        : '| [`' + feature + '`](../modules/' + spec + ') | Vendas · Checkout | Criação | `CA-1, CA-2, CA-3` | ' + status(valor) + ' |';
-      const espelho = valor => '| `' + feature.split(':')[0] + '` ([spec](./' + spec + ')) | ' + cena.ticket + ' | ' + valor + ' |';
-      const defasado = cena.id === 'cp1' && !corrigido;
-      return (path === INDEX ? ['  ## Esteira de checkpoints', ...(defasado
-        ? ['  ' + espelho(anterior)] : ['- ' + espelho(anterior), '+ ' + espelho(novo)])] : [])
-        .concat(['  ## ' + (path === INDEX ? 'Rastreabilidade' : 'Features')], defasado
-          ? ['  ' + linha(anterior)] : ['- ' + linha(anterior), '+ ' + linha(novo)]);
-    }
-    if (path.startsWith('analise-impacto/')) return cena.entrega ? ['- estado: em-execução', '+ estado: concluído', '+ Entrega reconciliada com as features no estado final.'] : ['+ Ticket: ' + cena.ticket, '+ Status das features espelhado do N3; changeset e critérios de aceite conferidos.'];
-    return ['+ ' + (path === INDEX ? 'Espelho da esteira e Status de rastreabilidade atualizados no mesmo PR.' : 'Artefato do checkpoint incluído e revisado.')];
-  }
-
-  function ausente(path, corrigido) {
-    return !corrigido && ((cena.id === 'cp3' && path.startsWith('qa/')) || (cena.id === 'cp4' && path === 'repos/INDEX.md'));
-  }
-
-  function diffCorrecao(path) {
-    const conteudo = corrigido => ausente(path, corrigido) ? []
-      : diff(path, corrigido).filter(l => !l.startsWith('-')).map(l => l.slice(2));
-    const antes = conteudo(false), depois = conteudo(true);
-    let inicio = 0, fimAntes = antes.length, fimDepois = depois.length;
-    while (inicio < fimAntes && inicio < fimDepois && antes[inicio] === depois[inicio]) inicio++;
-    if (inicio === fimAntes && inicio === fimDepois) return [];
-    while (fimAntes > inicio && fimDepois > inicio && antes[fimAntes - 1] === depois[fimDepois - 1]) { fimAntes--; fimDepois--; }
-    const removidas = antes.slice(inicio, fimAntes), adicionadas = depois.slice(inicio, fimDepois);
-    const comuns = Array.from({ length: removidas.length + 1 }, () => Array(adicionadas.length + 1).fill(0));
-    for (let i = removidas.length - 1; i >= 0; i--) {
-      for (let j = adicionadas.length - 1; j >= 0; j--) {
-        comuns[i][j] = removidas[i] === adicionadas[j] ? 1 + comuns[i + 1][j + 1] : Math.max(comuns[i + 1][j], comuns[i][j + 1]);
-      }
-    }
-    const linhas = [];
-    let i = 0, j = 0;
-    while (i < removidas.length || j < adicionadas.length) {
-      if (i < removidas.length && j < adicionadas.length && removidas[i] === adicionadas[j]) { linhas.push('  ' + removidas[i++]); j++; }
-      else if (i < removidas.length && (j === adicionadas.length || comuns[i + 1][j] >= comuns[i][j + 1])) linhas.push('- ' + removidas[i++]);
-      else linhas.push('+ ' + adicionadas[j++]);
-    }
-    return antes.slice(Math.max(0, inicio - 2), inicio).map(l => '  ' + l)
-      .concat(linhas, depois.slice(fimDepois, fimDepois + 2).map(l => '  ' + l));
-  }
-
-  function arquivos() {
-    const correcao = estado.corrigido && estado.comparacao === 'correcao';
-    const html = cena.arquivos.map(path => {
-      const falta = ausente(path, estado.corrigido);
-      const linhas = correcao ? diffCorrecao(path) : diff(path, estado.corrigido);
-      if (correcao && !linhas.length) return '';
-      return '<section class="gh-file"><div class="gh-panel-head">' + esc(path) +
-        (falta ? ' <span class="gh-error">— ausente do PR</span>' : correcao && ausente(path, false) ? ' — incluído pela correção' : '') + '</div>' +
-        (falta ? '<div class="gh-panel-body">O artefato precisa estar no diff, não apenas em outro PR.</div>'
-          : '<pre class="gh-diff">' + linhas.map(l => '<span class="' + (l.startsWith('+') ? 'add' : l.startsWith('-') ? 'del' : '') + '">' + esc(l) + '</span>').join('') + '</pre>') + '</section>';
-    }).join('');
-    return '<div class="gh-guide">Diff didático resumido, não um patch completo ou uma captura do GitHub real. ' +
-      (correcao ? 'Comparação: antes → depois do commit de correção. Vermelho: removido; verde: adicionado. Só os arquivos alterados pela correção aparecem.'
-        : 'Comparação: branch base → versão atual do PR. Os demais gates permanecem como já estavam na base.') + '</div>' +
-      (estado.corrigido ? '<div class="gh-picker"><label for="gh-diff-view">Comparação do diff</label><select id="gh-diff-view"><option value="pr"' + (!correcao ? ' selected' : '') + '>PR completo (base → atual)</option><option value="correcao"' + (correcao ? ' selected' : '') + '>Commit de correção (antes → depois)</option></select></div>' : '') +
-      (html || '<div class="gh-guide">Não há novas alterações nos trechos didáticos desta cena. O pedido de revisão não fornece um diff adicional.</div>');
-  }
-
-  function review() {
-    return '<section class="gh-panel"><div class="gh-panel-head">Review changes — ' + esc(cena.revisor) + '</div><form class="gh-panel-body gh-form" data-gh-form="review">' +
-      '<p>Revisão humana do artefato pelo CODEOWNER; check verde não equivale a aprovação.</p>' +
-      '<label for="gh-review-comment">Comentário de revisão (opcional)</label><textarea id="gh-review-comment" name="comment" placeholder="O que foi conferido no artefato?"></textarea>' +
-      '<div class="gh-review-options"><label><input type="radio" name="review" value="comment" checked> Comment</label><label><input type="radio" name="review" value="changes"> Request changes</label><label><input type="radio" name="review" value="approved"> Approve</label></div>' +
-      '<button class="gh-btn primary" type="submit"' + (cena.draft || estado.merged ? ' disabled' : '') + '>Submit review (simulado)</button></form></section>';
-  }
-
-  function conversa() {
-    const aprovado = estado.review === 'approved';
-    const pronto = estado.checks === 'success' && aprovado && !cena.draft;
-    let html = '<section class="gh-panel"><div class="gh-panel-head">Rui abriu este pull request · ' + esc(cena.ticket) + '</div><div class="gh-panel-body"><p>' + esc(cena.descricao) + '</p><p><strong>Arquivos do PR:</strong> ' + cena.arquivos.length + ' · Perfil: ' + esc(perfil) + '</p></div></section>' + checks();
-    html += '<section class="gh-panel"><div class="gh-panel-head">Reviewers</div><div class="gh-panel-body"><p>' + esc(cena.revisor) + ' · ' +
-      (aprovado ? '<span class="gh-ok">✓ Approved</span>' : estado.review === 'changes' ? '<span class="gh-error">Changes requested</span>' : 'Review required') + '</p>' +
-      (estado.comentario ? '<p><strong>Comentário:</strong> ' + esc(estado.comentario) + '</p>' : '') +
-      (estado.review === 'changes' ? botao('fix', 'Enviar commit de correção (simulado)', estado.merged) : '') +
-      '<div class="gh-actions">' + botao('review', 'Review changes', cena.draft || estado.merged) + '</div></div></section>';
-    if (estado.merged) return html + '<section class="gh-panel"><div class="gh-panel-head gh-ok">Pull request successfully merged and closed</div><div class="gh-panel-body"><p>A branch <code>' + esc(cena.head) + '</code> foi mesclada em <code>' + esc(cena.base) + '</code> nesta simulação.</p><p>' +
-      (cena.entrega ? 'A main passa a representar a sprint entregue. Confira o conteúdo e origin/main..origin/sprint/SP07 = 0.'
-        : cena.base === 'main' ? 'Confira o conteúdo na main e a trilha Approved-by do merge.'
-        : 'O checkpoint entra na branch da sprint; a main permanece inalterada até a entrega.') + '</p>' +
-      (cena.base === 'main' && !cena.codigo ? '<p><span class="gh-ok">✓ check-approval-trailers</span> · conferência pós-merge: o Approved-by foi incluído na mensagem.</p>' : '') + '</div></section>';
-    html += '<section class="gh-panel"><div class="gh-panel-head">' + (cena.draft ? 'This pull request is still a draft' : pronto ? 'Merging is available' : 'Merging is blocked') + '</div><div class="gh-panel-body"><p>' +
-      (cena.draft ? 'O PR da sprint fica aberto como draft. A conclusão está na cena “Entrega”, depois do fechamento das AIMs e da retirada do ticket não entregue.'
-        : pronto ? 'Checks aprovados e revisão humana aprovada. Confirme a branch base antes do merge.'
-        : 'É necessário passar nos checks, resolver os pedidos de alteração e receber aprovação do revisor.') + '</p>' +
-      botao('merge', 'Merge pull request', !pronto, true);
-    if (estado.confirmando) html += '<form class="gh-form" data-gh-form="merge"><label for="gh-merge-title">Commit title</label><input type="text" id="gh-merge-title" readonly value="Merge pull request #' + cena.numero + ' from acme/' + esc(cena.head) + '">' +
-      '<label for="gh-merge-body">Commit message</label><textarea id="gh-merge-body" name="message"></textarea>' +
-      (cena.base === 'main' ? '<p>Use Create a merge commit. No corpo, inclua <code>Approved-by: Nome &lt;email&gt;</code>; a aprovação da interface não escreve esse trailer automaticamente.</p>' + botao('trailer', 'Incluir Approved-by do aprovador') : '') +
-      '<div class="gh-actions"><button type="submit" class="gh-btn primary">Confirm merge (simulado)</button>' + botao('cancel-merge', 'Cancel') + '</div></form>';
-    return html + '</div></section>';
-  }
-
-  function render() {
-    const tabs = [['conversation', 'Conversation'], ['commits', 'Commits'], ['checks', 'Checks'], ['files', 'Files changed']];
-    let corpo;
-    if (!estado.aberto) corpo = '<section class="gh-panel"><div class="gh-panel-head">Comparing changes</div><div class="gh-panel-body"><div class="gh-branches"><strong>base:</strong> <code>' + esc(cena.base) + '</code> ← <strong>compare:</strong> <code>' + esc(cena.head) + '</code></div><p>A branch de trabalho é criada a partir da base indicada, recebe os artefatos em um commit com a chave do ticket e é enviada com git push antes de abrir o PR.</p><form class="gh-form" data-gh-form="create"><label for="gh-pr-title">Título</label><input type="text" id="gh-pr-title" readonly value="' + esc(cena.titulo) + '"><label for="gh-pr-body">Descrição</label><textarea id="gh-pr-body" readonly>' + esc(cena.descricao) + '\nTicket: ' + esc(cena.ticket) + '</textarea><div class="gh-actions"><button type="submit" class="gh-btn primary">' + (cena.draft ? 'Create draft pull request' : 'Create pull request') + ' (simulado)</button></div></form></div></section>';
-    else if (estado.aba === 'checks') corpo = checks();
-    else if (estado.aba === 'files') corpo = arquivos() + review();
-    else if (estado.aba === 'commits') corpo = '<section class="gh-panel"><div class="gh-panel-head">Commits da branch de trabalho</div><div class="gh-panel-body"><p><code>docs: ' + esc(cena.gate || cena.titulo) + ' (' + esc(cena.ticket) + ')</code></p>' + (estado.corrigido ? '<p><code>docs: correção após checks/review (' + esc(cena.ticket) + ')</code></p>' : '') + '<p>Uma chave de ticket por commit de spec; um gate por PR de checkpoint. Estes commits são apenas ilustrativos.</p></div></section>';
-    else corpo = conversa();
-    container.innerHTML = '<div class="gh"><div class="gh-banner"><strong>GitHub simulado — ambiente de ensino.</strong> Não acessa sua conta, não cria branches/PRs e não altera os gates ou arquivos do roteiro. Nomes, números e diffs são ilustrativos.</div>' +
-      '<div class="gh-header"><div class="gh-repo">▣ acme / <strong>' + esc(cena.repo) + '</strong> <small>simulado</small></div><div class="gh-repo-nav"><span>Code</span><span>Issues</span><span class="active">Pull requests</span><span>Actions</span></div></div>' +
-      '<div class="gh-shell"><div class="gh-picker"><label for="gh-scene">Cena do roteiro</label><select id="gh-scene">' + porPerfil(perfil).map(c => '<option value="' + c.id + '"' + (c.id === cena.id ? ' selected' : '') + '>' + esc(c.titulo) + ' — #' + c.numero + '</option>').join('') + '</select>' + botao('reset', 'Reiniciar cena') + '</div>' +
-      '<h3 class="gh-title">' + esc(cena.titulo) + ' <span>#' + cena.numero + '</span></h3><div class="gh-meta"><span class="gh-status ' + (estado.merged ? 'merged' : cena.draft ? 'draft' : '') + '">' + (estado.merged ? '⑂ Merged' : cena.draft ? '○ Draft' : '⑂ ' + (estado.aberto ? 'Open' : 'Novo PR')) + '</span><span>Rui quer mesclar <code>' + esc(cena.head) + '</code> em <code>' + esc(cena.base) + '</code></span></div>' +
-      (estado.aberto ? '<div class="gh-tabs" role="tablist" aria-label="Abas do pull request">' + tabs.map(([id, nome]) => '<button type="button" id="gh-tab-' + id + '" role="tab" data-gh-tab="' + id + '" aria-controls="gh-tabpanel" aria-selected="' + (estado.aba === id) + '" tabindex="' + (estado.aba === id ? '0' : '-1') + '">' + nome + '</button>').join('') + '</div>' : '') +
-      '<div class="gh-layout"><div id="gh-tabpanel"' + (estado.aberto ? ' role="tabpanel" aria-labelledby="gh-tab-' + estado.aba + '"' : '') + '>' + corpo + '<div class="gh-notice" role="status" aria-live="polite" tabindex="-1">' + esc(estado.aviso) + '</div></div><aside class="gh-sidebar"><section><h3>Reviewers · CODEOWNERS</h3><p>' + esc(cena.revisor) + '</p><p>' + (estado.review === 'approved' ? '✓ Approved' : 'Revisão humana obrigatória') + '</p></section><section><h3>Branch base</h3><p><code>' + esc(cena.base) + '</code></p><p>' + (cena.base === 'main' ? 'Preparação, código ou entrega; não antecipar a spec da sprint.' : 'Checkpoint mesclado na sprint, não diretamente na main.') + '</p></section><section><h3>Ticket</h3><p>' + esc(cena.ticket) + '</p><h3>Labels</h3><p>documentação · ' + esc(perfil) + '</p></section></aside></div></div></div>';
-  }
-
-  function acao(nome) {
-    estado.aviso = '';
-    if (nome === 'reset') { mostrar(perfil, cena.id); return; }
-    if (nome === 'correction' && estado.corrigido) {
-      estado.aba = 'files'; estado.comparacao = 'correcao'; render();
-      container.querySelector('#gh-diff-view').focus({ preventScroll: true });
-      return;
-    }
-    if (!estado.aberto || estado.merged) return;
-    if (nome === 'checks') {
-      estado.checks = cena.draft || (cena.problema && !estado.corrigido) ? 'failure' : 'success';
-      estado.aviso = estado.checks === 'failure' ? 'Checks reprovados; o merge continua bloqueado.' : 'Checks aprovados. Ainda é necessária a revisão humana.';
-    } else if (nome === 'fix') {
-      estado.corrigido = true; estado.comparacao = 'correcao'; estado.checks = 'pending'; estado.review = ''; estado.comentario = ''; estado.confirmando = false;
-      estado.aviso = 'Commit de correção enviado na mesma branch. Veja o antes/depois em Files changed, reexecute os checks e solicite nova revisão.';
-    } else if (nome === 'review') estado.aba = 'files';
-    else if (nome === 'merge' && estado.checks === 'success' && estado.review === 'approved' && !cena.draft) estado.confirmando = true;
-    else if (nome === 'cancel-merge') estado.confirmando = false;
-    else if (nome === 'trailer') {
-      container.querySelector('#gh-merge-body').value = 'Approved-by: ' + cena.aprovador;
-      return;
-    }
-    render();
-    container.querySelector('.gh-notice').focus({ preventScroll: true });
-  }
-
-  function iniciar(el, aoSelecionar) {
-    container = el; selecionar = aoSelecionar;
-    container.addEventListener('change', e => {
-      if (e.target.id === 'gh-scene') selecionar(e.target.value);
-      else if (e.target.id === 'gh-diff-view') { estado.comparacao = e.target.value; render(); container.querySelector('#gh-diff-view').focus({ preventScroll: true }); }
-    });
-    container.addEventListener('click', e => {
-      const tab = e.target.closest('[data-gh-tab]');
-      if (tab) { estado.aba = tab.dataset.ghTab; render(); container.querySelector('#gh-tab-' + estado.aba).focus(); return; }
-      const btn = e.target.closest('[data-gh-action]');
-      if (btn && !btn.disabled) acao(btn.dataset.ghAction);
-    });
-    container.addEventListener('keydown', e => {
-      if (!e.target.matches('[data-gh-tab]')) return;
-      const tabs = ['conversation', 'commits', 'checks', 'files'];
-      const i = tabs.indexOf(estado.aba);
-      const proxima = e.key === 'ArrowRight' ? tabs[(i + 1) % tabs.length] : e.key === 'ArrowLeft' ? tabs[(i + 3) % tabs.length] : e.key === 'Home' ? tabs[0] : e.key === 'End' ? tabs[3] : null;
-      if (!proxima) return;
-      e.preventDefault(); e.stopPropagation();
-      estado.aba = proxima; render(); container.querySelector('#gh-tab-' + proxima).focus();
-    });
-    container.addEventListener('submit', e => {
-      const form = e.target.closest('[data-gh-form]');
-      if (!form) return;
-      e.preventDefault();
-      const data = new FormData(form);
-      if (form.dataset.ghForm === 'create') { estado.aberto = true; estado.aba = 'conversation'; }
-      else if (form.dataset.ghForm === 'review') {
-        if (cena.draft || estado.merged) return;
-        const valor = data.get('review');
-        if (valor === 'approved' && estado.checks !== 'success') { estado.aviso = 'Aprovação bloqueada nesta simulação: primeiro resolva e passe nos checks.'; }
-        else {
-          estado.review = valor; estado.comentario = String(data.get('comment') || ''); estado.confirmando = false; estado.aba = 'conversation';
-          estado.aviso = valor === 'changes' ? 'Revisor solicitou alterações; envie um commit de correção e peça nova revisão.' : valor === 'approved' ? 'Revisão aprovada pelo CODEOWNER.' : 'Comentário registrado. Comment não é uma aprovação.';
-        }
-      } else if (form.dataset.ghForm === 'merge') {
-        if (!estado.confirmando || estado.checks !== 'success' || estado.review !== 'approved' || cena.draft || estado.merged) return;
-        if (cena.base === 'main' && !/^Approved-by:\s+.+\s<[^<>\s]+@[^<>\s]+>$/m.test(String(data.get('message') || ''))) {
-          container.querySelector('.gh-notice').textContent = 'Merge não confirmado: inclua Approved-by: Nome <email> no corpo da mensagem.';
-          return;
-        }
-        estado.merged = true; estado.confirmando = false; estado.aviso = 'Merge concluído apenas na simulação. Nenhuma operação foi enviada ao GitHub.';
-      }
-      render();
-      container.querySelector('.gh-notice').focus({ preventScroll: true });
-    });
-  }
-  window.DOCQUI_GITHUB = { cenas: porPerfil, mostrar, iniciar };
-})();
-
-</script>
-<script>
-(() => {
+window.iniciarSimulador = () => {
 'use strict';
 
 /* ── Constantes do método ───────────────────────────────────────────── */
@@ -5357,7 +4946,420 @@ window.addEventListener('hashchange', () => { const i = porAncora(); if (i >= 0 
 const inicial = porAncora();
 if (inicial >= 0) st.idx = inicial;
 render();
-})();
+};
 </script>
+<script>
+/* =========================================================================
+   Configuração do site — Docqui Caixa
+   -------------------------------------------------------------------------
+   Este é o único arquivo que você precisa editar para adaptar o template:
+   troque o nome, o repositório e a árvore de navegação. Cada item aponta
+   para um arquivo Markdown em /content (sem a extensão .md), ou usa href
+   para uma página HTML relativa à raiz do site.
+   ========================================================================= */
+window.DOKU_CONFIG = {
+  /* Identidade do site */
+  name: "Docqui Caixa",
+  fullName: "Docqui Caixa",
+  repo: "https://github.com/caixa-efrs/docqui-engine",
+  branch: "main",
+  defaultPage: "introducao",
+
+  /* Versão do engine, no selo ao lado do nome (toda página) e na página inicial.
+     Espelha o VERSION da raiz, que o site — servido só de docs/ — não alcança. No
+     release, troque os dois no mesmo commit: o eval 40 reprova a divergência. */
+  version: "6.4.1",
+
+  /* Páginas renomeadas: o endereço antigo (link, favorito) leva ao novo. */
+  redirects: {
+    "historia-usuario": "ticket", // AIM única (3.0.0)
+  },
+
+  /* Ícones opcionais por item (chaves definidas em assets/js/app.js → ICONS) */
+  nav: [
+    {
+      section: "Comece aqui",
+      items: [
+        { title: "Início", page: "", icon: "home" },
+        { title: "Introdução", page: "introducao", icon: "book" },
+        { title: "Início rápido", page: "inicio-rapido", icon: "rocket" },
+        { title: "Simulador Docqui Caixa", href: "simulador/index.html", icon: "flow" },
+        { title: "Estrutura do repositório", page: "estrutura", icon: "folder" },
+        { title: "Novidades", page: "novidades", icon: "doc" },
+      ],
+    },
+    {
+      section: "Conceitos",
+      items: [
+        {
+          title: "Os quatro níveis",
+          page: "quatro-niveis",
+          icon: "layers",
+          children: [
+            { title: "N0 — Visão de Produto", page: "n0" },
+            { title: "N1 — Major Feature Set", page: "n1" },
+            { title: "N2 — Feature Set", page: "n2" },
+            { title: "N3 — Feature", page: "n3" },
+          ],
+        },
+        { title: "Negócio e Técnico", page: "negocio-tecnico", icon: "split" },
+      ],
+    },
+    {
+      section: "Fluxo de trabalho",
+      items: [
+        { title: "Como o método flui", page: "fluxo-de-trabalho", icon: "flow" },
+        { title: "Processo — atividades e atores", href: "processo/index.html", icon: "flow" },
+        { title: "Jornada do perfil requisitos", href: "jornada/index.html", icon: "flow" },
+        { title: "Entrevista com o PO", page: "entrevista-po", icon: "book" },
+        { title: "Triagem", page: "triagem", icon: "search" },
+        { title: "Ticket (AIM)", page: "ticket", icon: "ticket" },
+        { title: "Rastreabilidade", page: "rastreabilidade", icon: "link" },
+        { title: "Mapa de rastreabilidade", page: "mapa-rastreabilidade", icon: "flow" },
+        { title: "Integração com o ServiceNow", page: "integracao-servicenow", icon: "git" },
+        { title: "Esteira de checkpoints", page: "esteira-checkpoints", icon: "flow" },
+        { title: "Cadência e entrega", page: "entrega", icon: "git" },
+      ],
+    },
+    {
+      section: "Medição e impacto",
+      items: [
+        { title: "Contagem de pontos de função", page: "contagem", icon: "layers" },
+        { title: "Análise de impacto", page: "analise-impacto", icon: "search" },
+      ],
+    },
+    {
+      section: "Referência",
+      items: [
+        { title: "Prompts", page: "prompts", icon: "terminal" },
+        { title: "Templates", page: "templates", icon: "file" },
+        { title: "Scripts", page: "scripts", icon: "terminal" },
+      ],
+    },
+    {
+      section: "Projeto",
+      items: [
+        { title: "Como usar", page: "como-usar", icon: "book" },
+        { title: "Aprendizado contínuo (retro)", page: "retro", icon: "doc" },
+        { title: "Contribuindo", page: "contribuindo", icon: "git" },
+      ],
+    },
+  ],
+};
+
+</script>
+<script>
+(() => {
+  'use strict';
+
+  const FRETE = 'modules/vendas/checkout/f-calcular-frete.md';
+  const RESUMO = 'modules/vendas/checkout/f-consultar-resumo-do-pedido.md';
+  const INDEX = 'modules/INDEX.md';
+  const AIM1 = 'analise-impacto/AIM-STRY0013101.md';
+  const AIM2 = 'analise-impacto/AIM-STRY0013120.md';
+  const MODELO = 'global/data-models/vendas.md';
+  const ANA = 'Ana (PO) <ana@acme.example>';
+  const CAIO = 'Caio (Tech Lead) <caio@acme.example>';
+  const cenas = [
+    { id: 'bootstrap', passo: 'n0', numero: 1, titulo: 'Preparação — instância e Visão de Produto', base: 'main', head: 'docs/bootstrap', revisor: 'Ana (PO)', aprovador: ANA, ticket: 'preparação', arquivos: ['global/MASTER.md', 'global/N0_PRODUCT_VISION.md', INDEX], descricao: 'A instância e o N0 entram na main antes da primeira sprint, por PR aprovado.' },
+    { id: 'sprint', passo: 'sprint', numero: 30, titulo: 'Entrega da sprint SP07', base: 'main', head: 'sprint/SP07', revisor: 'Ana (PO)', aprovador: ANA, ticket: 'SP07', draft: true, arquivos: ['analise-impacto/AIM-SP07.md'], descricao: 'Abra como Draft pull request durante o planejamento. A main só recebe a entrega, não o trabalho em andamento.' },
+    { id: 'cp1', passo: 't1-cp1', numero: 12, titulo: 'CP1 — requisitos de VND-CHK-01 — Calcular Frete', revisor: 'Ana (PO)', ticket: 'STRY0013101', arquivos: [FRETE, INDEX, AIM1], gate: 'requisitos', estado: 'requisitos-aprovados', problema: 'Dois gates no mesmo PR; modelo-dados sem por/em, antes da aprovação dos requisitos.', correcao: 'Retirar a aprovação antecipada de modelo-dados, manter só requisitos e atualizar Status na AIM e no INDEX.' },
+    { id: 'cp2', passo: 't1-cp2', numero: 14, titulo: 'CP2 — modelo de VND-CHK-01 — Calcular Frete', revisor: 'Bruno (DBA/Arquiteto)', ticket: 'STRY0013101', arquivos: [FRETE, MODELO, 'global/DATA-MODEL.md', INDEX, AIM1], gate: 'modelo-dados', estado: 'modelo-validado' },
+    { id: 'cp3', passo: 't1-qa', numero: 15, titulo: 'CP3 — testes de VND-CHK-01 — Calcular Frete', perfil: 'completo', revisor: 'Lia (QA)', ticket: 'STRY0013101', arquivos: [FRETE, 'qa/vendas/checkout/calcular-frete.md', INDEX, AIM1], gate: 'testes', estado: 'especificado', problema: 'O PR aprova testes, mas não inclui o plano em qa/.', correcao: 'Trazer o plano de testes no mesmo PR do gate, para o CODEOWNERS convocar a QA.' },
+    { id: 'codigo1', passo: 't1-dev', numero: 20, titulo: 'Código — VND-CHK-01 — Calcular Frete', perfil: 'completo', repo: 'loja-api', base: 'main', head: 'feature/STRY0013101-frete', revisor: 'Caio (Tech Lead)', aprovador: CAIO, ticket: 'STRY0013101', arquivos: ['src/checkout/frete/FreteService.java', 'src/test/checkout/frete/FreteServiceTest.java'], codigo: true, descricao: 'PR do repositório de código. Cada teste leva no nome a regra que verifica (VND-CHK-01/RN-NN). A revisão da implementação não substitui o PR do CP4 no repositório de docs.' },
+    { id: 'cp4', passo: 't1-dev', numero: 21, titulo: 'CP4 — registro de VND-CHK-01 — Calcular Frete', perfil: 'completo', revisor: 'Caio (Tech Lead)', ticket: 'STRY0013101', arquivos: [FRETE, 'repos/INDEX.md', INDEX, AIM1], gate: 'codigo', estado: 'implementado', problema: 'loja-api ainda não está no inventário repos/INDEX.md.', correcao: 'Registrar loja-api em repos/, preencher a Implementação do N3 e regenerar o índice de repositórios.' },
+    { id: 'cp1-resumo', passo: 't2-esteira', numero: 24, titulo: 'CP1 — requisitos de VND-CHK-02 — Consultar Resumo do Pedido', revisor: 'Ana (PO)', ticket: 'STRY0013120', arquivos: [RESUMO, INDEX, AIM2], gate: 'requisitos', estado: 'requisitos-aprovados' },
+    { id: 'cp2-resumo', passo: 't2-esteira', numero: 25, titulo: 'CP2 — modelo de VND-CHK-02 — Consultar Resumo do Pedido', revisor: 'Bruno (DBA/Arquiteto)', ticket: 'STRY0013120', arquivos: [RESUMO, MODELO, 'global/DATA-MODEL.md', INDEX, AIM2], gate: 'modelo-dados', estado: 'modelo-validado' },
+    { id: 'cp3-resumo', passo: 't2-esteira', numero: 26, titulo: 'CP3 — testes de VND-CHK-02 — Consultar Resumo do Pedido', perfil: 'completo', revisor: 'Lia (QA)', ticket: 'STRY0013120', arquivos: [RESUMO, 'qa/vendas/checkout/consultar-resumo-do-pedido.md', INDEX, AIM2], gate: 'testes', estado: 'especificado' },
+    { id: 'codigo2', passo: 't2-dev', numero: 22, titulo: 'Código — prazo e resumo do pedido', perfil: 'completo', repo: 'loja-api', base: 'main', head: 'feature/STRY0013120-prazo', revisor: 'Caio (Tech Lead)', aprovador: CAIO, ticket: 'STRY0013120', arquivos: ['src/checkout/frete/FreteService.java', 'src/checkout/pedido/ResumoService.java', 'src/test/checkout/frete/FreteServiceTest.java', 'src/test/checkout/pedido/ResumoServiceTest.java'], codigo: true, descricao: 'O diff implementa o delta de VND-CHK-01 — Calcular Frete e a nova VND-CHK-02 — Consultar Resumo do Pedido, com um teste por regra nova.' },
+    { id: 'cp4-resumo', passo: 't2-dev', numero: 28, titulo: 'CP4 — registro de VND-CHK-02 — Consultar Resumo do Pedido', perfil: 'completo', revisor: 'Caio (Tech Lead)', ticket: 'STRY0013120', arquivos: [RESUMO, 'repos/INDEX.md', INDEX, AIM2], gate: 'codigo', estado: 'implementado' },
+    { id: 'entrega', passo: 'merge', numero: 30, titulo: 'Entrega da sprint SP07', base: 'main', head: 'sprint/SP07', revisor: 'Ana (PO)', aprovador: ANA, ticket: 'SP07', entrega: true, arquivos: ['analise-impacto/AIM-SP07.md', AIM1, AIM2, FRETE, RESUMO, INDEX, 'global/CONTAGEM-PF.md'], descricao: 'AIMs concluídas, dois tickets entregues e cupom retirado da branch. Este é o mesmo PR #30 aberto como draft no planejamento, agora pronto para revisão e entrega.' },
+  ];
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const porPerfil = perfil => cenas.filter(c => !c.perfil || c.perfil === perfil);
+  let perfil, cena, estado, container, selecionar;
+
+  function configurar(original) {
+    const c = { repo: 'loja-doc', base: 'sprint/SP07', head: 'checkpoint/' + original.ticket + '-' + original.id, ...original };
+    if (perfil === 'requisitos' && c.gate === 'modelo-dados') {
+      c.estado = 'especificado';
+      if (c.id === 'cp2') {
+        c.problema = 'Estado modelo-validado pertence ao perfil completo; o CP2 de requisitos deve entregar especificado.';
+        c.correcao = 'Trocar estado para especificado e atualizar os espelhos da esteira e da rastreabilidade.';
+      }
+    }
+    if (!c.descricao) c.descricao = 'Um gate por PR: ' + c.gate + '. O checkpoint anterior já está aprovado na branch base. O artefato, o N3, a AIM e o INDEX viajam juntos.';
+    return c;
+  }
+
+  function mostrar(novoPerfil, id) {
+    perfil = novoPerfil;
+    const original = porPerfil(perfil).find(c => c.id === id);
+    if (!original) throw new Error('Cena GitHub indisponível para o perfil: ' + id);
+    cena = configurar(original);
+    estado = { aberto: false, checks: 'pending', corrigido: false, comparacao: 'pr', review: '', comentario: '', aba: 'conversation', confirmando: false, merged: false, aviso: '' };
+    render();
+  }
+
+  function checkRows() {
+    const nomes = cena.codigo ? ['CI do código', 'valida-artefatos-previstos']
+      : cena.entrega ? ['gate-check (commit a commit)', 'spec-guard', 'valida-commits-ticket', 'valida-entrega']
+      : cena.draft ? ['spec-guard', 'valida-entrega']
+      : cena.gate ? ['gate-check', 'spec-guard', 'audit-trace-links'] : ['spec-guard'];
+    return nomes.map((nome, i) => {
+      const falha = estado.checks === 'failure' && i === (cena.draft ? nomes.length - 1 : 0);
+      const classe = falha ? 'gh-error' : estado.checks === 'pending' ? 'gh-wait' : 'gh-ok';
+      const mensagem = falha ? (cena.draft ? 'Entrega ainda em planejamento; merge bloqueado.' : cena.problema)
+        : estado.checks === 'pending' ? 'Aguardando execução dos checks simulados.'
+        : nome === 'spec-guard' ? 'validate-doc, regras × cenários (valida-regras-cenarios), contrato da API (valida-contrato-api), elos e AIMs: aprovados na simulação.'
+        : nome === 'valida-artefatos-previstos' ? 'Nenhuma feature implementado neste PR: o caminho de volta (<ID>/RN-NN nos testes, error_codes no código) roda quando o CP4 a marcar.'
+        : 'Validação simulada aprovada.';
+      return '<div class="gh-check"><span class="' + classe + '">' + (falha ? '✗' : estado.checks === 'pending' ? '○' : '✓') + '</span><div><strong>' + esc(nome) + '</strong><small>' + esc(mensagem) + '</small></div></div>';
+    }).join('');
+  }
+
+  const botao = (acao, texto, bloqueado = false, primario = false) => '<button type="button" class="gh-btn' + (primario ? ' primary' : '') + '" data-gh-action="' + acao + '"' + (bloqueado ? ' disabled' : '') + '>' + texto + '</button>';
+  function checks() {
+    return '<section class="gh-panel"><div class="gh-panel-head">' +
+      (estado.checks === 'failure' ? 'Some checks were not successful' : estado.checks === 'success' ? 'All checks have passed' : 'Checks pending') +
+      '</div>' + checkRows() + '<div class="gh-panel-body">' +
+      botao('checks', estado.checks === 'pending' ? 'Executar checks (simulado)' : 'Reexecutar checks', estado.merged) +
+      (estado.checks === 'failure' && !cena.draft ? '<div class="gh-guide">' + esc(cena.correcao) + '</div>' + botao('fix', 'Aplicar correção e enviar commit (simulado)', estado.merged) : '') +
+      (estado.corrigido ? '<div class="gh-actions">' + botao('correction', 'Ver diff da correção em Files changed') + '</div>' : '') +
+      '</div></section>';
+  }
+
+  function estadoGate(corrigido) {
+    return cena.id === 'cp2' && perfil === 'requisitos' && !corrigido ? 'modelo-validado' : cena.estado;
+  }
+
+  function status(valor) {
+    return { rascunho: '✏️ Rascunho', 'requisitos-aprovados': '📝 Requisitos aprovados',
+      'modelo-validado': '🧱 Modelo validado', especificado: '📋 Especificado', implementado: '✅ Implementado' }[valor];
+  }
+
+  function diff(path, corrigido) {
+    const anterior = { requisitos: 'rascunho', 'modelo-dados': 'requisitos-aprovados', testes: 'modelo-validado', codigo: 'especificado' }[cena.gate];
+    const novo = estadoGate(corrigido);
+    if (path === FRETE || path === RESUMO) {
+      if (cena.gate) {
+        const usuario = { requisitos: 'ana.po', 'modelo-dados': 'bru.dba', testes: 'lia.qa', codigo: 'caio.tl' }[cena.gate];
+        const linhas = ['- estado: ' + anterior, '+ estado: ' + novo,
+          '+ ' + cena.gate + ': { aprovado: true, por: "' + usuario + '", em: 2026-10-08, pr: ' + cena.numero + ' }'];
+        if (cena.id === 'cp1') linhas.push(corrigido
+          ? '  modelo-dados: { aprovado: false, por: "", em: "", pr: "" }'
+          : '+ modelo-dados: { aprovado: true, por: "", em: "", pr: "" }');
+        return linhas;
+      }
+      return ['  ## Implementação', '+ | implementação entregue | loja-api | src/checkout | main |'];
+    }
+    if (path.startsWith('qa/')) {
+      const id = path.includes('resumo') ? 'VND-CHK-02' : 'VND-CHK-01';
+      return ['+ # Plano de testes — ' + id + ' — ' + (path.includes('resumo') ? 'Consultar Resumo do Pedido' : 'Calcular Frete'),
+        '+ ## Massa de teste', '+ ## Cobertura das regras', '+ | ' + id + '/RN-01 | cenário @RN-01 do N3 | `' + id + '/RN-01 — …` |',
+        '+ ## 📐 NFR aplicáveis', '+ ## Pontos a resolver (❓)'];
+    }
+    if (path.startsWith('src/test/')) {
+      const testes = { 'codigo1': ['VND-CHK-01/RN-01 — frete da faixa do CEP', 'VND-CHK-01/RN-02 — CEP fora das faixas', 'VND-CHK-01/RN-03 — CEP com menos de 8 dígitos'] }[cena.id]
+        || (path.includes('pedido') ? ['VND-CHK-02/RN-01 — prazo prometido no resumo'] : ['VND-CHK-01/RN-04 — prazo da faixa do CEP']);
+      return testes.map(n => '+ @Test @DisplayName("' + n + '")');
+    }
+    if (path === 'repos/INDEX.md') return ['+ | loja-api | https://git.acme/loja-api | Vendas | domínio | API do checkout | Java | Caio |'];
+    if (path.startsWith('src/')) return ['+ // Feature e ticket identificados no commit e no PR', '+ // ' + cena.ticket + ': implementação do comportamento especificado', '+ // Trecho didático; não é código executável da Loja Acme.'];
+    if (cena.gate && (path === INDEX || path.startsWith('analise-impacto/'))) {
+      const resumo = cena.arquivos.includes(RESUMO);
+      const feature = resumo ? 'VND-CHK-02: Consultar Resumo do Pedido' : 'VND-CHK-01: Calcular Frete';
+      const spec = (resumo ? RESUMO : FRETE).slice('modules/'.length);
+      const aim = resumo ? AIM2 : AIM1;
+      const linha = valor => path === INDEX
+        ? '| [`' + cena.ticket + '`](../' + aim + ') | [' + feature + '](./' + spec + ') | Vendas | ' + status(valor) + ' | 📋 | — | — | — |'
+        : '| [`' + feature + '`](../modules/' + spec + ') | Vendas · Checkout | Criação | `CA-1, CA-2, CA-3` | ' + status(valor) + ' |';
+      const espelho = valor => '| `' + feature.split(':')[0] + '` ([spec](./' + spec + ')) | ' + cena.ticket + ' | ' + valor + ' |';
+      const defasado = cena.id === 'cp1' && !corrigido;
+      return (path === INDEX ? ['  ## Esteira de checkpoints', ...(defasado
+        ? ['  ' + espelho(anterior)] : ['- ' + espelho(anterior), '+ ' + espelho(novo)])] : [])
+        .concat(['  ## ' + (path === INDEX ? 'Rastreabilidade' : 'Features')], defasado
+          ? ['  ' + linha(anterior)] : ['- ' + linha(anterior), '+ ' + linha(novo)]);
+    }
+    if (path.startsWith('analise-impacto/')) return cena.entrega ? ['- estado: em-execução', '+ estado: concluído', '+ Entrega reconciliada com as features no estado final.'] : ['+ Ticket: ' + cena.ticket, '+ Status das features espelhado do N3; changeset e critérios de aceite conferidos.'];
+    return ['+ ' + (path === INDEX ? 'Espelho da esteira e Status de rastreabilidade atualizados no mesmo PR.' : 'Artefato do checkpoint incluído e revisado.')];
+  }
+
+  function ausente(path, corrigido) {
+    return !corrigido && ((cena.id === 'cp3' && path.startsWith('qa/')) || (cena.id === 'cp4' && path === 'repos/INDEX.md'));
+  }
+
+  function diffCorrecao(path) {
+    const conteudo = corrigido => ausente(path, corrigido) ? []
+      : diff(path, corrigido).filter(l => !l.startsWith('-')).map(l => l.slice(2));
+    const antes = conteudo(false), depois = conteudo(true);
+    let inicio = 0, fimAntes = antes.length, fimDepois = depois.length;
+    while (inicio < fimAntes && inicio < fimDepois && antes[inicio] === depois[inicio]) inicio++;
+    if (inicio === fimAntes && inicio === fimDepois) return [];
+    while (fimAntes > inicio && fimDepois > inicio && antes[fimAntes - 1] === depois[fimDepois - 1]) { fimAntes--; fimDepois--; }
+    const removidas = antes.slice(inicio, fimAntes), adicionadas = depois.slice(inicio, fimDepois);
+    const comuns = Array.from({ length: removidas.length + 1 }, () => Array(adicionadas.length + 1).fill(0));
+    for (let i = removidas.length - 1; i >= 0; i--) {
+      for (let j = adicionadas.length - 1; j >= 0; j--) {
+        comuns[i][j] = removidas[i] === adicionadas[j] ? 1 + comuns[i + 1][j + 1] : Math.max(comuns[i + 1][j], comuns[i][j + 1]);
+      }
+    }
+    const linhas = [];
+    let i = 0, j = 0;
+    while (i < removidas.length || j < adicionadas.length) {
+      if (i < removidas.length && j < adicionadas.length && removidas[i] === adicionadas[j]) { linhas.push('  ' + removidas[i++]); j++; }
+      else if (i < removidas.length && (j === adicionadas.length || comuns[i + 1][j] >= comuns[i][j + 1])) linhas.push('- ' + removidas[i++]);
+      else linhas.push('+ ' + adicionadas[j++]);
+    }
+    return antes.slice(Math.max(0, inicio - 2), inicio).map(l => '  ' + l)
+      .concat(linhas, depois.slice(fimDepois, fimDepois + 2).map(l => '  ' + l));
+  }
+
+  function arquivos() {
+    const correcao = estado.corrigido && estado.comparacao === 'correcao';
+    const html = cena.arquivos.map(path => {
+      const falta = ausente(path, estado.corrigido);
+      const linhas = correcao ? diffCorrecao(path) : diff(path, estado.corrigido);
+      if (correcao && !linhas.length) return '';
+      return '<section class="gh-file"><div class="gh-panel-head">' + esc(path) +
+        (falta ? ' <span class="gh-error">— ausente do PR</span>' : correcao && ausente(path, false) ? ' — incluído pela correção' : '') + '</div>' +
+        (falta ? '<div class="gh-panel-body">O artefato precisa estar no diff, não apenas em outro PR.</div>'
+          : '<pre class="gh-diff">' + linhas.map(l => '<span class="' + (l.startsWith('+') ? 'add' : l.startsWith('-') ? 'del' : '') + '">' + esc(l) + '</span>').join('') + '</pre>') + '</section>';
+    }).join('');
+    return '<div class="gh-guide">Diff didático resumido, não um patch completo ou uma captura do GitHub real. ' +
+      (correcao ? 'Comparação: antes → depois do commit de correção. Vermelho: removido; verde: adicionado. Só os arquivos alterados pela correção aparecem.'
+        : 'Comparação: branch base → versão atual do PR. Os demais gates permanecem como já estavam na base.') + '</div>' +
+      (estado.corrigido ? '<div class="gh-picker"><label for="gh-diff-view">Comparação do diff</label><select id="gh-diff-view"><option value="pr"' + (!correcao ? ' selected' : '') + '>PR completo (base → atual)</option><option value="correcao"' + (correcao ? ' selected' : '') + '>Commit de correção (antes → depois)</option></select></div>' : '') +
+      (html || '<div class="gh-guide">Não há novas alterações nos trechos didáticos desta cena. O pedido de revisão não fornece um diff adicional.</div>');
+  }
+
+  function review() {
+    return '<section class="gh-panel"><div class="gh-panel-head">Review changes — ' + esc(cena.revisor) + '</div><form class="gh-panel-body gh-form" data-gh-form="review">' +
+      '<p>Revisão humana do artefato pelo CODEOWNER; check verde não equivale a aprovação.</p>' +
+      '<label for="gh-review-comment">Comentário de revisão (opcional)</label><textarea id="gh-review-comment" name="comment" placeholder="O que foi conferido no artefato?"></textarea>' +
+      '<div class="gh-review-options"><label><input type="radio" name="review" value="comment" checked> Comment</label><label><input type="radio" name="review" value="changes"> Request changes</label><label><input type="radio" name="review" value="approved"> Approve</label></div>' +
+      '<button class="gh-btn primary" type="submit"' + (cena.draft || estado.merged ? ' disabled' : '') + '>Submit review (simulado)</button></form></section>';
+  }
+
+  function conversa() {
+    const aprovado = estado.review === 'approved';
+    const pronto = estado.checks === 'success' && aprovado && !cena.draft;
+    let html = '<section class="gh-panel"><div class="gh-panel-head">Rui abriu este pull request · ' + esc(cena.ticket) + '</div><div class="gh-panel-body"><p>' + esc(cena.descricao) + '</p><p><strong>Arquivos do PR:</strong> ' + cena.arquivos.length + ' · Perfil: ' + esc(perfil) + '</p></div></section>' + checks();
+    html += '<section class="gh-panel"><div class="gh-panel-head">Reviewers</div><div class="gh-panel-body"><p>' + esc(cena.revisor) + ' · ' +
+      (aprovado ? '<span class="gh-ok">✓ Approved</span>' : estado.review === 'changes' ? '<span class="gh-error">Changes requested</span>' : 'Review required') + '</p>' +
+      (estado.comentario ? '<p><strong>Comentário:</strong> ' + esc(estado.comentario) + '</p>' : '') +
+      (estado.review === 'changes' ? botao('fix', 'Enviar commit de correção (simulado)', estado.merged) : '') +
+      '<div class="gh-actions">' + botao('review', 'Review changes', cena.draft || estado.merged) + '</div></div></section>';
+    if (estado.merged) return html + '<section class="gh-panel"><div class="gh-panel-head gh-ok">Pull request successfully merged and closed</div><div class="gh-panel-body"><p>A branch <code>' + esc(cena.head) + '</code> foi mesclada em <code>' + esc(cena.base) + '</code> nesta simulação.</p><p>' +
+      (cena.entrega ? 'A main passa a representar a sprint entregue. Confira o conteúdo e origin/main..origin/sprint/SP07 = 0.'
+        : cena.base === 'main' ? 'Confira o conteúdo na main e a trilha Approved-by do merge.'
+        : 'O checkpoint entra na branch da sprint; a main permanece inalterada até a entrega.') + '</p>' +
+      (cena.base === 'main' && !cena.codigo ? '<p><span class="gh-ok">✓ check-approval-trailers</span> · conferência pós-merge: o Approved-by foi incluído na mensagem.</p>' : '') + '</div></section>';
+    html += '<section class="gh-panel"><div class="gh-panel-head">' + (cena.draft ? 'This pull request is still a draft' : pronto ? 'Merging is available' : 'Merging is blocked') + '</div><div class="gh-panel-body"><p>' +
+      (cena.draft ? 'O PR da sprint fica aberto como draft. A conclusão está na cena “Entrega”, depois do fechamento das AIMs e da retirada do ticket não entregue.'
+        : pronto ? 'Checks aprovados e revisão humana aprovada. Confirme a branch base antes do merge.'
+        : 'É necessário passar nos checks, resolver os pedidos de alteração e receber aprovação do revisor.') + '</p>' +
+      botao('merge', 'Merge pull request', !pronto, true);
+    if (estado.confirmando) html += '<form class="gh-form" data-gh-form="merge"><label for="gh-merge-title">Commit title</label><input type="text" id="gh-merge-title" readonly value="Merge pull request #' + cena.numero + ' from acme/' + esc(cena.head) + '">' +
+      '<label for="gh-merge-body">Commit message</label><textarea id="gh-merge-body" name="message"></textarea>' +
+      (cena.base === 'main' ? '<p>Use Create a merge commit. No corpo, inclua <code>Approved-by: Nome &lt;email&gt;</code>; a aprovação da interface não escreve esse trailer automaticamente.</p>' + botao('trailer', 'Incluir Approved-by do aprovador') : '') +
+      '<div class="gh-actions"><button type="submit" class="gh-btn primary">Confirm merge (simulado)</button>' + botao('cancel-merge', 'Cancel') + '</div></form>';
+    return html + '</div></section>';
+  }
+
+  function render() {
+    const tabs = [['conversation', 'Conversation'], ['commits', 'Commits'], ['checks', 'Checks'], ['files', 'Files changed']];
+    let corpo;
+    if (!estado.aberto) corpo = '<section class="gh-panel"><div class="gh-panel-head">Comparing changes</div><div class="gh-panel-body"><div class="gh-branches"><strong>base:</strong> <code>' + esc(cena.base) + '</code> ← <strong>compare:</strong> <code>' + esc(cena.head) + '</code></div><p>A branch de trabalho é criada a partir da base indicada, recebe os artefatos em um commit com a chave do ticket e é enviada com git push antes de abrir o PR.</p><form class="gh-form" data-gh-form="create"><label for="gh-pr-title">Título</label><input type="text" id="gh-pr-title" readonly value="' + esc(cena.titulo) + '"><label for="gh-pr-body">Descrição</label><textarea id="gh-pr-body" readonly>' + esc(cena.descricao) + '\nTicket: ' + esc(cena.ticket) + '</textarea><div class="gh-actions"><button type="submit" class="gh-btn primary">' + (cena.draft ? 'Create draft pull request' : 'Create pull request') + ' (simulado)</button></div></form></div></section>';
+    else if (estado.aba === 'checks') corpo = checks();
+    else if (estado.aba === 'files') corpo = arquivos() + review();
+    else if (estado.aba === 'commits') corpo = '<section class="gh-panel"><div class="gh-panel-head">Commits da branch de trabalho</div><div class="gh-panel-body"><p><code>docs: ' + esc(cena.gate || cena.titulo) + ' (' + esc(cena.ticket) + ')</code></p>' + (estado.corrigido ? '<p><code>docs: correção após checks/review (' + esc(cena.ticket) + ')</code></p>' : '') + '<p>Uma chave de ticket por commit de spec; um gate por PR de checkpoint. Estes commits são apenas ilustrativos.</p></div></section>';
+    else corpo = conversa();
+    container.innerHTML = '<div class="gh"><div class="gh-banner"><strong>GitHub simulado — ambiente de ensino.</strong> Não acessa sua conta, não cria branches/PRs e não altera os gates ou arquivos do roteiro. Nomes, números e diffs são ilustrativos.</div>' +
+      '<div class="gh-header"><div class="gh-repo">▣ acme / <strong>' + esc(cena.repo) + '</strong> <small>simulado</small></div><div class="gh-repo-nav"><span>Code</span><span>Issues</span><span class="active">Pull requests</span><span>Actions</span></div></div>' +
+      '<div class="gh-shell"><div class="gh-picker"><label for="gh-scene">Cena do roteiro</label><select id="gh-scene">' + porPerfil(perfil).map(c => '<option value="' + c.id + '"' + (c.id === cena.id ? ' selected' : '') + '>' + esc(c.titulo) + ' — #' + c.numero + '</option>').join('') + '</select>' + botao('reset', 'Reiniciar cena') + '</div>' +
+      '<h3 class="gh-title">' + esc(cena.titulo) + ' <span>#' + cena.numero + '</span></h3><div class="gh-meta"><span class="gh-status ' + (estado.merged ? 'merged' : cena.draft ? 'draft' : '') + '">' + (estado.merged ? '⑂ Merged' : cena.draft ? '○ Draft' : '⑂ ' + (estado.aberto ? 'Open' : 'Novo PR')) + '</span><span>Rui quer mesclar <code>' + esc(cena.head) + '</code> em <code>' + esc(cena.base) + '</code></span></div>' +
+      (estado.aberto ? '<div class="gh-tabs" role="tablist" aria-label="Abas do pull request">' + tabs.map(([id, nome]) => '<button type="button" id="gh-tab-' + id + '" role="tab" data-gh-tab="' + id + '" aria-controls="gh-tabpanel" aria-selected="' + (estado.aba === id) + '" tabindex="' + (estado.aba === id ? '0' : '-1') + '">' + nome + '</button>').join('') + '</div>' : '') +
+      '<div class="gh-layout"><div id="gh-tabpanel"' + (estado.aberto ? ' role="tabpanel" aria-labelledby="gh-tab-' + estado.aba + '"' : '') + '>' + corpo + '<div class="gh-notice" role="status" aria-live="polite" tabindex="-1">' + esc(estado.aviso) + '</div></div><aside class="gh-sidebar"><section><h3>Reviewers · CODEOWNERS</h3><p>' + esc(cena.revisor) + '</p><p>' + (estado.review === 'approved' ? '✓ Approved' : 'Revisão humana obrigatória') + '</p></section><section><h3>Branch base</h3><p><code>' + esc(cena.base) + '</code></p><p>' + (cena.base === 'main' ? 'Preparação, código ou entrega; não antecipar a spec da sprint.' : 'Checkpoint mesclado na sprint, não diretamente na main.') + '</p></section><section><h3>Ticket</h3><p>' + esc(cena.ticket) + '</p><h3>Labels</h3><p>documentação · ' + esc(perfil) + '</p></section></aside></div></div></div>';
+  }
+
+  function acao(nome) {
+    estado.aviso = '';
+    if (nome === 'reset') { mostrar(perfil, cena.id); return; }
+    if (nome === 'correction' && estado.corrigido) {
+      estado.aba = 'files'; estado.comparacao = 'correcao'; render();
+      container.querySelector('#gh-diff-view').focus({ preventScroll: true });
+      return;
+    }
+    if (!estado.aberto || estado.merged) return;
+    if (nome === 'checks') {
+      estado.checks = cena.draft || (cena.problema && !estado.corrigido) ? 'failure' : 'success';
+      estado.aviso = estado.checks === 'failure' ? 'Checks reprovados; o merge continua bloqueado.' : 'Checks aprovados. Ainda é necessária a revisão humana.';
+    } else if (nome === 'fix') {
+      estado.corrigido = true; estado.comparacao = 'correcao'; estado.checks = 'pending'; estado.review = ''; estado.comentario = ''; estado.confirmando = false;
+      estado.aviso = 'Commit de correção enviado na mesma branch. Veja o antes/depois em Files changed, reexecute os checks e solicite nova revisão.';
+    } else if (nome === 'review') estado.aba = 'files';
+    else if (nome === 'merge' && estado.checks === 'success' && estado.review === 'approved' && !cena.draft) estado.confirmando = true;
+    else if (nome === 'cancel-merge') estado.confirmando = false;
+    else if (nome === 'trailer') {
+      container.querySelector('#gh-merge-body').value = 'Approved-by: ' + cena.aprovador;
+      return;
+    }
+    render();
+    container.querySelector('.gh-notice').focus({ preventScroll: true });
+  }
+
+  function iniciar(el, aoSelecionar) {
+    container = el; selecionar = aoSelecionar;
+    container.addEventListener('change', e => {
+      if (e.target.id === 'gh-scene') selecionar(e.target.value);
+      else if (e.target.id === 'gh-diff-view') { estado.comparacao = e.target.value; render(); container.querySelector('#gh-diff-view').focus({ preventScroll: true }); }
+    });
+    container.addEventListener('click', e => {
+      const tab = e.target.closest('[data-gh-tab]');
+      if (tab) { estado.aba = tab.dataset.ghTab; render(); container.querySelector('#gh-tab-' + estado.aba).focus(); return; }
+      const btn = e.target.closest('[data-gh-action]');
+      if (btn && !btn.disabled) acao(btn.dataset.ghAction);
+    });
+    container.addEventListener('keydown', e => {
+      if (!e.target.matches('[data-gh-tab]')) return;
+      const tabs = ['conversation', 'commits', 'checks', 'files'];
+      const i = tabs.indexOf(estado.aba);
+      const proxima = e.key === 'ArrowRight' ? tabs[(i + 1) % tabs.length] : e.key === 'ArrowLeft' ? tabs[(i + 3) % tabs.length] : e.key === 'Home' ? tabs[0] : e.key === 'End' ? tabs[3] : null;
+      if (!proxima) return;
+      e.preventDefault(); e.stopPropagation();
+      estado.aba = proxima; render(); container.querySelector('#gh-tab-' + proxima).focus();
+    });
+    container.addEventListener('submit', e => {
+      const form = e.target.closest('[data-gh-form]');
+      if (!form) return;
+      e.preventDefault();
+      const data = new FormData(form);
+      if (form.dataset.ghForm === 'create') { estado.aberto = true; estado.aba = 'conversation'; }
+      else if (form.dataset.ghForm === 'review') {
+        if (cena.draft || estado.merged) return;
+        const valor = data.get('review');
+        if (valor === 'approved' && estado.checks !== 'success') { estado.aviso = 'Aprovação bloqueada nesta simulação: primeiro resolva e passe nos checks.'; }
+        else {
+          estado.review = valor; estado.comentario = String(data.get('comment') || ''); estado.confirmando = false; estado.aba = 'conversation';
+          estado.aviso = valor === 'changes' ? 'Revisor solicitou alterações; envie um commit de correção e peça nova revisão.' : valor === 'approved' ? 'Revisão aprovada pelo CODEOWNER.' : 'Comentário registrado. Comment não é uma aprovação.';
+        }
+      } else if (form.dataset.ghForm === 'merge') {
+        if (!estado.confirmando || estado.checks !== 'success' || estado.review !== 'approved' || cena.draft || estado.merged) return;
+        if (cena.base === 'main' && !/^Approved-by:\s+.+\s<[^<>\s]+@[^<>\s]+>$/m.test(String(data.get('message') || ''))) {
+          container.querySelector('.gh-notice').textContent = 'Merge não confirmado: inclua Approved-by: Nome <email> no corpo da mensagem.';
+          return;
+        }
+        estado.merged = true; estado.confirmando = false; estado.aviso = 'Merge concluído apenas na simulação. Nenhuma operação foi enviada ao GitHub.';
+      }
+      render();
+      container.querySelector('.gh-notice').focus({ preventScroll: true });
+    });
+  }
+  window.DOCQUI_GITHUB = { cenas: porPerfil, mostrar, iniciar };
+})();
+
+</script>
+<script>window.iniciarSimulador();</script>
 </body>
 </html>
