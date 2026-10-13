@@ -22,8 +22,13 @@
 // de toda AIM da instância (`analise-impacto/AIM-<CHAVE>.md`) — o que cobre ferramenta
 // nova e o id da sprint.
 //
-// Fora de uma branch de unidade de entrega (`main`, outra qualquer) ou sem a linha
-// **Cadência** no MASTER, não há o que conferir: sai 0 dizendo por quê.
+// No PR de checkpoint — de uma branch de trabalho (`ticket/<CHAVE>`, por exemplo) para a
+// `sprint/<id>` ou a `historia/<CHAVE>` —, a unidade é a da BASE: os commits que entram
+// nela seguem a regra dela. Assim o commit sem chave é recusado no próprio PR de
+// checkpoint, e não só no PR da sprint para a `main`, depois do merge.
+//
+// Fora de uma branch de unidade de entrega (`main`, outra qualquer), com a base também
+// fora, ou sem a linha **Cadência** no MASTER, não há o que conferir: sai 0 dizendo por quê.
 //
 // Uso: node scripts/valida-commits-ticket.mjs [--root <inst>] [--base origin/main] [--branch <nome>]
 // Exit: 0 ok · 1 commit fora da regra · 2 erro de uso/git.
@@ -45,9 +50,9 @@ if (!cadencia) {
   process.exit(0);
 }
 const branch = opt('--branch') || branchAtual(ROOT);
-const unidade = unidadeDaBranch(branch);
+const unidade = unidadeDaBranch(branch) || unidadeDaBranch(BASE);
 if (!unidade) {
-  console.log(`valida-commits-ticket: \`${branch}\` não é branch de unidade de entrega (sprint/<id> ou historia/<CHAVE>) — nada a conferir.`);
+  console.log(`valida-commits-ticket: nem \`${branch}\` nem a base \`${BASE}\` é branch de unidade de entrega (sprint/<id> ou historia/<CHAVE>) — nada a conferir.`);
   process.exit(0);
 }
 if ((unidade.tipo === 'sprint') !== (cadencia === 'sprint')) {

@@ -6,7 +6,7 @@ Instância do framework **Docqui Caixa** usada para formar analistas no método.
 
 | | |
 |---|---|
-| Engine | docqui-caixa-engine 6.4.0 (`VERSION`), sincronizado em `engine/` e `scripts/` — não edite essas pastas aqui |
+| Engine | docqui-caixa-engine 6.4.1 (`VERSION`), sincronizado em `engine/` e `scripts/` — não edite essas pastas aqui |
 | Perfil | `requisitos`: esteira CP1 → CP2, estado final 📋 `especificado` |
 | Cadência | `sprint`: o trabalho vive na branch da sprint até o fechamento |
 | Aprovador dos checkpoints | `@andromarcio` (`.github/CODEOWNERS`) |
