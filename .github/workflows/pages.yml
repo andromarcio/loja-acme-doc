@@ -42,6 +42,19 @@ jobs:
         with:
           node-version: 20
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Dependências dos artefatos derivados
+        run: pip install pyyaml
+
+      - name: Regenerar artefatos da documentação
+        run: node scripts/atualiza-pages.mjs --com-dicionarios
+
+      - name: Verificar indicadores do dashboard
+        run: python -m unittest discover -s scripts -p "test_dashboard.py"
+
       - name: Montar o site — main + branches de entrega abertas
         run: node scripts/monta-site-preview.mjs --out _site
 

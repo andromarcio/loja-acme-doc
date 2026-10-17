@@ -49,10 +49,16 @@ function arvore(dir, rotulo) {
   if (!existsSync(gerador)) { console.log(`  ⚠ ${rotulo}: sem assets/generate-tree.js — publicado sem a árvore do visualizador.`); return; }
   execFileSync('node', [gerador], { cwd: dir, stdio: ['ignore', 'ignore', 'inherit'] });
 }
+function dashboard(dir, gitRoot, branch) {
+  execFileSync(process.platform === 'win32' ? 'python' : 'python3',
+    [join(ROOT, 'scripts', 'gera-dashboard.py'), '--root', dir, '--git-root', gitRoot, '--branch', branch],
+    { stdio: ['ignore', 'inherit', 'inherit'] });
+}
 
 rmSync(OUT, { recursive: true, force: true });
 copia(ROOT, OUT);
 arvore(OUT, 'main'); // antes dos previews: a árvore da main não pode embuti-los
+dashboard(OUT, ROOT, git('rev-parse', '--abbrev-ref', 'HEAD'));
 console.log(`✓ main → ${OUT}`);
 
 const refs = git('for-each-ref', '--format=%(refname:short)', `refs/remotes/${REMOTE}/sprint`, `refs/remotes/${REMOTE}/historia`)
@@ -71,6 +77,7 @@ for (const ref of refs) {
     const destino = join(OUT, unidade.tipo, unidade.id);
     copia(tmp, destino);
     arvore(destino, caminho);
+    dashboard(destino, tmp, `${unidade.tipo}/${unidade.id}`);
     const info = {
       tipo: unidade.tipo, id: unidade.id, branch: `${unidade.tipo}/${unidade.id}`, caminho: `${caminho}/`,
       commit: git('rev-parse', '--short=12', ref), data: git('log', '-1', '--format=%cs', ref),

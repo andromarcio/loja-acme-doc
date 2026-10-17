@@ -63,9 +63,9 @@ const PIPELINE = [
   },
   {
     nome: 'Grafo de rastreabilidade (rastreabilidade/data.js)',
-    quando: () => tem('scripts/generate-trace-index.mjs') && tem('rastreabilidade/data.js'),
+    quando: () => tem('scripts/build-trace-data.mjs') && tem('rastreabilidade/data.js'),
     porQueAqui: 'só existe nas instâncias que publicam o grafo',
-    cmd: ['node', ['scripts/generate-trace-index.mjs', '--root', '.', '--out-data', 'rastreabilidade/data.js']],
+    cmd: ['node', ['scripts/build-trace-data.mjs', '--root', '.', '-o', 'rastreabilidade/data.js']],
   },
   {
     nome: 'Diagrama ER (global/DIAGRAMA-ER.md)',
@@ -85,6 +85,12 @@ const PIPELINE = [
     porQueAqui: 'ALTERA os dicionários — por isso é opt-in, com --com-dicionarios',
     cmd: ['node', ['scripts/generate-usage-index.mjs', '--write']],
     puloPadrao: 'opt-in (--com-dicionarios) — altera conteúdo de spec, não só artefato gerado',
+  },
+  {
+    nome: 'Dashboard de gestão (assets/dashboard-data.js)',
+    quando: () => tem('scripts/gera-dashboard.py'),
+    porQueAqui: 'lê os documentos e as refs do Git, sem alterar as specs ou os gates',
+    cmd: [process.platform === 'win32' ? 'python' : 'python3', ['scripts/gera-dashboard.py']],
   },
   {
     nome: 'Árvore do visualizador (assets/tree.js)',

@@ -1,4 +1,4 @@
-<!-- docqui: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
+<!-- docqui: 6.4.1 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-14 -->
 # MESSAGE-DICTIONARY.md
 > Dicionário de **mensagens de UI** que a pessoa usuária lê — e o **baseline** de
 > validação (obrigatório, formato, sucesso, estados de tela).
@@ -54,11 +54,12 @@
 > Uma seção por domínio. Crie conforme os N3 forem especificados. Use chaves
 > descritivas em SCREAMING_SNAKE_CASE prefixadas pelo domínio.
 
-### [Domínio]
+### Vendas
 
 | Chave | Situação | Texto literal |
 |---|---|---|
-| `[DOMINIO]_[NOME]` | [quando aparece] | "[texto exato exibido ao usuário]" |
+| `VND_CEP_NAO_ATENDIDO` | CEP fora das faixas da Tabela de Frete | "Ainda não entregamos neste CEP." |
+| `VND_CARRINHO_VAZIO` | Tentativa de cálculo sem itens | "Adicione itens ao carrinho para calcular o frete." |
 
 ---
 
@@ -89,5 +90,7 @@ Ao escrever cenários/telas em um N3:
 
 | Entrada | Usado em |
 |---|---|
-| _(nenhuma referência encontrada)_ | — |
+| `BASELINE` | `VND-CHK-01` |
+| `VND_CARRINHO_VAZIO` | `VND-CHK-01` |
+| `VND_CEP_NAO_ATENDIDO` | `VND-CHK-01` |
 <!-- /usado-em -->

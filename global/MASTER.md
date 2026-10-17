@@ -8,9 +8,9 @@
 ## Identificação do sistema
 
 - **Sigla**: LACME
-- **Nome**: Loja Acme
-- **Descrição**: Loja virtual da Acme, em que o cliente compra sozinho, com o frete e o prazo de entrega à vista antes de confirmar.
-- **Versão atual**: [a definir]
+- **Nome**: Loja ACME
+- **Descrição**: Loja virtual fictícia em que o cliente compra sozinho, conhecendo o valor da entrega antes de confirmar.
+- **Versão atual**: demonstração inicial
 - **Repositório de docs**: loja-acme-doc (este repositório)
 
 > **Fonte única da identidade do sistema.** O N0 (`global/N0_PRODUCT_VISION.md`) repete a
@@ -99,7 +99,7 @@
 
 <!-- Sistemas de que este depende ou com que troca dados, na ótica do negócio: o que vem de cada um e como (integração via API, arquivo, referência digitada). Vale nos dois perfis — é daqui que saem as AIE da contagem (global/ALI-AIE-MAP.md) e as fontes `externo: [Sistema]` dos N3. -->
 
-- [Sistema] — [o que fornece e como: integração via API / arquivo / referência digitada] ⚠️
+- Nenhuma integração externa no exemplo inicial: as faixas de CEP e seus valores são dados locais fictícios da Tabela de Frete. Os tickets simulam o ServiceNow, sem conexão com a ferramenta.
 
 ---
 
@@ -133,7 +133,7 @@ Cada nível da hierarquia de documentação possui um ID único para rastreabili
   EXP-<id>) ou, em qualquer formato, pelo link da AIM (`AIM-<CHAVE>.md`).
 -->
 
-- **Origem padrão desta instância**: servicenow — ServiceNow da Acme (fictício: os tickets da mentoria estão em `mentoria/backlog.md`)
+- **Origem padrão desta instância**: servicenow — tickets fictícios transcritos de `mentoria/backlog.md`, sem acesso ao ServiceNow real.
 
 | Tipo | Formato da chave | AIM em `analise-impacto/` | Exemplo |
 |---|---|---|---|

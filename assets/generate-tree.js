@@ -9,8 +9,7 @@ const OUT = path.join(__dirname, 'tree.js');    // assets/tree.js
 
 const excludeDirs = new Set([
   '.git', '.github', '.claude', '.gemini', '.vscode', '.tsupgrader',
-  'node_modules', 'venv', 'env', '__pycache__', 'build', 'dist', 'assets',
-  'engine', 'scripts', '_site' // o engine sincronizado e o site montado não são requisitos da instância
+  'node_modules', 'venv', 'env', '__pycache__', 'build', 'dist', 'assets'
 ]);
 
 const mdFiles = [];

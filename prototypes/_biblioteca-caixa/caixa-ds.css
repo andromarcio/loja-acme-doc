@@ -125,8 +125,8 @@ a:hover { text-decoration: underline; }
   .dsc-header-logo { font-size: var(--dsc-font-size-micro); }
 }
 
-/* padding lateral = grid-margin do Figma (48px ≥768 · 16px <768); vertical 24 */
-.dsc-main { flex: 1; padding: var(--dsc-spacing-smaller) var(--dsc-spacing-large); overflow: auto; }
+/* padding lateral reduzido (16px em qualquer largura); vertical 24 */
+.dsc-main { flex: 1; padding: var(--dsc-spacing-smaller) var(--dsc-spacing-tiny); overflow: auto; }
 .dsc-main.is-narrow { max-width: 1120px; margin: 0 auto; width: 100%; }
 
 .dsc-footer {
@@ -141,8 +141,8 @@ a:hover { text-decoration: underline; }
 .dsc-page-subtitle { color: var(--text-secondary); margin-top: var(--dsc-spacing-quark); }
 
 /* Componente isolado (sem shell) — espelha .dsc-main: largura total (extra large),
-   padding lateral = grid-margin do Figma (48px ≥768 · 16px <768), vertical 24. */
-.dsc-component-only { padding: var(--dsc-spacing-smaller) var(--dsc-spacing-large); }
+   padding lateral reduzido (16px em qualquer largura), vertical 24. */
+.dsc-component-only { padding: var(--dsc-spacing-smaller) var(--dsc-spacing-tiny); }
 
 /* ============================================================================
    SHELL · MENU OCULTO POR PADRÃO (drawer via hambúrguer)

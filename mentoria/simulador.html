@@ -221,17 +221,32 @@ body {
 }
 
 .content pre {
-  background: #07365a;
-  border-color: #0d4f7d;
+  background: var(--bg-subtle);
+  border-color: var(--border);
 }
 
-.content pre code {
-  color: #e4f4fb;
+.content pre code,
+.content pre .hljs-code {
+  color: var(--text);
+}
+
+.content pre .hljs-section {
+  color: var(--primary);
 }
 
 .content thead th {
   color: var(--white, #fff);
   background: var(--primary);
+}
+
+[data-theme="dark"] .content thead th {
+  color: #003b6f;
+}
+
+.content thead th code,
+[data-theme="dark"] .content thead th code {
+  color: inherit;
+  background: transparent;
 }
 
 .content tbody tr:hover {
@@ -5003,6 +5018,7 @@ window.DOKU_CONFIG = {
           ],
         },
         { title: "Negócio e Técnico", page: "negocio-tecnico", icon: "split" },
+        { title: "Perfis de escopo: requisitos e completo", page: "perfis-escopo", icon: "split" },
       ],
     },
     {

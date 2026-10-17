@@ -1,106 +1,34 @@
-# Mentoria docqui — Loja Acme
+<!-- docqui: 6.4.1 | prompt: DEMONSTRACAO_SIMULADOR | atualizado: 2026-10-14 -->
+# Demonstração — Loja ACME
 
-Este repositório é uma instância real do framework **Docqui Caixa**, montada para formar analistas no método. Ele roda a mesma engine das instâncias de produção (docqui-caixa-engine 6.4.1), com o perfil `requisitos` e a cadência `sprint`, e começa só com a identidade do sistema preenchida: a Loja Acme, sigla `LACME`. Todo o resto você escreve, do N0 à entrega da sprint, com os prompts conduzindo e os validadores conferindo.
+Esta instância é um exemplo preenchido do perfil **requisitos**, pronto para apresentar o método e praticar os checkpoints. O [simulador](simulador.html) mostra o processo completo; selecione **requisitos** no topo.
 
-| Arquivo | Para quê |
-|---|---|
-| `mentoria/README.md` | este guia: preparação, branches, regras, roteiro e o que o mentor confere |
-| `mentoria/backlog.md` | os tickets do ServiceNow fictício da Acme, de onde saem as AIMs |
-| `mentoria/simulador.html` | o simulador do método: a mesma sprint, passo a passo, com as saídas reais dos validadores |
+## O que já está preenchido
 
-## Antes de começar
+Vendas (`VND`) contém Checkout (`VND-CHK`) e **VND-CHK-01 — Calcular Frete**. Carrinho (`VND-CAR`) e Catálogo (`CAT`) estão planejados, sem especificação própria. O CEP já tem entrada canônica; Pedido e TabelaFrete têm modelo negocial. O ticket fictício STRY0013101 está ligado ao N3, à AIM e ao INDEX.
 
-1. **Percorra o simulador.** Baixe `mentoria/simulador.html` (ou clone o repositório) e abra no navegador. No topo, escolha o perfil **requisitos**: são 32 passos, do repositório vazio ao merge. O GitHub mostra o código do arquivo, não a página; ele precisa ser aberto localmente.
-2. **Prepare o ambiente.** Claude Code (terminal, VS Code ou web) aberto na raiz deste repositório, Node 20 ou mais novo e Python 3 com PyYAML (`pip install pyyaml`), que o `scripts/gates.py` usa.
-3. **Abra a sessão na raiz.** O Claude Code lê o `CLAUDE.md`, que carrega o MASTER, o N0 e o INDEX, e o hook `spec-guard` (registrado em `.claude/settings.json`) passa a rodar os validadores a cada arquivo gravado. Se a skill `analista-requisitos` não aparecer ao digitar `/`, peça "use a skill analista-requisitos".
+Nenhum gate foi aprovado. A existência do material não equivale a aprovação da PO ou do DBA. Ana, Rui e Bruno são personagens do simulador, não usuários que deram aprovação neste repositório.
 
-## As branches
+## Roteiro de apresentação
 
-```text
-main                           ponto de partida comum: só a identidade. Ninguém mescla aqui.
- └─ n0/<nome>                  exercício 1: a sua visão de produto (PR rascunho → main)
-     └─ sprint/SP07-<nome>     exercícios 2 a 7: a sua sprint (PR rascunho → n0/<nome>)
-         └─ cp/<nome>/<ID>-<gate>   cada checkpoint, num PR curto → sprint/SP07-<nome>
-```
+1. Abra o N0 e mostre a fronteira entre Vendas e Catálogo.
+2. Navegue pelo N1 Vendas e pelo N2 Checkout; mostre que permissões ficam apenas no N2.
+3. Abra a AIM STRY0013101 e siga o link para **VND-CHK-01 — Calcular Frete**.
+4. Compare CA-1, CA-2 e CA-3 com RN-01, RN-02, RN-03 e seus cenários marcados.
+5. Abra o modelo de entidades e a entrada CEP no FIELD-DICTIONARY; nenhum schema de banco é necessário.
+6. Mostre os mapas de features e rastreabilidade e o INDEX com a esteira ainda em rascunho.
+7. No simulador, percorra CP1 e CP2. No repositório real, esses passos exigem responsáveis reais, um checkpoint por PR e regeneração do espelho.
 
-- **`n0/<nome>`** guarda o seu N0. Ele fica fora da sprint porque, na cadência `sprint`, todo arquivo que a branch de entrega altera precisa ter sido declarado por um ticket, e a visão de produto não é de ticket nenhum.
-- **`sprint/SP07-<nome>`** é a sua branch de entrega: o id da sprint é `SP07-<nome>`, e a AIM da sprint é `analise-impacto/AIM-SP07-<nome>.md`. As AIMs, os N1, N2 e N3, o modelo de dados, a contagem e os planos de teste entram nela por commits diretos, um ticket por commit.
-- **`cp/<nome>/<ID>-<gate>`** leva um checkpoint só (por exemplo, `cp/joana/VND-CHK-01-requisitos`): o gate no front-matter do N3, o artefato da etapa e o espelho do INDEX. O PR vai para a sua branch de sprint; o CODEOWNERS chama o mentor, que aprova e mescla.
+## Praticar sem alterar o ponto de partida
 
-```bash
-git checkout -b n0/joana origin/main
-# … exercício 1 …
-git push -u origin n0/joana                  # abra o PR rascunho n0/joana → main
+Crie uma branch `sprint/SP07-<nome>` da `main`; faça os PRs de checkpoint para essa branch. Não reescreva o exemplo inicial, não use `git reset --hard` para simular e não copie os nomes dos personagens para os campos de aprovação.
 
-git checkout -b sprint/SP07-joana n0/joana
-git push -u origin sprint/SP07-joana         # abra o PR rascunho sprint/SP07-joana → n0/joana
-```
+Antes de usar a CI como trilha de aprovação, substitua os times de exemplo de `.github/CODEOWNERS` por responsáveis reais e configure proteção de branch. No perfil requisitos, CP1 aprova o negócio e CP2 aprova o modelo negocial; CP3 e CP4 não se aplicam.
 
-Abra o PR da sprint como rascunho logo no planejamento: a CI (`spec-guard`) roda a cada push, e o portão da entrega (`valida-entrega`) mostra o tempo todo o que ainda separa a sprint do merge. Ele só fica verde no fechamento.
+## Evoluir o exemplo
 
-## As regras que os validadores cobram
+O [backlog](backlog.md) preserva os tickets fictícios do simulador. STRY0013120 introduz prazo de entrega e resumo; STRY0013135 introduz cupom. Use AIM → 4A/3A, atualize o N2 e feche os elos nos três lugares. A contagem de PF é uma atividade separada: execute CT a partir do N3, sem copiar os totais da apresentação.
 
-- **Um commit, um ticket.** O assunto do commit que toca a spec cita uma chave só: `docs(VND-CHK-01): Calcular Frete — 3A (ServiceNow STRY0013101)`. Nos commits da AIM da sprint, a chave é `SP07-<nome>`. Commit só com artefato regenerado por script (espelho da esteira, índice dos dicionários) vai marcado `[gerado]`, sem chave. Quem confere: `valida-commits-ticket`, já no PR `cp/…` para a branch da sprint e de novo no PR da sprint.
-- **A AIM antes da spec.** Nenhum N1, N2 ou N3 muda antes do aval do mentor no changeset (`avalizado-por` no front-matter da AIM). Quem confere: `validate-impact`.
-- **Um gate por PR**, com o artefato da etapa e o espelho do INDEX regenerado (`python3 scripts/gates.py promote --write`) no mesmo PR. No PR da sprint, o mesmo check confere commit a commit: cada PR `cp/…` mesclado na branch aprova um gate só, na ordem. Quem confere: o check *Esteira de gates — check*.
-- **Regra com ID e cenário.** Cada regra específica do N3 é `- **RN-NN** — …`, numerada na feature e nunca reaproveitada, e ao menos um cenário a verifica, com a tag `@RN-NN`. Fora do N3, a regra se cita como `<ID>/RN-NN`. Quem confere: `valida-regras-cenarios`, a cada gravação.
-- **O elo nos três lugares.** O par ticket ↔ feature aparece na `## Origem` do N3, na `## Features` da AIM e no INDEX, com o mesmo Status. Quem confere: `audit-trace-links`, a cada gravação.
-- **A contagem nasce no N3.** A `## Métricas de tamanho` e a memória de cálculo (o bloco JSON) vêm primeiro; o `global/CONTAGEM-PF.md` só espelha. Quem confere: `valida-enumeracao-contagem` e `valida-contagem-consolidada`.
-- **Parágrafo numa linha só.** Rode `node scripts/verifica-texto-corrido.mjs <seus arquivos>`. Veja a linha de base abaixo antes de rodar na pasta inteira.
+## Limites do material
 
-## O roteiro
-
-Os IDs e nomes esperados são os do simulador. Os passos citados são os do simulador no perfil **requisitos**; a âncora entre parênteses leva direto a eles (`simulador.html#t1-n3`, por exemplo).
-
-| # | Exercício | Opções e comandos | O que deve sair | Simulador |
-|---|---|---|---|---|
-| 1 | A visão de produto, na `n0/<nome>` | **N0** | `global/N0_PRODUCT_VISION.md` preenchido, com os Major Feature Sets previstos (Vendas `VND`, Catálogo `CAT`), passando no `validate-doc` | passo 4 (`n0`) |
-| 2 | Planejar a SP07 | branch da sprint; copie `analise-impacto/_TEMPLATE_AIM_SPRINT.md` | `AIM-SP07-<nome>.md` em `rascunho`, com os três tickets do backlog | passo 5 (`sprint`) |
-| 3 | STRY0013101, da triagem ao N3 | **TR**, **AIM** (passos 1 a 6), **1A**, **2A**, **DM**, **3A** | a AIM avalizada; N1 Vendas, N2 Checkout, o modelo negocial de Vendas e o N3 de `VND-CHK-01` — Calcular Frete | passos 6 a 13 (`t1-triagem` … `t1-n3`) |
-| 4 | Os checkpoints, a contagem e o NFR de `VND-CHK-01` — Calcular Frete | PRs `cp/…` para CP1 e CP2; **CT**; **NF** | a feature em 📋 `especificado`; a contagem no N3 e no consolidado; o DES-01 no `global/NFR.md` | passos 14 a 17 (`t1-cp1` … `t1-qa`) |
-| 5 | STRY0013120: alterar e criar | **TR**, **AIM** com o `generate-impact-draft`, **4A**, **3A**, **DM**, PRs `cp/…`, **CT** | `VND-CHK-01` — Calcular Frete com o prazo; `VND-CHK-02` — Consultar Resumo do Pedido em 📋 `especificado` | passos 18 a 22 (`t2-triagem` … `t2-esteira`) |
-| 6 | STRY0013135: o cupom | **AIM**, **3A** | a AIM e o N3 de `VND-CHK-03` — Aplicar Cupom, em commits com a chave do ticket | passo 23 (`t3`) |
-| 7 | O fechamento da sprint | `reverte-ticket STRY0013135`; skill **analise-impacto** (as AIMs dos tickets e a da sprint); `gera-planilha-contagem.py --jira`; `valida-entrega` | as AIMs em `concluído`, a AIM da sprint conferida com as dos tickets, o portão verde | passos 25 a 31 (`relatorio` … `merge`) |
-
-Depois da SP07, pratique com os dois tickets da segunda parte do `backlog.md`, sem o roteiro.
-
-## O que muda em relação ao simulador
-
-- A branch da sprint é `sprint/SP07-<nome>`, não `sprint/SP07`, e o PR dela vai para a sua `n0/<nome>`, não para a `main`. Ao rodar os scripts de entrega à mão, use essa base: `node scripts/valida-commits-ticket.mjs --base origin/n0/<nome>` e `node scripts/valida-entrega.mjs --base origin/n0/<nome>`. Na branch `cp/…`, antes do push: `node scripts/valida-commits-ticket.mjs --base origin/sprint/SP07-<nome>`.
-- Os checkpoints são PRs `cp/<nome>/<ID>-<gate>` para a sua branch de sprint. No simulador, em **GitHub · PRs**, eles aparecem como `checkpoint/<ticket>-<cp>` para `sprint/SP07`, e o terminal mostra o `gate-check` com `--base origin/sprint/SP07`.
-- O mentor faz o papel de todo aprovador: a PO no aval da AIM e no CP1, o DBA no CP2. No front-matter do N3, o `por:` de cada gate é `andromarcio`.
-- Não há merge na `main` no fim: o portão verde no PR da sprint é a entrega. No GitHub · PRs do simulador, o PR da preparação e o da entrega são mesclados na `main`; aqui, não.
-
-## A linha de base: o que já vem do engine
-
-A instância começa limpa: o `verifica-texto-corrido` em `global/`, `modules/`, `analise-impacto/` e no `CLAUDE.md` não acusa nada, e as checagens da CI passam. Erro ou aviso que aparecer é do seu trabalho, com uma exceção esperada:
-
-- **O aviso do C2 na AIM.** No perfil `requisitos` não há a opção 5B nem o checkpoint de testes: o plano de testes fica com quem constrói. Por isso a AIM não declara linha `QA`, e o `validate-impact` avisa, em toda AIM com mudança funcional, que ela não tem essa linha. O aviso não reprova; não crie plano em `qa/`. A linha `NFR` continua obrigatória quando a mudança tem limiar de desempenho, segurança ou auditoria.
-
-## Para o mentor
-
-**Configuração no GitHub, uma vez:**
-
-- Dê aos analistas acesso de escrita ao repositório (Settings → Collaborators).
-- Em Settings → Pages, defina *Source = GitHub Actions*, e em Settings → Environments → `github-pages` libere as branches `sprint/*` e `historia/*` em *Deployment branches and tags*. A cada push, o site publica a `main` na raiz e a sprint de cada analista em `/sprint/SP07-<nome>/`, com a faixa de requisitos ainda não entregues; o seletor *Branch* no topo troca entre elas mantendo o arquivo aberto.
-- Em Settings → Branches, proteja a `main`: *Require a pull request before merging* e *Require review from Code Owners*. Nada é mesclado na `main` durante a mentoria; a regra só impede um push acidental no ponto de partida de todos.
-- O `CODEOWNERS` já aponta `@andromarcio` para todos os checkpoints: você é chamado como revisor em todo PR que toca `modules/`, `global/data-models/`, `global/DATA-MODEL.md`, `qa/` ou `repos/`.
-
-**No dia a dia:**
-
-- O aval da AIM é seu: revise o changeset no PR da sprint e peça ao analista que registre `avalizado-por` no front-matter, com o seu nome e a data.
-- Aprovar um checkpoint é aprovar e mesclar o PR `cp/…` na branch de sprint do analista.
-- No fechamento, diga quais tickets foram entregues. O STRY0013135 não é: o analista o tira com o `reverte-ticket`.
-- Ao fim da turma, apague as branches `n0/`, `sprint/` e `cp/` dos analistas. A `main` continua pronta para a próxima.
-- Para atualizar a engine desta instância, rode, a partir de um checkout atualizado do docqui-caixa-engine, `node scripts/sync-instance.mjs ../loja-acme-doc` (relatório) e depois com `--write`. O engine sobe primeiro: só sincronize depois que a mudança estiver na `main` dele.
-
-**O que conferir em cada etapa:**
-
-| Etapa | Confira |
-|---|---|
-| N0 | o escopo tem o que está fora; os Major Feature Sets previstos têm sigla de 3 letras; a sigla do subtítulo é a do MASTER |
-| AIM | a descrição está transcrita, não reescrita; `CA-n` só existe se a fonte numera; o changeset passa no C1 a C3 (no perfil `requisitos`, a falta da linha `QA` só avisa); as linhas candidatas que não mudam foram podadas; N1 e N2 estão declarados quando o ticket os cria |
-| N1, N2, N3 | houve "Contexto verificado" antes de especificar; o N1 diz o que o domínio não faz; as permissões estão só no N2; a regra é invariante e a reação está no cenário; cada regra tem o seu `RN-NN` e um cenário com a tag `@RN-NN` que a verifica; as mensagens saem do catálogo, com o marcador na linha antes do `Scenario:`; o verbo do nome da feature bate com o tipo dela (Consultar pede colunas do resultado) |
-| Checkpoints | um gate por PR; o `estado` é o derivado (no perfil `requisitos`, o CP2 leva a `especificado`); o espelho do INDEX e o Status na AIM e no INDEX acompanham |
-| Contagem | o número nasce no N3, com a memória de cálculo em bloco JSON de nomes; o consolidado espelha; a alteração que não muda o PF ainda fecha a pendência |
-| Fechamento | a coluna Mudança diz o que mudou e de quê (*Antes* … *Agora* …); a reconciliação justifica cada divergência; na AIM da sprint, cada função entra uma vez e a natureza é a da sprint (incluída vence) |
+As mensagens de carrinho vazio e os estados de tela são complementos didáticos ao ticket inicial, não requisitos aprovados. Não há protótipo executável da loja, implementação, testes de código ou dados reais. Os arquivos em branco herdados do bootstrap são referências para exercícios futuros, não funcionalidades implementadas.

@@ -7,6 +7,6 @@ desktop.ini
 __pycache__/
 *.pyc
 
-# Visualizador: a árvore é gerada a cada deploy (scripts/monta-site-preview.mjs)
-assets/tree.js
+# Artefatos locais
 _site/
+.venv/

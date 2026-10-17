@@ -93,7 +93,7 @@ jobs:
 
   # PR da branch de entrega para a main, ou PR de checkpoint (branch de trabalho → sprint/…
   # ou historia/…): nos dois, cada commit de spec cita a chave do ticket. O portão da
-  # entrega só roda no PR para a main ou para a n0/<nome> (abaixo).
+  # entrega só roda no PR para a main.
   entrega:
     if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'sprint/') || startsWith(github.head_ref, 'historia/') || startsWith(github.base_ref, 'sprint/') || startsWith(github.base_ref, 'historia/'))
     runs-on: ubuntu-latest
@@ -106,12 +106,9 @@ jobs:
         run: git fetch --no-tags origin "+refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}"
       - name: um ticket por commit de spec
         run: node scripts/valida-commits-ticket.mjs --base "origin/${{ github.base_ref }}"
-      # Adaptação desta instância (mentoria): a sprint de cada analista abre o PR para a
-      # branch n0/<nome> dele, não para a main (ver mentoria/README.md). O portão roda
-      # contra a base do PR nos dois casos.
-      - name: portão da entrega (PR para a main ou para a n0/<nome>)
-        if: github.base_ref == 'main' || startsWith(github.base_ref, 'n0/')
-        run: node scripts/valida-entrega.mjs --base "origin/${{ github.base_ref }}"
+      - name: portão da entrega (só no PR para a main)
+        if: github.base_ref == 'main'
+        run: node scripts/valida-entrega.mjs --base origin/main
 
   aprovacao:
     if: github.event_name == 'push'

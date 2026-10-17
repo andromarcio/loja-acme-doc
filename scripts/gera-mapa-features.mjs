@@ -93,8 +93,15 @@ const totFeat = dominios.reduce((s, d) => s + d.fss.reduce((n, f) => n + f.feats
 const fssVazios = dominios.reduce((s, d) => s + d.fss.filter((f) => f.feats.length === 0).length, 0);
 const domsVazios = dominios.filter((d) => d.fss.length === 0).length;
 
+const master = readFileSync(join(ROOT, 'global', 'MASTER.md'), 'utf8');
+const nomeProduto = m1(master, /^-\s*\*\*Nome\*\*:\s*(.+)$/m);
+const descricaoProduto = m1(master, /^-\s*\*\*Descrição\*\*:\s*(.+)$/m);
+if (!nomeProduto || !descricaoProduto) {
+  throw new Error('global/MASTER.md deve declarar Nome e Descrição do sistema.');
+}
+
 const MAPA = {
-  produto: { nome: 'SIMPF', desc: 'Sistema de Mensuração de Projetos e Sistemas — sistema corporativo da Caixa para mensurar sistemas e projetos de software (APF, SNAP, COSMIC ou outro método definido pela Caixa).', path: 'global/MASTER.md' },
+  produto: { nome: nomeProduto, desc: descricaoProduto, path: 'global/MASTER.md' },
   dominios,
   kpi: { dominios: dominios.length, fss: totFs, feats: totFeat, fssVazios, domsVazios },
 };

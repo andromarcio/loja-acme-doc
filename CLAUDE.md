@@ -13,8 +13,8 @@
 ## Identificação do projeto
 
 - **Sigla**: LACME
-- **Nome**: Loja Acme
-- **Descrição**: Loja virtual da Acme, em que o cliente compra sozinho, com o frete e o prazo de entrega à vista antes de confirmar.
+- **Nome**: Loja ACME
+- **Descrição**: Loja virtual fictícia para demonstrar requisitos de compra com frete conhecido antes da confirmação.
 - **Repositório de docs**: loja-acme-doc (este repositório — a instância)
 
 Este repositório é uma **instância do framework Docqui Caixa**: contém a documentação específica deste sistema (N0–N3, dicionários, data-models) e consome os prompts/templates do `docqui-caixa-engine` mais a skill `analista-requisitos`.
@@ -47,4 +47,4 @@ Os arquivos abaixo entram no contexto automaticamente a cada sessão (sintaxe de
 - **Na abertura de qualquer sessão de especificação**, apresente primeiro os **domínios e Feature Sets já existentes** (do `modules/INDEX.md`) — sempre, qualquer que seja o ponto de partida — para situar a nova especificação e evitar duplicar ou colocar algo no domínio/Feature Set errado.
 - **Ao gerar ou atualizar qualquer artefato**, carimbe-o: a primeira linha deve ser o comentário invisível `<!-- docqui: <versão de VERSION> | prompt: <PROMPT_ID> | atualizado: <YYYY-MM-DD> -->`. Em updates, reescreva o carimbo (não duplique). É invisível ao leitor do documento; serve para auditar com que versão do framework o artefato foi produzido. Ver `engine/VERSIONING.md`.
 - **Markdown — texto corrido.** Ao criar ou editar qualquer `.md`, cada parágrafo de prosa é **uma única linha contínua** — nunca quebre linha no meio de frase/parágrafo ("hard wrap"). Quebras de linha só separam parágrafos, itens de lista, cabeçalhos, linhas de tabela e blocos de código. Conferência: `node scripts/verifica-texto-corrido.mjs [arquivo|pasta]`.
-- **Repositório de mentoria.** Esta instância existe para formar analistas no docqui; o roteiro e as regras de trabalho estão em `mentoria/README.md`, e os tickets de exercício, em `mentoria/backlog.md`. Cada analista escreve o N0 na branch `n0/<nome>`, faz a sprint em `sprint/SP07-<nome>` (criada da `n0/<nome>`, com o PR em rascunho para ela) e leva cada checkpoint num PR `cp/<nome>/<ID>-<gate>` para a branch da sprint. Nada é mesclado na `main`: ela fica como o ponto de partida de todos. Ao conduzir uma sessão, explique o porquê de cada passo e de cada desvio que um validador apontar — o objetivo é o analista aprender o método, não só entregar o artefato.
+- **Demonstração**: perfil `requisitos`, cadência `sprint`. O exemplo inicial está em rascunho, com contagem pendente; não atribua aprovações às personas fictícias do simulador. O roteiro está em `mentoria/README.md` e os tickets fictícios em `mentoria/backlog.md`.

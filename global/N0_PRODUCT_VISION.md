@@ -1,5 +1,5 @@
-<!-- docqui: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
-# Visão de Produto: Loja Acme
+<!-- docqui: 6.4.1 | prompt: PROMPT_N0_VISAO | atualizado: 2026-10-14 -->
+# Visão de Produto: Loja ACME
 > **Nível 0** - Visão de Produto - `LACME`
 
 > O documento de referência mais alto do sistema: define **por que** o produto
@@ -17,13 +17,13 @@
 
 ## Propósito
 
-[Em um parágrafo: que problema este produto resolve e por que ele deve existir. Foque na dor real do usuário/negócio, não na solução técnica.]
+O cliente da ACME compra por telefone e só descobre o custo da entrega quando o pedido já foi fechado. A Loja ACME existe para que ele compre sozinho, a qualquer hora, sabendo quanto vai pagar antes de confirmar. Este produto é fictício e serve exclusivamente à demonstração do método.
 
 ---
 
 ## Proposta de valor
 
-[Uma a três frases que sintetizam o benefício central — o que o usuário ganha que justifica adotar este produto em vez de uma alternativa ou do status quo.]
+Comprar em poucos passos, com o valor do frete à vista antes da confirmação. O prazo estimado será tratado na evolução do exemplo, conforme o backlog.
 
 ---
 
@@ -31,7 +31,8 @@
 
 | Persona | Quem é | Principal dor | O que espera do produto |
 |---|---|---|---|
-| [Nome da persona] | [papel / contexto] | [problema que enfrenta hoje] | [resultado desejado] |
+| Cliente | Pessoa que compra na loja | Só conhece o custo da entrega depois de fechar o pedido | Conhecer o frete antes de confirmar |
+| Atendente | Pessoa que apoia a compra | Precisa cotar frete por telefone | Consultar o mesmo valor apresentado ao cliente |
 
 ---
 
@@ -39,8 +40,8 @@
 
 > O **quê** o produto busca alcançar — em linguagem de negócio, sem soluções técnicas.
 
-1. [Objetivo estratégico 1]
-2. [Objetivo estratégico 2]
+1. Levar 60% dos pedidos para o autoatendimento, como meta didática.
+2. Eliminar a cotação de frete por telefone para CEPs atendidos.
 
 ---
 
@@ -50,7 +51,8 @@
 
 | KPI | O que mede | Meta |
 |---|---|---|
-| [indicador] | [o que ele indica sobre o sucesso] | [alvo / faixa] |
+| Autoatendimento | Proporção de pedidos feitos diretamente pelo cliente | 60% na operação fictícia |
+| Transparência do frete | Compras com valor da entrega conhecido antes de confirmar | 100% dos pedidos com CEP atendido |
 
 ---
 
@@ -58,11 +60,13 @@
 
 ### Está dentro
 
-- [grande capacidade/área que o produto cobre]
+- Catálogo de produtos, carrinho e checkout com cálculo de frete.
+- Evolução para prazo de entrega, resumo do pedido e cupom, conforme os tickets de exercício.
 
 ### Está fora (não-objetivos)
 
-- [o que o produto deliberadamente NÃO faz — para conter o escopo]
+- Marketplace de outros vendedores.
+- Cobrança, liquidação financeira e operação da transportadora.
 
 ---
 
@@ -73,21 +77,23 @@
 
 | Major Feature Set | SIGLA | O que cuida |
 |---|---|---|
-| [Nome] | [ABC] | [uma frase] |
+| Vendas | VND | Carrinho e checkout até a confirmação do pedido |
+| Catálogo | CAT | Produtos disponíveis para compra; ainda planejado |
 
 ---
 
 ## Tom de voz e princípios de experiência
 
-- **Tom**: [ex.: direto e profissional / acolhedor / técnico]
-- **Princípios**: [ex.: "menos cliques", "transparência sobre o que o sistema fez", "nunca perder dados do usuário"]
+- **Tom**: direto e acolhedor.
+- **Princípios**: mostrar o custo antes da confirmação; explicar quando a entrega não atende ao CEP; não apresentar uma cotação antiga como válida após mudar o destino.
 
 ---
 
 ## Restrições e premissas
 
-- [restrição de negócio, regulatória ou de mercado relevante]
-- [premissa assumida que, se mudar, altera a visão] ⚠️
+- Todos os dados e tickets são fictícios; não usar dados pessoais ou credenciais reais.
+- A tabela didática de frete tem uma única faixa atendida, declarada no modelo de entidades.
+- Nenhuma aprovação humana, contagem revisada ou implementação é inferida da existência dos documentos.
 
 ---
 
@@ -97,7 +103,7 @@
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
-| [data] | [autor] | N0 criado | Visão de produto inicial |
+| 2026-10-14 | Copilot | N0 criado | Visão didática baseada no roteiro do simulador, sem aprovação atribuída à PO fictícia. |
 
 ---
 

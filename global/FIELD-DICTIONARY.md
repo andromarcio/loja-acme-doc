@@ -1,4 +1,4 @@
-<!-- docqui: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
+<!-- docqui: 6.4.1 | prompt: PROMPT_DATA_MODEL_negocio | atualizado: 2026-10-14 -->
 # FIELD-DICTIONARY.md
 > Dicionário de **campos canônicos** — campos que se repetem em várias features
 > com a mesma semântica de validação (CPF, e-mail, telefone…).
@@ -69,6 +69,24 @@ Scenario: CPF com quantidade de dígitos diferente de 11
   Then o sistema rejeita e exibe "CPF inválido."
 ```
 
+### CEP
+<!-- usado-em:gerado -->
+> **Usado em:** `VND-CHK-01`
+<!-- /usado-em -->
+
+- **Label Dev**: `cep`
+- **Tipo**: texto (8 dígitos, sem máscara no exemplo)
+- **Validação**: exatamente oito dígitos numéricos.
+- **Em aberto (por feature)**: obrigatoriedade.
+- **Mensagem**: "CEP inválido."
+
+```gherkin
+Scenario: CEP com quantidade de dígitos inválida
+  Given que informo um CEP com menos de oito dígitos
+  When tento calcular o frete
+  Then o sistema rejeita e exibe "CEP inválido."
+```
+
 ### E-mail
 <!-- usado-em:gerado -->
 > **Usado em:** _(ainda não referenciado em N3)_
@@ -109,7 +127,7 @@ Scenario: Senha abaixo da política mínima
 
 ### Valor monetário
 <!-- usado-em:gerado -->
-> **Usado em:** _(ainda não referenciado em N3)_
+> **Usado em:** `VND-CHK-01`
 <!-- /usado-em -->
 
 - **Label Dev**: `valor`
