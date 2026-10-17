@@ -112,6 +112,13 @@ class VisualPagesTest(unittest.TestCase):
             self.assert_visual("dark")
         style.evaluate("el => el.remove()")
 
+    def test_local_styles_skip_stale_cache(self):
+        # Todo CSS local entra com ?v=, como o JS do dashboard: um CSS em cache com o JS novo, depois
+        # de um deploy, deixava o filtro de domínio sem estilo.
+        stale = self.page.evaluate("""() => [...document.querySelectorAll('link[rel="stylesheet"]')]
+          .map(link => link.getAttribute('href')).filter(href => href.startsWith('assets/') && !href.includes('?v='))""")
+        self.assertEqual(stale, [])
+
     def test_search_mobile_and_diagrams(self):
         for width in [1440, 390, 320]:
             self.page.set_viewport_size({"width": width, "height": 900})

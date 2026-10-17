@@ -19,8 +19,17 @@
   <!-- Bibliotecas externas locais -->
   <script src="assets/vendor/marked.min.js"></script>
   <script src="assets/vendor/mermaid.min.js"></script>
-  <link rel="stylesheet" href="assets/css/mapa.css">
-  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <!-- Com ?v=, como o docqui-theme.css e os scripts do dashboard: sem ele, o navegador juntava
+       o CSS em cache (o Pages guarda 10 min) com o JS novo depois de um deploy. -->
+  <script>
+    ['assets/css/mapa.css', 'assets/css/dashboard.css'].forEach(href => {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href + '?v=' + Date.now();
+      document.head.appendChild(link);
+    });
+  </script>
+  <noscript><link rel="stylesheet" href="assets/css/mapa.css"><link rel="stylesheet" href="assets/css/dashboard.css"></noscript>
 
   <style>
     /* ==========================================================================
