@@ -2981,7 +2981,17 @@
 
         ${descText ? `
           <div class="hero-description-block">
-            <h2 style="font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Descrição</h2>
+            <div class="section-header">
+              <h2 class="section-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--brand-blue);">
+                  <line x1="21" y1="6" x2="3" y2="6"></line>
+                  <line x1="17" y1="10" x2="3" y2="10"></line>
+                  <line x1="21" y1="14" x2="3" y2="14"></line>
+                  <line x1="17" y1="18" x2="3" y2="18"></line>
+                </svg>
+                Descrição
+              </h2>
+            </div>
             <p style="font-size: 14px; color: var(--text-main); line-height: 1.6; margin-bottom: ${naoFazText ? '10px' : '0'};">
               ${marked.parseInline(descText)}
             </p>
@@ -3101,7 +3111,17 @@
 
         ${descText ? `
           <div class="hero-description-block">
-            <h2 style="font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Descrição</h2>
+            <div class="section-header">
+              <h2 class="section-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--brand-blue);">
+                  <line x1="21" y1="6" x2="3" y2="6"></line>
+                  <line x1="17" y1="10" x2="3" y2="10"></line>
+                  <line x1="21" y1="14" x2="3" y2="14"></line>
+                  <line x1="17" y1="18" x2="3" y2="18"></line>
+                </svg>
+                Descrição
+              </h2>
+            </div>
             <div style="font-size: 14px; color: var(--text-main); line-height: 1.6;">
               ${marked.parse(descText)}
             </div>

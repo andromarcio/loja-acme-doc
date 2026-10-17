@@ -217,6 +217,7 @@ class VisualPagesTest(unittest.TestCase):
             return titulos
         genericos = ["global/N0_PRODUCT_VISION.md", "global/DATA-MODEL.md", "global/NFR.md",
                      "analise-impacto/AIM-STRY0013101.md", "mentoria/README.md"]
+        espacos = []
         for rel in genericos + ["modules/vendas/README.md", "modules/vendas/checkout/README.md", FEATURE]:
             self.page.evaluate("(rel) => navigateTo(rel)", rel)
             self.page.wait_for_function("document.getElementById('documentContainer').classList.contains('doc-cards')")
@@ -233,6 +234,16 @@ class VisualPagesTest(unittest.TestCase):
             self.assertEqual(info["semCard"], 0, rel)
             if rel in genericos:
                 self.assertEqual(info["titulos"], rubricas(rel), rel)
+            else:
+                # No hero do N1, do N2 e do N3, a Descrição tem o título das demais seções e a
+                # mesma distância até a linha.
+                espacos.append(self.page.evaluate("""() => {
+                  const b = document.querySelector('.hero-description-block');
+                  const t = b && b.querySelector(':scope > .section-header .section-title');
+                  return t ? Math.round(t.getBoundingClientRect().top - b.getBoundingClientRect().top) : null;
+                }"""))
+        self.assertEqual(len(set(espacos)), 1, espacos)
+        self.assertIsNotNone(espacos[0])
         self.assertGreater(len(rubricas("global/N0_PRODUCT_VISION.md")), 5)
         for rota in ["__dashboard__", "__mapa__"]:
             self.page.evaluate("(r) => navigateTo(r)", rota)
