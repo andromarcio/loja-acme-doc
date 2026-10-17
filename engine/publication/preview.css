@@ -10,21 +10,72 @@
   font: 14px/1.5 system-ui, sans-serif;
   overflow-wrap: anywhere;
 }
-.docqui-preview label { display: flex; align-items: center; gap: .5rem; min-width: 0; }
-.docqui-preview select {
+.docqui-preview label, .docqui-preview__branch { display: flex; align-items: center; gap: .5rem; min-width: 0; }
+.docqui-preview__menu { position: relative; min-width: 0; }
+.docqui-preview__menu > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
   min-width: 8rem;
   max-width: min(26rem, 70vw);
-  padding: .4rem;
+  padding: .4rem .7rem;
   color: #17334d;
   background: #fff;
   border: 1px solid #58748c;
   border-radius: .25rem;
-  font: inherit;
+  cursor: pointer;
+  list-style: none;
 }
+.docqui-preview__menu > summary::-webkit-details-marker { display: none; }
+.docqui-preview__menu > summary > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* A seta, com folga da borda; vira para cima com a lista aberta. */
+.docqui-preview__menu > summary::after {
+  content: "";
+  flex: none;
+  width: .45rem;
+  height: .45rem;
+  margin: 0 .1rem .2rem 0;
+  border: solid #17334d;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.docqui-preview__menu[open] > summary::after { margin: .2rem .1rem 0 0; transform: rotate(-135deg); }
+.docqui-preview__menu > ul {
+  position: absolute;
+  z-index: 1000;
+  top: calc(100% + .25rem);
+  left: 0;
+  min-width: 100%;
+  max-width: min(26rem, calc(100vw - 2rem));
+  max-height: 60vh;
+  overflow: auto;
+  margin: 0;
+  padding: .25rem 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid #58748c;
+  border-radius: .25rem;
+  box-shadow: 0 .4rem 1rem rgba(23, 51, 77, .18);
+}
+/* .docqui-preview na frente: as regras de link da barra (cor e sublinhado) vêm depois. */
+.docqui-preview .docqui-preview__menu a {
+  display: block;
+  padding: .4rem .7rem .4rem 1.6rem;
+  color: #17334d;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.docqui-preview .docqui-preview__menu a:hover { background: #eef6fc; }
+.docqui-preview .docqui-preview__menu a[aria-current="page"] { position: relative; font-weight: 700; }
+.docqui-preview .docqui-preview__menu a[aria-current="page"]::before { content: "✓"; position: absolute; left: .55rem; }
 .docqui-preview a, .docqui-review a { color: #005ca9; text-decoration: underline; }
 .docqui-preview__state { font-weight: 700; }
-.docqui-preview a:focus-visible, .docqui-preview select:focus-visible,
+.docqui-preview a:focus-visible, .docqui-preview summary:focus-visible,
 .docqui-review a:focus-visible, .docqui-diff:focus-visible { outline: 3px solid #005ca9; outline-offset: 3px; }
+.docqui-preview .docqui-preview__menu a:focus-visible { outline-offset: -3px; }
 .docqui-review { margin: 0; background: #fff; color: #17334d; font: 16px/1.6 system-ui, sans-serif; }
 .docqui-review__content { max-width: 90rem; margin: auto; padding: 1rem; overflow-wrap: anywhere; }
 .docqui-change { margin-top: 2rem; }

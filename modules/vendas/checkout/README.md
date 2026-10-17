@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.1 | prompt: PROMPT_2A_N2_negocio | atualizado: 2026-10-14 -->
+<!-- docqui: 6.4.8 | prompt: PROMPT_2A_N2_negocio | atualizado: 2026-10-17 -->
 # Feature Set: Checkout
 > **Nível 2** - Major Feature Set: Vendas - `VND-CHK`
 
@@ -10,9 +10,9 @@ Checkout é a etapa em que o cliente informa onde quer receber e consulta o valo
 
 ## Features
 
-| Feature | Prioridade | Descrição |
-|---|---|---|
-| [**Calcular Frete**](f-calcular-frete.md) <small>VND-CHK-01</small> | **P1** | Consultar o valor da entrega pelo CEP |
+| Feature | Descrição |
+|---|---|
+| [**Calcular Frete**](f-calcular-frete.md) <small>VND-CHK-01</small> | Consultar o valor da entrega pelo CEP |
 
 ## Fluxo Principal
 
@@ -50,5 +50,6 @@ Perfis: **Cliente**, **Atendente**.
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-14 | Copilot | N2 criado | Checkout didático com jornada e permissões, sem aprovação de checkpoint. |
+| 2026-10-17 | Claude | Ajuste | Sai a coluna Prioridade da tabela de Features: a priorização das features saiu do método no engine 6.4.4. A ordem da tabela continua a da jornada. |
 
 *Links: [Vendas](../README.md) · [INDEX geral](../../INDEX.md)*

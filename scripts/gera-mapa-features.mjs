@@ -74,8 +74,6 @@ for (const domNome of readdirSync(MODULES)) {
         nome: m1(t, /^#\s+(.+)$/m),
         desc: paraApos(t, 'Descrição'),
         estado: m1(t, /^estado:\s*(.+)$/m) || 'rascunho',
-        prioridade: m1(t, /^prioridade:\s*(.+)$/m) || '',
-        mvp: /^mvp:\s*true/m.test(t),
         path: `modules/${domNome}/${fsNome}/${arq}`,
       });
     }
