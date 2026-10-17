@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.6 | prompt: ATUALIZACAO_VISUAL_PAGES | atualizado: 2026-10-17 -->
+<!-- docqui: 6.4.8 | prompt: ATUALIZACAO_VISUAL_PAGES | atualizado: 2026-10-17 -->
 # Loja ACME — demonstração do Docqui Caixa
 
 Instância de demonstração de uma **loja virtual fictícia**, no perfil **requisitos** e cadência **sprint**. O exemplo preenchido acompanha **VND-CHK-01 — Calcular Frete**, do ticket ao N3 e ao modelo de entidades. Os dados, tickets e valores são didáticos; não representam sistemas ou atendimentos reais da CAIXA.
@@ -44,6 +44,6 @@ No GitHub, configure **Settings → Pages → Source: GitHub Actions**. O workfl
 
 Os arquivos de `engine/`, `scripts/` e `.claude/skills/` são sincronizados pelo `scripts/sync-instance.mjs` do engine, não por cópia manual. Depois de alterar Markdown, regenere os derivados; nunca copie `assets/tree.js`, `assets/mapa-data.js` ou `rastreabilidade/data.js` de outro sistema.
 
-**Adaptações locais de publicação**: `gera-mapa-features.mjs` lê nome e descrição do MASTER, em vez da identidade fixa do SIMPF; `atualiza-pages.mjs` usa o `build-trace-data.mjs` existente para preservar os caminhos dos N2. Preserve esses ajustes ao sincronizar enquanto não estiverem incorporados ao engine. A interface do grafo abre os documentos no visualizador local, inclusive nos previews.
+**Adaptações locais de publicação**: `gera-mapa-features.mjs` ainda lê `prioridade` e `mvp` do N3, que o mapa da loja exibe e que o engine tirou do método na 6.4.4 — o nome e a descrição do produto, lidos do MASTER, já vêm do engine desde a 6.4.8; `atualiza-pages.mjs` usa o `build-trace-data.mjs` existente para preservar os caminhos dos N2. Preserve esses ajustes ao sincronizar enquanto não estiverem incorporados ao engine. A interface do grafo abre os documentos no visualizador local, inclusive nos previews.
 
 O gerador e o renderer do dashboard são extensões de publicação reaproveitadas do SIMPF. Preserve também a integração local do dashboard em `atualiza-pages.mjs` e `monta-site-preview.mjs` — que regenera os derivados e o dashboard em cada versão do site — ao sincronizar o engine. Os destaques nos cards são do `index.html` da loja (`comparaNosCards`): a base é desenhada pelos mesmos templates e o comparador do engine corre card a card. O contrato de contagem dos indicadores roda com `python -m unittest discover -s scripts -p test_dashboard.py`.

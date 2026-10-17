@@ -5,8 +5,10 @@
 // cada nó e o caminho do artefato. Regerar após criar/alterar N1/N2/N3.
 // Uso: node scripts/gera-mapa-features.mjs
 //
-// Porta do gera-mapa-features.mjs do siesa-doc — mesma lógica de varredura,
-// adaptada à ordem de domínios e à identidade do SIMPF (ver global/MASTER.md).
+// Porta do gera-mapa-features.mjs do siesa-doc — mesma lógica de varredura. O nome e a
+// descrição do produto vêm do global/MASTER.md da instância (Identificação do sistema), a
+// fonte única da identidade; a ordem de domínios é a do SIMPF, e os demais domínios vêm
+// depois, na ordem da pasta.
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
