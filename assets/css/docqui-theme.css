@@ -235,40 +235,23 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
   color: var(--brand-blue);
 }
 
-.sidebar__footer {
-  padding: 12px;
-  border-top: 1px solid var(--border);
+.btn-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: var(--radius-sm);
+  color: var(--on-primary);
+  background: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
   flex-shrink: 0;
 }
 
-.workspace {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px;
-  border-radius: var(--radius-sm);
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 12px;
-}
-
-.workspace:hover {
-  background: var(--bg-hover);
-}
-
-.workspace__badge {
-  padding: 5px;
-  border-radius: 6px;
-  color: var(--on-primary);
-  background: var(--primary);
-  font-weight: 700;
-}
-
-.workspace__name {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.btn-github:hover {
+  filter: brightness(0.92);
 }
 
 .main-viewport {
@@ -452,8 +435,15 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
   }
 
   .app-header .breadcrumb-bar,
-  .mode-label {
+  .mode-label,
+  .btn-github__label {
     display: none;
+  }
+
+  .btn-github {
+    width: 34px;
+    padding: 0;
+    justify-content: center;
   }
 
   .header-right {
@@ -557,5 +547,14 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
 @media (max-width: 480px) {
   .brand-logo {
     font-size: 12px;
+  }
+}
+
+/* Abaixo de 360 px, o botão do GitHub no header não cabe ao lado do nome do projeto:
+   fica o logotipo do docqui, e o nome segue no rótulo acessível do link. */
+@media (max-width: 360px) {
+  .brand__divider,
+  .brand-project {
+    display: none;
   }
 }
