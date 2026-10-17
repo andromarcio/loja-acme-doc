@@ -2337,7 +2337,7 @@
   function loadFile(filePath) {
     if (!filePath) filePath = "global/N0_PRODUCT_VISION.md";
     currentFilePath = filePath;
-    document.getElementById('documentContainer').classList.remove('dashboard-view', 'n3-cards');
+    document.getElementById('documentContainer').classList.remove('dashboard-view', 'doc-cards');
 
     // Atualizar item ativo na sidebar e expandir ancestrais
     document.querySelectorAll('.feature-item, .nav-item-fixed a, .nav-folder summary').forEach(el => {
@@ -2410,8 +2410,8 @@
     const isN2FeatureSet = path.startsWith('modules/') && path.split('/').length === 4 && path.split('/')[3] === 'README.md';
     const isN1Domain = path.startsWith('modules/') && path.split('/').length === 3 && path.split('/')[2] === 'README.md';
 
-    // No N3, cada seção é um card próprio (ver .n3-cards no docqui-theme.css).
-    document.getElementById('documentContainer').classList.toggle('n3-cards', isN3Feature);
+    // Em todo documento, cada seção é um card próprio (ver .doc-cards no docqui-theme.css).
+    document.getElementById('documentContainer').classList.add('doc-cards');
     if (isN3Feature) {
       renderN3FeatureTemplate(path, title, frontmatter, cleanMd);
     } else if (isN2FeatureSet) {
@@ -3195,6 +3195,29 @@
     return { antes: linhas.slice(0, ini + 1).concat(intro).join('\n'), entradas, depois: linhas.slice(fim).join('\n') };
   }
 
+  // Cada rubrica `## ` vira um card, como as seções do N3; o que vem antes da primeira — o
+  // título e a apresentação — é o primeiro card. Rubrica dentro de cerca de código não conta.
+  function cardsPorSecao(md, path) {
+    const secoes = [{ titulo: null, linhas: [] }];
+    let cerca = false;
+    for (const l of md.split('\n')) {
+      if (/^\s*(```|~~~)/.test(l)) cerca = !cerca;
+      const h = !cerca && l.match(/^##\s+(.+?)\s*$/);
+      if (h) { secoes.push({ titulo: h[1], linhas: [] }); continue; }
+      secoes[secoes.length - 1].linhas.push(l);
+    }
+    return secoes
+      .filter((s) => s.titulo !== null || s.linhas.join('\n').trim())
+      .map((s) => s.titulo === null
+        ? `<div class="doc-section generic-markdown-body">${renderizaBloco(s.linhas.join('\n'), path, true)}</div>`
+        : `
+          <div class="doc-section">
+            ${cabecalhoDeCard(s.titulo)}
+            <div class="generic-markdown-body">${renderizaBloco(s.linhas.join('\n'), path, true)}</div>
+          </div>`)
+      .join('');
+  }
+
   // Template para Documentos Gerais (N0, Readmes gerais)
   function renderGenericDocumentTemplate(path, title, frontmatter, md) {
     const dicionario = /-DICTIONARY\.md$/i.test(path) ? entradasDeDicionario(md) : null;
@@ -3202,17 +3225,15 @@
     let rendered;
     if (dicionario) {
       rendered =
-        `<div class="doc-section generic-markdown-body">${renderizaBloco(dicionario.antes, path, true)}</div>` +
+        cardsPorSecao(dicionario.antes, path) +
         dicionario.entradas.map((e) => `
           <div class="doc-section">
             ${cabecalhoDeCard(e.titulo)}
             <div class="generic-markdown-body">${renderizaBloco(e.linhas.join('\n'), path, true)}</div>
           </div>`).join('') +
-        (dicionario.depois.trim()
-          ? `<div class="doc-section generic-markdown-body">${renderizaBloco(dicionario.depois, path, true)}</div>`
-          : '');
+        (dicionario.depois.trim() ? cardsPorSecao(dicionario.depois, path) : '');
     } else {
-      rendered = `<div class="doc-section generic-markdown-body">${renderizaBloco(md, path, false)}</div>`;
+      rendered = cardsPorSecao(md, path);
     }
 
     const html = `

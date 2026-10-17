@@ -58,7 +58,7 @@ class VisualPagesTest(unittest.TestCase):
         self.context.close()
         self.assertEqual(self.errors, [])
 
-    def assert_visual(self, theme, n3=False):
+    def assert_visual(self, theme):
         actual = self.page.evaluate("""() => {
           const css = getComputedStyle(document.documentElement);
           const heading = getComputedStyle(document.querySelector('#documentContainer h1'));
@@ -81,9 +81,9 @@ class VisualPagesTest(unittest.TestCase):
         self.assertEqual(actual["header"], "68px")
         self.assertEqual(actual["border"], "4px")
         self.assertEqual(actual["highlight"], "rgb(243, 146, 0)")
-        # No N3, cada seção é um card e o contêiner não é; nas demais páginas, o contrário.
-        self.assertEqual(actual["panel"], "0px" if n3 else "30px")
-        self.assertEqual(actual["section"], "1px" if n3 else "0px")
+        # Em todo documento, cada seção é um card e o contêiner não é.
+        self.assertEqual(actual["panel"], "0px")
+        self.assertEqual(actual["section"], "1px")
 
     def test_shell_and_theme(self):
         self.assertEqual(self.page.locator("#brandName").inner_text(), "Loja ACME")
@@ -117,7 +117,7 @@ class VisualPagesTest(unittest.TestCase):
             self.assertLessEqual(self.page.evaluate("document.documentElement.scrollWidth"), width)
             for theme in ["light", "dark"]:
                 self.page.evaluate("(theme) => document.documentElement.dataset.theme = theme", theme)
-                self.assert_visual(theme, n3=True)
+                self.assert_visual(theme)
             self.page.keyboard.press("Control+k")
             self.page.locator("#searchInput").fill("termo-inexistente-xyz")
             self.assertEqual(self.page.locator(".search-result-item").count(), 0)
@@ -202,6 +202,42 @@ class VisualPagesTest(unittest.TestCase):
         for passo in fundo:
             self.assertIn(passo, cards[0]["corpo"])
         self.assertEqual([{k: c[k] for k in ("titulo", "rn", "dic")} for c in cards[1:]], esperado)
+
+    def test_sections_as_cards(self):
+        # Todo documento põe cada seção num card, como o N3. Nos genéricos, um card com título
+        # por rubrica `## ` do .md (fora de cerca de código), com o título e a apresentação no
+        # primeiro; N1 e N2 já montam hero e seções. Dashboard e mapa ficam como eram.
+        def rubricas(rel):
+            cerca, titulos = False, []
+            for linha in (ROOT / rel).read_text(encoding="utf-8").splitlines():
+                if linha.lstrip().startswith(("```", "~~~")):
+                    cerca = not cerca
+                elif not cerca and linha.startswith("## "):
+                    titulos.append(linha[3:].strip())
+            return titulos
+        genericos = ["global/N0_PRODUCT_VISION.md", "global/DATA-MODEL.md", "global/NFR.md",
+                     "analise-impacto/AIM-STRY0013101.md", "mentoria/README.md"]
+        for rel in genericos + ["modules/vendas/README.md", "modules/vendas/checkout/README.md", FEATURE]:
+            self.page.evaluate("(rel) => navigateTo(rel)", rel)
+            self.page.wait_for_function("document.getElementById('documentContainer').classList.contains('doc-cards')")
+            info = self.page.evaluate("""() => {
+              const c = document.getElementById('documentContainer');
+              const blocos = [...c.querySelectorAll('.doc-section, .doc-hero-card')];
+              return {
+                painel: getComputedStyle(c).borderTopWidth,
+                semCard: blocos.filter((e) => getComputedStyle(e).borderTopWidth !== '1px').length,
+                titulos: [...c.querySelectorAll('.doc-section > .section-header .section-title')].map((t) => t.textContent.trim()),
+              };
+            }""")
+            self.assertEqual(info["painel"], "0px", rel)
+            self.assertEqual(info["semCard"], 0, rel)
+            if rel in genericos:
+                self.assertEqual(info["titulos"], rubricas(rel), rel)
+        self.assertGreater(len(rubricas("global/N0_PRODUCT_VISION.md")), 5)
+        for rota in ["__dashboard__", "__mapa__"]:
+            self.page.evaluate("(r) => navigateTo(r)", rota)
+            self.page.wait_for_timeout(300)
+            self.assertFalse(self.page.evaluate("document.getElementById('documentContainer').classList.contains('doc-cards')"), rota)
 
     def test_graph_and_simulator_preserved(self):
         self.page.goto(self.base + "/rastreabilidade/index.html")
