@@ -1569,7 +1569,7 @@
         <details class="nav-folder" id="fddFolder" open style="margin-bottom: 3px;">
           <summary>
             <div class="nav-folder-title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--brand-blue);">
+              <svg class="nav-folder-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none">
                 <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
               </svg>
               <span style="font-weight:600; color:var(--text-main);">Requisitos por Domínio</span>
@@ -1590,7 +1590,7 @@
         <details class="nav-folder" id="globalFolder" style="margin-bottom: 3px;">
           <summary>
             <div class="nav-folder-title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--brand-blue);">
+              <svg class="nav-folder-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none">
                 <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
               </svg>
               <span style="font-weight:600; color:var(--text-main);">Global</span>
@@ -2000,6 +2000,8 @@
             const content = repoFilesContent[file] || "";
             const t = extractTitle(content);
             if (t) domains[domainKey].featureSets[fsKey].title = t;
+            const siglaFS = content.match(/\*\*Nível 2\*\*.*`[A-Z0-9]+-([A-Z0-9]+)`/);
+            if (siglaFS) domains[domainKey].featureSets[fsKey].sigla = siglaFS[1];
           } else if (parts.length === 4 && parts[3].endsWith('.md')) {
             const content = repoFilesContent[file] || "";
             const { data } = parseFrontMatter(content);
@@ -2068,9 +2070,10 @@
           <details class="nav-folder" id="${fsId}" data-path="${fs.readme}" ${isFSOpen}>
             <summary ${fsClickHandler}>
               <div class="nav-folder-title">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="nav-folder-icon" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none">
                   <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                 </svg>
+                ${fs.sigla ? `<span class="domain-tag">${fs.sigla}</span>` : ''}
                 <span title="${fs.title}">${fs.title}</span>
               </div>
               <div class="nav-folder-aside">
@@ -2249,7 +2252,7 @@
           <details class="nav-folder" data-path="${item.path}">
             <summary ${clickHandler}>
               <div class="nav-folder-title">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="nav-folder-icon" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none">
                   <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                 </svg>
                 ${siglaBadge}
@@ -2371,7 +2374,7 @@
   function loadFile(filePath) {
     if (!filePath) filePath = "global/N0_PRODUCT_VISION.md";
     currentFilePath = filePath;
-    document.getElementById('documentContainer').classList.remove('dashboard-view');
+    document.getElementById('documentContainer').classList.remove('dashboard-view', 'n3-cards');
 
     // Atualizar item ativo na sidebar e expandir ancestrais
     document.querySelectorAll('.feature-item, .nav-item-fixed a, .nav-folder summary').forEach(el => {
@@ -2408,7 +2411,9 @@
     }
 
     // Obter conteúdo Markdown do tree.js
-    const rawContent = (typeof repoFilesContent !== 'undefined' && repoFilesContent[filePath]) || `# Documento não encontrado\n\nO arquivo \`${filePath}\` não está disponível em \`assets/tree.js\`.`;
+    // O tree.js gerado no Windows guarda o .md com \r\n, e os templates (N1, N2, N3)
+    // procuram as seções por \n: com \r\n, o título e cada rubrica do N3 saíam duas vezes.
+    const rawContent = ((typeof repoFilesContent !== 'undefined' && repoFilesContent[filePath]) || `# Documento não encontrado\n\nO arquivo \`${filePath}\` não está disponível em \`assets/tree.js\`.`).replace(/\r\n?/g, '\n');
     renderMarkdownContent(filePath, rawContent);
   }
 
@@ -2442,6 +2447,8 @@
     const isN2FeatureSet = path.startsWith('modules/') && path.split('/').length === 4 && path.split('/')[3] === 'README.md';
     const isN1Domain = path.startsWith('modules/') && path.split('/').length === 3 && path.split('/')[2] === 'README.md';
 
+    // No N3, cada seção é um card próprio (ver .n3-cards no docqui-theme.css).
+    document.getElementById('documentContainer').classList.toggle('n3-cards', isN3Feature);
     if (isN3Feature) {
       renderN3FeatureTemplate(path, title, frontmatter, cleanMd);
     } else if (isN2FeatureSet) {
@@ -2621,11 +2628,11 @@
     const regrasMatch = md.match(/## Regras de negócio\s*\n\n([\s\S]*?)(?=\n---|\n##|$)/);
     if (regrasMatch) {
       const rawRules = regrasMatch[1].trim();
-      const ruleLines = rawRules.split(/\n(?=\d+\.\s+)/);
+      const ruleLines = rawRules.split(/\n(?=\d+\.\s+|-\s+\*\*RN-\d+\*\*)/);
       let cards = '';
 
       ruleLines.forEach(line => {
-        const m = line.match(/^(\d+)\.\s+([\s\S]*)$/);
+        const m = line.match(/^(\d+)\.\s+([\s\S]*)$/) || line.match(/^-\s+\*\*RN-(\d+)\*\*\s*[—–-]\s*([\s\S]*)$/);
         if (m) {
           const num = m[1].padStart(2, '0');
           let text = m[2];
@@ -2741,6 +2748,10 @@
 
     // Remover linhas horizontais residuais
     restOfDoc = restOfDoc.replace(/^[ \t]*---[ \t]*$/gm, '').trim();
+    // O que vem antes da primeira rubrica — o título e as linhas do cabeçalho (Nível 3 e
+    // as que o seguem) — já está no hero; sem este corte, virava um card sem título.
+    const primeiraRubrica = restOfDoc.search(/^##\s+/m);
+    if (primeiraRubrica > 0) restOfDoc = restOfDoc.slice(primeiraRubrica);
 
     // Separar por seções (## Heading)
     const sections = restOfDoc.split(/\n(?=##\s+)/);

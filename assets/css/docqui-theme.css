@@ -231,8 +231,7 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
   color: var(--primary);
 }
 
-#fddTreeContainer .nav-folder-icon,
-#prototypesNavList .nav-folder-icon {
+#sidebar .nav-folder-icon {
   color: var(--brand-blue);
 }
 
@@ -299,6 +298,36 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
 
 #documentContainer .doc-section:last-child {
   margin-bottom: 0;
+}
+
+/* N3: cada seção num card próprio. Nas demais páginas o contêiner é o card e as
+   seções ficam dentro dele; na feature, o contêiner some e cada seção vira card. */
+#documentContainer.n3-cards {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+#documentContainer.n3-cards .doc-hero-card,
+#documentContainer.n3-cards .doc-section {
+  padding: 26px 32px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg-elev);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
+}
+
+#documentContainer.n3-cards .section-header > .section-title {
+  margin-top: 0;
+}
+
+@media (max-width: 820px) {
+  #documentContainer.n3-cards .doc-hero-card,
+  #documentContainer.n3-cards .doc-section {
+    padding: 20px 18px;
+  }
 }
 
 .doc-title, .section-title, .generic-markdown-body h1, .generic-markdown-body h2 {
