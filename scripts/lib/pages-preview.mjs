@@ -17,16 +17,23 @@ export function patchLines(patch) {
 
 export function previewNav(previews, info, home, review = false) {
   const current = info?.branch || 'main';
-  const options = [{ branch: 'main', caminho: '', pr: null }, ...previews].map(p =>
-    `<option value="${esc(`${home}/${p.caminho}index.html`)}"${p.branch === current ? ' selected' : ''}>${esc(p.branch)}${p.pr?.draft ? ' · rascunho' : ''}</option>`).join('');
+  const name = p => `${p.branch}${p.pr?.draft ? ' · rascunho' : ''}`;
+  const branches = [{ branch: 'main', caminho: '', pr: null }, ...previews];
+  // Lista própria, não <select>: a nativa do macOS abre por cima do campo. São links, então
+  // a troca de branch funciona sem JavaScript; o preview.js só leva junto a rota aberta.
+  const items = branches.map(p =>
+    `<li><a href="${esc(`${home}/${p.caminho}index.html`)}"${p.branch === current ? ' aria-current="page"' : ''}>${esc(name(p))}</a></li>`).join('');
+  const atual = branches.find(p => p.branch === current) || branches[0];
   return `<nav class="docqui-preview" aria-label="Versão dos artefatos" data-preview-branch="${esc(current)}"${info ? ` data-preview-commit="${info.commit}"` : ''}>
-  <label>Branch <select aria-label="Branch dos artefatos">${options}</select></label>
+  <div class="docqui-preview__branch">Branch <details class="docqui-preview__menu">
+    <summary aria-label="Branch dos artefatos: ${esc(name(atual))}"><span>${esc(name(atual))}</span></summary>
+    <ul aria-label="Branch dos artefatos">${items}</ul>
+  </details></div>
   <span class="docqui-preview__state">${info ? 'Em revisão · ainda não aprovado na main' : 'main · versão entregue'}</span>
   ${info ? `<span>Base: <strong>${esc(info.base)}</strong>${info.baseSource === 'fallback-main' ? ' (sem PR aberto; comparação com main)' : ''} · ${info.commit.slice(0, 12)}</span>
   ${prLink(info.pr)} <a href="${review ? 'changes.html' : '_docqui/changes.html'}">Ver alterações</a>` : ''}
   ${info && !review ? '<label><input type="checkbox" data-docqui-inline-toggle checked>Destacar alterações</label><span data-docqui-inline-status role="status" aria-live="polite">Selecione um artefato para comparar.</span>' : ''}
   ${review ? '<a href="../index.html">Consultar artefatos</a>' : ''}
-  <noscript><span>Abra a branch pelo link direto; o seletor requer JavaScript.</span></noscript>
 </nav>`;
 }
 
