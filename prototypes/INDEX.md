@@ -1,4 +1,4 @@
-<!-- docqui: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
+<!-- docqui: 6.4.1 | prompt: PROMPT_PROTOTYPE_FLOW_FULL | atualizado: 2026-10-17 -->
 # Protótipos — Manifesto de fidelidade e aprovação
 > Fonte de verdade do vínculo **protótipo ↔ N3**, do nível de **fidelidade** e do
 > **status de aprovação**. Uma tela com fidelidade **obrigatória** só vira **contrato
@@ -6,7 +6,7 @@
 
 | Protótipo | Feature (N3) | Fidelidade | Status | Aprovado por | Data |
 |---|---|---|---|---|---|
-| [prototypes/[dominio]/[feature-set]/[feature]/](./[dominio]/[feature-set]/[feature]/) | `[SIGLA-SFS-NN]` | obrigatória / referência | rascunho / aprovado | [nome / —] | [AAAA-MM-DD / —] |
+| [prototypes/vendas/checkout/flow.html](./vendas/checkout/flow.html) | `VND-CHK-01` | referência | rascunho | — | — |
 
 ## Como manter
 

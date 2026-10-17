@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.1 | prompt: DEMONSTRACAO_SIMULADOR | atualizado: 2026-10-14 -->
+<!-- docqui: 6.4.1 | prompt: PROMPT_PROTOTYPE_FLOW_FULL | atualizado: 2026-10-17 -->
 # Demonstração — Loja ACME
 
 Esta instância é um exemplo preenchido do perfil **requisitos**, pronto para apresentar o método e praticar os checkpoints. O [simulador](simulador.html) mostra o processo completo; selecione **requisitos** no topo.
@@ -31,4 +31,4 @@ O [backlog](backlog.md) preserva os tickets fictícios do simulador. STRY0013120
 
 ## Limites do material
 
-As mensagens de carrinho vazio e os estados de tela são complementos didáticos ao ticket inicial, não requisitos aprovados. Não há protótipo executável da loja, implementação, testes de código ou dados reais. Os arquivos em branco herdados do bootstrap são referências para exercícios futuros, não funcionalidades implementadas.
+As mensagens de carrinho vazio e os estados de tela são complementos didáticos ao ticket inicial, não requisitos aprovados. O protótipo de fluxo do Checkout ([`prototypes/vendas/checkout/flow.html`](../prototypes/vendas/checkout/flow.html)) está em rascunho, sem aprovação; não há implementação, testes de código ou dados reais. Os arquivos em branco herdados do bootstrap são referências para exercícios futuros, não funcionalidades implementadas.
