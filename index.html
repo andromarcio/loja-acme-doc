@@ -1030,8 +1030,18 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
       gap: 8px;
     }
+
+    .scenario-tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-left: auto;
+    }
+    .scenario-tags > span { white-space: nowrap; }
 
     .scenario-body {
       padding: 14px 18px;
@@ -2629,7 +2639,18 @@
     const cenariosMatch = md.match(/## Cenários\s*\n\n```gherkin([\s\S]*?)```/);
     if (cenariosMatch) {
       const gherkinText = cenariosMatch[1].trim();
-      const blocks = gherkinText.split(/\n(?=(?:# ←|\s*Scenario:|\s*Cenário:))/);
+      // Cada bloco começa nas tags e comentários logo acima do Background/Scenario a que
+      // pertencem; cortar só no Scenario os deixava no bloco do cenário anterior.
+      const gherkinLines = gherkinText.split('\n');
+      const blockStarts = [];
+      gherkinLines.forEach((l, i) => {
+        if (!/^\s*(?:Background|Contexto|Scenario|Cenário):/.test(l)) return;
+        let s = i;
+        while (s > 0 && /^\s*(?:[#@]|$)/.test(gherkinLines[s - 1])) s--;
+        blockStarts.push(s);
+      });
+      const blocks = blockStarts.map((s, k) => gherkinLines.slice(s, blockStarts[k + 1]).join('\n'));
+      const DICIONARIOS = { FIELD: 'Campo', RULES: 'Regra', MESSAGE: 'Mensagem', ERROR: 'Erro' };
       let scCards = '';
       let currentGroup = 'Cenários Principais';
 
@@ -2641,10 +2662,20 @@
         if (b.includes('Restrições de acesso')) currentGroup = 'Restrições de Acesso';
 
         const scTitleMatch = b.match(/(?:Scenario|Cenário):\s*(.+)/);
-        if (scTitleMatch) {
-          const scTitle = scTitleMatch[1].trim();
-          const tagMatch = b.match(/# ← MESSAGE-DICTIONARY:\s*([A-Z0-9_]+)/);
-          const tagBadge = tagMatch ? `<span class="rn-tag">${tagMatch[1]}</span>` : '';
+        const isBackground = /^\s*(?:Background|Contexto):/m.test(b);
+        if (scTitleMatch || isBackground) {
+          const titleHtml = isBackground
+            ? '<strong>Contexto:</strong> pré-condição de todos os cenários'
+            : `<strong>Cenário:</strong> ${scTitleMatch[1].trim()}`;
+          // @RN-NN no selo dos cards de regra; "# ← X-DICTIONARY: chave" pela chave, com o
+          // comentário inteiro no title.
+          const rnBadges = (b.match(/^\s*@.*$/gm) || []).join(' ').split(/\s+/)
+            .filter(t => /^@RN-\d+$/.test(t))
+            .map(t => `<span class="rn-num">${t.slice(1)}</span>`).join('');
+          const dicBadges = [...b.matchAll(/^\s*#\s*←\s*(([A-Z]+)-DICTIONARY:\s*(.+?))\s*$/gm)].map(m => {
+            const chave = m[3].replace(/\s*\(.*\)$/, '').split(/\s+[—–]\s+/)[0];
+            return `<span class="rn-tag" title="${m[1].replace(/"/g, '&quot;')}">${DICIONARIOS[m[2]] || m[2]}: ${chave}</span>`;
+          }).join('');
 
           let linesHtml = '';
           b.split('\n').forEach(l => {
@@ -2661,10 +2692,10 @@
           });
 
           scCards += `
-            <div class="scenario-card">
+            <div class="scenario-card${isBackground ? ' scenario-background' : ''}">
               <div class="scenario-header">
-                <span><strong>Cenário:</strong> ${scTitle}</span>
-                ${tagBadge}
+                <span class="scenario-title">${titleHtml}</span>
+                <span class="scenario-tags">${rnBadges}${dicBadges}</span>
               </div>
               <div class="scenario-body">${linesHtml}</div>
             </div>
@@ -2793,7 +2824,17 @@
         </div>
 
         <div class="hero-description-block">
-          <h2 style="font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Descrição</h2>
+          <div class="section-header">
+            <h2 class="section-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--brand-blue);">
+                <line x1="21" y1="6" x2="3" y2="6"></line>
+                <line x1="17" y1="10" x2="3" y2="10"></line>
+                <line x1="21" y1="14" x2="3" y2="14"></line>
+                <line x1="17" y1="18" x2="3" y2="18"></line>
+              </svg>
+              Descrição
+            </h2>
+          </div>
           <p style="font-size: 14px; color: var(--text-main); line-height: 1.6; margin-bottom: ${naoFazText ? '10px' : '0'};">
             ${marked.parseInline(descText)}
           </p>

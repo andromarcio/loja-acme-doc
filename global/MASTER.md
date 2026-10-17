@@ -203,7 +203,7 @@ Entidades e campos são nomeados em **português**. A nomenclatura de campos seg
 
 1. **Exclusão**: [física / lógica (soft delete via `deletedAt`)] ⚠️
 2. **Auditoria**: ações críticas sempre registradas em log de auditoria.
-3. **Autorização**: acesso por **funcionalidade** (Feature = átomo de permissão), aplicado no servidor; vínculo perfil↔funcionalidade é dado configurável, nega por padrão — ver `global/AUTHZ.md` e `global/NFR.md` → SEG-01.
+3. **Autorização**: o acesso a cada funcionalidade é controlado por perfil — permissões na matriz do N2 e qualidade em `global/NFR.md` → SEG-01. A solução técnica fica para o desenvolvimento.
 
 ---
 
@@ -225,9 +225,6 @@ Entidades e campos são nomeados em **português**. A nomenclatura de campos seg
 | `global/FIELD-DICTIONARY.md` | Campos canônicos (CPF, CEP, e-mail…) |
 | `global/MESSAGE-DICTIONARY.md` | Mensagens de UI genéricas + baseline de validação |
 | `global/ERROR-DICTIONARY.md` | Fonte única de códigos de erro |
-| `global/API-PATTERNS.md` | Padrões de API |
-| `global/AUTHZ.md` | Modelo de autorização — controle de acesso por funcionalidade (Feature = átomo de permissão) |
 | `global/DESIGN-SYSTEM.md` | Padrões de UI |
-| `global/PATTERNS.md` | Catálogo de padrões de projeto (design patterns) — como o sistema é construído no nível tático; consumido pelo `PROMPT_SDD` |
 | `global/VOCABULARY-OVERRIDES.md` | *(opcional)* Ajustes de vocabulário desta instância (verbos/termos — ver FEATURE-DEFINITION) |
 | `global/gates-config.yml` | *(opcional)* Papéis dos checkpoints CP1–CP4 desta instância (ver `scripts/gates.py`) |

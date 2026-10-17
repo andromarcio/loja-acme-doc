@@ -306,6 +306,12 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
   margin-top: 0;
 }
 
+/* No hero do N3, a Descrição tem o título das demais seções; da linha até ele, 35 px
+   (eram 70: o padding do bloco mais a margem de todo h2 do tema). */
+#documentContainer.n3-cards .hero-description-block {
+  padding-top: 35px;
+}
+
 @media (max-width: 820px) {
   #documentContainer.n3-cards .doc-hero-card,
   #documentContainer.n3-cards .doc-section {
