@@ -4,6 +4,7 @@ from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -167,21 +168,37 @@ class VisualPagesTest(unittest.TestCase):
         self.assertEqual(self.page.locator("#documentContainer .doc-title").inner_text(), "Calcular Frete")
 
     def test_diagrams_use_elk_layout(self):
-        # Os diagramas Mermaid saem no layout ELK: o desenho carrega o render do
-        # assets/vendor/mermaid-layout-elk. Sem o módulo, o Mermaid volta ao layout padrão e o
-        # diagrama continua desenhado — a mesma checagem acusa a falta do ELK.
-        def render(block_elk):
+        # Os diagramas saem no layout ELK, que vem no próprio Mermaid 12: as arestas do fluxo do
+        # N2 são ortogonais — só M, L e Q (cantos arredondados), cada L na horizontal ou na
+        # vertical. No dagre elas são curvas (C), e com o site trocado para ele a checagem acusa.
+        def orthogonal(path):
+            if re.search(r"[^MLQ0-9.,\s-]", path):
+                return False
+            x = y = None
+            for command, args in re.findall(r"([MLQ])([^MLQ]*)", path):
+                numbers = [float(n) for n in re.findall(r"-?\d+(?:\.\d+)?", args)]
+                if command == "L" and x is not None and abs(numbers[0] - x) > .5 and abs(numbers[1] - y) > .5:
+                    return False
+                x, y = numbers[-2], numbers[-1]
+            return True
+
+        def edges(layout=None):
             page = self.context.new_page()
-            requested = []
-            page.on("request", lambda request: requested.append(request.url))
-            if block_elk:
-                page.route("**/mermaid-layout-elk/**", lambda route: route.abort())
+            if layout:
+                def swap(route):
+                    response = route.fetch()
+                    route.fulfill(response=response, body=response.text().replace("layout: 'elk'", f"layout: '{layout}'"))
+                page.route("**/index.html", swap)
             page.goto(self.base + "/index.html#modules/vendas/checkout/README.md")
             page.locator("#documentContainer .mermaid svg").first.wait_for()
+            paths = page.evaluate("() => [...document.querySelectorAll('#documentContainer .mermaid .edgePaths path')].map(p => p.getAttribute('d'))")
             page.close()
-            return any("/mermaid-layout-elk/chunks/" in url and "/render-" in url for url in requested)
-        self.assertTrue(render(False))
-        self.assertFalse(render(True))
+            return paths
+
+        paths = edges()
+        self.assertEqual(len(paths), 4)
+        self.assertTrue(all(orthogonal(path) for path in paths), paths)
+        self.assertFalse(all(orthogonal(path) for path in edges("dagre")))
 
     def test_menu_orders_features_by_id(self):
         # No menu, os N3 de um Feature Set seguem o ID, não o nome do arquivo; o N3 sem ID
@@ -364,11 +381,12 @@ class VisualPagesTest(unittest.TestCase):
         self.assertEqual(self.page.locator('[data-metric="n3"]').count(), 0)
         self.page.evaluate("""() => {
           window.DASHBOARD_DATA = structuredClone(savedDashboard);
-          DASHBOARD_DATA.artifacts[0].title = '<img src=x onerror="window.injected=true">';
+          DASHBOARD_DATA.artifacts[0].title = '<img src=x onerror="window.dashboardInjected=true">';
           renderDashboard();
         }""")
         self.assertEqual(self.page.locator('.dashboard-view img[src="x"]').count(), 0)
-        self.assertFalse(self.page.evaluate("Boolean(window.injected)"))
+        # Sinal próprio: o Mermaid 12 deixa uma global `injected` na página.
+        self.assertFalse(self.page.evaluate("Boolean(window.dashboardInjected)"))
         self.page.evaluate("window.DASHBOARD_DATA = savedDashboard; renderDashboard()")
 
     def test_branch_preview_highlights_inside_cards(self):

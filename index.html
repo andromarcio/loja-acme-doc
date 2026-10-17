@@ -19,14 +19,6 @@
   <!-- Bibliotecas externas locais -->
   <script src="assets/vendor/marked.min.js"></script>
   <script src="assets/vendor/mermaid.min.js"></script>
-  <!-- Layout ELK nos diagramas (@mermaid-js/layout-elk 0.2.3, a versão para o Mermaid 11; em
-       assets/vendor/mermaid-layout-elk, só os arquivos que ele importa). Como módulo, roda antes
-       do DOMContentLoaded, quando o site desenha os diagramas; se não carregar, o Mermaid volta
-       ao layout padrão. -->
-  <script type="module">
-    import elkLayouts from './assets/vendor/mermaid-layout-elk/mermaid-layout-elk.esm.min.mjs';
-    mermaid.registerLayoutLoaders(elkLayouts);
-  </script>
   <link rel="stylesheet" href="assets/css/mapa.css">
   <link rel="stylesheet" href="assets/css/dashboard.css">
 
@@ -1735,8 +1727,12 @@
       startOnLoad: false,
       theme: isDark ? 'dark' : 'default',
       securityLevel: 'loose',
+      // O Mermaid 12 traz o ELK no próprio arquivo, como layout padrão; fica explícito aqui. Ele
+      // também trocou o estilo (neo) e a quebra dos textos do fluxograma (120 px, com largura
+      // mínima de caixa): look, wrappingWidth e minNodeWidth mantêm o desenho de antes.
       layout: 'elk',
-      flowchart: { useMaxWidth: true, htmlLabels: true }
+      look: 'classic',
+      flowchart: { useMaxWidth: true, htmlLabels: true, wrappingWidth: 200, minNodeWidth: 0 }
     });
   }
   initMermaid();
