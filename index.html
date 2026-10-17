@@ -797,19 +797,6 @@
       flex-shrink: 0;
     }
 
-    /* Seção de Governança e Apoio */
-    .sidebar-footer-tools {
-      margin-top: auto;
-      border-top: 1px solid var(--border-color);
-      padding: 12px;
-      background: var(--bg-app);
-    }
-    .support-group-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-    }
 
     /* ==========================================================================
        CONTEÚDO PRINCIPAL (100% LARGURA ÚTIL)
@@ -1422,7 +1409,7 @@
           <line x1="3" y1="18" x2="21" y2="18"></line>
         </svg>
       </button>
-      <a class="brand-logo" href="#README.md" onclick="navigateTo('README.md'); return false;" aria-label="Docqui Caixa — início da Loja ACME">
+      <a class="brand-logo" href="#__dashboard__" onclick="navigateTo('__dashboard__'); return false;" aria-label="Docqui Caixa — início da Loja ACME">
         <img class="brand__docqui" src="assets/img/docqui.svg" alt="Docqui" width="356" height="128">
         <span class="brand__divider" aria-hidden="true"></span>
         <span class="brand-project">
@@ -1433,7 +1420,7 @@
     </div>
 
     <nav class="breadcrumb-bar" id="breadcrumbBar" aria-label="Hierarquia FDD">
-      <a href="#README.md" onclick="navigateTo('README.md'); return false;">Início</a>
+      <a href="#__dashboard__" onclick="navigateTo('__dashboard__'); return false;">Início</a>
     </nav>
 
     <div class="header-right">
@@ -1462,6 +1449,14 @@
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
       </button>
+
+      <!-- Repositório no GitHub -->
+      <a class="btn-github" href="https://github.com/CAIXA-EFRS/loja-acme-doc" target="_blank" rel="noopener" title="CAIXA-EFRS/loja-acme-doc no GitHub" aria-label="Repositório CAIXA-EFRS/loja-acme-doc no GitHub">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+        </svg>
+        <span class="btn-github__label">GitHub</span>
+      </a>
     </div>
   </header>
 
@@ -1501,14 +1496,6 @@
             </a>
           </li>
           <li class="nav-item-fixed">
-            <a href="#README.md" data-path="README.md" onclick="navigateTo('README.md'); return false;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-              </svg>
-              Início / Visão Geral
-            </a>
-          </li>
-          <li class="nav-item-fixed">
             <a href="#global/N0_PRODUCT_VISION.md" data-path="global/N0_PRODUCT_VISION.md" onclick="navigateTo('global/N0_PRODUCT_VISION.md'); return false;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"></circle>
@@ -1519,26 +1506,6 @@
             </a>
           </li>
           <li class="nav-item-fixed">
-            <a href="#analise-impacto/INDEX.md" data-path="analise-impacto/INDEX.md" onclick="navigateTo('analise-impacto/INDEX.md'); return false;">
-              AIMs dos tickets
-            </a>
-          </li>
-          <li class="nav-item-fixed">
-            <a href="#arquivos/levantamentos/INDEX.md" data-path="arquivos/levantamentos/INDEX.md" onclick="navigateTo('arquivos/levantamentos/INDEX.md'); return false;">
-              Insumos de levantamento
-            </a>
-          </li>
-          <li class="nav-item-fixed">
-            <a href="#mentoria/README.md" data-path="mentoria/README.md" onclick="navigateTo('mentoria/README.md'); return false;">
-              Roteiro da demonstração
-            </a>
-          </li>
-          <li class="nav-item-fixed">
-            <a href="mentoria/simulador.html" target="_blank" rel="noopener">
-              Simulador Docqui Caixa ↗
-            </a>
-          </li>
-          <li class="nav-item-fixed">
             <a href="#__mapa__" data-path="__mapa__" onclick="navigateTo('__mapa__'); return false;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="6" cy="6" r="3"></circle>
@@ -1546,18 +1513,6 @@
                 <path d="M6 9v12M18 9a9 9 0 0 0-9 9"></path>
               </svg>
               Mapa de Features (Árvore)
-            </a>
-          </li>
-          <li class="nav-item-fixed">
-            <a href="rastreabilidade/index.html" target="_blank" rel="noopener">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="18" cy="5" r="3"></circle>
-                <circle cx="6" cy="12" r="3"></circle>
-                <circle cx="18" cy="19" r="3"></circle>
-                <line x1="8.5" y1="10.5" x2="15.5" y2="6.5"></line>
-                <line x1="8.5" y1="13.5" x2="15.5" y2="17.5"></line>
-              </svg>
-              Grafo de Rastreabilidade ↗
             </a>
           </li>
         </ul>
@@ -1623,28 +1578,59 @@
             <!-- Renderizado dinamicamente -->
           </div>
         </details>
+
+        <!-- Outros: o que não é Dashboard, Visão do Produto, Mapa de Features nem as árvores -->
+        <details class="nav-folder" id="outrosFolder">
+          <summary>
+            <div class="nav-folder-title">
+              <svg class="nav-folder-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span style="font-weight:600; color:var(--text-main);">Outros</span>
+            </div>
+            <svg class="chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </summary>
+          <div class="nav-folder-content">
+            <ul class="nav-list">
+              <li class="nav-item-fixed">
+                <a href="#analise-impacto/INDEX.md" data-path="analise-impacto/INDEX.md" onclick="navigateTo('analise-impacto/INDEX.md'); return false;">
+                  AIMs dos tickets
+                </a>
+              </li>
+              <li class="nav-item-fixed">
+                <a href="#arquivos/levantamentos/INDEX.md" data-path="arquivos/levantamentos/INDEX.md" onclick="navigateTo('arquivos/levantamentos/INDEX.md'); return false;">
+                  Insumos de levantamento
+                </a>
+              </li>
+              <li class="nav-item-fixed">
+                <a href="#mentoria/README.md" data-path="mentoria/README.md" onclick="navigateTo('mentoria/README.md'); return false;">
+                  Roteiro da demonstração
+                </a>
+              </li>
+              <li class="nav-item-fixed">
+                <a href="mentoria/simulador.html" target="_blank" rel="noopener">
+                  Simulador Docqui Caixa ↗
+                </a>
+              </li>
+              <li class="nav-item-fixed">
+                <a href="rastreabilidade/index.html" target="_blank" rel="noopener">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.5" y1="10.5" x2="15.5" y2="6.5"></line>
+                    <line x1="8.5" y1="13.5" x2="15.5" y2="17.5"></line>
+                  </svg>
+                  Grafo de Rastreabilidade ↗
+                </a>
+              </li>
+            </ul>
+          </div>
+        </details>
       </div>
 
-      <!-- Seção Inferior: Artefatos Técnicos & Dicionários -->
-      <div class="sidebar-footer-tools" id="sidebarSupportTools">
-        <div class="sidebar-label support-group-toggle" onclick="toggleSupportSection()" style="cursor: pointer;">
-          <span>Artefatos de Suporte</span>
-          <svg class="chevron-icon" id="supportChevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </div>
-        <ul class="nav-list" id="supportNavList" style="display: none;">
-          <!-- Preenchido via JavaScript -->
-        </ul>
-      </div>
-
-      </div>
-      <div class="sidebar__footer">
-        <a class="workspace" href="https://github.com/CAIXA-EFRS/loja-acme-doc" target="_blank" rel="noopener">
-          <span class="workspace__badge">LA</span>
-          <span class="workspace__name">CAIXA-EFRS/loja-acme-doc</span>
-          <span aria-hidden="true">↗</span>
-        </a>
       </div>
     </aside>
 
@@ -1841,7 +1827,8 @@
     document.getElementById('sidebarResizer').style.display = mobileSidebar.matches || !expanded ? 'none' : '';
   }
 
-  setSidebarExpanded(!mobileSidebar.matches);
+  // Ao abrir o site, o menu começa recolhido (o botão do header e o Ctrl+K o abrem).
+  setSidebarExpanded(false);
   mobileSidebar.addEventListener('change', () => setSidebarExpanded(!mobileSidebar.matches));
   document.getElementById('sidebarBackdrop').addEventListener('click', () => setSidebarExpanded(false));
 
@@ -1949,7 +1936,6 @@
     const domains = {};
     const globalFiles = [];
     const prototypeFiles = [];
-    const supportFiles = [];
 
     // Modelos em branco do framework (`_template-*`, `_TEMPLATE_*`) moram no
     // repositório de propósito — são a partida de um artefato novo — mas não são
@@ -2020,8 +2006,6 @@
         globalFiles.push(file);
       } else if (file.startsWith('prototypes/')) {
         prototypeFiles.push(file);
-      } else {
-        supportFiles.push(file);
       }
     });
 
@@ -2029,7 +2013,6 @@
     renderFDDTreeHTML(domains);
     renderGlobalFiles(globalFiles);
     renderPrototypeFiles(prototypeFiles);
-    renderSupportFiles(supportFiles);
   }
 
   function renderFDDTreeHTML(domains) {
@@ -2306,28 +2289,6 @@
     list.innerHTML = renderSubTreeHTML(tree, (dirName) => fddStructure[dirName]);
   }
 
-  function renderSupportFiles(files) {
-    const list = document.getElementById('supportNavList');
-    if (!list) return;
-    let html = '';
-
-    files.slice(0, 20).forEach(file => {
-      const fileName = file.split('/').pop().replace(/\.md|\.html/g, '');
-      html += `
-        <li class="nav-item-fixed">
-          <a href="#${file}" data-path="${file}" onclick="navigateTo('${file}'); return false;" style="font-size: 12px; padding: 4px 8px;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            </svg>
-            <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${file}">${fileName}</span>
-          </a>
-        </li>
-      `;
-    });
-
-    list.innerHTML = html;
-  }
-
   function toggleDomain(id) {
     document.getElementById(id).classList.toggle('open');
   }
@@ -2355,14 +2316,6 @@
   function togglePrototypesSection() {
     const list = document.getElementById('prototypesNavList');
     const chev = document.getElementById('prototypesChevron');
-    const isHidden = list.style.display === 'none';
-    list.style.display = isHidden ? 'flex' : 'none';
-    chev.style.transform = isHidden ? 'rotate(90deg)' : 'rotate(0deg)';
-  }
-
-  function toggleSupportSection() {
-    const list = document.getElementById('supportNavList');
-    const chev = document.getElementById('supportChevron');
     const isHidden = list.style.display === 'none';
     list.style.display = isHidden ? 'flex' : 'none';
     chev.style.transform = isHidden ? 'rotate(90deg)' : 'rotate(0deg)';
@@ -2564,7 +2517,7 @@
 
   function updateBreadcrumbs(path, title, frontmatter) {
     const bar = document.getElementById('breadcrumbBar');
-    let html = `<a href="#README.md" onclick="navigateTo('README.md'); return false;">Início</a>`;
+    let html = `<a href="#__dashboard__" onclick="navigateTo('__dashboard__'); return false;">Início</a>`;
 
     if (path.startsWith('modules/')) {
       const parts = path.split('/');
@@ -2859,7 +2812,7 @@
 
       <footer class="doc-footer">
         <div>Feature Set: <strong>${fsName}</strong> &bull; Domínio: <strong>${domName}</strong></div>
-        <div><a href="#README.md" onclick="navigateTo('README.md'); return false;">Voltar ao Início</a></div>
+        <div><a href="#__dashboard__" onclick="navigateTo('__dashboard__'); return false;">Voltar ao Início</a></div>
       </footer>
     `;
 
@@ -3004,7 +2957,7 @@
 
       <footer class="doc-footer">
         <div>Domínio: <strong>${domName}</strong> &bull; Feature Set: <strong>${fsName}</strong></div>
-        <div><a href="#README.md" onclick="navigateTo('README.md'); return false;">Voltar ao Início</a></div>
+        <div><a href="#__dashboard__" onclick="navigateTo('__dashboard__'); return false;">Voltar ao Início</a></div>
       </footer>
     `;
 
@@ -3119,7 +3072,7 @@
 
       <footer class="doc-footer">
         <div>Domínio: <strong>${domName}</strong></div>
-        <div><a href="#README.md" onclick="navigateTo('README.md'); return false;">Voltar ao Início</a></div>
+        <div><a href="#__dashboard__" onclick="navigateTo('__dashboard__'); return false;">Voltar ao Início</a></div>
       </footer>
     `;
 
@@ -3225,7 +3178,7 @@
       ${rendered}
       <footer class="doc-footer">
         <div>Arquivo: <code>${path}</code></div>
-        <div><a href="#README.md" onclick="navigateTo('README.md'); return false;">Voltar ao Início</a></div>
+        <div><a href="#__dashboard__" onclick="navigateTo('__dashboard__'); return false;">Voltar ao Início</a></div>
       </footer>
     `;
 
@@ -3626,7 +3579,7 @@
         ancora = rawHash.slice(ult + 1);
       }
     }
-    loadFile(alvo || "README.md");
+    loadFile(alvo || "__dashboard__");
     if (!ancora) return;
     // O documento é montado de forma síncrona a partir do conteúdo embutido, mas o
     // realce de código e os diagramas ainda mexem na altura — daí o quadro seguinte.

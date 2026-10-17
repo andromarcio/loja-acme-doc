@@ -91,10 +91,12 @@ class VisualPagesTest(unittest.TestCase):
         self.assertEqual(self.page.locator(".app-header #breadcrumbBar").count(), 1)
         self.assertEqual(self.page.locator(".header-center").count(), 0)
         self.assertTrue(self.page.locator(".brand__docqui").evaluate("el => el.complete && el.naturalWidth > 0"))
-        self.assertIn("CAIXA-EFRS/loja-acme-doc", self.page.locator(".workspace").inner_text())
+        github = self.page.locator(".app-header .header-right .btn-github")
+        self.assertEqual(github.get_attribute("href"), "https://github.com/CAIXA-EFRS/loja-acme-doc")
+        self.assertEqual(self.page.locator('#sidebar a[href*="github.com"]').count(), 0)
         self.assertEqual(self.page.locator('a[href="#mentoria/README.md"]').count(), 1)
         self.assertEqual(self.page.locator('a[href="mentoria/simulador.html"]').count(), 1)
-        self.assertEqual(self.page.locator('a[href="#__dashboard__"]').count(), 1)
+        self.assertEqual(self.page.locator('#sidebar a[href="#__dashboard__"]').count(), 1)
         ids = self.page.evaluate("() => [...document.querySelectorAll('[id]')].map(el => el.id)")
         self.assertEqual(len(ids), len(set(ids)))
         for theme in ["light", "dark"]:
@@ -131,6 +133,34 @@ class VisualPagesTest(unittest.TestCase):
         self.page.evaluate("navigateTo('__mapa__')")
         self.page.locator(".mm-product-name").wait_for()
         self.assertIn("Loja ACME", self.page.locator(".mm-product-name").inner_text())
+
+    def test_initial_load_and_menu(self):
+        # Sem rota, o site abre no dashboard, com o menu recolhido.
+        self.page.goto(self.base + "/index.html")
+        self.page.locator("#dashboardDomain").wait_for()
+        self.assertEqual(self.page.locator("#toggleSidebarBtn").get_attribute("aria-expanded"), "false")
+        self.assertFalse(self.page.locator("#searchInput").is_visible())
+        menu = self.page.evaluate("""() => ({
+          fixos: [...document.querySelector('#sidebar .sidebar-section .nav-list').children].map(li => li.textContent.trim()),
+          pastas: [...document.querySelectorAll('#sidebar .sidebar-navigation > .sidebar-section > details.nav-folder')].map(d => d.id),
+          outros: [...document.querySelectorAll('#outrosFolder a')].map(a => a.textContent.trim()),
+          texto: document.getElementById('sidebar').textContent,
+        })""")
+        self.assertEqual(menu["fixos"], ["Dashboard de gestão", "Visão do Produto (N0)", "Mapa de Features (Árvore)"])
+        self.assertEqual(menu["pastas"], ["fddFolder", "globalFolder", "prototypesFolder", "outrosFolder"])
+        self.assertEqual(menu["outros"], ["AIMs dos tickets", "Insumos de levantamento", "Roteiro da demonstração",
+                                          "Simulador Docqui Caixa ↗", "Grafo de Rastreabilidade ↗"])
+        self.assertNotIn("Início / Visão Geral", menu["texto"])
+        self.assertNotIn("Artefatos de Suporte", menu["texto"])
+        # Abrir um item de Outros expande a pasta; o Ctrl+K abre o menu e a busca.
+        self.page.evaluate("navigateTo('analise-impacto/INDEX.md')")
+        self.assertTrue(self.page.locator("#outrosFolder").evaluate("d => d.open"))
+        self.page.keyboard.press("Control+k")
+        self.assertTrue(self.page.locator("#searchInput").is_visible())
+        # Com rota, abre a página pedida.
+        self.page.goto(self.base + "/index.html#" + FEATURE)
+        self.page.locator("#documentContainer .doc-title").wait_for()
+        self.assertEqual(self.page.locator("#documentContainer .doc-title").inner_text(), "Calcular Frete")
 
     def test_graph_and_simulator_preserved(self):
         self.page.goto(self.base + "/rastreabilidade/index.html")
