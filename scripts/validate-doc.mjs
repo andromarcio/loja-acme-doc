@@ -597,6 +597,9 @@ function validateDataModel(lines, raw, kind, errors) {
 function validateDataModelNegocial(lines, raw, kind, errors) {
   if (kind === 'index') {
     requireSections(lines, ['Modelos por domínio'], errors);
+    if (/^\|[^\n]*Endpoint origem[^\n]*\|/m.test(raw) || /^## (?:Campos globais|Enums do sistema|Índices e restrições)/m.test(raw)) {
+      errors.push('Índice negocial contém estrutura física de banco ou API; mantenha entidades e atributos em Label PO.');
+    }
   } else {
     // "Arquivos Lógicos (APF)" é seção de contagem, não entidade: o PROMPT_CONTAGEM
     // manda gravá-la no fragmento do domínio, e sem esta exceção o gate a cobrava
@@ -857,7 +860,8 @@ function validate(file) {
   else if (level === '3') validateN3(lines, raw, errors, file);
   else if (dmKind) {
     if (/Modelo de artefatos \(dados persistidos\)/.test(raw)) validateDataModelArtefatos(lines, raw, dmKind, errors);
-    else if (/Modelo de entidades \(negocial\)/.test(raw)) validateDataModelNegocial(lines, raw, dmKind, errors);
+    else if (/Modelo de entidades \(negocial\)/.test(raw) &&
+      !(/(?:^|[\\/])engine[\\/]templates[\\/]/.test(file) && /^<!-- perfil:/m.test(raw))) validateDataModelNegocial(lines, raw, dmKind, errors);
     else validateDataModel(lines, raw, dmKind, errors);
   }
   else if (isPatterns) validatePatterns(lines, raw, errors);

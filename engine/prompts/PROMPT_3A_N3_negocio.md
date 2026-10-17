@@ -152,7 +152,7 @@ Se o N2 foi fornecido, leia a tabela de Features do N2 e extraia **exatamente**:
 - O nome do arquivo já definido (ex: `f-cadastrar-cliente.md` — é o link embutido no nome da feature, `[**Nome**](f-cadastrar-cliente.md)`)
 
 **Não gere novos IDs nem novos nomes de arquivo** — use os que o N2 já define.
-Se alguma feature não tiver ID ou arquivo definido no N2, sinalize com ⚠️ e proponha seguindo o padrão das demais.
+Se uma feature ainda não tiver ID, confirme sua posição na jornada e reserve-o no N2 com `node scripts/ids-n3.mjs modules/[dominio]/[feature-set]/README.md` (modo seco; depois `--write`). Preserve IDs e reservas existentes; o N3 copia o ID atribuído pelo N2, não um número calculado pela ordem de geração. Arquivo ausente no N2 é uma lacuna a confirmar antes da reserva — ver `engine/N3-IDS.md`.
 
 Pergunte:
 
@@ -168,17 +168,13 @@ Pergunte:
 
 ### Modo B — Bottom-up (sem N2)
 
-Se o N2 **não** foi fornecido, use a identificação manual. Informe que IDs
-provisórios serão atribuídos e confirmados quando o N2 for gerado via B2.
-Confirme:
+Se o N2 **não** foi fornecido, confronte os N3s e os IDs já usados. IDs existentes são imutáveis, inclusive os que já nasceram no fluxo bottom-up: a síntese via B2 conserva-os. Para uma feature ainda sem ID, confirme a jornada e registre primeiro a tabela Features do N2, reservando IDs com `scripts/ids-n3.mjs` antes de escrever o N3 — ver `engine/N3-IDS.md`. Confirme:
 
 > "Vou especificar a feature **[nome da feature]** do Feature Set
 > **[Feature Set]** no domínio **[Domínio]**.
-> ⚠️ ID provisório atribuído: **[SIGLA]-[SFS]-[NN]** — confirmar quando o N2 for gerado via B2.
+> ID reservado no N2: **[SIGLA]-[SFS]-[NN]** — imutável; a síntese via B2 não o renumera.
 >
-> ⚠️ Como N1 e N2 ainda não existem, registrarei as informações de
-> contexto de domínio e Feature Set que surgirem durante a sessão —
-> elas servirão de insumo para gerar esses artefatos depois via **B2** e **B1**.
+> ⚠️ O contexto completo do N1/N2 ainda será consolidado. A tabela da jornada e as reservas do N2 são registradas antes de atribuir IDs novos; as demais informações coletadas servirão à síntese via **B2** e **B1**, sem renumerar as identidades já usadas.
 >
 > Podemos começar?"
 
@@ -353,21 +349,6 @@ Pergunte ao usuário apenas o que a derivação não responde:
 > "O campo **[campo]** é uma seleção que vem do cadastro de **[Entidade]**.
 > 1. Deve carregar a lista completa ou buscar conforme o usuário digita?
 > 2. Algum registro de [Entidade] deve ficar de fora (ex: apenas ativos)?"
-
----
-
-## PASSO 1.6 — Prioridade e MVP
-
-Capture a **prioridade de entrega** da feature — ela alimenta o front-matter
-(`prioridade`/`mvp`) e ordena as user stories na exportação ao spec-kit
-(1 N3 = 1 user story; P1 entra no incremento mínimo).
-
-> "Qual a prioridade de entrega desta feature dentro do Feature Set?
-> **P1** = incremento mínimo (MVP) · **P2** / **P3** = incrementos seguintes."
-
-- Em **Modo A**, sugira a prioridade pela ordem/dependências já expressas no N2 e
-  confirme. Mantenha coerência com a coluna *Prioridade* da tabela de Features do N2.
-- Registre `prioridade` e `mvp` (true se P1) para usar no PASSO 3.
 
 ---
 
@@ -599,8 +580,6 @@ id: [ID do N2 — ex.: SIGLA-SFS-NN]
 feature_set: [SIGLA]-[SFS]
 dominio: [SIGLA]
 entidade: [Entidade principal]
-prioridade: [P1 | P2 | P3]
-mvp: [true | false]
 data_model_ref: data-models/[dominio].md#[entidade]
 endpoints: []
 error_codes: []
@@ -622,8 +601,7 @@ contagem:                           # status APF — independente dos gates; só
 
 # [Nome da Feature — exatamente como consta no N2]
 > **Nível 3** - Feature Set: [Nome do Feature Set] — Major Feature Set: [Nome do Domínio] - `[SIGLA]-[SFS]-[NN]`
-<!-- Este é o CÓDIGO DA FEATURE (SIGLA do domínio + SFS do Feature Set + NN sequencial da feature, ex.: `CAD-CLI-01`) — NÃO o ID do Feature Set (`CAD-CLI`). Modo A: copie o código EXATO que a feature tem na tabela de Features do N2 (aparece em `<small>SIGLA-SFS-NN</small>`). Modo B (bottom-up): atribua provisório e ⚠️ confirme via B2. Nunca omita o `-NN`. -->
-> **Prioridade**: [P1 | P2 | P3] · **MVP**: [sim | não]
+<!-- Este é o CÓDIGO DA FEATURE (SIGLA do domínio + SFS do Feature Set + NN sequencial da primeira jornada, ex.: `CAD-CLI-01`) — NÃO o ID do Feature Set (`CAD-CLI`). Copie o código EXATO reservado no N2 (`<small>SIGLA-SFS-NN</small>`). IDs já usados no bottom-up são imutáveis; B2 não os renumera. Nunca omita o `-NN` nem recalcule a numeração pela ordem de geração. Ver engine/N3-IDS.md. -->
 
 ## Descrição
 [1-2 frases de negócio que declaram a ENTREGA — única, tangível e negocial (FEATURE-DEFINITION.md, FD-8). Fórmula: "Permite que [ator] [ação] [entidade], [resultado observável]." Sem "etc."/"de forma eficiente", sem termo técnico, sem repetir a descrição de outra feature]

@@ -62,6 +62,8 @@ comportamentos a partir do código, **sem inventar** o que não está lá.
      ao `global/NFR.md`. Se o código a evidenciar, sinalize 🔍 e proponha o ID
      do NFR; auditoria de ação = NFR **AUD-01** (herdado), não vira regra.
 
+6. **A jornada orienta apenas a primeira numeração.** Confirme a ordem com o PO e registre as features na tabela do N2 antes de atribuir IDs com `scripts/ids-n3.mjs` (modo seco; depois `--write`). A ordem de controllers/entry points não determina os números. Preserve todo ID já usado no N2/N3 e o registro `docqui:n3-ids`; novas features continuam depois do maior reservado — ver `engine/N3-IDS.md`.
+
 **Marcadores usados nos artefatos:**
 
 | Marcador | Significado |
@@ -579,8 +581,6 @@ id: [SIGLA]-[SFS]-[NN]
 feature_set: [SIGLA]-[SFS]
 dominio: [SIGLA]
 entidade: [Entidade principal]
-prioridade: ""                      # ❓ o código não diz — o PO decide (PROMPT_3A, PASSO 1.6)
-mvp: ""                             # ❓ idem
 data_model_ref: data-models/[dominio].md#[entidade]
 endpoints: []                       # 🔍 espelho de ## API — ex.: ["POST /api/v1/recurso"]
 error_codes: []                     # 🔍 espelho de ## Mapeamento de erros
@@ -599,7 +599,6 @@ contagem:                           # status APF — independente dos gates; só
 
 # [Verbo] [entidade]
 > **Nível 3** - Feature Set: [Nome] — Major Feature Set: [Nome] - `[SIGLA]-[SFS]-[NN]`
-> **Prioridade**: ❓ · **MVP**: ❓ *(o código não diz — o PO decide no PROMPT_3A)*
 
 ## Descrição
 🔍 [Permite que [ator] [ação] [entidade], [resultado observável] — inferido da rota e da lógica do serviço; 1-2 frases de negócio (FD-8)]

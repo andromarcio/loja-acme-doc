@@ -43,4 +43,4 @@
 
 ---
 
-*Links: [N2 da spec](../../../modules/[dominio]/[feature-set]/README.md) · [Protótipos do domínio](../README.md) · [Índice de protótipos](../../prototypes/README.md)*
+*Links: [N2 da spec](../../../modules/[dominio]/[feature-set]/README.md) · [Protótipos do domínio](../README.md) · [Índice de protótipos](../../INDEX.md)*

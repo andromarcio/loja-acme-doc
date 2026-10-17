@@ -11,9 +11,11 @@
 
 ## Features
 
-| Feature | Prioridade | Descrição |
-|---|---|---|
-| [**Nome da Feature**](f-[verbo]-[entidade].md) <small>[SIGLA]-[SFS]-01</small> | **[P1 / P2 / P3]** | [descrição em uma linha] |
+<!-- Primeira atribuição: confirme a jornada e numere somente as entradas sem ID com scripts/ids-n3.mjs (modo seco, depois --write). IDs existentes são imutáveis; novas features continuam após o maior reservado. Preserve o registro docqui:n3-ids quando ele for criado. Ver engine/N3-IDS.md. -->
+
+| Feature | Descrição |
+|---|---|
+| [**Nome da Feature**](f-[verbo]-[entidade].md) <small>[SIGLA]-[SFS]-01</small> | [descrição em uma linha] |
 
 ---
 

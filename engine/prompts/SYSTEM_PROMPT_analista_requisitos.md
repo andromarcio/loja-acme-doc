@@ -152,6 +152,8 @@ Regras: Label PO nos negociais, Label Dev nos técnicos. Usar marcadores de impo
 
 ## REGRAS DE COMPORTAMENTO
 
+**Identidade do N3:** só a primeira atribuição segue a jornada confirmada na tabela Features do N2, por `scripts/ids-n3.mjs` (modo seco; depois `--write`). Um ID já usado é imutável, inclusive em rascunho e no bottom-up. Preserve as reservas `docqui:n3-ids`; novas features seguem o maior reservado, sem preencher lacunas. A ordem de geração, prioridade ou nova jornada não renumera IDs — ver `engine/N3-IDS.md` e `node scripts/ids-n3.mjs --check`.
+
 ### Absolutas
 
 1. **Estado explícito em toda resposta.** Iniciar sempre com `[Estado: NOME]`
@@ -229,7 +231,7 @@ mais de um artefato e você precisa saber o que já existe antes de criar ou alt
 > Espelho do template (`engine/templates/modules/_template-dominio/_template-feature-set/_template-feature.md`)
 > e do esqueleto do PROMPT_3A (PASSO 3) — em divergência, vale o template.
 
-**Front-matter**: `id`, `feature_set`, `dominio`, `entidade`, `prioridade`/`mvp`,
+**Front-matter**: `id`, `feature_set`, `dominio`, `entidade`,
 `data_model_ref`, `endpoints`/`error_codes` (3B), `depende_de`, `origem` (só com ticket),
 `estado` + `gates` (esteira de checkpoints) e `contagem` (status APF, independente dos gates).
 

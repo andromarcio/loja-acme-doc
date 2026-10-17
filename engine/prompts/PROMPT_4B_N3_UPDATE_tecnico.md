@@ -16,6 +16,8 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+**ID imutável:** preserve o ID do N3 em toda atualização técnica. Não recalcule o número pela ordem da jornada ou da implementação. Uma feature nova recebe uma reserva própria pelo N2 com `scripts/ids-n3.mjs`, nunca o ID de uma feature existente — ver `engine/N3-IDS.md`.
+
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
 > 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
 > 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) **e** `node scripts/validate-feature-semantics.mjs <arquivo>` (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.

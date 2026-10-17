@@ -198,8 +198,7 @@ PASSO 4.
 
 ## PASSO 4 — `[GERACAO_N2]`
 
-Monte a tabela de Features começando pela principal e seguindo com as auxiliares
-confirmadas. Atribua IDs sequenciais `[SIGLA]-[SFS]-NN`:
+Monte a tabela de Features pela jornada confirmada, começando pela principal e seguindo com as auxiliares. A sequência abaixo vale apenas para a primeira atribuição; omita auxiliares não confirmadas antes de numerar. Preserve todo ID existente no N2/N3, inclusive ao inserir uma auxiliar no meio da jornada; novas features seguem o maior reservado, sem reutilizar números. Rode `node scripts/ids-n3.mjs modules/[dominio]/[feature-set]/README.md` em modo seco e, conferido, com `--write`, antes de gerar N3s. Preserve o registro `docqui:n3-ids` do N2 — ver `engine/N3-IDS.md`. As etapas da principal não recebem IDs de feature próprios.
 
 | Ordem | Feature | Arquivo |
 |---|---|---|

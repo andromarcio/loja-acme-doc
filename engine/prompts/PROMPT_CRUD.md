@@ -174,8 +174,7 @@ o Feature Set inteiro:
 
 ## PASSO 4 — `[GERACAO_N2]`
 
-Monte a tabela de Features na ordem da jornada e atribua IDs sequenciais
-`[SIGLA]-[SFS]-NN`:
+Monte a tabela de Features na ordem da jornada confirmada. A sequência abaixo vale apenas para a primeira atribuição, quando não houver IDs usados. Preserve qualquer ID existente no N2/N3, mesmo que a jornada seja reorganizada; novas features recebem números depois do maior reservado, sem preencher lacunas. Rode `node scripts/ids-n3.mjs modules/[dominio]/[feature-set]/README.md` em modo seco e, conferido, com `--write`, antes de gerar os N3s. Preserve o registro `docqui:n3-ids` do N2 — ver `engine/N3-IDS.md`. A ordem de geração (Cadastro primeiro, depois os derivados) não é a ordem dos IDs.
 
 | Ordem | Feature | Arquivo |
 |---|---|---|

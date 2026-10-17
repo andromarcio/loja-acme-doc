@@ -13,6 +13,7 @@
 
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { planN3Ids } from './lib/n3-ids.mjs';
 
 const ROOT = process.cwd();
 const [domArg, fsArg] = process.argv.slice(2);
@@ -97,17 +98,22 @@ function reportFeatureSet(domFolder, fsFolder) {
   const id = levelId(n2);
   p(`    Feature Set: ${fsFolder}  ${n2 ? `[N2 ✔ ${id || '?'}]` : '[N2 ✘ ainda não existe]'}`);
   const feats = mdFiles(join(modulesDir, domFolder, fsFolder)).filter((n) => n.startsWith('f-'));
-  const ids = [];
   for (const f of feats) {
     const fid = levelId(read(join(modulesDir, domFolder, fsFolder, f)));
-    ids.push(fid);
     p(`        - ${f}  ${fid ? `\`${fid}\`` : '(sem ID no subtítulo ⚠)'}`);
   }
-  // Próximo NN livre no Feature Set.
-  const nums = ids.filter(Boolean).map((x) => x.match(/-(\d{2})$/)).filter(Boolean).map((m) => +m[1]);
-  const nextNN = String((nums.length ? Math.max(...nums) : 0) + 1).padStart(2, '0');
-  if (id) p(`        → próximo NN livre neste FS: ${id}-${nextNN}`);
-  else if (!feats.length) p('        (nenhuma feature ainda)');
+  if (id) {
+    try {
+      const plan = planN3Ids(ROOT, join(modulesDir, domFolder, fsFolder, 'README.md'));
+      p('        Jornada registrada no N2 (não confundir posição com ID):');
+      plan.rows.forEach(row => p(`          ${row.id} — ${row.name}${row.id && plan.pending.some(item => item.path === row.path) ? ' (reserva proposta; ainda não gravada)' : ''}`));
+      p(plan.next <= 99 ? `        → próximo NN livre neste FS: ${id}-${String(plan.next).padStart(2, '0')} (reservas incluídas; nunca preencha lacunas)` : '        → sequência esgotada (99); não renumere.');
+      if (plan.pending.length || plan.registration) p(`        → confira a jornada e rode node scripts/ids-n3.mjs modules/${domFolder}/${fsFolder}/README.md (modo seco), depois --write.`);
+    } catch (error) {
+      p(`        ⚠ sequência indisponível: ${error.message}`);
+      p('        Corrija o conflito sem renumerar os IDs existentes.');
+    }
+  } else p('        → confirme a jornada e registre o N2 antes de atribuir novos IDs; IDs de N3 existentes são imutáveis.');
 }
 
 if (domArg && !targetDomain) {

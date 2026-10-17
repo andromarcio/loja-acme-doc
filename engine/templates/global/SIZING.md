@@ -37,7 +37,12 @@
 | Elemento APF | Definição | Onde identificar nesta estrutura |
 |---|---|---|
 | ALI (Arquivo Lógico Interno) | Grupo de dados mantido pelo sistema | `global/DATA-MODEL.md` — uma entidade principal = um ALI candidato; registro em `global/ALI-AIE-MAP.md` |
+<!-- perfil:requisitos -->
+| AIE (Arquivo de Interface Externa) | Grupo de dados de sistema externo usado mas não mantido | `global/DATA-MODEL.md` (tabela de AIEs) e `global/ALI-AIE-MAP.md`; as candidatas surgem da seção "Integrações" do N1 e dos campos `externo: [Sistema]` do N3 |
+<!-- /perfil:requisitos -->
+<!-- perfil:completo -->
 | AIE (Arquivo de Interface Externa) | Grupo de dados de sistema externo usado mas não mantido | `global/DATA-MODEL.md` (tabela de AIEs) e `global/ALI-AIE-MAP.md`; as candidatas surgem da seção "Integrações" do N1, do `global/API-PATTERNS.md` e dos campos `externo: [Sistema]` do N3 |
+<!-- /perfil:completo -->
 | EE (Entrada Externa) | Transação que processa dados de fora para dentro — intenção primária: **manter** ALI ou **alterar o comportamento** do sistema | a feature (N3) inteira, front + BFF (ver *Arquitetura BFF*); no perfil `completo`, o `## API` confere — verbos POST / PUT / PATCH / DELETE |
 | SE (Saída Externa) | Transação que envia dados com lógica de processamento — cálculo, dado derivado, manutenção de ALI ou alteração de comportamento | a feature (N3) inteira; no perfil `completo`, o `## API` confere — GET com cálculo, relatório ou transformação |
 | CE (Consulta Externa) | Transação que recupera dados de ALI/AIE sem lógica adicional | a feature (N3) inteira; no perfil `completo`, o `## API` confere — GET simples de listagem ou detalhe |

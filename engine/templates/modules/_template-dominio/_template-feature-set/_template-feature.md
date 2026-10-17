@@ -4,8 +4,6 @@ id: [SIGLA]-[SFS]-[NN]
 feature_set: [SIGLA]-[SFS]
 dominio: [SIGLA]
 entidade: [Entidade principal]
-prioridade: [P1 | P2 | P3]          # P1 = MVP
-mvp: [true | false]
 data_model_ref: data-models/[dominio].md#[entidade]
 endpoints: []                       # ex.: ["POST /api/v1/recurso"] — preencher no 3B (se a feature expõe API)
 error_codes: []                     # ex.: ["ENTIDADE_ERRO"] — preencher no 3B
@@ -31,12 +29,11 @@ contagem:
   como o título do N3 por quem procura a primeira linha `# ` do arquivo. Dentro do
   bloco, comentário só no fim da linha (`campo: valor  # …`).
 
-  id · feature_set · dominio · entidade · prioridade · mvp · data_model_ref · endpoints
+  id · feature_set · dominio · entidade · data_model_ref · endpoints
   · error_codes · depende_de — fonte estruturada para a exportação ao spec-kit
   (PROMPT_SPECKIT_EXPORT). O corpo do N3 continua sendo a fonte de verdade legível; estes
   campos apenas espelham, de forma parseável, o que já está no corpo. Mantê-los em
   sincronia — o PASSO 0 do exporter valida a consistência.
-    prioridade → vira P1/P2/P3 das user stories no spec.md (ordena fases).
     endpoints / error_codes → preenchidos no 3B (espelham ## API e ## Mapeamento de erros).
     data_model_ref → entidade canônica resolvida em data-models/[dominio].md.
     depende_de → IDs de N3 pré-requisito (ordena foundational vs. user story).
@@ -76,9 +73,10 @@ contagem:
 
 # [Nome da Feature]
 > **Nível 3** - Feature Set: [Nome do Feature Set] — Major Feature Set: [Nome do Domínio] - `[SIGLA]-[SFS]-[NN]`
-> **Prioridade**: [P1 | P2 | P3] · **MVP**: [sim | não] *(P1 = entra no incremento mínimo; ordena as user stories na exportação ao spec-kit)*
 
 ## Descrição
+
+<!-- ID da feature: copie a reserva exata da tabela Features do N2. A primeira sequência segue a jornada confirmada; qualquer ID já usado é imutável, mesmo quando a ordem da jornada muda. Não renumere no 3B/4A/4B nem na síntese bottom-up. Ver engine/N3-IDS.md e scripts/ids-n3.mjs. -->
 
 <!--
   O CONTRATO DE ENTREGA da feature (FEATURE-DEFINITION.md, FD-8): 1-2 frases de

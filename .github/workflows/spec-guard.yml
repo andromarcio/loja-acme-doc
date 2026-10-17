@@ -7,6 +7,7 @@
 #
 # Jobs:
 #   estrutura      → validate-doc.mjs em todos os artefatos de nível (N0–N3, data-model)
+#                    + IDs imutáveis dos N3 e reservas da primeira jornada no N2
 #                    + diagrama ER (global/DIAGRAMA-ER.md) fresco + índice de repositórios
 #                    (repos/INDEX.md → Features por repositório) fresco
 #   rastreabilidade→ audit-trace-links.mjs (elos nos 3 lugares) + suspect-links.mjs
@@ -39,6 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
       - uses: actions/setup-node@v4
         with: { node-version: "20" }
       - name: validate-doc em todos os artefatos de nível
@@ -58,6 +60,15 @@ jobs:
         run: node scripts/valida-regras-cenarios.mjs
       - name: contrato da API do N3 (front-matter × API × ERROR-DICTIONARY × Campos)
         run: node scripts/valida-contrato-api.mjs
+      - name: IDs do N3 imutáveis e reservas da jornada
+        env:
+          ID_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ -n "$ID_BASE" ] && ! echo "$ID_BASE" | grep -q '^0\+$'; then
+            node scripts/ids-n3.mjs --check --base "$ID_BASE"
+          else
+            node scripts/ids-n3.mjs --check
+          fi
       - name: diagrama ER está fresco
         run: node scripts/gera-diagrama-er.mjs --check
       - name: índice de repositórios está fresco

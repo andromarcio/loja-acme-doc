@@ -16,6 +16,8 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+**ID imutável:** preserve o ID recebido do N3/N2, mesmo que a jornada ou a ordem de implementação mude. O 3B não atribui nem renumera IDs; qualquer feature nova reserva o número pelo N2 com `scripts/ids-n3.mjs` — ver `engine/N3-IDS.md`.
+
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
 > 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
 > 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) **e** `node scripts/validate-feature-semantics.mjs <arquivo>` (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
@@ -443,7 +445,7 @@ Após aprovação, gere o arquivo completo:
 > `data_model_ref` (entidade confirmada) e `depende_de` (N3 pré-requisito). **Não toque**
 > em `estado`/`gates`: o ciclo de vida é governado pela esteira de checkpoints
 > (`scripts/gates.py`) — `estado: especificado` só é alcançado aprovando os gates
-> CP1→CP2→CP3, um por PR. Preserve a linha `> **Prioridade** … **MVP** …` do 3A. Esse
+> CP1→CP2→CP3, um por PR. Esse
 > espelho é o que torna a exportação ao spec-kit (`PROMPT_SPECKIT_EXPORT`) determinística,
 > e é conferido: `node scripts/valida-contrato-api.mjs <N3>` (o hook roda a cada gravação).
 
@@ -460,7 +462,6 @@ resultado` e `## Dados lidos e gravados`) passa intacto para o arquivo final.
 > **Nível 3** - Feature Set: [Nome] — Major Feature Set: [Nome] - `[SIGLA]-[SFS]-[NN]`
                                      ← preservar do 3A (o validate-doc e os scripts de
                                         contagem leem o código da feature nesta linha)
-> **Prioridade**: P? · **MVP**: sim/não   ← preservar do 3A
 
 ## Descrição                         ← negocial (dois parágrafos)
 ## Origem                            ← negocial (só se houver ticket de origem)
@@ -514,7 +515,7 @@ Ao finalizar, informe obrigatoriamente:
 >
 > 2. Atualizar o N2 do Feature Set (nível imediatamente anterior),
 > `modules/[dominio]/[feature-set]/README.md`: garantir que a feature consta
-> na tabela de Features com o link para o arquivo final e a prioridade, e que
+> na tabela de Features com o link para o arquivo final, e que
 > telas/dependências novas estão refletidas. Sinalizar ⚠️ qualquer divergência.
 >
 > 3. O `estado` **não muda** nesta passada: ele é derivado dos gates e só vira

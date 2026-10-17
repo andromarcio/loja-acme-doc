@@ -67,7 +67,7 @@ Leia todos os N3s e extraia:
    **reutilize-o**; caso contrário, derive do ID do domínio (presente nos N3s) e atribua
    uma sigla de exatamente 3 letras maiúsculas derivada do nome do Feature Set, formando
    `[SIGLA]-[SFS]` (ex.: Usuários → `[SIGLA]-USR`), única dentro do domínio;
-   confirme IDs das features já existentes nos N3s e numere eventuais N3s sem ID
+   confirme os IDs já existentes nos N3s e preserve-os, mesmo fora da ordem da jornada. Para uma entrada ainda sem ID, organize a tabela Features na jornada confirmada e reserve o próximo número com `scripts/ids-n3.mjs` (modo seco; depois `--write`), sem renumerar os N3s existentes nem preencher lacunas. Preserve o registro `docqui:n3-ids` do N2 ao regenerá-lo — ver `engine/N3-IDS.md`.
 
 3. **Índice de features** — nome, arquivo, ID e descrição de uma linha de cada
    feature (extraído da seção "Descrição" de cada N3)

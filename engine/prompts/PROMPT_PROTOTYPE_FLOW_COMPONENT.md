@@ -36,6 +36,11 @@ apenas para permitir alternar entre as telas durante a revisão.
 > fonte de verdade de layout/comportamento/estados, **nunca** de implementação —
 > o código de produção segue o `PATTERNS.md`, o `MASTER.md` e os componentes reais
 > do design system (não as classes `.dsc-*`).
+>
+> **Carimbo (obrigatório).** A primeira linha do arquivo, antes do `<!DOCTYPE html>`,
+> é o carimbo `<!-- docqui: [VERSION] | prompt: PROMPT_PROTOTYPE_FLOW_COMPONENT | atualizado: [AAAA-MM-DD] -->`
+> (ver `engine/VERSIONING.md`). Comentário antes do doctype não tira o navegador do
+> modo padrão: o `document.compatMode` segue `CSS1Compat`.
 
 1. **Sem shell de aplicação**: nenhuma sidebar, topbar, nav global ou footer.
    O foco é a área de conteúdo `<main>` de cada tela.
@@ -103,6 +108,7 @@ Pergunte:
 Após aprovação, gere `flow-component.html`:
 
 ```html
+<!-- docqui: [VERSION] | prompt: PROMPT_PROTOTYPE_FLOW_COMPONENT | atualizado: [AAAA-MM-DD] -->
 <!DOCTYPE html>
 <!--
   ⚠️ PROTÓTIPO NAVEGÁVEL — treino, não jogo.

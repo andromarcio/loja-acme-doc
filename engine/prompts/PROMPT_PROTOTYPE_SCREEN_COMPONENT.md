@@ -36,6 +36,11 @@ no browser ou embutido como componente.
 > fonte de verdade de layout/comportamento/estados, **nunca** de implementação —
 > o código de produção segue o `PATTERNS.md`, o `MASTER.md` e os componentes reais
 > do design system (não as classes `.dsc-*`).
+>
+> **Carimbo (obrigatório).** A primeira linha do arquivo, antes do `<!DOCTYPE html>`,
+> é o carimbo `<!-- docqui: [VERSION] | prompt: PROMPT_PROTOTYPE_SCREEN_COMPONENT | atualizado: [AAAA-MM-DD] -->`
+> (ver `engine/VERSIONING.md`). Comentário antes do doctype não tira o navegador do
+> modo padrão: o `document.compatMode` segue `CSS1Compat`.
 
 1. **Sem shell de aplicação**: nenhuma sidebar, topbar, breadcrumb ou footer.
    O arquivo começa diretamente com o conteúdo da área principal.
@@ -111,6 +116,7 @@ Gere um estado por vez. Aguarde aprovação antes de avançar.
 ### Estrutura base de cada arquivo
 
 ```html
+<!-- docqui: [VERSION] | prompt: PROMPT_PROTOTYPE_SCREEN_COMPONENT | atualizado: [AAAA-MM-DD] -->
 <!DOCTYPE html>
 <!--
   ⚠️ PROTÓTIPO NAVEGÁVEL — treino, não jogo.

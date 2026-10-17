@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Gerado de docqui-caixa-engine, docs/simulador/index.html (versão 6.4.1), num arquivo único para abrir direto no navegador: o CSS, as imagens, o docs/config.js e o github.js vão embutidos. Não edite aqui; gere de novo a partir do engine. -->
+<!-- Gerado de docqui-caixa-engine, docs/simulador/index.html (versão 6.4.6), num arquivo único para abrir direto no navegador: o CSS, as imagens, o docs/config.js e o github.js vão embutidos. Não edite aqui; gere de novo a partir do engine. -->
 <html lang="pt-BR" data-theme="light">
 <head>
 <meta charset="utf-8">
@@ -1405,7 +1405,7 @@ th { font-weight: 600; color: var(--fg); background: var(--bg-2); font-size: 12.
      ⚠ ! avisa). fx guarda o estado: feat, aim, branch, commit, merge e
      "+ caminho" / "~ caminho" / "- caminho" para arquivos que nenhum
      bloco file/fix mostra.
-     Roteiro revisado para Docqui Caixa 6.4.0, nos dois perfis. Recapturados
+     Roteiro revisado para Docqui Caixa 6.4.6, nos dois perfis. Recapturados
      numa instância criada pelo init-instance, com os arquivos que os passos
      mostram: o bootstrap; os gates de gravação dos N1, N2, DM e N3 (com o F9
      de regras × cenários e, no completo, o F10 do contrato da API); o
@@ -1415,7 +1415,15 @@ th { font-weight: 600; color: var(--fg); background: var(--bg-2); font-size: 12.
      que não mudaram desde a 6.2.2 (gates.py, validate-impact, contagem,
      entrega, reverte-ticket, preview) mantêm a captura anterior; as que
      dependem de runner de CI usam as mensagens dos próprios scripts.
-     {{VERSION}} acompanha docs/config.js.
+     Na 6.4.2, bootstrap (245 arquivos), reservas e checks de ids-n3 e a
+     publicação de preview com metadados do PR foram recapturados. As datas
+     e os hashes do enredo são didáticos; caminhos absolutos são abreviados.
+     Na 6.4.3, global/ nasce conforme o perfil: 36 moldes em requisitos,
+     sem os três catálogos técnicos, e 39 em completo; o engine sincronizado
+     continua contendo os moldes dos dois perfis.
+     Na 6.4.4, a tabela de Features do N2 sai sem a coluna Prioridade, como
+     o template: a feature não tem mais prioridade nem MVP.
+     {{VERSION}} acompanha docs/config.js; ele não substitui a revisão do roteiro.
      ════════════════════════════════════════════════════════════════════════ -->
 <script type="text/plain" id="dados-arquivos">
 CLAUDE.md :: Índice de contexto que o Claude Code carrega em toda sessão. Importa o MASTER, o N0 e o INDEX; os demais arquivos são lidos sob demanda pela skill analista-requisitos.
@@ -1456,12 +1464,13 @@ repos/INDEX.md :: Inventário dos repositórios de código, por domínio e tipo 
 repos/_template-repo.md :: Modelo da ficha de um repositório.
 prototypes/INDEX.md :: Índice dos protótipos HTML (opções 6A a 6D).
 prototypes/_biblioteca-ds/ :: Biblioteca do design system para os protótipos: tokens, componentes e o shell.
-engine/ :: Cópia sincronizada do engine: prompts, templates (inclusive os moldes lidos no lugar, como o do N3 e o do plano de testes) e a FEATURE-DEFINITION. Não se edita na instância; chega pelo `sync-instance`.
+engine/ :: Cópia sincronizada do engine: prompts, templates, FEATURE-DEFINITION, N3-IDS e recursos de publicação para comparar previews. Não se edita na instância; chega pelo `sync-instance`.
 scripts/ :: Os validadores e geradores do engine, sincronizados. Rodam no hook, na CI e à mão.
 </script>
 
 <script type="text/plain" id="dados-scripts">
-preflight-spec.mjs :: sessão · F1 :: Panorama do que já existe (N0, N1, N2, N3 com IDs e o próximo número livre) antes de especificar. Informativo, sempre sai 0.
+preflight-spec.mjs :: sessão · F1 :: Panorama do que já existe e das reservas do N2, inclusive N3 ainda não escrito. Mostra o próximo número sem preencher lacunas; informativo, sempre sai 0.
+ids-n3.mjs :: N2 · ao gravar · CI :: Reserva IDs pela primeira jornada confirmada, em modo seco e --write; --check --base compara com a base do PR e recusa renumeração, remoção de reserva e conflitos. Vale nos dois perfis.
 validate-doc.mjs :: ao gravar · F2 · CI :: Estrutura de N0 a N3 e do data-model: título, subtítulo de nível, seções obrigatórias, a sigla do MASTER, o repositório da implementação.
 validate-feature-semantics.mjs :: ao gravar · F2 :: O N3 é mesmo uma feature? FD-1 a FD-9 reprovam (verbo, atomicidade, regra invariante, descrição da entrega); FD-10 a FD-12 e [MSG] avisam.
 valida-citacoes-dicionario.mjs :: ao gravar · F6 :: Toda citação `→ ver <X>-DICTIONARY: alvo` tem entrada no dicionário.
@@ -1481,7 +1490,7 @@ gera-indice-repos.mjs :: publicação · CI :: Deriva a seção Features por rep
 valida-commits-ticket.mjs :: branch de entrega · CI :: Cada commit que toca a spec cita uma chave só.
 reverte-ticket.mjs :: branch de entrega :: Tira da branch da sprint o ticket que não foi entregue, revertendo os commits que citam a chave.
 valida-entrega.mjs :: branch de entrega · CI :: O portão do merge na main: AIMs concluídas, features no estado final da esteira e a branch alterando só o que os tickets entregues declaram.
-monta-site-preview.mjs :: CI · Pages :: Monta o site com a main na raiz e cada branch de entrega aberta ao lado.
+monta-site-preview.mjs :: CI · Pages :: Publica snapshots de commits: main e branches de entrega, com seletor, base do PR, Ver alterações e comparação por palavra no próprio artefato. Sem PR, explicita a referência à main.
 gera-planilha-contagem.py :: contagem :: A planilha de entrega à métrica, sob demanda, com Item do Jira e Natureza vindos das AIMs.
 atualiza-pages.mjs :: publicação :: Regenera na ordem certa o que o site deriva: espelho da esteira, índice de repositórios, HTML das AIMs, diagrama ER, árvore.
 init-instance.mjs :: engine → instância :: Cria uma instância em branco, já sincronizada, com o Perfil e a Cadência no MASTER.
@@ -1514,7 +1523,7 @@ O botão principal, embaixo à direita, avança: roda o próximo comando, aplica
 --- nota perfil
 O seletor **Perfil**, no topo, troca a instância de perfil a qualquer momento. Em `completo`, a spec vai até o código: quatro checkpoints e estado final ✅ `implementado`. Em `requisitos`, a instância para no negocial e no modelo de dados: dois checkpoints e estado final 📋 `especificado`. Os passos que só existem num perfil aparecem ou somem, e os demais mudam o que precisam.
 --- nota conceito
-A equipe: **Ana** (PO), **Rui** (analista de requisitos), **Bruno** (DBA), **Lia** (QA) e **Caio** (Tech Lead). O **Claude** conduz os prompts; o hook `spec-guard` e a CI rodam os validadores. O roteiro foi revisado para **Docqui Caixa {{VERSION}}**: as regras de negócio têm ID `RN-NN` e o cenário que as verifica leva a tag `@RN-NN`; no perfil `completo`, o contrato da API é conferido e o CP4 confere o caminho de volta até o teste. As saídas do bootstrap, dos gates de gravação, do pacote de contexto, do caminho de volta e do delta foram recapturadas numa instância de teste; as que não mudaram preservam a captura anterior, e as que dependem de um runner de CI usam as mensagens dos próprios scripts.
+A equipe: **Ana** (PO), **Rui** (analista de requisitos), **Bruno** (DBA), **Lia** (QA) e **Caio** (Tech Lead). O **Claude** conduz os prompts; o hook `spec-guard` e a CI rodam os validadores. O roteiro foi revisado para **Docqui Caixa 6.4.6**: inclui o N2 sem a coluna Prioridade, global conforme o perfil, reservas de IDs imutáveis e revisão de previews por palavra, além de regras `RN-NN`, cenários `@RN-NN`, contrato da API e caminho de volta até o teste. O selo acompanha a versão do engine; a revisão do roteiro é explícita. As capturas novas foram verificadas numa instância isolada; datas e hashes do enredo são didáticos, e trechos sem mudança mantêm a captura anterior.
 
 === init
 cap: A
@@ -1529,9 +1538,9 @@ $ node scripts/init-instance.mjs ../loja-doc --perfil completo --cadencia sprint
 ✓ 39 molde(s) seedado(s) em ../loja-doc · perfil: completo · cadência: sprint
 → puxando o engine canônico (sync-instance)...
 engine {{VERSION}} → instância ../loja-doc ((sem VERSION))
-238 arquivos canônicos · 0 em sincronia · 0 divergem · 238 faltam · 0 extras em engine/
+245 arquivos canônicos · 0 em sincronia · 0 divergem · 245 faltam · 0 extras em engine/
 (…)
-✓ 238 arquivo(s) replicado(s) do canônico.
+✓ 245 arquivo(s) replicado(s) do canônico.
 INDEX.md atualizado: /…/loja-doc/modules/INDEX.md
 
 ✓ Instância inicializada em /…/loja-doc
@@ -1543,18 +1552,18 @@ Próximos passos:
   (Site de docs — index.html/assets — é camada de publicação à parte, não incluída aqui.)
 --- term@requisitos à mão, no checkout do engine | demanda
 $ node scripts/init-instance.mjs ../loja-doc --perfil requisitos --cadencia sprint
-✓ 39 molde(s) seedado(s) em ../loja-doc · perfil: requisitos · cadência: sprint
+✓ 36 molde(s) seedado(s) em ../loja-doc · perfil: requisitos · cadência: sprint
 → puxando o engine canônico (sync-instance)...
 engine {{VERSION}} → instância ../loja-doc ((sem VERSION))
-238 arquivos canônicos · 0 em sincronia · 0 divergem · 238 faltam · 0 extras em engine/
+245 arquivos canônicos · 0 em sincronia · 0 divergem · 245 faltam · 0 extras em engine/
 (…)
-✓ 238 arquivo(s) replicado(s) do canônico.
+✓ 245 arquivo(s) replicado(s) do canônico.
 INDEX.md atualizado: /…/loja-doc/modules/INDEX.md
 
 ✓ Instância inicializada em /…/loja-doc
 
 Próximos passos:
-  1. Preencha global/MASTER.md (sigla, nome, stack, arquétipo).
+  1. Preencha global/MASTER.md (sigla, nome, arquétipo).
   2. git add -A && git commit -m "chore: bootstrap docqui" && crie o repo remoto e dê push.
   3. Abra a sessão e rode a skill analista-requisitos (ou cole engine/prompts/PROMPT_MENU.md) para começar em N0/1A.
   (Site de docs — index.html/assets — é camada de publicação à parte, não incluída aqui.)
@@ -1577,7 +1586,7 @@ O bootstrap regenera o espelho do INDEX com a esteira do perfil e a data do dia.
 --- nota conceito
 **Uma sigla, muitos repositórios.** O inventário agrupa os serviços por domínio de negócio, não cria um N1 por serviço. No perfil `completo`, o 3B preenche o repositório no N3; no `requisitos`, o 3A o preenche quando existe inventário, sem exigir código nem CP4. O mapa e os validadores percorrem os serviços disponíveis no disco além do par backend/frontend; repositório ausente gera aviso. `gera-indice-repos` responde quais features cada serviço realiza.
 --- nota@requisitos perfil
-A árvore é a mesma nos dois perfis. O que muda é o MASTER: no perfil `requisitos` ele nasce **sem as seções técnicas** (stack, repositórios, convenções de código, campos globais e padrão de API).
+Em `requisitos`, a pasta global nasce **sem API-PATTERNS.md, AUTHZ.md e PATTERNS.md**. O DATA-MODEL é negocial, sem estrutura física de banco; MASTER/NFR não apontam para os catálogos omitidos, e gates-config tem só CP1/CP2. Os dicionários, N0, design system, vocabulário e contagem continuam presentes. Os moldes técnicos permanecem no engine sincronizado, não como arquivos ativos de global.
 --- fx
 + CLAUDE.md
 + README.md
@@ -1602,10 +1611,7 @@ A árvore é a mesma nos dois perfis. O que muda é o MASTER: no perfil `requisi
 + global/SIZING.md
 + global/CONTAGEM-PF.md
 + global/ALI-AIE-MAP.md
-+ global/API-PATTERNS.md
-+ global/AUTHZ.md
 + global/DESIGN-SYSTEM.md
-+ global/PATTERNS.md
 + global/VOCABULARY-OVERRIDES.md
 + global/gates-config.yml
 + modules/INDEX.md
@@ -1618,8 +1624,15 @@ A árvore é a mesma nos dois perfis. O que muda é o MASTER: no perfil `requisi
 + prototypes/INDEX.md
 + prototypes/_biblioteca-ds/
 + engine/
++ engine/N3-IDS.md
++ engine/publication/
++ scripts/ids-n3.mjs
 + scripts/
 branch main
+--- fx@completo
++ global/API-PATTERNS.md
++ global/AUTHZ.md
++ global/PATTERNS.md
 
 === master
 cap: A
@@ -2121,7 +2134,7 @@ niveis: N2
 quem: Ana (PO) · Claude
 prompt: 2A · PROMPT_2A_N2_negocio
 --- intro
-O N2 é **integralmente negocial**: a jornada principal (um fluxo só para frente), as features do Feature Set, as telas e as **permissões por perfil**. As permissões vivem só aqui: o N3 nunca lista perfis.
+O N2 é **integralmente negocial**: a jornada principal, as features, as telas e as **permissões por perfil**. Na primeira atribuição, confirme com a PO a ordem da tabela Features antes de reservar os IDs. O N3 copia a reserva: a ordem de geração dos arquivos não decide a numeração. As permissões vivem só aqui.
 --- file modules/vendas/checkout/README.md | novo
 <!-- docqui: {{VERSION}} | prompt: PROMPT_2A | atualizado: 2026-10-07 -->
 # Feature Set: Checkout
@@ -2134,9 +2147,9 @@ Checkout é a etapa em que o cliente informa onde quer receber, vê quanto custa
 
 ## Features
 
-| Feature | Prioridade | Descrição |
-|---|---|---|
-| [**Calcular Frete**](f-calcular-frete.md) <small>VND-CHK-01</small> | **P1** | valor da entrega pelo CEP |
+| Feature | Descrição |
+|---|---|
+| [**Calcular Frete**](f-calcular-frete.md) | valor da entrega pelo CEP |
 
 ## Fluxo Principal
 
@@ -2154,7 +2167,7 @@ flowchart TD
 
 | Tela | Rota sugerida | Features atendidas | Descrição |
 |---|---|---|---|
-| Checkout | `/checkout` | **Calcular Frete** <small>VND-CHK-01</small> | endereço, frete e resumo da compra |
+| Checkout | `/checkout` | **Calcular Frete** | endereço, frete e resumo da compra |
 
 ## Permissões por perfil
 
@@ -2173,13 +2186,45 @@ Perfis: **Cliente**, **Atendente**.
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-07 | Ana (PO) | N2 criado | Gerado pelo PROMPT 2A (STRY0013101) |
---- term hook spec-guard · F2 · F7 | gravar
+--- term à mão, depois de confirmar a jornada | demanda
+$ node scripts/ids-n3.mjs modules/vendas/checkout/README.md
+VND-CHK: 1 feature(s) na ordem da tabela; IDs existentes preservados.
+  VND-CHK-01 — Calcular Frete [reservar no N2]
+  Próximo número: VND-CHK-02 (sem reutilizar lacunas).
+Modo seco: nenhum arquivo alterado. Após conferir a jornada e o diff previsto, aplique com --write.
+--- nota regra
+Ana confirma **Calcular Frete** como a primeira feature da jornada. O modo seco não escreve; depois da conferência, Rui aplica a reserva. O comentário invisível mantém o ID e o caminho, inclusive se a feature sair da tabela depois.
+--- term à mão, reserva confirmada | demanda
+$ node scripts/ids-n3.mjs modules/vendas/checkout/README.md --write
+VND-CHK: 1 feature(s) na ordem da tabela; IDs existentes preservados.
+  VND-CHK-01 — Calcular Frete [reservar no N2]
+  Próximo número: VND-CHK-02 (sem reutilizar lacunas).
+✓ 1 N2 atualizado(s); nenhum N3 renumerado. Confira o diff antes do commit.
+--- fix Registro e referências atualizados pelo reservador
+@ modules/vendas/checkout/README.md
+- <!-- docqui: {{VERSION}} | prompt: PROMPT_2A | atualizado: 2026-10-07 -->
++ <!-- docqui: {{VERSION}} | prompt: IDS_N3 | atualizado: 2026-10-16 -->
+  ## Features
++
++ <!-- docqui:n3-ids {"version":1,"ids":{"VND-CHK-01":"f-calcular-frete.md"}} -->
+- | [**Calcular Frete**](f-calcular-frete.md) | valor da entrega pelo CEP |
++ | [**Calcular Frete**](f-calcular-frete.md) <small>VND-CHK-01</small> | valor da entrega pelo CEP |
+- | Checkout | `/checkout` | **Calcular Frete** | endereço, frete e resumo da compra |
++ | Checkout | `/checkout` | **Calcular Frete** <small>VND-CHK-01</small> | endereço, frete e resumo da compra |
+  | Data | Autor | Tipo | Descrição |
+  |---|---|---|---|
++ | 2026-10-16 | ids-n3 | IDs reservados | VND-CHK-01 — Calcular Frete; IDs imutáveis. |
+--- term hook spec-guard · identidade · F2 · F7 | gravar
+$ node scripts/ids-n3.mjs --check
+VND-CHK: 1 feature(s) na ordem da tabela; IDs existentes preservados.
+  VND-CHK-01 — Calcular Frete [preservado]
+✓ 1 Feature Set(s) conferido(s).
 $ node scripts/validate-doc.mjs modules/vendas/checkout/README.md
 ✓ [N2] modules/vendas/checkout/README.md
 $ node scripts/valida-fluxo-principal.mjs modules/vendas/checkout/README.md
 ✓ 1 Feature Set(s) conferido(s) — todo "## Fluxo Principal" contempla as features da própria tabela.
 --- nota conceito
-O `validate-doc` cobra do N2 as seções na ordem canônica, a linha **Não faz**, o diagrama em `flowchart TD` sem ciclo e a nota de fonte única das permissões. O `valida-fluxo-principal` (F7) cobra que cada feature da tabela tenha no diagrama um nó com o **nome exato**. Na história 2 ele reprova.
+O `validate-doc` cobra a estrutura; o `valida-fluxo-principal` (F7), o nome exato de cada feature no diagrama. O `ids-n3 --check` cobra as reservas: ID já usado não muda quando a jornada ou a ordem de geração muda. Ao regenerar o N2, preserve `docqui:n3-ids` e as linhas anteriores do Changelog. Na história 2 veremos o F7 e a proteção de identidade reprovarem.
 --- fx
 commit docs(VND): N2 Checkout (ServiceNow STRY0013101)
 
@@ -2258,7 +2303,14 @@ prompt: 3A · PROMPT_3A_N3_negocio
 --- intro
 O **3A** desdobra cada critério de aceite em regra de negócio (se é invariante), em cenário Gherkin (se é comportamento observável) ou nos dois. Cada regra ganha um ID `RN-NN`, sequencial na feature e nunca reaproveitado, e o cenário que a verifica leva a tag `@RN-NN` na linha logo acima do `Scenario:`. Ao gravar o N3, o hook roda de uma vez os gates de estrutura, de semântica, de citação, de regras × cenários e de rastreabilidade, e devolve todos os desvios juntos.
 --- chat
-@Claude: [Contexto verificado] `VND-CHK` não tem features; o próximo NN livre é 01. O CEP tem validação canônica no FIELD-DICTIONARY: vou citá-la em vez de reescrever. Permissões ficam no N2. As regras nascem com ID, de `RN-01` em diante.
+@Claude: [Contexto verificado] `VND-CHK-01 — Calcular Frete` já está reservado no N2, ainda sem arquivo N3. Vou copiar esse ID; a próxima reserva será 02, não uma renumeração da feature. O CEP tem entrada canônica no FIELD-DICTIONARY e permissões ficam no N2. As regras desta feature começam em `RN-01`.
+--- term F1 · preflight antes de escrever o N3 | sessao
+$ node scripts/preflight-spec.mjs vendas checkout
+Major Feature Set alvo: vendas  [N1 ✔ VND — Vendas]
+    Feature Set: checkout  [N2 ✔ VND-CHK]
+        Jornada registrada no N2 (não confundir posição com ID):
+          VND-CHK-01 — Calcular Frete
+        → próximo NN livre neste FS: VND-CHK-02 (reservas incluídas; nunca preencha lacunas)
 --- file modules/vendas/checkout/f-calcular-frete.md | novo
 <!-- docqui: {{VERSION}} | prompt: PROMPT_3A | atualizado: 2026-10-07 -->
 ---
@@ -3325,7 +3377,30 @@ niveis: N2 N3
 quem: Ana (PO) · Claude
 prompt: 3A · PROMPT_3A_N3_negocio
 --- intro
-O CA-3 vira uma feature nova: `VND-CHK-02` — Consultar Resumo do Pedido, um modal aberto a partir do checkout. O 3A cria o N3, inclui a feature no N2 e fecha o elo nos três lugares na mesma passada.
+O CA-3 vira **VND-CHK-02 — Consultar Resumo do Pedido**, um modal aberto a partir do checkout. Antes de escrever o N3, inclua sua linha sem ID no N2 e reserve o próximo número. A reserva existente de **VND-CHK-01 — Calcular Frete** é preservada. O 3A copia 02 e fecha o elo nos três lugares.
+--- fix Incluir a nova feature no N2 antes de escrever o N3
+@ modules/vendas/checkout/README.md
+  | [**Calcular Frete**](f-calcular-frete.md) <small>VND-CHK-01</small> | valor da entrega pelo CEP |
++ | [**Consultar Resumo do Pedido**](f-consultar-resumo-do-pedido.md) | itens, frete e prazo antes de confirmar |
+--- term à mão · reserva da nova feature | demanda
+$ node scripts/ids-n3.mjs modules/vendas/checkout/README.md
+VND-CHK: 2 feature(s) na ordem da tabela; IDs existentes preservados.
+  VND-CHK-01 — Calcular Frete [preservado]
+  VND-CHK-02 — Consultar Resumo do Pedido [reservar no N2]
+  Próximo número: VND-CHK-03 (sem reutilizar lacunas).
+Modo seco: nenhum arquivo alterado. Após conferir a jornada e o diff previsto, aplique com --write.
+$ node scripts/ids-n3.mjs modules/vendas/checkout/README.md --write
+VND-CHK: 2 feature(s) na ordem da tabela; IDs existentes preservados.
+  VND-CHK-01 — Calcular Frete [preservado]
+  VND-CHK-02 — Consultar Resumo do Pedido [reservar no N2]
+  Próximo número: VND-CHK-03 (sem reutilizar lacunas).
+✓ 1 N2 atualizado(s); nenhum N3 renumerado. Confira o diff antes do commit.
+--- fix Manter a reserva anterior e registrar a nova
+@ modules/vendas/checkout/README.md
+- <!-- docqui:n3-ids {"version":1,"ids":{"VND-CHK-01":"f-calcular-frete.md"}} -->
++ <!-- docqui:n3-ids {"version":1,"ids":{"VND-CHK-01":"f-calcular-frete.md","VND-CHK-02":"f-consultar-resumo-do-pedido.md"}} -->
+- | [**Consultar Resumo do Pedido**](f-consultar-resumo-do-pedido.md) | itens, frete e prazo antes de confirmar |
++ | [**Consultar Resumo do Pedido**](f-consultar-resumo-do-pedido.md) <small>VND-CHK-02</small> | itens, frete e prazo antes de confirmar |
 --- file modules/vendas/checkout/f-consultar-resumo-do-pedido.md | novo
 <!-- docqui: {{VERSION}} | prompt: PROMPT_3A | atualizado: 2026-10-11 -->
 ---
@@ -3402,10 +3477,12 @@ O verbo decide o tipo da feature. **Consultar**, **Pesquisar**, **Listar** e **B
 --- file modules/vendas/checkout/README.md | alterado
 ## Features
 
-| Feature | Prioridade | Descrição |
-|---|---|---|
-| [**Calcular Frete**](f-calcular-frete.md) <small>VND-CHK-01</small> | **P1** | valor e prazo da entrega pelo CEP |
-» | [**Consultar Resumo do Pedido**](f-consultar-resumo-do-pedido.md) <small>VND-CHK-02</small> | **P1** | itens, frete e prazo antes de confirmar |
+<!-- docqui:n3-ids {"version":1,"ids":{"VND-CHK-01":"f-calcular-frete.md","VND-CHK-02":"f-consultar-resumo-do-pedido.md"}} -->
+
+| Feature | Descrição |
+|---|---|
+| [**Calcular Frete**](f-calcular-frete.md) <small>VND-CHK-01</small> | valor e prazo da entrega pelo CEP |
+» | [**Consultar Resumo do Pedido**](f-consultar-resumo-do-pedido.md) <small>VND-CHK-02</small> | itens, frete e prazo antes de confirmar |
 
 ## Fluxo Principal
 
@@ -3414,6 +3491,12 @@ flowchart TD
     A(["Cliente com itens no carrinho"]) --> B["Calcular Frete"]
     B --> C(["Pedido pronto para confirmar"])
 ```
+
+## Telas
+
+| Tela | Rota sugerida | Features atendidas | Descrição |
+|---|---|---|---|
+| Checkout | `/checkout` | **Calcular Frete** <small>VND-CHK-01</small> | endereço, frete e resumo da compra |
 
 ## Permissões por perfil
 (…)
@@ -3455,8 +3538,65 @@ $ node scripts/valida-fluxo-principal.mjs modules/vendas/checkout/README.md
 ✓ 1 Feature Set(s) conferido(s) — todo "## Fluxo Principal" contempla as features da própria tabela.
 $ node scripts/validate-doc.mjs modules/vendas/checkout/README.md
 ✓ [N2] modules/vendas/checkout/README.md
+$ node scripts/ids-n3.mjs modules/vendas/checkout/README.md --check
+VND-CHK: 2 feature(s) na ordem da tabela; IDs existentes preservados.
+  VND-CHK-01 — Calcular Frete [preservado]
+  VND-CHK-02 — Consultar Resumo do Pedido [preservado]
+✓ 1 Feature Set(s) conferido(s).
 $ node scripts/audit-trace-links.mjs
 ✓ audit-trace-links: elos ticket↔feature consistentes nas três fontes — 3 par(es), 2 AIM(s), 2 feature(s).
+--- nota regra
+**Mudar a jornada não muda a identidade.** Rui tenta trocar o ID de **VND-CHK-01 — Calcular Frete** para 99 no N2, no registro e no N3. Mesmo tornando esses lugares coerentes entre si, o histórico continua reservando 01 para essa feature. A CI compara com a base do PR; em uma conferência local, HEAD abaixo é o último commit válido, anterior à tentativa.
+--- file modules/vendas/checkout/f-calcular-frete.md | trecho de identidade; restante do N3 preservado
+---
+id: VND-CHK-01
+feature_set: VND-CHK
+dominio: VND
+entidade: Pedido
+---
+# Calcular Frete
+> **Nível 3** - Feature Set: Checkout — Major Feature Set: Vendas - `VND-CHK-01`
+--- fix Tentativa incorreta: renumerar uma feature já existente
+@ modules/vendas/checkout/README.md
+- <!-- docqui:n3-ids {"version":1,"ids":{"VND-CHK-01":"f-calcular-frete.md","VND-CHK-02":"f-consultar-resumo-do-pedido.md"}} -->
++ <!-- docqui:n3-ids {"version":1,"ids":{"VND-CHK-99":"f-calcular-frete.md","VND-CHK-02":"f-consultar-resumo-do-pedido.md"}} -->
+- | [**Calcular Frete**](f-calcular-frete.md) <small>VND-CHK-01</small> | valor e prazo da entrega pelo CEP |
++ | [**Calcular Frete**](f-calcular-frete.md) <small>VND-CHK-99</small> | valor e prazo da entrega pelo CEP |
+- | Checkout | `/checkout` | **Calcular Frete** <small>VND-CHK-01</small> | endereço, frete e resumo da compra |
++ | Checkout | `/checkout` | **Calcular Frete** <small>VND-CHK-99</small> | endereço, frete e resumo da compra |
+@ modules/vendas/checkout/f-calcular-frete.md
+- id: VND-CHK-01
++ id: VND-CHK-99
+- > **Nível 3** - Feature Set: Checkout — Major Feature Set: Vendas - `VND-CHK-01`
++ > **Nível 3** - Feature Set: Checkout — Major Feature Set: Vendas - `VND-CHK-99`
+--- term guard de identidade · base anterior à tentativa | pr
+$ node scripts/ids-n3.mjs modules/vendas/checkout/README.md --check --base HEAD
+✗ /…/loja-doc/modules/vendas/checkout/README.md: Reserva atual: f-calcular-frete.md já tem o ID imutável VND-CHK-01, não VND-CHK-99.
+N2 atual: f-calcular-frete.md já tem o ID imutável VND-CHK-01, não VND-CHK-99.
+Telas atuais: f-calcular-frete.md já tem o ID imutável VND-CHK-01, não VND-CHK-99.
+N3 atual: f-calcular-frete.md já tem o ID imutável VND-CHK-01, não VND-CHK-99.
+Reserva imutável VND-CHK-01 foi removida do registro docqui:n3-ids.
+--- fix Restaurar a identidade, sem reorganizar os números
+@ modules/vendas/checkout/README.md
+- <!-- docqui:n3-ids {"version":1,"ids":{"VND-CHK-99":"f-calcular-frete.md","VND-CHK-02":"f-consultar-resumo-do-pedido.md"}} -->
++ <!-- docqui:n3-ids {"version":1,"ids":{"VND-CHK-01":"f-calcular-frete.md","VND-CHK-02":"f-consultar-resumo-do-pedido.md"}} -->
+- | [**Calcular Frete**](f-calcular-frete.md) <small>VND-CHK-99</small> | valor e prazo da entrega pelo CEP |
++ | [**Calcular Frete**](f-calcular-frete.md) <small>VND-CHK-01</small> | valor e prazo da entrega pelo CEP |
+- | Checkout | `/checkout` | **Calcular Frete** <small>VND-CHK-99</small> | endereço, frete e resumo da compra |
++ | Checkout | `/checkout` | **Calcular Frete** <small>VND-CHK-01</small> | endereço, frete e resumo da compra |
+@ modules/vendas/checkout/f-calcular-frete.md
+- id: VND-CHK-99
++ id: VND-CHK-01
+- > **Nível 3** - Feature Set: Checkout — Major Feature Set: Vendas - `VND-CHK-99`
++ > **Nível 3** - Feature Set: Checkout — Major Feature Set: Vendas - `VND-CHK-01`
+--- term guard de identidade · correção conferida | pr
+$ node scripts/ids-n3.mjs modules/vendas/checkout/README.md --check --base HEAD
+VND-CHK: 2 feature(s) na ordem da tabela; IDs existentes preservados.
+  VND-CHK-01 — Calcular Frete [preservado]
+  VND-CHK-02 — Consultar Resumo do Pedido [preservado]
+✓ 1 Feature Set(s) conferido(s).
+--- nota dica
+O atalho **GitHub: Identidade imutável** mostra a mesma tentativa num PR para a sprint. Depois de corrigir, a tabela pode mudar de ordem, mas **VND-CHK-01 — Calcular Frete** e **VND-CHK-02 — Consultar Resumo do Pedido** mantêm seus IDs. Um número retirado também não volta a ficar livre.
 --- fx
 feat VND-CHK-02 rascunho
 commit docs(VND-CHK-02): Consultar Resumo do Pedido — 3A (ServiceNow STRY0013120)
@@ -3623,6 +3763,26 @@ A terceira história pede cupom de desconto. Rui abre a AIM, o changeset é aval
 --- ticket STRY0013135 | Cupom de desconto | ServiceNow
 Como cliente, quero aplicar um cupom de desconto no checkout, para pagar menos pelo pedido.
 CA-1 | Quando o cliente aplica um cupom válido, o total mostra o desconto.
+--- nota regra
+O cupom entra entre o cálculo do frete e o resumo na apresentação da jornada, mas recebe 03: os números 01 e 02 já pertencem às features existentes. A nova posição não autoriza renumerar o resumo para 03.
+--- fix Incluir a linha do cupom sem mexer nos IDs existentes
+@ modules/vendas/checkout/README.md
+  | [**Calcular Frete**](f-calcular-frete.md) <small>VND-CHK-01</small> | valor e prazo da entrega pelo CEP |
++ | [**Aplicar Cupom**](f-aplicar-cupom.md) | desconto no checkout |
+--- term à mão · reserva confirmada depois do modo seco | demanda
+$ node scripts/ids-n3.mjs modules/vendas/checkout/README.md --write
+VND-CHK: 3 feature(s) na ordem da tabela; IDs existentes preservados.
+  VND-CHK-01 — Calcular Frete [preservado]
+  VND-CHK-03 — Aplicar Cupom [reservar no N2]
+  VND-CHK-02 — Consultar Resumo do Pedido [preservado]
+  Próximo número: VND-CHK-04 (sem reutilizar lacunas).
+✓ 1 N2 atualizado(s); nenhum N3 renumerado. Confira o diff antes do commit.
+--- fix Atualizar o registro e copiar a reserva para o N3
+@ modules/vendas/checkout/README.md
+- <!-- docqui:n3-ids {"version":1,"ids":{"VND-CHK-01":"f-calcular-frete.md","VND-CHK-02":"f-consultar-resumo-do-pedido.md"}} -->
++ <!-- docqui:n3-ids {"version":1,"ids":{"VND-CHK-01":"f-calcular-frete.md","VND-CHK-02":"f-consultar-resumo-do-pedido.md","VND-CHK-03":"f-aplicar-cupom.md"}} -->
+- | [**Aplicar Cupom**](f-aplicar-cupom.md) | desconto no checkout |
++ | [**Aplicar Cupom**](f-aplicar-cupom.md) <small>VND-CHK-03</small> | desconto no checkout |
 --- term CI · spec-guard, job entrega | branch
 $ node scripts/valida-commits-ticket.mjs --base origin/main
 ✗ 1 commit(s) fora da regra em `sprint/SP07`:
@@ -3654,19 +3814,47 @@ fase: entrega
 titulo: Os requisitos da sprint no site, antes do merge
 quem: Ana (PO) · Caio (Tech Lead)
 --- intro
-Até o merge, os requisitos da sprint existem só na branch. O `pages.yml` da instância chama o `monta-site-preview` a cada push na `main` ou numa branch de entrega: a `main` fica na raiz do site, e cada branch aberta, ao lado. A PO e o time consultam no mesmo endereço o que está entregue e o que está em andamento.
+Até o merge, a PO consulta a spec da sprint no Pages. Na 6.4.2, o workflow lê os metadados dos PRs de entrega e remonta snapshots dos commits da `main` e das branches abertas, também quando o PR muda de base ou fecha. O build não publica edições locais nem executa a implementação da branch. No template da instância, o visualizador está na raiz; no engine, o workflow usa `--site-dir docs`.
 --- term CI · Pages | pr
-$ node scripts/monta-site-preview.mjs
-✓ main → /…/loja-doc/_site
-✓ origin/sprint/SP07 → sprint/SP07/
-1 branch(es) de entrega aberta(s) no site.
+$ node scripts/monta-site-preview.mjs --out _site --pull-requests pages-prs.json
+✓ sprint/SP07 → sprint/SP07/
+✓ main + 1 preview(s) → /…/loja-doc/_site
 --- nota conceito
-| Endereço | O que mostra |
+`pages-prs.json` é a entrada gerada pelo workflow a partir dos PRs do próprio repositório. O PR #30 é draft e tem a base `main`: draft permite consultar o preview, não entregar a sprint. A comparação parte do ancestral comum. Se o destino fosse `sprint/SP07`, essa seria a base de revisão; sem PR aberto, a referência à `main` aparece explicitamente como fallback, não como origem comprovada.
+--- file _site/sprint/SP07/preview.json | trecho gerado, não versionado
+{
+  "tipo": "sprint",
+  "id": "SP07",
+  "branch": "sprint/SP07",
+  "caminho": "sprint/SP07/",
+  "commit": "<sha-da-sprint>",
+  "data": "2026-10-16",
+  "base": "main",
+  "baseCommit": "<sha-da-base>",
+  "mergeBase": "<sha-do-ancestral-comum>",
+  "baseSource": "pull-request",
+  "pr": { "number": 30, "url": "https://github.com/acme/loja-doc/pull/30", "draft": true }
+}
+--- nota conceito
+| Endereço / controle | O que mostra |
 |---|---|
 | `/` | a `main`: o que já foi entregue |
 | `/sprint/SP07/` | a branch da sprint: o que está em andamento |
+| Seletor de branch | troca main, sprint ou história, preservando o artefato aberto |
+| **Ver alterações** | diff completo por arquivo, com incluídos, alterados, excluídos, renomeados e binários |
+| **Destacar alterações** | vem ligado no preview; marca as diferenças no próprio artefato Markdown |
 
-Cada preview leva um `preview.json` (branch, commit, data), e a raiz um `previews.json` com a lista. Depois do merge, a branch sai do site no deploy seguinte.
+Cada preview leva `preview.json` e `_docqui/changes.json`; a raiz leva `previews.json` para o seletor. Depois da entrega e da montagem seguinte, a branch incorporada sai do preview. As instâncias existentes precisam receber a integração do template `pages.yml`, preservando suas customizações: sincronizar scripts não muda o workflow herdado.
+--- nota conceito
+**Exemplo de revisão por palavra em uma célula do N2.** O ticket do prazo altera a descrição de Calcular Frete: o comparador realça só o trecho novo, sem pintar o contexto igual. A mesma regra vale para parágrafos, listas e código. Aqui os trechos destacados são representados em negrito; no Pages recebem a marcação de inclusão/remoção.
+
+| Visão | Descrição da feature |
+|---|---|
+| Base do PR | valor da entrega pelo CEP |
+| Preview · destaque ligado | valor **e prazo** da entrega pelo CEP |
+| Preview · destaque desligado | valor e prazo da entrega pelo CEP |
+
+Na troca de “até 5 dias úteis” por “até 3 dias úteis”, só **5** fica riscado e só **3** é destacado. Linhas ou blocos totalmente novos/removidos são marcados por inteiro. Desligar o controle restaura o conteúdo atual e preserva links e formatação. **Copiar código entrega só a versão atual**, nunca o texto removido. Na `main` não há essas marcações; erro ao carregar a comparação é informado na barra, não tratado como “nenhuma alteração”.
 
 === relatorio
 cap: F
@@ -4143,6 +4331,7 @@ Da instância vazia à sprint entregue: um N0, um N1, um N2, duas features no es
 | Momento | Quem confere | O que pega |
 |---|---|---|
 | ao pedir especificação | hook F1 · `preflight-spec` | ID ou pasta que já existe |
+| antes de escrever N3, ao gravar N2/N3 e na CI | `ids-n3` · modo seco / `--write` / `--check --base` | reserva pela primeira jornada; recusa renumeração, reserva removida e reutilização de números |
 | ao gravar N0 a N3 e o data-model | hook F2 · `validate-doc`, `validate-feature-semantics` | sigla divergente, regra com reação, consulta sem colunas do resultado, repositório fora do inventário |
 | ao gravar | hook F6 · F7 · F8 | citação de dicionário sem entrada, feature fora do fluxo do N2, memória de cálculo fora do formato |
 | ao gravar o N3, e na CI | hook F9 · `valida-regras-cenarios` | regra sem ID, ID repetido, tag sem regra, regra sem o cenário `@RN-NN` que a verifica |
@@ -4156,6 +4345,7 @@ Da instância vazia à sprint entregue: um N0, um N1, um N2, duas features no es
 | no merge | `valida-entrega` | AIM aberta, feature fora do estado final, arquivo que nenhum ticket entregue declara |
 | na CI do código, no CP4 | `valida-artefatos-previstos` | código sem o ID da feature e, no caminho de volta, regra sem teste `<ID>/RN-NN` e código de erro só no teste (perfil `completo`) |
 | ao publicar e na CI | `gera-indice-repos`, `--check` | índice de features por repositório que não espelha a Implementação do N3 |
+| ao publicar o Pages | `monta-site-preview` + metadados dos PRs | snapshot do commit, base do PR, ancestral comum e comparação por palavra; não publica edições locais |
 --- nota conceito
 | | Perfil `completo` | Perfil `requisitos` |
 |---|---|---|
@@ -4167,6 +4357,8 @@ Da instância vazia à sprint entregue: um N0, um N1, um N2, duas features no es
 | Fechar a AIM e mesclar | exige `implementado` | exige `especificado` |
 | Plano de testes | 5B, com gate (CP3), no molde do engine, com massa de teste e um teste por regra | fica com quem constrói: a AIM não o declara, e o C2 só avisa |
 | Regras e cenários (F9) | reprova regra sem cenário `@RN-NN` | o mesmo: a regra com ID é requisito |
+| Identidade dos N3 | reserva no N2 e ID imutável; a CI compara com a base | o mesmo: o perfil não permite renumerar |
+| Revisão de preview | Ver alterações e Destacar alterações, só palavras diferentes | o mesmo: a main permanece limpa |
 | Contrato da API (F10) | reprova na passada técnica (3B e 4B) | sem `## API`, o F10 roda e não tem o que conferir |
 --- nota dica
 Para praticar: troque o perfil no topo e percorra a sprint de novo, ou abra o **Mapa** e clique num validador para ir direto ao passo em que ele reprova.
@@ -4654,9 +4846,13 @@ function menuHTML() {
 }
 
 function descArquivo(path) {
+  if (st.perfil === 'requisitos') {
+    if (path === 'global/DATA-MODEL.md') return 'Índice **negocial** de entidades, atributos em Label PO e relacionamentos, sem estrutura física de banco. Contagem das funções de dados pela opção CT.';
+    if (path === 'global/gates-config.yml') return 'Papéis dos checkpoints deste perfil: CP1 (PO/Negócio) e CP2 (DBA/Arquiteto).';
+  }
   if (ARQ.has(path)) return ARQ.get(path);
   if (/^modules\/[^/]+\/README\.md$/.test(path)) return '**N1 — Major Feature Set.** O que o domínio faz e o que não faz, os Feature Sets com as siglas, regras transversais e integrações. Opções 1A (negócio) e 1B (técnico).';
-  if (/^modules\/[^/]+\/[^/]+\/README\.md$/.test(path)) return '**N2 — Feature Set.** A jornada (`## Fluxo Principal`), as features, as telas e as permissões por perfil. Integralmente negocial. Opção 2A.';
+  if (/^modules\/[^/]+\/[^/]+\/README\.md$/.test(path)) return '**N2 — Feature Set.** A jornada, as features, as telas e as permissões. Antes do N3, ids-n3 reserva a primeira sequência confirmada; preserve o registro docqui:n3-ids e os IDs já usados. Integralmente negocial. Opção 2A.';
   if (/^modules\/.+\/f-[^/]+\.md$/.test(path)) return '**N3 — Feature.** Campos, regras de negócio, cenários Gherkin e comportamento de tela. O front-matter carrega a esteira (`estado` + `gates`) e a pendência de contagem. Opções 3A/3B, 4A/4B e CT.';
   if (/^analise-impacto\/AIM-SP/.test(path)) return '**AIM da sprint.** Consolida os tickets entregues, conta cada função uma vez e traz o apurável que a equipe de métricas audita.';
   if (/^analise-impacto\/AIM-/.test(path)) return '**AIM do ticket.** O que o ticket pede, o changeset que a PO avaliza e, no fechamento, o que mudou, com PFB/PFL e a reconciliação. Opção AIM; o fechamento é da skill analise-impacto.';
@@ -4807,7 +5003,8 @@ function renderMapa() {
   } else {
     const grupos = [['Raiz e automação', (p) => !p.includes('/') || /^\.(claude|github)\//.test(p)], ['Arquivos globais (global/)', (p) => p.startsWith('global/')], ['Níveis e espelhos (modules/)', (p) => p.startsWith('modules/')], ['Análise de impacto, testes, código e protótipos', (p) => /^(analise-impacto|qa|repos|prototypes)\//.test(p)], ['Sincronizados do engine', (p) => /^(engine|scripts)\/$/.test(p)]];
     for (const [g, f] of grupos) {
-      html += '<section class="mapa-arquivos"><h3 style="font-size:15px">' + esc(g) + '</h3><table><tbody>' + [...ARQ.keys()].filter(f).map((p) => '<tr><td><code>' + esc(p) + '</code></td><td>' + inline(ARQ.get(p)) + '</td></tr>').join('') + '</tbody></table></section>';
+      const arquivos = [...ARQ.keys()].filter(f).filter(p => st.perfil !== 'requisitos' || !['global/API-PATTERNS.md', 'global/AUTHZ.md', 'global/PATTERNS.md'].includes(p));
+      html += '<section class="mapa-arquivos"><h3 style="font-size:15px">' + esc(g) + '</h3><table><tbody>' + arquivos.map((p) => '<tr><td><code>' + esc(p) + '</code></td><td>' + inline(descArquivo(p)) + '</td></tr>').join('') + '</tbody></table></section>';
     }
   }
   $('#ov-mapa-c').innerHTML = html;
@@ -4983,7 +5180,7 @@ window.DOKU_CONFIG = {
   /* Versão do engine, no selo ao lado do nome (toda página) e na página inicial.
      Espelha o VERSION da raiz, que o site — servido só de docs/ — não alcança. No
      release, troque os dois no mesmo commit: o eval 40 reprova a divergência. */
-  version: "6.4.1",
+  version: "6.4.6",
 
   /* Páginas renomeadas: o endereço antigo (link, favorito) leva ao novo. */
   redirects: {
@@ -5070,6 +5267,7 @@ window.DOKU_CONFIG = {
 
   const FRETE = 'modules/vendas/checkout/f-calcular-frete.md';
   const RESUMO = 'modules/vendas/checkout/f-consultar-resumo-do-pedido.md';
+  const CHECKOUT = 'modules/vendas/checkout/README.md';
   const INDEX = 'modules/INDEX.md';
   const AIM1 = 'analise-impacto/AIM-STRY0013101.md';
   const AIM2 = 'analise-impacto/AIM-STRY0013120.md';
@@ -5084,6 +5282,7 @@ window.DOKU_CONFIG = {
     { id: 'cp3', passo: 't1-qa', numero: 15, titulo: 'CP3 — testes de VND-CHK-01 — Calcular Frete', perfil: 'completo', revisor: 'Lia (QA)', ticket: 'STRY0013101', arquivos: [FRETE, 'qa/vendas/checkout/calcular-frete.md', INDEX, AIM1], gate: 'testes', estado: 'especificado', problema: 'O PR aprova testes, mas não inclui o plano em qa/.', correcao: 'Trazer o plano de testes no mesmo PR do gate, para o CODEOWNERS convocar a QA.' },
     { id: 'codigo1', passo: 't1-dev', numero: 20, titulo: 'Código — VND-CHK-01 — Calcular Frete', perfil: 'completo', repo: 'loja-api', base: 'main', head: 'feature/STRY0013101-frete', revisor: 'Caio (Tech Lead)', aprovador: CAIO, ticket: 'STRY0013101', arquivos: ['src/checkout/frete/FreteService.java', 'src/test/checkout/frete/FreteServiceTest.java'], codigo: true, descricao: 'PR do repositório de código. Cada teste leva no nome a regra que verifica (VND-CHK-01/RN-NN). A revisão da implementação não substitui o PR do CP4 no repositório de docs.' },
     { id: 'cp4', passo: 't1-dev', numero: 21, titulo: 'CP4 — registro de VND-CHK-01 — Calcular Frete', perfil: 'completo', revisor: 'Caio (Tech Lead)', ticket: 'STRY0013101', arquivos: [FRETE, 'repos/INDEX.md', INDEX, AIM1], gate: 'codigo', estado: 'implementado', problema: 'loja-api ainda não está no inventário repos/INDEX.md.', correcao: 'Registrar loja-api em repos/, preencher a Implementação do N3 e regenerar o índice de repositórios.' },
+    { id: 'ids', passo: 't2-3a', numero: 23, titulo: 'Identidade imutável — VND-CHK-01 — Calcular Frete', revisor: 'Ana (PO)', ticket: 'STRY0013120', arquivos: [CHECKOUT, FRETE], problema: 'ids-n3: VND-CHK-01 já pertence a Calcular Frete; trocar para VND-CHK-99 no N2, no registro e no N3 continua sendo renumeração.', correcao: 'Restaurar VND-CHK-01 — Calcular Frete, preservar as reservas e manter VND-CHK-02 — Consultar Resumo do Pedido. A ordem de apresentação não muda IDs.', descricao: 'A nova feature recebe 02. A tentativa de renumerar a existente para 99 é recusada pela identidade comparada com a base do PR, mesmo com os arquivos alterados juntos.' },
     { id: 'cp1-resumo', passo: 't2-esteira', numero: 24, titulo: 'CP1 — requisitos de VND-CHK-02 — Consultar Resumo do Pedido', revisor: 'Ana (PO)', ticket: 'STRY0013120', arquivos: [RESUMO, INDEX, AIM2], gate: 'requisitos', estado: 'requisitos-aprovados' },
     { id: 'cp2-resumo', passo: 't2-esteira', numero: 25, titulo: 'CP2 — modelo de VND-CHK-02 — Consultar Resumo do Pedido', revisor: 'Bruno (DBA/Arquiteto)', ticket: 'STRY0013120', arquivos: [RESUMO, MODELO, 'global/DATA-MODEL.md', INDEX, AIM2], gate: 'modelo-dados', estado: 'modelo-validado' },
     { id: 'cp3-resumo', passo: 't2-esteira', numero: 26, titulo: 'CP3 — testes de VND-CHK-02 — Consultar Resumo do Pedido', perfil: 'completo', revisor: 'Lia (QA)', ticket: 'STRY0013120', arquivos: [RESUMO, 'qa/vendas/checkout/consultar-resumo-do-pedido.md', INDEX, AIM2], gate: 'testes', estado: 'especificado' },
@@ -5121,13 +5320,15 @@ window.DOKU_CONFIG = {
     const nomes = cena.codigo ? ['CI do código', 'valida-artefatos-previstos']
       : cena.entrega ? ['gate-check (commit a commit)', 'spec-guard', 'valida-commits-ticket', 'valida-entrega']
       : cena.draft ? ['spec-guard', 'valida-entrega']
+      : cena.id === 'ids' ? ['ids-n3 --check --base', 'spec-guard']
       : cena.gate ? ['gate-check', 'spec-guard', 'audit-trace-links'] : ['spec-guard'];
     return nomes.map((nome, i) => {
       const falha = estado.checks === 'failure' && i === (cena.draft ? nomes.length - 1 : 0);
       const classe = falha ? 'gh-error' : estado.checks === 'pending' ? 'gh-wait' : 'gh-ok';
       const mensagem = falha ? (cena.draft ? 'Entrega ainda em planejamento; merge bloqueado.' : cena.problema)
         : estado.checks === 'pending' ? 'Aguardando execução dos checks simulados.'
-        : nome === 'spec-guard' ? 'validate-doc, regras × cenários (valida-regras-cenarios), contrato da API (valida-contrato-api), elos e AIMs: aprovados na simulação.'
+        : nome === 'ids-n3 --check --base' ? 'IDs existentes e reservas preservados; nova feature usa o próximo número, sem renumerar.'
+        : nome === 'spec-guard' ? 'validate-doc, identidade imutável (ids-n3), regras × cenários (valida-regras-cenarios), contrato da API (valida-contrato-api), elos e AIMs: aprovados na simulação.'
         : nome === 'valida-artefatos-previstos' ? 'Nenhuma feature implementado neste PR: o caminho de volta (<ID>/RN-NN nos testes, error_codes no código) roda quando o CP4 a marcar.'
         : 'Validação simulada aprovada.';
       return '<div class="gh-check"><span class="' + classe + '">' + (falha ? '✗' : estado.checks === 'pending' ? '○' : '✓') + '</span><div><strong>' + esc(nome) + '</strong><small>' + esc(mensagem) + '</small></div></div>';
@@ -5155,6 +5356,20 @@ window.DOKU_CONFIG = {
   }
 
   function diff(path, corrigido) {
+    if (cena.id === 'ids') {
+      const id = corrigido ? 'VND-CHK-01' : 'VND-CHK-99';
+      if (path === CHECKOUT) {
+        const ledger = value => '<!-- docqui:n3-ids ' + JSON.stringify({ version: 1, ids: {
+          [value]: 'f-calcular-frete.md', 'VND-CHK-02': 'f-consultar-resumo-do-pedido.md',
+        } }) + ' -->';
+        return ['  ## Features', '- ' + ledger('VND-CHK-01'), '+ ' + ledger(id),
+          (corrigido ? '  ' : '+ ') + '| Calcular Frete | ' + id + ' |',
+          '+ | Consultar Resumo do Pedido | VND-CHK-02 |'];
+      }
+      return corrigido ? ['  id: VND-CHK-01', '  > **Nível 3** - `VND-CHK-01`']
+        : ['- id: VND-CHK-01', '+ id: VND-CHK-99',
+          '- > **Nível 3** - `VND-CHK-01`', '+ > **Nível 3** - `VND-CHK-99`'];
+    }
     const anterior = { requisitos: 'rascunho', 'modelo-dados': 'requisitos-aprovados', testes: 'modelo-validado', codigo: 'especificado' }[cena.gate];
     const novo = estadoGate(corrigido);
     if (path === FRETE || path === RESUMO) {
