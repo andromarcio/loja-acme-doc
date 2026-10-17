@@ -461,10 +461,6 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
     padding: 7px;
   }
 
-  .delivery-preview {
-    max-width: 80px;
-  }
-
   .sidebar {
     display: none;
     position: fixed;
@@ -508,9 +504,6 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
     width: 72px;
   }
 
-  .delivery-preview {
-    width: 64px;
-  }
 }
 
 .lvl-root > .mm-card, .lvl-n1 > .mm-card { border-left-color: var(--primary); }

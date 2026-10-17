@@ -2,8 +2,12 @@
 
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+import json
 import os
 from pathlib import Path
+import shutil
+import subprocess
+import tempfile
 from threading import Thread
 import unittest
 
@@ -310,6 +314,85 @@ class VisualPagesTest(unittest.TestCase):
         self.assertEqual(self.page.locator('.dashboard-view img[src="x"]').count(), 0)
         self.assertFalse(self.page.evaluate("Boolean(window.injected)"))
         self.page.evaluate("window.DASHBOARD_DATA = savedDashboard; renderDashboard()")
+
+    def test_branch_preview_highlights_inside_cards(self):
+        # O site montado como no CI (monta-site-preview.mjs), com uma sprint que altera o N3:
+        # "Destacar alterações" marca só o que mudou, dentro do card de cada mudança.
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp, "repo")
+            listed = subprocess.run(["git", "ls-files", "-co", "--exclude-standard", "-z"],
+                                    cwd=ROOT, capture_output=True, check=True).stdout.decode("utf-8")
+            for rel in filter(None, listed.split("\0")):
+                if (ROOT / rel).is_file():
+                    (repo / rel).parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(ROOT / rel, repo / rel)
+
+            def git(*args):
+                return subprocess.run(["git", "-c", "user.name=teste", "-c", "user.email=teste@exemplo.invalid", *args],
+                                      cwd=repo, capture_output=True, check=True, text=True).stdout.strip()
+
+            git("init", "-q", "-b", "main")
+            git("add", "-A")
+            git("commit", "-qm", "main")
+            git("checkout", "-qb", "sprint/demo")
+            text = (repo / FEATURE).read_text(encoding="utf-8")
+            for old, new in [("oito dígitos numéricos.", "oito algarismos, sem traço."),
+                             ("| entrada do usuário |", "| entrada do cliente |")]:
+                self.assertIn(old, text)
+                text = text.replace(old, new, 1)
+            (repo / FEATURE).write_text(text, encoding="utf-8")
+            git("commit", "-qam", "STRY0013120: CEP sem traço")
+            prs = Path(tmp, "prs.json")
+            prs.write_text(json.dumps([{"branch": "sprint/demo", "head": git("rev-parse", "HEAD"), "base": "main",
+                                        "number": 1, "url": "https://github.com/exemplo/loja/pull/1",
+                                        "state": "open", "draft": False, "merged": False}]))
+            git("update-ref", "refs/remotes/origin/sprint/demo", "HEAD")
+            git("checkout", "-q", "main")
+            git("update-ref", "refs/remotes/origin/main", "main")
+            subprocess.run(["node", "scripts/monta-site-preview.mjs", "--out", "_site", "--pull-requests", str(prs)],
+                           cwd=repo, capture_output=True, check=True)
+
+            server = ThreadingHTTPServer(("127.0.0.1", 0), partial(Handler, directory=str(repo / "_site")))
+            Thread(target=server.serve_forever, daemon=True).start()
+            preview = f"http://127.0.0.1:{server.server_port}/sprint/demo/index.html"
+            status = "() => (document.querySelector('[data-docqui-inline-status]') || {}).textContent || ''"
+
+            def marks():
+                return self.page.evaluate("""() => Object.fromEntries([...document.querySelectorAll('#documentContainer > .doc-section')]
+                  .map(card => [card.querySelector('.section-title').textContent.trim(),
+                    [...card.querySelectorAll('del.docqui-inline-word-removed, ins.docqui-inline-word-added')].map(n => n.textContent)])
+                  .filter(([, found]) => found.length))""")
+
+            def open_feature():
+                self.page.goto(preview + "#" + FEATURE)
+                self.page.wait_for_function(f"() => /com diferenças/.test(({status})())")
+                self.assertEqual(marks(), {"Regras de Negócio": ["dígitos numéricos", "algarismos, sem traço"],
+                                           "Campos": ["usuário", "cliente"]})
+
+            try:
+                open_feature()
+                self.assertTrue(self.page.evaluate(status).startswith("1 célula(s) · 1 bloco(s) com diferenças"))
+                self.assertEqual(self.page.locator("#documentContainer .doc-hero-card").count(), 1)
+                highlighted = self.page.locator("#documentContainer").inner_html()
+                self.page.locator("[data-docqui-inline-toggle]").uncheck()
+                self.assertEqual(self.page.locator('#documentContainer [class*="docqui-inline"]').count(), 0)
+                self.page.locator("[data-docqui-inline-toggle]").check()
+                self.assertEqual(self.page.locator("#documentContainer").inner_html(), highlighted)
+                self.page.evaluate("navigateTo('global/N0_PRODUCT_VISION.md')")
+                self.page.wait_for_function(f"() => /não foi alterado/.test(({status})())")
+                # Controle negativo: sem a comparação card a card, o Markdown corrido da base não
+                # alinha com os cards e as marcas saem do lugar.
+                def without_cards(route):
+                    response = route.fetch()
+                    route.fulfill(response=response, body=response.text().replace(
+                        "comparaNosCards(window.DOCQUI_INLINE_DIFF.apply)", "window.DOCQUI_INLINE_DIFF.apply"))
+                self.context.route("**/sprint/demo/index.html", without_cards)
+                self.page.goto("about:blank")  # só o hash mudaria, e a página não seria recarregada
+                with self.assertRaises(AssertionError):
+                    open_feature()
+            finally:
+                server.shutdown()
+                server.server_close()
 
 
 if __name__ == "__main__":

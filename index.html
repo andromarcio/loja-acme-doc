@@ -396,17 +396,6 @@
       gap: 12px;
     }
 
-    .delivery-preview {
-      max-width: 180px;
-      padding: 6px;
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-sm);
-      color: var(--text-main);
-      background: var(--bg-sidebar);
-      font: inherit;
-      font-size: 12px;
-    }
-
     /* Toggle Modo PO vs Técnico */
     .view-mode-toggle {
       display: flex;
@@ -1434,7 +1423,6 @@
     </nav>
 
     <div class="header-right">
-      <select class="delivery-preview" id="deliveryPreview" aria-label="Versão dos requisitos por entrega" hidden></select>
       <!-- Toggle Modo PO / Desenvolvedor -->
       <div class="view-mode-toggle" title="Alternar visão entre Foco de Negócio (PO) e Visão Técnica">
         <button class="mode-btn active" id="btnModePO" onclick="setDocMode('po')">
@@ -1688,52 +1676,6 @@
 
   const APP_NAME = (globalThis.DOCS_CONFIG && DOCS_CONFIG.name) || "Loja ACME";
   document.getElementById('brandName').innerText = APP_NAME;
-
-  async function initDeliveryPreviews() {
-    if (location.protocol === 'file:') return;
-    const picker = document.getElementById('deliveryPreview');
-    try {
-      const directory = new URL('./', location.href);
-      const response = await fetch(new URL('preview.json', directory), { cache: 'no-cache' });
-      let current = null;
-      if (response.ok) current = await response.json();
-      else if (response.status !== 404) throw new Error(`preview.json: HTTP ${response.status}`);
-      const root = current ? new URL('../../', directory) : directory;
-      const manifest = await fetch(new URL('previews.json', root), { cache: 'no-cache' });
-      if (manifest.status === 404) {
-        console.info('Previews de entrega ainda não gerados neste site.');
-        return;
-      }
-      if (!manifest.ok) throw new Error(`previews.json: HTTP ${manifest.status}`);
-      const previews = await manifest.json();
-      if (!Array.isArray(previews) || previews.some(p =>
-        !['sprint', 'historia'].includes(p.tipo) ||
-        typeof p.id !== 'string' || !/^[A-Za-z0-9_.-]+$/.test(p.id) ||
-        p.caminho !== `${p.tipo}/${p.id}/`)) {
-        throw new Error('Manifesto de previews inválido.');
-      }
-      if (!current && previews.length === 0) return;
-      picker.add(new Option('main · requisitos entregues', root.href));
-      previews.forEach(p => {
-        const option = new Option(`${p.branch} · em andamento`, new URL(p.caminho, root).href);
-        option.selected = Boolean(current && current.branch === p.branch);
-        picker.add(option);
-      });
-      picker.hidden = false;
-      picker.addEventListener('change', () => {
-        const destination = new URL(picker.value);
-        destination.hash = location.hash;
-        location.assign(destination.href);
-      });
-    } catch (error) {
-      console.error('Falha ao carregar previews de entrega:', error);
-      picker.add(new Option('Previews indisponíveis', ''));
-      picker.disabled = true;
-      picker.hidden = false;
-      picker.title = error.message;
-    }
-  }
-  initDeliveryPreviews();
 
   let currentFilePath = "";
   let fddStructure = {};
@@ -2337,7 +2279,12 @@
   function loadFile(filePath) {
     if (!filePath) filePath = "global/N0_PRODUCT_VISION.md";
     currentFilePath = filePath;
-    document.getElementById('documentContainer').classList.remove('dashboard-view', 'doc-cards');
+    // Nos previews de branch, o comparador desfaz o que marcou antes de o conteúdo trocar.
+    const documento = document.getElementById('documentContainer');
+    delete documento.dataset.docquiSource;
+    delete documento.dataset.docquiSourceRoot;
+    document.dispatchEvent(new CustomEvent('docqui:artifact-reset'));
+    documento.classList.remove('dashboard-view', 'doc-cards');
 
     // Atualizar item ativo na sidebar e expandir ancestrais
     document.querySelectorAll('.feature-item, .nav-item-fixed a, .nav-folder summary').forEach(el => {
@@ -2401,28 +2348,40 @@
     `;
   }
 
-  function renderMarkdownContent(path, rawMd) {
+  // O HTML do documento no template do seu nível. Serve também à versão da base nos
+  // previews de branch (comparaNosCards), por isso não mexe na página.
+  function desenhaDocumento(path, rawMd) {
     const { data: frontmatter, content: cleanMd } = parseFrontMatter(rawMd);
     const title = extractTitle(cleanMd) || path.split('/').pop().replace(/\.md$/i, '');
-    updateBreadcrumbs(path, title, frontmatter);
 
     const isN3Feature = path.startsWith('modules/') && path.split('/').length === 4 && path.split('/').pop().startsWith('f-');
     const isN2FeatureSet = path.startsWith('modules/') && path.split('/').length === 4 && path.split('/')[3] === 'README.md';
     const isN1Domain = path.startsWith('modules/') && path.split('/').length === 3 && path.split('/')[2] === 'README.md';
 
-    // Em todo documento, cada seção é um card próprio (ver .doc-cards no docqui-theme.css).
-    document.getElementById('documentContainer').classList.add('doc-cards');
+    let html;
     if (isN3Feature) {
-      renderN3FeatureTemplate(path, title, frontmatter, cleanMd);
+      html = renderN3FeatureTemplate(path, title, frontmatter, cleanMd);
     } else if (isN2FeatureSet) {
-      renderN2FeatureSetTemplate(path, title, frontmatter, cleanMd);
+      html = renderN2FeatureSetTemplate(path, title, frontmatter, cleanMd);
     } else if (isN1Domain) {
-      renderN1DomainTemplate(path, title, frontmatter, cleanMd);
+      html = renderN1DomainTemplate(path, title, frontmatter, cleanMd);
     } else {
-      renderGenericDocumentTemplate(path, title, frontmatter, cleanMd);
+      html = renderGenericDocumentTemplate(path, title, frontmatter, cleanMd);
     }
+    // `table-wrap` é a moldura de tabela que o comparador do engine reconhece: com ela, a
+    // tabela é comparada linha a linha e célula a célula.
+    html = html.replace(/<div class="table-container">/g, '<div class="table-container table-wrap">');
+    return { title, frontmatter, html };
+  }
+
+  function renderMarkdownContent(path, rawMd) {
+    const { title, frontmatter, html } = desenhaDocumento(path, rawMd);
+    updateBreadcrumbs(path, title, frontmatter);
 
     const container = document.getElementById('documentContainer');
+    // Em todo documento, cada seção é um card próprio (ver .doc-cards no docqui-theme.css).
+    container.classList.add('doc-cards');
+    container.innerHTML = html;
 
     // Link para arquivo que NÃO é .md — o protótipo da feature, uma planilha, um
     // PDF. Duas coisas precisam acontecer aqui, e nenhuma é automática:
@@ -2508,6 +2467,9 @@
       const pre = el.closest('pre') || el;
       pre.parentNode.replaceChild(div, pre);
     });
+    // A fonte fica guardada: o Mermaid a troca pelo desenho, e o comparador dos previews
+    // confronta a fonte com a da base.
+    container.querySelectorAll('.mermaid').forEach(div => { div.dataset.fonte = div.textContent; });
 
     if (typeof mermaid !== 'undefined') {
       initMermaid();
@@ -2523,6 +2485,14 @@
         }
       }, 40);
     }
+
+    // Nos previews de branch, avisa a barra do engine de qual artefato está na tela, para o
+    // "Destacar alterações" compará-lo com a base (ver comparaNosCards).
+    container.dataset.docquiSource = path;
+    container.dataset.docquiSourceRoot = 'repository';
+    document.dispatchEvent(new CustomEvent('docqui:artifact', {
+      detail: { path, root: 'repository', element: container },
+    }));
   }
 
   function updateBreadcrumbs(path, title, frontmatter) {
@@ -2681,13 +2651,13 @@
           b.split('\n').forEach(l => {
             const lineTrim = l.trim();
             if (lineTrim.startsWith('Given') || lineTrim.startsWith('Dado')) {
-              linesHtml += `<div><span class="gherkin-keyword gherkin-given">Dado</span> ${lineTrim.replace(/^(Given|Dado)\s+/i, '')}</div>`;
+              linesHtml += `<div><span class="gherkin-keyword gherkin-given">Dado</span> ${lineTrim.replace(/^(Given|Dado)\s+/i, '')}</div>\n`;
             } else if (lineTrim.startsWith('When') || lineTrim.startsWith('Quando')) {
-              linesHtml += `<div><span class="gherkin-keyword gherkin-when">Quando</span> ${lineTrim.replace(/^(When|Quando)\s+/i, '')}</div>`;
+              linesHtml += `<div><span class="gherkin-keyword gherkin-when">Quando</span> ${lineTrim.replace(/^(When|Quando)\s+/i, '')}</div>\n`;
             } else if (lineTrim.startsWith('Then') || lineTrim.startsWith('Então') || lineTrim.startsWith('Entao')) {
-              linesHtml += `<div><span class="gherkin-keyword gherkin-then">Então</span> ${lineTrim.replace(/^(Then|Então|Entao)\s+/i, '')}</div>`;
+              linesHtml += `<div><span class="gherkin-keyword gherkin-then">Então</span> ${lineTrim.replace(/^(Then|Então|Entao)\s+/i, '')}</div>\n`;
             } else if (lineTrim.startsWith('And') || lineTrim.startsWith('E ')) {
-              linesHtml += `<div><span class="gherkin-keyword gherkin-and">E</span> ${lineTrim.replace(/^(And|E)\s+/i, '')}</div>`;
+              linesHtml += `<div><span class="gherkin-keyword gherkin-and">E</span> ${lineTrim.replace(/^(And|E)\s+/i, '')}</div>\n`;
             }
           });
 
@@ -2857,7 +2827,7 @@
       </footer>
     `;
 
-    document.getElementById('documentContainer').innerHTML = html;
+    return html;
   }
 
   // Template para Feature Sets Nível 2 (Cards modulares, Hero card e Fluxo Mermaid)
@@ -3012,7 +2982,7 @@
       </footer>
     `;
 
-    document.getElementById('documentContainer').innerHTML = html;
+    return html;
   }
 
   // Template para Domínios Nível 1 (Cards modulares e Hero card)
@@ -3137,7 +3107,7 @@
       </footer>
     `;
 
-    document.getElementById('documentContainer').innerHTML = html;
+    return html;
   }
 
   // Resolve um caminho relativo contra o diretório de um documento ('a/b' + '../c' → 'a/c')
@@ -3264,7 +3234,7 @@
       </footer>
     `;
 
-    document.getElementById('documentContainer').innerHTML = html;
+    return html;
   }
 
   // Navegação Global
@@ -3646,6 +3616,111 @@
     setTimeout(() => toast.classList.remove('show'), 2400);
   }
 
+  // ============================================================================
+  // PREVIEW DE BRANCH: "DESTACAR ALTERAÇÕES" DENTRO DOS CARDS
+  // ============================================================================
+  // A barra do engine (engine/publication/preview.js) compara o artefato desenhado com o
+  // Markdown da base: alinha os blocos de um com os do outro e marca, dentro deles, só o que
+  // mudou — o removido riscado, o incluído destacado. Aqui o desenho são cards, que os
+  // templates montam separando e enfeitando as seções, e o .md corrido da base não alinharia
+  // com eles. Por isso a base é desenhada pelos mesmos templates, fora da tela, e o comparador
+  // do engine corre card a card, cada um contra o seu par na base (pelo título da seção): as
+  // marcas caem dentro do card certo. Card novo sai contornado; card que saiu volta no lugar
+  // onde estava, com o conteúdo de antes riscado.
+  function cardsDoDesenho(raiz) {
+    const vistos = new Map();
+    return Array.from(raiz.querySelectorAll(':scope > .doc-hero-card, :scope > .dev-only, :scope > .doc-section')).map((card) => {
+      const titulo = card.querySelector(':scope > .section-header .section-title');
+      const nome = card.matches('.doc-hero-card') ? '§hero' : card.matches('.dev-only') ? '§dev' : titulo ? titulo.textContent.trim() : '§abertura';
+      const n = (vistos.get(nome) || 0) + 1;
+      vistos.set(nome, n);
+      return { chave: `${nome}#${n}`, card, corpo: card.querySelector(':scope > .rn-list, :scope > .generic-markdown-body') || card };
+    });
+  }
+
+  function antesRiscado(texto) {
+    const div = document.createElement('div');
+    div.className = 'docqui-inline-before';
+    div.style.whiteSpace = 'pre-wrap';
+    const rotulo = document.createElement('span');
+    rotulo.className = 'docqui-inline-label';
+    rotulo.textContent = 'Antes: ';
+    const del = document.createElement('del');
+    del.textContent = texto;
+    div.append(rotulo, del);
+    return div;
+  }
+
+  // O Mermaid troca a fonte do diagrama pelo desenho, que o comparador leria como texto: o
+  // diagrama sai da comparação e é confrontado pela fonte — o que mudou fica contornado, com
+  // a fonte de antes riscada logo abaixo.
+  function comparaCard(aplica, atual, base, desfazer) {
+    const diagramas = Array.from(atual.querySelectorAll('.mermaid')).map((div) => {
+      const marca = document.createComment('diagrama');
+      div.replaceWith(marca);
+      return { div, marca };
+    });
+    const fontes = Array.from(base.querySelectorAll('.mermaid')).map((div) => { div.remove(); return div.textContent; });
+    let resultado;
+    try { resultado = aplica(atual, '', () => base.innerHTML); }
+    finally { diagramas.forEach(({ div, marca }) => marca.replaceWith(div)); }
+    desfazer.push(resultado.clear);
+    diagramas.forEach(({ div }, i) => {
+      if (div.dataset.fonte === fontes[i]) return;
+      div.classList.add('docqui-inline-after-block');
+      desfazer.push(() => div.classList.remove('docqui-inline-after-block'));
+      resultado.stats.blocks++;
+      if (fontes[i] === undefined) return;
+      const antes = antesRiscado(fontes[i]);
+      div.after(antes);
+      desfazer.push(() => antes.remove());
+    });
+    fontes.slice(diagramas.length).forEach((fonte) => {
+      const antes = antesRiscado(fonte);
+      atual.append(antes);
+      desfazer.push(() => antes.remove());
+      resultado.stats.blocks++;
+    });
+    return resultado.stats;
+  }
+
+  function comparaNosCards(aplica) {
+    return function (conteudo, antesMd, parse) {
+      if (conteudo.id !== 'documentContainer') return aplica(conteudo, antesMd, parse);
+      const base = document.createElement('div');
+      if (antesMd) base.innerHTML = desenhaDocumento(conteudo.dataset.docquiSource, antesMd.replace(/\r\n?/g, '\n')).html;
+      const atuais = cardsDoDesenho(conteudo), anteriores = cardsDoDesenho(base);
+      const naBase = new Map(anteriores.map((c) => [c.chave, c]));
+      const naTela = new Map(atuais.map((c) => [c.chave, c]));
+      const desfazer = [], stats = { cells: 0, rows: 0, blocks: 0 };
+      const soma = (parcial) => Object.keys(stats).forEach((k) => { stats[k] += parcial[k]; });
+      const limpa = () => { desfazer.reverse().forEach((f) => f()); desfazer.length = 0; };
+      try {
+        atuais.forEach((c) => {
+          const par = naBase.get(c.chave);
+          if (par) { soma(comparaCard(aplica, c.corpo, par.corpo, desfazer)); return; }
+          c.card.classList.add('docqui-inline-after-block');
+          desfazer.push(() => c.card.classList.remove('docqui-inline-after-block'));
+          stats.blocks++;
+        });
+        anteriores.forEach((c, i) => {
+          if (naTela.has(c.chave)) return;
+          const seguinte = anteriores.slice(i + 1).find((p) => naTela.has(p.chave));
+          const casca = c.card.cloneNode(true);
+          const corpo = c.corpo === c.card ? casca : casca.querySelector(':scope > .rn-list, :scope > .generic-markdown-body');
+          corpo.replaceChildren();
+          conteudo.insertBefore(casca, seguinte ? naTela.get(seguinte.chave).card : conteudo.querySelector(':scope > .doc-footer'));
+          desfazer.push(() => casca.remove());
+          soma(comparaCard(aplica, corpo, c.corpo, desfazer));
+        });
+      } catch (erro) {
+        limpa();
+        throw erro;
+      }
+      return { stats, clear: limpa };
+    };
+  }
+
   // Inicialização Robusta da SPA
   function handleHashRoute() {
     const rawHash = decodeURIComponent(window.location.hash.substring(1));
@@ -3672,6 +3747,8 @@
   }
 
   function initApp() {
+    // O comparador do engine só existe nos previews de branch (scripts/monta-site-preview.mjs).
+    if (window.DOCQUI_INLINE_DIFF) window.DOCQUI_INLINE_DIFF.apply = comparaNosCards(window.DOCQUI_INLINE_DIFF.apply);
     buildFDDTree();
     handleHashRoute();
   }
