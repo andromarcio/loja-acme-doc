@@ -58,7 +58,7 @@ class VisualPagesTest(unittest.TestCase):
         self.context.close()
         self.assertEqual(self.errors, [])
 
-    def assert_visual(self, theme):
+    def assert_visual(self, theme, n3=False):
         actual = self.page.evaluate("""() => {
           const css = getComputedStyle(document.documentElement);
           const heading = getComputedStyle(document.querySelector('#documentContainer h1'));
@@ -81,8 +81,9 @@ class VisualPagesTest(unittest.TestCase):
         self.assertEqual(actual["header"], "68px")
         self.assertEqual(actual["border"], "4px")
         self.assertEqual(actual["highlight"], "rgb(243, 146, 0)")
-        self.assertEqual(actual["panel"], "30px")
-        self.assertEqual(actual["section"], "0px")
+        # No N3, cada seção é um card e o contêiner não é; nas demais páginas, o contrário.
+        self.assertEqual(actual["panel"], "0px" if n3 else "30px")
+        self.assertEqual(actual["section"], "1px" if n3 else "0px")
 
     def test_shell_and_theme(self):
         self.assertEqual(self.page.locator("#brandName").inner_text(), "Loja ACME")
@@ -114,7 +115,7 @@ class VisualPagesTest(unittest.TestCase):
             self.assertLessEqual(self.page.evaluate("document.documentElement.scrollWidth"), width)
             for theme in ["light", "dark"]:
                 self.page.evaluate("(theme) => document.documentElement.dataset.theme = theme", theme)
-                self.assert_visual(theme)
+                self.assert_visual(theme, n3=True)
             self.page.keyboard.press("Control+k")
             self.page.locator("#searchInput").fill("termo-inexistente-xyz")
             self.assertEqual(self.page.locator(".search-result-item").count(), 0)

@@ -1,6 +1,6 @@
-<!-- docqui: 6.4.1 | prompt: PROMPT_DATA_MODEL_negocio | atualizado: 2026-10-14 -->
+<!-- docqui: 6.4.1 | prompt: PROMPT_DATA_MODEL_negocio | atualizado: 2026-10-17 -->
 # DATA-MODEL.md
-> Índice dos modelos de entidades da Loja ACME. O perfil é `requisitos`: os fragmentos descrevem atributos em Label PO e relacionamentos de negócio, sem definir banco ou API.
+> **Modelo de entidades (negocial)** — índice dos modelos de entidades da Loja ACME. O perfil é `requisitos`: os fragmentos descrevem atributos em Label PO e relacionamentos de negócio, sem definir banco ou API.
 
 ## Convenção de nomenclatura
 
@@ -35,3 +35,4 @@ As funções de dados ainda não foram dimensionadas. Nenhum ALI/AIE recebe PF p
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-14 | Copilot | Modelo negocial | Índice de Vendas preenchido para demonstração, sem modelagem física ou contagem. |
+| 2026-10-17 | Claude | Correção | Subtítulo com a marca **Modelo de entidades (negocial)** do template do perfil `requisitos`: sem ela, o `validate-doc` conferia o índice como físico e exigia a seção de campos globais. |
