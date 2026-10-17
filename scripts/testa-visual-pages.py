@@ -114,6 +114,11 @@ class VisualPagesTest(unittest.TestCase):
     def test_search_mobile_and_diagrams(self):
         for width in [1440, 390, 320]:
             self.page.set_viewport_size({"width": width, "height": 900})
+            if width < 820:
+                # Entrar no móvel fecha o menu pelo `change` do matchMedia, que chega um quadro depois
+                # do redimensionamento: o Ctrl+K antes dele abre o menu que o evento fecha em seguida.
+                # O CSS já esconde o menu ao redimensionar; só o script muda o aria-expanded.
+                self.page.locator('#toggleSidebarBtn[aria-expanded="false"]').wait_for()
             self.page.keyboard.press("Control+k")
             self.page.locator("#searchInput").fill("Calcular Frete")
             self.page.locator(f'.search-result-item[href="#{FEATURE}"]').click()
