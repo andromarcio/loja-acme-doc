@@ -65,12 +65,18 @@
       <p><strong>Pendentes:</strong> N3 com próximo checkpoint definido. Sem gates e registros inconsistentes são mostrados separadamente, nunca tratados como aprovados. As contagens de pendências de aprovação e revisão de contagem podem se sobrepor. “N3 sem arquivo” mede os caminhos declarados nas tabelas de Features dos N2; um caminho desatualizado também aparece e deve ser inspecionado antes de concluir que falta especificar.</p>
       <p><strong>Branches:</strong> nomes únicos das refs locais e remotas disponíveis no checkout; uma branch local rastreada no remoto conta uma vez no total. Não é consulta em tempo real ao GitHub; execute fetch antes de regenerar localmente. Branches de entrega existentes não significam necessariamente previews abertos.</p>
       <p><strong>Recorte:</strong> os documentos e seu perfil correspondem ao checkout usado na geração. O filtro por domínio não muda os indicadores de branches, protótipos e modelos de dados, que são do repositório inteiro.</p>`;
+    // Lista própria, não <select>: a nativa do macOS abre por cima do campo (como no seletor
+    // Branch dos previews, engine/publication/preview.css).
+    const domainName = item => item.domain ? `${item.id} — ${item.title}` : 'Todos os domínios';
+    const options = [{ domain: '' }, ...domains];
+    const chosen = options.find(item => item.domain === (selectedDomain || '')) || options[0];
     container.classList.add('dashboard-view');
     container.innerHTML = `
       <div class="dashboard-toolbar">
-        <label>Domínio<select id="dashboardDomain"><option value="">Todos os domínios</option>
-          ${domains.map(item => `<option value="${esc(item.domain)}" ${selectedDomain === item.domain ? 'selected' : ''}>${esc(item.id)} — ${esc(item.title)}</option>`).join('')}
-        </select></label></div>
+        <div class="dashboard-filter">Domínio<details class="dashboard-filter__menu" id="dashboardDomain">
+          <summary aria-label="Domínio: ${esc(domainName(chosen))}"><span>${esc(domainName(chosen))}</span></summary>
+          <ul aria-label="Domínio">${options.map(item => `<li><button type="button" data-domain="${esc(item.domain)}"${item === chosen ? ' aria-current="true"' : ''}>${esc(domainName(item))}</button></li>`).join('')}</ul>
+        </details></div></div>
       <div class="dashboard-stats">
         ${card('n1', 'Domínios (N1)', artifacts.filter(item => item.level === 1).length, 'Documentos presentes')}
         ${card('n2', 'Feature Sets (N2)', artifacts.filter(item => item.level === 2).length, 'Documentos presentes')}
@@ -109,8 +115,23 @@
         ${card('dataModels', 'Fragmentos de dados', data.dataModels, 'global/data-models — sem o índice')}
       </div><p>${link('analise-impacto/INDEX.md', 'AIMs dos tickets')} · ${link('global/CONTAGEM-PF.md', 'Consolidado de contagem')} · ${link('modules/INDEX.md', 'Índice dos módulos')}</p>`)}
       ${section('Como interpretar o painel', definitions)}`;
-    document.getElementById('dashboardDomain').addEventListener('change', event => render(data, event.target.value));
+    document.querySelectorAll('#dashboardDomain button[data-domain]').forEach(button => button.addEventListener('click', () => {
+      render(data, button.dataset.domain);
+      document.querySelector('#dashboardDomain > summary').focus();
+    }));
   }
+
+  // A lista do filtro fecha com Esc (o foco volta ao campo) ou com um clique fora dela.
+  document.addEventListener('click', event => {
+    const menu = document.querySelector('#dashboardDomain[open]');
+    if (menu && !menu.contains(event.target)) menu.open = false;
+  });
+  document.addEventListener('keydown', event => {
+    const menu = document.querySelector('#dashboardDomain[open]');
+    if (event.key !== 'Escape' || !menu) return;
+    menu.open = false;
+    menu.querySelector('summary').focus();
+  });
 
   window.renderDashboard = () => {
     const container = document.getElementById('documentContainer');

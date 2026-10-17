@@ -2,12 +2,21 @@
   "use strict";
   var nav = document.querySelector(".docqui-preview");
   if (!nav) return;
-  var select = nav.querySelector("select");
-  select.addEventListener("change", function () {
-    var target = new URL(select.value, location.href);
-    // As rotas do artefato continuam na outra branch; âncoras do diff, não.
-    if (!document.body.classList.contains("docqui-review")) target.hash = location.hash;
-    location.assign(target.href);
+  var menu = nav.querySelector(".docqui-preview__menu");
+  // As rotas do artefato continuam na outra branch; âncoras do diff, não.
+  function route() {
+    if (document.body.classList.contains("docqui-review")) return;
+    menu.querySelectorAll("a[href]").forEach(function (link) { link.hash = location.hash; });
+  }
+  route();
+  window.addEventListener("hashchange", route);
+  document.addEventListener("click", function (event) {
+    if (menu.open && !menu.contains(event.target)) menu.open = false;
+  });
+  menu.addEventListener("keydown", function (event) {
+    if (event.key !== "Escape" || !menu.open) return;
+    menu.open = false;
+    menu.querySelector("summary").focus();
   });
 
   var toggle = nav.querySelector("[data-docqui-inline-toggle]");
