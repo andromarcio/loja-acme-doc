@@ -9,16 +9,16 @@ Fonte: [`data-models/vendas.md`](./data-models/vendas.md)
 ```mermaid
 erDiagram
   Pedido {
-    número Número_do_pedido
-    texto CEP_de_entrega
-    valor Valor_do_frete
-    seleção Faixa_de_frete FK
-    texto Situação
+    Número_do_pedido número
+    CEP_de_entrega texto
+    Valor_do_frete valor
+    Faixa_de_frete seleção FK
+    Situação texto
   }
   TabelaFrete {
-    texto CEP_inicial
-    texto CEP_final
-    valor Valor_do_frete
+    CEP_inicial texto
+    CEP_final texto
+    Valor_do_frete valor
   }
   TabelaFrete |o--o{ Pedido : "Faixa_de_frete"
 ```

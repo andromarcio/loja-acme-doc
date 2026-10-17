@@ -104,7 +104,9 @@ for (const f of fragmentos) {
   const linhas = ['```mermaid', 'erDiagram'];
   for (const e of f.ents) {
     if (!e.attrs.length) { linhas.push(`  ${token(e.nome)}`); continue; }
-    linhas.push(`  ${token(e.nome)} {`, ...e.attrs.map((a) => `    ${a.tipo} ${a.nome}${a.fk ? ' FK' : ''}`), '  }');
+    // O erDiagram desenha a primeira palavra da linha na primeira coluna: o nome vem antes do
+    // tipo para a caixa ler "nome, tipo" (a sintaxe pede "tipo nome"; as duas aceitam o mesmo token).
+    linhas.push(`  ${token(e.nome)} {`, ...e.attrs.map((a) => `    ${a.nome} ${a.tipo}${a.fk ? ' FK' : ''}`), '  }');
   }
   for (const e of f.ents) for (const r of e.rels) {
     const alvo = resolve(r.alvo);
