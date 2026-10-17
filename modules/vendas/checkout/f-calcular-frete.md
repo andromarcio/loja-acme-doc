@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.1 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-14 -->
+<!-- docqui: 6.4.1 | prompt: PROMPT_PROTOTYPE_FLOW_FULL | atualizado: 2026-10-17 -->
 ---
 id: VND-CHK-01
 feature_set: VND-CHK
@@ -45,7 +45,7 @@ No checkout com itens no carrinho, o cliente informa o CEP e aciona **Calcular**
 
 **Ação em tela** — origem: Checkout (`/checkout`).
 
-**Fidelidade ao protótipo**: n/a — sem protótipo específico; o simulador demonstra o método, não a interface de compra.
+**Fidelidade ao protótipo**: referência · `prototypes/vendas/checkout/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/checkout/flow.html)
 
 ## Regras de negócio
 
@@ -169,3 +169,4 @@ A contagem está pendente. Não foi deduzida do valor de PF mostrado no simulado
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-14 | Copilot | N3 criado | Exemplo negocial do ticket fictício, regras e cenários preenchidos; gates sem aprovação e contagem pendente. |
+| 2026-10-17 | Claude | Protótipo vinculado | A Superfície passa a apontar o protótipo de fluxo do Checkout (`prototypes/vendas/checkout/flow.html`), com fidelidade referência e em rascunho, sem aprovação. |
