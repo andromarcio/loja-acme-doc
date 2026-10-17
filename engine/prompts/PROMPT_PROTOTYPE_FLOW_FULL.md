@@ -33,6 +33,11 @@ seguindo rigorosamente os padrões definidos no DESIGN-SYSTEM.md.
 > fonte de verdade de layout/comportamento/estados, **nunca** de implementação —
 > o código de produção segue o `PATTERNS.md`, o `MASTER.md` e os componentes reais
 > do design system (não as classes `.dsc-*`).
+>
+> **Carimbo (obrigatório).** A primeira linha do arquivo, antes do `<!DOCTYPE html>`,
+> é o carimbo `<!-- docqui: [VERSION] | prompt: PROMPT_PROTOTYPE_FLOW_FULL | atualizado: [AAAA-MM-DD] -->`
+> (ver `engine/VERSIONING.md`). Comentário antes do doctype não tira o navegador do
+> modo padrão: o `document.compatMode` segue `CSS1Compat`.
 
 1. **Fidelidade ao Design System**: use exatamente as cores, tipografia,
    espaçamentos e componentes definidos no DESIGN-SYSTEM.md.
@@ -164,6 +169,13 @@ seguindo rigorosamente os padrões definidos no DESIGN-SYSTEM.md.
     ficam no histórico do git, não em arquivos soltos no diretório. Protótipos de
     tela isolada por estado pertencem ao PROMPT_PROTOTYPE_SCREEN, não ao fluxo.
 
+22. **Estado que nenhum clique produz é simulado no painel**: carrinho vazio, perfil
+    sem acesso, falha do servidor e afins não nascem de navegar pelo fluxo. Simule-os
+    com um seletor (`.dsc-select`) dentro do `.dsc-proto-notes`, rotulado como
+    controle do protótipo, fora da tela: a tela abre no estado normal (regra 11) e
+    muda quando o seletor muda. Não use `.dsc-segmented` para isso — com quatro
+    opções ele estoura a largura no celular.
+
 ---
 
 ## ANTI-PADRÕES (não fazer)
@@ -186,6 +198,7 @@ seguindo rigorosamente os padrões definidos no DESIGN-SYSTEM.md.
 | Faltar botão de uma ação documentada no Fluxo Principal (ex.: "Novo Cadastro") | Um botão por seta rotulada do fluxo (regra 19) |
 | Header reduzido a `<strong>` + avatar | Marca à esquerda + identidade (nome + perfil) à direita (regra 20) |
 | Vários HTMLs ou arquivos `flow_*` paralelos no diretório | Um único `flow.html`, sobrescrito ao regenerar (regra 21) |
+| Estado sem gatilho no fluxo (carrinho vazio, sem acesso, falha) só citado nas notas ou embutido na carga | Seletor "Simular estado" no painel de notas (regra 22) |
 
 ---
 
@@ -210,6 +223,8 @@ Se algum falhar, corrija antes de entregar:
 - [ ] O fluxo inteiro está em **um único** `flow.html` (sem arquivos `flow_*` paralelos de versão/variação).
 - [ ] Toda navegação clicável funciona (troca de `.dsc-screen`, modais, toasts).
 - [ ] Lacunas não representáveis estão no painel `.dsc-proto-notes`.
+- [ ] Os estados que nenhum clique produz têm um seletor no painel de notas (regra 22).
+- [ ] A primeira linha é o carimbo, antes do `<!DOCTYPE html>`.
 
 ---
 
@@ -253,6 +268,7 @@ Após aprovação do mapa, gere o arquivo `flow.html` com:
 
 **Estrutura do arquivo**:
 ```html
+<!-- docqui: [VERSION] | prompt: PROMPT_PROTOTYPE_FLOW_FULL | atualizado: [AAAA-MM-DD] -->
 <!DOCTYPE html>
 <!--
   ⚠️ PROTÓTIPO NAVEGÁVEL — treino, não jogo.

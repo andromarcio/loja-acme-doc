@@ -181,19 +181,12 @@ Features são nomeadas sempre no **infinitivo**, seguindo o padrão:
 
 ## Nomenclatura de entidades e campos
 
-Entidades e campos são nomeados em **português**. A nomenclatura de campos segue três camadas com responsabilidades distintas. **A única fonte de verdade para Label Dev e campo banco é o `global/DATA-MODEL.md`.** Os N3 usam apenas Label PO — nunca duplicam as camadas técnicas.
+Entidades e atributos são nomeados em **português**. O `global/DATA-MODEL.md` e os fragmentos por domínio registram o modelo de entidades de negócio, com atributos em Label PO, sem definição física de banco.
 
 | Camada | Convenção | Exemplo | Onde aparece |
 |---|---|---|---|
 | Entidade | PascalCase singular, português | `ModeloEmail` | DATA-MODEL.md, data-models/[dominio].md (cabeçalho) |
 | Label PO | Português, title case, sem jargão | `Nome completo` | N3 (tabela de campos), Gherkin, telas |
-| Label Dev | camelCase, português, autoexplicativo | `nomeCompleto` | DATA-MODEL.md, código, API |
-| Campo banco | snake_case, português ⚠️ | `nome_completo` | DATA-MODEL.md, migrations, ORM |
-
-> ⚠️ Entidades e campos são nomeados em **português**. Confirme apenas a caixa
-> dos identificadores do banco (snake_case vs. UPPER_SNAKE_CASE) antes de gerar
-> N1/N3. Em engenharia reversa de bases legadas, transcreva os identificadores
-> como estão na origem (podem estar em inglês) — não os traduza.
 
 ---
 
@@ -201,7 +194,7 @@ Entidades e campos são nomeados em **português**. A nomenclatura de campos seg
 
 > ⚠️ Itens marcados dependem de decisão do projeto.
 
-1. **Exclusão**: [física / lógica (soft delete via `deletedAt`)] ⚠️
+1. **Exclusão**: [remoção definitiva / desativação com manutenção do histórico] ⚠️
 2. **Auditoria**: ações críticas sempre registradas em log de auditoria.
 3. **Autorização**: o acesso a cada funcionalidade é controlado por perfil — permissões na matriz do N2 e qualidade em `global/NFR.md` → SEG-01. A solução técnica fica para o desenvolvimento.
 
@@ -209,7 +202,7 @@ Entidades e campos são nomeados em **português**. A nomenclatura de campos seg
 
 ## O que NUNCA fazer
 
-- Duplicar Label Dev ou campo banco nos N3 — essas informações vivem apenas no DATA-MODEL.md
+- Definir nomes de banco, tipos SQL, chaves ou índices no modelo de entidades de negócio — a camada física fica para o desenvolvimento
 
 ---
 
@@ -219,7 +212,7 @@ Entidades e campos são nomeados em **português**. A nomenclatura de campos seg
 |---|---|
 | `CLAUDE.md` (raiz) | Índice de contexto carregado a cada sessão no Claude Code |
 | `global/MASTER.md` | Identificação, perfil e convenções globais (este arquivo) |
-| `global/DATA-MODEL.md` | Índice de entidades + campos globais + enums |
+| `global/DATA-MODEL.md` | Índice de entidades e relacionamentos de negócio; funções de dados dimensionadas na contagem |
 | `global/SIZING.md` | Convenções de contagem APF e COSMIC |
 | `global/RULES-DICTIONARY.md` | Regras de negócio canônicas |
 | `global/FIELD-DICTIONARY.md` | Campos canônicos (CPF, CEP, e-mail…) |
@@ -227,4 +220,4 @@ Entidades e campos são nomeados em **português**. A nomenclatura de campos seg
 | `global/ERROR-DICTIONARY.md` | Fonte única de códigos de erro |
 | `global/DESIGN-SYSTEM.md` | Padrões de UI |
 | `global/VOCABULARY-OVERRIDES.md` | *(opcional)* Ajustes de vocabulário desta instância (verbos/termos — ver FEATURE-DEFINITION) |
-| `global/gates-config.yml` | *(opcional)* Papéis dos checkpoints CP1–CP4 desta instância (ver `scripts/gates.py`) |
+| `global/gates-config.yml` | *(opcional)* Papéis dos checkpoints CP1–CP2 desta instância (ver `scripts/gates.py`) |

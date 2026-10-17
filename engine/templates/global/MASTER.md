@@ -262,12 +262,18 @@ Features são nomeadas sempre no **infinitivo**, seguindo o padrão:
 
 ## Nomenclatura de entidades e campos
 
+<!-- perfil:requisitos -->
+Entidades e atributos são nomeados em **português**. O `global/DATA-MODEL.md` e os fragmentos por domínio registram o modelo de entidades de negócio, com atributos em Label PO, sem definição física de banco.
+<!-- /perfil:requisitos -->
+<!-- perfil:completo -->
 Entidades e campos são nomeados em **português**. A nomenclatura de campos segue três camadas com responsabilidades distintas. **A única fonte de verdade para Label Dev e campo banco é o `global/DATA-MODEL.md`.** Os N3 usam apenas Label PO — nunca duplicam as camadas técnicas.
+<!-- /perfil:completo -->
 
 | Camada | Convenção | Exemplo | Onde aparece |
 |---|---|---|---|
 | Entidade | PascalCase singular, português | `ModeloEmail` | DATA-MODEL.md, data-models/[dominio].md (cabeçalho) |
 | Label PO | Português, title case, sem jargão | `Nome completo` | N3 (tabela de campos), Gherkin, telas |
+<!-- perfil:completo -->
 | Label Dev | camelCase, português, autoexplicativo | `nomeCompleto` | DATA-MODEL.md, código, API |
 | Campo banco | snake_case, português ⚠️ | `nome_completo` | DATA-MODEL.md, migrations, ORM |
 
@@ -275,6 +281,7 @@ Entidades e campos são nomeados em **português**. A nomenclatura de campos seg
 > dos identificadores do banco (snake_case vs. UPPER_SNAKE_CASE) antes de gerar
 > N1/N3. Em engenharia reversa de bases legadas, transcreva os identificadores
 > como estão na origem (podem estar em inglês) — não os traduza.
+<!-- /perfil:completo -->
 
 ---
 
@@ -299,10 +306,18 @@ Entidades e campos são nomeados em **português**. A nomenclatura de campos seg
 
 > ⚠️ Itens marcados dependem de decisão do projeto.
 
-1. **Exclusão**: [física / lógica (soft delete via `deletedAt`)] ⚠️
-2. **Auditoria**: ações críticas sempre registradas em log de auditoria.
-3. **Autorização**: acesso por **funcionalidade** (Feature = átomo de permissão), aplicado no servidor; vínculo perfil↔funcionalidade é dado configurável, nega por padrão — ver `global/AUTHZ.md` e `global/NFR.md` → SEG-01.
+<!-- perfil:requisitos -->
+1. **Exclusão**: [remoção definitiva / desativação com manutenção do histórico] ⚠️
+<!-- /perfil:requisitos -->
 <!-- perfil:completo -->
+1. **Exclusão**: [física / lógica (soft delete via `deletedAt`)] ⚠️
+<!-- /perfil:completo -->
+2. **Auditoria**: ações críticas sempre registradas em log de auditoria.
+<!-- perfil:requisitos -->
+3. **Autorização**: o acesso a cada funcionalidade é controlado por perfil — permissões na matriz do N2 e qualidade em `global/NFR.md` → SEG-01. A solução técnica fica para o desenvolvimento.
+<!-- /perfil:requisitos -->
+<!-- perfil:completo -->
+3. **Autorização**: acesso por **funcionalidade** (Feature = átomo de permissão), aplicado no servidor; vínculo perfil↔funcionalidade é dado configurável, nega por padrão — ver `global/AUTHZ.md` e `global/NFR.md` → SEG-01.
 4. **IDs em URLs**: não expor o identificador interno (PK); usar a chave de negócio quando aplicável.
 5. **Paginação**: [cursor-based / offset] e limites ⚠️
 6. **Validação**: no frontend e no backend — nunca confiar apenas no client.
@@ -335,8 +350,11 @@ Entidades e campos são nomeados em **português**. A nomenclatura de campos seg
 - Retornar senhas ou tokens em respostas, mesmo hasheados
 - Lançar exceções cruas — sempre retornar envelope de erro padronizado
 <!-- /perfil:completo -->
-- Duplicar Label Dev ou campo banco nos N3 — essas informações vivem apenas no DATA-MODEL.md
+<!-- perfil:requisitos -->
+- Definir nomes de banco, tipos SQL, chaves ou índices no modelo de entidades de negócio — a camada física fica para o desenvolvimento
+<!-- /perfil:requisitos -->
 <!-- perfil:completo -->
+- Duplicar Label Dev ou campo banco nos N3 — essas informações vivem apenas no DATA-MODEL.md
 - [demais proibições específicas da stack — ex.: `any` no TypeScript, remoção física se a exclusão é lógica]
 <!-- /perfil:completo -->
 
@@ -348,15 +366,29 @@ Entidades e campos são nomeados em **português**. A nomenclatura de campos seg
 |---|---|
 | `CLAUDE.md` (raiz) | Índice de contexto carregado a cada sessão no Claude Code |
 | `global/MASTER.md` | Identificação, perfil e convenções globais (este arquivo) |
+<!-- perfil:requisitos -->
+| `global/DATA-MODEL.md` | Índice de entidades e relacionamentos de negócio; funções de dados dimensionadas na contagem |
+<!-- /perfil:requisitos -->
+<!-- perfil:completo -->
 | `global/DATA-MODEL.md` | Índice de entidades + campos globais + enums |
+<!-- /perfil:completo -->
 | `global/SIZING.md` | Convenções de contagem APF e COSMIC |
 | `global/RULES-DICTIONARY.md` | Regras de negócio canônicas |
 | `global/FIELD-DICTIONARY.md` | Campos canônicos (CPF, CEP, e-mail…) |
 | `global/MESSAGE-DICTIONARY.md` | Mensagens de UI genéricas + baseline de validação |
 | `global/ERROR-DICTIONARY.md` | Fonte única de códigos de erro |
+<!-- perfil:completo -->
 | `global/API-PATTERNS.md` | Padrões de API |
 | `global/AUTHZ.md` | Modelo de autorização — controle de acesso por funcionalidade (Feature = átomo de permissão) |
+<!-- /perfil:completo -->
 | `global/DESIGN-SYSTEM.md` | Padrões de UI |
+<!-- perfil:completo -->
 | `global/PATTERNS.md` | Catálogo de padrões de projeto (design patterns) — como o sistema é construído no nível tático; consumido pelo `PROMPT_SDD` |
+<!-- /perfil:completo -->
 | `global/VOCABULARY-OVERRIDES.md` | *(opcional)* Ajustes de vocabulário desta instância (verbos/termos — ver FEATURE-DEFINITION) |
+<!-- perfil:requisitos -->
+| `global/gates-config.yml` | *(opcional)* Papéis dos checkpoints CP1–CP2 desta instância (ver `scripts/gates.py`) |
+<!-- /perfil:requisitos -->
+<!-- perfil:completo -->
 | `global/gates-config.yml` | *(opcional)* Papéis dos checkpoints CP1–CP4 desta instância (ver `scripts/gates.py`) |
+<!-- /perfil:completo -->

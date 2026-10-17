@@ -23,6 +23,8 @@
 //       F10 — contrato da API (valida-contrato-api) em N3: `endpoints`/`error_codes` do
 //            front-matter espelham `## API` e `## Mapeamento de erros`, todo código está
 //            no ERROR-DICTIONARY e todo campo das tabelas da API está em `## Campos`.
+//       Identidade — ids-n3 em N2/N3: primeira sequência pela jornada; ID já usado
+//                    e reserva são imutáveis, inclusive após reorganizar a tabela.
 //
 //   • PreToolUse (Bash) → F5: bloqueia comando git destrutivo (reset --hard, checkout --,
 //     restore, clean -f) enquanto houver alteração não commitada na árvore.
@@ -50,6 +52,7 @@ const FLUXO_PRINCIPAL = join(HERE, '..', 'valida-fluxo-principal.mjs'); // Fluxo
 const ENUMERACAO = join(HERE, '..', 'valida-enumeracao-contagem.mjs'); // ALR/DER do PE fora do bloco JSON da memória
 const REGRAS_CENARIOS = join(HERE, '..', 'valida-regras-cenarios.mjs'); // regra sem RN-NN ou sem cenário @RN-NN
 const CONTRATO_API = join(HERE, '..', 'valida-contrato-api.mjs'); // front-matter × API × ERROR-DICTIONARY × Campos
+const IDS_N3 = join(HERE, '..', 'ids-n3.mjs');
 
 // Só validamos artefatos de nível (N0–N3, DATA-MODEL). INDEX, AIMs, prompts,
 // scripts, README de projeto etc. passam batido. Padrões espelham LOCATION_RULES do validador.
@@ -87,6 +90,14 @@ function main() {
     if (/(^|\/)__fixtures__\//.test(path)) return 0;         // fixtures de teste — violações intencionais
 
     const problems = [];
+
+    if ((N2_PATTERN.test(path) || N3_PATTERN.test(path)) && existsSync(IDS_N3)) {
+      const ids = spawnSync('node', [IDS_N3, file, '--check'], { encoding: 'utf8' });
+      if (ids.status !== 0) problems.push(
+        'GATE DE IDENTIDADE (ids-n3) reprovou: o ID de uma feature é imutável. Reserve novos IDs pela ordem da jornada na tabela Features do N2, depois do maior número usado; nunca renumere nem reutilize lacunas.\n' +
+        `${ids.stdout || ''}${ids.stderr || ids.error?.message || ''}`.trim(),
+      );
+    }
 
     // F2 — estrutura do artefato de nível (N0–N3, data-model). Validador ausente → fail-open.
     if (ARTIFACT_PATTERNS.some((re) => re.test(path)) && existsSync(VALIDATOR)) {

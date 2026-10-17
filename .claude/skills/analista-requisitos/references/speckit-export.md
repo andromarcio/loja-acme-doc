@@ -26,7 +26,7 @@ N3 aprovados + globais
 | Artefato spec-kit | Fonte no engine |
 |---|---|
 | `constitution.md` | `MASTER.md` (proibições, decisões, envelope) + `API-PATTERNS` + `NFR` + `DESIGN-SYSTEM` |
-| `spec.md` › User Story (P?) | cada N3; prioridade ← front-matter `prioridade` |
+| `spec.md` › User Story | cada N3, na ordem da tabela de Features do N2 |
 | `spec.md` › Acceptance Scenarios | Gherkin "Caminho feliz" + "Erros de validação" |
 | `spec.md` › Edge Cases | Gherkin "Conflitos…" + "Estados especiais" |
 | `spec.md` › FR-### | `## Regras de negócio` (RULES-DICTIONARY resolvido) |
@@ -38,13 +38,12 @@ N3 aprovados + globais
 
 ## Ajustes de N3 que tornam a exportação determinística
 
-1. **Front-matter YAML** (`id`, `entidade`, `prioridade`, `endpoints`, `error_codes`,
+1. **Front-matter YAML** (`id`, `entidade`, `endpoints`, `error_codes`,
    `data_model_ref`, `depende_de`, `estado`).
-2. **Prioridade P1/P2/P3** (front-matter + linha no cabeçalho + coluna no N2).
-3. **`## Critérios de sucesso`** (alimenta os `SC-###`).
-4. **Bloco "Technical Context"** normalizado no `MASTER.md` (alimenta o `plan.md`).
-5. **Mapeamento de Edge Cases** (grupos Gherkin → seção Edge Cases).
-6. **Gate de completude do 3B** (PASSO 0 do exporter — bloqueia se algo não resolve).
+2. **`## Critérios de sucesso`** (alimenta os `SC-###`).
+3. **Bloco "Technical Context"** normalizado no `MASTER.md` (alimenta o `plan.md`).
+4. **Mapeamento de Edge Cases** (grupos Gherkin → seção Edge Cases).
+5. **Gate de completude do 3B** (PASSO 0 do exporter — bloqueia se algo não resolve).
 
 ## Escopo
 

@@ -6,13 +6,16 @@
 # modules/INDEX.md e no `gates.py status`); quem torna o revisor obrigatório é o
 # CODEOWNERS. A ordem e o significado dos checkpoints não mudam:
 #   requisitos → modelo-dados → testes → codigo
+# No perfil requisitos, são semeados apenas os papéis de CP1 e CP2.
 #
 # Exemplo para time de PRODUTO (padrão — pode omitir o arquivo inteiro):
 papeis:
   requisitos: "PO/Negócio"
   modelo-dados: "DBA/Arquiteto"
+# perfil:completo
   testes: "QA"
   codigo: "Tech Lead"
+# /perfil:completo
 
 # Exemplo para time de PESQUISA/ML (arquétipo ml-dados) — sem PO/DBA/QA formais,
 # os checkpoints continuam existindo, com donos que fazem sentido no contexto:

@@ -31,6 +31,11 @@ de comportamento descritas no N3.
 > fonte de verdade de layout/comportamento/estados, **nunca** de implementação —
 > o código de produção segue o `PATTERNS.md`, o `MASTER.md` e os componentes reais
 > do design system (não as classes `.dsc-*`).
+>
+> **Carimbo (obrigatório).** A primeira linha do arquivo, antes do `<!DOCTYPE html>`,
+> é o carimbo `<!-- docqui: [VERSION] | prompt: PROMPT_PROTOTYPE_SCREEN_FULL | atualizado: [AAAA-MM-DD] -->`
+> (ver `engine/VERSIONING.md`). Comentário antes do doctype não tira o navegador do
+> modo padrão: o `document.compatMode` segue `CSS1Compat`.
 
 1. **Fidelidade ao Design System**: use exatamente os tokens, componentes
    e padrões definidos no DESIGN-SYSTEM.md. Não invente estilos.
@@ -187,6 +192,7 @@ falhar, corrija antes de entregar:
 - [ ] Tabelas têm ≥ 5 linhas de dados realistas do domínio.
 - [ ] Header completo: marca à esquerda + identidade do usuário (nome + perfil do N3) à direita.
 - [ ] Lacunas não representáveis estão no painel `.dsc-proto-notes`.
+- [ ] A primeira linha é o carimbo, antes do `<!DOCTYPE html>`.
 
 ---
 
@@ -228,6 +234,7 @@ Gere um estado por vez. Após gerar, pergunte se aprova antes de avançar.
 ### Estrutura base de cada arquivo
 
 ```html
+<!-- docqui: [VERSION] | prompt: PROMPT_PROTOTYPE_SCREEN_FULL | atualizado: [AAAA-MM-DD] -->
 <!DOCTYPE html>
 <!--
   ⚠️ PROTÓTIPO NAVEGÁVEL — treino, não jogo.

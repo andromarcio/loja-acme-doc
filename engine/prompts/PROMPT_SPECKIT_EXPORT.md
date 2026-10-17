@@ -23,8 +23,8 @@ ele já lê. A geração de `tasks.md` e do código fica para os comandos vanill
 ### Princípio de granularidade
 
 - **1 Feature Set (N2) = 1 "feature" do spec-kit** (uma pasta `specs/NNN-…/`).
-- **1 N3 (verbo + entidade) = 1 User Story** priorizada no `spec.md`.
-- O CRUD do engine (5 N3) vira 5 user stories → fatias de MVP no `/speckit.tasks`.
+- **1 N3 (verbo + entidade) = 1 User Story** no `spec.md`, na ordem da tabela de Features do N2.
+- O CRUD do engine (5 N3) vira 5 user stories → fatias independentes no `/speckit.tasks`.
 
 ### Regras de geração
 
@@ -37,7 +37,7 @@ ele já lê. A geração de `tasks.md` e do código fica para os comandos vanill
    (agnóstico de tecnologia); o `dev-only` vira os artefatos técnicos.
 3. **Sem inventar.** Se faltar dado para um campo do spec-kit, escreva
    `[NEEDS CLARIFICATION: …]` (marcador nativo do spec-kit) — não preencha por suposição.
-4. **Front-matter é a fonte estruturada.** Use `id`, `prioridade`, `entidade`,
+4. **Front-matter é a fonte estruturada.** Use `id`, `entidade`,
    `endpoints`, `error_codes`, `data_model_ref`, `depende_de` para montar os artefatos
    de forma determinística; o corpo do N3 resolve o conteúdo legível.
 5. **Não gerar `tasks.md`.** É produzido pelo `/speckit.tasks` vanilla. Opcionalmente,
@@ -114,7 +114,6 @@ ele já lê. A geração de `tasks.md` e do código fica para os comandos vanill
 [ ] Feature CLI/Job/Pipeline: a seção ## Execução e operação está preenchida (comando/gatilho, parâmetros, reexecução, saídas)?
 [ ] Todo ponteiro "→ ver X" do N3 aponta para um alvo existente e resolvível?
 [ ] O MASTER.md tem o bloco "Technical Context" preenchido (ou marcado NEEDS CLARIFICATION)?
-[ ] Cada N3 tem prioridade (P1/P2/P3) no front-matter?
 ```
 
 Se houver falhas, liste-as como **lacunas bloqueantes** (com o N3 e a seção de
@@ -170,16 +169,14 @@ Governance). Cada princípio: nome, descrição imperativa ("MUST …") e a orig
 Cabeçalho: `# Feature Specification: [Nome do Feature Set]`. Preencha as seções
 **mandatórias** do `spec-template.md` do spec-kit a partir dos N3:
 
-### User Scenarios & Testing — **uma User Story por N3**, ordenadas por `prioridade`
+### User Scenarios & Testing — **uma User Story por N3**, na ordem da tabela de Features do N2
 
-Para cada N3, na ordem P1 → P2 → P3:
+Para cada N3, na ordem em que o N2 lista as features (a jornada que o PO confirmou):
 
 ```markdown
-### User Story N - [Nome da feature do N3] (Priority: [P1/P2/P3])
+### User Story N - [Nome da feature do N3]
 
 [Descrição em linguagem de negócio — da seção ## Descrição do N3]
-
-**Why this priority**: [valor de negócio — da seção ## Origem / NFR]
 
 **Independent Test**: [como testar isolada — derive do cenário de Caminho feliz]
 
@@ -307,7 +304,7 @@ Label PO) e de erros (HTTP | code) vão como estão, e a rota é a do N3:
 Antes de encerrar, rode a checagem e apresente o resultado:
 
 ```
-[ ] Cada N3 virou uma User Story priorizada no spec.md?
+[ ] Cada N3 virou uma User Story no spec.md, na ordem da tabela de Features do N2?
 [ ] Toda regra de negócio virou um FR-### que cita <ID>/RN-NN?
 [ ] Todo cenário negocial virou Acceptance Scenario ou Edge Case, e todo técnico está em contracts/?
 [ ] Toda seção do N3 foi para o destino da tabela do PASSO 3?

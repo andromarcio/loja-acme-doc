@@ -53,6 +53,8 @@ Vale para **todo** prompt de especificação (N0, 1A/1B, 2A, 3A/3B, 4A/4B, CRUD,
 
 ## Hierarquia de níveis
 
+**Identidade do N3:** a primeira numeração segue a jornada confirmada na ordem da tabela Features do N2, não a ordem de escrita dos N3s. Antes de gerar, use `scripts/ids-n3.mjs` em modo seco e, conferido, `--write`. Preserve qualquer ID já usado no N2/N3 e o registro `docqui:n3-ids`, inclusive no bottom-up e ao regenerar N2s. Novas features continuam após o maior reservado, sem reutilizar lacunas; mudar a jornada não renumera IDs. Procedimento: `engine/N3-IDS.md`. Conferência: `node scripts/ids-n3.mjs --check`.
+
 | Nível | Nome | Arquivo | Conteúdo |
 |---|---|---|---|
 | N0 | Visão de Produto | `N0_PRODUCT_VISION.md` | Propósito, personas, KPIs, tom de voz |

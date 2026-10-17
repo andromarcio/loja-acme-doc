@@ -315,7 +315,7 @@ Scenario: [resultado esperado]
 Na `## Features`, o link vai para o N3 (`../modules/…`); feature ainda sem N3 leva o nome
 proposto, *(a confirmar no 3A)* e o Status **📋 A especificar**. Enquanto não existe N3
 com o ID, o `audit-trace-links` a trata como pendência da rota 3A, não como elo quebrado;
-o 3A, ao criá-la, confirma o ID e troca o Status pelo do N3. O elo recíproco é a
+o 3A, ao criá-la, usa o ID reservado no N2 e troca o Status pelo do N3. Um ID real já atribuído é imutável; `(a confirmar no 3A)` não autoriza renumerá-lo. Para a primeira reserva, confirme a jornada na tabela Features do N2 e use `scripts/ids-n3.mjs`; novas features continuam após o maior reservado — ver `engine/N3-IDS.md`. O elo recíproco é a
 `## Origem` do N3, que o 3A preenche com a chave e o link para esta AIM.
 
 ---

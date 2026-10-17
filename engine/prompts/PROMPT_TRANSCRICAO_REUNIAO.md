@@ -17,6 +17,8 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
+**Identidade das features:** confirme a jornada extraída da reunião na tabela Features do N2 antes da primeira numeração com `scripts/ids-n3.mjs` (modo seco; depois `--write`). A ordem das falas não determina os IDs. Preserve todo ID já usado e as reservas `docqui:n3-ids`; a nova ordem de jornada não renumera N3s — ver `engine/N3-IDS.md`.
+
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
 > 1. **Antes do mapa da reunião (Passo 1)** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` para cada Feature Set que a reunião toca (só `[dominio]`, se ela ficou no N1; ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). É esse bloco que decide, no mapa, o que é **criar** e o que é **atualizar**. Não duplique ID/pasta/regra/campo existente.
 > 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` em **cada** N1, N2 e N3 gravado (estrutura) **e** `node scripts/validate-feature-semantics.mjs <arquivo>` em cada N3 (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.

@@ -48,7 +48,7 @@ Apresente uma lista `aprendizado → destino → mudança proposta` e peça conf
 
 - Antes de adicionar, **verifique se regra equivalente já existe** no destino — se existir, refine-a em vez de duplicar.
 - Menor diff possível; siga o estilo do arquivo destino.
-- Mudança em skill/prompt/template é evolução do engine: registre em `CHANGELOG.md` (seção `Unreleased`) quando relevante.
+- Mudança em skill/prompt/template é evolução do engine: registre na seção da versão nova do `CHANGELOG.md` e faça o *bump* em todos os lugares que o `engine/VERSIONING.md` lista. Nada fica no `Unreleased` — o eval reprova.
 - Commite com mensagem `retro: <aprendizado em uma linha>`.
 
 ---

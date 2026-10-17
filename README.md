@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.1 | prompt: ATUALIZACAO_VISUAL_PAGES | atualizado: 2026-10-16 -->
+<!-- docqui: 6.4.8 | prompt: ATUALIZACAO_VISUAL_PAGES | atualizado: 2026-10-17 -->
 # Loja ACME — demonstração do Docqui Caixa
 
 Instância de demonstração de uma **loja virtual fictícia**, no perfil **requisitos** e cadência **sprint**. O exemplo preenchido acompanha **VND-CHK-01 — Calcular Frete**, do ticket ao N3 e ao modelo de entidades. Os dados, tickets e valores são didáticos; não representam sistemas ou atendimentos reais da CAIXA.
@@ -9,7 +9,7 @@ O Pages segue o modelo visual atual do SIMPF: marca Docqui no cabeçalho, busca 
 
 O **Dashboard de gestão** (`#__dashboard__`) mostra artefatos N1–N3, próximos checkpoints, revisão de contagem, branches e apoio, com filtro por domínio. Seus dados são gerados a partir **desta instância** por `python scripts/gera-dashboard.py` (PyYAML), integrado ao pipeline do Pages e aos previews de entrega. O exemplo inicial tem um N1, um N2 e um N3 em rascunho: o painel não concede aprovação, não soma PF pendentes nem copia indicadores do SIMPF. Branches representam as refs do checkout, não uma consulta em tempo real ao GitHub.
 
-Confira o visual com `python scripts/testa-visual-pages.py` (Playwright e Chromium/Edge, ou `SIM_BROWSER`): valida identidade, layout, temas, busca, menu móvel, diagramas e preservação do simulador, com controles negativos.
+Confira o visual com `python scripts/testa-visual-pages.py` (Playwright e Chromium/Edge, ou `SIM_BROWSER`): valida identidade, layout, temas, busca, menu móvel, diagramas, preservação do simulador e os destaques do preview de branch, com controles negativos.
 
 | Artefato | O que demonstra |
 |---|---|
@@ -40,10 +40,10 @@ python -m http.server 8080 --bind 127.0.0.1
 
 Abra `http://127.0.0.1:8080`. O pipeline canônico usa o comando `python3`; no Windows, disponibilize esse comando apontando para a instalação de Python com PyYAML antes de executar `atualiza-pages`.
 
-No GitHub, configure **Settings → Pages → Source: GitHub Actions**. O workflow publica a `main` e os previews de branches de entrega; no ambiente `github-pages`, permita `main`, `sprint/*` e `historia/*`. O repositório é [CAIXA-EFRS/loja-acme-doc](https://github.com/CAIXA-EFRS/loja-acme-doc).
+No GitHub, configure **Settings → Pages → Source: GitHub Actions**. O workflow publica a `main` e os previews de branches de entrega; no ambiente `github-pages`, permita `main`, `sprint/*` e `historia/*`. No topo de cada versão do site, o seletor **Branch** troca entre a `main` e as branches abertas, mantendo o documento aberto; nos previews, **Ver alterações** lista o que a branch muda em relação à base do PR, e **Destacar alterações** marca, dentro de cada card, só o que mudou — o removido riscado, o incluído destacado. O repositório é [CAIXA-EFRS/loja-acme-doc](https://github.com/CAIXA-EFRS/loja-acme-doc).
 
 Os arquivos de `engine/`, `scripts/` e `.claude/skills/` são sincronizados pelo `scripts/sync-instance.mjs` do engine, não por cópia manual. Depois de alterar Markdown, regenere os derivados; nunca copie `assets/tree.js`, `assets/mapa-data.js` ou `rastreabilidade/data.js` de outro sistema.
 
-**Adaptações locais de publicação**: `gera-mapa-features.mjs` lê nome e descrição do MASTER, em vez da identidade fixa do SIMPF; `atualiza-pages.mjs` usa o `build-trace-data.mjs` existente para preservar os caminhos dos N2. Preserve esses ajustes ao sincronizar enquanto não estiverem incorporados ao engine. A interface do grafo abre os documentos no visualizador local, inclusive nos previews.
+**Adaptações locais de publicação**: `gera-mapa-features.mjs` ainda lê `prioridade` e `mvp` do N3, que o mapa da loja exibe e que o engine tirou do método na 6.4.4 — o nome e a descrição do produto, lidos do MASTER, já vêm do engine desde a 6.4.8; `atualiza-pages.mjs` usa o `build-trace-data.mjs` existente para preservar os caminhos dos N2. Preserve esses ajustes ao sincronizar enquanto não estiverem incorporados ao engine. A interface do grafo abre os documentos no visualizador local, inclusive nos previews.
 
-O gerador e o renderer do dashboard são extensões de publicação reaproveitadas do SIMPF. Preserve também a integração local do dashboard em `atualiza-pages.mjs` e `monta-site-preview.mjs` ao sincronizar o engine. O contrato de contagem dos indicadores roda com `python -m unittest discover -s scripts -p test_dashboard.py`.
+O gerador e o renderer do dashboard são extensões de publicação reaproveitadas do SIMPF. Preserve também a integração local do dashboard em `atualiza-pages.mjs` e `monta-site-preview.mjs` — que regenera os derivados e o dashboard em cada versão do site — ao sincronizar o engine. Os destaques nos cards são do `index.html` da loja (`comparaNosCards`): a base é desenhada pelos mesmos templates e o comparador do engine corre card a card. O contrato de contagem dos indicadores roda com `python -m unittest discover -s scripts -p test_dashboard.py`.

@@ -1,5 +1,9 @@
 <!-- docqui: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # DATA-MODEL.md
+<!-- perfil:requisitos -->
+> **Modelo de entidades (negocial)** — índice de entidades, atributos e relacionamentos de negócio, sem camada física de banco. Os modelos detalhados estão em `global/data-models/`; use `PROMPT_DATA_MODEL_negocio` para criá-los ou atualizá-los.
+<!-- /perfil:requisitos -->
+<!-- perfil:completo -->
 > **Índice e fonte de verdade** para nomenclatura e mapeamento de campos.
 > Os modelos detalhados estão fragmentados por domínio em `global/data-models/`
 > para otimizar o contexto enviado ao LLM — cole apenas o fragmento do
@@ -11,6 +15,7 @@
 > Qualquer outro artefato (N0–N3, SDD, protótipo, contagem) **referencia**, nunca
 > redefine: `→ ver DATA-MODEL.md: Entidade [Nome]`. Os N3 usam só Label PO e
 > **nunca** duplicam Label Dev, campo banco, tipo ou FK em suas tabelas.
+<!-- /perfil:completo -->
 
 ---
 
@@ -20,6 +25,7 @@
 |---|---|---|---|
 | Entidade | PascalCase singular, português | `ModeloEmail` | **data-models/[dominio].md** (cabeçalho), "Modelos por domínio" |
 | Label PO | Português, title case, sem jargão | `Nome completo` | N3 (campos), Gherkin, telas |
+<!-- perfil:completo -->
 | Label Dev | camelCase, português, autoexplicativo | `nomeCompleto` | **data-models/[dominio].md** — apenas aqui |
 | Campo banco | snake_case, português ⚠️ | `nome_completo` | **data-models/[dominio].md** — apenas aqui |
 
@@ -39,6 +45,7 @@ Estão implícitos — não precisam ser listados nos arquivos de domínio.
 | Data de criação | createdAt | created_at | [timestamp] | Gerado automaticamente |
 | Data de atualização | updatedAt | updated_at | [timestamp] | Atualizado automaticamente |
 | Data de exclusão | deletedAt | deleted_at | [timestamp] | Exclusão lógica (soft delete); null = ativo |
+<!-- /perfil:completo -->
 
 ---
 
@@ -57,6 +64,7 @@ Estão implícitos — não precisam ser listados nos arquivos de domínio.
 
 ---
 
+<!-- perfil:completo -->
 ## Enums do sistema
 
 | Enum | Campo banco | Valores | Usado em |
@@ -70,6 +78,7 @@ Estão implícitos — não precisam ser listados nos arquivos de domínio.
 | Data | Entidade | Label PO | Label Dev | Campo banco | Tipo | N3 de origem |
 |---|---|---|---|---|---|---|
 | [data] | [Entidade] | [Label PO] | [labelDev] | [campo_banco] | [tipo] | [feature] |
+<!-- /perfil:completo -->
 
 ---
 
@@ -82,6 +91,15 @@ Estão implícitos — não precisam ser listados nos arquivos de domínio.
 ---
 
 ## Relacionamentos de seleção (comboboxes)
+<!-- perfil:requisitos -->
+
+Os campos de seleção dos N3 referenciam entidades deste modelo pelo nome de negócio. Registre aqui a entidade e o atributo exibido; nomes físicos, consultas e operações de API ficam para o desenvolvimento.
+
+| Campo (Label PO) | Entidade de origem | Atributo exibido (Label PO) | Critério de seleção |
+|---|---|---|---|
+| [campo de negócio] | [Entidade] | [atributo de negócio] | [restrição de negócio] |
+<!-- /perfil:requisitos -->
+<!-- perfil:completo -->
 
 > Fonte de verdade para campos que, na tela, são uma **combobox/seleção cujas
 > opções vêm de outra entidade** (chave estrangeira com exibição de label).
@@ -111,6 +129,7 @@ Estão implícitos — não precisam ser listados nos arquivos de domínio.
 | Tabela | Campos | Tipo | Justificativa |
 |---|---|---|---|
 | [tabela] | (campo) | UNIQUE / INDEX | [justificativa] |
+<!-- /perfil:completo -->
 
 ---
 
@@ -118,8 +137,13 @@ Estão implícitos — não precisam ser listados nos arquivos de domínio.
 
 > Registro central de ALIs e AIEs do sistema.
 > Mantido via atualização dos fragmentos `global/data-models/[dominio].md`.
+<!-- perfil:requisitos -->
+> A modelagem negocial não faz a contagem automaticamente. Dimensione as funções de dados pela opção **CT**, conforme `global/SIZING.md`, e registre os resultados nas tabelas abaixo.
+<!-- /perfil:requisitos -->
+<!-- perfil:completo -->
 > A contagem de DER **exclui** os campos globais técnicos (createdAt, updatedAt, deletedAt) e conta o `id` como **1 DER por ALI**, não por tabela — ver `global/SIZING.md`.
 > **RLR** (Registro Lógico Referenciado = IFPUG RET) e **DER** (Dado Elementar Referenciado = IFPUG DET) determinam a complexidade — ver `global/SIZING.md`.
+<!-- /perfil:completo -->
 
 ### ALIs — Arquivos Lógicos Internos
 
@@ -127,7 +151,12 @@ Estão implícitos — não precisam ser listados nos arquivos de domínio.
 |---|---|---|---|---|---|---|---|
 | [Nome] | [Domínio] | [Entidade] | 1 | [N] | a definir ⚠️ | a definir | [AAAA-MM-DD] |
 
+<!-- perfil:requisitos -->
+**Total ALIs: a definir** *(dimensionar via CT / SIZING.md)*
+<!-- /perfil:requisitos -->
+<!-- perfil:completo -->
 **Total ALIs: a definir** *(dimensionar via PROMPT_3B / SIZING.md)*
+<!-- /perfil:completo -->
 
 ### AIEs — Arquivos de Interface Externa
 
@@ -139,6 +168,10 @@ Estão implícitos — não precisam ser listados nos arquivos de domínio.
 
 ---
 
+<!-- perfil:requisitos -->
+> ℹ️ **Como manter esta seção:** a opção DM registra entidades e relacionamentos, sem dimensionar funções de dados. Preencha ou atualize as tabelas de ALIs/AIEs pela opção CT; a contagem é uma atividade separada.
+<!-- /perfil:requisitos -->
+<!-- perfil:completo -->
 > ℹ️ **Como manter esta seção**
 > 1. Ao criar ou alterar uma entidade num fragmento `data-models/[dominio].md`,
 >    atualize a linha do ALI correspondente (RLR, DER, Complexidade, PF).
@@ -146,3 +179,4 @@ Estão implícitos — não precisam ser listados nos arquivos de domínio.
 >    **e** anote o ALI no cabeçalho da entidade no fragmento do domínio.
 > 3. Entidades de suporte (tabelas de junção, tabelas de auditoria) geralmente
 >    não formam ALI próprio — pertencem ao ALI da entidade principal.
+<!-- /perfil:completo -->

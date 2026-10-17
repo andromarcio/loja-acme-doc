@@ -1,0 +1,71 @@
+.docqui-preview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .6rem 1rem;
+  padding: .75rem 1rem;
+  background: #eef6fc;
+  color: #17334d;
+  border-bottom: 2px solid #005ca9;
+  font: 14px/1.5 system-ui, sans-serif;
+  overflow-wrap: anywhere;
+}
+.docqui-preview label { display: flex; align-items: center; gap: .5rem; min-width: 0; }
+.docqui-preview select {
+  min-width: 8rem;
+  max-width: min(26rem, 70vw);
+  padding: .4rem;
+  color: #17334d;
+  background: #fff;
+  border: 1px solid #58748c;
+  border-radius: .25rem;
+  font: inherit;
+}
+.docqui-preview a, .docqui-review a { color: #005ca9; text-decoration: underline; }
+.docqui-preview__state { font-weight: 700; }
+.docqui-preview a:focus-visible, .docqui-preview select:focus-visible,
+.docqui-review a:focus-visible, .docqui-diff:focus-visible { outline: 3px solid #005ca9; outline-offset: 3px; }
+.docqui-review { margin: 0; background: #fff; color: #17334d; font: 16px/1.6 system-ui, sans-serif; }
+.docqui-review__content { max-width: 90rem; margin: auto; padding: 1rem; overflow-wrap: anywhere; }
+.docqui-change { margin-top: 2rem; }
+.docqui-change h2 { font-size: 1.1rem; }
+.docqui-diff {
+  overflow: auto;
+  padding: .75rem;
+  background: #f6f8fa;
+  color: #17334d;
+  border: 1px solid #a6b6c4;
+  font: 13px/1.6 Consolas, monospace;
+  tab-size: 4;
+}
+.docqui-diff span { display: inline-block; min-width: 100%; }
+.docqui-diff__added { color: #14532d; background: #dcfce7; }
+.docqui-diff__removed { color: #7f1d1d; background: #fee2e2; }
+.docqui-diff__hunk { color: #164e63; background: #e0f2fe; }
+.docqui-preview input:focus-visible { outline: 3px solid #005ca9; outline-offset: 3px; }
+.docqui-inline-label { font: 600 .8rem/1.5 system-ui, sans-serif; }
+.docqui-inline-before {
+  display: block;
+  margin: .3rem 0;
+  padding: .3rem .5rem;
+  border-left: 3px solid #991b1b;
+  color: #7f1d1d;
+  background: #fee2e2;
+  overflow-wrap: anywhere;
+}
+.docqui-inline-after {
+  display: block;
+  padding: .3rem .5rem;
+  color: #14532d;
+  background: #dcfce7;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.docqui-inline-word-removed { color: #7f1d1d !important; background: #fee2e2; white-space: pre-wrap; }
+.docqui-inline-word-added { color: #14532d !important; background: #dcfce7; text-decoration: none; }
+.docqui-inline-after-block { outline: 2px solid #15803d; outline-offset: 2px; }
+tr.docqui-inline-after-block > td { color: #14532d; background: #dcfce7; }
+@media print {
+  .docqui-preview { display: none; }
+  .docqui-diff { white-space: pre-wrap; overflow-wrap: anywhere; }
+}

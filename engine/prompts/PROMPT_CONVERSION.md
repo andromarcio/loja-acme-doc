@@ -159,6 +159,8 @@ código/doc.
 
 ### 2.3 — N2 (um por Feature Set)
 
+Antes de gerar N3s, confirme a ordem da jornada e registre-a na tabela Features do N2. Só a primeira atribuição dos IDs segue essa ordem; IDs já usados no N2/N3 são imutáveis. Use `scripts/ids-n3.mjs` em modo seco e, conferido, `--write`; preserve as reservas `docqui:n3-ids` e continue depois do maior número conhecido — ver `engine/N3-IDS.md`. Não numere pela ordem de leitura dos arquivos de código.
+
 Use o template de `_template-feature-set/README.md`. Agrupe rotas/controllers
 (código) e seções (doc) em Feature Sets lógicos de negócio. Preencha a tabela
 de Features, o Fluxo principal (mermaid — 🔍 se inferido só do código; sempre para

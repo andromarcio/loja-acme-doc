@@ -262,8 +262,8 @@ Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
 > ```
 > - **Não use `\n` dentro de um nó** — quebra o parser. Mantenha o rótulo curto.
 
-> **Regra dos IDs de feature** — Atribua a cada feature um ID sequencial
-> `[SIGLA]-[SFS]-NN` na ordem da jornada. Na tabela **Features**, renderize
+> **Regra dos IDs de feature** — Só a primeira atribuição segue a jornada confirmada na ordem da tabela `## Features`. Antes de escrever N3s, rode `node scripts/ids-n3.mjs modules/[dominio]/[feature-set]/README.md` (modo seco) e, conferido, `--write`. Preserve qualquer ID existente no N2/N3, mesmo fora da ordem atual; novas features continuam após o maior reservado, sem reutilizar lacunas. Ao regenerar o N2, preserve o registro `docqui:n3-ids`. O ID é imutável, não uma posição da jornada — ver `engine/N3-IDS.md`.
+> Na tabela **Features**, renderize
 > **sempre** como `[**Nome da Feature**](f-….md) <small>[SIGLA]-[SFS]-NN</small>`
 > (link do N3 envolvendo o negrito + ID em `<small>` ao lado — nunca `**[Nome](...)**`,
 > que quebra a extração automática do nome). Na coluna **Features atendidas** das

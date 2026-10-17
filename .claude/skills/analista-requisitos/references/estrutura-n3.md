@@ -19,8 +19,6 @@ id: [SIGLA]-[SFS]-[NN]
 feature_set: [SIGLA]-[SFS]
 dominio: [SIGLA]
 entidade: [Entidade principal]
-prioridade: [P1 | P2 | P3]          # P1 = MVP; ordena as user stories no spec.md
-mvp: [true | false]
 data_model_ref: data-models/[dominio].md#[entidade]
 endpoints: []                       # preenchido no 3B (espelha ## API) — só p/ feature que expõe API
 error_codes: []                     # preenchido no 3B (espelha ## Mapeamento de erros)
@@ -41,8 +39,7 @@ contagem:                           # status de contagem APF — INDEPENDENTE do
 ---
 ```
 
-- `prioridade` é coletada no **3A**; `endpoints`/`error_codes`/`data_model_ref` são
-  completados no **3B**. O `PASSO 0` do exporter valida a sincronia front-matter ↔ corpo.
+- `endpoints`/`error_codes`/`data_model_ref` são completados no **3B**. O `PASSO 0` do exporter valida a sincronia front-matter ↔ corpo.
 - `estado` é **derivado** dos `gates`: rascunho → requisitos-aprovados → modelo-validado →
   especificado → implementado (manuais: em-desenvolvimento, revisao-necessaria, deprecado).
   `estado: especificado` (CP1→CP3 aprovados) é pré-requisito para exportar ao spec-kit; a partir
@@ -61,7 +58,6 @@ contagem:                           # status de contagem APF — INDEPENDENTE do
 ````markdown
 # [Nome da Feature]
 > **Nível 3** - Feature Set: [Nome do Feature Set] — Major Feature Set: [Nome do Domínio] - `[SIGLA]-[SFS]-[NN]`
-> **Prioridade**: [P1 | P2 | P3] · **MVP**: [sim | não]
 
 ## Descrição
 

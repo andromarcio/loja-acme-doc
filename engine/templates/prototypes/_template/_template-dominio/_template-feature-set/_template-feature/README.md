@@ -62,4 +62,4 @@
 
 ---
 
-*Links: [N3 da spec](../../../../modules/[dom]/[fs]/[feature].md) · [Fluxo do Feature Set](../README.md) · [Índice de protótipos](../../../prototypes/README.md)*
+*Links: [N3 da spec](../../../../modules/[dom]/[fs]/[feature].md) · [Fluxo do Feature Set](../README.md) · [Índice de protótipos](../../../INDEX.md)*
