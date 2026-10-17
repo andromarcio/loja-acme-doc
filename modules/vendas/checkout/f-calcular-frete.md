@@ -1,11 +1,9 @@
-<!-- docqui: 6.4.1 | prompt: PROMPT_PROTOTYPE_FLOW_FULL | atualizado: 2026-10-17 -->
+<!-- docqui: 6.4.8 | prompt: PROMPT_4A_N3_UPDATE_negocio | atualizado: 2026-10-17 -->
 ---
 id: VND-CHK-01
 feature_set: VND-CHK
 dominio: VND
 entidade: Pedido
-prioridade: P1
-mvp: true
 data_model_ref: data-models/vendas.md#pedido
 endpoints: []
 error_codes: []
@@ -27,7 +25,6 @@ contagem:
 
 # Calcular Frete
 > **Nível 3** - Feature Set: Checkout — Major Feature Set: Vendas - `VND-CHK-01`
-> **Prioridade**: P1 · **MVP**: sim
 
 ## Descrição
 
@@ -170,3 +167,4 @@ A contagem está pendente. Não foi deduzida do valor de PF mostrado no simulado
 |---|---|---|---|
 | 2026-10-14 | Copilot | N3 criado | Exemplo negocial do ticket fictício, regras e cenários preenchidos; gates sem aprovação e contagem pendente. |
 | 2026-10-17 | Claude | Protótipo vinculado | A Superfície passa a apontar o protótipo de fluxo do Checkout (`prototypes/vendas/checkout/flow.html`), com fidelidade referência e em rascunho, sem aprovação. |
+| 2026-10-17 | Claude | Ajuste | Saem `prioridade` e `mvp` do front-matter e a linha de Prioridade e MVP do cabeçalho: a priorização das features saiu do método no engine 6.4.4. Nenhuma regra, cenário ou campo muda. |

@@ -166,6 +166,25 @@ class VisualPagesTest(unittest.TestCase):
         self.page.locator("#documentContainer .doc-title").wait_for()
         self.assertEqual(self.page.locator("#documentContainer .doc-title").inner_text(), "Calcular Frete")
 
+    def test_menu_orders_features_by_id(self):
+        # No menu, os N3 de um Feature Set seguem o ID, não o nome do arquivo; o N3 sem ID
+        # vai para o fim. Os N3 extras só existem na página: pelo caminho, a ordem seria outra.
+        def order():
+            return self.page.evaluate("""() => [...document.querySelectorAll('#fs-vendas-checkout .feature-item')]
+              .map(a => a.dataset.path.split('/').pop())""")
+        self.assertEqual(order(), ["f-calcular-frete.md"])
+        self.page.evaluate("""() => {
+          const n3 = (id, nome) => `---\\nid: ${id}\\n---\\n\\n# ${nome}\\n`;
+          Object.entries({
+            'modules/vendas/checkout/f-aplicar-cupom.md': n3('VND-CHK-10', 'Aplicar Cupom'),
+            'modules/vendas/checkout/f-exibir-prazo.md': n3('VND-CHK-02', 'Exibir Prazo'),
+            'modules/vendas/checkout/f-a-sem-id.md': '# Sem ID\\n',
+          }).forEach(([path, text]) => { repoFiles.push(path); repoFilesContent[path] = text; });
+          repoFiles.sort();
+          buildFDDTree();
+        }""")
+        self.assertEqual(order(), ["f-calcular-frete.md", "f-exibir-prazo.md", "f-aplicar-cupom.md", "f-a-sem-id.md"])
+
     def test_n3_scenarios_tags_and_background(self):
         # O esperado vem do .md: as tags e os comentários "# ←" logo acima de cada Scenario,
         # e os passos do Background.

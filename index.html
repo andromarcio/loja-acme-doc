@@ -1961,6 +1961,12 @@
       }
     });
 
+    // No menu, os N3 de cada Feature Set seguem a ordem do ID (VND-CHK-01, -02…), não a do
+    // nome do arquivo; o N3 sem ID vai para o fim, na ordem do caminho.
+    Object.values(domains).forEach(dom => Object.values(dom.featureSets).forEach(fs => {
+      fs.features.sort((a, b) => (!a.id - !b.id) || a.id.localeCompare(b.id, 'pt', { numeric: true }));
+    }));
+
     fddStructure = domains;
     renderFDDTreeHTML(domains);
     renderGlobalFiles(globalFiles);
@@ -3358,8 +3364,6 @@
         }
         const feats = fs.feats.map(function (f) {
           const foot = '<div class="mm-foot"><span class="mm-status st-' + mmEsc(f.estado) + '"></span>'
-            + (f.prioridade ? '<span class="mm-pri">' + mmEsc(f.prioridade) + '</span>' : '')
-            + (f.mvp ? '<span class="mm-mvp">MVP</span>' : '')
             + mmOpenLink(f.path) + '</div>';
           return mmCard('lvl-n3', f.id + ' ' + f.nome + ' ' + f.desc, 'N3 · ' + mmEsc(f.id), f.nome, f.desc, foot, '', true);
         }).join('');

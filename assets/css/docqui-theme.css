@@ -135,7 +135,7 @@ body {
 }
 
 code, pre, kbd, #documentContainer code, #documentContainer pre,
-.feature-code, .badge-id, .rn-tag, .scenario-body, .mm-badge, .mm-pri, .mm-mvp {
+.feature-code, .badge-id, .rn-tag, .scenario-body, .mm-badge {
   font-family: var(--font-mono);
 }
 
