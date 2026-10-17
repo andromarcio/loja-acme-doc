@@ -166,6 +166,23 @@ class VisualPagesTest(unittest.TestCase):
         self.page.locator("#documentContainer .doc-title").wait_for()
         self.assertEqual(self.page.locator("#documentContainer .doc-title").inner_text(), "Calcular Frete")
 
+    def test_diagrams_use_elk_layout(self):
+        # Os diagramas Mermaid saem no layout ELK: o desenho carrega o render do
+        # assets/vendor/mermaid-layout-elk. Sem o módulo, o Mermaid volta ao layout padrão e o
+        # diagrama continua desenhado — a mesma checagem acusa a falta do ELK.
+        def render(block_elk):
+            page = self.context.new_page()
+            requested = []
+            page.on("request", lambda request: requested.append(request.url))
+            if block_elk:
+                page.route("**/mermaid-layout-elk/**", lambda route: route.abort())
+            page.goto(self.base + "/index.html#modules/vendas/checkout/README.md")
+            page.locator("#documentContainer .mermaid svg").first.wait_for()
+            page.close()
+            return any("/mermaid-layout-elk/chunks/" in url and "/render-" in url for url in requested)
+        self.assertTrue(render(False))
+        self.assertFalse(render(True))
+
     def test_menu_orders_features_by_id(self):
         # No menu, os N3 de um Feature Set seguem o ID, não o nome do arquivo; o N3 sem ID
         # vai para o fim. Os N3 extras só existem na página: pelo caminho, a ordem seria outra.
@@ -306,7 +323,27 @@ class VisualPagesTest(unittest.TestCase):
             self.assertEqual(metric(name), value, name)
         branches = metric("branches")
         self.assertGreaterEqual(branches, 1)
-        self.page.locator("#dashboardDomain").select_option("VND")
+        # O filtro abre a lista abaixo do campo, sem cobri-lo, e a seta tem folga da borda; uma
+        # lista posta sobre o campo reprova a checagem.
+        def list_below_field():
+            field = self.page.locator("#dashboardDomain > summary").bounding_box()
+            items = self.page.locator("#dashboardDomain > ul").bounding_box()
+            self.assertGreaterEqual(items["y"], field["y"] + field["height"])
+            self.assertGreaterEqual(self.page.evaluate("""() => {
+              const field = document.querySelector('#dashboardDomain > summary');
+              return parseFloat(getComputedStyle(field).paddingRight) + parseFloat(getComputedStyle(field, '::after').marginRight);
+            }"""), 8)
+        self.page.locator("#dashboardDomain > summary").click()
+        list_below_field()
+        style = self.page.add_style_tag(content="#dashboardDomain > ul { top: 0 !important; }")
+        with self.assertRaises(AssertionError):
+            list_below_field()
+        style.evaluate("el => el.remove()")
+        self.page.keyboard.press("Escape")
+        self.assertFalse(self.page.evaluate("document.getElementById('dashboardDomain').open"))
+        self.page.locator("#dashboardDomain > summary").click()
+        self.page.get_by_role("button", name="VND — Vendas", exact=True).click()
+        self.assertEqual(self.page.locator("#dashboardDomain > summary").inner_text(), "VND — Vendas")
         self.assertEqual(metric("n3"), 1)
         self.assertEqual(metric("branches"), branches)
         for width in [1440, 390, 320]:
