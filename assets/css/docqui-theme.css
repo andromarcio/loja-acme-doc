@@ -283,17 +283,17 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
   margin-bottom: 0;
 }
 
-/* N3: cada seção num card próprio. Nas demais páginas o contêiner é o card e as
-   seções ficam dentro dele; na feature, o contêiner some e cada seção vira card. */
-#documentContainer.n3-cards {
+/* Documentos: cada seção num card próprio — o contêiner some e cada seção vira card.
+   Nas demais páginas (dashboard, mapa, protótipo), o contêiner é o card. */
+#documentContainer.doc-cards {
   padding: 0;
   border: 0;
   background: transparent;
   box-shadow: none;
 }
 
-#documentContainer.n3-cards .doc-hero-card,
-#documentContainer.n3-cards .doc-section {
+#documentContainer.doc-cards .doc-hero-card,
+#documentContainer.doc-cards .doc-section {
   padding: 26px 32px;
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -302,19 +302,20 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
   margin-bottom: 24px;
 }
 
-#documentContainer.n3-cards .section-header > .section-title {
+#documentContainer.doc-cards .section-header > .section-title {
   margin-top: 0;
 }
 
 /* No hero do N3, a Descrição tem o título das demais seções; da linha até ele, 35 px
-   (eram 70: o padding do bloco mais a margem de todo h2 do tema). */
-#documentContainer.n3-cards .hero-description-block {
+   (eram 70: o padding do bloco mais a margem de todo h2 do tema). Só o hero com esse
+   título: o do N1 e o do N2 ainda usam o h2 próprio. */
+#documentContainer.doc-cards .hero-description-block:has(> .section-header) {
   padding-top: 35px;
 }
 
 @media (max-width: 820px) {
-  #documentContainer.n3-cards .doc-hero-card,
-  #documentContainer.n3-cards .doc-section {
+  #documentContainer.doc-cards .doc-hero-card,
+  #documentContainer.doc-cards .doc-section {
     padding: 20px 18px;
   }
 }
