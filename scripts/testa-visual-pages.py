@@ -162,6 +162,47 @@ class VisualPagesTest(unittest.TestCase):
         self.page.locator("#documentContainer .doc-title").wait_for()
         self.assertEqual(self.page.locator("#documentContainer .doc-title").inner_text(), "Calcular Frete")
 
+    def test_n3_scenarios_tags_and_background(self):
+        # O esperado vem do .md: as tags e os comentários "# ←" logo acima de cada Scenario,
+        # e os passos do Background.
+        gherkin = (ROOT / FEATURE).read_text(encoding="utf-8").split("```gherkin")[1].split("```")[0]
+        esperado, acima, fundo, no_fundo = [], [], [], False
+        for linha in (l.strip() for l in gherkin.splitlines()):
+            if linha.startswith("Background:"):
+                no_fundo = True
+            elif linha.startswith("Scenario:"):
+                no_fundo = False
+                esperado.append({
+                    "titulo": linha.split(":", 1)[1].strip(),
+                    "rn": [t for l in acima if l.startswith("@") for t in l.split()],
+                    "dic": [l.split("←", 1)[1].strip() for l in acima if l.startswith("# ←")],
+                })
+                acima = []
+            elif linha.startswith(("#", "@")):
+                acima.append(linha)
+            elif linha and no_fundo:
+                fundo.append(linha.split(" ", 1)[1])
+            elif linha:
+                acima = []
+        self.assertEqual(len(esperado), 7)
+        self.assertIn(["@RN-03"], [e["rn"] for e in esperado])
+        self.assertIn(["FIELD-DICTIONARY: CEP"], [e["dic"] for e in esperado])
+        self.assertEqual(len(fundo), 2)
+
+        self.page.goto(self.base + "/index.html#" + FEATURE)
+        self.page.locator("#documentContainer .scenario-card").first.wait_for()
+        cards = self.page.evaluate("""() => [...document.querySelectorAll('#documentContainer .scenario-card')].map(c => ({
+          fundo: c.classList.contains('scenario-background'),
+          titulo: c.querySelector('.scenario-title') ? c.querySelector('.scenario-title').textContent.replace(/^Cenário:\\s*/, '').trim() : null,
+          rn: [...c.querySelectorAll('.scenario-header .rn-num')].map(b => '@' + b.textContent.trim()),
+          dic: [...c.querySelectorAll('.scenario-header .rn-tag')].map(b => b.title),
+          corpo: c.querySelector('.scenario-body').textContent,
+        }))""")
+        self.assertTrue(cards and cards[0]["fundo"], "o Background abre a seção de cenários")
+        for passo in fundo:
+            self.assertIn(passo, cards[0]["corpo"])
+        self.assertEqual([{k: c[k] for k in ("titulo", "rn", "dic")} for c in cards[1:]], esperado)
+
     def test_graph_and_simulator_preserved(self):
         self.page.goto(self.base + "/rastreabilidade/index.html")
         self.page.wait_for_function("window.TRACE_DATA && document.querySelector('#graph').children.length")
