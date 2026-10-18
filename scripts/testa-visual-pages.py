@@ -287,6 +287,38 @@ class VisualPagesTest(unittest.TestCase):
             self.assertIn(passo, cards[0]["corpo"])
         self.assertEqual([{k: c[k] for k in ("titulo", "rn", "dic")} for c in cards[1:]], esperado)
 
+    def test_n3_hides_uncounted_metrics(self):
+        # A "Métricas de tamanho" sem nada contado não vira card; contada, com PF 0 ou com PE
+        # reutilizado (↪), vira. O .md continua com a seção — é só a apresentação.
+        self.assertIn("## Métricas de tamanho", (ROOT / FEATURE).read_text(encoding="utf-8"))
+        self.page.evaluate("(rel) => navigateTo(rel)", FEATURE)
+        self.page.locator("#documentContainer .doc-hero-card").wait_for()
+        titulos = self.page.evaluate("""() => [...document.querySelectorAll('#documentContainer .section-title')]
+          .map((t) => t.textContent.trim())""")
+        self.assertIn("Campos", titulos)
+        self.assertNotIn("Métricas de tamanho", titulos)
+
+        def com_metricas(linha, memoria=False, filtro=True):
+            return self.page.evaluate("""([path, linha, memoria, filtro]) => {
+              const { data, content } = parseFrontMatter(repoFilesContent[path]);
+              const tabela = '| Função de Transação | Papel | Tipo | ALR | DER | Complexidade | PF | Data |\\n|---|---|---|---|---|---|---|---|\\n' + linha + '\\n';
+              const md = content.replace(/## Métricas de tamanho\\n[\\s\\S]*?(?=\\n## )/,
+                '## Métricas de tamanho\\n\\n' + tabela + (memoria ? '\\n### Memória de cálculo\\n\\nx\\n' : ''));
+              const original = window.metricasVazia;
+              if (!filtro) window.metricasVazia = () => false;
+              try { return renderN3FeatureTemplate(path, 'x', data, md).includes('Métricas de tamanho'); }
+              finally { window.metricasVazia = original; }
+            }""", [FEATURE, linha, memoria, filtro])
+
+        pendente = "| Calcular Frete | principal | — | — | — | — | — | — |"
+        self.assertFalse(com_metricas(pendente))
+        self.assertTrue(com_metricas("| Calcular Frete | principal | SE | 2 | 5 | Baixa | 4 | 2026-10-18 |", memoria=True))
+        self.assertTrue(com_metricas("| Calcular Frete | principal | — | — | — | — | 0 | 2026-10-18 |"))
+        self.assertTrue(com_metricas("| Consultar Faixa | acessório | ↪ [ADM-FRT-01](x.md) | — | — | — | — | — |"))
+        self.assertTrue(com_metricas(pendente, memoria=True))
+        # Controle negativo: sem o filtro, a mesma seção pendente aparece — é ele que a oculta.
+        self.assertTrue(com_metricas(pendente, filtro=False))
+
     def test_sections_as_cards(self):
         # Todo documento põe cada seção num card, como o N3. Nos genéricos, um card com título
         # por rubrica `## ` do .md (fora de cerca de código), com o título e a apresentação no

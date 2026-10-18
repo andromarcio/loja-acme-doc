@@ -3,8 +3,12 @@
 Gera um documento Word com a especificação **negocial** de um Feature Set:
 
 - **Visão geral do N2** (a partir do `README.md` do Feature Set) — descrição, features, fluxo principal, dependências, telas e permissões.
-- **Para cada Feature (N3)**: todo o conteúdo negocial — descrição, superfície, regras de negócio, cenários (Gherkin), campos, comportamento de tela e métricas de tamanho. As seções técnicas (o bloco `dev-only`) são **omitidas**.
+- **Para cada Feature (N3)**: o conteúdo negocial — descrição, origem, regras de negócio, cenários (Gherkin), campos, comportamento de tela e critérios de sucesso. Ficam de fora o front-matter, os comentários HTML, os blocos `dev-only` (onde quer que estejam no N3: no template, a `## Superfície` é um deles) e o `## Changelog`.
+- **Métricas de tamanho só quando contadas**: a seção sai enquanto nada foi contado — toda célula de Tipo, ALR, DER, Complexidade e PF vazia ou com `—`, e sem `### Memória de cálculo`. A linha de PF 0 (PE descartado) e a de PE reutilizado (`↪`) contam como preenchidas.
 - **Protótipos**: embutidos como imagem, **apenas onde já existem**.
+- **Capa**: o sistema da instância, `Sigla — Nome`, lido do `global/MASTER.md`; sem o MASTER preenchido, a linha não aparece.
+
+A tabela `## Features` do N2 é lida nos dois formatos: o atual, `| [**Nome**](f-x.md) <small>ID</small> | … |`, e o legado, `| **Nome** <small>ID</small> | [f-x.md] |`.
 
 Os `.docx` gerados vão para `exports/`.
 
@@ -55,6 +59,10 @@ python3 scripts/docx-export/gen_feature_set_docx.py \
 ```
 
 As imagens ficam **embutidas** no `.docx` — ele é autocontido. Screenshots muito altos (protótipos de página inteira) são fatiados automaticamente em partes de altura de página.
+
+## Conferência
+
+`python3 scripts/eval/testa-docx-export.py` — monta uma instância mínima, gera o `.docx` e confere o contrato acima; o `run-evals.mjs` o chama.
 
 ## Estado atual (prova de conceito)
 

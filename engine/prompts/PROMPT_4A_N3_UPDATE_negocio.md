@@ -192,7 +192,10 @@ alinhadas e confirme:
 
 Gere a versão atualizada das seções negociais do N3 afetadas,
 evidenciando o que mudou. Se a alteração veio de um ticket, adicione a linha
-correspondente à seção `## Origem` (Tipo "Alteração", com o link da AIM do ticket). Adicione ou atualize a
+correspondente à seção `## Origem` (Tipo "Alteração", com o link da AIM do ticket). O bloco
+`origem:` do front-matter **não muda**: ele guarda só o ticket que criou a feature (é a coluna
+Origem da esteira no `modules/INDEX.md`), e a feature que nasceu sem ticket continua sem ele —
+o histórico de tickets é a `## Origem`. Adicione ou atualize a
 seção de changelog. **Insira a nova linha no topo da tabela** (logo abaixo do
 cabeçalho), mantendo o changelog em **ordem decrescente por data** — a entrada
 mais recente sempre primeiro:

@@ -5,7 +5,7 @@ window.TRACE_DATA = {
     "system": "Loja ACME",
     "subtitle": "índice de rastreabilidade gerado por scripts/build-trace-data.mjs",
     "generatedAt": "2026-10-18",
-    "engineVersion": "6.4.10",
+    "engineVersion": "6.4.14",
     "repo": "https://github.com/andromarcio/loja-acme-doc"
   },
   "nodes": [
