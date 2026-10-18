@@ -2,7 +2,7 @@
 
 Os tickets abaixo fazem o papel do ServiceNow: é daqui que você copia a descrição e os critérios de aceite para a AIM de cada ticket, **como estão escritos** — transcrição, não formulação. O mentor faz o papel da PO: é com ele que você elicita o que o ticket não diz e é ele quem avaliza o escopo.
 
-Os três primeiros formam a sprint SP07 e são os mesmos do simulador (`mentoria/simulador.html`). Os dois últimos são para praticar sem o roteiro do simulador.
+Os três primeiros formam a sprint SP07 e são os mesmos do simulador (`mentoria/simulador.html`). Os dois seguintes são para praticar sem o roteiro do simulador. Os da última seção já estão especificados no exemplo, em rascunho: servem de consulta, para comparar cada ticket com a AIM e as features que ele originou.
 
 ## Sprint SP07
 
@@ -48,7 +48,7 @@ Este ticket **não será entregue** na SP07: no fechamento, o mentor avisa, e vo
 | CA-2 | Não pode haver dois produtos com o mesmo nome. |
 | CA-3 | O produto retirado de venda não aparece mais na loja, mas continua nos pedidos antigos. |
 
-O que este ticket exercita: o primeiro N1 de outro Major Feature Set (Catálogo, previsto no N0), a opção **CR** (CRUD padrão) e a fronteira entre "retirar de venda" e "excluir".
+O que este ticket exercita: o Feature Set Produtos (`CAT-PRD`), planejado no N1 Catálogo, pela opção **CR** (CRUD padrão), e a fronteira entre "retirar de venda" e "excluir". A entidade Produto já existe no modelo de entidades, porque a Vitrine, os Destaques e o Carrinho a leem: o "retirar de venda" do CA-3 muda o que essas features mostram e aceitam, e a AIM tem de dizer quais delas o ticket altera.
 
 ### STRY0013165 — Frete grátis
 
@@ -63,3 +63,86 @@ Critérios de aceite (como estão no ticket, sem numeração):
 - CEP não atendido continua não atendido, mesmo acima de R$ 200,00
 
 O que este ticket exercita: alteração de uma feature que já existe (4A), regra de negócio que é invariante e reação que vira cenário, mensagem nova no MESSAGE-DICTIONARY e, sobretudo, a **numeração**: a fonte não numera os critérios, então a AIM declara isso e a coluna `CA-n` sai `—`. Número inventado não vale.
+
+## Já especificados no exemplo
+
+Cada ticket abaixo tem a sua AIM em `analise-impacto/` e originou um Feature Set inteiro, em rascunho, sem aprovação e com a contagem pendente.
+
+### STRY0013170 — Categorias de produtos
+
+> A equipe de vendas precisa organizar os produtos da loja em categorias, para que o cliente encontre o que procura: pesquisar, cadastrar, alterar, excluir e consultar as categorias.
+
+| Critério | Descrição |
+|---|---|
+| CA-1 | A equipe pesquisa as categorias por nome e por situação. |
+| CA-2 | A categoria é cadastrada com nome e uma descrição opcional; não pode haver duas categorias com o mesmo nome. |
+| CA-3 | A equipe altera a descrição e a situação da categoria, mas não o nome; os produtos de uma categoria inativa deixam de aparecer na vitrine. |
+| CA-4 | Categoria com produtos não pode ser excluída. |
+| CA-5 | A equipe consulta os dados de uma categoria e quantos produtos ela tem. |
+
+### STRY0013175 — Navegar pela vitrine
+
+> Como visitante da loja, quero ver os destaques, pesquisar produtos e abrir a página de um produto, para encontrar o que quero comprar e saber quanto custa.
+
+| Critério | Descrição |
+|---|---|
+| CA-1 | Na página inicial, o sistema mostra os destaques vigentes, na ordem definida pela equipe de vendas. |
+| CA-2 | O visitante pesquisa produtos por parte do nome e pode filtrar por categoria; produtos de categoria inativa não aparecem. |
+| CA-3 | Ao abrir um produto, o sistema mostra nome, descrição, categoria e preço; o produto sem estoque aparece como esgotado. |
+
+### STRY0013180 — Destaques da página inicial
+
+> A equipe de vendas precisa escolher quais produtos aparecem em destaque na página inicial da loja, com uma chamada, a ordem e o período em que cada destaque fica no ar.
+
+| Critério | Descrição |
+|---|---|
+| CA-1 | A equipe pesquisa os destaques por produto e por situação (programado, vigente ou encerrado). |
+| CA-2 | O destaque é cadastrado com produto, chamada, ordem de exibição e período de vigência; o fim não pode ser anterior ao início, e o mesmo produto não pode ter dois destaques no mesmo período. |
+| CA-3 | A equipe altera a chamada, a ordem e o período de um destaque, mas não troca o produto; destaque encerrado não pode ser alterado. |
+| CA-4 | A equipe exclui um destaque, que sai da página inicial. |
+| CA-5 | A equipe consulta todos os dados de um destaque. |
+
+### STRY0013185 — Carrinho de compras
+
+> Como cliente, quero colocar produtos no carrinho, ver o que escolhi, mudar quantidades e tirar itens, para fechar a compra só com o que quero.
+
+| Critério | Descrição |
+|---|---|
+| CA-1 | Na página do produto, o cliente escolhe a quantidade e adiciona o produto ao carrinho; se o produto já está no carrinho, a quantidade é somada. |
+| CA-2 | O carrinho mostra cada item com o preço unitário, a quantidade e o subtotal, e o total dos itens. |
+| CA-3 | O cliente muda a quantidade de um item, sem passar da quantidade em estoque. |
+| CA-4 | O cliente remove um item do carrinho. |
+
+### STRY0013190 — Atendimento de pedidos
+
+> Como atendente, quero encontrar os pedidos dos clientes, ver o detalhe de cada um e cancelar um pedido quando o cliente pedir, registrando o motivo.
+
+| Critério | Descrição |
+|---|---|
+| CA-1 | O atendente pesquisa pedidos por número, cliente, situação e período da confirmação. |
+| CA-2 | O detalhe do pedido mostra o cliente, os itens, o CEP de entrega, o frete, o total e a situação. |
+| CA-3 | Só pedido confirmado pode ser cancelado, e o motivo é obrigatório. |
+
+### STRY0013195 — Usuários da loja
+
+> O administrador precisa manter os usuários da loja — clientes, atendentes, gestores de catálogo e administradores — e tirar o acesso de quem não deve mais usar a loja, sem apagar o histórico.
+
+| Critério | Descrição |
+|---|---|
+| CA-1 | O administrador pesquisa usuários por nome, e-mail, perfil e situação. |
+| CA-2 | O usuário é cadastrado com nome completo, e-mail e perfil, e opcionalmente CPF e telefone; e-mail e CPF não se repetem. |
+| CA-3 | O administrador altera o nome, o CPF, o telefone e o perfil do usuário; o e-mail não muda, e a loja nunca fica sem um administrador ativo. |
+| CA-4 | O usuário inativado perde o acesso, mas continua nos pedidos; o administrador não pode inativar o próprio usuário. |
+| CA-5 | O administrador consulta todos os dados de um usuário. |
+
+### STRY0013200 — Faixas de frete
+
+> O administrador precisa manter as faixas de CEP atendidas e o valor do frete de cada uma, sem depender da equipe de sistemas para mudar a tabela.
+
+| Critério | Descrição |
+|---|---|
+| CA-1 | O administrador pesquisa as faixas por região ou por um CEP que elas atendem. |
+| CA-2 | A faixa é cadastrada com região, CEP inicial, CEP final e valor do frete; duas faixas não podem ter CEPs em comum. |
+| CA-3 | O administrador altera o intervalo e o valor da faixa; a mudança vale para os próximos cálculos, não para os pedidos já feitos. |
+| CA-4 | Faixa usada em pedidos não pode ser excluída. |
+| CA-5 | O administrador consulta todos os dados de uma faixa. |

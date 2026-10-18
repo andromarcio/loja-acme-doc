@@ -339,8 +339,8 @@ class VisualPagesTest(unittest.TestCase):
             self.page.evaluate("(theme) => document.documentElement.dataset.theme = theme", theme)
             self.assertEqual(self.page.evaluate("getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()"), bg)
         data = self.page.evaluate("window.TRACE_DATA")
-        self.assertEqual(len(data["nodes"]), 6)
-        self.assertEqual(len(data["edges"]), 5)
+        self.assertEqual(len(data["nodes"]), 53)
+        self.assertEqual(len(data["edges"]), 79)
         self.assertTrue(any(n["id"] == "VND-CHK-01" for n in data["nodes"]))
         # O visualizador legado nao reconhece o no aim; erro confirmado no HEAD anterior.
         self.assertEqual(self.errors, ["Cannot read properties of undefined (reading 'r')"])
@@ -357,10 +357,10 @@ class VisualPagesTest(unittest.TestCase):
         def metric(name):
             return int(self.page.locator(f'[data-metric="{name}"] > strong').inner_text())
 
-        expected = {"n1": 1, "n2": 1, "n3": 1, "artifacts": 3, "approved": 0,
-                    "specified": 0, "waiting": 1, "inconsistent": 0, "ungoverned": 0,
-                    "missing": 0, "countPending": 1, "countReviewed": 0, "dataModels": 1,
-                    "prototypes": 0}
+        expected = {"n1": 4, "n2": 8, "n3": 31, "artifacts": 43, "approved": 0,
+                    "specified": 0, "waiting": 31, "inconsistent": 0, "ungoverned": 0,
+                    "missing": 0, "countPending": 31, "countReviewed": 0, "dataModels": 4,
+                    "prototypes": 8}
         for name, value in expected.items():
             self.assertEqual(metric(name), value, name)
         branches = metric("branches")
@@ -386,7 +386,7 @@ class VisualPagesTest(unittest.TestCase):
         self.page.locator("#dashboardDomain > summary").click()
         self.page.get_by_role("button", name="VND — Vendas", exact=True).click()
         self.assertEqual(self.page.locator("#dashboardDomain > summary").inner_text(), "VND — Vendas")
-        self.assertEqual(metric("n3"), 1)
+        self.assertEqual(metric("n3"), 8)
         self.assertEqual(metric("branches"), branches)
         for width in [1440, 390, 320]:
             self.page.set_viewport_size({"width": width, "height": 900})

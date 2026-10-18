@@ -1,4 +1,4 @@
-<!-- docqui: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
+<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 # RULES-DICTIONARY.md
 > Dicionário de **regras de negócio canônicas** — invariantes que se repetem em
 > várias features (maioridade, registro vinculado não excluível, etc.).
@@ -61,6 +61,23 @@ Scenario: Pessoa abaixo da idade mínima
   Then o sistema rejeita e exibe "É necessário ter no mínimo [idade] anos."
 ```
 
+### RC-03 — Período de vigência
+<!-- usado-em:gerado -->
+> **Usado em:** `VIT-DST-01` · `VIT-DST-02` · `VIT-DST-03` · `VIT-DST-05` · `VIT-NAV-01`
+<!-- /usado-em -->
+
+- **Invariante**: a data de início da vigência é igual ou anterior à data de fim; o registro só produz efeito entre as duas datas, inclusive.
+- **Parâmetros (por feature)**: as datas que delimitam a vigência; o fuso de referência (padrão: horário de Brasília).
+- **Mensagem**: "A data final não pode ser anterior à data inicial."
+
+```gherkin
+# ── Regra: Período de vigência ───────────────────────────────────
+Scenario: Fim da vigência anterior ao início
+  Given que informo uma data final anterior à data inicial
+  When tento salvar
+  Then o sistema rejeita e exibe "A data final não pode ser anterior à data inicial."
+```
+
 ### RC-08 — Arquivo com tamanho máximo
 <!-- usado-em:gerado -->
 > **Usado em:** _(ainda não referenciado em N3)_
@@ -80,7 +97,7 @@ Scenario: Arquivo acima do tamanho permitido
 
 ### RC-09 — Registro vinculado não pode ser excluído
 <!-- usado-em:gerado -->
-> **Usado em:** _(ainda não referenciado em N3)_
+> **Usado em:** `ADM-FRT-04` · `CAT-CTG-04`
 <!-- /usado-em -->
 
 - **Invariante**: um registro referenciado por outros não pode ser removido enquanto houver vínculos.

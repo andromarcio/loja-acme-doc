@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.1 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-14 -->
+<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 # MESSAGE-DICTIONARY.md
 > Dicionário de **mensagens de UI** que a pessoa usuária lê — e o **baseline** de
 > validação (obrigatório, formato, sucesso, estados de tela).
@@ -33,6 +33,8 @@
 | `DELETE_CONFIRM` | Confirmação antes de excluir | "Deseja realmente excluir este registro?" |
 | `GENERIC_ERROR` | Falha inesperada | "Ocorreu um erro. Tente novamente." |
 | `NO_PERMISSION` | Ação sem permissão | "Você não tem permissão para esta ação." |
+| `NOT_FOUND` | Registro inexistente ou excluído enquanto a pessoa navegava | "Registro não encontrado." |
+| `INVALID_PERIOD` | Período com a data final antes da inicial (filtro ou formulário) | "A data final não pode ser anterior à data inicial." |
 
 ---
 
@@ -54,12 +56,59 @@
 > Uma seção por domínio. Crie conforme os N3 forem especificados. Use chaves
 > descritivas em SCREAMING_SNAKE_CASE prefixadas pelo domínio.
 
+### Catálogo
+
+| Chave | Situação | Texto literal |
+|---|---|---|
+| `CAT_CATEGORIA_DUPLICADA` | Nome de categoria já usado por outra categoria | "Já existe uma categoria com este nome." |
+| `CAT_CATEGORIA_COM_PRODUTOS` | Exclusão de uma categoria que tem produtos (RC-09 — Registro vinculado não pode ser excluído) | "Não é possível excluir: existem produtos vinculados a este registro." |
+| `CAT_INATIVAR_COM_PRODUTOS` | Confirmação ao inativar uma categoria que tem produtos | "Os produtos desta categoria deixarão de aparecer na vitrine. Deseja continuar?" |
+
+### Vitrine
+
+| Chave | Situação | Texto literal |
+|---|---|---|
+| `VIT_SELO_ESGOTADO` | Selo do produto com estoque zero, nos destaques, na busca e na página do produto | "Esgotado" |
+| `VIT_SEM_DESTAQUES` | Página inicial sem destaque vigente | "Nenhum destaque no momento. Use a busca para encontrar produtos." |
+| `VIT_PRODUTO_INDISPONIVEL` | Página de um produto inexistente ou de categoria inativa | "Este produto não está disponível na loja." |
+| `VIT_ORDEM_INVALIDA` | Ordem de exibição fora de 1 a 99 | "Informe uma ordem de 1 a 99." |
+| `VIT_DESTAQUE_SOBREPOSTO` | Produto que já tem destaque com vigência sobreposta | "Este produto já tem um destaque nesse período." |
+| `VIT_DESTAQUE_ENCERRADO` | Tentativa de alterar um destaque encerrado | "Destaque encerrado não pode ser alterado." |
+
 ### Vendas
 
 | Chave | Situação | Texto literal |
 |---|---|---|
 | `VND_CEP_NAO_ATENDIDO` | CEP fora das faixas da Tabela de Frete | "Ainda não entregamos neste CEP." |
 | `VND_CARRINHO_VAZIO` | Tentativa de cálculo sem itens | "Adicione itens ao carrinho para calcular o frete." |
+| `VND_PRODUTO_ESGOTADO` | Tentativa de adicionar ao carrinho um produto sem estoque | "Este produto está esgotado." |
+| `VND_ESTOQUE_INSUFICIENTE` | Quantidade maior que a quantidade em estoque | "Quantidade indisponível em estoque." |
+| `VND_ITEM_ADICIONADO` | Produto adicionado ao carrinho | "Produto adicionado ao carrinho." |
+| `VND_QUANTIDADE_ATUALIZADA` | Quantidade de um item do carrinho alterada | "Quantidade atualizada." |
+| `VND_ITEM_REMOVIDO` | Item removido do carrinho | "Item removido do carrinho." |
+| `VND_CARRINHO_SEM_ITENS` | Carrinho aberto sem itens | "Seu carrinho está vazio." |
+| `VND_ESTOQUE_REDUZIDO` | Estoque do produto ficou abaixo da quantidade que está no carrinho | "O estoque deste produto é menor que a quantidade no carrinho." |
+| `VND_CANCELAR_CONFIRMACAO` | Confirmação antes de cancelar um pedido | "Deseja realmente cancelar o pedido [número]?" |
+| `VND_PEDIDO_CANCELADO` | Pedido cancelado | "Pedido cancelado." |
+| `VND_PEDIDO_NAO_CANCELAVEL` | Cancelamento de pedido que não está confirmado | "Somente pedidos confirmados podem ser cancelados." |
+
+### Administração
+
+| Chave | Situação | Texto literal |
+|---|---|---|
+| `ADM_EMAIL_DUPLICADO` | E-mail já usado por outro usuário | "Já existe um usuário com este e-mail." |
+| `ADM_CPF_DUPLICADO` | CPF já usado por outro usuário | "Já existe um usuário com este CPF." |
+| `ADM_USUARIO_INATIVO` | Tentativa de alterar um usuário inativo | "Usuário inativo não pode ser alterado." |
+| `ADM_ULTIMO_ADMINISTRADOR` | Tirar o perfil Administrador do único administrador ativo | "A loja precisa de ao menos um administrador ativo." |
+| `ADM_AUTOINATIVACAO` | Administrador tenta inativar o próprio usuário | "Você não pode inativar o próprio usuário." |
+| `ADM_INATIVAR_CONFIRMACAO` | Confirmação antes de inativar um usuário | "Deseja realmente inativar [nome]? O usuário perderá o acesso à loja." |
+| `ADM_USUARIO_INATIVADO` | Usuário inativado | "Usuário inativado." |
+| `ADM_USUARIO_JA_INATIVO` | Tentativa de inativar um usuário que já está inativo | "Este usuário já está inativo." |
+| `ADM_REGIAO_DUPLICADA` | Região já usada por outra faixa de frete | "Já existe uma faixa com esta região." |
+| `ADM_FAIXA_INTERVALO_INVALIDO` | CEP final menor que o CEP inicial | "O CEP final deve ser igual ou maior que o CEP inicial." |
+| `ADM_FAIXA_SOBREPOSTA` | Faixa com CEPs em comum com outra | "Esta faixa tem CEPs em comum com a faixa [região]." |
+| `ADM_FAIXA_COM_PEDIDOS` | Exclusão de uma faixa de frete que atende pedidos (RC-09 — Registro vinculado não pode ser excluído) | "Não é possível excluir: existem pedidos vinculados a este registro." |
+| `ADM_FAIXA_VALE_PROXIMOS` | Aviso no formulário de edição da faixa de frete | "A alteração vale para os próximos cálculos de frete; os pedidos já feitos mantêm o valor cobrado." |
 
 ---
 
@@ -90,7 +139,42 @@ Ao escrever cenários/telas em um N3:
 
 | Entrada | Usado em |
 |---|---|
-| `BASELINE` | `VND-CHK-01` |
+| `ADM_AUTOINATIVACAO` | `ADM-USR-04` |
+| `ADM_CPF_DUPLICADO` | `ADM-USR-02` · `ADM-USR-03` |
+| `ADM_EMAIL_DUPLICADO` | `ADM-USR-02` |
+| `ADM_FAIXA_COM_PEDIDOS` | `ADM-FRT-04` |
+| `ADM_FAIXA_INTERVALO_INVALIDO` | `ADM-FRT-02` · `ADM-FRT-03` |
+| `ADM_FAIXA_SOBREPOSTA` | `ADM-FRT-02` · `ADM-FRT-03` |
+| `ADM_FAIXA_VALE_PROXIMOS` | `ADM-FRT-03` |
+| `ADM_INATIVAR_CONFIRMACAO` | `ADM-USR-04` |
+| `ADM_REGIAO_DUPLICADA` | `ADM-FRT-02` |
+| `ADM_ULTIMO_ADMINISTRADOR` | `ADM-USR-03` |
+| `ADM_USUARIO_INATIVADO` | `ADM-USR-04` |
+| `ADM_USUARIO_INATIVO` | `ADM-USR-03` |
+| `ADM_USUARIO_JA_INATIVO` | `ADM-USR-04` |
+| `BASELINE` | `ADM-FRT-01` · `ADM-FRT-02` · `ADM-FRT-03` · `ADM-FRT-04` · `ADM-FRT-05` · `ADM-USR-01` · `ADM-USR-02` · `ADM-USR-03` · `ADM-USR-04` · `ADM-USR-05` · `CAT-CTG-01` · `CAT-CTG-02` · `CAT-CTG-03` · `CAT-CTG-04` · `CAT-CTG-05` · `VIT-DST-01` · `VIT-DST-02` · `VIT-DST-03` · `VIT-DST-04` · `VIT-DST-05` · `VND-CAR-01` · `VND-CAR-02` · `VND-CAR-03` · `VND-CAR-04` · `VND-CHK-01` · `VND-PED-01` · `VND-PED-02` · `VND-PED-03` |
+| `CAT_CATEGORIA_COM_PRODUTOS` | `CAT-CTG-04` |
+| `CAT_CATEGORIA_DUPLICADA` | `CAT-CTG-02` |
+| `CAT_INATIVAR_COM_PRODUTOS` | `CAT-CTG-03` |
+| `EMPTY_SEARCH` | `VIT-NAV-02` |
+| `ERROR_STATE` | `VIT-NAV-01` · `VIT-NAV-02` · `VIT-NAV-03` |
+| `MIN_LENGTH` | `VIT-NAV-02` |
+| `VIT_DESTAQUE_ENCERRADO` | `VIT-DST-03` |
+| `VIT_DESTAQUE_SOBREPOSTO` | `VIT-DST-02` · `VIT-DST-03` |
+| `VIT_ORDEM_INVALIDA` | `VIT-DST-02` · `VIT-DST-03` |
+| `VIT_PRODUTO_INDISPONIVEL` | `VIT-NAV-03` |
+| `VIT_SELO_ESGOTADO` | `VIT-NAV-01` · `VIT-NAV-02` · `VIT-NAV-03` |
+| `VIT_SEM_DESTAQUES` | `VIT-NAV-01` |
+| `VND_CANCELAR_CONFIRMACAO` | `VND-PED-03` |
+| `VND_CARRINHO_SEM_ITENS` | `VND-CAR-02` · `VND-CAR-04` |
 | `VND_CARRINHO_VAZIO` | `VND-CHK-01` |
-| `VND_CEP_NAO_ATENDIDO` | `VND-CHK-01` |
+| `VND_CEP_NAO_ATENDIDO` | `ADM-FRT-04` · `VND-CHK-01` |
+| `VND_ESTOQUE_INSUFICIENTE` | `VND-CAR-01` · `VND-CAR-03` |
+| `VND_ESTOQUE_REDUZIDO` | `VND-CAR-02` |
+| `VND_ITEM_ADICIONADO` | `VND-CAR-01` |
+| `VND_ITEM_REMOVIDO` | `VND-CAR-04` |
+| `VND_PEDIDO_CANCELADO` | `VND-PED-03` |
+| `VND_PEDIDO_NAO_CANCELAVEL` | `VND-PED-03` |
+| `VND_PRODUTO_ESGOTADO` | `VND-CAR-01` |
+| `VND_QUANTIDADE_ATUALIZADA` | `VND-CAR-03` |
 <!-- /usado-em -->
