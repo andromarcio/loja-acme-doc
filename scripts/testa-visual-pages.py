@@ -106,11 +106,13 @@ class VisualPagesTest(unittest.TestCase):
         self.assertEqual(actual["section"], "1px")
 
     def test_shell_and_theme(self):
-        self.assertEqual(self.page.locator("#brandName").inner_text(), "Loja ACME")
+        self.assertEqual(self.page.locator("#brandSigla").inner_text(), "LACME")
+        self.assertEqual(self.page.locator("#brandLink").get_attribute("aria-label"), "LACME — Loja ACME — Docqui Caixa — início")
         self.assertEqual(self.page.locator(".sidebar__search #searchInput").count(), 1)
         self.assertEqual(self.page.locator(".app-header #breadcrumbBar").count(), 1)
         self.assertEqual(self.page.locator(".header-center").count(), 0)
-        self.assertTrue(self.page.locator(".brand__docqui").evaluate("el => el.complete && el.naturalWidth > 0"))
+        for imagem in [".brand__docqui", ".brand__caixa--positiva", ".brand__caixa--negativa"]:
+            self.assertTrue(self.page.locator(imagem).evaluate("el => el.complete && el.naturalWidth > 0"), imagem)
         github = self.page.locator(".app-header .header-right .btn-github")
         self.assertEqual(github.get_attribute("href"), "https://github.com/CAIXA-EFRS/loja-acme-doc")
         self.assertEqual(self.page.locator('#sidebar a[href*="github.com"]').count(), 0)
@@ -133,6 +135,75 @@ class VisualPagesTest(unittest.TestCase):
         stale = self.page.evaluate("""() => [...document.querySelectorAll('link[rel="stylesheet"]')]
           .map(link => link.getAttribute('href')).filter(href => href.startsWith('assets/') && !href.includes('?v='))""")
         self.assertEqual(stale, [])
+
+    def test_header_sigla_and_docqui_caixa(self):
+        # A sigla do MASTER em destaque; à direita, o docqui sobre a marca oficial da Caixa, os dois
+        # alinhados à esquerda, com a marca positiva no tema claro e a negativa no escuro.
+        medidas = """() => {
+          const caixa = [...document.querySelectorAll('.brand__caixa')].filter(el => el.offsetParent);
+          const r = el => el.getBoundingClientRect();
+          return {caixa: caixa.map(el => el.getAttribute('src').split('/').pop()),
+                  docqui: r(document.querySelector('.brand__docqui')).left, marca: caixa.map(el => r(el).left),
+                  sigla: r(document.querySelector('.brand-sigla')).height, assinatura: r(document.querySelector('.brand__docqui')).height,
+                  visivel: !!document.querySelector('.brand-marca').offsetParent};
+        }"""
+        for width in [1440, 390]:
+            self.page.set_viewport_size({"width": width, "height": 900})
+            for tema, arquivo in [("light", "CAIXA_2cores_positiva.png"), ("dark", "CAIXA_2cores_negativa.png")]:
+                with self.subTest(width=width, tema=tema):
+                    self.page.evaluate("(theme) => document.documentElement.dataset.theme = theme", tema)
+                    m = self.page.evaluate(medidas)
+                    self.assertEqual(m["caixa"], [arquivo])
+                    self.assertAlmostEqual(m["marca"][0], m["docqui"], delta=0.5)
+                    self.assertGreater(m["sigla"], m["assinatura"] * 0.8)
+        # Na tela estreita, fica só a sigla.
+        self.page.set_viewport_size({"width": 340, "height": 900})
+        m = self.page.evaluate(medidas)
+        self.assertFalse(m["visivel"])
+        self.assertTrue(self.page.locator("#brandSigla").is_visible())
+        # Com o MASTER ainda no template, sem a sigla, o header mostra o nome do sistema.
+        def tree(route):
+            corpo = route.fetch().text()
+            self.assertIn("**Sigla**: LACME", corpo)
+            route.fulfill(body=corpo.replace("**Sigla**: LACME", "**Sigla**: [SIGLA]"),
+                          content_type="application/javascript; charset=utf-8")
+        self.page.route("**/assets/tree.js*", tree)
+        self.page.reload()
+        self.page.locator("#documentContainer h1").wait_for()
+        self.assertEqual(self.page.locator("#brandSigla").inner_text(), "Loja ACME")
+        self.page.unroute("**/assets/tree.js*")
+
+    def test_mode_toggle_only_in_complete_profile(self):
+        # O botão Visão PO/Técnico só existe no perfil completo. No requisitos (o desta instância), a
+        # página fica na Visão PO, mesmo com a preferência "Técnico" gravada no navegador.
+        self.page.evaluate("localStorage.setItem('dev-only-pref', 'show')")
+        def servir_tree(perfil):
+            # Fábrica, não parâmetro padrão: o Playwright passa (route, request) ao handler.
+            def tree(route):
+                corpo = route.fetch().text()
+                self.assertIn("**Perfil**: `requisitos`", corpo)
+                route.fulfill(body=corpo.replace("**Perfil**: `requisitos`", f"**Perfil**: `{perfil}`"),
+                              content_type="application/javascript; charset=utf-8")
+            return tree
+
+        for perfil in ["requisitos", "completo"]:
+            with self.subTest(perfil=perfil):
+                self.page.route("**/assets/tree.js*", servir_tree(perfil))
+                # Só o hash muda em relação à página aberta: sem o reload, o tree.js não seria lido de novo.
+                self.page.goto(self.base + "/index.html#" + FEATURE)
+                self.page.reload()
+                self.page.locator("#documentContainer h1").wait_for()
+                botao = self.page.locator(".view-mode-toggle")
+                tecnico = "document.documentElement.classList.contains('app-show-dev')"
+                if perfil == "requisitos":
+                    self.assertEqual(botao.count(), 0)
+                    self.assertFalse(self.page.evaluate(tecnico))
+                else:
+                    self.assertEqual(botao.count(), 1)
+                    self.assertTrue(self.page.evaluate(tecnico))
+                    self.page.locator("#btnModePO").click()
+                    self.assertFalse(self.page.evaluate(tecnico))
+                self.page.unroute("**/assets/tree.js*")
 
     def test_search_mobile_and_diagrams(self):
         for width in [1440, 390, 320]:
