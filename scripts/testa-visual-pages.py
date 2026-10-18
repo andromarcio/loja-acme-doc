@@ -134,6 +134,38 @@ class VisualPagesTest(unittest.TestCase):
           .map(link => link.getAttribute('href')).filter(href => href.startsWith('assets/') && !href.includes('?v='))""")
         self.assertEqual(stale, [])
 
+    def test_mode_toggle_only_in_complete_profile(self):
+        # O botão Visão PO/Técnico só existe no perfil completo. No requisitos (o desta instância), a
+        # página fica na Visão PO, mesmo com a preferência "Técnico" gravada no navegador.
+        self.page.evaluate("localStorage.setItem('dev-only-pref', 'show')")
+        def servir_tree(perfil):
+            # Fábrica, não parâmetro padrão: o Playwright passa (route, request) ao handler.
+            def tree(route):
+                corpo = route.fetch().text()
+                self.assertIn("**Perfil**: `requisitos`", corpo)
+                route.fulfill(body=corpo.replace("**Perfil**: `requisitos`", f"**Perfil**: `{perfil}`"),
+                              content_type="application/javascript; charset=utf-8")
+            return tree
+
+        for perfil in ["requisitos", "completo"]:
+            with self.subTest(perfil=perfil):
+                self.page.route("**/assets/tree.js*", servir_tree(perfil))
+                # Só o hash muda em relação à página aberta: sem o reload, o tree.js não seria lido de novo.
+                self.page.goto(self.base + "/index.html#" + FEATURE)
+                self.page.reload()
+                self.page.locator("#documentContainer h1").wait_for()
+                botao = self.page.locator(".view-mode-toggle")
+                tecnico = "document.documentElement.classList.contains('app-show-dev')"
+                if perfil == "requisitos":
+                    self.assertEqual(botao.count(), 0)
+                    self.assertFalse(self.page.evaluate(tecnico))
+                else:
+                    self.assertEqual(botao.count(), 1)
+                    self.assertTrue(self.page.evaluate(tecnico))
+                    self.page.locator("#btnModePO").click()
+                    self.assertFalse(self.page.evaluate(tecnico))
+                self.page.unroute("**/assets/tree.js*")
+
     def test_search_mobile_and_diagrams(self):
         for width in [1440, 390, 320]:
             self.page.set_viewport_size({"width": width, "height": 900})

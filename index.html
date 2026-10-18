@@ -1778,7 +1778,14 @@
     }
   }
 
-  if (localStorage.getItem('dev-only-pref') === 'show') {
+  // O botão PO/Técnico só existe no perfil completo. O perfil vem do global/MASTER.md, como no
+  // gates.py: ausente ou desconhecido conta como completo. No requisitos, a página fica na Visão PO,
+  // e a preferência "Técnico" gravada antes é ignorada — sem o botão, não haveria como desligá-la.
+  const masterMd = (typeof repoFilesContent !== 'undefined' && repoFilesContent['global/MASTER.md']) || '';
+  const perfilMaster = (masterMd.match(/\*\*Perfil\*\*\s*:?\s*`?([a-z][a-z-]*)`?/i) || [])[1];
+  if (String(perfilMaster).toLowerCase() === 'requisitos') {
+    document.querySelector('.view-mode-toggle').remove();
+  } else if (localStorage.getItem('dev-only-pref') === 'show') {
     setDocMode('tech');
   }
 
