@@ -60,14 +60,14 @@
 
 A faixa Centro — São Paulo é a da massa inicial: o CEP `01310100` é atendido por R$ 18,90, e o `69900000` continua fora de todas as faixas. Nenhuma faixa tem CEP em comum com outra.
 
-| Número do pedido | Cliente | Situação | Data da confirmação | Itens | Faixa de frete | Valor do frete |
-|---|---|---|---|---|---|---|
-| 1001 | Ana Costa | Confirmado | 12/10/2026 | 2 × Caneca de cerâmica ACME 300 ml (R$ 39,90) · 1 × Camiseta ACME algodão — tamanho M (R$ 59,90) | Centro — São Paulo | R$ 18,90 |
-| 1002 | Marcos Pereira | Confirmado | 14/10/2026 | 1 × Garrafa térmica ACME 500 ml (R$ 89,90) | Mooca — São Paulo | R$ 22,50 |
-| 1003 | Ana Costa | Cancelado | 15/10/2026 | 3 × Bloco de notas ACME A5 (R$ 24,90) | Centro — São Paulo | R$ 18,90 |
-| 1004 | Marcos Pereira | Aberto | — | 1 × Ecobag ACME de lona (R$ 34,90) | — | — |
-| 1005 | Juliana Alves | Confirmado | 16/10/2026 | 1 × Boné ACME aba curva (R$ 49,90) | Campinas | R$ 32,90 |
-| 1006 | Roberto Dias | Confirmado | 17/10/2026 | 4 × Caneta esferográfica ACME azul (R$ 6,90) · 1 × Chaveiro ACME de metal (R$ 14,90) | Pinheiros — São Paulo | R$ 21,00 |
-| 1007 | Ana Costa | Aberto | — | 2 × Caneca de cerâmica ACME 300 ml · 1 × Camiseta ACME algodão — tamanho M · 1 × Garrafa térmica ACME 500 ml · 3 × Bloco de notas ACME A5 · 1 × Ecobag ACME de lona | — | — |
+| Número do pedido | Cliente | Situação | Data da confirmação | Itens | CEP de entrega | Faixa de frete | Valor do frete |
+|---|---|---|---|---|---|---|---|
+| 1001 | Ana Costa | Confirmado | 12/10/2026 | 2 × Caneca de cerâmica ACME 300 ml (R$ 39,90) · 1 × Camiseta ACME algodão — tamanho M (R$ 59,90) | 01310100 | Centro — São Paulo | R$ 18,90 |
+| 1002 | Marcos Pereira | Confirmado | 14/10/2026 | 1 × Garrafa térmica ACME 500 ml (R$ 89,90) | 03105000 | Mooca — São Paulo | R$ 22,50 |
+| 1003 | Ana Costa | Cancelado | 15/10/2026 | 3 × Bloco de notas ACME A5 (R$ 24,90) | 01310200 | Centro — São Paulo | R$ 18,90 |
+| 1004 | Marcos Pereira | Aberto | — | 1 × Ecobag ACME de lona (R$ 34,90) | — | — | — |
+| 1005 | Juliana Alves | Confirmado | 16/10/2026 | 1 × Boné ACME aba curva (R$ 49,90) | 13010000 | Campinas | R$ 32,90 |
+| 1006 | Roberto Dias | Confirmado | 17/10/2026 | 4 × Caneta esferográfica ACME azul (R$ 6,90) · 1 × Chaveiro ACME de metal (R$ 14,90) | 05410000 | Pinheiros — São Paulo | R$ 21,00 |
+| 1007 | Ana Costa | Aberto | — | 2 × Caneca de cerâmica ACME 300 ml · 1 × Camiseta ACME algodão — tamanho M · 1 × Garrafa térmica ACME 500 ml · 3 × Bloco de notas ACME A5 · 1 × Ecobag ACME de lona | — | — | — |
 
 O pedido 1003 foi cancelado em 16/10/2026 por Carla Souza, com o motivo "Cliente desistiu da compra". Os pedidos 1004 e 1007 são os carrinhos de Marcos Pereira e de Ana Costa, ainda sem cotação de frete; o de Ana Costa é o carrinho dos protótipos do Carrinho e do Checkout, com R$ 339,20 em itens. A faixa Rio de Janeiro — Centro não atende nenhum pedido.
