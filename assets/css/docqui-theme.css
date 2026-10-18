@@ -326,7 +326,7 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
 
 #documentContainer h1 {
   margin: 0 0 20px;
-  padding-bottom: 20px;
+  padding-bottom: 3px;
   border-bottom: 4px solid var(--grifo);
   font-size: clamp(30px, 3.3vw, 42px);
   line-height: 1.2;

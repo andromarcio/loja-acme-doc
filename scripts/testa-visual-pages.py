@@ -87,6 +87,7 @@ class VisualPagesTest(unittest.TestCase):
             mono: css.getPropertyValue('--font-mono'),
             header: getComputedStyle(document.querySelector('.app-header')).height,
             border: heading.borderBottomWidth,
+            gap: heading.paddingBottom,
             highlight: heading.borderBottomColor,
             panel: getComputedStyle(document.querySelector('#documentContainer')).paddingTop,
             section: getComputedStyle(document.querySelector('#documentContainer .doc-section')).borderWidth
@@ -98,6 +99,7 @@ class VisualPagesTest(unittest.TestCase):
         self.assertIn("JetBrains Mono", actual["mono"])
         self.assertEqual(actual["header"], "68px")
         self.assertEqual(actual["border"], "4px")
+        self.assertEqual(actual["gap"], "3px")
         self.assertEqual(actual["highlight"], "rgb(243, 146, 0)")
         # Em todo documento, cada seção é um card e o contêiner não é.
         self.assertEqual(actual["panel"], "0px")
