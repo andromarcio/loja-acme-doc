@@ -158,6 +158,115 @@ gates: {
         self.assertTrue(all(item["state"] == "governanca-invalida" and not item["approved"]
                             for item in data["artifacts"]))
 
+    def commit(self, message, *paths):
+        self.git("add", "--all", *paths)
+        self.git("-c", "user.name=Test", "-c", "user.email=test@example.invalid", "commit", "--quiet", "-m", message)
+
+    def aim(self, key, state, *features, sprint=""):
+        rows = "\n".join(f"| `{feature}` | Teste | Alteração | — | ✏️ |" for feature in features)
+        return f"""---
+tipo: ticket
+ticket: {key}
+titulo: Ticket {key}
+estado: {state}
+sprint: "{sprint}"
+---
+# AIM {key}
+## Features
+| Feature (N3) | Domínio · Feature Set | Operação | Critérios cobertos | Status |
+|---|---|---|---|---|
+{rows}
+## Changelog
+"""
+
+    def test_delivery_shows_what_the_sprint_branch_changed(self):
+        # A visão da sprint: o que a branch mudou desde a base — documentos, features com o
+        # estado antes e agora, tickets pelas chaves dos commits e pela AIM da sprint.
+        self.write("modules/teste/grupo/README.md", "# Feature Set: Grupo\n> **Nível 2** - `TST-GRP`\n")
+        self.write("modules/teste/grupo/f-consultar.md", self.feature("TST-GRP-01"))
+        self.write("modules/teste/grupo/f-antiga.md", self.feature("TST-GRP-02"))
+        self.write("analise-impacto/AIM-STRY0000001.md", self.aim("STRY0000001", "em-análise", "TST-GRP-01"))
+        self.write("analise-impacto/AIM-STRY0000001.html", "<p>em-análise</p>")
+        self.write("analise-impacto/_TEMPLATE_AIM.md", "---\ntipo: ticket\n---\n# AIM [CHAVE]\n")
+        self.write("analise-impacto/AIM-STRY0000004.md", self.aim("STRY0000004", "concluído", "TST-GRP-01"))
+        self.write("analise-impacto/AIM-STRY0000004.html", "<p>v1</p>")
+        self.commit("Base")
+        base = self.git("rev-parse", "HEAD")
+        self.git("checkout", "--quiet", "-b", "sprint/SP08")
+        self.write("analise-impacto/AIM-SP08.md", """---
+tipo: sprint
+sprint: SP08
+estado: rascunho
+---
+# AIM SP08
+## Tickets da sprint
+| Ticket | AIM | Features | Resumo |
+|---|---|---|---|
+| `STRY0000001` | [AIM](AIM-STRY0000001.md) | `TST-GRP-01` | Consultar |
+| `STRY0000003` | — | — | Planejado, ainda sem AIM |
+""")
+        self.commit("SP08: abre a AIM da sprint")
+        self.write("modules/teste/grupo/f-consultar.md", self.feature("TST-GRP-01", requirements=True))
+        self.write("analise-impacto/AIM-STRY0000001.md", self.aim("STRY0000001", "escopo-aprovado", "TST-GRP-01"))
+        self.write("analise-impacto/AIM-STRY0000001.html", "<p>escopo-aprovado</p>")
+        self.write("analise-impacto/_TEMPLATE_AIM.md", "---\ntipo: ticket\n---\n# AIM [CHAVE] (modelo)\n")
+        self.commit("STRY0000001: requisitos aprovados")
+        self.write("modules/teste/grupo/f-exibir.md", self.feature("TST-GRP-03"))
+        (self.root / "modules/teste/grupo/f-antiga.md").unlink()
+        self.commit("STRY0000002: inclui Exibir e retira a antiga")
+        self.write("modules/teste/grupo/README.md", "# Feature Set: Grupo\n> **Nível 2** - `TST-GRP`\n\nAjuste.\n")
+        self.write("analise-impacto/AIM-STRY0000004.html", "<p>v2, regerada</p>")
+        self.commit("ajusta o texto do Feature Set")
+
+        data = dashboard.build_snapshot(self.root, base=base)["delivery"]
+        self.assertEqual(data["unit"], {"type": "sprint", "id": "SP08"})
+        self.assertEqual((data["commits"], data["commitsWithoutKey"]), (4, 1))
+        files = {item["path"]: (item["status"], item["category"], item["tickets"]) for item in data["files"]}
+        self.assertEqual(files["modules/teste/grupo/f-consultar.md"], ("M", "n3", ["STRY0000001"]))
+        # O git vê a antiga e a nova, parecidas, como uma renomeação; a feature, não (abaixo).
+        self.assertEqual(files["modules/teste/grupo/f-exibir.md"], ("R", "n3", ["STRY0000002"]))
+        self.assertNotIn("modules/teste/grupo/f-antiga.md", files)
+        self.assertEqual(files["modules/teste/grupo/README.md"], ("M", "n2", []))
+        self.assertEqual(files["analise-impacto/AIM-SP08.md"], ("A", "aim", ["SP08"]))
+        features = {item["id"]: item for item in data["features"]}
+        self.assertEqual(features["TST-GRP-01"]["change"], "M")
+        self.assertEqual((features["TST-GRP-01"]["before"]["state"], features["TST-GRP-01"]["after"]["state"]),
+                         ("rascunho", "requisitos-aprovados"))
+        self.assertEqual((features["TST-GRP-01"]["before"]["nextGate"], features["TST-GRP-01"]["after"]["nextGate"]),
+                         ("requisitos", "modelo-dados"))
+        self.assertEqual((features["TST-GRP-03"]["change"], features["TST-GRP-03"]["before"]), ("A", None))
+        self.assertEqual((features["TST-GRP-02"]["change"], features["TST-GRP-02"]["after"]), ("D", None))
+        self.assertEqual(features["TST-GRP-02"]["before"]["state"], "rascunho")
+        # Sem o modelo da AIM e sem a HTML regerada (a do STRY0000004, de outra sprint) como
+        # ticket; a AIM da sprint fica à parte.
+        tickets = {item["key"]: item for item in data["tickets"]}
+        self.assertEqual(sorted(tickets), ["STRY0000001", "STRY0000002", "STRY0000003"])
+        self.assertEqual((tickets["STRY0000001"]["before"], tickets["STRY0000001"]["after"]), ("em-análise", "escopo-aprovado"))
+        self.assertEqual((tickets["STRY0000001"]["commits"], tickets["STRY0000001"]["features"]), (1, ["TST-GRP-01"]))
+        self.assertEqual((tickets["STRY0000002"]["path"], tickets["STRY0000002"]["features"]), (None, ["TST-GRP-02", "TST-GRP-03"]))
+        self.assertEqual((tickets["STRY0000003"]["commits"], tickets["STRY0000003"]["after"]), (0, None))
+        self.assertEqual(data["sprintAim"], {"path": "analise-impacto/AIM-SP08.md", "before": None, "after": "rascunho", "commits": 1})
+        self.assertNotIn("delivery", dashboard.build_snapshot(self.root))
+
+    def test_delivery_of_a_story_branch_keeps_the_story_ticket(self):
+        self.write("modules/teste/grupo/f-consultar.md", self.feature("TST-GRP-01"))
+        self.commit("Base")
+        base = self.git("rev-parse", "HEAD")
+        self.git("checkout", "--quiet", "-b", "historia/STRY0000007")
+        self.write("analise-impacto/AIM-STRY0000007.md", self.aim("STRY0000007", "rascunho", "TST-GRP-01"))
+        self.commit("STRY0000007: abre a AIM")
+        # A main anda depois que a história saiu: o que chegou nela não é da história.
+        self.git("checkout", "--quiet", "main")
+        self.write("modules/teste/grupo/f-consultar.md", self.feature("TST-GRP-01", requirements=True))
+        self.commit("STRY0000008: entregue na main")
+        self.git("checkout", "--quiet", "historia/STRY0000007")
+        data = dashboard.build_snapshot(self.root, base="main")["delivery"]
+        self.assertEqual(data["base"], base[:12])
+        self.assertEqual(data["unit"], {"type": "historia", "id": "STRY0000007"})
+        self.assertEqual([(item["key"], item["before"], item["after"]) for item in data["tickets"]],
+                         [("STRY0000007", None, "rascunho")])
+        self.assertEqual((data["features"], data["sprintAim"]), ([], None))
+
 
 if __name__ == "__main__":
     unittest.main()

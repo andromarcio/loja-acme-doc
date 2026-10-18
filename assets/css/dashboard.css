@@ -1,5 +1,18 @@
 .dashboard-view { min-width: 0; container-type: inline-size; }
+/* A regra `a` do caixa-ds.css pinta o link de azul-escuro também no tema escuro (1,6:1). */
+.dashboard-view a { color: var(--primary); }
 .dashboard-toolbar { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+.dashboard-toolbar--views { justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+/* Abas "Esta sprint" / "Repositório inteiro" dos previews de branch de entrega. */
+.dashboard-views { display: inline-flex; padding: 3px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-card); }
+.dashboard-views button { padding: 6px 12px; border: 0; border-radius: 6px; background: none; color: var(--text-secondary); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+.dashboard-views button[aria-pressed="true"] { background: var(--primary); color: #fff; }
+.dashboard-views button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.dashboard-lead { margin: 0 0 4px; color: var(--text-secondary); font-size: 13px; overflow-wrap: anywhere; }
+.dashboard-lead strong { color: var(--text-main); font-size: 15px; }
+#documentContainer .dashboard-panel h3 { margin: 18px 0 8px; font-size: 14px; }
+.dashboard-more { margin-top: 18px; }
+.dashboard-more > summary { cursor: pointer; color: var(--text-secondary); font-size: 13px; font-weight: 600; }
 .dashboard-filter { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 12px; }
 .dashboard-filter__menu { position: relative; min-width: 0; }
 .dashboard-filter__menu > summary {
@@ -104,6 +117,21 @@
 .dashboard-view .table-container { max-width: 100%; }
 .dashboard-view .custom-table td:first-child { white-space: normal !important; min-width: 200px; }
 .dashboard-view .custom-table td { overflow-wrap: anywhere; }
+/* Na visão da sprint as tabelas têm 4 a 5 colunas: no celular a tabela rola dentro do card,
+   em vez de quebrar chave de ticket e estado no meio da palavra. */
+.dashboard-delivery .custom-table { min-width: 680px; }
+.dashboard-delivery .custom-table td { overflow-wrap: normal; }
+/* No celular, cada linha vira um bloco, com o nome da coluna acima de cada valor. */
+@media (max-width: 600px) {
+  .dashboard-delivery .custom-table { min-width: 0; }
+  .dashboard-delivery .custom-table thead { display: none; }
+  .dashboard-delivery .custom-table, .dashboard-delivery .custom-table tbody,
+  .dashboard-delivery .custom-table tr, .dashboard-delivery .custom-table td { display: block; width: 100%; }
+  .dashboard-delivery .custom-table tr { padding: 10px 12px; border-bottom: 1px solid var(--border-color); }
+  .dashboard-delivery .custom-table tr:last-child { border-bottom: 0; }
+  .dashboard-delivery .custom-table td, .dashboard-delivery .custom-table td:first-child { min-width: 0; padding: 3px 0; border: 0; overflow-wrap: anywhere; }
+  .dashboard-delivery .custom-table td::before { content: attr(data-label); display: block; color: var(--text-secondary); font-size: 11px; font-weight: 600; }
+}
 @media (max-width: 820px) {
   .dashboard-filter, .dashboard-filter__menu { width: 100%; }
   .dashboard-filter__menu > summary, .dashboard-filter__menu > ul { max-width: 100%; }

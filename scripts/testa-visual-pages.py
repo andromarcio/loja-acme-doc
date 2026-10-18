@@ -19,6 +19,19 @@ ROOT = Path(__file__).resolve().parents[1]
 FEATURE = "modules/vendas/checkout/f-calcular-frete.md"
 
 
+# Contraste do primeiro link de tabela do dashboard com o fundo atrás dele (WCAG).
+LINK_CONTRAST = """() => {
+  const rgb = color => color.match(/[\\d.]+/g).map(Number);
+  const luminance = ([r, g, b]) => [r, g, b].map(v => (v /= 255) <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4)
+    .reduce((sum, v, i) => sum + v * [.2126, .7152, .0722][i], 0);
+  const link = document.querySelector('.dashboard-view .custom-table td a');
+  let node = link, background;
+  do { background = rgb(getComputedStyle(node).backgroundColor); node = node.parentElement; } while (node && background[3] === 0);
+  const [a, b] = [luminance(rgb(getComputedStyle(link).color)), luminance(background)];
+  return (Math.max(a, b) + .05) / (Math.min(a, b) + .05);
+}"""
+
+
 class Handler(SimpleHTTPRequestHandler):
     def log_message(self, *args):
         pass
@@ -380,6 +393,7 @@ class VisualPagesTest(unittest.TestCase):
             for theme in ["light", "dark"]:
                 self.page.evaluate("(theme) => document.documentElement.dataset.theme = theme", theme)
                 self.page.wait_for_function("document.documentElement.scrollWidth <= innerWidth")
+                self.assertGreaterEqual(self.page.evaluate(LINK_CONTRAST), 4.5, theme)
                 self.assertLessEqual(self.page.evaluate("document.documentElement.scrollWidth"), width)
         self.page.locator(f'.dashboard-view a[href="#{FEATURE}"]').first.click()
         self.page.locator("#documentContainer .doc-title").wait_for()
@@ -466,6 +480,25 @@ class VisualPagesTest(unittest.TestCase):
                 self.assertEqual(self.page.locator("#documentContainer").inner_html(), highlighted)
                 self.page.evaluate("navigateTo('global/N0_PRODUCT_VISION.md')")
                 self.page.wait_for_function(f"() => /não foi alterado/.test(({status})())")
+                # O dashboard do preview abre na visão da sprint: a feature tocada, com o ticket do
+                # commit, e o N3 entre os documentos alterados. A aba do repositório volta ao painel
+                # geral, e o dashboard da main não tem a visão da sprint.
+                self.page.evaluate("navigateTo('__dashboard__')")
+                self.page.locator(".dashboard-views").wait_for()
+                self.assertEqual(self.page.locator('.dashboard-views [aria-pressed="true"]').inner_text(), "Esta sprint")
+                panel = lambda title: self.page.locator(".dashboard-panel", has=self.page.get_by_role("heading", name=title, exact=True))
+                rows = panel("Features da sprint").locator("tbody tr")
+                self.assertEqual(rows.count(), 1)
+                self.assertEqual(rows.first.locator("td").all_inner_texts()[:3], ["VND-CHK-01 — Calcular Frete", "STRY0013120", "Alterada"])
+                self.assertEqual(self.page.locator('[data-metric="deliveryCommits"] > strong').inner_text(), "1")
+                self.assertIn(FEATURE, panel("Documentos alterados").inner_text())
+                self.page.get_by_role("button", name="Repositório inteiro").click()
+                self.page.locator("#dashboardDomain").wait_for()
+                main_page = self.context.new_page()
+                main_page.goto(preview.replace("sprint/demo/", "") + "#__dashboard__")
+                main_page.locator("#dashboardDomain").wait_for()
+                self.assertEqual(main_page.locator(".dashboard-views").count(), 0)
+                main_page.close()
                 # Controle negativo: sem a comparação card a card, o Markdown corrido da base não
                 # alinha com os cards e as marcas saem do lugar.
                 def without_cards(route):
