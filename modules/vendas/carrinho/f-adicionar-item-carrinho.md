@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
 ---
 id: VND-CAR-01
 feature_set: VND-CAR
@@ -31,18 +31,6 @@ contagem:
 Permite que o cliente adicione um produto ao carrinho na quantidade escolhida, com o preço do momento em que o item entra.
 
 Na página do produto, o cliente informa a quantidade (1 por padrão) e aciona **Adicionar ao carrinho**; se ainda não tem carrinho, o primeiro item o cria, e se o produto já está no carrinho, a quantidade é somada à que estava lá.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013185`](../../../analise-impacto/AIM-STRY0013185.md) | Criação | `CA-1` — adicionar o produto ao carrinho na quantidade escolhida, somando quando ele já está lá |
-
-## Superfície
-
-**Ação em tela** — origem: Visualizar Produto na Vitrine (Página do produto, `/produtos/:id`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/vendas/carrinho/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/carrinho/flow.html)
 
 ## Regras de negócio
 
@@ -167,6 +155,12 @@ Feature: Adicionar Item ao Carrinho
 |---|---|---|
 | Pedido | lê e grava | Localiza o pedido aberto do cliente e o cria quando não existe (RN-04) |
 
+## Superfície
+
+**Ação em tela** — origem: Visualizar Produto na Vitrine (Página do produto, `/produtos/:id`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/vendas/carrinho/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/carrinho/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -201,8 +195,15 @@ Na Página do produto (VIT-NAV-03 — Visualizar Produto na Vitrine), abaixo do 
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013185`](../../../analise-impacto/AIM-STRY0013185.md) | Criação | `CA-1` — adicionar o produto ao carrinho na quantidade escolhida, somando quando ele já está lá |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Inclusão do produto no carrinho a partir do ticket fictício STRY0013185, com soma de quantidade, limite de estoque e criação do pedido aberto; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

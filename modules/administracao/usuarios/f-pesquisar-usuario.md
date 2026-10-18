@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: ADM-USR-01
 feature_set: ADM-USR
@@ -31,18 +31,6 @@ contagem:
 Permite que o administrador pesquise os usuários da loja por nome, e-mail, perfil e situação, vendo de cada um o perfil e se está ativo.
 
 Ao abrir a Pesquisa de Usuários, o administrador já vê os usuários ativos; para filtrar, informa parte do nome ou do e-mail, escolhe um perfil ou uma situação e aciona **Pesquisar**. De cada linha, abre a visualização, a edição ou a inativação do usuário.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013195`](../../../analise-impacto/AIM-STRY0013195.md) | Criação | `CA-1` — pesquisa de usuários por nome, e-mail, perfil e situação |
-
-## Superfície
-
-**Tela própria** — rota: Pesquisa de Usuários (`/administracao/usuarios`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/administracao/usuarios/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/usuarios/flow.html)
 
 ## Regras de negócio
 
@@ -132,6 +120,12 @@ Feature: Pesquisar Usuários
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Tela própria** — rota: Pesquisa de Usuários (`/administracao/usuarios`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/administracao/usuarios/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/usuarios/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -164,8 +158,15 @@ A Pesquisa de Usuários traz os filtros no topo, o botão **Cadastrar usuário**
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013195`](../../../analise-impacto/AIM-STRY0013195.md) | Criação | `CA-1` — pesquisa de usuários por nome, e-mail, perfil e situação |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Pesquisa de usuários do ticket fictício STRY0013195, derivada do cadastro, com filtros por nome, e-mail, perfil e situação; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

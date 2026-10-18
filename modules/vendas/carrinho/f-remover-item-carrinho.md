@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
 ---
 id: VND-CAR-04
 feature_set: VND-CAR
@@ -31,18 +31,6 @@ contagem:
 Permite que o cliente remova um item do carrinho, que deixa de contar no total dos itens.
 
 No **Carrinho**, o cliente aciona o ícone **Remover** na linha do item; a remoção é imediata, sem caixa de confirmação, e o total dos itens se atualiza.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013185`](../../../analise-impacto/AIM-STRY0013185.md) | Criação | `CA-4` — remover um item do carrinho |
-
-## Superfície
-
-**Ação em tela** — origem: Listar Itens do Carrinho (Carrinho, `/carrinho`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/vendas/carrinho/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/carrinho/flow.html)
 
 ## Regras de negócio
 
@@ -125,6 +113,12 @@ Feature: Remover Item do Carrinho
 |---|---|---|
 | Pedido | lê | Localiza o pedido aberto do cliente, que continua aberto mesmo sem itens (RN-02) |
 
+## Superfície
+
+**Ação em tela** — origem: Listar Itens do Carrinho (Carrinho, `/carrinho`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/vendas/carrinho/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/carrinho/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -157,8 +151,15 @@ Na tela **Carrinho** (VND-CAR-02 — Listar Itens do Carrinho), o ícone **Remov
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013185`](../../../analise-impacto/AIM-STRY0013185.md) | Criação | `CA-4` — remover um item do carrinho |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Remoção de um item do carrinho a partir do ticket fictício STRY0013185, sem caixa de confirmação e com o carrinho aberto mesmo vazio; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

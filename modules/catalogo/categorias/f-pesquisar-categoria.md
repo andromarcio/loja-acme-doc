@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: CAT-CTG-01
 feature_set: CAT-CTG
@@ -31,18 +31,6 @@ contagem:
 Permite que o gestor de catálogo pesquise as categorias de produtos pelo nome e pela situação, vendo de cada uma quantos produtos ela agrupa.
 
 Na Pesquisa de Categorias, a lista abre com todas as categorias em ordem alfabética; o gestor informa parte do nome, escolhe a situação e aciona **Pesquisar**. De cada linha partem as ações de visualizar, editar e excluir, e do topo da tela parte o cadastro de uma nova categoria.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013170`](../../../analise-impacto/AIM-STRY0013170.md) | Criação | `CA-1` — pesquisa das categorias por nome e por situação |
-
-## Superfície
-
-**Tela própria** — rota: Pesquisa de Categorias (`/catalogo/categorias`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/catalogo/categorias/flow.html` · [abrir o protótipo ↗](../../../prototypes/catalogo/categorias/flow.html)
 
 ## Regras de negócio
 
@@ -147,6 +135,12 @@ Feature: Pesquisar Categorias
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Tela própria** — rota: Pesquisa de Categorias (`/catalogo/categorias`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/catalogo/categorias/flow.html` · [abrir o protótipo ↗](../../../prototypes/catalogo/categorias/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -180,8 +174,15 @@ A Pesquisa de Categorias é a tela de entrada do Feature Set, com o card de filt
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013170`](../../../analise-impacto/AIM-STRY0013170.md) | Criação | `CA-1` — pesquisa das categorias por nome e por situação |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Pesquisa de categorias derivada do cadastro, a partir do ticket fictício STRY0013170, com filtros, colunas, regras e cenários; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

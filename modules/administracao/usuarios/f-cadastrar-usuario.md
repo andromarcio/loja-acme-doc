@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: ADM-USR-02
 feature_set: ADM-USR
@@ -31,18 +31,6 @@ contagem:
 Permite que o administrador cadastre um usuário da loja com nome completo, e-mail e perfil, deixando-o ativo e pronto para ser reconhecido pela loja.
 
 Na Pesquisa de Usuários, o administrador aciona **Cadastrar usuário**, informa o nome completo, o e-mail e o perfil — e, se quiser, o CPF e o telefone — e aciona **Salvar**.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013195`](../../../analise-impacto/AIM-STRY0013195.md) | Criação | `CA-2` — cadastro com nome completo, e-mail e perfil, CPF e telefone opcionais, e-mail e CPF sem repetição |
-
-## Superfície
-
-**Tela própria** — rota: Cadastrar Usuário (`/administracao/usuarios/novo`), acessada da Pesquisa de Usuários.
-
-**Fidelidade ao protótipo**: referência · `prototypes/administracao/usuarios/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/usuarios/flow.html)
 
 ## Regras de negócio
 
@@ -162,6 +150,12 @@ Feature: Cadastrar Usuário
 | Situação | Ativo | Ao salvar o cadastro |
 | Data de cadastro | Data do dia | Ao salvar o cadastro |
 
+## Superfície
+
+**Tela própria** — rota: Cadastrar Usuário (`/administracao/usuarios/novo`), acessada da Pesquisa de Usuários.
+
+**Fidelidade ao protótipo**: referência · `prototypes/administracao/usuarios/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/usuarios/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -195,8 +189,15 @@ A tela Cadastrar Usuário abre pelo botão **Cadastrar usuário** da Pesquisa de
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013195`](../../../analise-impacto/AIM-STRY0013195.md) | Criação | `CA-2` — cadastro com nome completo, e-mail e perfil, CPF e telefone opcionais, e-mail e CPF sem repetição |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Cadastro de usuário do ticket fictício STRY0013195, com e-mail e CPF únicos e o usuário nascendo ativo; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

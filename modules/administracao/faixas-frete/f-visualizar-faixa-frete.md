@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: ADM-FRT-05
 feature_set: ADM-FRT
@@ -31,18 +31,6 @@ contagem:
 Permite que o administrador e o atendente consultem todos os dados de uma faixa de frete, inclusive quantos pedidos ela atende, sem alterar nada.
 
 Na Pesquisa de Faixas de Frete, a pessoa aciona a ação de visualizar na linha da faixa e vê a ficha somente leitura; **Voltar** retorna à pesquisa.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013200`](../../../analise-impacto/AIM-STRY0013200.md) | Criação | `CA-5` — consulta de todos os dados de uma faixa de frete |
-
-## Superfície
-
-**Tela própria** — rota: Visualizar Faixa de Frete (`/administracao/faixas-frete/:id`), acessada da Pesquisa de Faixas de Frete.
-
-**Fidelidade ao protótipo**: referência · `prototypes/administracao/faixas-frete/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/faixas-frete/flow.html)
 
 ## Regras de negócio
 
@@ -121,6 +109,12 @@ Feature: Visualizar Faixa de Frete
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Tela própria** — rota: Visualizar Faixa de Frete (`/administracao/faixas-frete/:id`), acessada da Pesquisa de Faixas de Frete.
+
+**Fidelidade ao protótipo**: referência · `prototypes/administracao/faixas-frete/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/faixas-frete/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -152,8 +146,15 @@ Visualizar Faixa de Frete é uma tela própria, aberta pela ação de visualizar
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013200`](../../../analise-impacto/AIM-STRY0013200.md) | Criação | `CA-5` — consulta de todos os dados de uma faixa de frete |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Ficha somente leitura da faixa de frete, com a quantidade de pedidos derivada, gerada pelo PROMPT CRUD a partir do ticket fictício STRY0013200; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

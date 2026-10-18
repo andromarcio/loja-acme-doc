@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: VIT-DST-01
 feature_set: VIT-DST
@@ -31,18 +31,6 @@ contagem:
 Permite que o gestor de catálogo encontre os destaques da página inicial pelo produto e pela situação, vendo de relance o que está no ar, o que vai entrar e o que já saiu.
 
 Na tela Pesquisa de Destaques, o gestor informa parte do nome do produto, escolhe a situação — programado, vigente ou encerrado — e aciona **Pesquisar**; da lista, cadastra, visualiza, edita ou exclui um destaque.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013180`](../../../analise-impacto/AIM-STRY0013180.md) | Criação | `CA-1` — pesquisa dos destaques por produto e por situação (programado, vigente ou encerrado) |
-
-## Superfície
-
-**Tela própria** — rota: Pesquisa de Destaques (`/vitrine/destaques`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/vitrine/destaques/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/destaques/flow.html)
 
 ## Regras de negócio
 
@@ -153,6 +141,12 @@ Feature: Pesquisar Destaques
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Tela própria** — rota: Pesquisa de Destaques (`/vitrine/destaques`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/vitrine/destaques/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/destaques/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -186,8 +180,15 @@ Página própria Pesquisa de Destaques (`/vitrine/destaques`), no menu Vitrine �
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013180`](../../../analise-impacto/AIM-STRY0013180.md) | Criação | `CA-1` — pesquisa dos destaques por produto e por situação (programado, vigente ou encerrado) |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Pesquisa de destaques do ticket fictício STRY0013180, derivada do cadastro, com a situação derivada da vigência (RC-03); gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

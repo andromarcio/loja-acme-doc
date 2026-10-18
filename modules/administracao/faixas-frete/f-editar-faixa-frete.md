@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: ADM-FRT-03
 feature_set: ADM-FRT
@@ -31,18 +31,6 @@ contagem:
 Permite que o administrador altere o intervalo de CEP e o valor do frete de uma faixa, com a alteração valendo para os próximos cálculos de frete e os pedidos já feitos mantendo o frete cobrado.
 
 Na Pesquisa de Faixas de Frete, o administrador aciona a ação de editar na linha da faixa, muda o CEP inicial, o CEP final ou o valor do frete e aciona **Salvar**; a região aparece sem edição.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013200`](../../../analise-impacto/AIM-STRY0013200.md) | Criação | `CA-3` — alteração do intervalo e do valor da faixa, valendo para os próximos cálculos e não para os pedidos já feitos |
-
-## Superfície
-
-**Tela própria** — rota: Editar Faixa de Frete (`/administracao/faixas-frete/:id/editar`), acessada da Pesquisa de Faixas de Frete.
-
-**Fidelidade ao protótipo**: referência · `prototypes/administracao/faixas-frete/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/faixas-frete/flow.html)
 
 ## Regras de negócio
 
@@ -176,6 +164,12 @@ Feature: Editar Faixa de Frete
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Tela própria** — rota: Editar Faixa de Frete (`/administracao/faixas-frete/:id/editar`), acessada da Pesquisa de Faixas de Frete.
+
+**Fidelidade ao protótipo**: referência · `prototypes/administracao/faixas-frete/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/faixas-frete/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -210,8 +204,15 @@ Editar Faixa de Frete é uma tela própria, aberta pela ação de editar na linh
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013200`](../../../analise-impacto/AIM-STRY0013200.md) | Criação | `CA-3` — alteração do intervalo e do valor da faixa, valendo para os próximos cálculos e não para os pedidos já feitos |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Edição de faixa de frete, derivada do cadastro pelo PROMPT CRUD a partir do ticket fictício STRY0013200, com a região imutável; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
 ---
 id: VND-PED-01
 feature_set: VND-PED
@@ -31,18 +31,6 @@ contagem:
 Permite que o atendente encontre os pedidos confirmados e cancelados dos clientes por número, cliente, situação e período da confirmação, vendo o total de cada pedido.
 
 Na Pesquisa de Pedidos, o atendente informa um ou mais filtros e aciona **Pesquisar**; sem filtro, a lista mostra os pedidos confirmados nos últimos 30 dias, e cada linha leva a VND-PED-02 — Visualizar Pedido.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013190`](../../../analise-impacto/AIM-STRY0013190.md) | Criação | `CA-1` — pesquisa dos pedidos por número, cliente, situação e período da confirmação |
-
-## Superfície
-
-**Tela própria** — rota: Pesquisa de Pedidos (`/vendas/pedidos`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/vendas/gestao-pedidos/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/gestao-pedidos/flow.html)
 
 ## Regras de negócio
 
@@ -168,6 +156,12 @@ Feature: Pesquisar Pedidos
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Tela própria** — rota: Pesquisa de Pedidos (`/vendas/pedidos`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/vendas/gestao-pedidos/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/gestao-pedidos/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -202,8 +196,15 @@ A Pesquisa de Pedidos (`/vendas/pedidos`) tem no topo o card de filtros — Núm
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013190`](../../../analise-impacto/AIM-STRY0013190.md) | Criação | `CA-1` — pesquisa dos pedidos por número, cliente, situação e período da confirmação |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Pesquisa de pedidos do atendimento a partir do ticket fictício STRY0013190, com filtros, total derivado e cenários sobre a massa da demonstração; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

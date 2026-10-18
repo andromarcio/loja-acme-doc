@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: ADM-USR-05
 feature_set: ADM-USR
@@ -31,18 +31,6 @@ contagem:
 Permite que o administrador consulte a ficha completa de um usuário, ativo ou inativo, com o perfil, a situação e, se inativo, quando e por que perdeu o acesso.
 
 Na Pesquisa de Usuários, o administrador aciona visualizar na linha do usuário; a ficha abre em somente leitura e **Voltar** retorna à pesquisa.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013195`](../../../analise-impacto/AIM-STRY0013195.md) | Criação | `CA-5` — consulta de todos os dados de um usuário |
-
-## Superfície
-
-**Tela própria** — rota: Visualizar Usuário (`/administracao/usuarios/:id`), acessada da Pesquisa de Usuários.
-
-**Fidelidade ao protótipo**: referência · `prototypes/administracao/usuarios/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/usuarios/flow.html)
 
 ## Regras de negócio
 
@@ -118,6 +106,12 @@ Feature: Visualizar Usuário
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Tela própria** — rota: Visualizar Usuário (`/administracao/usuarios/:id`), acessada da Pesquisa de Usuários.
+
+**Fidelidade ao protótipo**: referência · `prototypes/administracao/usuarios/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/usuarios/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -150,8 +144,15 @@ A tela Visualizar Usuário abre pelo ícone visualizar em qualquer linha da Pesq
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013195`](../../../analise-impacto/AIM-STRY0013195.md) | Criação | `CA-5` — consulta de todos os dados de um usuário |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Visualização de usuário do ticket fictício STRY0013195, derivada do cadastro, com os dados da inativação só no usuário inativo; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: VIT-DST-03
 feature_set: VIT-DST
@@ -31,18 +31,6 @@ contagem:
 Permite que o gestor de catálogo altere a chamada, a ordem de exibição e a vigência de um destaque que ainda não terminou, sem trocar o produto em destaque.
 
 Na pesquisa de destaques, o gestor aciona editar na linha do destaque, ajusta os campos liberados e aciona **Salvar**; o produto aparece só para leitura.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013180`](../../../analise-impacto/AIM-STRY0013180.md) | Criação | `CA-3` — alteração da chamada, da ordem e do período, sem trocar o produto; destaque encerrado não é alterado |
-
-## Superfície
-
-**Tela própria** — rota: Editar Destaque (`/vitrine/destaques/:id/editar`), acessada da Pesquisa de Destaques.
-
-**Fidelidade ao protótipo**: referência · `prototypes/vitrine/destaques/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/destaques/flow.html)
 
 ## Regras de negócio
 
@@ -186,6 +174,12 @@ Feature: Editar Destaque
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Tela própria** — rota: Editar Destaque (`/vitrine/destaques/:id/editar`), acessada da Pesquisa de Destaques.
+
+**Fidelidade ao protótipo**: referência · `prototypes/vitrine/destaques/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/destaques/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -222,8 +216,15 @@ Página própria Editar Destaque (`/vitrine/destaques/:id/editar`), aberta pela 
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013180`](../../../analise-impacto/AIM-STRY0013180.md) | Criação | `CA-3` — alteração da chamada, da ordem e do período, sem trocar o produto; destaque encerrado não é alterado |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Edição de destaque do ticket fictício STRY0013180, derivada do cadastro: produto imutável, encerrado bloqueado e início travado no destaque vigente; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

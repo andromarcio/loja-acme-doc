@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: ADM-FRT-04
 feature_set: ADM-FRT
@@ -31,18 +31,6 @@ contagem:
 Permite que o administrador exclua definitivamente uma faixa de frete que não atende pedidos, e os CEPs dela deixam de ser atendidos no cálculo de frete.
 
 Na Pesquisa de Faixas de Frete, o administrador aciona a ação de excluir na linha da faixa e confirma a exclusão na caixa de diálogo; a faixa que atende pedidos não é excluída.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013200`](../../../analise-impacto/AIM-STRY0013200.md) | Criação | `CA-4` — exclusão da faixa de frete, bloqueada quando a faixa é usada em pedidos |
-
-## Superfície
-
-**Ação em tela** — origem: Pesquisar Faixas de Frete (Pesquisa de Faixas de Frete, `/administracao/faixas-frete`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/administracao/faixas-frete/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/faixas-frete/flow.html)
 
 ## Regras de negócio
 
@@ -129,6 +117,12 @@ Feature: Excluir Faixa de Frete
 |---|---|---|
 | Pedido | lê | Verificar se algum pedido usa a faixa antes de excluí-la (RN-02) |
 
+## Superfície
+
+**Ação em tela** — origem: Pesquisar Faixas de Frete (Pesquisa de Faixas de Frete, `/administracao/faixas-frete`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/administracao/faixas-frete/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/faixas-frete/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -163,8 +157,15 @@ A exclusão é uma ação na linha da faixa, na Pesquisa de Faixas de Frete, sem
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013200`](../../../analise-impacto/AIM-STRY0013200.md) | Criação | `CA-4` — exclusão da faixa de frete, bloqueada quando a faixa é usada em pedidos |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Exclusão definitiva de faixa de frete, derivada do cadastro pelo PROMPT CRUD a partir do ticket fictício STRY0013200, com bloqueio pela RC-09 quando a faixa atende pedidos; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: CAT-CTG-03
 feature_set: CAT-CTG
@@ -31,18 +31,6 @@ contagem:
 Permite que o gestor de catálogo altere a descrição e a situação de uma categoria, mantendo o nome; ao inativá-la, os produtos dela saem da vitrine sem sair do catálogo.
 
 Na Pesquisa de Categorias, o gestor aciona o ícone de editar da linha; no modal, o nome aparece só para leitura, e ele altera a descrição ou a situação e aciona **Salvar**. Se inativar uma categoria que tem produtos, confirma antes de salvar.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013170`](../../../analise-impacto/AIM-STRY0013170.md) | Criação | `CA-3` — alteração da descrição e da situação, sem mudar o nome; categoria inativa fora da vitrine |
-
-## Superfície
-
-**Modal** — origem: Pesquisar Categorias (Pesquisa de Categorias, `/catalogo/categorias`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/catalogo/categorias/flow.html` · [abrir o protótipo ↗](../../../prototypes/catalogo/categorias/flow.html)
 
 ## Regras de negócio
 
@@ -157,6 +145,12 @@ Feature: Editar Categoria
 |---|---|---|
 | Produto | lê | Saber se a categoria tem produtos, para pedir a confirmação ao inativá-la (RN-02) |
 
+## Superfície
+
+**Modal** — origem: Pesquisar Categorias (Pesquisa de Categorias, `/catalogo/categorias`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/catalogo/categorias/flow.html` · [abrir o protótipo ↗](../../../prototypes/catalogo/categorias/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -191,8 +185,15 @@ A edição abre em modal sobre a Pesquisa de Categorias, pelo ícone de editar d
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013170`](../../../analise-impacto/AIM-STRY0013170.md) | Criação | `CA-3` — alteração da descrição e da situação, sem mudar o nome; categoria inativa fora da vitrine |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Edição de categoria em modal, derivada do cadastro, a partir do ticket fictício STRY0013170: nome imutável e confirmação ao inativar categoria com produtos; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

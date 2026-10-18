@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
 ---
 id: VND-PED-03
 feature_set: VND-PED
@@ -31,18 +31,6 @@ contagem:
 Permite que o atendente cancele um pedido confirmado quando o cliente pede, deixando registrados o motivo, a data e quem cancelou.
 
 No Detalhe do Pedido de um pedido confirmado, o atendente aciona **Cancelar pedido**, informa o motivo na caixa de confirmação e confirma; o pedido passa à situação Cancelado.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013190`](../../../analise-impacto/AIM-STRY0013190.md) | Criação | `CA-3` — cancelamento só de pedido confirmado, com o motivo obrigatório |
-
-## Superfície
-
-**Ação em tela** — origem: Visualizar Pedido (Detalhe do Pedido, `/vendas/pedidos/:numero`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/vendas/gestao-pedidos/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/gestao-pedidos/flow.html)
 
 ## Regras de negócio
 
@@ -159,6 +147,12 @@ Feature: Cancelar Pedido
 |---|---|---|
 | Usuario | lê | Identifica quem confirma o cancelamento, gravado no campo automático Cancelado por |
 
+## Superfície
+
+**Ação em tela** — origem: Visualizar Pedido (Detalhe do Pedido, `/vendas/pedidos/:numero`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/vendas/gestao-pedidos/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/gestao-pedidos/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -193,8 +187,15 @@ O botão **Cancelar pedido** fica no Detalhe do Pedido, de VND-PED-02 — Visual
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013190`](../../../analise-impacto/AIM-STRY0013190.md) | Criação | `CA-3` — cancelamento só de pedido confirmado, com o motivo obrigatório |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Cancelamento de pedido confirmado pelo atendimento a partir do ticket fictício STRY0013190, com motivo obrigatório e registro de quem cancelou; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

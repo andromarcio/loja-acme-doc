@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
 ---
 id: VIT-NAV-03
 feature_set: VIT-NAV
@@ -31,18 +31,6 @@ contagem:
 Permite que a pessoa que visita a loja abra a página de um produto e veja o nome, a descrição, a categoria, o preço e se há estoque, sabendo quanto vai pagar antes de decidir a compra.
 
 A página abre ao escolher um card em VIT-NAV-01 — Listar Destaques ou em VIT-NAV-02 — Pesquisar Produtos na Vitrine; dali, o cliente segue para o carrinho pela ação de VND-CAR-01 — Adicionar Item ao Carrinho.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013175`](../../../analise-impacto/AIM-STRY0013175.md) | Criação | `CA-3` — página do produto com nome, descrição, categoria e preço, e o produto sem estoque como esgotado |
-
-## Superfície
-
-**Tela própria** — rota: Página do produto (`/produtos/:id`), aberta de Listar Destaques ou de Pesquisar Produtos na Vitrine.
-
-**Fidelidade ao protótipo**: referência · `prototypes/vitrine/navegacao/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/navegacao/flow.html)
 
 ## Regras de negócio
 
@@ -129,6 +117,12 @@ Feature: Visualizar Produto na Vitrine
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Tela própria** — rota: Página do produto (`/produtos/:id`), aberta de Listar Destaques ou de Pesquisar Produtos na Vitrine.
+
+**Fidelidade ao protótipo**: referência · `prototypes/vitrine/navegacao/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/navegacao/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -162,8 +156,15 @@ A página do produto (`/produtos/:id`) mostra o nome como título, a categoria, 
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013175`](../../../analise-impacto/AIM-STRY0013175.md) | Criação | `CA-3` — página do produto com nome, descrição, categoria e preço, e o produto sem estoque como esgotado |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Página do produto na vitrine do ticket fictício STRY0013175, com regras, cenários e estados de tela; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

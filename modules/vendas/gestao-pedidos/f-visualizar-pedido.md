@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
 ---
 id: VND-PED-02
 feature_set: VND-PED
@@ -31,18 +31,6 @@ contagem:
 Permite que o atendente veja o pedido completo de um cliente — itens, entrega, frete, total e situação —, com o motivo, a data e o responsável quando o pedido foi cancelado.
 
 O atendente chega ao Detalhe do Pedido pela ação Visualizar de VND-PED-01 — Pesquisar Pedidos; a ficha é só de leitura e, no pedido confirmado, traz o botão **Cancelar pedido**, de VND-PED-03 — Cancelar Pedido.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013190`](../../../analise-impacto/AIM-STRY0013190.md) | Criação | `CA-2` — detalhe do pedido com o cliente, os itens, o CEP de entrega, o frete, o total e a situação |
-
-## Superfície
-
-**Tela própria** — rota: Detalhe do Pedido (`/vendas/pedidos/:numero`), aberta de VND-PED-01 — Pesquisar Pedidos.
-
-**Fidelidade ao protótipo**: referência · `prototypes/vendas/gestao-pedidos/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/gestao-pedidos/flow.html)
 
 ## Regras de negócio
 
@@ -155,6 +143,12 @@ Feature: Visualizar Pedido
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Tela própria** — rota: Detalhe do Pedido (`/vendas/pedidos/:numero`), aberta de VND-PED-01 — Pesquisar Pedidos.
+
+**Fidelidade ao protótipo**: referência · `prototypes/vendas/gestao-pedidos/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/gestao-pedidos/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -188,8 +182,15 @@ O Detalhe do Pedido (`/vendas/pedidos/:numero`) abre em página própria a parti
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013190`](../../../analise-impacto/AIM-STRY0013190.md) | Criação | `CA-2` — detalhe do pedido com o cliente, os itens, o CEP de entrega, o frete, o total e a situação |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Detalhe do pedido para o atendimento a partir do ticket fictício STRY0013190, com itens, totais derivados e os dados do cancelamento; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

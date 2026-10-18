@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
 ---
 id: VIT-NAV-01
 feature_set: VIT-NAV
@@ -31,18 +31,6 @@ contagem:
 Permite que a pessoa que visita a loja veja, na página inicial, os produtos em destaque vigentes, com a chamada, o preço e a disponibilidade de cada um, na ordem escolhida pela equipe de vendas.
 
 Ao abrir a loja, a página inicial mostra os destaques em cards; escolher um card abre a página do produto, em VIT-NAV-03 — Visualizar Produto na Vitrine. Não há nada a informar: a lista sai das vigências e da ordem cadastradas em VIT-DST-02 — Cadastrar Destaque.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013175`](../../../analise-impacto/AIM-STRY0013175.md) | Criação | `CA-1` — página inicial com os destaques vigentes, na ordem definida pela equipe de vendas |
-
-## Superfície
-
-**Tela própria** — rota: Página inicial (`/`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/vitrine/navegacao/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/navegacao/flow.html)
 
 ## Regras de negócio
 
@@ -145,6 +133,12 @@ Feature: Listar Destaques
 |---|---|---|
 | Categoria | lê | A situação da categoria do produto decide se o destaque aparece (RN-03) |
 
+## Superfície
+
+**Tela própria** — rota: Página inicial (`/`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/vitrine/navegacao/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/navegacao/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -177,8 +171,15 @@ Os destaques ocupam o corpo da página inicial (`/`), abaixo do campo de busca, 
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013175`](../../../analise-impacto/AIM-STRY0013175.md) | Criação | `CA-1` — página inicial com os destaques vigentes, na ordem definida pela equipe de vendas |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Página inicial com os destaques vigentes do ticket fictício STRY0013175, regras, cenários e estados de tela; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: ADM-FRT-01
 feature_set: ADM-FRT
@@ -31,18 +31,6 @@ contagem:
 Permite que o administrador e o atendente pesquisem as faixas de frete por parte da região ou por um CEP atendido, vendo o intervalo de CEP e o valor da entrega de cada faixa.
 
 Na Pesquisa de Faixas de Frete, a pessoa informa parte da região, um CEP ou nenhum filtro e aciona **Pesquisar**; da lista, abre, edita ou exclui uma faixa, e pelo botão **Cadastrar faixa de frete** inclui uma nova.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013200`](../../../analise-impacto/AIM-STRY0013200.md) | Criação | `CA-1` — pesquisa das faixas por região ou por um CEP que elas atendem |
-
-## Superfície
-
-**Tela própria** — rota: Pesquisa de Faixas de Frete (`/administracao/faixas-frete`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/administracao/faixas-frete/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/faixas-frete/flow.html)
 
 ## Regras de negócio
 
@@ -144,6 +132,12 @@ Feature: Pesquisar Faixas de Frete
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Tela própria** — rota: Pesquisa de Faixas de Frete (`/administracao/faixas-frete`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/administracao/faixas-frete/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/faixas-frete/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -177,8 +171,15 @@ A Pesquisa de Faixas de Frete é a tela de entrada das faixas de frete, na Admin
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013200`](../../../analise-impacto/AIM-STRY0013200.md) | Criação | `CA-1` — pesquisa das faixas por região ou por um CEP que elas atendem |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Pesquisa das faixas de frete por região e por CEP atendido, derivada do cadastro pelo PROMPT CRUD a partir do ticket fictício STRY0013200; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
