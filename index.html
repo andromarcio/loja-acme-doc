@@ -1417,12 +1417,15 @@
           <line x1="3" y1="18" x2="21" y2="18"></line>
         </svg>
       </button>
-      <a class="brand-logo" href="#__dashboard__" onclick="navigateTo('__dashboard__'); return false;" aria-label="Docqui Caixa — início da Loja ACME">
-        <img class="brand__docqui" src="assets/img/docqui.svg" alt="Docqui" width="356" height="128">
+      <!-- A sigla do sistema (global/MASTER.md) em destaque; à direita, a assinatura Docqui Caixa,
+           com a marca oficial da Caixa (positiva no tema claro, negativa no escuro). -->
+      <a class="brand-logo" id="brandLink" href="#__dashboard__" onclick="navigateTo('__dashboard__'); return false;" aria-label="Loja ACME — Docqui Caixa — início">
+        <span class="brand-sigla" id="brandSigla" aria-hidden="true">LACME</span>
         <span class="brand__divider" aria-hidden="true"></span>
-        <span class="brand-project">
-          <span id="brandName">Loja ACME</span>
-          <span class="brand-organization">CAIXA</span>
+        <span class="brand-marca" aria-hidden="true">
+          <img class="brand__docqui" src="assets/img/docqui.svg" alt="" width="356" height="128">
+          <img class="brand__caixa brand__caixa--positiva" src="assets/img/caixa/CAIXA_2cores_positiva.png" alt="" width="1023" height="232">
+          <img class="brand__caixa brand__caixa--negativa" src="assets/img/caixa/CAIXA_2cores_negativa.png" alt="" width="1023" height="232">
         </span>
       </a>
     </div>
@@ -1684,7 +1687,13 @@
   // ============================================================================
 
   const APP_NAME = (globalThis.DOCS_CONFIG && DOCS_CONFIG.name) || "Loja ACME";
-  document.getElementById('brandName').innerText = APP_NAME;
+  const masterMd = (typeof repoFilesContent !== 'undefined' && repoFilesContent['global/MASTER.md']) || '';
+  // A sigla vem do global/MASTER.md (Identificação do sistema); com o MASTER ainda no template,
+  // o header mostra o nome do sistema.
+  const SIGLA = (masterMd.match(/\*\*Sigla\*\*\s*:\s*`?([A-Z0-9]{2,10})`?\s*$/m) || [])[1] || APP_NAME;
+  document.getElementById('brandSigla').textContent = SIGLA;
+  document.getElementById('brandLink').setAttribute('aria-label', `${SIGLA === APP_NAME ? APP_NAME : `${SIGLA} — ${APP_NAME}`} — Docqui Caixa — início`);
+  document.getElementById('brandLink').title = APP_NAME;
 
   let currentFilePath = "";
   let fddStructure = {};
@@ -1778,7 +1787,13 @@
     }
   }
 
-  if (localStorage.getItem('dev-only-pref') === 'show') {
+  // O botão PO/Técnico só existe no perfil completo. O perfil vem do global/MASTER.md, como no
+  // gates.py: ausente ou desconhecido conta como completo. No requisitos, a página fica na Visão PO,
+  // e a preferência "Técnico" gravada antes é ignorada — sem o botão, não haveria como desligá-la.
+  const perfilMaster = (masterMd.match(/\*\*Perfil\*\*\s*:?\s*`?([a-z][a-z-]*)`?/i) || [])[1];
+  if (String(perfilMaster).toLowerCase() === 'requisitos') {
+    document.querySelector('.view-mode-toggle').remove();
+  } else if (localStorage.getItem('dev-only-pref') === 'show') {
     setDocMode('tech');
   }
 
