@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: VIT-DST-05
 feature_set: VIT-DST
@@ -31,18 +31,6 @@ contagem:
 Permite que o gestor de catálogo consulte todos os dados de um destaque — produto, chamada, ordem, vigência, situação e data de cadastro — sem risco de alterá-los.
 
 Na pesquisa de destaques, o gestor aciona visualizar na linha do destaque; a ficha abre só para leitura, com o botão **Voltar**.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013180`](../../../analise-impacto/AIM-STRY0013180.md) | Criação | `CA-5` — consulta de todos os dados de um destaque |
-
-## Superfície
-
-**Tela própria** — rota: Visualizar Destaque (`/vitrine/destaques/:id`), acessada da Pesquisa de Destaques.
-
-**Fidelidade ao protótipo**: referência · `prototypes/vitrine/destaques/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/destaques/flow.html)
 
 ## Regras de negócio
 
@@ -121,6 +109,12 @@ Feature: Visualizar Destaque
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Tela própria** — rota: Visualizar Destaque (`/vitrine/destaques/:id`), acessada da Pesquisa de Destaques.
+
+**Fidelidade ao protótipo**: referência · `prototypes/vitrine/destaques/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/destaques/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -153,8 +147,15 @@ Página própria Visualizar Destaque (`/vitrine/destaques/:id`), aberta pela aç
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013180`](../../../analise-impacto/AIM-STRY0013180.md) | Criação | `CA-5` — consulta de todos os dados de um destaque |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Ficha do destaque do ticket fictício STRY0013180, derivada do cadastro, somente leitura, com a situação derivada da vigência (RC-03); gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

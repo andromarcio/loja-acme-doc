@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: VIT-DST-02
 feature_set: VIT-DST
@@ -31,18 +31,6 @@ contagem:
 Permite que o gestor de catálogo ponha um produto em destaque na página inicial da loja, com uma chamada, a ordem de exibição e o período em que o destaque fica no ar.
 
 Na pesquisa de destaques, o gestor aciona **Cadastrar destaque**, escolhe o produto, escreve a chamada, informa a ordem e as datas de início e de fim da vigência e aciona **Salvar**.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013180`](../../../analise-impacto/AIM-STRY0013180.md) | Criação | `CA-2` — cadastro com produto, chamada, ordem e vigência, com o fim não anterior ao início e sem dois destaques do mesmo produto no mesmo período |
-
-## Superfície
-
-**Tela própria** — rota: Cadastrar Destaque (`/vitrine/destaques/novo`), acessada da Pesquisa de Destaques.
-
-**Fidelidade ao protótipo**: referência · `prototypes/vitrine/destaques/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/destaques/flow.html)
 
 ## Regras de negócio
 
@@ -168,6 +156,12 @@ Feature: Cadastrar Destaque
 |---|---|---|
 | Categoria | lê | Saber se o produto é de categoria ativa, para oferecer só esses produtos na seleção (RN-03) |
 
+## Superfície
+
+**Tela própria** — rota: Cadastrar Destaque (`/vitrine/destaques/novo`), acessada da Pesquisa de Destaques.
+
+**Fidelidade ao protótipo**: referência · `prototypes/vitrine/destaques/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/destaques/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -202,8 +196,15 @@ Página própria Cadastrar Destaque (`/vitrine/destaques/novo`), aberta pelo bot
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013180`](../../../analise-impacto/AIM-STRY0013180.md) | Criação | `CA-2` — cadastro com produto, chamada, ordem e vigência, com o fim não anterior ao início e sem dois destaques do mesmo produto no mesmo período |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Cadastro de destaque do ticket fictício STRY0013180, com vigência (RC-03), ordem de 1 a 99 e sem sobreposição para o mesmo produto; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

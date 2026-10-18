@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: CAT-CTG-05
 feature_set: CAT-CTG
@@ -31,18 +31,6 @@ contagem:
 Permite que o gestor de catálogo visualize todos os dados de uma categoria e quantos produtos ela tem, sem alterar nada.
 
 Na Pesquisa de Categorias, o gestor aciona o ícone de visualizar da linha; a ficha abre em modal, só para leitura, e fecha pelo botão **Fechar**.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013170`](../../../analise-impacto/AIM-STRY0013170.md) | Criação | `CA-5` — consulta aos dados da categoria e à quantidade de produtos |
-
-## Superfície
-
-**Modal** — origem: Pesquisar Categorias (Pesquisa de Categorias, `/catalogo/categorias`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/catalogo/categorias/flow.html` · [abrir o protótipo ↗](../../../prototypes/catalogo/categorias/flow.html)
 
 ## Regras de negócio
 
@@ -111,6 +99,12 @@ Feature: Visualizar Categoria
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Modal** — origem: Pesquisar Categorias (Pesquisa de Categorias, `/catalogo/categorias`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/catalogo/categorias/flow.html` · [abrir o protótipo ↗](../../../prototypes/catalogo/categorias/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -142,8 +136,15 @@ A ficha abre em modal sobre a Pesquisa de Categorias, pelo ícone de visualizar 
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013170`](../../../analise-impacto/AIM-STRY0013170.md) | Criação | `CA-5` — consulta aos dados da categoria e à quantidade de produtos |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Ficha da categoria em modal, somente leitura, derivada do cadastro, a partir do ticket fictício STRY0013170; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

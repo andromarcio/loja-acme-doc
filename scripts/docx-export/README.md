@@ -3,7 +3,7 @@
 Gera um documento Word com a especificação **negocial** de um Feature Set:
 
 - **Visão geral do N2** (a partir do `README.md` do Feature Set) — descrição, features, fluxo principal, dependências, telas e permissões.
-- **Para cada Feature (N3)**: o conteúdo negocial — descrição, origem, regras de negócio, cenários (Gherkin), campos, comportamento de tela e critérios de sucesso. Ficam de fora o front-matter, os comentários HTML, os blocos `dev-only` (onde quer que estejam no N3: no template, a `## Superfície` é um deles) e o `## Changelog`.
+- **Para cada Feature (N3)**: o conteúdo negocial, na ordem do N3 — descrição, regras de negócio, cenários (Gherkin), campos, superfície, comportamento de tela, critérios de sucesso e origem. Ficam de fora o front-matter, os comentários HTML, os blocos `dev-only` (onde quer que estejam no N3; o N3 anterior à 6.4.16 ainda pode ter a `## Superfície` num deles) e o `## Changelog`.
 - **Métricas de tamanho só quando contadas**: a seção sai enquanto nada foi contado — toda célula de Tipo, ALR, DER, Complexidade e PF vazia ou com `—`, e sem `### Memória de cálculo`. A linha de PF 0 (PE descartado) e a de PE reutilizado (`↪`) contam como preenchidas.
 - **Protótipos**: embutidos como imagem, **apenas onde já existem**.
 - **Capa**: o sistema da instância, `Sigla — Nome`, lido do `global/MASTER.md`; sem o MASTER preenchido, a linha não aparece.

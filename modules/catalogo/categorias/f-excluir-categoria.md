@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: CAT-CTG-04
 feature_set: CAT-CTG
@@ -31,18 +31,6 @@ contagem:
 Permite que o gestor de catálogo exclua definitivamente uma categoria que não tem produtos, tirando-a do catálogo.
 
 Na Pesquisa de Categorias, o gestor aciona o ícone de excluir da linha e confirma a exclusão. Se a categoria tiver produtos, a exclusão não acontece; a alternativa é inativá-la em CAT-CTG-03 — Editar Categoria.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013170`](../../../analise-impacto/AIM-STRY0013170.md) | Criação | `CA-4` — categoria com produtos não pode ser excluída |
-
-## Superfície
-
-**Ação em tela** — origem: Pesquisar Categorias (Pesquisa de Categorias, `/catalogo/categorias`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/catalogo/categorias/flow.html` · [abrir o protótipo ↗](../../../prototypes/catalogo/categorias/flow.html)
 
 ## Regras de negócio
 
@@ -125,6 +113,12 @@ Feature: Excluir Categoria
 |---|---|---|
 | Produto | lê | Verificar se há produtos vinculados à categoria antes de excluir (RN-02) |
 
+## Superfície
+
+**Ação em tela** — origem: Pesquisar Categorias (Pesquisa de Categorias, `/catalogo/categorias`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/catalogo/categorias/flow.html` · [abrir o protótipo ↗](../../../prototypes/catalogo/categorias/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -158,8 +152,15 @@ A exclusão é acionada pelo ícone de excluir em cada linha da Pesquisa de Cate
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013170`](../../../analise-impacto/AIM-STRY0013170.md) | Criação | `CA-4` — categoria com produtos não pode ser excluída |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Exclusão definitiva de categoria, com bloqueio por produtos vinculados (RC-09), derivada do cadastro, a partir do ticket fictício STRY0013170; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

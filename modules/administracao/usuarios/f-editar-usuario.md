@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: ADM-USR-03
 feature_set: ADM-USR
@@ -31,18 +31,6 @@ contagem:
 Permite que o administrador altere o nome completo, o CPF, o telefone e o perfil de um usuário ativo, mantendo o e-mail que o identifica.
 
 Na Pesquisa de Usuários, o administrador aciona editar na linha de um usuário ativo, ajusta os dados no formulário já preenchido e aciona **Salvar**.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013195`](../../../analise-impacto/AIM-STRY0013195.md) | Criação | `CA-3` — alteração de nome, CPF, telefone e perfil, sem mudar o e-mail e sem deixar a loja sem administrador ativo |
-
-## Superfície
-
-**Tela própria** — rota: Editar Usuário (`/administracao/usuarios/:id/editar`), acessada da Pesquisa de Usuários.
-
-**Fidelidade ao protótipo**: referência · `prototypes/administracao/usuarios/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/usuarios/flow.html)
 
 ## Regras de negócio
 
@@ -157,6 +145,12 @@ Feature: Editar Usuário
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Tela própria** — rota: Editar Usuário (`/administracao/usuarios/:id/editar`), acessada da Pesquisa de Usuários.
+
+**Fidelidade ao protótipo**: referência · `prototypes/administracao/usuarios/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/usuarios/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -192,8 +186,15 @@ A tela Editar Usuário abre pelo ícone editar na linha de um usuário ativo da 
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013195`](../../../analise-impacto/AIM-STRY0013195.md) | Criação | `CA-3` — alteração de nome, CPF, telefone e perfil, sem mudar o e-mail e sem deixar a loja sem administrador ativo |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Edição de usuário do ticket fictício STRY0013195, derivada do cadastro, com o e-mail imutável e a garantia de ao menos um administrador ativo; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

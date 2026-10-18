@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
 ---
 id: VND-CAR-03
 feature_set: VND-CAR
@@ -31,18 +31,6 @@ contagem:
 Permite que o cliente altere a quantidade de um item do carrinho, até a quantidade em estoque, com o subtotal e o total dos itens recalculados.
 
 No **Carrinho**, o cliente muda o número no campo **Quantidade** da linha do item e confirma a mudança; o preço unitário do item continua o mesmo.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013185`](../../../analise-impacto/AIM-STRY0013185.md) | Criação | `CA-3` — mudar a quantidade de um item sem passar da quantidade em estoque |
-
-## Superfície
-
-**Ação em tela** — origem: Listar Itens do Carrinho (Carrinho, `/carrinho`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/vendas/carrinho/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/carrinho/flow.html)
 
 ## Regras de negócio
 
@@ -145,6 +133,12 @@ Feature: Alterar Quantidade do Item
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Ação em tela** — origem: Listar Itens do Carrinho (Carrinho, `/carrinho`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/vendas/carrinho/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/carrinho/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -179,8 +173,15 @@ Na tela **Carrinho** (VND-CAR-02 — Listar Itens do Carrinho), o campo **Quanti
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013185`](../../../analise-impacto/AIM-STRY0013185.md) | Criação | `CA-3` — mudar a quantidade de um item sem passar da quantidade em estoque |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Alteração da quantidade de um item do carrinho a partir do ticket fictício STRY0013185, com limite de estoque e recálculo do subtotal e do total; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

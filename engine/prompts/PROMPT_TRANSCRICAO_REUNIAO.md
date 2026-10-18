@@ -157,15 +157,14 @@ arquétipo sem UI, `ml-dados`/`cli-biblioteca`, Telas e Permissões podem ficar 
 `modules/[dominio]/[feature-set]/f-[verbo]-[entidade].md` — o nome que a tabela de
 Features do N2 dá à feature, pela regra de nomes do PROMPT_3A. O esqueleto é o completo
 do 3A: front-matter com `contagem.pendente: true` · título + linha `> **Nível 3**` com o
-código da feature · Descrição (dois parágrafos) · Origem (só com ticket) ·
-**Superfície** (no `dev-only`; ❓ se a reunião não disse como a feature se manifesta) ·
-Regras de negócio · **Cenários** (Gherkin — `# ← MESSAGE-DICTIONARY: BASELINE` para
+código da feature · Descrição (dois parágrafos) · Regras de negócio · **Cenários** (Gherkin — `# ← MESSAGE-DICTIONARY: BASELINE` para
 obrigatório/formato; **mensagens literais** do catálogo; **Restrições de acesso** só com a reação, sem
 perfis — ver regra 7) · Campos (Label PO | Entidade | Preenchimento | Edição | Tipo | Obrigatório |
 Validação) · Derivações (só com campo calculado) · Colunas do resultado (só em
 pesquisa/listagem) · Campos automáticos · Dados lidos e gravados (só se houver) ·
+**Superfície** (fora do `dev-only`; ❓ se a reunião não disse como a feature se manifesta) ·
 Comportamento de tela **ou** Execução e operação (conforme a Superfície) · Critérios de
-sucesso · **Changelog**. As seções técnicas (Mapeamento de campos, Cenários técnicos, API,
+sucesso · Origem (só com ticket) · **Changelog**. As seções técnicas (Mapeamento de campos, Cenários técnicos, API,
 Eventos, AuditLog, Arquivos) **não** são geradas — nascem no 3B.
 
 **No modo atualização** (artefato já existe): não reescreva o arquivo inteiro —

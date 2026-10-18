@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
 ---
 id: VND-CAR-02
 feature_set: VND-CAR
@@ -31,18 +31,6 @@ contagem:
 Permite que o cliente visualize os itens do seu carrinho, com o preço unitário, a quantidade e o subtotal de cada item e o total dos itens.
 
 O cliente abre o **Carrinho** pelo menu ou pelo aviso que aparece ao adicionar um produto; dali ajusta as quantidades, remove itens e aciona **Ir para o checkout**.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013185`](../../../analise-impacto/AIM-STRY0013185.md) | Criação | `CA-2` — mostrar cada item com preço unitário, quantidade e subtotal, e o total dos itens |
-
-## Superfície
-
-**Tela própria** — rota: Carrinho (`/carrinho`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/vendas/carrinho/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/carrinho/flow.html)
 
 ## Regras de negócio
 
@@ -151,6 +139,12 @@ Feature: Listar Itens do Carrinho
 |---|---|---|
 | Pedido | lê | Localiza o pedido aberto do cliente, que é o carrinho (RN-01) |
 
+## Superfície
+
+**Tela própria** — rota: Carrinho (`/carrinho`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/vendas/carrinho/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/carrinho/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -184,8 +178,15 @@ Tela **Carrinho** (`/carrinho`): a tabela dos itens, com a quantidade de cada um
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013185`](../../../analise-impacto/AIM-STRY0013185.md) | Criação | `CA-2` — mostrar cada item com preço unitário, quantidade e subtotal, e o total dos itens |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Listagem dos itens do carrinho a partir do ticket fictício STRY0013185, com subtotais, total dos itens e sinal de estoque reduzido; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

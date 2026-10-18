@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
 ---
 id: VIT-NAV-02
 feature_set: VIT-NAV
@@ -31,18 +31,6 @@ contagem:
 Permite que a pessoa que visita a loja pesquise os produtos à venda por parte do nome e por categoria, vendo o nome, a categoria, o preço e a disponibilidade de cada um.
 
 A pessoa digita o termo no campo de busca da página inicial ou da própria tela de resultados, pode escolher uma categoria e a ordenação — Nome A–Z, Menor preço ou Maior preço — e escolhe um produto para abrir a página dele, em VIT-NAV-03 — Visualizar Produto na Vitrine.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013175`](../../../analise-impacto/AIM-STRY0013175.md) | Criação | `CA-2` — busca por parte do nome, filtro por categoria e produtos de categoria inativa fora do resultado |
-
-## Superfície
-
-**Tela própria** — rota: Resultado da busca (`/produtos`), alcançada pelo campo de busca da página inicial.
-
-**Fidelidade ao protótipo**: referência · `prototypes/vitrine/navegacao/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/navegacao/flow.html)
 
 ## Regras de negócio
 
@@ -160,6 +148,12 @@ Feature: Pesquisar Produtos na Vitrine
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Tela própria** — rota: Resultado da busca (`/produtos`), alcançada pelo campo de busca da página inicial.
+
+**Fidelidade ao protótipo**: referência · `prototypes/vitrine/navegacao/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/navegacao/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -194,8 +188,15 @@ A tela de resultado da busca (`/produtos`) tem no topo o mesmo campo de busca da
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013175`](../../../analise-impacto/AIM-STRY0013175.md) | Criação | `CA-2` — busca por parte do nome, filtro por categoria e produtos de categoria inativa fora do resultado |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Busca de produtos da vitrine do ticket fictício STRY0013175, com filtros, colunas, regras e cenários; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

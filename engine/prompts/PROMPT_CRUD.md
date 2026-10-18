@@ -333,16 +333,15 @@ Aguarde aprovação antes do PASSO 5.
 
 Gere o N3 de **Cadastro** — a fonte canônica das demais operações. Use os campos
 do PASSO 2 e siga **exatamente** o esqueleto completo do PROMPT_3A (PASSO 3):
-front-matter com `contagem.pendente: true` · Descrição (dois parágrafos) · Origem
-(só com ticket) · Superfície (no `dev-only`) · Regras de negócio · Cenários (os 5
-grupos) · Campos (7 colunas) · Derivações (só com campo calculado) · Colunas do
-resultado (só na Pesquisa) · Campos automáticos · Dados lidos e gravados (só se a
-feature toca entidade sem campo na tela) · Comportamento de tela · Critérios de
-sucesso · Changelog.
+front-matter com `contagem.pendente: true` · Descrição (dois parágrafos) · Regras de
+negócio · Cenários (os 5 grupos) · Campos (7 colunas) · Derivações (só com campo
+calculado) · Colunas do resultado (só na Pesquisa) · Campos automáticos · Dados lidos
+e gravados (só se a feature toca entidade sem campo na tela) · Superfície ·
+Comportamento de tela · Critérios de sucesso · Origem (só com ticket) · Changelog.
 
-> **`## Superfície` vai dentro do `<div class="dev-only">`** — embora negocial, tem o
-> mesmo tratamento de visibilidade do 3B (oculta no Modo PO). Emita-a exatamente como
-> no esqueleto do PROMPT_3A (PASSO 3), dentro do wrapper — nunca como seção visível.
+> **`## Superfície` é visível**, fora do `dev-only`, logo antes do `## Comportamento de
+> tela`; a **`## Origem`** fica logo antes do `## Changelog`. Emita as duas exatamente
+> como no esqueleto do PROMPT_3A (PASSO 3).
 
 > **DESTINO DOS ARQUIVOS (obrigatório — não erre a pasta).** Todos os N3 deste CRUD vão na **mesma pasta** do `README.md` do Feature Set: `modules/[dominio]/[feature-set]/`. `[feature-set]` é o nome exato dessa pasta — a mesma do N2 gerado nesta sessão. **Nunca** grave na raiz, `global/`, `engine/`, outro domínio ou outro Feature Set. Se em dúvida, pergunte antes de gravar.
 

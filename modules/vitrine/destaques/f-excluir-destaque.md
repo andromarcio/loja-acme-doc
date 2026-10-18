@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: VIT-DST-04
 feature_set: VIT-DST
@@ -31,18 +31,6 @@ contagem:
 Permite que o gestor de catálogo exclua um destaque, que sai na hora da página inicial da loja e da pesquisa de destaques.
 
 Na pesquisa de destaques, o gestor aciona excluir na linha do destaque e confirma na caixa de diálogo; se desistir, nada muda.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013180`](../../../analise-impacto/AIM-STRY0013180.md) | Criação | `CA-4` — exclusão do destaque, que sai da página inicial |
-
-## Superfície
-
-**Ação em tela** — origem: Pesquisar Destaques (Pesquisa de Destaques, `/vitrine/destaques`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/vitrine/destaques/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/destaques/flow.html)
 
 ## Regras de negócio
 
@@ -118,6 +106,12 @@ Feature: Excluir Destaque
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Ação em tela** — origem: Pesquisar Destaques (Pesquisa de Destaques, `/vitrine/destaques`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/vitrine/destaques/flow.html` · [abrir o protótipo ↗](../../../prototypes/vitrine/destaques/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -151,8 +145,15 @@ Feature: Excluir Destaque
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013180`](../../../analise-impacto/AIM-STRY0013180.md) | Criação | `CA-4` — exclusão do destaque, que sai da página inicial |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Exclusão definitiva de destaque do ticket fictício STRY0013180, sem vínculo a bloquear; o destaque sai da página inicial; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

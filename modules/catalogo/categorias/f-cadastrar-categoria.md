@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: CAT-CTG-02
 feature_set: CAT-CTG
@@ -31,18 +31,6 @@ contagem:
 Permite que o gestor de catálogo cadastre uma nova categoria de produtos, com nome único e uma descrição opcional, que passa a existir como ativa no catálogo.
 
 Na Pesquisa de Categorias, o gestor aciona **Cadastrar categoria**; no modal, informa o nome e, se quiser, a descrição, e aciona **Salvar**. A categoria cadastrada aparece na pesquisa.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013170`](../../../analise-impacto/AIM-STRY0013170.md) | Criação | `CA-2` — cadastro com nome e descrição opcional, sem nomes repetidos |
-
-## Superfície
-
-**Modal** — origem: Pesquisar Categorias (Pesquisa de Categorias, `/catalogo/categorias`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/catalogo/categorias/flow.html` · [abrir o protótipo ↗](../../../prototypes/catalogo/categorias/flow.html)
 
 ## Regras de negócio
 
@@ -140,6 +128,12 @@ Feature: Cadastrar Categoria
 | Situação | Ativa | Ao salvar o cadastro |
 | Data de cadastro | Data do dia | Ao salvar o cadastro |
 
+## Superfície
+
+**Modal** — origem: Pesquisar Categorias (Pesquisa de Categorias, `/catalogo/categorias`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/catalogo/categorias/flow.html` · [abrir o protótipo ↗](../../../prototypes/catalogo/categorias/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -172,8 +166,15 @@ O cadastro abre em modal sobre a Pesquisa de Categorias, pelo botão **Cadastrar
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013170`](../../../analise-impacto/AIM-STRY0013170.md) | Criação | `CA-2` — cadastro com nome e descrição opcional, sem nomes repetidos |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Cadastro de categoria em modal, fonte canônica do CRUD, a partir do ticket fictício STRY0013170; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

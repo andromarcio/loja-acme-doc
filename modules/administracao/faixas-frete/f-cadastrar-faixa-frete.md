@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: ADM-FRT-02
 feature_set: ADM-FRT
@@ -31,18 +31,6 @@ contagem:
 Permite que o administrador cadastre uma faixa de CEP com o valor do frete, e os CEPs dela passam a ser atendidos no cálculo de frete do checkout.
 
 Na Pesquisa de Faixas de Frete, o administrador aciona **Cadastrar faixa de frete**, informa a região, o CEP inicial, o CEP final e o valor do frete e aciona **Salvar**.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013200`](../../../analise-impacto/AIM-STRY0013200.md) | Criação | `CA-2` — cadastro da faixa com região, CEP inicial, CEP final e valor do frete, sem CEP em comum com outra faixa |
-
-## Superfície
-
-**Tela própria** — rota: Cadastrar Faixa de Frete (`/administracao/faixas-frete/novo`), acessada da Pesquisa de Faixas de Frete.
-
-**Fidelidade ao protótipo**: referência · `prototypes/administracao/faixas-frete/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/faixas-frete/flow.html)
 
 ## Regras de negócio
 
@@ -172,6 +160,12 @@ Feature: Cadastrar Faixa de Frete
 |---|---|---|
 | — | Nenhum campo é preenchido automaticamente nesta feature | — |
 
+## Superfície
+
+**Tela própria** — rota: Cadastrar Faixa de Frete (`/administracao/faixas-frete/novo`), acessada da Pesquisa de Faixas de Frete.
+
+**Fidelidade ao protótipo**: referência · `prototypes/administracao/faixas-frete/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/faixas-frete/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -205,8 +199,15 @@ Cadastrar Faixa de Frete é uma tela própria, aberta pelo botão **Cadastrar fa
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013200`](../../../analise-impacto/AIM-STRY0013200.md) | Criação | `CA-2` — cadastro da faixa com região, CEP inicial, CEP final e valor do frete, sem CEP em comum com outra faixa |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Cadastro de faixa de frete, fonte canônica do CRUD gerado pelo PROMPT CRUD a partir do ticket fictício STRY0013200; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

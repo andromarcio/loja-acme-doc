@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.8 | prompt: PROMPT_4A_N3_UPDATE_negocio | atualizado: 2026-10-17 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_4A_N3_UPDATE_negocio | atualizado: 2026-10-18 -->
 ---
 id: VND-CHK-01
 feature_set: VND-CHK
@@ -31,18 +31,6 @@ contagem:
 Permite que o cliente calcule o frete do pedido pelo CEP de entrega, conhecendo o valor antes de confirmar a compra.
 
 No checkout com itens no carrinho, o cliente informa o CEP e aciona **Calcular**; o valor aparece ao lado do pedido.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013101`](../../../analise-impacto/AIM-STRY0013101.md) | Criação | `CA-1, CA-2, CA-3` — valor do frete pelo CEP, CEP inválido e CEP fora da área |
-
-## Superfície
-
-**Ação em tela** — origem: Checkout (`/checkout`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/vendas/checkout/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/checkout/flow.html)
 
 ## Regras de negócio
 
@@ -127,6 +115,12 @@ Feature: Calcular Frete
 | Valor do frete | Valor da faixa atendida, registrado no Pedido | Ao concluir o cálculo com CEP atendido |
 | Faixa de frete | Faixa da TabelaFrete que atende ao CEP, vinculada ao Pedido | Ao concluir o cálculo com CEP atendido |
 
+## Superfície
+
+**Ação em tela** — origem: Checkout (`/checkout`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/vendas/checkout/flow.html` · [abrir o protótipo ↗](../../../prototypes/vendas/checkout/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -161,6 +155,12 @@ O campo **CEP de entrega** e o botão **Calcular** ficam na tela de Checkout, co
 
 A contagem está pendente. Não foi deduzida do valor de PF mostrado no simulador; deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013101`](../../../analise-impacto/AIM-STRY0013101.md) | Criação | `CA-1, CA-2, CA-3` — valor do frete pelo CEP, CEP inválido e CEP fora da área |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
@@ -168,3 +168,4 @@ A contagem está pendente. Não foi deduzida do valor de PF mostrado no simulado
 | 2026-10-14 | Copilot | N3 criado | Exemplo negocial do ticket fictício, regras e cenários preenchidos; gates sem aprovação e contagem pendente. |
 | 2026-10-17 | Claude | Protótipo vinculado | A Superfície passa a apontar o protótipo de fluxo do Checkout (`prototypes/vendas/checkout/flow.html`), com fidelidade referência e em rascunho, sem aprovação. |
 | 2026-10-17 | Claude | Ajuste | Saem `prioridade` e `mvp` do front-matter e a linha de Prioridade e MVP do cabeçalho: a priorização das features saiu do método no engine 6.4.4. Nenhuma regra, cenário ou campo muda. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |

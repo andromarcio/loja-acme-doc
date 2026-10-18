@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 ---
 id: ADM-USR-04
 feature_set: ADM-USR
@@ -31,18 +31,6 @@ contagem:
 Permite que o administrador inative um usuário, tirando o acesso dele à loja sem apagá-lo dos pedidos e do histórico.
 
 Na Pesquisa de Usuários, o administrador aciona inativar na linha de um usuário ativo, informa o motivo se quiser e confirma na caixa de diálogo.
-
-## Origem
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRY0013195`](../../../analise-impacto/AIM-STRY0013195.md) | Criação | `CA-4` — inativação que tira o acesso e mantém o usuário nos pedidos, sem que o administrador inative a si mesmo |
-
-## Superfície
-
-**Ação em tela** — origem: Pesquisar Usuários (Pesquisa de Usuários, `/administracao/usuarios`).
-
-**Fidelidade ao protótipo**: referência · `prototypes/administracao/usuarios/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/usuarios/flow.html)
 
 ## Regras de negócio
 
@@ -142,6 +130,12 @@ Feature: Inativar Usuário
 | Situação | Inativo | Ao confirmar a inativação |
 | Data da inativação | Data do dia | Ao confirmar a inativação |
 
+## Superfície
+
+**Ação em tela** — origem: Pesquisar Usuários (Pesquisa de Usuários, `/administracao/usuarios`).
+
+**Fidelidade ao protótipo**: referência · `prototypes/administracao/usuarios/flow.html` · [abrir o protótipo ↗](../../../prototypes/administracao/usuarios/flow.html)
+
 ## Comportamento de tela
 
 ### Onde fica
@@ -176,8 +170,15 @@ O ícone inativar aparece na linha de cada usuário ativo da Pesquisa de Usuári
 
 A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
 
+## Origem
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRY0013195`](../../../analise-impacto/AIM-STRY0013195.md) | Criação | `CA-4` — inativação que tira o acesso e mantém o usuário nos pedidos, sem que o administrador inative a si mesmo |
+
 ## Changelog
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Inativação de usuário do ticket fictício STRY0013195: exclusão lógica, com motivo opcional e sem autoinativação; gates sem aprovação e contagem pendente. |
+| 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
