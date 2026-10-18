@@ -2539,6 +2539,34 @@
   }
 
   // Template Especial para Features Nível 3 (Clean, FDD, sem linhas em títulos)
+  // "Métricas de tamanho" sem nada contado: nenhuma célula de Tipo, ALR, DER, Complexidade
+  // ou PF preenchida e nenhuma Memória de cálculo. A linha de PF 0 (PE descartado) e a de PE
+  // reutilizado (↪) contam como preenchidas, e tabela sem essas colunas não é julgada vazia.
+  // O mesmo critério da exportação Word do engine (docx-export, Docqui Caixa 6.4.14).
+  function metricasVazia(md) {
+    if (/^###\s+Mem[óo]ria de c[áa]lculo/mi.test(md)) return false;
+    const COLUNAS = ['Tipo', 'ALR', 'DER', 'Complexidade', 'PF'];
+    const VAZIA = new Set(['', '—', '–', '-']);
+    let cab = null;
+    for (const linha of md.split('\n')) {
+      const l = linha.trim();
+      if (!l.startsWith('|')) { cab = null; continue; }
+      const cells = l.replace(/^\|/, '').replace(/\|$/, '').split('|')
+        .map((c) => c.replace(/<\/?(small|strong|em)>/g, '').trim());
+      if (cells.every((c) => !c || /^:?-{2,}:?$/.test(c))) continue;
+      if (!cab) {
+        cab = cells;
+        if (!COLUNAS.some((c) => cab.includes(c))) return false;
+        continue;
+      }
+      for (const nome of COLUNAS) {
+        const k = cab.indexOf(nome);
+        if (k >= 0 && k < cells.length && !VAZIA.has(cells[k])) return false;
+      }
+    }
+    return true;
+  }
+
   function renderN3FeatureTemplate(path, title, frontmatter, md) {
     const idCode = frontmatter.id || path.split('/').pop().replace(/^f-|\.md$/g, '').toUpperCase();
     const parts = path.split('/');
@@ -2736,6 +2764,10 @@
       const secTitleMatch = sec.match(/^##\s+(.+)$/m);
       let secTitle = secTitleMatch ? secTitleMatch[1].trim() : '';
       let secBody = sec.replace(/^##\s+.*?(\n|$)/, '').trim();
+
+      // Métricas de tamanho ainda sem contagem não vira card: a pendência já aparece na
+      // coluna Contagem do INDEX e no painel; a seção continua no .md, onde a contagem nasce.
+      if (/^m[ée]tricas de tamanho$/i.test(secTitle) && metricasVazia(secBody)) return;
 
       // Remover rodapés em itálico de metadados
       secBody = secBody.replace(/\*Feature Set:[\s\S]*$/i, '').trim();
