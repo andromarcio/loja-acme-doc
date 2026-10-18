@@ -155,11 +155,46 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
   gap: 12px;
 }
 
+.brand-sigla {
+  color: var(--primary-strong);
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+[data-theme="dark"] .brand-sigla {
+  color: var(--text-strong);
+}
+
+/* Assinatura Docqui Caixa: o docqui sobre a marca oficial da Caixa, alinhados à esquerda. Os
+   dois arquivos começam a tinta na borda da imagem, então basta não recuar nenhum. */
+.brand-marca {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .brand__docqui {
   display: block;
-  width: 136px;
+  width: 74px;
   height: auto;
-  padding-top: 10px;
+}
+
+.brand__caixa {
+  display: block;
+  width: 40px;
+  height: auto;
+  margin-top: -5px;
+}
+
+.brand__caixa--negativa,
+[data-theme="dark"] .brand__caixa--positiva {
+  display: none;
+}
+
+[data-theme="dark"] .brand__caixa--negativa {
+  display: block;
 }
 
 .brand__divider {
@@ -167,19 +202,6 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
   height: 30px;
   border-radius: 2px;
   background: var(--grifo);
-}
-
-.brand-project {
-  display: flex;
-  flex-direction: column;
-  color: var(--text-strong);
-  line-height: 1.3;
-}
-
-.brand-organization {
-  color: var(--primary);
-  font-size: 10px;
-  letter-spacing: 0.12em;
 }
 
 .app-header .breadcrumb-bar {
@@ -432,10 +454,6 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
     min-width: 0;
   }
 
-  .brand__docqui {
-    width: 94px;
-  }
-
   .brand-logo {
     gap: 8px;
     font-size: 14px;
@@ -500,8 +518,17 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
     gap: 6px;
   }
 
+  .brand-sigla {
+    font-size: 22px;
+  }
+
   .brand__docqui {
-    width: 72px;
+    width: 62px;
+  }
+
+  .brand__caixa {
+    width: 34px;
+    margin-top: -4px;
   }
 
 }
@@ -550,11 +577,11 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
   }
 }
 
-/* Abaixo de 360 px, o botão do GitHub no header não cabe ao lado do nome do projeto:
-   fica o logotipo do docqui, e o nome segue no rótulo acessível do link. */
+/* Abaixo de 360 px, o botão do GitHub no header não cabe ao lado da assinatura Docqui Caixa:
+   fica a sigla do sistema, e o resto segue no rótulo acessível do link. */
 @media (max-width: 360px) {
   .brand__divider,
-  .brand-project {
+  .brand-marca {
     display: none;
   }
 }
