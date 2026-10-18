@@ -24,11 +24,110 @@
     <span>${label}</span><strong>${value}</strong><small>${note}</small></div>`;
   const table = (columns, rows, empty) => rows.length
     ? `<div class="table-container"><table class="custom-table"><thead><tr>${columns.map(column => `<th>${column}</th>`).join('')}</tr></thead>
-      <tbody>${rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`
+      <tbody>${rows.map(row => `<tr>${row.map((cell, index) => `<td data-label="${esc(columns[index])}">${cell}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`
     : `<p class="dashboard-empty">${esc(empty)}</p>`;
   const section = (title, body) => `<section class="dashboard-panel"><h2>${title}</h2>${body}</section>`;
 
-  function render(data, selectedDomain) {
+  // Visão da sprint (ou da história): nos previews de branch de entrega, o gera-dashboard.py
+  // recebe a base e grava em `delivery` o que a branch mudou — documentos, features com o
+  // estado antes e agora, tickets pelas chaves dos commits e pelas AIMs.
+  const aimStates = {
+    rascunho: 'Rascunho', 'em-análise': 'Em análise', 'escopo-aprovado': 'Escopo aprovado',
+    'em-execução': 'Em execução', 'concluído': 'Concluído',
+  };
+  const changes = { A: 'Incluída', M: 'Alterada', D: 'Excluída', R: 'Renomeada', C: 'Incluída', T: 'Alterada' };
+  const fileChanges = { A: 'Incluído', M: 'Alterado', D: 'Excluído', R: 'Renomeado', C: 'Copiado', T: 'Alterado' };
+  const categories = [
+    ['n3', 'Features (N3)'], ['n2', 'Feature Sets (N2)'], ['n1', 'Domínios (N1)'], ['aim', 'Análises de impacto'],
+    ['modelo', 'Modelo de dados'], ['dicionario', 'Dicionários'], ['global', 'Outros documentos globais'],
+    ['prototipo', 'Protótipos'], ['qa', 'Planos de teste'], ['modulos', 'Índices dos módulos'],
+  ];
+  const unitName = delivery => delivery.unit
+    ? `${delivery.unit.type === 'historia' ? 'História' : 'Sprint'} ${delivery.unit.id}` : `Branch ${delivery.branch}`;
+  const views = (data, current) => data.delivery ? `<div class="dashboard-views" role="group" aria-label="Recorte do painel">
+      ${[['entrega', `Esta ${data.delivery.unit?.type === 'historia' ? 'história' : 'sprint'}`], ['repositorio', 'Repositório inteiro']]
+        .map(([view, label]) => `<button type="button" data-view="${view}" aria-pressed="${view === current}">${label}</button>`).join('')}
+    </div>` : '';
+  const shift = (before, after, label) => {
+    if (before === after) return esc(label(after));
+    if (before == null) return `${esc(label(after))} <small>(nova)</small>`;
+    if (after == null) return `${esc(label(before))} → <small>excluída</small>`;
+    return `${esc(label(before))} → <strong>${esc(label(after))}</strong>`;
+  };
+
+  function renderDelivery(data) {
+    const container = document.getElementById('documentContainer');
+    const delivery = data.delivery;
+    const word = delivery.unit?.type === 'historia' ? 'história' : 'sprint';
+    const titles = new Map(data.artifacts.map(item => [item.id, item]));
+    const named = id => titles.has(id) ? link(titles.get(id).path, `${id} — ${titles.get(id).title}`) : esc(id);
+    const spec = delivery.files.filter(file => file.category !== 'site');
+    const site = delivery.files.filter(file => file.category === 'site');
+    const touched = delivery.features;
+    const alive = touched.filter(item => item.after);
+    const stateOf = item => item ? states[item.state] || item.state : '—';
+    const count = change => touched.filter(item => item.change === change).length;
+    const ticketsCell = keys => keys.length ? keys.map(esc).join(', ') : '<small>sem chave de ticket</small>';
+    const lines = file => file.added == null ? 'binário' : `+${file.added} / −${file.removed}`;
+    const documentRow = file => [
+      file.status === 'D' ? `<s>${esc(file.path)}</s>` : /\.md$/i.test(file.path) ? link(file.path, file.path) : `<code>${esc(file.path)}</code>`,
+      `${fileChanges[file.status] || esc(file.status)}${file.status === 'R' ? `<br><small>antes: ${esc(file.oldPath)}</small>` : ''}`,
+      lines(file), ticketsCell(file.tickets)];
+    const featureRows = touched.map(item => [
+      item.after ? link(item.path, `${item.id} — ${item.title}`) : `<s>${esc(`${item.id} — ${item.title}`)}</s>`,
+      ticketsCell(item.tickets), changes[item.change] || esc(item.change),
+      shift(item.before?.state, item.after?.state, state => states[state] || state),
+      item.after ? (item.after.nextGate ? esc(gates[item.after.nextGate]) : 'Esteira concluída') : '—']);
+    const ticketRows = delivery.tickets.map(item => [
+      item.path ? link(item.path, `${item.key}${item.title ? ` — ${item.title}` : ''}`) : `${esc(item.key)}<br><small>sem AIM nesta branch</small>`,
+      item.after == null && item.before == null ? '—' : shift(item.before, item.after, state => aimStates[state] || state),
+      item.features.length ? item.features.map(named).join('<br>') : '—', item.commits]);
+    const sprintAim = delivery.unit?.type !== 'sprint' ? ''
+      : delivery.sprintAim ? `<p>AIM da sprint: ${link(delivery.sprintAim.path, `AIM-${delivery.unit.id}`)} —
+          ${shift(delivery.sprintAim.before, delivery.sprintAim.after, state => aimStates[state] || state)} · ${delivery.sprintAim.commits} commit(s).</p>`
+      : `<p>Ainda não há AIM da sprint (<code>analise-impacto/AIM-${esc(delivery.unit.id)}.md</code>); ela é aberta no planejamento.</p>`;
+    const groups = categories.map(([key, label]) => [label, spec.filter(file => file.category === key)])
+      .filter(([, files]) => files.length).map(([label, files]) =>
+        `<h3>${label} <small>(${files.length})</small></h3>${table(['Documento', 'Mudança', 'Linhas', 'Ticket'], files.map(documentRow), '')}`).join('');
+    const review = document.querySelector('.docqui-preview[data-preview-commit]')
+      ? ' · <a href="_docqui/changes.html">Ver alterações</a>' : '';
+    container.classList.add('dashboard-view');
+    container.innerHTML = `<div class="dashboard-delivery">
+      <div class="dashboard-toolbar dashboard-toolbar--views">${views(data, 'entrega')}</div>
+      <p class="dashboard-lead"><strong>${esc(unitName(delivery))}</strong> · branch <code>${esc(delivery.branch)}</code>,
+        comparada com a base desde o ancestral comum <code>${esc(delivery.base)}</code> · ${delivery.commits} commit(s)${review}</p>
+      <div class="dashboard-stats">
+        ${card('deliveryDocs', 'Documentos alterados', spec.length, `${site.length} arquivo(s) do site e de scripts à parte`)}
+        ${card('deliveryFeatures', 'Features tocadas', touched.length, `${count('A') + count('C')} incluída(s) · ${count('M') + count('R') + count('T')} alterada(s) · ${count('D')} excluída(s)`)}
+        ${card('deliveryTickets', 'Tickets', delivery.tickets.length, `${delivery.tickets.filter(item => item.path).length} com AIM nesta branch`)}
+        ${card('deliveryWaiting', 'Aguardando checkpoint', alive.filter(item => item.after.nextGate).length, 'Entre as features tocadas')}
+        ${card('deliveryReady', 'Prontas para desenvolvimento', alive.filter(item => ['especificado', 'em-desenvolvimento', 'implementado'].includes(item.after.state)).length, 'Entre as features tocadas')}
+        ${card('deliveryCommits', 'Commits', delivery.commits, `${delivery.commitsWithoutKey} sem chave de ticket`)}
+      </div>
+      ${section(`Features da ${word}`, table(['Feature', 'Ticket', 'Mudança', 'Estado', 'Próximo checkpoint'], featureRows,
+        'Esta branch ainda não mexe em nenhum N3.'))}
+      ${section('Tickets', `${sprintAim}${table(['Ticket', 'AIM', 'Features', 'Commits'], ticketRows,
+        'Nenhum ticket citado nos commits, nas AIMs da branch ou na AIM da sprint.')}`)}
+      ${section('Documentos alterados', `${groups || '<p class="dashboard-empty">Nenhum documento de especificação alterado.</p>'}
+        ${site.length ? `<details class="dashboard-more"><summary>Site, scripts e engine (${site.length})</summary>
+          ${table(['Arquivo', 'Mudança', 'Linhas', 'Ticket'], site.map(documentRow), '')}</details>` : ''}`)}
+      ${section('Estados das features tocadas', alive.length ? `<div class="dashboard-state-list">${Object.entries(states).map(([state, label]) => {
+        const total = alive.filter(item => item.after.state === state).length;
+        return total ? `<div><span>${label}</span><strong>${total}</strong><progress value="${total}" max="${alive.length}" aria-label="${label}: ${total}"></progress></div>` : '';
+      }).join('')}</div>` : '<p class="dashboard-empty">Nenhuma feature tocada continua na branch.</p>')}
+      ${section('Como ler esta visão', `
+        <p><strong>Base:</strong> a mesma do Ver alterações — o ancestral comum com a base do PR (sem PR, a main). O que chegou à base depois que a branch saiu não conta como mudança desta ${word}.</p>
+        <p><strong>Ticket:</strong> a chave que os commits citam no assunto (na cadência sprint, todo commit de spec cita uma). A coluna mostra os tickets dos commits que tocaram o documento; a origem do N3 guarda o ticket que criou a feature e não entra aqui.</p>
+        <p><strong>Estado:</strong> o da esteira na base e na branch, lido dos gates de cada N3. O painel não concede aprovações.</p>`)}
+      </div>`;
+    container.querySelectorAll('.dashboard-views button').forEach(button => button.addEventListener('click', () => render(data, '', button.dataset.view)));
+  }
+
+  function render(data, selectedDomain, view) {
+    if ((view || (data.delivery ? 'entrega' : 'repositorio')) === 'entrega') {
+      renderDelivery(data);
+      return;
+    }
     const container = document.getElementById('documentContainer');
     const domains = data.artifacts.filter(item => item.level === 1);
     const artifacts = data.artifacts.filter(item => !selectedDomain || item.domain === selectedDomain);
@@ -72,7 +171,7 @@
     const chosen = options.find(item => item.domain === (selectedDomain || '')) || options[0];
     container.classList.add('dashboard-view');
     container.innerHTML = `
-      <div class="dashboard-toolbar">
+      <div class="dashboard-toolbar${data.delivery ? ' dashboard-toolbar--views' : ''}">${views(data, 'repositorio')}
         <div class="dashboard-filter">Domínio<details class="dashboard-filter__menu" id="dashboardDomain">
           <summary aria-label="Domínio: ${esc(domainName(chosen))}"><span>${esc(domainName(chosen))}</span></summary>
           <ul aria-label="Domínio">${options.map(item => `<li><button type="button" data-domain="${esc(item.domain)}"${item === chosen ? ' aria-current="true"' : ''}>${esc(domainName(item))}</button></li>`).join('')}</ul>
@@ -116,9 +215,10 @@
       </div><p>${link('analise-impacto/INDEX.md', 'AIMs dos tickets')} · ${link('global/CONTAGEM-PF.md', 'Consolidado de contagem')} · ${link('modules/INDEX.md', 'Índice dos módulos')}</p>`)}
       ${section('Como interpretar o painel', definitions)}`;
     document.querySelectorAll('#dashboardDomain button[data-domain]').forEach(button => button.addEventListener('click', () => {
-      render(data, button.dataset.domain);
+      render(data, button.dataset.domain, 'repositorio');
       document.querySelector('#dashboardDomain > summary').focus();
     }));
+    container.querySelectorAll('.dashboard-views button').forEach(button => button.addEventListener('click', () => render(data, '', button.dataset.view)));
   }
 
   // A lista do filtro fecha com Esc (o foco volta ao campo) ou com um clique fora dela.
