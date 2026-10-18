@@ -35,4 +35,4 @@
 | Elisa Rocha | elisa.rocha@acme.example | Administrador | Ativo |
 | Fábio Nunes | fabio.nunes@acme.example | Atendente | Inativo |
 
-Pessoas e e-mails fictícios, nos domínios reservados `.example`. Elisa Rocha é a única administradora ativa: tirar dela o perfil Administrador deixaria a loja sem administrador, e ela não pode inativar o próprio usuário.
+Pessoas e e-mails fictícios, nos domínios reservados `.example`; os CPFs dos cenários são números de teste conhecidos. Fábio Nunes foi inativado em 30/09/2026, com o motivo "Desligado da equipe de atendimento". Elisa Rocha é a única administradora ativa: tirar dela o perfil Administrador deixaria a loja sem administrador, e ela não pode inativar o próprio usuário.
