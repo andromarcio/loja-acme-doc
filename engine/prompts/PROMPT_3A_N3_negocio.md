@@ -558,9 +558,9 @@ A seção `## Superfície` é o classificador escaneável — **o validador a us
 exigir a seção de detalhamento certa**: Tela própria/Modal/Ação em tela → `## Comportamento
 de tela`; CLI/Job/Pipeline/API → `## Execução e operação` (omita a outra). Quando uma
 mesma tela atende várias features, isso será consolidado na seção **Telas** do N2.
-Apesar de negocial, `## Superfície` **sempre vai dentro do bloco `<div class="dev-only">`**
-(visibilidade — mesmo tratamento do 3B): oculta no Modo PO, aparece ao ligar o toggle
-de detalhes técnicos no viewer.
+A `## Superfície` é negocial e **visível no Modo PO**, fora do `dev-only`. No N3 ela fica
+logo antes da seção que decide (`## Comportamento de tela` ou `## Execução e operação`),
+e a `## Origem` fica no fim, logo antes do `## Changelog` — o `validate-doc` confere a ordem.
 
 ---
 
@@ -609,33 +609,6 @@ contagem:                           # status APF — independente dos gates; só
 [SEGUNDO PARÁGRAFO — COMO SE USA: uma ou duas frases de como se opera a funcionalidade (por onde se chega, o que se informa, o que se aciona) ou, em Job/CLI, do que dispara a execução. É a 2ª camada da descrição e mora aqui, não em seção própria. Só o 1º parágrafo é medido pelo FD-8. Ao citar um conjunto de opções, cite até três precedidas de "como…"]
 
 ---
-
-## Origem
-<!-- Incluir apenas se houver ticket de origem (ServiceNow, issue, experimento); senão, omitir a seção. -->
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta feature realiza desses critérios] |
-
-<!-- A célula abre com as referências `CA-n` quando o ticket numera os critérios
-     (linha de Numeração da AIM do ticket), seguidas de travessão e da prosa.
-     Quando a fonte não numera, abra com `—` e deixe só a prosa. Nunca invente
-     número: é ele que a contagem por sprint entrega ao cliente. -->
-
----
-
-<div class="dev-only">
-
-## Superfície
-
-**[Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API]** — [tela própria: rota `/...` · modal: origem: [Feature/Tela] · ação em tela: origem: [Feature/Tela] · CLI: comando · Job/Pipeline: gatilho · API: consumidor]
-
-**Fidelidade ao protótipo**: [obrigatória | referência | n/a] · [caminho do protótipo quando houver, ex.: `prototypes/[dominio]/[feature-set]/[feature]/[estado].html`] · [[abrir o protótipo ↗](../../../prototypes/[dominio]/[feature-set]/[feature]/[estado].html)]
-<!-- obrigatória = a implementação deve reproduzir o protótipo (exige o caminho); referência (padrão) = protótipo guia, ajustes permitidos no Design System; n/a = sem tela/protótipo (padrão para CLI/Job/API). A fidelidade "obrigatória" é checada pelo validador. -->
-
----
-
-</div>
 
 ## Regras de negócio
 
@@ -695,6 +668,15 @@ contagem:                           # status APF — independente dos gates; só
 
 ---
 
+## Superfície
+
+**[Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API]** — [tela própria: rota `/...` · modal: origem: [Feature/Tela] · ação em tela: origem: [Feature/Tela] · CLI: comando · Job/Pipeline: gatilho · API: consumidor]
+
+**Fidelidade ao protótipo**: [obrigatória | referência | n/a] · [caminho do protótipo quando houver, ex.: `prototypes/[dominio]/[feature-set]/[feature]/[estado].html`] · [[abrir o protótipo ↗](../../../prototypes/[dominio]/[feature-set]/[feature]/[estado].html)]
+<!-- obrigatória = a implementação deve reproduzir o protótipo (exige o caminho); referência (padrão) = protótipo guia, ajustes permitidos no Design System; n/a = sem tela/protótipo (padrão para CLI/Job/API). A fidelidade "obrigatória" é checada pelo validador. -->
+
+---
+
 ## Comportamento de tela
 <!-- Somente quando a Superfície é Tela própria/Modal/Ação em tela. Para CLI/Job/Pipeline/API, OMITA esta seção e gere "## Execução e operação" no lugar. -->
 
@@ -746,6 +728,20 @@ contagem:                           # status APF — independente dos gates; só
 | # | Critério mensurável | Origem |
 |---|---|---|
 | SC-01 | [resultado observável e medível, em linguagem de negócio] | [cenário / → ver NFR: [ID] / negócio] |
+
+---
+
+## Origem
+<!-- Incluir apenas se houver ticket de origem (ServiceNow, issue, experimento); senão, omitir a seção. -->
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta feature realiza desses critérios] |
+
+<!-- A célula abre com as referências `CA-n` quando o ticket numera os critérios
+     (linha de Numeração da AIM do ticket), seguidas de travessão e da prosa.
+     Quando a fonte não numera, abra com `—` e deixe só a prosa. Nunca invente
+     número: é ele que a contagem por sprint entrega ao cliente. -->
 
 ---
 
@@ -950,8 +946,8 @@ Antes de apresentar cada feature, confira (todos os itens são obrigatórios):
 > ```
 > O primeiro (estrutura) exige as seções obrigatórias do N3 (Descrição, Superfície,
 > Regras de negócio, Cenários, Campos, Campos automáticos, Changelog, e — conforme a
-> Superfície — Comportamento de tela **ou** Execução e operação) e **reprova** se a
-> tabela `## Campos` vazar camada técnica (Label Dev / campo banco). O segundo (semântico) verifica se o artefato **é mesmo uma feature**
+> Superfície — Comportamento de tela **ou** Execução e operação), **reprova** seção fora da
+> ordem do template e **reprova** se a tabela `## Campos` vazar camada técnica (Label Dev / campo banco). O segundo (semântico) verifica se o artefato **é mesmo uma feature**
 > segundo a definição canônica (`engine/FEATURE-DEFINITION.md`, critérios FD-1…FD-9 —
 > os FD-10…FD-12 também rodam, como avisos de contagem que não reprovam):
 > verbo no infinitivo catalogado, título com a mesma ação, atomicidade (um verbo só),

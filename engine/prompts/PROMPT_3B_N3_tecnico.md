@@ -438,7 +438,7 @@ Após aprovação, gere o arquivo completo:
 
 📄 `modules/[dominio]/[feature-set]/f-[verbo]-[entidade]-[adjetivo].md` — **o mesmo arquivo gerado pelo PROMPT 3A, na mesma pasta** (o N3 técnico é uma mescla no arquivo existente, não um novo arquivo). `[feature-set]` é a pasta do Feature Set (onde vive o `README.md` do N2); nunca grave na raiz, `global/`, `engine/` ou outro domínio. Use o mesmo nome de arquivo do 3A (`f-` + verbo + entidade singular + adjetivo qualificador quando houver, em kebab-case).
 
-> **Nota**: as seções técnicas **não existem** no N3 negocial gerado pelo PROMPT 3A — este prompt as cria e as insere depois de `## Métricas de tamanho`, dentro do bloco `<div class="dev-only">`.
+> **Nota**: as seções técnicas **não existem** no N3 negocial gerado pelo PROMPT 3A — este prompt as cria e as insere depois de `## Métricas de tamanho` e antes da `## Origem`, dentro do bloco `<div class="dev-only">`.
 
 > **Nota (front-matter)**: atualize o bloco YAML do topo com o que foi definido aqui —
 > `endpoints` (espelha `## API`), `error_codes` (espelha `## Mapeamento de erros`),
@@ -464,11 +464,6 @@ resultado` e `## Dados lidos e gravados`) passa intacto para o arquivo final.
                                         contagem leem o código da feature nesta linha)
 
 ## Descrição                         ← negocial (dois parágrafos)
-## Origem                            ← negocial (só se houver ticket de origem)
-<div class="dev-only">
-## Superfície                        ← negocial (Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API),
-                                        já vem do 3A no seu próprio dev-only — preserve o wrapper
-</div>
 ## Regras de negócio                 ← negocial (com refs. aos dicionários)
 ## Cenários                          ← negocial (os 5 grupos + marcadores)
 ## Campos                            ← negocial (Label PO | Entidade | Preenchimento | Edição | Tipo | Obrigatório | Validação)
@@ -476,6 +471,8 @@ resultado` e `## Dados lidos e gravados`) passa intacto para o arquivo final.
 ## Colunas do resultado              ← negocial (só em pesquisa/listagem)
 ## Campos automáticos                ← negocial (Label PO | Valor | Quando)
 ## Dados lidos e gravados            ← negocial (só se a feature toca entidade sem campo na tela)
+## Superfície                        ← negocial (Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API),
+                                        fora do dev-only, logo antes da seção que ela decide
 ## Comportamento de tela             ← negocial (Tela própria | Modal | Ação em tela)
    OU ## Execução e operação         ← negocial (CLI | Job/Pipeline | API) — nunca as duas
 ## Critérios de sucesso              ← negocial (SC-## mensuráveis)
@@ -493,6 +490,7 @@ resultado` e `## Dados lidos e gravados`) passa intacto para o arquivo final.
 ## Implementação                     ← Repositório(s) definidos no PASSO 5; Caminho/Branch após dev
 </div>
 
+## Origem                            ← negocial (só se houver ticket de origem), depois do dev-only
 ## Changelog                         ← acrescentar entrada no topo (ordem decrescente por data) ao gerar o arquivo final
 *Feature Set: [Nome] · Major Feature Set: [Nome] · Última revisão: [data]*   ← rodapé
 *Links: [N2] · [N1] · [INDEX]*       ← rodapé (última linha, como no template)

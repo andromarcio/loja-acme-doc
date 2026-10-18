@@ -156,9 +156,9 @@ def parse_blocks(lines):
 
 def business_lines(path):
     """Linhas negociais do N3: sem o front-matter, os comentários HTML e os blocos
-    dev-only. O bloco dev-only pode estar em qualquer ponto do N3 — no template, a
-    `## Superfície` é um deles, logo depois da Origem —, então ele é pulado até o
-    `</div>` que o fecha, e a leitura continua depois dele."""
+    dev-only. O bloco dev-only pode estar em qualquer ponto do N3 — no N3 anterior à
+    6.4.16, a `## Superfície` tinha o seu, logo depois da Origem —, então ele é pulado
+    até o `</div>` que o fecha, e a leitura continua depois dele."""
     with open(path, encoding="utf-8") as fh:
         text = fh.read()
     text = re.sub(r"<!--.*?-->", "", text, flags=re.S)

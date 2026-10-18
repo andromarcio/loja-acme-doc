@@ -362,8 +362,6 @@ template do N3 (`engine/templates/modules/_template-dominio/_template-feature-se
 
 **Negocial (visível no Modo PO)**, nesta ordem:
 - Descrição — **dois parágrafos consecutivos**: 1º = **contrato de entrega** (o que a feature entrega, 1–2 frases de negócio — é o que o FD-8 mede); 2º = **como se usa** (por onde se chega, o que se informa, o que se aciona; em Job/CLI, o que dispara a execução). O "como se usa" mora aqui, não em seção própria.
-- Origem — ticket(s) de origem, com o link da AIM *(só com ticket)*
-- Superfície — Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API *(negocial, mas no seu próprio `dev-only`; Modal = detalhe, consulta ou formulário que não é subformulário de outro — caixa de diálogo é parte da Ação em tela)*
 - Regras de negócio
 - Cenários Gherkin negociais (os 5 grupos)
 - Campos: Label PO | **Entidade** | Preenchimento | Edição | Tipo | Obrigatório | Validação (linguagem natural)
@@ -371,6 +369,7 @@ template do N3 (`engine/templates/modules/_template-dominio/_template-feature-se
 - Colunas do resultado *(só em pesquisa/listagem)*
 - Campos automáticos: Label PO | Valor | Quando
 - Dados lidos e gravados: Entidade | Papel | Por que a feature a toca *(só se a feature toca entidade sem campo na tela)*
+- Superfície — Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API *(fora do `dev-only`, logo antes da seção que ela decide; Modal = detalhe, consulta ou formulário que não é subformulário de outro — caixa de diálogo é parte da Ação em tela)*
 - Comportamento de tela **ou** Execução e operação *(conforme a Superfície)*
 - Critérios de sucesso (SC-## mensuráveis)
 - Métricas de tamanho — tabela → `### Memória de cálculo` → Total *(3B passo 6 ou opção CT)*
@@ -390,7 +389,7 @@ template do N3 (`engine/templates/modules/_template-dominio/_template-feature-se
 - Dependências
 - Implementação (item | repositório | caminho | branch/tag)
 
-Depois do `dev-only`: Changelog e o rodapé.
+Depois do `dev-only`: Origem — ticket(s) de origem, com o link da AIM *(só com ticket)* —, Changelog e o rodapé.
 
 ---
 

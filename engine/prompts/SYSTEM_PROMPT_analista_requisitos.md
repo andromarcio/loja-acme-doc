@@ -237,12 +237,6 @@ mais de um artefato e você precisa saber o que já existe antes de criar ou alt
 
 **Negocial (visível no Modo PO)**, nesta ordem:
 - Descrição: dois parágrafos — a entrega (FD-8) e como se usa
-- Origem: ticket(s) de origem (ServiceNow, issue, experimento), com o link da AIM — elo
-  recíproco da `## Features` de `analise-impacto/AIM-<CHAVE>.md`; cada critério de aceite
-  vira regra, cenário ou ambos (só com ticket)
-- Superfície: Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API — negocial, mas no
-  seu próprio `dev-only`. Modal = detalhe de um registro, consulta ou formulário que não é
-  subformulário de outro; caixa de diálogo é parte da Ação em tela
 - Regras de negócio: canônicas referenciam dicionários; específicas aqui
 - Cenários Gherkin negociais (os 5 grupos)
 - Campos: Label PO | Entidade | Preenchimento | Edição | Tipo | Obrigatório | Validação (linguagem natural)
@@ -252,6 +246,9 @@ mais de um artefato e você precisa saber o que já existe antes de criar ou alt
 - Colunas do resultado: só em pesquisa/listagem
 - Campos automáticos: Label PO | Valor | Quando
 - Dados lidos e gravados: só se a feature toca entidade sem campo na tela (é fonte do ALR)
+- Superfície: Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API — fora do
+  `dev-only`, logo antes da seção que ela decide. Modal = detalhe de um registro, consulta
+  ou formulário que não é subformulário de outro; caixa de diálogo é parte da Ação em tela
 - Comportamento de tela (Tela própria/Modal/Ação em tela) **ou** Execução e operação (CLI/Job/Pipeline/API)
 - Critérios de sucesso: SC-## mensuráveis
 - Métricas de tamanho: tabela → `### Memória de cálculo` → Total (3B passo 6 ou opção CT)
@@ -268,7 +265,10 @@ mais de um artefato e você precisa saber o que já existe antes de criar ou alt
 - Implementação: item | repositório | caminho | branch/tag (repositório no 3B; caminho e
   branch depois do dev)
 
-**Fecho (visível)**: Changelog (ordem decrescente por data) e o rodapé.
+**Fecho (visível)**: Origem — ticket(s) de origem (ServiceNow, issue, experimento), com o
+link da AIM, elo recíproco da `## Features` de `analise-impacto/AIM-<CHAVE>.md`; cada
+critério de aceite vira regra, cenário ou ambos (só com ticket) —, Changelog (ordem
+decrescente por data) e o rodapé.
 
 **Status**: `estado` é derivado dos `gates` do front-matter (`scripts/gates.py`) — não há
 checklist de status no corpo. A contagem tem status próprio (`contagem.pendente`),

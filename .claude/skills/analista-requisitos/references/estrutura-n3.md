@@ -53,7 +53,7 @@ contagem:                           # status de contagem APF — INDEPENDENTE do
 
 ## Seções negociais (visíveis no Modo PO)
 
-> Exceção: a `## Superfície` fica num `<div class="dev-only">` próprio — é detalhe de manifestação (onde a feature aparece), oculto no Modo PO como o restante do técnico. Seção marcada "só se…" é omitida quando a condição não vale.
+> A `## Superfície` é negocial e fica fora do `dev-only`, logo antes da seção de manifestação que ela decide. A `## Origem` também é negocial, mas é rastreabilidade: fica no fecho, logo antes do `## Changelog`. Seção marcada "só se…" é omitida quando a condição não vale.
 
 ````markdown
 # [Nome da Feature]
@@ -68,41 +68,6 @@ Fórmula: "Permite que [ator] [ação] [entidade], [resultado observável]."]
 em Job/CLI, o que dispara a execução.]
 
 ---
-
-## Origem
-<!-- Só se houver ticket de origem (ServiceNow, issue, experimento); senão, omita a seção. -->
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta feature realiza desses critérios] |
-
----
-
-<div class="dev-only">
-
-## Superfície
-
-**[Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API]** — [tela própria: rota `/...` · modal: origem: [Feature/Tela] · ação em tela: origem: [Feature/Tela] · CLI: comando · Job/Pipeline: gatilho · API: consumidor]
-
-<!-- MAIS DE UMA ROTA? Escreva em LISTA, uma linha por rota, com o critério que as
-     distingue à esquerda (tipo, canal, variante) — em parágrafo corrido não se
-     percebe quantas são. A ressalva (⚠️) vai em parágrafo DEPOIS da lista. Exemplo:
-
-     **Tela própria** — são **três** rotas, uma por canal e tipo de cliente:
-
-     - Administrador — `/clientes/novo`
-     - Autocadastro · Pessoa Física — `/cadastro/pessoa-fisica`
-     - Autocadastro · Pessoa Jurídica — `/cadastro/pessoa-juridica` -->
-
-**Fidelidade ao protótipo**: [obrigatória | referência | n/a] · [caminho do protótipo quando houver] · [[abrir o protótipo ↗](../../../prototypes/[dominio]/[feature-set]/[feature]/[estado].html)]
-
-<!-- O validador usa a Superfície para exigir a seção de manifestação certa:
-     Tela própria/Modal/Ação em tela → ## Comportamento de tela
-     CLI/Job/Pipeline/API     → ## Execução e operação (no lugar) -->
-
----
-
-</div>
 
 ## Regras de negócio
 
@@ -208,6 +173,28 @@ Feature: [Nome da feature em linguagem natural]
 | Entidade | Papel | Por que a feature a toca |
 |---|---|---|
 | [Entidade] | [lê / grava / lê e grava] | [o que a feature faz com ela — cite a regra que a motiva] |
+
+---
+
+## Superfície
+
+**[Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API]** — [tela própria: rota `/...` · modal: origem: [Feature/Tela] · ação em tela: origem: [Feature/Tela] · CLI: comando · Job/Pipeline: gatilho · API: consumidor]
+
+<!-- MAIS DE UMA ROTA? Escreva em LISTA, uma linha por rota, com o critério que as
+     distingue à esquerda (tipo, canal, variante) — em parágrafo corrido não se
+     percebe quantas são. A ressalva (⚠️) vai em parágrafo DEPOIS da lista. Exemplo:
+
+     **Tela própria** — são **três** rotas, uma por canal e tipo de cliente:
+
+     - Administrador — `/clientes/novo`
+     - Autocadastro · Pessoa Física — `/cadastro/pessoa-fisica`
+     - Autocadastro · Pessoa Jurídica — `/cadastro/pessoa-juridica` -->
+
+**Fidelidade ao protótipo**: [obrigatória | referência | n/a] · [caminho do protótipo quando houver] · [[abrir o protótipo ↗](../../../prototypes/[dominio]/[feature-set]/[feature]/[estado].html)]
+
+<!-- O validador usa a Superfície para exigir a seção de manifestação certa:
+     Tela própria/Modal/Ação em tela → ## Comportamento de tela
+     CLI/Job/Pipeline/API     → ## Execução e operação (no lugar) -->
 
 ---
 
@@ -372,6 +359,15 @@ A coluna **Repositório** é preenchida **no 3B** (PASSO 5), com nomes que exist
 ## Fecho (visível)
 
 ````markdown
+## Origem
+<!-- Só se houver ticket de origem (ServiceNow, issue, experimento); senão, omita a seção. -->
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta feature realiza desses critérios] |
+
+---
+
 ## Changelog
 
 <!-- Ordem decrescente por data: a entrada mais recente fica sempre no topo, logo abaixo do cabeçalho. -->
@@ -391,7 +387,7 @@ A coluna **Repositório** é preenchida **no 3B** (PASSO 5), com nomes que exist
 
 ## Convenção de visibilidade
 
-Seções negociais ficam **fora** da tag `dev-only`. Seções técnicas ficam **dentro**. A `## Superfície` é negocial, mas tem o seu próprio `dev-only`.
+Seções negociais ficam **fora** da tag `dev-only`, inclusive a `## Superfície`. Seções técnicas ficam **dentro**.
 
 ```html
 <!-- Negocial — visível para todos -->

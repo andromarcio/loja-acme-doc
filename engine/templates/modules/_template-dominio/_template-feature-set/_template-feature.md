@@ -102,99 +102,6 @@ contagem:
 
 ---
 
-## Origem
-
-<!--
-  Os tickets (história do ServiceNow, issue, experimento — ver MASTER.md → "Origem do
-  ticket") que originaram ou alteraram esta feature, cada um com o link para a sua AIM
-  (`analise-impacto/AIM-<CHAVE>.md`). Elo recíproco da seção `## Features` da AIM.
-  Relação M:N: uma feature pode atender a vários tickets; um ticket pode gerar várias
-  features. A chave da ferramenta de origem é a fonte de verdade — não inventar IDs aqui.
-
-  CARIMBO DE VERIFICAÇÃO (elo suspeito): após fechar/rever o elo, rode
-  `node scripts/suspect-links.mjs --stamp --file <este arquivo>` — ele grava aqui
-  um comentário `<!- - trace-verified: [chave] @ fingerprint - ->` por ticket.
-  Se a descrição ou os critérios do ticket mudarem na AIM depois disso,
-  `suspect-links` acusa o elo como suspeito (e `--mark` sinaliza ⚠️ no INDEX.md).
-  Não editar os carimbos à mão. A consistência dos três lugares é provada por
-  `scripts/audit-trace-links.mjs`.
--->
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta feature realiza desses critérios] |
-
-<!--
-  A célula "Critérios cobertos" ABRE com as referências `CA-n` quando o ticket
-  numera os critérios (ver a linha de Numeração na AIM do ticket) — é delas que a
-  contagem por sprint monta a rastreabilidade ticket › critério › feature.
-  Formato: `CA-1, CA-4` seguido de travessão e da prosa do que a feature realiza.
-  Quando a fonte NÃO numera, abra a célula com `—` e mantenha só a prosa: a
-  rastreabilidade fica pela chave do ticket. Nunca invente número de critério.
-  Entre as features de um mesmo ticket, os `CA-n` não devem se repetir nem faltar:
-  a união dos critérios das features é o conjunto de critérios do ticket.
--->
-
----
-
-<div class="dev-only">
-
-## Superfície
-
-<!--
-  Classifica COMO a feature se manifesta — marcador escaneável lido pelo validador
-  (validate-doc.mjs), que decide qual seção de detalhamento exigir:
-
-  - **Tela própria** — página/rota ou formulário dedicado.        → exige ## Comportamento de tela
-  - **Modal** — janela aberta sobre outra tela, com conteúdo       → exige ## Comportamento de tela
-    próprio: o detalhe de um registro, uma consulta ou um formulário que não é
-    subformulário de outro. Indicar a origem. Como a Tela própria, é dona dos seus
-    acessórios (lista consultada, consulta implícita, exportação).
-  - **Ação em tela** — disparada de dentro de outra tela           → exige ## Comportamento de tela
-    (botão/ícone em listagem, menu de contexto), no máximo com uma caixa de diálogo.
-    Indicar a origem.
-
-  Caixa de diálogo (confirmação, alerta) não é Modal: é parte da Ação em tela que a abre.
-  Modal que é subformulário de outro formulário — os dados só são gravados com o
-  registro-pai — não é N3 nem Superfície: fica no `## Comportamento de tela` e nos
-  `## Campos` da feature do pai. *(decisão do PO, 2026-09-27)*
-  - **CLI** — comando de terminal executado pelo ator.             → exige ## Execução e operação
-  - **Job/Pipeline** — execução disparada por agendamento/evento/  → exige ## Execução e operação
-    estágio de pipeline (sem interação durante a execução).
-  - **API** — operação exposta para consumo por outro sistema      → exige ## Execução e operação
-    (a "tela" é de terceiros; o contrato vive no dev-only/3B).
-
-  Esta linha apenas classifica. O mapa tela↔feature (N:N), quando uma tela atende
-  várias features, é consolidado no N2 (seção Telas — arquétipo transacional).
-
-  MAIS DE UMA ROTA NA MESMA FEATURE? Escreva em LISTA, uma linha por rota, com o
-  critério que as distingue à esquerda (tipo, canal, variante). Em parágrafo
-  corrido não se percebe quantas são (REP-038 do portal-compras: uma feature
-  carregava cinco rotas numa frase só). Assim:
-
-      **Tela própria** — são **três** rotas, uma por canal e tipo de cliente:
-
-      - Administrador — `/clientes/novo`
-      - Autocadastro · Pessoa Física — `/cadastro/pessoa-fisica`
-      - Autocadastro · Pessoa Jurídica — `/cadastro/pessoa-juridica`
-
-  A ressalva (⚠️) vai em parágrafo DEPOIS da lista, nunca dentro de um item: ela
-  costuma valer para o conjunto, e presa a um item mente sobre o alcance.
-
-  NÃO vire lista a rota que aparece dentro de uma frase de ANÁLISE ("a rota antiga
-  `/x` não existe no código; há duas candidatas, `/y` e `/z`") — ali as rotas são
-  argumento, não inventário, e a lista quebra o raciocínio no meio.
--->
-
-**[Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API]** — [tela própria: rota `/...` · modal: origem: [Feature/Tela] (`/rota`) · ação em tela: origem: [Feature/Tela] (`/rota`) · CLI: comando `...` · Job/Pipeline: gatilho (cron/evento/estágio) · API: consumidor previsto]
-
-**Fidelidade ao protótipo**: [obrigatória | referência | n/a] · [caminho do protótipo quando houver, ex.: `prototypes/[dominio]/[feature-set]/[feature]/[estado].html`] · [[abrir o protótipo ↗](../../../prototypes/[dominio]/[feature-set]/[feature]/[estado].html)]
-<!-- obrigatória = a implementação deve reproduzir o protótipo (exige o caminho); referência (padrão) = protótipo guia, ajustes permitidos no Design System; n/a = sem tela/protótipo (padrão para CLI/Job/API). A fidelidade "obrigatória" é checada pelo validador. O link "abrir o protótipo ↗" é relativo a este N3 (sobe três níveis até a raiz) — é a forma que funciona no GitHub e no editor; o visualizador da instância o abre em outra aba. -->
-
----
-
-</div>
-
 ## Regras de negócio
 
 <!--
@@ -399,6 +306,60 @@ Feature: [Nome da feature em linguagem natural]
 | Entidade | Papel | Por que a feature a toca |
 |---|---|---|
 | [Entidade] | [lê / grava / lê e grava] | [o que a feature faz com ela — ex.: "Recebe o status do processamento e o relatório de erros (RN-08)"] |
+
+---
+
+## Superfície
+
+<!--
+  Classifica COMO a feature se manifesta — marcador escaneável lido pelo validador
+  (validate-doc.mjs), que decide qual seção de detalhamento exigir:
+
+  - **Tela própria** — página/rota ou formulário dedicado.        → exige ## Comportamento de tela
+  - **Modal** — janela aberta sobre outra tela, com conteúdo       → exige ## Comportamento de tela
+    próprio: o detalhe de um registro, uma consulta ou um formulário que não é
+    subformulário de outro. Indicar a origem. Como a Tela própria, é dona dos seus
+    acessórios (lista consultada, consulta implícita, exportação).
+  - **Ação em tela** — disparada de dentro de outra tela           → exige ## Comportamento de tela
+    (botão/ícone em listagem, menu de contexto), no máximo com uma caixa de diálogo.
+    Indicar a origem.
+
+  Caixa de diálogo (confirmação, alerta) não é Modal: é parte da Ação em tela que a abre.
+  Modal que é subformulário de outro formulário — os dados só são gravados com o
+  registro-pai — não é N3 nem Superfície: fica no `## Comportamento de tela` e nos
+  `## Campos` da feature do pai. *(decisão do PO, 2026-09-27)*
+  - **CLI** — comando de terminal executado pelo ator.             → exige ## Execução e operação
+  - **Job/Pipeline** — execução disparada por agendamento/evento/  → exige ## Execução e operação
+    estágio de pipeline (sem interação durante a execução).
+  - **API** — operação exposta para consumo por outro sistema      → exige ## Execução e operação
+    (a "tela" é de terceiros; o contrato vive no dev-only/3B).
+
+  Esta linha apenas classifica. O mapa tela↔feature (N:N), quando uma tela atende
+  várias features, é consolidado no N2 (seção Telas — arquétipo transacional).
+
+  MAIS DE UMA ROTA NA MESMA FEATURE? Escreva em LISTA, uma linha por rota, com o
+  critério que as distingue à esquerda (tipo, canal, variante). Em parágrafo
+  corrido não se percebe quantas são (REP-038 do portal-compras: uma feature
+  carregava cinco rotas numa frase só). Assim:
+
+      **Tela própria** — são **três** rotas, uma por canal e tipo de cliente:
+
+      - Administrador — `/clientes/novo`
+      - Autocadastro · Pessoa Física — `/cadastro/pessoa-fisica`
+      - Autocadastro · Pessoa Jurídica — `/cadastro/pessoa-juridica`
+
+  A ressalva (⚠️) vai em parágrafo DEPOIS da lista, nunca dentro de um item: ela
+  costuma valer para o conjunto, e presa a um item mente sobre o alcance.
+
+  NÃO vire lista a rota que aparece dentro de uma frase de ANÁLISE ("a rota antiga
+  `/x` não existe no código; há duas candidatas, `/y` e `/z`") — ali as rotas são
+  argumento, não inventário, e a lista quebra o raciocínio no meio.
+-->
+
+**[Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API]** — [tela própria: rota `/...` · modal: origem: [Feature/Tela] (`/rota`) · ação em tela: origem: [Feature/Tela] (`/rota`) · CLI: comando `...` · Job/Pipeline: gatilho (cron/evento/estágio) · API: consumidor previsto]
+
+**Fidelidade ao protótipo**: [obrigatória | referência | n/a] · [caminho do protótipo quando houver, ex.: `prototypes/[dominio]/[feature-set]/[feature]/[estado].html`] · [[abrir o protótipo ↗](../../../prototypes/[dominio]/[feature-set]/[feature]/[estado].html)]
+<!-- obrigatória = a implementação deve reproduzir o protótipo (exige o caminho); referência (padrão) = protótipo guia, ajustes permitidos no Design System; n/a = sem tela/protótipo (padrão para CLI/Job/API). A fidelidade "obrigatória" é checada pelo validador. O link "abrir o protótipo ↗" é relativo a este N3 (sobe três níveis até a raiz) — é a forma que funciona no GitHub e no editor; o visualizador da instância o abre em outra aba. -->
 
 ---
 
@@ -684,6 +645,41 @@ logAction({
 ---
 
 </div>
+
+## Origem
+
+<!--
+  Os tickets (história do ServiceNow, issue, experimento — ver MASTER.md → "Origem do
+  ticket") que originaram ou alteraram esta feature, cada um com o link para a sua AIM
+  (`analise-impacto/AIM-<CHAVE>.md`). Elo recíproco da seção `## Features` da AIM.
+  Relação M:N: uma feature pode atender a vários tickets; um ticket pode gerar várias
+  features. A chave da ferramenta de origem é a fonte de verdade — não inventar IDs aqui.
+
+  CARIMBO DE VERIFICAÇÃO (elo suspeito): após fechar/rever o elo, rode
+  `node scripts/suspect-links.mjs --stamp --file <este arquivo>` — ele grava aqui
+  um comentário `<!- - trace-verified: [chave] @ fingerprint - ->` por ticket.
+  Se a descrição ou os critérios do ticket mudarem na AIM depois disso,
+  `suspect-links` acusa o elo como suspeito (e `--mark` sinaliza ⚠️ no INDEX.md).
+  Não editar os carimbos à mão. A consistência dos três lugares é provada por
+  `scripts/audit-trace-links.mjs`.
+-->
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta feature realiza desses critérios] |
+
+<!--
+  A célula "Critérios cobertos" ABRE com as referências `CA-n` quando o ticket
+  numera os critérios (ver a linha de Numeração na AIM do ticket) — é delas que a
+  contagem por sprint monta a rastreabilidade ticket › critério › feature.
+  Formato: `CA-1, CA-4` seguido de travessão e da prosa do que a feature realiza.
+  Quando a fonte NÃO numera, abra a célula com `—` e mantenha só a prosa: a
+  rastreabilidade fica pela chave do ticket. Nunca invente número de critério.
+  Entre as features de um mesmo ticket, os `CA-n` não devem se repetir nem faltar:
+  a união dos critérios das features é o conjunto de critérios do ticket.
+-->
+
+---
 
 ## Changelog
 

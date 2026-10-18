@@ -607,29 +607,6 @@ contagem:                           # status APF — independente dos gates; só
 
 ---
 
-## Origem
-<!-- Só se a extração atende a um ticket registrado (ex.: o ticket que pediu a documentação do sistema, com a sua AIM); senão, OMITA a seção e o bloco `origem:` do front-matter. -->
-
-| Ticket (AIM) | Tipo | Critérios cobertos |
-|---|---|---|
-| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIM-[CHAVE].md) | Criação | — [o que esta feature realiza do ticket] |
-
----
-
-<div class="dev-only">
-
-## Superfície
-
-🔍 **[Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API]** — [Trilha A: rota `/...`
-da definição de rotas (modal ou ação em tela: origem inferida ❓ — requer análise do
-frontend); Trilha B: comando/entry point 📍 ou gatilho do estágio]
-
-**Fidelidade ao protótipo**: [referência | n/a] — o código não traz protótipo; `n/a` em CLI/Job/API
-
----
-
-</div>
-
 ## Regras de negócio
 
 - **RN-01** — 🔍 [invariante extraída do código — só o "o quê"] — 📍 `[arquivo:linha]`
@@ -741,6 +718,16 @@ banco, Label Dev, tipo SQL e a FK ficam só no DATA-MODEL.md; o N3 nunca os rees
 | Entidade | Papel | Por que a feature a toca |
 |---|---|---|
 | 🔍 [Entidade] | [lê / grava / lê e grava] | [o que o serviço faz com ela — a regra/campo automático que a motiva] — 📍 `[arquivo:linha]` |
+
+---
+
+## Superfície
+
+🔍 **[Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API]** — [Trilha A: rota `/...`
+da definição de rotas (modal ou ação em tela: origem inferida ❓ — requer análise do
+frontend); Trilha B: comando/entry point 📍 ou gatilho do estágio]
+
+**Fidelidade ao protótipo**: [referência | n/a] — o código não traz protótipo; `n/a` em CLI/Job/API
 
 ---
 
@@ -868,6 +855,15 @@ Body/params e respostas extraídos do controller/DTO; tipos completos → DATA-M
 ---
 
 </div>
+
+## Origem
+<!-- Só se a extração atende a um ticket registrado (ex.: o ticket que pediu a documentação do sistema, com a sua AIM); senão, OMITA a seção e o bloco `origem:` do front-matter. -->
+
+| Ticket (AIM) | Tipo | Critérios cobertos |
+|---|---|---|
+| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIM-[CHAVE].md) | Criação | — [o que esta feature realiza do ticket] |
+
+---
 
 ## Changelog
 

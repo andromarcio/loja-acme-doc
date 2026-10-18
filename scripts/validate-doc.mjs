@@ -54,6 +54,7 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { frontMatterEstado } from './lib/front-matter.mjs';
+import { ordemN3 } from './lib/ordem-n3.mjs';
 
 const trunc = (s) => (s.length > 60 ? `${s.slice(0, 60)}…` : s).trim();
 
@@ -459,6 +460,15 @@ function validateN3(lines, raw, errors, file) {
     ['Descrição', 'Superfície', 'Regras de negócio', 'Cenários', 'Campos', 'Campos automáticos'],
     errors,
   );
+  // Ordem das seções (6.4.16): só as do molde, na ordem de scripts/lib/ordem-n3.mjs —
+  // a Superfície logo antes da seção de manifestação e a Origem logo antes do Changelog.
+  const ordem = ordemN3(lines);
+  if (!ordem.emOrdem) {
+    errors.push(
+      `Seções do N3 fora da ordem canônica — esperado: ${ordem.esperada.join(' → ')}. ` +
+      'O N3 anterior à 6.4.16 se migra com node scripts/migra-ordem-n3.mjs <arquivo> --aplicar.',
+    );
+  }
   // Seção de manifestação condicionada à Superfície declarada (1.6.0):
   // tela → "Comportamento de tela"; CLI/Job/Pipeline/API → "Execução e operação".
   const surface = surfaceOf(lines);
