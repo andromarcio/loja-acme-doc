@@ -54,13 +54,43 @@ Veja o [mapa de rastreabilidade](../rastreabilidade/index.html).
 <!-- GATES:INICIO -->
 ## Esteira de checkpoints (gates)
 
-> ⚙️ **Seção gerada por `scripts/gates.py` — não editar à mão.** Espelha o estado de cada feature na esteira (CP1 requisitos (PO/Negócio) → CP2 modelo-dados (DBA/Arquiteto)). Reflete o estado em **2026-10-14**.
+> ⚙️ **Seção gerada por `scripts/gates.py` — não editar à mão.** Espelha o estado de cada feature na esteira (CP1 requisitos (PO/Negócio) → CP2 modelo-dados (DBA/Arquiteto)). Reflete o estado em **2026-10-18**.
 
 | Feature | Origem | Estado | Situação |
 |---|---|---|---|
 | `VND-CHK-01` ([spec](./vendas/checkout/f-calcular-frete.md)) | STRY0013101 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `CAT-CTG-01` ([spec](./catalogo/categorias/f-pesquisar-categoria.md)) | STRY0013170 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `CAT-CTG-02` ([spec](./catalogo/categorias/f-cadastrar-categoria.md)) | STRY0013170 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `CAT-CTG-03` ([spec](./catalogo/categorias/f-editar-categoria.md)) | STRY0013170 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `CAT-CTG-04` ([spec](./catalogo/categorias/f-excluir-categoria.md)) | STRY0013170 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `CAT-CTG-05` ([spec](./catalogo/categorias/f-visualizar-categoria.md)) | STRY0013170 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `VIT-NAV-01` ([spec](./vitrine/navegacao/f-listar-destaque.md)) | STRY0013175 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `VIT-NAV-02` ([spec](./vitrine/navegacao/f-pesquisar-produto-vitrine.md)) | STRY0013175 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `VIT-NAV-03` ([spec](./vitrine/navegacao/f-visualizar-produto-vitrine.md)) | STRY0013175 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `VIT-DST-01` ([spec](./vitrine/destaques/f-pesquisar-destaque.md)) | STRY0013180 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `VIT-DST-02` ([spec](./vitrine/destaques/f-cadastrar-destaque.md)) | STRY0013180 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `VIT-DST-03` ([spec](./vitrine/destaques/f-editar-destaque.md)) | STRY0013180 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `VIT-DST-04` ([spec](./vitrine/destaques/f-excluir-destaque.md)) | STRY0013180 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `VIT-DST-05` ([spec](./vitrine/destaques/f-visualizar-destaque.md)) | STRY0013180 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `VND-CAR-01` ([spec](./vendas/carrinho/f-adicionar-item-carrinho.md)) | STRY0013185 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `VND-CAR-02` ([spec](./vendas/carrinho/f-listar-item-carrinho.md)) | STRY0013185 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `VND-CAR-03` ([spec](./vendas/carrinho/f-alterar-quantidade-item.md)) | STRY0013185 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `VND-CAR-04` ([spec](./vendas/carrinho/f-remover-item-carrinho.md)) | STRY0013185 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `VND-PED-01` ([spec](./vendas/gestao-pedidos/f-pesquisar-pedido.md)) | STRY0013190 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `VND-PED-02` ([spec](./vendas/gestao-pedidos/f-visualizar-pedido.md)) | STRY0013190 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `VND-PED-03` ([spec](./vendas/gestao-pedidos/f-cancelar-pedido.md)) | STRY0013190 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `ADM-USR-01` ([spec](./administracao/usuarios/f-pesquisar-usuario.md)) | STRY0013195 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `ADM-USR-02` ([spec](./administracao/usuarios/f-cadastrar-usuario.md)) | STRY0013195 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `ADM-USR-03` ([spec](./administracao/usuarios/f-editar-usuario.md)) | STRY0013195 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `ADM-USR-04` ([spec](./administracao/usuarios/f-inativar-usuario.md)) | STRY0013195 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `ADM-USR-05` ([spec](./administracao/usuarios/f-visualizar-usuario.md)) | STRY0013195 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `ADM-FRT-01` ([spec](./administracao/faixas-frete/f-pesquisar-faixa-frete.md)) | STRY0013200 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `ADM-FRT-02` ([spec](./administracao/faixas-frete/f-cadastrar-faixa-frete.md)) | STRY0013200 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `ADM-FRT-03` ([spec](./administracao/faixas-frete/f-editar-faixa-frete.md)) | STRY0013200 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `ADM-FRT-04` ([spec](./administracao/faixas-frete/f-excluir-faixa-frete.md)) | STRY0013200 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
+| `ADM-FRT-05` ([spec](./administracao/faixas-frete/f-visualizar-faixa-frete.md)) | STRY0013200 | ✏️ rascunho | aguardando **requisitos** (PO/Negócio) |
 
-**0** de **1** feature(s) prontas para desenvolvimento.
+**0** de **31** feature(s) prontas para desenvolvimento.
 <!-- GATES:FIM -->
 
 ## Pendências de especificação

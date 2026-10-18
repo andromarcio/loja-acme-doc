@@ -82,6 +82,7 @@ Feature: Excluir Faixa de Frete
   # Conflitos com dados existentes
   @RN-02
   # ← RULES-DICTIONARY: RC-09 — Registro vinculado não pode ser excluído
+  # ← MESSAGE-DICTIONARY: ADM_FAIXA_COM_PEDIDOS
   Scenario: Faixa que atende pedidos
     When o administrador aciona excluir na linha da faixa "Centro — São Paulo"
     Then o sistema exibe "Não é possível excluir: existem pedidos vinculados a este registro."

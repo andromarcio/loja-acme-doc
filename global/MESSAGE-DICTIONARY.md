@@ -61,6 +61,7 @@
 | Chave | Situação | Texto literal |
 |---|---|---|
 | `CAT_CATEGORIA_DUPLICADA` | Nome de categoria já usado por outra categoria | "Já existe uma categoria com este nome." |
+| `CAT_CATEGORIA_COM_PRODUTOS` | Exclusão de uma categoria que tem produtos (RC-09 — Registro vinculado não pode ser excluído) | "Não é possível excluir: existem produtos vinculados a este registro." |
 | `CAT_INATIVAR_COM_PRODUTOS` | Confirmação ao inativar uma categoria que tem produtos | "Os produtos desta categoria deixarão de aparecer na vitrine. Deseja continuar?" |
 
 ### Vitrine
@@ -106,6 +107,7 @@
 | `ADM_REGIAO_DUPLICADA` | Região já usada por outra faixa de frete | "Já existe uma faixa com esta região." |
 | `ADM_FAIXA_INTERVALO_INVALIDO` | CEP final menor que o CEP inicial | "O CEP final deve ser igual ou maior que o CEP inicial." |
 | `ADM_FAIXA_SOBREPOSTA` | Faixa com CEPs em comum com outra | "Esta faixa tem CEPs em comum com a faixa [região]." |
+| `ADM_FAIXA_COM_PEDIDOS` | Exclusão de uma faixa de frete que atende pedidos (RC-09 — Registro vinculado não pode ser excluído) | "Não é possível excluir: existem pedidos vinculados a este registro." |
 | `ADM_FAIXA_VALE_PROXIMOS` | Aviso no formulário de edição da faixa de frete | "A alteração vale para os próximos cálculos de frete; os pedidos já feitos mantêm o valor cobrado." |
 
 ---
@@ -137,7 +139,42 @@ Ao escrever cenários/telas em um N3:
 
 | Entrada | Usado em |
 |---|---|
-| `BASELINE` | `VND-CHK-01` |
+| `ADM_AUTOINATIVACAO` | `ADM-USR-04` |
+| `ADM_CPF_DUPLICADO` | `ADM-USR-02` · `ADM-USR-03` |
+| `ADM_EMAIL_DUPLICADO` | `ADM-USR-02` |
+| `ADM_FAIXA_COM_PEDIDOS` | `ADM-FRT-04` |
+| `ADM_FAIXA_INTERVALO_INVALIDO` | `ADM-FRT-02` · `ADM-FRT-03` |
+| `ADM_FAIXA_SOBREPOSTA` | `ADM-FRT-02` · `ADM-FRT-03` |
+| `ADM_FAIXA_VALE_PROXIMOS` | `ADM-FRT-03` |
+| `ADM_INATIVAR_CONFIRMACAO` | `ADM-USR-04` |
+| `ADM_REGIAO_DUPLICADA` | `ADM-FRT-02` |
+| `ADM_ULTIMO_ADMINISTRADOR` | `ADM-USR-03` |
+| `ADM_USUARIO_INATIVADO` | `ADM-USR-04` |
+| `ADM_USUARIO_INATIVO` | `ADM-USR-03` |
+| `ADM_USUARIO_JA_INATIVO` | `ADM-USR-04` |
+| `BASELINE` | `ADM-FRT-01` · `ADM-FRT-02` · `ADM-FRT-03` · `ADM-FRT-04` · `ADM-FRT-05` · `ADM-USR-01` · `ADM-USR-02` · `ADM-USR-03` · `ADM-USR-04` · `ADM-USR-05` · `CAT-CTG-01` · `CAT-CTG-02` · `CAT-CTG-03` · `CAT-CTG-04` · `CAT-CTG-05` · `VIT-DST-01` · `VIT-DST-02` · `VIT-DST-03` · `VIT-DST-04` · `VIT-DST-05` · `VND-CAR-01` · `VND-CAR-02` · `VND-CAR-03` · `VND-CAR-04` · `VND-CHK-01` · `VND-PED-01` · `VND-PED-02` · `VND-PED-03` |
+| `CAT_CATEGORIA_COM_PRODUTOS` | `CAT-CTG-04` |
+| `CAT_CATEGORIA_DUPLICADA` | `CAT-CTG-02` |
+| `CAT_INATIVAR_COM_PRODUTOS` | `CAT-CTG-03` |
+| `EMPTY_SEARCH` | `VIT-NAV-02` |
+| `ERROR_STATE` | `VIT-NAV-01` · `VIT-NAV-02` · `VIT-NAV-03` |
+| `MIN_LENGTH` | `VIT-NAV-02` |
+| `VIT_DESTAQUE_ENCERRADO` | `VIT-DST-03` |
+| `VIT_DESTAQUE_SOBREPOSTO` | `VIT-DST-02` · `VIT-DST-03` |
+| `VIT_ORDEM_INVALIDA` | `VIT-DST-02` · `VIT-DST-03` |
+| `VIT_PRODUTO_INDISPONIVEL` | `VIT-NAV-03` |
+| `VIT_SELO_ESGOTADO` | `VIT-NAV-01` · `VIT-NAV-02` · `VIT-NAV-03` |
+| `VIT_SEM_DESTAQUES` | `VIT-NAV-01` |
+| `VND_CANCELAR_CONFIRMACAO` | `VND-PED-03` |
+| `VND_CARRINHO_SEM_ITENS` | `VND-CAR-02` · `VND-CAR-04` |
 | `VND_CARRINHO_VAZIO` | `VND-CHK-01` |
-| `VND_CEP_NAO_ATENDIDO` | `VND-CHK-01` |
+| `VND_CEP_NAO_ATENDIDO` | `ADM-FRT-04` · `VND-CHK-01` |
+| `VND_ESTOQUE_INSUFICIENTE` | `VND-CAR-01` · `VND-CAR-03` |
+| `VND_ESTOQUE_REDUZIDO` | `VND-CAR-02` |
+| `VND_ITEM_ADICIONADO` | `VND-CAR-01` |
+| `VND_ITEM_REMOVIDO` | `VND-CAR-04` |
+| `VND_PEDIDO_CANCELADO` | `VND-PED-03` |
+| `VND_PEDIDO_NAO_CANCELAVEL` | `VND-PED-03` |
+| `VND_PRODUTO_ESGOTADO` | `VND-CAR-01` |
+| `VND_QUANTIDADE_ATUALIZADA` | `VND-CAR-03` |
 <!-- /usado-em -->

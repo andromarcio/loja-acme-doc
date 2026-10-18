@@ -233,16 +233,19 @@
     }
 
     // VIT-NAV-01 — Listar Destaques
-    function abrirInicio() {
+    // Na abertura do protótipo a tela já vem em repouso (regra 11); o "Carregando…" só aparece ao voltar ao Início.
+    function abrirInicio(imediato) {
       showScreen('screen-inicio');
-      carregando('destaques', 3);
-      setTimeout(function () {
+      function desenha() {
         if (estado === 'falha') { estadoTela('destaques', '⚠️', 'Não foi possível carregar', 'Não foi possível carregar os dados.'); return; }
         if (estado === 'sem-destaques') { estadoTela('destaques', '🛍️', 'Sem destaques', 'Nenhum destaque no momento. Use a busca para encontrar produtos.'); return; }
         var html = '<div class="dsc-grid-3">';
         DESTAQUES.forEach(function (d) { html += cardProduto(porId(d.produto), d.chamada); });
         document.getElementById('destaques').innerHTML = html + '</div>';
-      }, 500);
+      }
+      if (imediato) { desenha(); return; }
+      carregando('destaques', 3);
+      setTimeout(desenha, 500);
     }
 
     function pesquisarDoInicio() {
@@ -346,7 +349,7 @@
       abrirInicio();
     }
 
-    abrirInicio();
+    abrirInicio(true);
   </script>
 </body>
 </html>

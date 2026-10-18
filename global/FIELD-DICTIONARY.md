@@ -48,7 +48,7 @@
 
 ### CPF
 <!-- usado-em:gerado -->
-> **Usado em:** _(ainda não referenciado em N3)_
+> **Usado em:** `ADM-USR-02` · `ADM-USR-03`
 <!-- /usado-em -->
 
 - **Label Dev**: `cpf`
@@ -72,7 +72,7 @@ Scenario: CPF com quantidade de dígitos diferente de 11
 
 ### CEP
 <!-- usado-em:gerado -->
-> **Usado em:** `VND-CHK-01`
+> **Usado em:** `ADM-FRT-01` · `ADM-FRT-02` · `ADM-FRT-03` · `ADM-FRT-05` · `VND-CHK-01` · `VND-PED-02`
 <!-- /usado-em -->
 
 - **Label Dev**: `cep`
@@ -90,7 +90,7 @@ Scenario: CEP com quantidade de dígitos inválida
 
 ### Telefone
 <!-- usado-em:gerado -->
-> **Usado em:** _(ainda não referenciado em N3)_
+> **Usado em:** `ADM-USR-02` · `ADM-USR-03`
 <!-- /usado-em -->
 
 - **Label Dev**: `telefone`
@@ -109,7 +109,7 @@ Scenario: Telefone com quantidade de dígitos inválida
 
 ### E-mail
 <!-- usado-em:gerado -->
-> **Usado em:** _(ainda não referenciado em N3)_
+> **Usado em:** `ADM-USR-02` · `VND-PED-02`
 <!-- /usado-em -->
 
 - **Label Dev**: `email`
@@ -147,7 +147,7 @@ Scenario: Senha abaixo da política mínima
 
 ### Valor monetário
 <!-- usado-em:gerado -->
-> **Usado em:** `VND-CHK-01`
+> **Usado em:** `ADM-FRT-02` · `ADM-FRT-03` · `ADM-FRT-05` · `VIT-NAV-01` · `VIT-NAV-02` · `VIT-NAV-03` · `VND-CAR-02` · `VND-CAR-03` · `VND-CAR-04` · `VND-CHK-01` · `VND-PED-01` · `VND-PED-02`
 <!-- /usado-em -->
 
 - **Label Dev**: `valor`
@@ -166,7 +166,7 @@ Scenario: Valor negativo
 
 ### Nome de pessoa
 <!-- usado-em:gerado -->
-> **Usado em:** _(ainda não referenciado em N3)_
+> **Usado em:** `ADM-USR-02` · `ADM-USR-03`
 <!-- /usado-em -->
 
 - **Label Dev**: `nomeCompleto`
@@ -185,7 +185,7 @@ Scenario: Nome sem sobrenome
 
 ### Data futura
 <!-- usado-em:gerado -->
-> **Usado em:** _(ainda não referenciado em N3)_
+> **Usado em:** `VIT-DST-02` · `VIT-DST-03`
 <!-- /usado-em -->
 
 - **Label Dev**: definido pelo contexto (ex.: `inicioVigencia`)
@@ -204,7 +204,7 @@ Scenario: Data anterior a hoje
 
 ### Quantidade
 <!-- usado-em:gerado -->
-> **Usado em:** _(ainda não referenciado em N3)_
+> **Usado em:** `VND-CAR-01` · `VND-CAR-02` · `VND-CAR-03` · `VND-PED-02`
 <!-- /usado-em -->
 
 - **Label Dev**: `quantidade`

@@ -63,7 +63,7 @@ Scenario: Pessoa abaixo da idade mínima
 
 ### RC-03 — Período de vigência
 <!-- usado-em:gerado -->
-> **Usado em:** _(ainda não referenciado em N3)_
+> **Usado em:** `VIT-DST-01` · `VIT-DST-02` · `VIT-DST-03` · `VIT-DST-05` · `VIT-NAV-01`
 <!-- /usado-em -->
 
 - **Invariante**: a data de início da vigência é igual ou anterior à data de fim; o registro só produz efeito entre as duas datas, inclusive.
@@ -97,7 +97,7 @@ Scenario: Arquivo acima do tamanho permitido
 
 ### RC-09 — Registro vinculado não pode ser excluído
 <!-- usado-em:gerado -->
-> **Usado em:** _(ainda não referenciado em N3)_
+> **Usado em:** `ADM-FRT-04` · `CAT-CTG-04`
 <!-- /usado-em -->
 
 - **Invariante**: um registro referenciado por outros não pode ser removido enquanto houver vínculos.

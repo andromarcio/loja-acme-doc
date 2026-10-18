@@ -78,6 +78,7 @@ Feature: Excluir Categoria
   # Conflitos com dados existentes
   @RN-02
   # ← RULES-DICTIONARY: RC-09 — Registro vinculado não pode ser excluído
+  # ← MESSAGE-DICTIONARY: CAT_CATEGORIA_COM_PRODUTOS
   Scenario: Categoria com produtos não é excluída
     When o gestor aciona excluir na linha "Cozinha"
     Then o sistema exibe "Não é possível excluir: existem produtos vinculados a este registro."
