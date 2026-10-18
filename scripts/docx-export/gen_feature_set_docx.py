@@ -3,8 +3,11 @@
 """
 Gera um documento Word (.docx) com a especificação de um Feature Set (N2):
 - Visão geral do N2 (a partir do README do Feature Set)
-- Para cada Feature (N3), todo o conteúdo negocial (tudo antes do bloco dev-only)
+- Para cada Feature (N3), o conteúdo negocial: tudo, menos o front-matter, os
+  comentários HTML, os blocos dev-only e o Changelog; a seção "Métricas de tamanho"
+  sai enquanto nenhuma linha foi contada
 - Os protótipos existentes, embutidos como imagem
+- Na capa, o sistema da instância (Sigla e Nome do global/MASTER.md)
 
 Fonte de verdade dos Markdowns: modules/<dominio>/<feature-set>/.
 As imagens (fluxo do N2 e protótipos) são pré-renderizadas — ver render_*.mjs.
@@ -152,13 +155,86 @@ def parse_blocks(lines):
 
 
 def business_lines(path):
-    """Linhas do N3 até o bloco dev-only (todo o conteúdo negocial)."""
-    out = []
+    """Linhas negociais do N3: sem o front-matter, os comentários HTML e os blocos
+    dev-only. O bloco dev-only pode estar em qualquer ponto do N3 — no template, a
+    `## Superfície` é um deles, logo depois da Origem —, então ele é pulado até o
+    `</div>` que o fecha, e a leitura continua depois dele."""
     with open(path, encoding="utf-8") as fh:
-        for line in fh:
-            if DEV_ONLY_MARKER in line:
-                break
-            out.append(line.rstrip("\n"))
+        text = fh.read()
+    text = re.sub(r"<!--.*?-->", "", text, flags=re.S)
+    lines = text.split("\n")
+    inicio = next((i for i, l in enumerate(lines) if l.strip()), None)
+    if inicio is not None and lines[inicio].strip() == "---":
+        fim = next((i for i in range(inicio + 1, len(lines)) if lines[i].strip() == "---"), None)
+        if fim is not None:
+            lines = lines[fim + 1:]
+    out, depth = [], 0
+    for line in lines:
+        if depth == 0 and DEV_ONLY_MARKER not in line:
+            out.append(line.rstrip("\r"))
+            continue
+        depth += line.count("<div") - line.count("</div>")
+    return out
+
+
+def secoes_h2(lines):
+    """Quebra as linhas em [(título ou None, linhas)] pela rubrica `## ` no início da
+    linha, fora de cerca de código (a rubrica entra nas linhas da própria seção)."""
+    secoes, cerca = [(None, [])], False
+    for l in lines:
+        if l.strip().startswith(("```", "~~~")):
+            cerca = not cerca
+        m = None if cerca else re.match(r"^##\s+(.+?)\s*$", l)
+        if m:
+            secoes.append((m.group(1).strip(), [l]))
+        else:
+            secoes[-1][1].append(l)
+    return secoes
+
+
+COLUNAS_CONTADAS = ("Tipo", "ALR", "DER", "Complexidade", "PF")
+CELULA_VAZIA = {"", "—", "–", "-"}
+
+
+def metricas_vazia(linhas):
+    """True quando a seção "Métricas de tamanho" não tem nada contado: nenhuma célula
+    de Tipo, ALR, DER, Complexidade ou PF preenchida e nenhuma Memória de cálculo. A
+    linha de PF 0 (PE descartado) e a de PE reutilizado (↪ no Tipo) contam como
+    preenchidas. Tabela sem nenhuma dessas colunas não é julgada vazia: na dúvida, a
+    seção fica."""
+    if any(re.match(r"^###\s+Mem[óo]ria de c[áa]lculo", l.strip()) for l in linhas):
+        return False
+    cab = None
+    for l in linhas:
+        if not l.strip().startswith("|"):
+            cab = None
+            continue
+        cells = [strip_inline_tags(c) for c in split_table_row(l)]
+        if is_separator_row(cells):
+            continue
+        if cab is None:
+            cab = cells
+            if not any(c in cab for c in COLUNAS_CONTADAS):
+                return False
+            continue
+        for nome in COLUNAS_CONTADAS:
+            if nome in cab:
+                k = cab.index(nome)
+                if k < len(cells) and cells[k] not in CELULA_VAZIA:
+                    return False
+    return True
+
+
+def secoes_exportadas(lines):
+    """Tira do N3 o Changelog (o histórico fica no repositório) e a seção "Métricas de
+    tamanho" enquanto nada foi contado."""
+    out = []
+    for titulo, linhas in secoes_h2(lines):
+        if titulo and re.match(r"^Changelog\b", titulo, re.I):
+            continue
+        if titulo and re.match(r"^M[ée]tricas de tamanho$", titulo, re.I) and metricas_vazia(linhas):
+            continue
+        out.extend(linhas)
     return out
 
 # ================================================================ docx render helpers
@@ -349,12 +425,36 @@ def read_fs_meta(readme_path):
         if m and fs_id is None:
             dominio = m.group(1).strip()
             fs_id = m.group(2).strip()
-    # features table
+    # tabela de Features: o formato atual, `| [**Nome**](f-x.md) <small>ID</small> | … |`,
+    # e o legado, `| **Nome** <small>ID</small> | [f-x.md] … |`
     for ln in lines:
+        m = re.match(r"^\|\s*\[\*\*(.+?)\*\*\]\(([^)\s]+\.md)\)\s*<small>([A-Z]{3}-[A-Z]{3}-\d{2})</small>", ln)
+        if m:
+            features.append((m.group(1).strip(), m.group(3).strip(), m.group(2).strip()))
+            continue
         m = re.match(r"^\|\s*\*\*(.+?)\*\*\s*<small>([A-Z]{3}-[A-Z]{3}-\d{2})</small>\s*\|\s*\[([^\]]+)\]", ln)
         if m:
             features.append((m.group(1).strip(), m.group(2).strip(), m.group(3).strip()))
     return title, fs_id, dominio, features
+
+
+def sistema_da_instancia(fs_dir):
+    """"SIGLA — Nome" do global/MASTER.md da instância (o --fs-dir é
+    modules/<dominio>/<feature-set>). Campo ainda com o texto do template ([…]) não
+    conta; sem MASTER ou sem os dois campos, None."""
+    master = os.path.normpath(os.path.join(fs_dir, "..", "..", "..", "global", "MASTER.md"))
+    if not os.path.exists(master):
+        return None
+    with open(master, encoding="utf-8") as fh:
+        texto = fh.read()
+    def campo(nome):
+        m = re.search(rf"^\s*-\s*\*\*{nome}\*\*:\s*`?([^`\n]+?)`?\s*$", texto, re.M)
+        valor = m.group(1).strip() if m else ""
+        return "" if not valor or valor.startswith("[") else valor
+    sigla, nome = campo("Sigla"), campo("Nome")
+    if sigla and nome:
+        return f"{sigla} — {nome}"
+    return sigla or nome or None
 
 
 def readme_overview_lines(readme_path):
@@ -410,10 +510,12 @@ def main():
     style_base(doc)
 
     # ---- Capa
-    t = doc.add_paragraph()
-    t.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    r = t.add_run("SIMPF — Sistema de Mensuração de Projetos e Sistemas")
-    r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x00, 0x55, 0x8C); r.bold = True
+    sistema = sistema_da_instancia(args.fs_dir)
+    if sistema:
+        t = doc.add_paragraph()
+        t.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        r = t.add_run(sistema)
+        r.font.size = Pt(12); r.font.color.rgb = RGBColor(0x00, 0x55, 0x8C); r.bold = True
 
     h = doc.add_paragraph(); h.alignment = WD_ALIGN_PARAGRAPH.CENTER
     r = h.add_run(f"Especificação de Feature Set (N2)\n{title}")
@@ -459,9 +561,9 @@ def main():
     add_inline(
         intro,
         "As seções a seguir trazem o conteúdo negocial de cada feature — descrição, "
-        "superfície, regras de negócio, cenários, campos, comportamento de tela e "
-        "métricas de tamanho. As seções técnicas (dev-only) são omitidas. "
-        "Os protótipos são incluídos apenas onde já existem.",
+        "regras de negócio, cenários, campos, comportamento de tela e, quando já "
+        "contadas, as métricas de tamanho. As seções técnicas (dev-only) e o changelog "
+        "são omitidos. Os protótipos são incluídos apenas onde já existem.",
     )
 
     for name, fid, filename in features:
@@ -471,7 +573,7 @@ def main():
         if not os.path.exists(fpath):
             doc.add_paragraph(f"[arquivo não encontrado: {filename}]")
             continue
-        lines = business_lines(fpath)
+        lines = secoes_exportadas(business_lines(fpath))
         blocks = parse_blocks(lines)
         # remove H1 do arquivo + quote "Nível 3"
         cleaned = []
