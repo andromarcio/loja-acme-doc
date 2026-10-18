@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.1 | prompt: PROMPT_PROTOTYPE_FLOW_FULL | atualizado: 2026-10-17 -->
+<!-- docqui: 6.4.10 | prompt: PROMPT_PROTOTYPE_FLOW_FULL | atualizado: 2026-10-18 -->
 # Protótipos — Manifesto de fidelidade e aprovação
 > Fonte de verdade do vínculo **protótipo ↔ N3**, do nível de **fidelidade** e do
 > **status de aprovação**. Uma tela com fidelidade **obrigatória** só vira **contrato
@@ -6,7 +6,37 @@
 
 | Protótipo | Feature (N3) | Fidelidade | Status | Aprovado por | Data |
 |---|---|---|---|---|---|
+| [prototypes/catalogo/categorias/flow.html](./catalogo/categorias/flow.html) | `CAT-CTG-01` | referência | rascunho | — | — |
+| [prototypes/catalogo/categorias/flow.html](./catalogo/categorias/flow.html) | `CAT-CTG-02` | referência | rascunho | — | — |
+| [prototypes/catalogo/categorias/flow.html](./catalogo/categorias/flow.html) | `CAT-CTG-03` | referência | rascunho | — | — |
+| [prototypes/catalogo/categorias/flow.html](./catalogo/categorias/flow.html) | `CAT-CTG-04` | referência | rascunho | — | — |
+| [prototypes/catalogo/categorias/flow.html](./catalogo/categorias/flow.html) | `CAT-CTG-05` | referência | rascunho | — | — |
+| [prototypes/vitrine/navegacao/flow.html](./vitrine/navegacao/flow.html) | `VIT-NAV-01` | referência | rascunho | — | — |
+| [prototypes/vitrine/navegacao/flow.html](./vitrine/navegacao/flow.html) | `VIT-NAV-02` | referência | rascunho | — | — |
+| [prototypes/vitrine/navegacao/flow.html](./vitrine/navegacao/flow.html) | `VIT-NAV-03` | referência | rascunho | — | — |
+| [prototypes/vitrine/destaques/flow.html](./vitrine/destaques/flow.html) | `VIT-DST-01` | referência | rascunho | — | — |
+| [prototypes/vitrine/destaques/flow.html](./vitrine/destaques/flow.html) | `VIT-DST-02` | referência | rascunho | — | — |
+| [prototypes/vitrine/destaques/flow.html](./vitrine/destaques/flow.html) | `VIT-DST-03` | referência | rascunho | — | — |
+| [prototypes/vitrine/destaques/flow.html](./vitrine/destaques/flow.html) | `VIT-DST-04` | referência | rascunho | — | — |
+| [prototypes/vitrine/destaques/flow.html](./vitrine/destaques/flow.html) | `VIT-DST-05` | referência | rascunho | — | — |
+| [prototypes/vendas/carrinho/flow.html](./vendas/carrinho/flow.html) | `VND-CAR-01` | referência | rascunho | — | — |
+| [prototypes/vendas/carrinho/flow.html](./vendas/carrinho/flow.html) | `VND-CAR-02` | referência | rascunho | — | — |
+| [prototypes/vendas/carrinho/flow.html](./vendas/carrinho/flow.html) | `VND-CAR-03` | referência | rascunho | — | — |
+| [prototypes/vendas/carrinho/flow.html](./vendas/carrinho/flow.html) | `VND-CAR-04` | referência | rascunho | — | — |
 | [prototypes/vendas/checkout/flow.html](./vendas/checkout/flow.html) | `VND-CHK-01` | referência | rascunho | — | — |
+| [prototypes/vendas/gestao-pedidos/flow.html](./vendas/gestao-pedidos/flow.html) | `VND-PED-01` | referência | rascunho | — | — |
+| [prototypes/vendas/gestao-pedidos/flow.html](./vendas/gestao-pedidos/flow.html) | `VND-PED-02` | referência | rascunho | — | — |
+| [prototypes/vendas/gestao-pedidos/flow.html](./vendas/gestao-pedidos/flow.html) | `VND-PED-03` | referência | rascunho | — | — |
+| [prototypes/administracao/usuarios/flow.html](./administracao/usuarios/flow.html) | `ADM-USR-01` | referência | rascunho | — | — |
+| [prototypes/administracao/usuarios/flow.html](./administracao/usuarios/flow.html) | `ADM-USR-02` | referência | rascunho | — | — |
+| [prototypes/administracao/usuarios/flow.html](./administracao/usuarios/flow.html) | `ADM-USR-03` | referência | rascunho | — | — |
+| [prototypes/administracao/usuarios/flow.html](./administracao/usuarios/flow.html) | `ADM-USR-04` | referência | rascunho | — | — |
+| [prototypes/administracao/usuarios/flow.html](./administracao/usuarios/flow.html) | `ADM-USR-05` | referência | rascunho | — | — |
+| [prototypes/administracao/faixas-frete/flow.html](./administracao/faixas-frete/flow.html) | `ADM-FRT-01` | referência | rascunho | — | — |
+| [prototypes/administracao/faixas-frete/flow.html](./administracao/faixas-frete/flow.html) | `ADM-FRT-02` | referência | rascunho | — | — |
+| [prototypes/administracao/faixas-frete/flow.html](./administracao/faixas-frete/flow.html) | `ADM-FRT-03` | referência | rascunho | — | — |
+| [prototypes/administracao/faixas-frete/flow.html](./administracao/faixas-frete/flow.html) | `ADM-FRT-04` | referência | rascunho | — | — |
+| [prototypes/administracao/faixas-frete/flow.html](./administracao/faixas-frete/flow.html) | `ADM-FRT-05` | referência | rascunho | — | — |
 
 ## Como manter
 

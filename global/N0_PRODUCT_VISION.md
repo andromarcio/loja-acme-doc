@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.1 | prompt: PROMPT_N0_VISAO | atualizado: 2026-10-14 -->
+<!-- docqui: 6.4.10 | prompt: PROMPT_N0_VISAO | atualizado: 2026-10-18 -->
 # Visão de Produto: Loja ACME
 > **Nível 0** - Visão de Produto - `LACME`
 
@@ -23,7 +23,7 @@ O cliente da ACME compra por telefone e só descobre o custo da entrega quando o
 
 ## Proposta de valor
 
-Comprar em poucos passos, com o valor do frete à vista antes da confirmação. O prazo estimado será tratado na evolução do exemplo, conforme o backlog.
+Encontrar o produto na vitrine e comprar em poucos passos, com o valor do frete à vista antes da confirmação. Do outro lado do balcão, a equipe da loja mantém o catálogo, a vitrine, os pedidos, os usuários e a tabela de frete sem depender da equipe de sistemas. O prazo estimado será tratado na evolução do exemplo, conforme o backlog.
 
 ---
 
@@ -31,8 +31,11 @@ Comprar em poucos passos, com o valor do frete à vista antes da confirmação. 
 
 | Persona | Quem é | Principal dor | O que espera do produto |
 |---|---|---|---|
+| Visitante | Pessoa que navega pela loja sem se identificar | Não sabe se o produto existe nem quanto custa | Encontrar o produto e o preço sem precisar se identificar |
 | Cliente | Pessoa que compra na loja | Só conhece o custo da entrega depois de fechar o pedido | Conhecer o frete antes de confirmar |
-| Atendente | Pessoa que apoia a compra | Precisa cotar frete por telefone | Consultar o mesmo valor apresentado ao cliente |
+| Atendente | Pessoa que apoia a compra e atende os pedidos | Precisa cotar frete e localizar pedidos por telefone | Consultar o mesmo valor apresentado ao cliente e cancelar o pedido quando o cliente pede |
+| Gestor de catálogo | Pessoa da equipe de vendas que organiza o que a loja mostra | Depende da equipe de sistemas para mudar categorias e destaques | Manter categorias e destaques da vitrine sozinho |
+| Administrador | Pessoa que cuida da operação da loja | Não controla quem acessa a loja nem a tabela de frete | Manter usuários e faixas de frete |
 
 ---
 
@@ -60,13 +63,18 @@ Comprar em poucos passos, com o valor do frete à vista antes da confirmação. 
 
 ### Está dentro
 
-- Catálogo de produtos, carrinho e checkout com cálculo de frete.
+- Vitrine com destaques, busca e página do produto.
+- Catálogo de produtos organizado em categorias.
+- Carrinho e checkout com cálculo de frete.
+- Gestão dos pedidos pelo atendimento, com cancelamento.
+- Administração dos usuários e das faixas de frete.
 - Evolução para prazo de entrega, resumo do pedido e cupom, conforme os tickets de exercício.
 
 ### Está fora (não-objetivos)
 
 - Marketplace de outros vendedores.
 - Cobrança, liquidação financeira e operação da transportadora.
+- Compra, reposição e controle físico do estoque.
 
 ---
 
@@ -77,8 +85,10 @@ Comprar em poucos passos, com o valor do frete à vista antes da confirmação. 
 
 | Major Feature Set | SIGLA | O que cuida |
 |---|---|---|
-| Vendas | VND | Carrinho e checkout até a confirmação do pedido |
-| Catálogo | CAT | Produtos disponíveis para compra; ainda planejado |
+| Catálogo | CAT | Produtos à venda e as categorias que os organizam |
+| Vitrine | VIT | O que o visitante vê: destaques, busca e página do produto |
+| Vendas | VND | Carrinho, checkout e gestão dos pedidos |
+| Administração | ADM | Usuários da loja e faixas de frete |
 
 ---
 
@@ -92,7 +102,7 @@ Comprar em poucos passos, com o valor do frete à vista antes da confirmação. 
 ## Restrições e premissas
 
 - Todos os dados e tickets são fictícios; não usar dados pessoais ou credenciais reais.
-- A tabela didática de frete tem uma única faixa atendida, declarada no modelo de entidades.
+- As faixas de frete, os produtos, os destaques e os usuários da demonstração são massa fictícia, declarada no modelo de entidades. O CEP `69900000` continua fora de todas as faixas.
 - Nenhuma aprovação humana, contagem revisada ou implementação é inferida da existência dos documentos.
 
 ---
@@ -103,6 +113,7 @@ Comprar em poucos passos, com o valor do frete à vista antes da confirmação. 
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-18 | Claude | N0 atualizado | Entram Vitrine e Administração entre os Major Feature Sets, as personas Visitante, Gestor de catálogo e Administrador e o novo escopo (vitrine, categorias, carrinho, gestão de pedidos, usuários e faixas de frete). Objetivos e KPIs não mudam; sem aprovação atribuída. |
 | 2026-10-14 | Copilot | N0 criado | Visão didática baseada no roteiro do simulador, sem aprovação atribuída à PO fictícia. |
 
 ---

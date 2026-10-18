@@ -1,3 +1,4 @@
+<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 # MASTER.md
 > Arquivo de contexto global, independente do módulo ou nível em trabalho.
 > No Claude Code é carregado automaticamente a cada sessão via o `CLAUDE.md` da
@@ -194,7 +195,7 @@ Entidades e atributos são nomeados em **português**. O `global/DATA-MODEL.md` 
 
 > ⚠️ Itens marcados dependem de decisão do projeto.
 
-1. **Exclusão**: [remoção definitiva / desativação com manutenção do histórico] ⚠️
+1. **Exclusão**: decidida por entidade, no N2 de cada cadastro. Remoção definitiva quando o registro sai sem deixar história — Categoria, Destaque e Faixa de Frete, bloqueada enquanto houver registro vinculado (→ ver RULES-DICTIONARY: RC-09 — Registro vinculado não pode ser excluído); desativação com manutenção do histórico quando o registro precisa continuar visível no passado — Usuário (Inativar Usuário).
 2. **Auditoria**: ações críticas sempre registradas em log de auditoria.
 3. **Autorização**: o acesso a cada funcionalidade é controlado por perfil — permissões na matriz do N2 e qualidade em `global/NFR.md` → SEG-01. A solução técnica fica para o desenvolvimento.
 

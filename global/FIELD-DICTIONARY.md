@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.1 | prompt: PROMPT_DATA_MODEL_negocio | atualizado: 2026-10-14 -->
+<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
 # FIELD-DICTIONARY.md
 > Dicionário de **campos canônicos** — campos que se repetem em várias features
 > com a mesma semântica de validação (CPF, e-mail, telefone…).
@@ -35,6 +35,7 @@
 | Nome de pessoa | nomeCompleto | texto | nome e sobrenome; comprimento mínimo |
 | Razão social | razaoSocial | texto | texto livre; comprimento mínimo |
 | URL | url | texto | formato de URL válido (http/https) |
+| Quantidade | quantidade | número inteiro | inteiro maior ou igual a 1 |
 
 > Parâmetros sempre deixados em aberto para a feature: **obrigatoriedade** e **unicidade**.
 
@@ -85,6 +86,25 @@ Scenario: CEP com quantidade de dígitos inválida
   Given que informo um CEP com menos de oito dígitos
   When tento calcular o frete
   Then o sistema rejeita e exibe "CEP inválido."
+```
+
+### Telefone
+<!-- usado-em:gerado -->
+> **Usado em:** _(ainda não referenciado em N3)_
+<!-- /usado-em -->
+
+- **Label Dev**: `telefone`
+- **Tipo**: texto (DDD + número, sem máscara no armazenamento)
+- **Validação**: DDD de dois dígitos seguido do número, com 10 ou 11 dígitos no total.
+- **Em aberto (por feature)**: obrigatoriedade.
+- **Mensagem**: "Telefone inválido."
+
+```gherkin
+# ── Validação de campo: Telefone ─────────────────────────────────
+Scenario: Telefone com quantidade de dígitos inválida
+  Given que informo um telefone com menos de 10 dígitos
+  When tento salvar
+  Then o sistema rejeita e exibe "Telefone inválido."
 ```
 
 ### E-mail
@@ -142,6 +162,63 @@ Scenario: Valor negativo
   Given que informo um valor menor que zero
   When tento salvar
   Then o sistema rejeita e exibe "Informe um valor válido."
+```
+
+### Nome de pessoa
+<!-- usado-em:gerado -->
+> **Usado em:** _(ainda não referenciado em N3)_
+<!-- /usado-em -->
+
+- **Label Dev**: `nomeCompleto`
+- **Tipo**: texto
+- **Validação**: nome e sobrenome separados por espaço; de 5 a 100 caracteres.
+- **Em aberto (por feature)**: obrigatoriedade.
+- **Mensagem**: "Informe nome e sobrenome."
+
+```gherkin
+# ── Validação de campo: Nome de pessoa ───────────────────────────
+Scenario: Nome sem sobrenome
+  Given que informo apenas o primeiro nome
+  When tento salvar
+  Then o sistema rejeita e exibe "Informe nome e sobrenome."
+```
+
+### Data futura
+<!-- usado-em:gerado -->
+> **Usado em:** _(ainda não referenciado em N3)_
+<!-- /usado-em -->
+
+- **Label Dev**: definido pelo contexto (ex.: `inicioVigencia`)
+- **Tipo**: data
+- **Validação**: igual ou posterior à data atual.
+- **Em aberto (por feature)**: obrigatoriedade; se vale também na edição de um registro que já começou.
+- **Mensagem**: "Informe uma data igual ou posterior a hoje."
+
+```gherkin
+# ── Validação de campo: Data futura ──────────────────────────────
+Scenario: Data anterior a hoje
+  Given que informo uma data anterior à data atual
+  When tento salvar
+  Then o sistema rejeita e exibe "Informe uma data igual ou posterior a hoje."
+```
+
+### Quantidade
+<!-- usado-em:gerado -->
+> **Usado em:** _(ainda não referenciado em N3)_
+<!-- /usado-em -->
+
+- **Label Dev**: `quantidade`
+- **Tipo**: número inteiro
+- **Validação**: inteiro maior ou igual a 1.
+- **Em aberto (por feature)**: limite máximo (ex.: a quantidade em estoque).
+- **Mensagem**: "Informe uma quantidade válida."
+
+```gherkin
+# ── Validação de campo: Quantidade ───────────────────────────────
+Scenario: Quantidade menor que 1
+  Given que informo a quantidade 0
+  When tento confirmar
+  Then o sistema rejeita e exibe "Informe uma quantidade válida."
 ```
 
 ---
