@@ -61,8 +61,8 @@ Vale para **todo** prompt de especificação (N0, 1A/1B, 2A, 3A/3B, 4A/4B, CRUD,
 |---|---|---|---|
 | N0 | Visão de Produto | `N0_PRODUCT_VISION.md` | Propósito, personas, KPIs, tom de voz |
 | N1 | Domínio | `modules/[dom]/README.md` | Responsabilidades, entidades, regras transversais |
-| N2 | Agrupamento Funcional | `modules/[dom]/[fs]/README.md` | Fluxo, telas, permissões, endpoints preliminares |
-| N3 | Funcionalidade | `modules/[dom]/[fs]/[feat].md` | Campos, regras, Gherkin, API, rastreabilidade |
+| N2 | Agrupamento Funcional | `modules/[dom]/[af]/README.md` | Fluxo, telas, permissões, endpoints preliminares |
+| N3 | Funcionalidade | `modules/[dom]/[af]/[func].md` | Campos, regras, Gherkin, API, rastreabilidade |
 
 ---
 

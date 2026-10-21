@@ -47,7 +47,7 @@ seguindo rigorosamente os padrões definidos no DESIGN-SYSTEM.md.
 2. **Use a biblioteca de componentes**: linke `prototypes/_biblioteca-ds/ds.css`
    e use as classes `.dsc-*` (CAIXA DS, espelham o DESIGN-SYSTEM.md). Ajuste o
    caminho relativo conforme a profundidade do arquivo — para
-   `prototypes/[dom]/[fs]/flow.html` o caminho é `../../_biblioteca-ds/ds.css`.
+   `prototypes/[dom]/[af]/flow.html` o caminho é `../../_biblioteca-ds/ds.css`.
    A navegação entre telas usa `.dsc-screen` / `.dsc-screen.is-active` (já na biblioteca).
    Apenas o JS de navegação vai inline.
    **Não redefina classes da biblioteca em CSS inline.** Em especial,

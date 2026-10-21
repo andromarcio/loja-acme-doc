@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Gerado de docqui-caixa-engine, docs/simulador/index.html (versão 7.1.0), num arquivo único para abrir direto no navegador: o CSS, as imagens, o docs/config.js e o github.js vão embutidos. Não edite aqui; gere de novo a partir do engine. -->
+<!-- Gerado de docqui-caixa-engine, docs/simulador/index.html (versão 7.1.1), num arquivo único para abrir direto no navegador: o CSS, as imagens, o docs/config.js e o github.js vão embutidos. Não edite aqui; gere de novo a partir do engine. -->
 <html lang="pt-BR" data-theme="light">
 <head>
 <meta charset="utf-8">
@@ -1405,7 +1405,7 @@ th { font-weight: 600; color: var(--fg); background: var(--bg-2); font-size: 12.
      ⚠ ! avisa). fx guarda o estado: feat, aim, branch, commit, merge e
      "+ caminho" / "~ caminho" / "- caminho" para arquivos que nenhum
      bloco file/fix mostra.
-     Roteiro revisado para Docqui Caixa 7.1.0, nos dois perfis. Recapturados
+     Roteiro revisado para Docqui Caixa 7.1.1, nos dois perfis. Recapturados
      numa instância criada pelo init-instance, com os arquivos que os passos
      mostram: o bootstrap; os gates de gravação dos N1, N2, DM e N3 (com o F9
      de regras × cenários e, no completo, o F10 do contrato da API); o
@@ -1524,7 +1524,7 @@ O seletor **Perfil**, no topo, troca a instância de perfil a qualquer momento. 
 --- nota regra
 **Branches e AIMMs:** história usa `historia/STRY0000000` e `analise-impacto/AIMM-STRY0000000.md`; sprint usa `sprint/SP07` e `analise-impacto/AIMM-SP07.md`. A cadência no MASTER decide a unidade de entrega. Este simulador percorre uma **sprint**: PRs de um checkpoint usam `checkpoint/STRY0013101-cp1` com destino a `sprint/SP07`, não a branch de história. Pages publica `historia/*` e `sprint/*`; no environment **github-pages**, permita as duas além da `main`. Envie a branch ao remoto com ao menos um commit próprio e aguarde o deploy.
 --- nota conceito
-A equipe: **Ana** (PO), **Rui** (analista de requisitos), **Bruno** (DBA), **Lia** (QA) e **Caio** (Tech Lead). O **Claude** conduz os prompts; o hook `spec-guard` e a CI rodam os validadores. O roteiro foi revisado para **Docqui Caixa 7.1.0**: usa os níveis Domínio, Agrupamento Funcional e Funcionalidade, a AIMM do ticket sem Contexto, com as Decisões pendentes e as Alterações em funcionalidades por Agrupamento Funcional, explicita `historia/*`, `sprint/*` e os PRs temporários `checkpoint/*`, além do N3 com a Superfície logo antes do Comportamento de tela e a Origem antes do Changelog, o N2 sem a coluna Prioridade, global conforme o perfil, reservas de IDs imutáveis e revisão de previews por palavra, regras `RN-NN`, cenários `@RN-NN`, contrato da API e caminho de volta até o teste. AIMM significa **Análise de Impacto de Mudança para Manutenção**; no ticket, Contexto é leitura do analista, nome da funcionalidade fica abaixo do ID e entidades não carregam PF. O selo acompanha a versão do engine; a revisão do roteiro é explícita. As capturas novas foram verificadas numa instância isolada; datas e hashes do enredo são didáticos, e trechos sem mudança mantêm a captura anterior.
+A equipe: **Ana** (PO), **Rui** (analista de requisitos), **Bruno** (DBA), **Lia** (QA) e **Caio** (Tech Lead). O **Claude** conduz os prompts; o hook `spec-guard` e a CI rodam os validadores. O roteiro foi revisado para **Docqui Caixa 7.1.1**: usa os níveis Domínio, Agrupamento Funcional e Funcionalidade, a AIMM do ticket sem Contexto, com as Decisões pendentes e as Alterações em funcionalidades por Agrupamento Funcional, explicita `historia/*`, `sprint/*` e os PRs temporários `checkpoint/*`, além do N3 com a Superfície logo antes do Comportamento de tela e a Origem antes do Changelog, o N2 sem a coluna Prioridade, global conforme o perfil, reservas de IDs imutáveis e revisão de previews por palavra, regras `RN-NN`, cenários `@RN-NN`, contrato da API e caminho de volta até o teste. AIMM significa **Análise de Impacto de Mudança para Manutenção**; no ticket, Contexto é leitura do analista, nome da funcionalidade fica abaixo do ID e entidades não carregam PF. O selo acompanha a versão do engine; a revisão do roteiro é explícita. As capturas novas foram verificadas numa instância isolada; datas e hashes do enredo são didáticos, e trechos sem mudança mantêm a captura anterior.
 
 === init
 cap: A
@@ -5170,7 +5170,7 @@ window.DOKU_CONFIG = {
   /* Versão do engine, no selo ao lado do nome (toda página) e na página inicial.
      Espelha o VERSION da raiz, que o site — servido só de docs/ — não alcança. No
      release, troque os dois no mesmo commit: o eval 40 reprova a divergência. */
-  version: "7.1.0",
+  version: "7.1.1",
 
   /* Páginas renomeadas: o endereço antigo (link, favorito) leva ao novo. */
   redirects: {

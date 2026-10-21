@@ -51,7 +51,7 @@ Regras da sessão:
   Normalize maiúsculas/minúsculas.
 - Trate caminhos relativos: a `## Origem` aponta para
   `../../../analise-impacto/AIMM-<CHAVE>.md` e a AIMM aponta para
-  `../modules/[dominio]/[fs]/[arquivo].md` — resolva-os ao mesmo par.
+  `../modules/[dominio]/[af]/[arquivo].md` — resolva-os ao mesmo par.
 - Só as AIMMs de ticket (`tipo: ticket` no front-matter) entram no inventário; a AIMM
   da sprint (`tipo: sprint`) consolida tickets e não é um lado do elo.
 - Nunca altere os arquivos diretamente neste passo de diagnóstico — primeiro o
@@ -213,7 +213,7 @@ Adicione a linha que falta no lado recíproco, espelhando o lado existente.
 
 Se falta na **AIMM do ticket** (`analise-impacto/AIMM-<CHAVE>.md`), em `## Funcionalidades`:
 ```diff
-+ | [`[ID]`: Nome da Funcionalidade](../modules/[dominio]/[fs]/[arquivo].md) | [Domínio] · [Agrupamento Funcional] | Criação / Alteração | [`CA-n`] | [status] |
++ | [`[ID]`: Nome da Funcionalidade](../modules/[dominio]/[af]/[arquivo].md) | [Domínio] · [Agrupamento Funcional] | Criação / Alteração | [`CA-n`] | [status] |
 ```
 
 Se falta na **`## Origem`** do N3:
@@ -228,7 +228,7 @@ com a linha do elo.
 
 Adicione a linha na tabela `## Rastreabilidade: ticket → spec → código`:
 ```diff
-+ | [`STRYxxxxxxx`](../analise-impacto/AIMM-[CHAVE].md) | [[ID]: Nome](./[dominio]/[fs]/[arquivo].md) | [Domínio] | [status] | — | — | — |
++ | [`STRYxxxxxxx`](../analise-impacto/AIMM-[CHAVE].md) | [[ID]: Nome](./[dominio]/[af]/[arquivo].md) | [Domínio] | [status] | — | — | — |
 ```
 
 ### 5c — Status divergente
