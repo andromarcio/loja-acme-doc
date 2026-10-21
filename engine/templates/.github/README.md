@@ -52,9 +52,9 @@ Para o Pages, selecione **GitHub Actions** como fonte e permita `main`, `sprint/
    ```yaml
    modelo-dados: { aprovado: true, por: "bru.dba", em: 2026-06-23, pr: 0 }
    ```
-   e ajuste `estado` para o derivado (ex.: `modelo-validado`). **Inclua o artefato da etapa no mesmo PR** — é ele que torna o dono do checkpoint revisor obrigatório: CP2 → `DATA-MODEL.md` · CP3 → plano de testes em `qa/[dominio]/[agrupamento-funcional]/[funcionalidade].md` · CP4 → registro em `repos/`. Para CP3/CP4 o gate-check **exige** o artefato no diff.
+   e ajuste `estado` para o derivado (ex.: `modelo-validado`). **Inclua o artefato da etapa no mesmo PR** — é ele que torna o dono do checkpoint revisor obrigatório: CP2 → `DATA-MODEL.md` · CP3 → plano de testes em `qa/[dominio]/[agrupamento-funcional]/[funcionalidade].md` · CP4 → registro em `repos/`. Para CP3/CP4 o gate-check **exige** o artefato no diff. No perfil `requisitos`, o CP1 e o CP2 podem ir juntos, num PR só, quando a mesma revisão cobre o N3 e o modelo de entidades: marque os dois gates, com `por` e `em`, e o `estado` em `especificado`.
 3. Regenere o espelho e inclua-o **no mesmo PR** (o gate-check reprova espelho defasado): `python scripts/gates.py promote --write` → commit do `modules/INDEX.md`.
-4. Abra o PR. O **gate-check** valida ordem + espelho; o **CODEOWNER** aprova; faça o merge. Nada é empurrado direto na `main` — o workflow de **drift** (`promote-estado.yml`) só confirma, após o merge, que o espelho seguiu em dia. No merge para a `main`, use *Create a merge commit* e acrescente ao corpo da mensagem `Approved-by: Nome <email>`: a mensagem padrão do GitHub não traz o trailer, e o job `aprovacao` do `spec-guard` reprova o push sem ele.
+4. Abra o PR. O **gate-check** valida ordem + espelho; o **CODEOWNER** aprova; faça o merge. Nada é empurrado direto na `main` — o workflow de **drift** (`promote-estado.yml`) só confirma, após o merge, que o espelho seguiu em dia. No merge para a `main`, use *Create a merge commit*, com `Approved-by: Nome <email>` no último parágrafo da mensagem: no fim da descrição do PR, se o repositório usa *Pull request title and description* como mensagem padrão; senão, acrescentado na hora do merge. Sem o trailer, o job `aprovacao` do `spec-guard` reprova o push.
 
 ## Comandos locais
 

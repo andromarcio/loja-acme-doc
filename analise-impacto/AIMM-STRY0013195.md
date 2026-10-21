@@ -36,11 +36,11 @@ O administrador precisa manter os usuários da loja — clientes, atendentes, ge
 
 | Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
-| [`ADM-USR-01`: Pesquisar Usuários](../modules/administracao/usuarios/f-pesquisar-usuario.md) | Administração · Usuários | Criação | `CA-1` | ✏️ Rascunho |
-| [`ADM-USR-02`: Cadastrar Usuário](../modules/administracao/usuarios/f-cadastrar-usuario.md) | Administração · Usuários | Criação | `CA-2` | ✏️ Rascunho |
-| [`ADM-USR-03`: Editar Usuário](../modules/administracao/usuarios/f-editar-usuario.md) | Administração · Usuários | Criação | `CA-3` | ✏️ Rascunho |
-| [`ADM-USR-04`: Inativar Usuário](../modules/administracao/usuarios/f-inativar-usuario.md) | Administração · Usuários | Criação | `CA-4` | ✏️ Rascunho |
-| [`ADM-USR-05`: Visualizar Usuário](../modules/administracao/usuarios/f-visualizar-usuario.md) | Administração · Usuários | Criação | `CA-5` | ✏️ Rascunho |
+| [`ADM-USR-01`: Pesquisar Usuários](../modules/administracao/usuarios/f-pesquisar-usuario.md) | Administração · Usuários | Criação | `CA-1` | 📋 Especificado |
+| [`ADM-USR-02`: Cadastrar Usuário](../modules/administracao/usuarios/f-cadastrar-usuario.md) | Administração · Usuários | Criação | `CA-2` | 📋 Especificado |
+| [`ADM-USR-03`: Editar Usuário](../modules/administracao/usuarios/f-editar-usuario.md) | Administração · Usuários | Criação | `CA-3` | 📋 Especificado |
+| [`ADM-USR-04`: Inativar Usuário](../modules/administracao/usuarios/f-inativar-usuario.md) | Administração · Usuários | Criação | `CA-4` | 📋 Especificado |
+| [`ADM-USR-05`: Visualizar Usuário](../modules/administracao/usuarios/f-visualizar-usuario.md) | Administração · Usuários | Criação | `CA-5` | 📋 Especificado |
 
 ## Artefatos impactados
 

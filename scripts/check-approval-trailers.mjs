@@ -9,7 +9,9 @@
 //
 //     Approved-by: Nome Sobrenome <email@dominio>
 //
-//   • merge via PR      → editar a mensagem do merge/squash commit na hora do merge;
+//   • merge via PR      → no último parágrafo da mensagem do merge/squash commit: no fim
+//                         da descrição do PR, se o repositório usa "Pull request title and
+//                         description" como mensagem padrão; senão, editada na hora do merge;
 //   • commit direto     → git commit --amend (ou -m com o trailer no rodapé);
 //   • mais de um aprovador → um trailer por linha.
 //
@@ -20,8 +22,11 @@
 //   node scripts/check-approval-trailers.mjs --range A..B --all # todos os commits (fluxo squash)
 //
 // Por padrão só MERGE commits são exigidos (commits de trabalho não precisam de
-// trailer). Em fluxo squash-merge não há merge commit — use --all no intervalo do
-// push. Commits que não tocam modules/|global/ são ignorados.
+// trailer), e só os da linha principal (--first-parent): o merge do PR já carrega o
+// que os merges de dentro da branch trouxeram — o "Update branch" e a incorporação
+// de outra branch não pedem aval próprio. Em fluxo squash-merge não há merge commit
+// — use --all no intervalo do push. Commits que não tocam modules/|global/ são
+// ignorados.
 // Exit: 0 ok; 1 commit exigido sem trailer; 2 erro de uso/git.
 
 import { execFileSync } from 'node:child_process';
@@ -69,7 +74,7 @@ const range = argOf('--range');
 let commits;
 try {
   if (range) {
-    const all = git('rev-list', '--reverse', range).split(/\r?\n/).filter(Boolean);
+    const all = git('rev-list', '--reverse', ...(has('--all') ? [] : ['--first-parent']), range).split(/\r?\n/).filter(Boolean);
     commits = has('--all') ? all : all.filter(isMerge);
     if (!commits.length) {
       console.log(`✓ check-approval-trailers: nenhum ${has('--all') ? 'commit' : 'merge commit'} no intervalo ${range} — nada a exigir.`);

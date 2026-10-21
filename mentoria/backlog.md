@@ -2,7 +2,7 @@
 
 Os tickets abaixo fazem o papel do ServiceNow: é daqui que você copia a descrição e os critérios de aceite para a AIMM de cada ticket, **como estão escritos** — transcrição, não formulação. O mentor faz o papel da PO: é com ele que você elicita o que o ticket não diz e é ele quem avaliza o escopo.
 
-Os três primeiros formam a sprint SP07 e são os mesmos do simulador (`mentoria/simulador.html`). Os dois seguintes são para praticar sem o roteiro do simulador. Os da última seção já estão especificados no exemplo, em rascunho: servem de consulta, para comparar cada ticket com a AIMM e as funcionalidades que ele originou. O STRY0013205 tem só a AIMM, em análise e sem aval: mostra o que uma alteração no modelo de entidades leva para a AIMM antes de qualquer funcionalidade mudar.
+Os três primeiros formam a sprint SP07 e são os mesmos do simulador (`mentoria/simulador.html`). Os dois seguintes são para praticar sem o roteiro do simulador. Os da última seção já estão especificados no exemplo: servem de consulta, para comparar cada ticket com a AIMM e as funcionalidades que ele originou. O STRY0013205 tem só a AIMM, em análise e sem aval: mostra o que uma alteração no modelo de entidades leva para a AIMM antes de qualquer funcionalidade mudar.
 
 ## Sprint SP07
 
@@ -83,7 +83,7 @@ O que este ticket exercita: a seção `## Entidades alteradas` da AIMM. O ticket
 
 ## Já especificados no exemplo
 
-Cada ticket abaixo tem a sua AIMM em `analise-impacto/` e originou um Agrupamento Funcional inteiro, em rascunho, sem aprovação e com a contagem pendente.
+Cada ticket abaixo tem a sua AIMM em `analise-impacto/` e originou um Agrupamento Funcional inteiro, com a contagem pendente. As funcionalidades estão especificadas, menos as cinco que a STRY0013205 ainda vai alterar.
 
 ### STRY0013170 — Categorias de produtos
 

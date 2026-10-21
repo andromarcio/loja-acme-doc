@@ -29,7 +29,9 @@ tabela vem do front-matter `origem: { tipo, chave }` (legado: `servicenow:`).
 
 Perfil de escopo: a linha "**Perfil**: `requisitos`" do `global/MASTER.md`
 encurta a esteira ao lado negocial (requisitos → modelo-dados) e o CP2 entrega
-`especificado`; ausente/`completo` mantém os quatro checkpoints. Ver
+`especificado`; nele, o CP1 e o CP2 podem ser aprovados juntos, num PR só (o N3
+e o modelo de entidades na mesma revisão). Ausente/`completo` mantém os quatro
+checkpoints, um por PR. Ver
 `ler_perfil`/`aplicar_perfil`. O estado em que a esteira da instância termina é o
 `estado_final()` — é ele que a AIMM confere ao fechar (validate-impact).
 
@@ -123,6 +125,7 @@ def aplicar_perfil(root: str) -> str:
     GATE_ORDER[:] = ESTEIRA_POR_PERFIL[perfil]
     GATE_TO_ESTADO.clear()
     GATE_TO_ESTADO.update(GATE_TO_ESTADO_PADRAO, **ESTADO_POR_PERFIL[perfil])
+    GATES_JUNTOS[:] = JUNTOS_POR_PERFIL[perfil]
     return perfil
 
 
@@ -147,6 +150,14 @@ ESTADO_POR_PERFIL = {
     "requisitos": {"modelo-dados": "especificado"},
     "completo": {},
 }
+# Checkpoints que o perfil deixa aprovar juntos, no mesmo PR (decisão do PO,
+# 2026-10-21, da proposta da esteira por ticket): no `requisitos`, o N3 e o modelo
+# de entidades passam pela mesma revisão. Aprovar um por PR continua valendo.
+JUNTOS_POR_PERFIL = {
+    "requisitos": ["requisitos", "modelo-dados"],
+    "completo": [],
+}
+GATES_JUNTOS: list = []
 GATE_TO_ESTADO = dict(GATE_TO_ESTADO_PADRAO)
 
 # Estados manuais (não derivados de gates) que o autor pode declarar.
@@ -383,7 +394,8 @@ def validar_estado(meta, rotulo, erros):
 
 
 def validar_transicao(after, before, rotulo, erros, unidade="PR", onde="na base"):
-    """A transição é legal? (no máximo 1 gate novo, predecessor já aprovado antes).
+    """A transição é legal? (no máximo 1 gate novo, predecessor já aprovado antes;
+    no perfil que os junta, CP1 e CP2 contam como um checkpoint só).
 
     `unidade`/`onde` só mudam a mensagem: no PR comum a unidade é o PR e o "antes" é a
     base; na branch de entrega, o commit e os commits anteriores a ele."""
@@ -391,7 +403,8 @@ def validar_transicao(after, before, rotulo, erros, unidade="PR", onde="na base"
         g for g in GATE_ORDER
         if gate_aprovado(after, g) and not gate_aprovado(before, g)
     ]
-    if len(novos) > 1:
+    juntos = len(novos) > 1 and set(novos) <= set(GATES_JUNTOS)
+    if len(novos) > 1 and not juntos:
         erros.append(
             f"{rotulo}: {len(novos)} gates aprovados de uma vez ({', '.join(novos)}). "
             f"Cada checkpoint é uma aprovação humana separada — um gate por {unidade}."
@@ -400,7 +413,7 @@ def validar_transicao(after, before, rotulo, erros, unidade="PR", onde="na base"
         idx = GATE_ORDER.index(gate)
         if idx > 0:
             pred = GATE_ORDER[idx - 1]
-            if not gate_aprovado(before, pred):
+            if not gate_aprovado(before, pred) and not (juntos and pred in novos):
                 erros.append(
                     f"{rotulo}: gate '{gate}' está sendo aprovado, mas o anterior "
                     f"('{pred}') ainda não foi aprovado {onde}. Não pule etapas."

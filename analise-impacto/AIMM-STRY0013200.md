@@ -36,11 +36,11 @@ O administrador precisa manter as faixas de CEP atendidas e o valor do frete de 
 
 | Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
-| [`ADM-FRT-01`: Pesquisar Faixas de Frete](../modules/administracao/faixas-frete/f-pesquisar-faixa-frete.md) | Administração · Faixas de Frete | Criação | `CA-1` | ✏️ Rascunho |
-| [`ADM-FRT-02`: Cadastrar Faixa de Frete](../modules/administracao/faixas-frete/f-cadastrar-faixa-frete.md) | Administração · Faixas de Frete | Criação | `CA-2` | ✏️ Rascunho |
-| [`ADM-FRT-03`: Editar Faixa de Frete](../modules/administracao/faixas-frete/f-editar-faixa-frete.md) | Administração · Faixas de Frete | Criação | `CA-3` | ✏️ Rascunho |
-| [`ADM-FRT-04`: Excluir Faixa de Frete](../modules/administracao/faixas-frete/f-excluir-faixa-frete.md) | Administração · Faixas de Frete | Criação | `CA-4` | ✏️ Rascunho |
-| [`ADM-FRT-05`: Visualizar Faixa de Frete](../modules/administracao/faixas-frete/f-visualizar-faixa-frete.md) | Administração · Faixas de Frete | Criação | `CA-5` | ✏️ Rascunho |
+| [`ADM-FRT-01`: Pesquisar Faixas de Frete](../modules/administracao/faixas-frete/f-pesquisar-faixa-frete.md) | Administração · Faixas de Frete | Criação | `CA-1` | 📋 Especificado |
+| [`ADM-FRT-02`: Cadastrar Faixa de Frete](../modules/administracao/faixas-frete/f-cadastrar-faixa-frete.md) | Administração · Faixas de Frete | Criação | `CA-2` | 📋 Especificado |
+| [`ADM-FRT-03`: Editar Faixa de Frete](../modules/administracao/faixas-frete/f-editar-faixa-frete.md) | Administração · Faixas de Frete | Criação | `CA-3` | 📋 Especificado |
+| [`ADM-FRT-04`: Excluir Faixa de Frete](../modules/administracao/faixas-frete/f-excluir-faixa-frete.md) | Administração · Faixas de Frete | Criação | `CA-4` | 📋 Especificado |
+| [`ADM-FRT-05`: Visualizar Faixa de Frete](../modules/administracao/faixas-frete/f-visualizar-faixa-frete.md) | Administração · Faixas de Frete | Criação | `CA-5` | 📋 Especificado |
 
 ## Artefatos impactados
 

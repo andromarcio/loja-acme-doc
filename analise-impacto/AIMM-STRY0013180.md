@@ -36,11 +36,11 @@ A equipe de vendas precisa escolher quais produtos aparecem em destaque na pági
 
 | Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
-| [`VIT-DST-01`: Pesquisar Destaques](../modules/vitrine/destaques/f-pesquisar-destaque.md) | Vitrine · Destaques | Criação | `CA-1` | ✏️ Rascunho |
-| [`VIT-DST-02`: Cadastrar Destaque](../modules/vitrine/destaques/f-cadastrar-destaque.md) | Vitrine · Destaques | Criação | `CA-2` | ✏️ Rascunho |
-| [`VIT-DST-03`: Editar Destaque](../modules/vitrine/destaques/f-editar-destaque.md) | Vitrine · Destaques | Criação | `CA-3` | ✏️ Rascunho |
-| [`VIT-DST-04`: Excluir Destaque](../modules/vitrine/destaques/f-excluir-destaque.md) | Vitrine · Destaques | Criação | `CA-4` | ✏️ Rascunho |
-| [`VIT-DST-05`: Visualizar Destaque](../modules/vitrine/destaques/f-visualizar-destaque.md) | Vitrine · Destaques | Criação | `CA-5` | ✏️ Rascunho |
+| [`VIT-DST-01`: Pesquisar Destaques](../modules/vitrine/destaques/f-pesquisar-destaque.md) | Vitrine · Destaques | Criação | `CA-1` | 📋 Especificado |
+| [`VIT-DST-02`: Cadastrar Destaque](../modules/vitrine/destaques/f-cadastrar-destaque.md) | Vitrine · Destaques | Criação | `CA-2` | 📋 Especificado |
+| [`VIT-DST-03`: Editar Destaque](../modules/vitrine/destaques/f-editar-destaque.md) | Vitrine · Destaques | Criação | `CA-3` | 📋 Especificado |
+| [`VIT-DST-04`: Excluir Destaque](../modules/vitrine/destaques/f-excluir-destaque.md) | Vitrine · Destaques | Criação | `CA-4` | 📋 Especificado |
+| [`VIT-DST-05`: Visualizar Destaque](../modules/vitrine/destaques/f-visualizar-destaque.md) | Vitrine · Destaques | Criação | `CA-5` | 📋 Especificado |
 
 ## Artefatos impactados
 

@@ -11,10 +11,10 @@ depende_de: ["VIT-DST-02"]
 origem:
   tipo: servicenow
   chave: STRY0013175
-estado: rascunho
+estado: especificado
 gates:
-  requisitos: { aprovado: false, por: "", em: "", pr: "" }
-  modelo-dados: { aprovado: false, por: "", em: "", pr: "" }
+  requisitos: { aprovado: true, por: "Andro Márcio", em: "2026-10-21", pr: 25 }
+  modelo-dados: { aprovado: true, por: "Andro Márcio", em: "2026-10-21", pr: 25 }
   testes: { aprovado: false, por: "", em: "", pr: "" }
   codigo: { aprovado: false, por: "", em: "", pr: "" }
 contagem:

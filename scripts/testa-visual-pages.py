@@ -286,6 +286,8 @@ class VisualPagesTest(unittest.TestCase):
                 self.assertEqual(reports.count(), 9)
                 reports.first.click()
                 self.page.wait_for_url("**#analise-impacto/AIMM-STRY0013101.md")
+                # A URL muda antes de a AIMM renderizar: espera o título dela, não o do índice.
+                self.page.wait_for_function("() => document.querySelector('#documentContainer h1')?.textContent === 'AIMM STRY0013101'", timeout=5000)
                 self.assertEqual(self.page.locator("#documentContainer h1").inner_text(), "AIMM STRY0013101")
                 self.assertLessEqual(self.page.evaluate("document.documentElement.scrollWidth"), width)
 
@@ -497,8 +499,8 @@ class VisualPagesTest(unittest.TestCase):
         def metric(name):
             return int(self.page.locator(f'[data-metric="{name}"] > strong').inner_text())
 
-        expected = {"n1": 4, "n2": 8, "n3": 31, "artifacts": 43, "approved": 0,
-                    "specified": 0, "waiting": 31, "inconsistent": 0, "ungoverned": 0,
+        expected = {"n1": 4, "n2": 8, "n3": 31, "artifacts": 43, "approved": 25,
+                    "specified": 25, "waiting": 6, "inconsistent": 0, "ungoverned": 0,
                     "missing": 0, "countPending": 31, "countReviewed": 0, "dataModels": 4,
                     "prototypes": 8}
         for name, value in expected.items():

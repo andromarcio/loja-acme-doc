@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Gerado de docqui-caixa-engine, docs/simulador/index.html (versão 7.1.1), num arquivo único para abrir direto no navegador: o CSS, as imagens, o docs/config.js e o github.js vão embutidos. Não edite aqui; gere de novo a partir do engine. -->
+<!-- Gerado de docqui-caixa-engine, docs/simulador/index.html (versão 7.2.0), num arquivo único para abrir direto no navegador: o CSS, as imagens, o docs/config.js e o github.js vão embutidos. Não edite aqui; gere de novo a partir do engine. -->
 <html lang="pt-BR" data-theme="light">
 <head>
 <meta charset="utf-8">
@@ -1405,7 +1405,7 @@ th { font-weight: 600; color: var(--fg); background: var(--bg-2); font-size: 12.
      ⚠ ! avisa). fx guarda o estado: feat, aim, branch, commit, merge e
      "+ caminho" / "~ caminho" / "- caminho" para arquivos que nenhum
      bloco file/fix mostra.
-     Roteiro revisado para Docqui Caixa 7.1.1, nos dois perfis. Recapturados
+     Roteiro revisado para Docqui Caixa 7.2.0, nos dois perfis. Recapturados
      numa instância criada pelo init-instance, com os arquivos que os passos
      mostram: o bootstrap; os gates de gravação dos N1, N2, DM e N3 (com o F9
      de regras × cenários e, no completo, o F10 do contrato da API); o
@@ -1434,7 +1434,7 @@ VERSION :: Versão do Docqui Caixa sincronizado ({{VERSION}}). Todo artefato ger
 .github/CODEOWNERS :: Quem aprova cada checkpoint: `modules/` convoca a PO (CP1), `DATA-MODEL` o DBA (CP2), `qa/` a QA (CP3), `repos/` o Tech Lead (CP4).
 .github/README.md :: Passo a passo para adotar a esteira na instância.
 .github/pull_request_template.md :: Modelo do PR: o checkpoint e a chave do ticket.
-.github/workflows/gate-check.yml :: Status check que bloqueia o PR: ordem dos gates, um gate por PR, espelho do INDEX em dia e o artefato da etapa no mesmo PR.
+.github/workflows/gate-check.yml :: Status check que bloqueia o PR: ordem dos gates, um gate por PR (no perfil requisitos, CP1 e CP2 podem ir juntos), espelho do INDEX em dia e o artefato da etapa no mesmo PR.
 .github/workflows/spec-guard.yml :: A CI de cada PR: validate-doc, valida-regras-cenarios, valida-contrato-api, audit-trace-links, suspect-links, validate-impact, índices de uso dos dicionários e de funcionalidades por repositório, e diagrama ER. No PR da branch de entrega, também valida-commits-ticket e, para a main, valida-entrega.
 .github/workflows/promote-estado.yml :: Rede de segurança depois do merge: acusa o espelho da esteira defasado no INDEX, sem push na main.
 .github/workflows/pages.yml :: Publica o site: a main na raiz e cada branch de entrega aberta em /sprint/<id>/ ou /historia/<CHAVE>/.
@@ -1482,7 +1482,7 @@ valida-contrato-api.mjs :: ao gravar · F10 · CI :: Num N3 com `## API`: E1 end
 monta-contexto.mjs :: sessão · 3B · 5B · 5A :: O pacote de contexto da funcionalidade (ou, com `--agrupamento`, do Agrupamento Funcional): o N3 e, dos globais, só o que ele usa. O que é citado e não existe abre o pacote como ❓; com `--base`, traz o delta.
 generate-impact-draft.mjs :: AIMM · passo 5 :: Deriva o changeset dos elos das funcionalidades do ticket e o grava na AIMM. Não valida.
 validate-impact.mjs :: AIMM · CI :: Estrutura da AIMM, invariantes C1 a C3, portões por estado (aval, fechamento, estado final das funcionalidades) e a AIMM da sprint conferida com as dos tickets.
-gates.py :: esteira · CI :: Máquina de estados dos checkpoints: ordem, um gate por PR, quem e quando, estado derivado, artefato da etapa. Regenera o espelho no INDEX.
+gates.py :: esteira · CI :: Máquina de estados dos checkpoints: ordem, um gate por PR (no perfil requisitos, CP1 e CP2 podem ir juntos), quem e quando, estado derivado, artefato da etapa. Regenera o espelho no INDEX.
 valida-contagem-consolidada.mjs :: contagem :: O CONTAGEM-PF espelha a contagem dos N3: o PF, a pendência e o papel de cada processo elementar.
 delta-n3.mjs :: alteração :: O que mudou em cada N3 da AIMM entre a main e a branch, por seção. É a entrada do SDD em modo alteração.
 valida-artefatos-previstos.mjs :: CI do código · CP4 :: O código cita o ID de cada funcionalidade implementada e, no caminho de volta, toda regra `RN-NN` aparece como `<ID>/RN-NN` num teste e todo código de `error_codes` aparece no código. Com `--repo nome=dir`, confere somente aquele serviço; `--repos-dir` confere os repositórios clonados lado a lado.
@@ -1524,7 +1524,7 @@ O seletor **Perfil**, no topo, troca a instância de perfil a qualquer momento. 
 --- nota regra
 **Branches e AIMMs:** história usa `historia/STRY0000000` e `analise-impacto/AIMM-STRY0000000.md`; sprint usa `sprint/SP07` e `analise-impacto/AIMM-SP07.md`. A cadência no MASTER decide a unidade de entrega. Este simulador percorre uma **sprint**: PRs de um checkpoint usam `checkpoint/STRY0013101-cp1` com destino a `sprint/SP07`, não a branch de história. Pages publica `historia/*` e `sprint/*`; no environment **github-pages**, permita as duas além da `main`. Envie a branch ao remoto com ao menos um commit próprio e aguarde o deploy.
 --- nota conceito
-A equipe: **Ana** (PO), **Rui** (analista de requisitos), **Bruno** (DBA), **Lia** (QA) e **Caio** (Tech Lead). O **Claude** conduz os prompts; o hook `spec-guard` e a CI rodam os validadores. O roteiro foi revisado para **Docqui Caixa 7.1.1**: usa os níveis Domínio, Agrupamento Funcional e Funcionalidade, a AIMM do ticket sem Contexto, com as Decisões pendentes e as Alterações em funcionalidades por Agrupamento Funcional, explicita `historia/*`, `sprint/*` e os PRs temporários `checkpoint/*`, além do N3 com a Superfície logo antes do Comportamento de tela e a Origem antes do Changelog, o N2 sem a coluna Prioridade, global conforme o perfil, reservas de IDs imutáveis e revisão de previews por palavra, regras `RN-NN`, cenários `@RN-NN`, contrato da API e caminho de volta até o teste. AIMM significa **Análise de Impacto de Mudança para Manutenção**; no ticket, Contexto é leitura do analista, nome da funcionalidade fica abaixo do ID e entidades não carregam PF. O selo acompanha a versão do engine; a revisão do roteiro é explícita. As capturas novas foram verificadas numa instância isolada; datas e hashes do enredo são didáticos, e trechos sem mudança mantêm a captura anterior.
+A equipe: **Ana** (PO), **Rui** (analista de requisitos), **Bruno** (DBA), **Lia** (QA) e **Caio** (Tech Lead). O **Claude** conduz os prompts; o hook `spec-guard` e a CI rodam os validadores. O roteiro foi revisado para **Docqui Caixa 7.2.0**: usa os níveis Domínio, Agrupamento Funcional e Funcionalidade, a AIMM do ticket sem Contexto, com as Decisões pendentes e as Alterações em funcionalidades por Agrupamento Funcional, explicita `historia/*`, `sprint/*` e os PRs temporários `checkpoint/*`, além do N3 com a Superfície logo antes do Comportamento de tela e a Origem antes do Changelog, o N2 sem a coluna Prioridade, global conforme o perfil, reservas de IDs imutáveis e revisão de previews por palavra, regras `RN-NN`, cenários `@RN-NN`, contrato da API e caminho de volta até o teste. AIMM significa **Análise de Impacto de Mudança para Manutenção**; no ticket, Contexto é leitura do analista, nome da funcionalidade fica abaixo do ID e entidades não carregam PF. O selo acompanha a versão do engine; a revisão do roteiro é explícita. As capturas novas foram verificadas numa instância isolada; datas e hashes do enredo são didáticos, e trechos sem mudança mantêm a captura anterior.
 
 === init
 cap: A
@@ -2544,8 +2544,6 @@ $ python3 scripts/gates.py check --base origin/sprint/SP07
 ❌ Esteira de gates: transição inválida
 
   • modules/vendas/checkout/f-calcular-frete.md: campo 'estado' é 'requisitos-aprovados', mas o derivado dos gates é 'especificado'. Ajuste 'estado' para 'especificado'.
-  • modules/vendas/checkout/f-calcular-frete.md: 2 gates aprovados de uma vez (requisitos, modelo-dados). Cada checkpoint é uma aprovação humana separada — um gate por PR.
-  • modules/vendas/checkout/f-calcular-frete.md: gate 'modelo-dados' está sendo aprovado, mas o anterior ('requisitos') ainda não foi aprovado na base. Não pule etapas.
   • modules/vendas/checkout/f-calcular-frete.md: gate 'modelo-dados' aprovado sem preencher 'por'.
   • modules/vendas/checkout/f-calcular-frete.md: gate 'modelo-dados' aprovado sem preencher 'em' (data).
 
@@ -2581,7 +2579,7 @@ O espelho da esteira é gerado; a coluna **Status** da rastreabilidade, não. El
 $ node scripts/audit-trace-links.mjs
 ✓ audit-trace-links: elos ticket↔funcionalidade consistentes nas três fontes — 1 par(es), 1 AIMM(s), 1 funcionalidade(s).
 --- nota regra
-**Um gate por PR, com o artefato da etapa no mesmo PR.** Os motivos clássicos de reprovação do `gate-check`: gate pulado, mais de um gate no PR, `por` ou `em` vazios, `estado` diferente do derivado, espelho do INDEX defasado e, no CP3 e no CP4, o artefato da etapa ausente.
+**Um gate por PR, com o artefato da etapa no mesmo PR.** No perfil requisitos, o CP1 e o CP2 podem ir juntos, num PR só, quando a mesma revisão cobre o N3 e o modelo de entidades — com `por` e `em` nos dois; aqui, o DBA ainda não viu o modelo. Os motivos clássicos de reprovação do `gate-check`: gate pulado, mais de um gate no PR, `por` ou `em` vazios, `estado` diferente do derivado, espelho do INDEX defasado e, no CP3 e no CP4, o artefato da etapa ausente.
 --- fx
 feat VND-CHK-01 requisitos-aprovados
 commit docs(VND-CHK-01): CP1 requisitos aprovado (ServiceNow STRY0013101)
@@ -5170,7 +5168,7 @@ window.DOKU_CONFIG = {
   /* Versão do engine, no selo ao lado do nome (toda página) e na página inicial.
      Espelha o VERSION da raiz, que o site — servido só de docs/ — não alcança. No
      release, troque os dois no mesmo commit: o eval 40 reprova a divergência. */
-  version: "7.1.1",
+  version: "7.2.0",
 
   /* Páginas renomeadas: o endereço antigo (link, favorito) leva ao novo. */
   redirects: {

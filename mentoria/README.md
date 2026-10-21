@@ -5,7 +5,7 @@ Esta instância é um exemplo preenchido do perfil **requisitos**, pronto para a
 
 ## O que já está preenchido
 
-Quatro Domínios estão preenchidos, em rascunho, com 31 funcionalidades:
+Quatro Domínios estão preenchidos, com 31 funcionalidades, 25 delas especificadas:
 
 - **Catálogo** (`CAT`): Categorias (`CAT-CTG`), CRUD completo com cadastro, edição e visualização em modal. Produtos (`CAT-PRD`) fica planejado: é o exercício STRY0013150.
 - **Vitrine** (`VIT`): Navegação (`VIT-NAV`), aberta a quem visita, e Destaques (`VIT-DST`), CRUD completo com período de vigência.
@@ -14,7 +14,7 @@ Quatro Domínios estão preenchidos, em rascunho, com 31 funcionalidades:
 
 Cada Agrupamento Funcional nasceu de um ticket fictício (STRY0013101 e STRY0013170 a STRY0013200, no [backlog](backlog.md)), tem a sua AIMM e o seu protótipo de fluxo, e cada funcionalidade está ligada ao ticket nos três lugares: a N3, a AIMM e o INDEX. O modelo de entidades tem Categoria, Produto, Destaque, Pedido, ItemPedido, TabelaFrete e Usuario, com massa fictícia; os dicionários têm as entradas canônicas que as funcionalidades citam, como CEP, Quantidade e RC-09 — Registro vinculado não pode ser excluído.
 
-Nenhum gate foi aprovado. A existência do material não equivale a aprovação da PO ou do DBA. Ana, Rui e Bruno são personagens do simulador, não usuários que deram aprovação neste repositório.
+Em 2026-10-21, Andro Márcio aprovou o CP1 e o CP2 juntos em 25 funcionalidades, num PR só. VND-CHK-01 — Calcular Frete segue em rascunho, para percorrer a sprint SP07, e CAT-CTG-02 a CAT-CTG-05 e VIT-NAV-02 também, até a AIMM da STRY0013205 ter aval. A existência do material não equivale a aprovação: o que está especificado tem `por` e `em` no front-matter. Ana, Rui e Bruno são personagens do simulador, não usuários que deram aprovação neste repositório.
 
 ## Roteiro de apresentação
 
@@ -25,8 +25,8 @@ Nenhum gate foi aprovado. A existência do material não equivale a aprovação 
 5. Abra o modelo de entidades e a entrada CEP no FIELD-DICTIONARY; nenhum schema de banco é necessário.
 6. Compare dois CRUDs completos: Categorias, em modal, e Faixas de Frete, em telas próprias. As cinco operações nascem do Cadastrar; a exclusão bloqueada cita a regra canônica RC-09, e Usuários troca a exclusão pela inativação.
 7. Siga as relações entre domínios: a faixa mantida em Faixas de Frete é a que o Calcular Frete usa, a categoria inativada no Catálogo some da Vitrine e o carrinho é o pedido aberto que a Gestão de Pedidos acompanha depois de confirmado.
-8. Mostre os mapas de funcionalidades e rastreabilidade, o diagrama ER e o INDEX com a esteira ainda em rascunho.
-9. No simulador, percorra CP1 e CP2. No repositório real, esses passos exigem responsáveis reais, um checkpoint por PR e regeneração do espelho.
+8. Mostre os mapas de funcionalidades e rastreabilidade, o diagrama ER e o INDEX com a esteira: 25 funcionalidades especificadas e 6 em rascunho.
+9. No simulador, percorra CP1 e CP2. No repositório real, esses passos exigem responsáveis reais, um checkpoint por PR — ou, no perfil requisitos, o CP1 e o CP2 juntos, num PR só — e regeneração do espelho.
 
 ## Praticar sem alterar o ponto de partida
 
