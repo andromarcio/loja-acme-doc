@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// Atualiza a AIMM do ticket para o layout sem PF e com entidades, preservando conteúdo.
+// Atualiza a AIMM do ticket para o layout sem Contexto, sem PF e com entidades; a AIMM da
+// sprint, só nos nomes das alterações por Agrupamento Funcional e das Decisões pendentes.
 // Uso: node scripts/migra-aimm-ticket-layout.mjs [--root <instância>] [--write]
 
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
@@ -41,7 +42,8 @@ function migrate(text, version, date) {
   const original = text.replace(/\r\n/g, '\n');
   const lines = original.split('\n');
   const fm = frontMatterCampos(lines);
-  if (String(fm.tipo || '').toLowerCase() !== 'ticket') return text;
+  const kind = String(fm.tipo || '').toLowerCase(), ticket = kind === 'ticket';
+  if (!ticket && kind !== 'sprint') return text;
   let changed = false;
   const alterations = section(lines, 'Alterações na spec, por Agrupamento Funcional');
   if (alterations) {
@@ -71,7 +73,7 @@ function migrate(text, version, date) {
       }
     }
   }
-  const oldEntities = section(lines, 'Funções de dados alteradas');
+  const oldEntities = ticket ? section(lines, 'Funções de dados alteradas') : null;
   if (oldEntities) {
     lines[oldEntities.start] = '## Entidades alteradas';
     for (let index = oldEntities.start + 1; index < oldEntities.end; index++) {
@@ -94,14 +96,15 @@ function migrate(text, version, date) {
       const row = header.map(value => /^data$/i.test(value) ? date
         : /^autor$/i.test(value) ? 'Docqui Caixa'
           : /^tipo$/i.test(value) ? 'Ajuste'
-            : /^descri|mudan/i.test(value) ? 'Layout da AIMM do ticket: nome abaixo do ID, entidades sem PF.' : '—');
+            : /^descri|mudan/i.test(value) ? (ticket ? 'Layout da AIMM do ticket: sem Contexto, alterações por Agrupamento Funcional, Decisões pendentes, nome abaixo do ID, entidades sem PF.'
+              : 'Seções renomeadas: Alterações em funcionalidades por Agrupamento Funcional e Decisões pendentes.') : '—');
       lines.splice(separator + 1, 0, tableLine(row));
     }
   }
   if (/^<!-- docqui: [^|]+\|/.test(lines[0])) {
     lines[0] = lines[0].replace(/^<!-- docqui: [^|]+\|/, `<!-- docqui: ${version} |`).replace(/atualizado: \d{4}-\d{2}-\d{2}/, `atualizado: ${date}`);
   }
-  if ((original.match(/^## /gm) || []).length !== (lines.join('\n').match(/^## /gm) || []).length) throw new Error('A migração alterou a quantidade de seções.');
+  if ((original.match(/^## /gm) || []).length - (context ? 1 : 0) !== (lines.join('\n').match(/^## /gm) || []).length) throw new Error('A migração alterou a quantidade de seções.');
   return lines.join(eol);
 }
 
@@ -112,7 +115,7 @@ const changes = impactFiles(dir).map(name => {
   const file = join(dir, name), before = readFileSync(file, 'utf8'), after = migrate(before, version, date);
   return { file, before, after };
 }).filter(change => change.before !== change.after);
-console.log(`${WRITE ? 'Migração' : 'Modo seco'}: ${changes.length} AIMM(s) de ticket no layout de entidades.`);
+console.log(`${WRITE ? 'Migração' : 'Modo seco'}: ${changes.length} AIMM(s) no layout atual.`);
 for (const change of changes) console.log(`  ${change.file.slice(ROOT.length + 1)}`);
 if (!WRITE) {
   console.log('Nenhum arquivo alterado. Confira a lista e aplique com --write.');

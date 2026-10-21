@@ -7,10 +7,10 @@ estado: rascunho          # rascunho → concluído (apurável fechado e conferi
 ---
 
 <!--
-  AIM DA SPRINT. Um arquivo por sprint, em `analise-impacto/AIM-<sprint>.md`. Consolida
-  as AIMs dos tickets atendidos na sprint — as de front-matter `sprint:` igual a esta — e
+  AIMM DA SPRINT. Um arquivo por sprint, em `analise-impacto/AIMM-<sprint>.md`. Consolida
+  as AIMMs dos tickets atendidos na sprint — as de front-matter `sprint:` igual a esta — e
   é a ÚNICA fonte do que foi entregue sem ticket na ferramenta de origem. É o documento
-  que a equipe de métricas audita; a AIM de cada ticket é o que o time consulta ao mexer
+  que a equipe de métricas audita; a AIMM de cada ticket é o que o time consulta ao mexer
   naquele ticket. Escrita pela skill `analise-impacto`, depois da entrega.
 
   Cada função conta UMA vez na sprint, venha de quantos tickets vier: a unidade da
@@ -23,7 +23,7 @@ estado: rascunho          # rascunho → concluído (apurável fechado e conferi
   natureza e o apurável pela soma. Em `concluído`, divergência reprova; em `rascunho`, avisa.
 -->
 
-# AIM [sprint]
+# AIMM [sprint]
 
 ## Tickets da sprint
 
@@ -63,7 +63,7 @@ estado: rascunho          # rascunho → concluído (apurável fechado e conferi
 > `## Alterações na spec, por Agrupamento Funcional` e de `## Funções de dados alteradas`, e cada
 > subtotal contra a sua. Rode-o a cada rodada de números novos.
 
-## Decisões de produto pendentes
+## Decisões pendentes
 
 - [o que ainda depende de decisão, e o que trava — ou "Nenhuma."]
 
@@ -71,5 +71,6 @@ estado: rascunho          # rascunho → concluído (apurável fechado e conferi
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico anterior preservado. |
 | [AAAA-MM-DD] | [autor] | AIM da sprint | consolidação dos tickets da [sprint] |
 | 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

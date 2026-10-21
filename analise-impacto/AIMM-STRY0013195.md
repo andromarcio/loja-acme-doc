@@ -20,10 +20,6 @@ aberta-em: 2026-10-18
 
 O administrador precisa manter os usuários da loja — clientes, atendentes, gestores de catálogo e administradores — e tirar o acesso de quem não deve mais usar a loja, sem apagar o histórico.
 
-## Contexto
-
-O administrador controla quem acessa a loja e com que perfil, sem perder o histórico de quem sai. Esta AIMM documenta o exemplo didático preenchido, não um escopo avalizado ou uma entrega real.
-
 ## Critérios de aceite
 
 > **Numeração**: a fonte fictícia numera os critérios; os números CA-n abaixo são os mesmos do backlog.
@@ -86,7 +82,7 @@ Modelo negocial de Usuario, sem alterações físicas ou contagem ALI/AIE.
 - Nome de pessoa e Telefone recebem entradas trabalhadas no FIELD-DICTIONARY; CPF e E-mail já tinham.
 - Mensagens de Administração: `ADM_EMAIL_DUPLICADO`, `ADM_CPF_DUPLICADO`, `ADM_USUARIO_INATIVO`, `ADM_ULTIMO_ADMINISTRADOR`, `ADM_AUTOINATIVACAO`, `ADM_INATIVAR_CONFIRMACAO`, `ADM_USUARIO_INATIVADO` e `ADM_USUARIO_JA_INATIVO`.
 
-## Decisões de produto pendentes
+## Decisões pendentes
 
 - O responsável real deve revisar o escopo e conduzir CP1/CP2 antes de qualquer entrega.
 - A contagem será feita via CT; nenhum PF foi estimado.
@@ -100,6 +96,7 @@ Não encerrada. Esta AIMM está em análise e não declara entrega, aprovação 
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-21 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: sem Contexto, alterações por Agrupamento Funcional, Decisões pendentes, nome abaixo do ID, entidades sem PF. |
 | 2026-10-20 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: nome abaixo do ID, entidades sem PF. |
 | 2026-10-18 | Claude | Demonstração | Ticket fictício e Feature Set Usuários preenchidos, com 5 features em rascunho, sem aval e com a contagem pendente. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |

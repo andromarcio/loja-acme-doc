@@ -135,7 +135,7 @@ Trabalhe nesta ordem. As seções de impacto da AIMM chegam aqui com a visão do
 
 **4. `## Impacto em dicionários`.** Mensagens, regras e campos canônicos novos ou alterados.
 
-**5. `## Decisões de produto pendentes`.** Onde o ticket contradiz o publicado, ou falta uma escolha antes de reescrever. Cada decisão precisa dizer **o que trava** se não for tomada.
+**5. `## Decisões pendentes`.** Onde o ticket contradiz o publicado, ou falta uma escolha antes de reescrever. Cada decisão precisa dizer **o que trava** se não for tomada.
 
 **6. `## Reconciliação`.** O declarado no changeset × o efetivamente tocado: `node scripts/validate-impact.mjs analise-impacto/AIMM-<CHAVE>.md --git-base <base>`. Declarado e não tocado é escopo não cumprido; tocado e não declarado é desvio — os dois precisam de justificativa escrita. Na AIMM aberta na entrega, diga que não houve escopo prévio.
 

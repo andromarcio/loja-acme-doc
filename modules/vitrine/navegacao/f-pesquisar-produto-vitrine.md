@@ -193,6 +193,7 @@ A contagem está pendente e deve nascer da análise desta funcionalidade via CT,
 | Ticket (AIMM) | Tipo | Critérios cobertos |
 |---|---|---|
 | [`STRY0013175`](../../../analise-impacto/AIMM-STRY0013175.md) | Criação | `CA-2` — busca por parte do nome, filtro por categoria e produtos de categoria inativa fora do resultado |
+| [`STRY0013205`](../../../analise-impacto/AIMM-STRY0013205.md) | Alteração | `CA-6` — o filtro por categoria inclui as subcategorias (AIMM em análise, sem aval da PO) |
 
 ## Changelog
 
@@ -201,4 +202,5 @@ A contagem está pendente e deve nascer da análise desta funcionalidade via CT,
 | 2026-10-18 | Claude | N3 criado | Busca de produtos da vitrine do ticket fictício STRY0013175, com filtros, colunas, regras e cenários; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Claude | Origem | Ticket `STRY0013205` registrado na Origem: a AIMM está em análise e ainda não muda campos, regras ou cenários. |
 | 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

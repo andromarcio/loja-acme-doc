@@ -6,41 +6,41 @@ ferramenta: [ServiceNow | Jira | GitHub | experimento]
 link: [URL do ticket na ferramenta de origem]
 titulo: [título curto do ticket]
 estado: rascunho          # rascunho → em-análise → escopo-aprovado → em-execução → concluído
-aberta-na-entrega: false  # true quando a AIM nasce depois da entrega (skill analise-impacto)
+aberta-na-entrega: false  # true quando a AIMM nasce depois da entrega (skill analise-impacto)
 sprint: ""                # sprint da entrega — preenchida no fechamento
 avalizado-por: ""         # aval do PO no escopo — obrigatório de escopo-aprovado em diante
 aberta-em: [AAAA-MM-DD]
 ---
 
 <!--
-  AIM — ANÁLISE DE IMPACTO DO TICKET. Um arquivo por ticket, em
-  `analise-impacto/AIM-<CHAVE>.md` (a chave como a ferramenta a escreve:
-  `AIM-STRY0012345.md`, `AIM-PDTIC25093-49.md`). É o único artefato do ticket no
+  AIMM — ANÁLISE DE IMPACTO DO TICKET. Um arquivo por ticket, em
+  `analise-impacto/AIMM-<CHAVE>.md` (a chave como a ferramenta a escreve:
+  `AIMM-STRY0012345.md`, `AIMM-PDTIC25093-49.md`). É o único artefato do ticket no
   framework: o que o ticket pede, o que ele vai mudar e, no fim, o que ele mudou.
-  A AIM é VERSIONADA à medida que o ticket avança — o Changelog registra cada versão
+  A AIMM é VERSIONADA à medida que o ticket avança — o Changelog registra cada versão
   e o git guarda as anteriores:
 
     rascunho         aberta: Descrição, Contexto, Critérios e Funcionalidades (PROMPT_AIM, passos 1–4)
     em-análise       o que SERÁ alterado: Artefatos impactados, Alterações previstas (passo 5)
     escopo-aprovado  o PO avalizou o escopo (`avalizado-por`) — só então a spec muda (passo 6)
     em-execução      as passadas de spec e código, uma por linha do changeset
-    concluído        o que FOI alterado: as seções de impacto reescritas com o que mudou,
-                     PFB/PFL e a Reconciliação com o escopo aprovado (skill analise-impacto,
-                     PROMPT_AIM passo 7)
+    concluído        o que FOI alterado: as seções de impacto reescritas com o que mudou
+                     e a Reconciliação com o escopo aprovado (skill analise-impacto,
+                     PROMPT_AIMM passo 7)
 
-  Front-matter: fonte única dos metadados — o HTML da AIM o mostra como ficha.
+  Front-matter: fonte única dos metadados — o HTML da AIMM o mostra como ficha.
     ticket · ferramenta · link · titulo → o ticket na ferramenta de origem; a chave é a
       FONTE DE VERDADE e o identificador em toda a rastreabilidade (o framework não
       cria ID próprio para o ticket).
-    aberta-na-entrega → a AIM nasceu depois da entrega, sem escopo prévio a
+    aberta-na-entrega → a AIMM nasceu depois da entrega, sem escopo prévio a
       reconciliar: C2 e C3 viram aviso, e a Reconciliação diz isso.
-    sprint → a sprint em que o ticket foi entregue; é por ela que a AIM da sprint
-      (`analise-impacto/AIM-<sprint>.md`) consolida os tickets.
+    sprint → a sprint em que o ticket foi entregue; é por ela que a AIMM da sprint
+      (`analise-impacto/AIMM-<sprint>.md`) consolida os tickets.
   Dentro do front-matter, comentário só no fim da linha: linha que começa com `#` seria
   lida como o título do arquivo.
 -->
 
-# AIM [CHAVE]
+# AIMM [CHAVE]
 
 ## Descrição do ticket
 
@@ -49,17 +49,13 @@ aberta-em: [AAAA-MM-DD]
   origem. Se a fonte enuncia no formato Como/quero/para, transcreva nesse formato; se
   enuncia em prosa, transcreva a prosa. NUNCA converta uma na outra nem componha um
   Como/quero/para que a fonte não tem — derivá-lo inventa persona e valor que ninguém
-  aprovou. O que você concluir a partir dela vai para `## Contexto`, marcado como sua
-  leitura.
+  aprovou. O que a fonte não diz se elicita com o PO e, até ele decidir, fica em
+  `## Decisões pendentes`.
 -->
 
 > Transcrição da descrição do ticket `[CHAVE]` na ferramenta de origem.
 
 [o texto da fonte, como está]
-
-## Contexto
-
-[1–3 frases: o problema ou a oportunidade que motiva o ticket — o "porquê", em linguagem de negócio. É leitura sua, não da fonte.]
 
 ## Critérios de aceite
 
@@ -116,7 +112,7 @@ Scenario: [resultado esperado em linguagem de negócio]
 
 > O **changeset**: os artefatos de documentação que o ticket vai criar ou alterar,
 > aprovados pelo PO ANTES de qualquer um deles mudar. Linhas `derivado:` nascem dos elos
-> (`node scripts/generate-impact-draft.mjs --aim <este arquivo>`); linhas `elicitado`
+> (`node scripts/generate-impact-draft.mjs --aimm <este arquivo>`); linhas `elicitado`
 > vêm da passada do analista (NFR e limiares de teste não-funcional não são deriváveis).
 > Só documentação entra aqui — código e artefatos técnicos (SDD, migração, runbook)
 > derivam destes e ficam fora do aval.
@@ -156,19 +152,19 @@ Scenario: [resultado esperado em linguagem de negócio]
 |---|---|---|---|---|---|---|---|
 | `SIGLA-SAF-NN` **[Nome da Funcionalidade]** | CA-1 | alterada | **[Verbo]** de [o quê]. *Antes* [como era]. *Agora* [como fica]. | +1 | +2 | [PF] | [PF] |
 
-## Funções de dados alteradas
+## Entidades alteradas
 
 <!--
-  As alterações físicas agrupadas pela função de dados (ALI/AIE) a que cada tabela
-  pertence: migração → tabela/coluna → ALI/AIE, com o tamanho antes e depois. O título
-  de cada função segue o formato que a planilha de entrega lê:
-  `### ALI: <Entidade> — RLR a → b · DER c → d` (ou `### AIE: …`). Sem alteração de
-  dados, escreva "Nenhuma." e apague o exemplo.
+  As alterações no modelo de dados agrupadas por ENTIDADE: tabela/coleção, atributos,
+  relacionamentos, restrições e migração associada. Descreva o contraste *Antes*/*Agora*
+  quando houver estado anterior. Não classifique ALI/AIE, não informe RLR/DER e não
+  inclua PF: a medição pertence ao DATA-MODEL e ao consolidado Markdown.
+  Sem alteração de entidade, escreva "Nenhuma." e apague o exemplo.
 -->
 
-### ALI: [Entidade] — RLR [a] → [b] · DER [c] → [d]
+### [Entidade]
 
-| Migração | Tabela / coluna | Natureza | Mudança |
+| Migração | Tabela / atributo | Natureza | Mudança |
 |---|---|---|---|
 | [V000NN] | `[TABELA.COLUNA]` | coluna incluída | **Inclusão** de [o quê]. *Antes* [como era]. |
 
@@ -176,7 +172,7 @@ Scenario: [resultado esperado em linguagem de negócio]
 
 - [mensagens, regras e campos canônicos novos ou alterados — ou "Nenhum."]
 
-## Decisões de produto pendentes
+## Decisões pendentes
 
 - [onde o ticket contradiz o publicado, ou falta uma escolha — e o que TRAVA se ela não for tomada; ou "Nenhuma."]
 
@@ -184,9 +180,9 @@ Scenario: [resultado esperado em linguagem de negócio]
 
 > Preenchida no fechamento (estado `concluído`): artefatos **declarados** no changeset ×
 > artefatos **efetivamente tocados** no diff/PR. Rodar:
-> `node scripts/validate-impact.mjs analise-impacto/AIM-<CHAVE>.md --git-base <base>`.
+> `node scripts/validate-impact.mjs analise-impacto/AIMM-<CHAVE>.md --git-base <base>`.
 > Declarado-e-não-tocado = escopo não cumprido; tocado-e-não-declarado = desvio — os dois
-> precisam de justificativa. AIM aberta na entrega: diga que não houve escopo prévio.
+> precisam de justificativa. AIMM aberta na entrega: diga que não houve escopo prévio.
 > Escreva o resultado abaixo desta citação — ela é instrução e pode ficar.
 
 ## Changelog
@@ -195,5 +191,6 @@ Scenario: [resultado esperado em linguagem de negócio]
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico anterior preservado. |
 | [AAAA-MM-DD] | [autor] | AIM aberta | ticket `[CHAVE]` registrado; features mapeadas |
 | 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

@@ -49,25 +49,13 @@ aberta-em: [AAAA-MM-DD]
   origem. Se a fonte enuncia no formato Como/quero/para, transcreva nesse formato; se
   enuncia em prosa, transcreva a prosa. NUNCA converta uma na outra nem componha um
   Como/quero/para que a fonte não tem — derivá-lo inventa persona e valor que ninguém
-  aprovou. O que você concluir a partir dela vai para `## Contexto`, marcado como sua
-  leitura.
+  aprovou. O que a fonte não diz se elicita com o PO e, até ele decidir, fica em
+  `## Decisões pendentes`.
 -->
 
 > Transcrição da descrição do ticket `[CHAVE]` na ferramenta de origem.
 
 [o texto da fonte, como está]
-
-## Contexto
-
-<!--
-  LEITURA DO ANALISTA, não transcrição e não solução. Em 1–3 frases, explique o problema
-  ou a oportunidade de negócio que conecta a descrição aos artefatos já existentes:
-  quem é afetado, qual limitação atual ou resultado esperado motivou o ticket e, quando
-  conhecido, que comportamento/documento publicado será impactado. Diferencie fato da
-  fonte de premissa ou hipótese; não invente regra, critério, persona ou decisão.
--->
-
-[1–3 frases: o problema ou a oportunidade que motiva o ticket, em linguagem de negócio. Identifique fatos da fonte e, se houver, premissas da análise.]
 
 ## Critérios de aceite
 
@@ -182,7 +170,7 @@ Scenario: [resultado esperado em linguagem de negócio]
 
 - [mensagens, regras e campos canônicos novos ou alterados — ou "Nenhum."]
 
-## Decisões de produto pendentes
+## Decisões pendentes
 
 - [onde o ticket contradiz o publicado, ou falta uma escolha — e o que TRAVA se ela não for tomada; ou "Nenhuma."]
 

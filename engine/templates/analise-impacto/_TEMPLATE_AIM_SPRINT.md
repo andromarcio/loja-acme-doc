@@ -63,7 +63,7 @@ estado: rascunho          # rascunho → concluído (apurável fechado e conferi
 > `## Alterações na spec, por Agrupamento Funcional` e de `## Funções de dados alteradas`, e cada
 > subtotal contra a sua. Rode-o a cada rodada de números novos.
 
-## Decisões de produto pendentes
+## Decisões pendentes
 
 - [o que ainda depende de decisão, e o que trava — ou "Nenhuma."]
 

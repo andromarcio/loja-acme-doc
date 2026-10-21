@@ -20,10 +20,6 @@ aberta-em: 2026-10-14
 
 Como cliente, quero informar o CEP no checkout e ver o valor do frete, para saber quanto vou pagar pela entrega antes de fechar o pedido.
 
-## Contexto
-
-A compra deve tornar visível o custo da entrega antes da confirmação. Esta AIMM documenta o exemplo didático preenchido, não um escopo avalizado ou uma entrega real.
-
 ## Critérios de aceite
 
 > **Numeração**: a fonte fictícia numera os critérios; os números CA-n abaixo são os mesmos do backlog.
@@ -71,7 +67,7 @@ Modelo negocial de Pedido e TabelaFrete, sem alterações físicas ou contagem A
 - CEP recebe uma entrada trabalhada no FIELD-DICTIONARY.
 - Vendas recebe mensagens para CEP não atendido e carrinho vazio.
 
-## Decisões de produto pendentes
+## Decisões pendentes
 
 - O responsável real deve revisar o escopo e conduzir CP1/CP2 antes de qualquer entrega.
 - A contagem será feita via CT; nenhum PF estimado foi copiado do simulador.
@@ -84,6 +80,7 @@ Não encerrada. Esta AIMM está em análise e não declara entrega, aprovação 
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-21 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: sem Contexto, alterações por Agrupamento Funcional, Decisões pendentes, nome abaixo do ID, entidades sem PF. |
 | 2026-10-20 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: nome abaixo do ID, entidades sem PF. |
 | 2026-10-14 | Copilot | Demonstração | Ticket fictício e pacote de requisitos preenchidos, com estado e contagem pendentes. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |

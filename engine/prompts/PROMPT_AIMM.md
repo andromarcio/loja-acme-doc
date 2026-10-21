@@ -154,9 +154,8 @@ Reúna os dados (via MCP ou manualmente). Você precisa de:
   fonte enuncia no formato *Como [persona], quero [ação], para [valor]*, transcreva nesse
   formato; se enuncia em prosa, transcreva a prosa. **Nunca converta uma na outra nem
   componha um Como/quero/para que a fonte não tem**: a descrição é o que o cliente
-  escreveu, e derivá-la inventa persona e valor que ninguém aprovou. Interpretação,
-  quando necessária, vai para `## Contexto` — marcada como sua.
-- **Contexto** — a leitura do analista em 1–3 frases: o problema/oportunidade de negócio, quem é afetado e a limitação ou comportamento publicado que motivou o ticket. **Não** repita a transcrição nem invente critério, regra, persona ou decisão. Identifique como premissa toda hipótese que a fonte não confirma.
+  escreveu, e derivá-la inventa persona e valor que ninguém aprovou. O que a fonte não
+  diz se elicita com o PO e, até ele decidir, fica em `## Decisões pendentes`.
 - **Critérios de aceite** — de preferência em Given/When/Then
 
 Quando os dados forem manuais, peça-os de forma objetiva (um bloco por vez, se o usuário
@@ -250,10 +249,6 @@ aberta-em: [data atual]
 
 [o texto da fonte, como está — Como/quero/para se ela usa esse formato, prosa se ela usa prosa]
 
-## Contexto
-
-[1–3 frases de leitura do analista: problema/oportunidade, impacto de negócio e artefato/comportamento conhecido; premissas marcadas como hipótese.]
-
 ## Critérios de aceite
 
 > **Numeração**: [a fonte numera os critérios — `CA-n` é o número da própria ferramenta | a fonte **não** numera — sem `CA-n`; a rastreabilidade é pela chave do ticket]
@@ -294,7 +289,7 @@ Scenario: [resultado esperado]
 
 - [ou "Nenhum."]
 
-## Decisões de produto pendentes
+## Decisões pendentes
 
 - [ou "Nenhuma."]
 
@@ -359,7 +354,7 @@ Depois, a **passada dimensional** com o PO/analista — o derivador **não adivi
 Marque as linhas acrescentadas com Proveniência `elicitado`. Preencha também a previsão
 em **Alterações na spec, por Agrupamento Funcional** (uma linha por funcionalidade, com o ID e o nome em
 linhas separadas, e a mudança pedida), **Entidades alteradas** (sem PF), **Impacto em
-dicionários** e **Decisões de produto pendentes**. Mude `estado:` para `em-análise` e registre a versão no
+dicionários** e **Decisões pendentes**. Mude `estado:` para `em-análise` e registre a versão no
 Changelog.
 
 ---
@@ -402,7 +397,7 @@ Conclua:
 
 ## PASSO 7 — Fechamento: o que foi alterado
 
-Depois da entrega, a skill `analise-impacto` fecha a AIMM: reescreve **Alterações na spec**,
+Depois da entrega, a skill `analise-impacto` fecha a AIMM: reescreve **Alterações em funcionalidades**,
 **Entidades alteradas**, **Impacto em dicionários** e **Decisões pendentes** com o
 que mudou (o contraste *Antes*/*Agora*; sem PF na AIMM do ticket),
 preenche `sprint:` e consolida o ticket na AIM da sprint. A reconciliação compara o

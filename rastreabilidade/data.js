@@ -1,5 +1,5 @@
 /* GERADO por scripts/build-trace-data.mjs — não editar à mão.
-   Fonte: artefatos .md da instância (53 nós, 79 arestas). */
+   Fonte: artefatos .md da instância (54 nós, 84 arestas). */
 window.TRACE_DATA = {
   "meta": {
     "system": "Loja ACME",
@@ -534,6 +534,14 @@ window.TRACE_DATA = {
       "sub": "AIMM · STRY0013200",
       "desc": "O administrador precisa manter as faixas de CEP atendidas e o valor do frete de cada uma, sem depender da equipe de sistemas para mudar a tabela.",
       "path": "analise-impacto/AIMM-STRY0013200.md"
+    },
+    {
+      "id": "STRY0013205",
+      "type": "aim",
+      "label": "Subcategorias",
+      "sub": "AIMM · STRY0013205",
+      "desc": "A equipe de vendas precisa dividir as categorias em subcategorias — por exemplo, Canecas e Garrafas dentro de Cozinha —, para que o cliente refine a busca se…",
+      "path": "analise-impacto/AIMM-STRY0013205.md"
     }
   ],
   "edges": [
@@ -748,6 +756,12 @@ window.TRACE_DATA = {
       "note": "`CA-2` — cadastro com nome e descrição opcional, sem nomes repetidos"
     },
     {
+      "from": "STRY0013205",
+      "to": "CAT-CTG-02",
+      "kind": "origina",
+      "note": "`CA-1, CA-3` — categoria superior no cadastro e nome único entre as categorias c"
+    },
+    {
       "from": "CAT-CTG",
       "to": "CAT-CTG-03",
       "kind": "contem"
@@ -759,6 +773,12 @@ window.TRACE_DATA = {
       "note": "`CA-3` — alteração da descrição e da situação, sem mudar o nome; categoria inati"
     },
     {
+      "from": "STRY0013205",
+      "to": "CAT-CTG-03",
+      "kind": "origina",
+      "note": "`CA-2` — trocar ou retirar a categoria superior (AIMM em análise, sem aval da PO"
+    },
+    {
       "from": "CAT-CTG",
       "to": "CAT-CTG-04",
       "kind": "contem"
@@ -768,6 +788,12 @@ window.TRACE_DATA = {
       "to": "CAT-CTG-04",
       "kind": "origina",
       "note": "`CA-4` — categoria com produtos não pode ser excluída"
+    },
+    {
+      "from": "STRY0013205",
+      "to": "CAT-CTG-04",
+      "kind": "origina",
+      "note": "`CA-4` — categoria com subcategorias não pode ser excluída (AIMM em análise, sem"
     },
     {
       "from": "CAT-CTG",
@@ -790,6 +816,12 @@ window.TRACE_DATA = {
       "to": "CAT-CTG-05",
       "kind": "origina",
       "note": "`CA-5` — consulta aos dados da categoria e à quantidade de produtos"
+    },
+    {
+      "from": "STRY0013205",
+      "to": "CAT-CTG-05",
+      "kind": "origina",
+      "note": "`CA-5` — categoria superior e subcategorias na consulta (AIMM em análise, sem av"
     },
     {
       "from": "VND-CAR",
@@ -955,6 +987,12 @@ window.TRACE_DATA = {
       "to": "VIT-NAV-02",
       "kind": "origina",
       "note": "`CA-2` — busca por parte do nome, filtro por categoria e produtos de categoria i"
+    },
+    {
+      "from": "STRY0013205",
+      "to": "VIT-NAV-02",
+      "kind": "origina",
+      "note": "`CA-6` — o filtro por categoria inclui as subcategorias (AIMM em análise, sem av"
     },
     {
       "from": "VIT-NAV",

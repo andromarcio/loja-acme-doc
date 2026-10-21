@@ -10,6 +10,7 @@ const repoFiles = [
   "analise-impacto/AIMM-STRY0013190.md",
   "analise-impacto/AIMM-STRY0013195.md",
   "analise-impacto/AIMM-STRY0013200.md",
+  "analise-impacto/AIMM-STRY0013205.md",
   "analise-impacto/INDEX.md",
   "analise-impacto/_TEMPLATE_AIM.md",
   "analise-impacto/_TEMPLATE_AIMM.md",
@@ -197,7 +198,8 @@ const repoFiles = [
   "prototypes/vitrine/navegacao/flow.html",
   "qa/README.md",
   "repos/INDEX.md",
-  "repos/_template-repo.md"
+  "repos/_template-repo.md",
+  "scripts/docx-export/README.md"
 ];
 
 const repoFilesContent = {

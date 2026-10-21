@@ -20,10 +20,6 @@ aberta-em: 2026-10-18
 
 A equipe de vendas precisa organizar os produtos da loja em categorias, para que o cliente encontre o que procura: pesquisar, cadastrar, alterar, excluir e consultar as categorias.
 
-## Contexto
-
-A equipe de vendas organiza os produtos sem depender da equipe de sistemas, e o cliente encontra mais rápido o que procura. Esta AIMM documenta o exemplo didático preenchido, não um escopo avalizado ou uma entrega real.
-
 ## Critérios de aceite
 
 > **Numeração**: a fonte fictícia numera os critérios; os números CA-n abaixo são os mesmos do backlog.
@@ -85,7 +81,7 @@ Modelo negocial de Categoria e Produto, sem alterações físicas ou contagem AL
 - Mensagens de Catálogo: `CAT_CATEGORIA_DUPLICADA`, `CAT_CATEGORIA_COM_PRODUTOS` e `CAT_INATIVAR_COM_PRODUTOS`.
 - A exclusão bloqueada usa a regra canônica RC-09 — Registro vinculado não pode ser excluído, que já tinha entrada; o texto exibido ganha a chave `CAT_CATEGORIA_COM_PRODUTOS`.
 
-## Decisões de produto pendentes
+## Decisões pendentes
 
 - O responsável real deve revisar o escopo e conduzir CP1/CP2 antes de qualquer entrega.
 - A contagem será feita via CT; nenhum PF foi estimado.
@@ -100,6 +96,7 @@ Não encerrada. Esta AIMM está em análise e não declara entrega, aprovação 
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-21 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: sem Contexto, alterações por Agrupamento Funcional, Decisões pendentes, nome abaixo do ID, entidades sem PF. |
 | 2026-10-20 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: nome abaixo do ID, entidades sem PF. |
 | 2026-10-18 | Claude | Demonstração | Ticket fictício e Feature Set Categorias preenchidos, com 5 features em rascunho, sem aval e com a contagem pendente. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
