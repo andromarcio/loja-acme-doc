@@ -34,13 +34,13 @@
 //     "## Implementação"; nomes cruzados com repos/INDEX.md quando o inventário existe.
 //   - LOCALIZAÇÃO: o tipo detectado precisa bater com a pasta (N3 → modules/<dom>/<fs>/
 //     f-*.md; N1/N2 → README.md; N0/DATA-MODEL → global/). Pega o caso do arquivo gerado
-//     na pasta errada. Agnóstico ao prefixo da pasta do Feature Set (g- ou sem g-).
+//     na pasta errada. Agnóstico ao prefixo da pasta do Agrupamento Funcional (g- ou sem g-).
 //     Isenta o engine/ (templates com nomes de placeholder) e caminhos fora da instância.
 //   - ARQUÉTIPO (1.6.0): a linha "**Arquétipo**: `…`" do global/MASTER.md da instância
 //     modula as exigências — em `ml-dados`/`cli-biblioteca`, as seções "Telas" e
 //     "Permissões por perfil" do N2 tornam-se OPCIONAIS (sem UI não há tela nem matriz
 //     de perfil). Ausente/ilegível → `transacional` (comportamento 1.5.x).
-//   - SUPERFÍCIE (1.6.0): o N3 declara em "## Superfície" como a feature se manifesta.
+//   - SUPERFÍCIE (1.6.0): o N3 declara em "## Superfície" como a funcionalidade se manifesta.
 //     Tela própria/Modal/Ação em tela → exige "## Comportamento de tela" (como sempre);
 //     CLI/Job/Pipeline/API → exige "## Execução e operação" no lugar. Sem marcador
 //     reconhecível → trata como tela (comportamento 1.5.x).
@@ -55,6 +55,7 @@ import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { frontMatterEstado } from './lib/front-matter.mjs';
 import { ordemN3 } from './lib/ordem-n3.mjs';
+import { ehSecao, nomesDaSecao, secaoAtual, TITULO_N1, TITULO_N2 } from './lib/niveis.mjs';
 
 const trunc = (s) => (s.length > 60 ? `${s.slice(0, 60)}…` : s).trim();
 
@@ -64,7 +65,7 @@ function splitRow(row) {
 
 // Linhas (cruas) de uma seção `## nome` até o próximo `## `.
 function sectionSlice(lines, name) {
-  const start = lines.findIndex((l) => l.trim() === `## ${name}`);
+  const start = lines.findIndex((l) => ehSecao(l, name));
   if (start === -1) return null;
   const out = [];
   for (let i = start + 1; i < lines.length; i++) {
@@ -146,9 +147,9 @@ function findCycle(adj) {
 
 const N2_SECTIONS = [
   'Descrição',
-  'Features',
+  'Funcionalidades',
   'Fluxo Principal',
-  'Dependências entre features',
+  'Dependências entre funcionalidades',
   'Telas',
   'Permissões por perfil',
   'Changelog',
@@ -201,7 +202,7 @@ const N0_SECTIONS = [
   'Objetivos do produto',
   'Métricas de sucesso (KPIs)',
   'Escopo',
-  ['Major Feature Sets previstos (N1)', 'Domínios previstos (N1)'],
+  nomesDaSecao('Domínios previstos (N1)'),
   'Tom de voz e princípios de experiência',
   'Restrições e premissas',
 ];
@@ -241,12 +242,12 @@ function validateN0(lines, raw, errors, file) {
 
 function validateN1(lines, raw, errors) {
   const title = checkCommon(lines, errors);
-  if (title && !/^# (?:Major Feature Set|Domínio): .+/.test(title.trim())) {
-    errors.push('Título deve ser "# Major Feature Set: [Nome]" (legado aceito: "# Domínio: [Nome]").');
+  if (title && !new RegExp(TITULO_N1.source + '.+').test(title.trim())) {
+    errors.push('Título deve ser "# Domínio: [Nome]" (legado aceito: "# Major Feature Set: [Nome]").');
   }
   const sub = lines.find((l) => l.trim().startsWith('> **Nível 1**'));
   if (sub && !/`[A-Z]{3}`/.test(sub)) errors.push('Subtítulo N1 sem SIGLA `XXX` (3 maiúsculas) em crase.');
-  requireSections(lines, ['Descrição', 'Feature Sets', 'Regras transversais de negócio'], errors);
+  requireSections(lines, ['Descrição', nomesDaSecao('Agrupamentos Funcionais'), 'Regras transversais de negócio'], errors);
   if (!lines.some((l) => l.trim() === '### O que este domínio NÃO faz')) {
     errors.push('Falta a subseção "### O que este domínio NÃO faz".');
   }
@@ -254,18 +255,18 @@ function validateN1(lines, raw, errors) {
 
 function validateN2(lines, raw, errors, file) {
   const title = checkCommon(lines, errors);
-  if (title && !/^# Feature Set: .+/.test(title.trim())) errors.push('Título deve ser "# Feature Set: [Nome]".');
+  if (title && !new RegExp(TITULO_N2.source + '.+').test(title.trim())) errors.push('Título deve ser "# Agrupamento Funcional: [Nome]" (legado aceito: "# Feature Set: [Nome]").');
   const sub = lines.find((l) => l.trim().startsWith('> **Nível 2**'));
   if (sub) {
     if (sub.includes('—')) errors.push('Subtítulo N2 usa em-dash (—); o contrato 2A pede hífen (-).');
-    if (!/`[A-Z]{3}-[A-Z]{3}`/.test(sub)) errors.push('Subtítulo N2 sem ID `SIGLA-SFS` em crase.');
+    if (!/`[A-Z]{3}-[A-Z]{3}`/.test(sub)) errors.push('Subtítulo N2 sem ID `SIGLA-SAF` em crase.');
   }
 
   // Lista FECHADA de seções + ordem. No arquétipo sem UI (ml-dados/cli-biblioteca),
   // "Telas" e "Permissões por perfil" são opcionais — permitidas, não exigidas.
   const archetype = readArchetype(file || '.');
   const optional = archetype === 'transacional' ? new Set() : N2_OPTIONAL_NO_UI;
-  const sections = lines.filter((l) => /^## /.test(l)).map((l) => l.replace(/^##\s+/, '').trim());
+  const sections = lines.filter((l) => /^## /.test(l)).map((l) => secaoAtual(l.replace(/^##\s+/, '').trim()));
   const extras = sections.filter((s) => !N2_SECTIONS.includes(s));
   if (extras.length) errors.push(`Seção(ões) não permitida(s) no N2: ${extras.map((s) => `"${s}"`).join(', ')}.`);
   const missing = N2_SECTIONS.filter((s) => !sections.includes(s) && !optional.has(s));
@@ -276,12 +277,12 @@ function validateN2(lines, raw, errors, file) {
 
   if (!/\*\*Não faz\*\*:/.test(raw)) errors.push('Falta a linha "**Não faz**:" na Descrição.');
 
-  for (const row of tableRows(lines, 'Features')) {
+  for (const row of tableRows(lines, 'Funcionalidades')) {
     const cells = splitRow(row);
     if (cells.length < 2) continue;
     const [feat] = cells;
     if (!/^\[\*\*.+\*\*\]\([^)]+\.md\)\s*<small>[A-Z]{3}-[A-Z]{3}-\d{2}<\/small>/.test(feat)) {
-      errors.push(`Feature mal formatada (esperado "[**Nome**](f-….md) <small>SIGLA-SFS-NN</small>"): ${trunc(feat)}`);
+      errors.push(`Funcionalidade mal formatada (esperado "[**Nome**](f-….md) <small>SIGLA-SAF-NN</small>"): ${trunc(feat)}`);
     }
   }
 
@@ -324,7 +325,7 @@ function surfaceOf(lines) {
 }
 
 // --- Gate de repositório de destino (1.7.0) ---------------------------------
-// A partir de `estado: em-desenvolvimento` (e em `implementado`), a feature precisa
+// A partir de `estado: em-desenvolvimento` (e em `implementado`), a funcionalidade precisa
 // declarar ONDE o código vive: ≥1 linha na tabela de "## Implementação" com a coluna
 // Repositório real (não placeholder). Quando a instância possui repos/INDEX.md com
 // repositórios reais, cada nome declarado precisa constar lá (inventário canônico).
@@ -370,7 +371,7 @@ function checkImplementationRepos(lines, file, errors) {
   }
   if (!declared.length) {
     errors.push(
-      `Feature em \`estado: ${estado}\` sem repositório de destino: a tabela de "## Implementação" ` +
+      `Funcionalidade em \`estado: ${estado}\` sem repositório de destino: a tabela de "## Implementação" ` +
       'precisa de ao menos uma linha com a coluna Repositório real (definida no 3B — PASSO 5; ' +
       'Caminho/Branch podem seguir como placeholder até o dev).',
     );
@@ -389,8 +390,8 @@ function checkImplementationRepos(lines, file, errors) {
   }
 }
 
-// Feature de edição/alteração? (verbos: editar, alterar, atualizar). A editabilidade
-// dos campos precisa ser explícita nessas features (coluna "Edição" em ## Campos).
+// Funcionalidade de edição/alteração? (verbos: editar, alterar, atualizar). A editabilidade
+// dos campos precisa ser explícita nessas funcionalidades (coluna "Edição" em ## Campos).
 // Portado do simpf-doc (evolução nascida na instância — upstream em 1.17.0).
 function isEditFeature(lines, file) {
   const title = (lines.find((l) => l.trim().startsWith('# ')) || '').replace(/^#\s*/, '').trim();
@@ -400,7 +401,7 @@ function isEditFeature(lines, file) {
   return byTitle || byFile;
 }
 
-// Feature de pesquisa/listagem? Detecta pelo verbo do título ou pelo prefixo do arquivo
+// Funcionalidade de pesquisa/listagem? Detecta pelo verbo do título ou pelo prefixo do arquivo
 // (verbos de busca no framework: pesquisar, listar, consultar, buscar).
 function isSearchFeature(lines, file) {
   const title = (lines.find((l) => l.trim().startsWith('# ')) || '').replace(/^#\s*/, '').trim();
@@ -413,7 +414,7 @@ function isSearchFeature(lines, file) {
 // --- Conformidade da seção ## API com o API-PATTERNS da instância (1.20.0) ---
 // Diretriz MÁQUINA-LEGÍVEL lida do global/API-PATTERNS.md da instância (o validador é
 // código genérico do engine; a regra é dado da instância — mesmo padrão do Arquétipo do
-// MASTER e das tabelas do FEATURE-DEFINITION). Determinístico: (N3 + API-PATTERNS) → saída fixa.
+// MASTER e das tabelas do DEFINICAO-FUNCIONALIDADE). Determinístico: (N3 + API-PATTERNS) → saída fixa.
 // Seed do mecanismo "validador obedece diretriz global": aqui, versão em rota interna.
 const API_VERBS = /\b(GET|POST|PUT|PATCH|DELETE)\s+(\/[^\s)?"'`]+)/g;
 
@@ -434,7 +435,7 @@ function checkApiRoutes(lines, file, errors) {
   const dir = readApiDirectives(file);
   if (!dir) return;
   const slice = sectionSlice(lines, 'API');
-  if (!slice) return; // feature sem seção ## API
+  if (!slice) return; // funcionalidade sem seção ## API
   const paths = new Set();
   for (const line of slice) {
     let m;
@@ -454,7 +455,7 @@ function checkApiRoutes(lines, file, errors) {
 function validateN3(lines, raw, errors, file) {
   checkCommon(lines, errors);
   const sub = lines.find((l) => l.trim().startsWith('> **Nível 3**'));
-  if (sub && !/`[A-Z]{3}-[A-Z]{3}-\d{2}`/.test(sub)) errors.push('Subtítulo N3 sem ID `SIGLA-SFS-NN` em crase.');
+  if (sub && !/`[A-Z]{3}-[A-Z]{3}-\d{2}`/.test(sub)) errors.push('Subtítulo N3 sem ID `SIGLA-SAF-NN` em crase.');
   requireSections(
     lines,
     ['Descrição', 'Superfície', 'Regras de negócio', 'Cenários', 'Campos', 'Campos automáticos'],
@@ -483,7 +484,7 @@ function validateN3(lines, raw, errors, file) {
   } else if (!lines.some((l) => l.trim() === '## Comportamento de tela')) {
     errors.push(
       'Falta a seção "## Comportamento de tela" (obrigatória quando a Superfície é ' +
-      'Tela própria/Modal/Ação em tela; se a feature é CLI/Job/Pipeline/API, declare isso em ' +
+      'Tela própria/Modal/Ação em tela; se a funcionalidade é CLI/Job/Pipeline/API, declare isso em ' +
       '"## Superfície" e use "## Execução e operação").',
     );
   }
@@ -495,15 +496,15 @@ function validateN3(lines, raw, errors, file) {
       errors.push('Tabela "## Campos" vaza camada técnica (Label Dev / campo banco) — proibido no N3.');
     }
   }
-  // Gate de editabilidade: feature de edição exige a coluna "Edição" em ## Campos
+  // Gate de editabilidade: funcionalidade de edição exige a coluna "Edição" em ## Campos
   // (quais campos são editáveis, somente leitura ou imutáveis — explícito, não inferido).
   if (isEditFeature(lines, file) && header && !header.some((c) => /edi[çc][aã]o/i.test(c))) {
-    errors.push('Feature de edição sem a coluna "Edição" na tabela "## Campos" — marque cada campo como editável / somente leitura / imutável.');
+    errors.push('Funcionalidade de edição sem a coluna "Edição" na tabela "## Campos" — marque cada campo como editável / somente leitura / imutável.');
   }
-  // Gate de resultado: feature de pesquisa/listagem exige a tabela das colunas do resultado.
+  // Gate de resultado: funcionalidade de pesquisa/listagem exige a tabela das colunas do resultado.
   if (isSearchFeature(lines, file)) {
     if (!lines.some((l) => l.trim() === '## Colunas do resultado')) {
-      errors.push('Feature de pesquisa/listagem sem a seção "## Colunas do resultado" (tabela dos campos exibidos no resultado da busca).');
+      errors.push('Funcionalidade de pesquisa/listagem sem a seção "## Colunas do resultado" (tabela dos campos exibidos no resultado da busca).');
     } else {
       const rh = tableHeader(lines, 'Colunas do resultado');
       if (!rh) errors.push('Seção "## Colunas do resultado" sem tabela.');
@@ -730,14 +731,14 @@ function validatePatterns(lines, raw, errors) {
   }
 }
 
-// Local esperado por tipo de artefato (g-/sem-g- agnóstico: a pasta do Feature Set é
+// Local esperado por tipo de artefato (g-/sem-g- agnóstico: a pasta do Agrupamento Funcional é
 // [^/]+, com ou sem prefixo). Ancoradas ao FIM do caminho.
 const LOCATION_RULES = {
   N0: { re: /(^|\/)global\/N0_PRODUCT_VISION\.md$/, hint: 'global/N0_PRODUCT_VISION.md' },
   PATTERNS: { re: /(^|\/)global\/PATTERNS\.md$/, hint: 'global/PATTERNS.md' },
   N1: { re: /(^|\/)modules\/[^/]+\/README\.md$/, hint: 'modules/[dominio]/README.md' },
-  N2: { re: /(^|\/)modules\/[^/]+\/[^/]+\/README\.md$/, hint: 'modules/[dominio]/[feature-set]/README.md' },
-  N3: { re: /(^|\/)modules\/[^/]+\/[^/]+\/f-[^/]+\.md$/, hint: 'modules/[dominio]/[feature-set]/f-….md' },
+  N2: { re: /(^|\/)modules\/[^/]+\/[^/]+\/README\.md$/, hint: 'modules/[dominio]/[agrupamento-funcional]/README.md' },
+  N3: { re: /(^|\/)modules\/[^/]+\/[^/]+\/f-[^/]+\.md$/, hint: 'modules/[dominio]/[agrupamento-funcional]/f-….md' },
   DM: { re: /(^|\/)global\/data-models\/[^/]+\.md$/, hint: 'global/data-models/[dominio].md' },
   'DM-idx': { re: /(^|\/)global\/DATA-MODEL\.md$/, hint: 'global/DATA-MODEL.md' },
 };
@@ -757,7 +758,7 @@ function checkLocation(file, tag, errors) {
 }
 
 // --- Cross-artifact: ID duplicado na mesma instância (determinístico) -------
-// IDs (SIGLA / SIGLA-SFS / SIGLA-SFS-NN) são únicos e nunca reutilizados. Este
+// IDs (SIGLA / SIGLA-SAF / SIGLA-SAF-NN) são únicos e nunca reutilizados. Este
 // check varre a instância (modules/ + global/) e reprova se o ID deste artefato
 // já aparece em outro. Isenta o engine/ (templates com IDs de placeholder).
 function artifactId(lines) {

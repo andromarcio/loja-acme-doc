@@ -1,5 +1,5 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_1A_N1_negocio | atualizado: 2026-10-18 -->
-# Major Feature Set: Vendas
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+# Domínio: Vendas
 > **Nível 1** - Visão estratégica do domínio - `VND`
 
 ## Descrição
@@ -15,9 +15,9 @@ Vendas reúne o carrinho, o checkout e a gestão dos pedidos da Loja ACME. O cli
 | Manter as faixas de frete | Administração |
 | Executar pagamento ou entrega | Serviços fora do escopo do produto |
 
-## Feature Sets
+## Agrupamentos Funcionais
 
-| Feature Set | Descrição | Features |
+| Agrupamento Funcional | Descrição | Funcionalidades |
 |---|---|---|
 | [**Carrinho**](carrinho/README.md) <small>VND-CAR</small> | Itens escolhidos antes da compra | 4 |
 | [**Checkout**](checkout/README.md) <small>VND-CHK</small> | Valor da entrega antes da confirmação | 1 |
@@ -46,6 +46,7 @@ Vendas reúne o carrinho, o checkout e a gestão dos pedidos da Loja ACME. O cli
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |
 | 2026-10-18 | Claude | N1 atualizado | Carrinho especificado e novo Feature Set Gestão de Pedidos; a regra 2 diz que o pedido aberto é o carrinho. Integrações com Administração, que mantém as faixas da Tabela de Frete e consulta os pedidos antes de excluir uma faixa. Catálogo deixa de ser apenas previsto. |
 | 2026-10-14 | Copilot | N1 criado | Vendas com Checkout preenchido e Carrinho planejado; exemplo em rascunho. |
 

@@ -14,14 +14,14 @@
 > **Entrega — gerada em uma única passada**:
 > - Entradas para `global/data-models/[dominio].md`
 > - N1 (domínio) no formato do template, com marcadores
-> - N2 (Feature Sets) no formato do template, com marcadores
-> - N3 por feature no formato do template, com marcadores
+> - N2 (Agrupamentos Funcionais) no formato do template, com marcadores
+> - N3 por funcionalidade no formato do template, com marcadores
 > - **Lista consolidada de lacunas ❓ e divergências ⚠️** para a revisão do PO
 >
 > **Pré-requisito**: `PROMPT_REPO_MAPPING` concluído (define o mapa Domínio↔repo).
 > Se for um único sistema simples, pode pular e informar o domínio aqui.
 > **Próximo passo**: PO/dev revisa **apenas os marcadores** 🔍/❓/⚠️ — e, onde a
-> lacuna for de negócio, usa o `PROMPT_3A` naquela feature específica.
+> lacuna for de negócio, usa o `PROMPT_3A` naquela funcionalidade específica.
 
 ---
 
@@ -29,7 +29,7 @@
 
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
 > 1. **Antes da confirmação de escopo (Passo 1)** — rode `node scripts/preflight-spec.mjs [dominio]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
-> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` em **cada** N1, N2 e N3 do lote (estrutura) **e** `node scripts/validate-feature-semantics.mjs <arquivo>` em cada N3 (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` em **cada** N1, N2 e N3 do lote (estrutura) **e** `node scripts/valida-semantica-funcionalidade.mjs <arquivo>` em cada N3 (é mesmo uma funcionalidade? — critérios FD de `engine/DEFINICAO-FUNCIONALIDADE.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
 Você é um analista de requisitos migrando um sistema legado para o formato
@@ -114,7 +114,7 @@ conversão e aguarde um "ok" (ou ajuste):
 
 > "Recebi: [doc: sim/não] · [código: sim/não].
 > Domínio-alvo: **[Nome]** (SIGLA `[XXX]`).
-> Identifiquei preliminarmente **[N] Feature Sets** e **[M] features**.
+> Identifiquei preliminarmente **[N] Agrupamentos Funcionais** e **[M] funcionalidades**.
 > Vou gerar de uma vez: entradas do DATA-MODEL, o N1, os N2 e os N3, mais a
 > lista de lacunas. Confirma o domínio e a SIGLA, ou ajusto antes de gerar?"
 
@@ -152,37 +152,37 @@ Cruze modelos/migrations (código) com os campos citados na doc.
 ### 2.2 — N1 (domínio)
 
 Use o template de `_template-dominio/README.md`. Preencha
-Descrição, Feature Sets, Regras transversais, Integrações e (no bloco
+Descrição, Agrupamentos Funcionais, Regras transversais, Integrações e (no bloco
 `dev-only`) Entidades/Dependências/Acessos — cada item com seu marcador.
 Regras transversais = regras que aparecem repetidas em vários pontos do
 código/doc.
 
-### 2.3 — N2 (um por Feature Set)
+### 2.3 — N2 (um por Agrupamento Funcional)
 
-Antes de gerar N3s, confirme a ordem da jornada e registre-a na tabela Features do N2. Só a primeira atribuição dos IDs segue essa ordem; IDs já usados no N2/N3 são imutáveis. Use `scripts/ids-n3.mjs` em modo seco e, conferido, `--write`; preserve as reservas `docqui:n3-ids` e continue depois do maior número conhecido — ver `engine/N3-IDS.md`. Não numere pela ordem de leitura dos arquivos de código.
+Antes de gerar N3s, confirme a ordem da jornada e registre-a na tabela Funcionalidades do N2. Só a primeira atribuição dos IDs segue essa ordem; IDs já usados no N2/N3 são imutáveis. Use `scripts/ids-n3.mjs` em modo seco e, conferido, `--write`; preserve as reservas `docqui:n3-ids` e continue depois do maior número conhecido — ver `engine/N3-IDS.md`. Não numere pela ordem de leitura dos arquivos de código.
 
-Use o template de `_template-feature-set/README.md`. Agrupe rotas/controllers
-(código) e seções (doc) em Feature Sets lógicos de negócio. Preencha a tabela
-de Features, o Fluxo principal (mermaid — 🔍 se inferido só do código; sempre para
+Use o template de `_template-agrupamento-funcional/README.md`. Agrupe rotas/controllers
+(código) e seções (doc) em Agrupamentos Funcionais lógicos de negócio. Preencha a tabela
+de Funcionalidades, o Fluxo principal (mermaid — 🔍 se inferido só do código; sempre para
 frente, **sem caminho de volta** — sem loops nem retorno a etapas anteriores),
 Telas e Permissões por perfil (de middleware/guards 💻, ou da doc 📄).
-Cada linha da tabela de Features é uma **ação de negócio** que passa nos cinco testes
-de `engine/FEATURE-DEFINITION.md` (§ Definição) — não uma rota: a feature junta as rotas
+Cada linha da tabela de Funcionalidades é uma **ação de negócio** que passa nos cinco testes
+de `engine/DEFINICAO-FUNCIONALIDADE.md` (§ Definição) — não uma rota: a funcionalidade junta as rotas
 que a servem, e a rota que só carrega uma lista de seleção é a lista consultada da
-feature dona da tela (`global/SIZING.md` → *Regra da lista consultada*), não feature
+funcionalidade dona da tela (`global/SIZING.md` → *Regra da lista consultada*), não funcionalidade
 própria (como no PROMPT_REVERSE_ENGINEERING, Passo 4A).
 
-### 2.4 — N3 (um por feature)
+### 2.4 — N3 (um por funcionalidade)
 
-Use o template `_template-feature.md` **na íntegra** — o front-matter inclusive, com
+Use o template `_template-funcionalidade.md` **na íntegra** — o front-matter inclusive, com
 `estado: rascunho` e o bloco `contagem` com `pendente: true` —, incluindo os blocos
 `dev-only`. O comentário `METADADOS DO FRONT-MATTER`, logo abaixo do front-matter, explica
 os campos e não vai para o N3; dentro do front-matter, comentário só no fim da linha —
 linha que começa com `#` seria lida como o título. Pontos de atenção por seção:
 
-- **Cabeçalho/ID**: logo abaixo do título, a linha `> **Nível 3** - Feature Set: [Nome] — Major Feature Set: [Nome] - \`[SIGLA]-[SFS]-[NN]\`` (sem seção `## ID` separada; `[SFS]` é a sigla do Feature Set e `[NN]` o sequencial da feature dentro dele).
+- **Cabeçalho/ID**: logo abaixo do título, a linha `> **Nível 3** - Agrupamento Funcional: [Nome] — Domínio: [Nome] - \`[SIGLA]-[SAF]-[NN]\`` (sem seção `## ID` separada; `[SAF]` é a sigla do Agrupamento Funcional e `[NN]` o sequencial da funcionalidade dentro dele).
 - **Regras de negócio**: invariantes apenas (regra ≠ comportamento). Cada
-  uma com 📍 da origem e o ID `**RN-NN** —` (sequencial na feature). Regra canônica →
+  uma com 📍 da origem e o ID `**RN-NN** —` (sequencial na funcionalidade). Regra canônica →
   apontar para RULES-DICTIONARY. Ao menos um cenário verifica cada regra, com a tag
   `@RN-NN` na linha acima do `Scenario:`.
 - **Cenários (Gherkin)**: os cinco grupos do template — caminho feliz, erros de
@@ -205,8 +205,8 @@ linha que começa com `#` seria lida como o título. Pontos de atenção por se�
   validar o N3, pela passada técnica (PROMPT_3B, passo 6) ou pela opção **CT**. Não
   chutar PF.
 - **Bloco `dev-only`** (API, eventos, AuditLog, erros, arquivos): preencher
-  do código com 💻 e 📍. A unidade de contagem é a feature (N3), não o endpoint:
-  BFF interno **não** zera a feature (ver `global/SIZING.md`).
+  do código com 💻 e 📍. A unidade de contagem é a funcionalidade (N3), não o endpoint:
+  BFF interno **não** zera a funcionalidade (ver `global/SIZING.md`).
 
 **Contagem pendente e esteira**: todo N3 do lote fica com `contagem.pendente: true` e com
 a linha em `global/CONTAGEM-PF.md → ## Pendências de contagem` (como no PROMPT_3A, PASSO
@@ -228,7 +228,7 @@ que torna o lote revisável**:
 > concordantes (📄💻) e dispensa revisão. Revise apenas o abaixo.
 
 ## ⚠️ Divergências doc × código (decidir qual vale)
-- [feature/campo]: doc diz "[X]" 📄, código faz "[Y]" 💻 — 📍 `[arquivo:linha]`
+- [funcionalidade/campo]: doc diz "[X]" 📄, código faz "[Y]" 💻 — 📍 `[arquivo:linha]`
 
 ## ❓ Lacunas críticas (bloqueiam a spec — usar PROMPT_3A)
 - [ponto que nenhum insumo respondeu]
@@ -243,9 +243,9 @@ que torna o lote revisável**:
 - [comportamento que parece incorreto, campo nunca lido, rota morta]
 
 ## Resumo
-- [N] entidades · [N] Feature Sets · [N] features geradas
+- [N] entidades · [N] Agrupamentos Funcionais · [N] funcionalidades geradas
 - [N] ⚠️ divergências · [N] ❓ críticas · [N] ❓ importantes · [N] 🔍
-- Sugestão: [quais features merecem sessão de PROMPT_3A, por prioridade]
+- Sugestão: [quais funcionalidades merecem sessão de PROMPT_3A, por prioridade]
 ```
 
 Conclua com:
@@ -253,4 +253,4 @@ Conclua com:
 > "✅ Conversão de **[Domínio]** gerada em lote.
 > Sem marcador = alta confiança (doc+código concordam). Foque a revisão nos
 > **[N] ⚠️** e **[N] ❓**. Para as lacunas de negócio, rode o **PROMPT_3A**
-> na feature específica. Próximo sistema a converter: **[sugestão]**."
+> na funcionalidade específica. Próximo sistema a converter: **[sugestão]**."

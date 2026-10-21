@@ -1,7 +1,7 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 id: VIT-DST-03
-feature_set: VIT-DST
+agrupamento_funcional: VIT-DST
 dominio: VIT
 entidade: Destaque
 data_model_ref: data-models/vitrine.md#destaque
@@ -24,7 +24,7 @@ contagem:
 ---
 
 # Editar Destaque
-> **Nível 3** - Feature Set: Destaques — Major Feature Set: Vitrine - `VIT-DST-03`
+> **Nível 3** - Agrupamento Funcional: Destaques — Domínio: Vitrine - `VIT-DST-03`
 
 ## Descrição
 
@@ -172,7 +172,7 @@ Feature: Editar Destaque
 
 | Label PO | Valor | Quando |
 |---|---|---|
-| — | Nenhum campo é preenchido automaticamente nesta feature | — |
+| — | Nenhum campo é preenchido automaticamente nesta funcionalidade | — |
 
 ## Superfície
 
@@ -214,7 +214,7 @@ Página própria Editar Destaque (`/vitrine/destaques/:id/editar`), aberta pela 
 |---|---|---|---|---|---|---|---|
 | Editar Destaque | principal | — | — | — | — | — | — |
 
-A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
+A contagem está pendente e deve nascer da análise desta funcionalidade via CT, com memória de cálculo.
 
 ## Origem
 
@@ -229,3 +229,4 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 | 2026-10-18 | Claude | N3 criado | Edição de destaque do ticket fictício STRY0013180, derivada do cadastro: produto imutável, encerrado bloqueado e início travado no destaque vigente; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

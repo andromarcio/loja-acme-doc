@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_N0_VISAO | atualizado: 2026-10-18 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # Visão de Produto: Loja ACME
 > **Nível 0** - Visão de Produto - `LACME`
 
@@ -11,7 +11,7 @@
 > a fonte única — aqui eles só se repetem (o `validate-doc` reprova sigla divergente).
 >
 > **Quem mantém**: PO / Liderança de Produto
-> **Atualização**: revisado quando a estratégia do produto muda — não a cada feature.
+> **Atualização**: revisado quando a estratégia do produto muda — não a cada funcionalidade.
 
 ---
 
@@ -78,12 +78,12 @@ Encontrar o produto na vitrine e comprar em poucos passos, com o valor do frete 
 
 ---
 
-## Major Feature Sets previstos (N1)
+## Domínios previstos (N1)
 
 > Visão preliminar das grandes áreas que comporão o sistema. Cada uma será
 > detalhada em seu próprio N1. Mantenha esta lista alinhada com `modules/INDEX.md`.
 
-| Major Feature Set | SIGLA | O que cuida |
+| Domínio | SIGLA | O que cuida |
 |---|---|---|
 | Catálogo | CAT | Produtos à venda e as categorias que os organizam |
 | Vitrine | VIT | O que o visitante vê: destaques, busca e página do produto |
@@ -113,6 +113,7 @@ Encontrar o produto na vitrine e comprar em poucos passos, com o valor do frete 
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |
 | 2026-10-18 | Claude | N0 atualizado | Entram Vitrine e Administração entre os Major Feature Sets, as personas Visitante, Gestor de catálogo e Administrador e o novo escopo (vitrine, categorias, carrinho, gestão de pedidos, usuários e faixas de frete). Objetivos e KPIs não mudam; sem aprovação atribuída. |
 | 2026-10-14 | Copilot | N0 criado | Visão didática baseada no roteiro do simulador, sem aprovação atribuída à PO fictícia. |
 

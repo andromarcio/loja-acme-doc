@@ -1,13 +1,13 @@
-# `qa/` — planos de teste por feature
+# `qa/` — planos de teste por funcionalidade
 
-Guarda o **plano de testes de cada feature (N3)** — a saída do `PROMPT_QA` (opção **5B** do menu): roteiro E2E, scripts base (Playwright/Cypress/Cucumber) ou roteiro manual, sempre derivado dos `## Cenários` do N3.
+Guarda o **plano de testes de cada funcionalidade (N3)** — a saída do `PROMPT_QA` (opção **5B** do menu): roteiro E2E, scripts base (Playwright/Cypress/Cucumber) ou roteiro manual, sempre derivado dos `## Cenários` do N3.
 
 ## Convenção de caminho
 
 Espelha a árvore de `modules/`:
 
 ```
-qa/[dominio]/[feature-set]/[feature].md    ← ex.: qa/vendas/checkout/f-calcular-frete.md
+qa/[dominio]/[agrupamento-funcional]/[funcionalidade].md    ← ex.: qa/vendas/checkout/f-calcular-frete.md
 ```
 
 O plano segue o molde `engine/templates/qa/_template-plano.md`: massa de teste, cobertura das regras (`[ID]/RN-NN` → teste), testes por grupo, script base e pontos a resolver (❓).

@@ -1,7 +1,7 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 id: VND-CAR-01
-feature_set: VND-CAR
+agrupamento_funcional: VND-CAR
 dominio: VND
 entidade: ItemPedido
 data_model_ref: data-models/vendas.md#itempedido
@@ -24,7 +24,7 @@ contagem:
 ---
 
 # Adicionar Item ao Carrinho
-> **Nível 3** - Feature Set: Carrinho — Major Feature Set: Vendas - `VND-CAR-01`
+> **Nível 3** - Agrupamento Funcional: Carrinho — Domínio: Vendas - `VND-CAR-01`
 
 ## Descrição
 
@@ -151,7 +151,7 @@ Feature: Adicionar Item ao Carrinho
 
 ## Dados lidos e gravados
 
-| Entidade | Papel | Por que a feature a toca |
+| Entidade | Papel | Por que a funcionalidade a toca |
 |---|---|---|
 | Pedido | lê e grava | Localiza o pedido aberto do cliente e o cria quando não existe (RN-04) |
 
@@ -193,7 +193,7 @@ Na Página do produto (VIT-NAV-03 — Visualizar Produto na Vitrine), abaixo do 
 |---|---|---|---|---|---|---|---|
 | Adicionar Item ao Carrinho | principal | — | — | — | — | — | — |
 
-A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
+A contagem está pendente e deve nascer da análise desta funcionalidade via CT, com memória de cálculo.
 
 ## Origem
 
@@ -208,3 +208,4 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 | 2026-10-18 | Claude | N3 criado | Inclusão do produto no carrinho a partir do ticket fictício STRY0013185, com soma de quantidade, limite de estoque e criação do pedido aberto; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

@@ -1,7 +1,7 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 id: VND-PED-03
-feature_set: VND-PED
+agrupamento_funcional: VND-PED
 dominio: VND
 entidade: Pedido
 data_model_ref: data-models/vendas.md#pedido
@@ -24,7 +24,7 @@ contagem:
 ---
 
 # Cancelar Pedido
-> **Nível 3** - Feature Set: Gestão de Pedidos — Major Feature Set: Vendas - `VND-PED-03`
+> **Nível 3** - Agrupamento Funcional: Gestão de Pedidos — Domínio: Vendas - `VND-PED-03`
 
 ## Descrição
 
@@ -143,7 +143,7 @@ Feature: Cancelar Pedido
 
 ## Dados lidos e gravados
 
-| Entidade | Papel | Por que a feature a toca |
+| Entidade | Papel | Por que a funcionalidade a toca |
 |---|---|---|
 | Usuario | lê | Identifica quem confirma o cancelamento, gravado no campo automático Cancelado por |
 
@@ -185,7 +185,7 @@ O botão **Cancelar pedido** fica no Detalhe do Pedido, de VND-PED-02 — Visual
 |---|---|---|---|---|---|---|---|
 | Cancelar Pedido | principal | — | — | — | — | — | — |
 
-A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
+A contagem está pendente e deve nascer da análise desta funcionalidade via CT, com memória de cálculo.
 
 ## Origem
 
@@ -200,3 +200,4 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 | 2026-10-18 | Claude | N3 criado | Cancelamento de pedido confirmado pelo atendimento a partir do ticket fictício STRY0013190, com motivo obrigatório e registro de quem cancelou; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

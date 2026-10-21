@@ -26,10 +26,10 @@ HTML/CSS **sem build e sem dependências** para os protótipos do docqui (classe
 O caminho relativo depende da profundidade do protótipo dentro de `prototypes/`:
 
 ```html
-<!-- prototypes/[dominio]/[feature-set]/flow.html -->
+<!-- prototypes/[dominio]/[agrupamento-funcional]/flow.html -->
 <link rel="stylesheet" href="../../_biblioteca-ds/ds.css">
 
-<!-- prototypes/[dominio]/[feature-set]/[feature]/form.html -->
+<!-- prototypes/[dominio]/[agrupamento-funcional]/[funcionalidade]/form.html -->
 <link rel="stylesheet" href="../../../_biblioteca-ds/ds.css">
 ```
 

@@ -1,6 +1,6 @@
-<!-- docqui: 6.4.1 | prompt: PROMPT_PROTOTYPE_FLOW_FULL | atualizado: 2026-10-17 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # Protótipo de Fluxo: Checkout
-> Feature Set: Checkout — Major Feature Set: Vendas
+> Agrupamento Funcional: Checkout — Domínio: Vendas
 > Spec de referência: [../../../modules/vendas/checkout/README.md](../../../modules/vendas/checkout/README.md)
 
 ---

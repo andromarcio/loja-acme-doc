@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_DATA_MODEL_negocio | atualizado: 2026-10-18 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # Data Model: Catálogo
 > **Modelo de entidades (negocial)** — entidades, atributos e relacionamentos de negócio, sem camada física.
 
@@ -15,7 +15,7 @@
 
 ## Produto
 
-> Item à venda na loja. A manutenção do cadastro de produtos é o exercício STRY0013150 (Feature Set Produtos, planejado); os produtos da demonstração são massa fictícia.
+> Item à venda na loja. A manutenção do cadastro de produtos é o exercício STRY0013150 (Agrupamento Funcional Produtos, planejado); os produtos da demonstração são massa fictícia.
 
 | Atributo (Label PO) | Tipo | Obrigatório | Notas |
 |---|---|---|---|

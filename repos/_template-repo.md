@@ -46,11 +46,11 @@ cp .env.example .env
 
 ---
 
-## Features implementadas neste repositório
+## Funcionalidades implementadas neste repositório
 
-| Feature | N3 de referência | Status | PR |
+| Funcionalidade | N3 de referência | Status | PR |
 |---|---|---|---|
-| [feature] | [link para N3] | ✅ Implementado | [link] |
+| [funcionalidade] | [link para N3] | ✅ Implementado | [link] |
 
 ---
 

@@ -82,7 +82,7 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 | **R2** | Gerar DATA-MODEL a partir de SQL | Converte um schema SQL (DDL) em `DATA-MODEL.md` e fragmentos `data-models/[dominio].md` |
 | **R3** | Converter doc existente → N1/N2/N3 (lote) | Cruza **documentação legada + código** numa única passada e gera DATA-MODEL, N1, N2 e N3 já marcados (🔍/❓/⚠️) para revisão posterior |
 | **R4** | Extrair PATTERNS (padrões de projeto) do código | Lê o código do próprio sistema **ou de um sistema de referência** e destila `global/PATTERNS.md` (Strategy, Repository, Facade…), classificando padrão × convenção × idioma e **normalizando** para a stack-alvo — cada entrada com exemplo de código |
-| **B2** | Sintetizar N2 a partir dos N3s | Gera o README.md de um Feature Set consolidando os N3s existentes |
+| **B2** | Sintetizar N2 a partir dos N3s | Gera o README.md de um Agrupamento Funcional consolidando os N3s existentes |
 | **B1** | Sintetizar N1 a partir dos N2s | Gera o README.md de um Domínio consolidando os N2s (ou N3s) existentes |
 
 > ⚠️ Tem documentação antiga (+ código): **R0** → **R3** (lote) → revisar ⚠️/❓ → **3A** só nas lacunas
@@ -98,26 +98,26 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 | # | Opção | O que faz |
 |---|---|---|
 | **N0** | Especificar Visão de Produto | Levanta propósito, personas, objetivos, KPIs, escopo, domínios previstos e tom de voz e gera `global/N0_PRODUCT_VISION.md` — o documento de referência mais alto e ponto de partida do fluxo **top-down** |
-| **AIMM** | Abrir a AIMM de um ticket | Registra o ticket (ServiceNow, Jira, issue, experimento) na AIMM — `analise-impacto/AIMM-<CHAVE>.md` —, mapeia as features que ele cria ou altera e leva o changeset ao aval do PO. Ponto de entrada do processo, com rastreabilidade ticket → spec → código; depois da entrega, a skill `analise-impacto` fecha a AIMM com o que foi alterado |
+| **AIMM** | Abrir a AIMM de um ticket | Registra o ticket (ServiceNow, Jira, issue, experimento) na AIMM — `analise-impacto/AIMM-<CHAVE>.md` —, mapeia as funcionalidades que ele cria ou altera e leva o changeset ao aval do PO. Ponto de entrada do processo, com rastreabilidade ticket → spec → código; depois da entrega, a skill `analise-impacto` fecha a AIMM com o que foi alterado |
 | **0** | Extrair insumos brutos | Organiza transcrições, PDFs, rascunhos e anotações em uma base estruturada para usar nas próximas fases |
 
 ---
 
-### 🏛️ Fase 1 — Major Feature Sets (N1)
+### 🏛️ Fase 1 — Domínios (N1)
 
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
-| **1A** | Especificar domínio — negócio | PO + Dev | Levanta responsabilidades, limites e Feature Sets em linguagem de negócio |
+| **1A** | Especificar domínio — negócio | PO + Dev | Levanta responsabilidades, limites e Agrupamentos Funcionais em linguagem de negócio |
 | **1B** | Especificar domínio — técnico | Dev | Complementa o N1 negocial com entidades, campos e integrações técnicas |
 | **DM** | Modelo de dados (negocial) | PO + Analista | *(só no `Perfil: requisitos`)* Levanta as entidades do domínio, atributos em Label PO e relacionamentos de negócio — **sem camada física** — e gera `global/data-models/[dominio].md`. No `Perfil: completo` o data-model segue pelo fluxo técnico (1B/3B/R2) |
 
 ---
 
-### 🗂️ Fase 2 — Feature Sets (N2)
+### 🗂️ Fase 2 — Agrupamentos Funcionais (N2)
 
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
-| **2A** | Especificar Feature Set — negócio | PO + Dev | Levanta fluxo, telas e permissões em linguagem de negócio. O N2 passou a ser **integralmente negocial**; a especificação técnica agora vive nos N3 — use **3B**.
+| **2A** | Especificar Agrupamento Funcional — negócio | PO + Dev | Levanta fluxo, telas e permissões em linguagem de negócio. O N2 passou a ser **integralmente negocial**; a especificação técnica agora vive nos N3 — use **3B**.
 
 ---
 
@@ -125,18 +125,18 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
-| **CR** | CRUD padrão — N2 + N3 das 5 operações | PO + Dev | A partir da descrição da entidade e da tabela de campos, gera o N2 do Feature Set e os N3 negociais de **Pesquisar, Cadastrar, Editar, Excluir e Visualizar** numa única sessão — derivando pesquisa/edição/exclusão/visualização do cadastro |
-| **WZ** | Wizard — N2 + N3 de processo guiado multi-etapas | PO + Dev | A partir da descrição do processo e da lista ordenada de etapas, gera o N2 e o N3 da **feature principal multi-etapas** (mais auxiliares: retomar rascunho, acompanhar status, cancelar) numa única sessão |
+| **CR** | CRUD padrão — N2 + N3 das 5 operações | PO + Dev | A partir da descrição da entidade e da tabela de campos, gera o N2 do Agrupamento Funcional e os N3 negociais de **Pesquisar, Cadastrar, Editar, Excluir e Visualizar** numa única sessão — derivando pesquisa/edição/exclusão/visualização do cadastro |
+| **WZ** | Wizard — N2 + N3 de processo guiado multi-etapas | PO + Dev | A partir da descrição do processo e da lista ordenada de etapas, gera o N2 e o N3 da **funcionalidade principal multi-etapas** (mais auxiliares: retomar rascunho, acompanhar status, cancelar) numa única sessão |
 
 ---
 
-### ⚙️ Fase 3 — Features (N3)
+### ⚙️ Fase 3 — Funcionalidades (N3)
 
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
-| **3A** | Especificar feature — negócio | PO + Dev | Levanta campos, regras e cenários Gherkin em linguagem de negócio *(suporta modo bottom-up sem N1/N2)* |
+| **3A** | Especificar funcionalidade — negócio | PO + Dev | Levanta campos, regras e cenários Gherkin em linguagem de negócio *(suporta modo bottom-up sem N1/N2)* |
 | **RT** | Reunião → artefatos (N1/N2/N3) a partir de transcrição | PO + Dev | Extrai e/ou **atualiza** N1/N2/N3 de uma transcrição de reunião de refino (cruza níveis), sinalizando lacunas e gerando um relatório da reunião |
-| **3B** | Especificar feature — técnico | Dev | Complementa o N3 negocial com API, eventos, AuditLog e mapeamento de campos |
+| **3B** | Especificar funcionalidade — técnico | Dev | Complementa o N3 negocial com API, eventos, AuditLog e mapeamento de campos |
 
 ---
 
@@ -145,8 +145,8 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
 | **RV** | Revisar artefato (conformidade) | Analista / Tech Lead | Recebe **um** N0/N1/N2/N3/data-model, roda o gate determinístico e a revisão semântica (altitude, regra=invariante, fonte única de banco, canônicos, ⚠️) e devolve os itens a corrigir com severidade e rota — **não edita** |
-| **AU** | Deduplicar regras de negócio | Analista / Tech Lead | Varre N3s e detecta regras duplicadas, sobrepostas ou contraditórias entre features |
-| **AT** | Auditar elos ticket ↔ feature | Analista / Tech Lead | Varre `## Origem` dos N3, `## Features` das AIMMs e o `INDEX.md`; detecta elos unilaterais, ausências no índice e órfãos — garante que o caminho inverso (ticket → features) está consistente |
+| **AU** | Deduplicar regras de negócio | Analista / Tech Lead | Varre N3s e detecta regras duplicadas, sobrepostas ou contraditórias entre funcionalidades |
+| **AT** | Auditar elos ticket ↔ funcionalidade | Analista / Tech Lead | Varre `## Origem` dos N3, `## Funcionalidades` das AIMMs e o `INDEX.md`; detecta elos unilaterais, ausências no índice e órfãos — garante que o caminho inverso (ticket → funcionalidades) está consistente |
 | **PD** | Painel de pendências (o que falta especificar) | Analista / PO / Tech Lead | Varre as AIMMs (`analise-impacto/`), READMEs de N2 e os N3 (⚠️) e **regenera** a seção `## Pendências de especificação` do `INDEX.md` — separando **existência** (falta N3) de **conteúdo** (lacunas em aberto), cada item com a rota para resolver |
 | **IV** | Investigar artefatos (delta → pending_changes) | PO + Analista | Cruza requisitos/delta com o que já existe e classifica cada bloco em `create`, `modify` ou `keep`; gera `pending_changes.md` para aprovação humana |
 | **EX** | Executar alterações aprovadas | Analista / Dev | Lê o `pending_changes.md` revisado e executa o prompt correto para cada item aprovado — um por vez, com confirmação entre eles |
@@ -157,8 +157,8 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
-| **4A** | Atualizar feature existente — negócio | PO + Dev | Aplica mudança em N3 já existente, avalia impacto e gera changelog |
-| **4B** | Atualizar feature existente — técnico | Dev | Complementa o 4A com análise de breaking changes e atualização técnica |
+| **4A** | Atualizar funcionalidade existente — negócio | PO + Dev | Aplica mudança em N3 já existente, avalia impacto e gera changelog |
+| **4B** | Atualizar funcionalidade existente — técnico | Dev | Complementa o 4A com análise de breaking changes e atualização técnica |
 
 ---
 
@@ -166,9 +166,9 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
-| **5A** | Gerar SDD | Dev | Gera Software Design Document com arquitetura, pseudocódigo e sequência de implementação — feature nova; feature que já existe e muda (linha `alterar` na AIMM) vai para o **modo alteração**: só o que o delta do N3 pede |
+| **5A** | Gerar SDD | Dev | Gera Software Design Document com arquitetura, pseudocódigo e sequência de implementação — funcionalidade nova; funcionalidade que já existe e muda (linha `alterar` na AIMM) vai para o **modo alteração**: só o que o delta do N3 pede |
 | **5B** | Gerar plano de testes (QA) | QA | Gera plano de testes E2E ou scripts Playwright/Cypress/Cucumber a partir do N3 |
-| **SK** | Exportar para o spec-kit | Dev | Exporta os N3 aprovados (`estado: especificado`) de um Feature Set para o workspace do GitHub spec-kit (`spec.md`, `plan.md`, `data-model.md`, `contracts/`) — rumo a código + testes |
+| **SK** | Exportar para o spec-kit | Dev | Exporta os N3 aprovados (`estado: especificado`) de um Agrupamento Funcional para o workspace do GitHub spec-kit (`spec.md`, `plan.md`, `data-model.md`, `contracts/`) — rumo a código + testes |
 
 ---
 
@@ -176,7 +176,7 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
-| **CT** | Contar/recontar PF por escopo | Dev / Analista de Métricas | Conta os Pontos de Função (APF / IFPUG CPM 4.3.1) de uma **feature**, **feature set** ou **domínio** numa única passada; grava na fonte (N3 + DATA-MODEL) e, após confirmação, espelha em `CONTAGEM-PF.md` e propaga o total ao `INDEX.md` |
+| **CT** | Contar/recontar PF por escopo | Dev / Analista de Métricas | Conta os Pontos de Função (APF / IFPUG CPM 4.3.1) de uma **funcionalidade**, **agrupamento funcional** ou **domínio** numa única passada; grava na fonte (N3 + DATA-MODEL) e, após confirmação, espelha em `CONTAGEM-PF.md` e propaga o total ao `INDEX.md` |
 
 ---
 
@@ -231,7 +231,7 @@ apresente o que será necessário fornecer. Use a tabela abaixo.
 | **R2** | 1. MASTER.md · 2. DATA-MODEL.md existente *(se houver)* · 3. FIELD-DICTIONARY.md · 4. global/SIZING.md *(opcional, para módulo ALI/AIE)* · 5. Schema `.sql` (CREATE TABLE / CREATE TYPE / etc.) |
 | **R3** | 1. MASTER.md *(se existir)* · 2. modules/INDEX.md + repos/[repo].md (do R0) *(ou domínio/SIGLA informados)* · 3. DATA-MODEL.md existente *(se houver)* · 4. **Documentação legada** (PDF/wiki/Word/planilha colados) · 5. **Código**: modelos · 6. Código: rotas/controllers · 7. Código: serviços · 8. Código: testes *(opcional)* · 9. Código: eventos/workers *(se houver)* |
 | **R4** | 1. MASTER.md (define a **stack-alvo**) · 2. PATTERNS.md existente *(se houver — para mesclar)* · 3. Origem do código (próprio sistema × referência/predecessor, e a stack de origem) · 4. **Código back**: interfaces/classes-base, repositórios, services, mappers/DTOs, factories · 5. **Código front**: serviços, classes-base, fachadas, interceptors/caches, guards/estratégias, máquinas de estado |
-| **B2** | 1. N3s do Feature Set (todos) |
+| **B2** | 1. N3s do Agrupamento Funcional (todos) |
 | **B1** | 1. N2s do domínio (todos) · 2. modules/INDEX.md *(opcional, para mapear integrações)* · 3. N3s adicionais sem N2 *(opcional)* |
 | **N0** | 1. MASTER.md *(opcional — sigla, nome e descrição do produto; no Claude Code é lido do disco)* · 2. Descrição do produto em linguagem natural (problema, público, valor — coletada na sessão) · 3. modules/_base-conhecimento/[assunto].md *(opcional — saída do PROMPT_0)* |
 | **AIMM** | 1. Chave do ticket + descrição + critérios de aceite *(à mão enquanto não há integração; via MCP quando houver)* · 2. modules/INDEX.md *(opcional — ajuda no roteamento)* · 3. N0_PRODUCT_VISION.md *(opcional)* |
@@ -246,21 +246,21 @@ apresente o que será necessário fornecer. Use a tabela abaixo.
 | **3B** | 1. MASTER.md · 2. DATA-MODEL do domínio · 3. API-PATTERNS.md · 4. ERROR-DICTIONARY.md · 5. FIELD-DICTIONARY.md · 6. RULES-DICTIONARY.md · 7. N1 · 8. N2 · 9. N3 negocial aprovado · 10. global/SIZING.md · 11. global/ALI-AIE-MAP.md *(contagem, passo 6)* |
 | **RV** | 1. O artefato a revisar (caminho no Claude Code, ou colado) · 2. global/DATA-MODEL.md + dicionários (FIELD/RULES/ERROR/MESSAGE) + N0/N1/N2 vizinhos *(sob demanda, para cruzamento)* |
 | **AU** | 1. RULES-DICTIONARY.md · 2. Trechos de regras transversais dos N1s relevantes · 3. N3s a varrer |
-| **AT** | 1. modules/INDEX.md *(no Claude Code é lido do disco)* · 2. AIMMs dos tickets em `analise-impacto/AIMM-*.md` (com a seção `## Features`) · 3. N3s a varrer (com a seção `## Origem`) |
-| **PD** | 1. modules/INDEX.md *(no Claude Code é lido do disco junto com a árvore `modules/`)* · 2. READMEs dos Feature Sets (N2) · 3. AIMMs dos tickets em `analise-impacto/AIMM-*.md` · 4. modules/_triagem/*.md *(opcional)* |
+| **AT** | 1. modules/INDEX.md *(no Claude Code é lido do disco)* · 2. AIMMs dos tickets em `analise-impacto/AIMM-*.md` (com a seção `## Funcionalidades`) · 3. N3s a varrer (com a seção `## Origem`) |
+| **PD** | 1. modules/INDEX.md *(no Claude Code é lido do disco junto com a árvore `modules/`)* · 2. READMEs dos Agrupamentos Funcionais (N2) · 3. AIMMs dos tickets em `analise-impacto/AIMM-*.md` · 4. modules/_triagem/*.md *(opcional)* |
 | **IV** | 1. MASTER.md · 2. modules/INDEX.md · 3. RULES-DICTIONARY.md · 4. FIELD-DICTIONARY.md · 5. Delta / requisitos novos ou alterados · 6. Artefatos existentes afetados *(opcional — N3s, N2s relevantes)* |
 | **EX** | 1. MASTER.md · 2. pending_changes.md revisado · 3. Insumos específicos de cada item (coletados durante a execução) |
 | **4A** | 1. MASTER.md · 2. FIELD-DICTIONARY.md · 3. RULES-DICTIONARY.md · 4. N3 existente completo |
 | **4B** | 1. MASTER.md · 2. DATA-MODEL do domínio · 3. API-PATTERNS.md · 4. ERROR-DICTIONARY.md · 5. FIELD-DICTIONARY.md · 6. RULES-DICTIONARY.md · 7. N1 · 8. N2 · 9. N3 original completo · 10. N3 negocial atualizado (do 4A) · 11. global/SIZING.md · 12. global/ALI-AIE-MAP.md *(recontagem)* |
 | **5A** | 1. MASTER.md · 2. DESIGN-SYSTEM.md · 3. DATA-MODEL.md (índice) · 4. API-PATTERNS.md · 5. FIELD-DICTIONARY.md · 6. RULES-DICTIONARY.md · 7. N1(s) · 8. N2(s) · 9. N3(s) a implementar — **modo alteração**: 1. a AIMM do ticket · 2. a saída de `node scripts/delta-n3.mjs --aimm analise-impacto/AIMM-<CHAVE>.md` · 3. os N3 com delta · 4. só os globais que o delta toca |
 | **5B** | 1. FIELD-DICTIONARY.md · 2. RULES-DICTIONARY.md · 3. ERROR-DICTIONARY.md · 4. N3 completo |
-| **6A** | 1. DESIGN-SYSTEM.md · 2. N2 do Feature Set · 3. N3s das features *(opcional)* |
-| **6B** | 1. DESIGN-SYSTEM.md · 2. N3 da feature |
-| **6C** | 1. DESIGN-SYSTEM.md · 2. N2 do Feature Set |
-| **6D** | 1. DESIGN-SYSTEM.md · 2. N3 da feature |
-| **CT** | 1. **Código do escopo** (feature `f-`/ID, feature set `g-`, ou nome do módulo/domínio) · 2. N3(s) do escopo · 3. global/SIZING.md · 4. global/DATA-MODEL.md + data-models/[dominio].md · 5. global/ALI-AIE-MAP.md · 6. global/CONTAGEM-PF.md *(para atualizar o consolidado)* |
+| **6A** | 1. DESIGN-SYSTEM.md · 2. N2 do Agrupamento Funcional · 3. N3s das funcionalidades *(opcional)* |
+| **6B** | 1. DESIGN-SYSTEM.md · 2. N3 da funcionalidade |
+| **6C** | 1. DESIGN-SYSTEM.md · 2. N2 do Agrupamento Funcional |
+| **6D** | 1. DESIGN-SYSTEM.md · 2. N3 da funcionalidade |
+| **CT** | 1. **Código do escopo** (funcionalidade `f-`/ID, agrupamento funcional `g-`, ou nome do módulo/domínio) · 2. N3(s) do escopo · 3. global/SIZING.md · 4. global/DATA-MODEL.md + data-models/[dominio].md · 5. global/ALI-AIE-MAP.md · 6. global/CONTAGEM-PF.md *(para atualizar o consolidado)* |
 | **NF** | 1. global/NFR.md atual (completo) · 2. Dados do requisito (coletados no questionário do prompt) |
-| **SK** | 1. Diretório de saída (raiz do projeto já inicializado com o spec-kit) · 2. MASTER.md · 3. API-PATTERNS.md · 4. NFR.md · 5. DESIGN-SYSTEM.md · 6. Dicionários (ERROR/FIELD/RULES/MESSAGE) · 7. DATA-MODEL (fragmento do domínio) · 8. N2 do Feature Set · 9. N3s técnicos com `estado: especificado` |
+| **SK** | 1. Diretório de saída (raiz do projeto já inicializado com o spec-kit) · 2. MASTER.md · 3. API-PATTERNS.md · 4. NFR.md · 5. DESIGN-SYSTEM.md · 6. Dicionários (ERROR/FIELD/RULES/MESSAGE) · 7. DATA-MODEL (fragmento do domínio) · 8. N2 do Agrupamento Funcional · 9. N3s técnicos com `estado: especificado` |
 
 ---
 
@@ -398,7 +398,7 @@ Se um insumo obrigatório não estiver disponível, oriente como obtê-lo:
 | MASTER.md | "Preencha o template em `global/MASTER.md` do repositório de docs." |
 | DATA-MODEL do domínio | "O arquivo fica em `global/data-models/[dominio].md`. Se o domínio ainda não existe, execute a opção **1B** primeiro." |
 | N1 do domínio | "Execute a opção **1A** primeiro para criar o N1 deste domínio." |
-| N2 do Feature Set | "Execute a opção **2A** para criar o N2 a partir do zero, ou **B2** para sintetizá-lo a partir dos N3s existentes." |
-| N3 negocial | "Execute a opção **3A** primeiro para criar a spec negocial desta feature." |
-| N3s para varredura (AU) | "Cole os arquivos N3 das features que deseja auditar. Não é obrigatório varrer o sistema inteiro de uma vez." |
+| N2 do Agrupamento Funcional | "Execute a opção **2A** para criar o N2 a partir do zero, ou **B2** para sintetizá-lo a partir dos N3s existentes." |
+| N3 negocial | "Execute a opção **3A** primeiro para criar a spec negocial desta funcionalidade." |
+| N3s para varredura (AU) | "Cole os arquivos N3 das funcionalidades que deseja auditar. Não é obrigatório varrer o sistema inteiro de uma vez." |
 | AIMMs/N3s para auditar elos (AT) | "Cole o `INDEX.md`, as AIMMs de `analise-impacto/` e os N3 do escopo. No Claude Code, basta apontar o domínio — leio os arquivos do disco." |

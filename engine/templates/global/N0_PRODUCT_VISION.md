@@ -11,7 +11,7 @@
 > a fonte única — aqui eles só se repetem (o `validate-doc` reprova sigla divergente).
 >
 > **Quem mantém**: PO / Liderança de Produto
-> **Atualização**: revisado quando a estratégia do produto muda — não a cada feature.
+> **Atualização**: revisado quando a estratégia do produto muda — não a cada funcionalidade.
 
 ---
 
@@ -66,12 +66,12 @@
 
 ---
 
-## Major Feature Sets previstos (N1)
+## Domínios previstos (N1)
 
 > Visão preliminar das grandes áreas que comporão o sistema. Cada uma será
 > detalhada em seu próprio N1. Mantenha esta lista alinhada com `modules/INDEX.md`.
 
-| Major Feature Set | SIGLA | O que cuida |
+| Domínio | SIGLA | O que cuida |
 |---|---|---|
 | [Nome] | [ABC] | [uma frase] |
 

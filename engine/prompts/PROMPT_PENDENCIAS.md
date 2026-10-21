@@ -2,7 +2,7 @@
 
 > **Quem participa**: Analista de Requisitos / PO / Tech Lead
 > **Insumo necessário**: `modules/INDEX.md`, a árvore `modules/**` (READMEs de
-> Feature Set + N3), as AIMMs dos tickets (`analise-impacto/AIMM-*.md`) e — se existir —
+> Agrupamento Funcional + N3), as AIMMs dos tickets (`analise-impacto/AIMM-*.md`) e — se existir —
 > `modules/_triagem/*.md`
 > **Entrega**: a seção **`## Pendências de especificação`** do `modules/INDEX.md`
 > **regenerada** — duas tabelas (**Existência** / **Conteúdo**), cada item linkando
@@ -33,7 +33,7 @@ seção delimitada — e só **após confirmação**.
 
 | Tipo | O que é | De onde vem | Rota para resolver |
 |---|---|---|---|
-| **Existência** | falta o artefato — algo é conhecido como necessário mas **ainda não tem N3** | features na `## Features` da AIMM de um ticket ainda "📋 A especificar"; features citadas num N2 (README) **sem** o `.md` correspondente; relatórios de triagem com veredito **Criar**; linhas do INDEX apontando para um N3 inexistente | **3A** *(ou **CRUD** se for cadastro completo)* · **2A**→3A *(feature set novo)* · **1A**→2A→3A *(domínio novo)* |
+| **Existência** | falta o artefato — algo é conhecido como necessário mas **ainda não tem N3** | funcionalidades na `## Funcionalidades` da AIMM de um ticket ainda "📋 A especificar"; funcionalidades citadas num N2 (README) **sem** o `.md` correspondente; relatórios de triagem com veredito **Criar**; linhas do INDEX apontando para um N3 inexistente | **3A** *(ou **CRUD** se for cadastro completo)* · **2A**→3A *(agrupamento funcional novo)* · **1A**→2A→3A *(domínio novo)* |
 | **Conteúdo** | o artefato **existe**, mas tem **lacunas em aberto** (⚠️ / ❓ / 🔍) aguardando esclarecimento | marcadores `⚠️` no corpo dos N3 e a lista de **Suposições** ao final de cada artefato (regra de condução #15); `❓`/`🔍` herdados de engenharia reversa | **4A**/**4B** *(manutenção)* ou **3B** *(se a passada técnica ainda está aberta)* |
 
 ### Princípios
@@ -88,11 +88,11 @@ Nunca faça mais de uma pergunta por estado.
 === modules/INDEX.md ===
 [cole o índice — em especial a tabela `## Rastreabilidade: ticket → spec → código`]
 
-=== READMEs de Feature Set (modules/[dom]/[fs]/README.md) ===
-[cole os N2 do escopo — a lista de features de cada um revela quais ainda não têm N3]
+=== READMEs de Agrupamento Funcional (modules/[dom]/[fs]/README.md) ===
+[cole os N2 do escopo — a lista de funcionalidades de cada um revela quais ainda não têm N3]
 
 === analise-impacto/AIMM-*.md ===
-[cole as AIMMs dos tickets — o front-matter e a tabela `## Features` de cada uma]
+[cole as AIMMs dos tickets — o front-matter e a tabela `## Funcionalidades` de cada uma]
 
 === modules/_triagem/*.md *(opcional)* ===
 [cole os relatórios de triagem salvos, se houver — vereditos "Criar" ainda não atendidos]
@@ -113,7 +113,7 @@ Detecte o canal, declare o escopo (um domínio ou o sistema inteiro) e aguarde:
 - **No copy-paste/CLI:**
   > "Vou consolidar as pendências a partir do que você colou. Recebi: [lista].
   > Ausentes: [lista ou 'nenhum']. [Se faltar a árvore de N2: ⚠️ sem os READMEs dos
-  > Feature Sets a *existência* fica limitada às AIMMs.] Posso iniciar?"
+  > Agrupamentos Funcionais a *existência* fica limitada às AIMMs.] Posso iniciar?"
 
 ---
 
@@ -126,12 +126,12 @@ Monte uma tabela interna (não exiba ainda), um registro por pendência, anotand
 
 **Existência (falta N3):**
 - **AIMMs dos tickets** — para cada `analise-impacto/AIMM-<CHAVE>.md` de `tipo: ticket`,
-  leia a tabela `## Features`. Toda feature listada como "📋 A especificar" ou
+  leia a tabela `## Funcionalidades`. Toda funcionalidade listada como "📋 A especificar" ou
   "*(a confirmar no 3A)*", ou cujo link aponta para um N3 que não existe, é uma
   pendência de existência — origem = a chave do ticket (`STRYxxxxxxx`). A AIMM da
   sprint (`tipo: sprint`) não entra: ela consolida o que já foi entregue.
-- **N2 sem N3** — em cada README de Feature Set, confronte as features listadas com os
-  arquivos `.md` que existem na pasta do FS. Feature citada **sem** `.md` correspondente
+- **N2 sem N3** — em cada README de Agrupamento Funcional, confronte as funcionalidades listadas com os
+  arquivos `.md` que existem na pasta do FS. Funcionalidade citada **sem** `.md` correspondente
   = pendência de existência — origem = o N2 (`modules/[dom]/[fs]/README.md`).
 - **INDEX órfão** — linhas da tabela de rastreabilidade do INDEX cujo link de N3 aponta
   para um arquivo **inexistente** = pendência de existência — origem = o INDEX.
@@ -158,14 +158,14 @@ Monte uma tabela interna (não exiba ainda), um registro por pendência, anotand
 
    | Situação | Nível | Rota |
    |---|---|---|
-   | Feature nova isolada | N3 | **3A** |
+   | Funcionalidade nova isolada | N3 | **3A** |
    | Cadastro completo (5 operações) | N3 | **CRUD** |
    | Nova operação de um cadastro existente | N3 | **3A** *(derivação CRUD)* |
-   | Feature Set inteiro novo | N2 | **2A** → 3A |
+   | Agrupamento Funcional inteiro novo | N2 | **2A** → 3A |
    | Domínio novo | N1 | **1A** → 2A → 3A |
 
 3. **Para conteúdo**, a rota padrão é **4A** (ou **4B**/**3B** se a lacuna for técnica).
-4. **Ordene** por domínio/feature set para o painel ficar legível.
+4. **Ordene** por domínio/agrupamento funcional para o painel ficar legível.
 
 ---
 
@@ -185,7 +185,7 @@ Apresente o painel **exatamente no formato que será gravado** (abaixo) e **pare
 
 ### Conteúdo (⚠️ em aberto)
 
-| Feature | Lacuna | Arquivo |
+| Funcionalidade | Lacuna | Arquivo |
 |---|---|---|
 | Cadastrar cliente | Idade mínima exigida? | [cadastrar-cliente.md](./clientes/cadastro/cadastrar-cliente.md) |
 ```
@@ -234,7 +234,7 @@ Estrutura gravada (entre os marcadores):
 
 ### Conteúdo (⚠️ em aberto)
 
-| Feature | Lacuna | Arquivo |
+| Funcionalidade | Lacuna | Arquivo |
 |---|---|---|
 | … |
 ```

@@ -1,37 +1,37 @@
 # PROMPT 2A — N2 Negócio
-## Feature Sets · Parte negocial
+## Agrupamentos Funcionais · Parte negocial
 
-> **Modelo de estrutura**: `engine/templates/modules/_template-dominio/_template-feature-set/README.md` *(referência humana — o prompt já embute o esqueleto)*
+> **Modelo de estrutura**: `engine/templates/modules/_template-dominio/_template-agrupamento-funcional/README.md` *(referência humana — o prompt já embute o esqueleto)*
 > **Quem participa**: PO + dev (ou só PO)
 > **Insumo necessário**: N1 completo do domínio escolhido
-> **Entrega**: rascunho do README.md de cada Feature Set com fluxo
+> **Entrega**: rascunho do README.md de cada Agrupamento Funcional com fluxo
 > principal, telas e permissões — sem campos técnicos ou endpoints
 >
 > **Pré-requisito**: PROMPT_1B concluído para o domínio escolhido
-> **Próximo passo**: após aprovação, usar PROMPT_3A para especificar as features (o N2 é integralmente negocial — sem passada técnica)
+> **Próximo passo**: após aprovação, usar PROMPT_3A para especificar as funcionalidades (o N2 é integralmente negocial — sem passada técnica)
 
 ---
 
 ## INSTRUÇÕES PARA O CLAUDE
 
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
-> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
-> 2. **Ao montar a tabela `## Features`** — cada linha precisa passar nos cinco testes de
->    `engine/FEATURE-DEFINITION.md` (§ Definição): uma ação · de negócio · um ator executa ·
->    começo-meio-fim · resultado observável. Em dúvida se algo é **feature** ou **campo da
->    feature-pai**, aplique o teste do "pronto": *o item é gravado por si, ou só quando o
->    registro-pai é salvo?* Gravação própria → feature. Salvo junto com o pai → campo.
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [agrupamento-funcional]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Ao montar a tabela `## Funcionalidades`** — cada linha precisa passar nos cinco testes de
+>    `engine/DEFINICAO-FUNCIONALIDADE.md` (§ Definição): uma ação · de negócio · um ator executa ·
+>    começo-meio-fim · resultado observável. Em dúvida se algo é **funcionalidade** ou **campo da
+>    funcionalidade-pai**, aplique o teste do "pronto": *o item é gravado por si, ou só quando o
+>    registro-pai é salvo?* Gravação própria → funcionalidade. Salvo junto com o pai → campo.
 >    **Nunca** use diferença de permissão como critério: permissão é consequência de a
->    feature existir (`global/AUTHZ.md` da instância), nunca a razão de ela existir.
+>    funcionalidade existir (`global/AUTHZ.md` da instância), nunca a razão de ela existir.
 > 3. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
-Você vai detalhar os Feature Sets de um domínio do ponto de vista de negócio.
+Você vai detalhar os Agrupamentos Funcionais de um domínio do ponto de vista de negócio.
 Foque em fluxos, jornadas e regras — sem mencionar endpoints, FKs ou libs.
 
 Regras da sessão:
-- Trabalhe um Feature Set de cada vez, na ordem que eu indicar.
-- Ao completar as perguntas de um Feature Set, gere o artefato parcial
+- Trabalhe um Agrupamento Funcional de cada vez, na ordem que eu indicar.
+- Ao completar as perguntas de um Agrupamento Funcional, gere o artefato parcial
   e aguarde aprovação antes de iniciar o próximo.
 - Sinalize suposições com ⚠️.
 
@@ -47,20 +47,20 @@ Regras da sessão:
 
 ---
 
-## PASSO 1 — Confirmação dos Feature Sets
+## PASSO 1 — Confirmação dos Agrupamentos Funcionais
 
-Leia o N1, identifique a sigla do domínio (ID do N1) e os Feature Sets. **O ID de cada
-Feature Set (`[SIGLA]-[SFS]`) já vem definido no N1** — use-o como está, **não gere
-outro**. Caso o N1 esteja desatualizado e algum Feature Set não tenha ID (ou não conste),
+Leia o N1, identifique a sigla do domínio (ID do N1) e os Agrupamentos Funcionais. **O ID de cada
+Agrupamento Funcional (`[SIGLA]-[SAF]`) já vem definido no N1** — use-o como está, **não gere
+outro**. Caso o N1 esteja desatualizado e algum Agrupamento Funcional não tenha ID (ou não conste),
 atribua uma sigla de 3 letras maiúsculas única no domínio e proponha incluí-la no N1
 (PASSO 3). Pergunte:
 
-> "Identifiquei os seguintes Feature Sets no domínio **[nome]** (`[SIGLA]`):
+> "Identifiquei os seguintes Agrupamentos Funcionais no domínio **[nome]** (`[SIGLA]`):
 >
-> | Feature Set | ID |
+> | Agrupamento Funcional | ID |
 > |---|---|
-> | [Nome] | [SIGLA]-[SFS] |
-> | [Nome] | [SIGLA]-[SFS] |
+> | [Nome] | [SIGLA]-[SAF] |
+> | [Nome] | [SIGLA]-[SAF] |
 >
 > Qual deles deseja detalhar primeiro?"
 
@@ -68,12 +68,12 @@ Aguarde minha escolha antes de prosseguir.
 
 ---
 
-## PASSO 2 — Detalhamento negocial de cada Feature Set
+## PASSO 2 — Detalhamento negocial de cada Agrupamento Funcional
 
-Para cada Feature Set que eu indicar, faça as perguntas abaixo
+Para cada Agrupamento Funcional que eu indicar, faça as perguntas abaixo
 em sequência, uma de cada vez, aguardando minha resposta:
 
-**Pergunta 1 — Features**
+**Pergunta 1 — Funcionalidades**
 > "Quais são as funcionalidades individuais deste grupo?
 > Para cada uma: nome e uma linha do que o usuário consegue fazer."
 
@@ -92,24 +92,24 @@ em sequência, uma de cada vez, aguardando minha resposta:
 
 **Pergunta 5 — Permissões (fonte única do projeto)**
 > "Quem pode usar este grupo de funcionalidades?
-> Liste os **perfis** de usuário envolvidos e, para **cada feature/ação** do
-> Feature Set (pesquisar, cadastrar, editar, excluir, importar, visualizar…),
+> Liste os **perfis** de usuário envolvidos e, para **cada funcionalidade/ação** do
+> Agrupamento Funcional (pesquisar, cadastrar, editar, excluir, importar, visualizar…),
 > diga **quais perfis podem executá-la**.
 > Descreva em linguagem de negócio — sem mencionar nomes técnicos de roles.
 > Esta é a **única** definição de permissões do projeto: perfis e permissões
-> vivem **só no N2** — os N3 das features não repetem esta matriz (descrevem só
+> vivem **só no N2** — os N3 das funcionalidades não repetem esta matriz (descrevem só
 > o que o sistema faz quando alguém sem acesso tenta a ação)."
 
 Com as respostas, gere o artefato parcial:
 
-📄 `modules/[dominio]/[feature-set]/README.md` — seções negociais
+📄 `modules/[dominio]/[agrupamento-funcional]/README.md` — seções negociais
 
-> **Nome da pasta do Feature Set (obrigatório):** `[feature-set]` é o **slug em kebab-case do nome do Feature Set, SEM prefixo** — ex.: *Gestão de Fábricas* → `gestao-fabricas`; *Sistemas* → `sistemas`. **A pasta não leva prefixo** (nada de `g-`); só os **arquivos de feature** levam `f-`. O nome é também o segmento de rota (`/[dominio]/[feature-set]`).
+> **Nome da pasta do Agrupamento Funcional (obrigatório):** `[agrupamento-funcional]` é o **slug em kebab-case do nome do Agrupamento Funcional, SEM prefixo** — ex.: *Gestão de Fábricas* → `gestao-fabricas`; *Sistemas* → `sistemas`. **A pasta não leva prefixo** (nada de `g-`); só os **arquivos de funcionalidade** levam `f-`. O nome é também o segmento de rota (`/[dominio]/[agrupamento-funcional]`).
 
 > ### Contrato estrutural (vinculante — verificado por `scripts/validate-doc.mjs`)
 >
 > O N2 tem **exatamente estas 7 seções `##`, nesta ordem, e nenhuma outra**:
-> `## Descrição` · `## Features` · `## Fluxo Principal` · `## Dependências entre features` · `## Telas` · `## Permissões por perfil` · `## Changelog`.
+> `## Descrição` · `## Funcionalidades` · `## Fluxo Principal` · `## Dependências entre funcionalidades` · `## Telas` · `## Permissões por perfil` · `## Changelog`.
 >
 > **Arquétipo do produto** (`global/MASTER.md` → "Arquétipo"): em `ml-dados` e
 > `cli-biblioteca` (produto sem UI), `## Telas` e `## Permissões por perfil` são
@@ -117,20 +117,20 @@ Com as respostas, gere o artefato parcial:
 > aceita a omissão nesses arquétipos). As demais seções e a ordem não mudam.
 >
 > **MUST**
-> - Título `# Feature Set: [Nome]` e subtítulo `> **Nível 2** - Major Feature Set: [Nome] - ` + ID em crase (hífens `-`, sem em-dash).
-> - Nome da Feature **sempre** com o link do N3 embutido — `[**Nome**](f-….md) <small>SIGLA-SFS-NN</small>` (link envolve o negrito, nunca o inverso) — nunca texto puro nem link separado em coluna própria.
+> - Título `# Agrupamento Funcional: [Nome]` e subtítulo `> **Nível 2** - Domínio: [Nome] - ` + ID em crase (hífens `-`, sem em-dash).
+> - Nome da Funcionalidade **sempre** com o link do N3 embutido — `[**Nome**](f-….md) <small>SIGLA-SAF-NN</small>` (link envolve o negrito, nunca o inverso) — nunca texto puro nem link separado em coluna própria.
 > - Fluxo Principal: bloco `mermaid` `flowchart TD` **acíclico nas setas comuns** — toda seta avança até o nó final; ramos de decisão convergem para frente. **Única exceção**: retorno de **processo iterativo** anotado como `-.->|itera: motivo|` (ver Regra do Fluxo principal).
 >
 > **MUST NOT**
-> - Acrescentar **qualquer** seção, subtítulo ou tabela fora da lista de 7 acima (ex.: "Categorias", "Tipos", "Naturezas", "Regras de negócio", "Campos"). Informação de categoria/tipo/natureza de uma entidade vai na **Descrição** ou em **Dependências entre features** — nunca em seção própria.
+> - Acrescentar **qualquer** seção, subtítulo ou tabela fora da lista de 7 acima (ex.: "Categorias", "Tipos", "Naturezas", "Regras de negócio", "Campos"). Informação de categoria/tipo/natureza de uma entidade vai na **Descrição** ou em **Dependências entre funcionalidades** — nunca em seção própria.
 > - Setas de retorno no Mermaid **sem a anotação `itera`** (loop acidental, "voltar", reabrir etapa já percorrida): isso é fluxo alternativo e vive no N3, não no N2.
 > - Duplicar Label Dev, campo banco, endpoints ou FKs (pertencem ao N3 / data-model).
 
 **Gere exatamente esta estrutura — sem adicionar seções, subtítulos ou elementos não listados abaixo:**
 
 ```
-# Feature Set: [Nome do Feature Set]
-> **Nível 2** - Major Feature Set: [Nome do Domínio] - `[SIGLA]-[SFS]`
+# Agrupamento Funcional: [Nome do Agrupamento Funcional]
+> **Nível 2** - Domínio: [Nome do Domínio] - `[SIGLA]-[SAF]`
 
 ## Descrição
 [2-3 frases sobre o que faz]
@@ -139,11 +139,11 @@ Com as respostas, gere o artefato parcial:
 
 ---
 
-## Features
+## Funcionalidades
 
-| Feature | Descrição |
+| Funcionalidade | Descrição |
 |---|---|
-| [**Nome da Feature**](f-[verbo]-[entidade].md) <small>[SIGLA]-[SFS]-NN</small> | [descrição em uma linha] |
+| [**Nome da Funcionalidade**](f-[verbo]-[entidade].md) <small>[SIGLA]-[SAF]-NN</small> | [descrição em uma linha] |
 
 ---
 
@@ -154,23 +154,23 @@ representação do fluxo: nada de lista numerada depois dele]
 
 ---
 
-## Dependências entre features
+## Dependências entre funcionalidades
 
-[lista descrevendo pré-requisitos e relações entre features]
+[lista descrevendo pré-requisitos e relações entre funcionalidades]
 
 ---
 
 ## Telas
 
-| Tela | Rota sugerida | Features atendidas | Descrição |
+| Tela | Rota sugerida | Funcionalidades atendidas | Descrição |
 |---|---|---|---|
-| [nome] | `/[rota]` | **[Nome da Feature]** <small>[SIGLA]-[SFS]-NN</small> | [descrição] |
+| [nome] | `/[rota]` | **[Nome da Funcionalidade]** <small>[SIGLA]-[SAF]-NN</small> | [descrição] |
 
 ---
 
 ## Permissões por perfil
 
-> **Fonte única de permissões** deste Feature Set. As features (N3) não tratam de
+> **Fonte única de permissões** deste Agrupamento Funcional. As funcionalidades (N3) não tratam de
 > perfis nem permissões — qualquer acesso novo ou diferente entra nesta matriz.
 
 Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
@@ -200,14 +200,14 @@ Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
 
 > **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
 > parágrafo em **uma única linha contínua** (sem quebras internas). Comece pela
-> **capacidade que o conjunto entrega ao usuário** — o Feature Set *agrupa operações*.
+> **capacidade que o conjunto entrega ao usuário** — o Agrupamento Funcional *agrupa operações*.
 > Em ordem de preferência: **1) "Reúne as operações de…"** (estruturalmente exato: um
-> conjunto reúne operações, já antecipando as features); **2) "Agrupa as funcionalidades
+> conjunto reúne operações, já antecipando as funcionalidades); **2) "Agrupa as funcionalidades
 > que permitem…"**; **3) "Permite ao [perfil] …"** (quando o destaque é o valor para o
 > perfil). **Não use** verbos de domínio (*Responde por, Concentra*) — confundem o nível.
-> Ordene as frases assim: (1ª) quais operações reúne, já antecipando as features · (2ª) o
+> Ordene as frases assim: (1ª) quais operações reúne, já antecipando as funcionalidades · (2ª) o
 > que isso permite ao perfil. A linha `**Não faz**:` delimita o escopo negativo do conjunto.
-> Exemplo (Feature Set **Cadastro de Clientes** `CLI-CAD`):
+> Exemplo (Agrupamento Funcional **Cadastro de Clientes** `CLI-CAD`):
 > ```
 > ## Descrição
 > Reúne as operações de manutenção do cadastro de clientes: incluir, pesquisar, editar, visualizar e desativar um cliente. Permite ao operador manter os dados cadastrais sempre atualizados a partir de uma única área do sistema.
@@ -229,8 +229,8 @@ Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
 > direção ao fim** e os ramos **convergem para frente** — nunca apontam de volta
 > para um nó acima. Situações de retorno (cancelar, voltar à tela anterior,
 > reeditar, validação que devolve ao formulário) são **fluxos alternativos/de
-> exceção** e vivem no **N3 da feature**, não no fluxo principal do N2.
-> **Exceção única — iteração anotada.** Quando a jornada do Feature Set é um
+> exceção** e vivem no **N3 da funcionalidade**, não no fluxo principal do N2.
+> **Exceção única — iteração anotada.** Quando a jornada do Agrupamento Funcional é um
 > **processo genuinamente iterativo** (comum no arquétipo `ml-dados`: treinar →
 > avaliar → ajustar → treinar de novo), o retorno **faz parte do happy path** e
 > pode ser representado — mas **somente** como aresta **tracejada e rotulada com
@@ -240,7 +240,7 @@ Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
 > exceção (validação que devolve ao formulário continua sendo N3).
 > Converta a jornada descrita na Pergunta 2 em nós e setas:
 > - Ponto de entrada e resultado final como nós de terminal: `(["texto"])`
-> - Etapas/features como nós de processo: `["texto"]`
+> - Etapas/funcionalidades como nós de processo: `["texto"]`
 > - Decisões como losangos: `{"texto?"}` com setas rotuladas (`-->|Sim|`, `-->|Não|`)
 > - Use rótulos em linguagem de negócio (sem endpoints, FKs ou nomes técnicos).
 > - **Envolva o texto dos NÓS em aspas duplas** (`["texto"]`, `(["texto"])`,
@@ -262,52 +262,52 @@ Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
 > ```
 > - **Não use `\n` dentro de um nó** — quebra o parser. Mantenha o rótulo curto.
 
-> **Regra dos IDs de feature** — Só a primeira atribuição segue a jornada confirmada na ordem da tabela `## Features`. Antes de escrever N3s, rode `node scripts/ids-n3.mjs modules/[dominio]/[feature-set]/README.md` (modo seco) e, conferido, `--write`. Preserve qualquer ID existente no N2/N3, mesmo fora da ordem atual; novas features continuam após o maior reservado, sem reutilizar lacunas. Ao regenerar o N2, preserve o registro `docqui:n3-ids`. O ID é imutável, não uma posição da jornada — ver `engine/N3-IDS.md`.
-> Na tabela **Features**, renderize
-> **sempre** como `[**Nome da Feature**](f-….md) <small>[SIGLA]-[SFS]-NN</small>`
+> **Regra dos IDs de funcionalidade** — Só a primeira atribuição segue a jornada confirmada na ordem da tabela `## Funcionalidades`. Antes de escrever N3s, rode `node scripts/ids-n3.mjs modules/[dominio]/[agrupamento-funcional]/README.md` (modo seco) e, conferido, `--write`. Preserve qualquer ID existente no N2/N3, mesmo fora da ordem atual; novas funcionalidades continuam após o maior reservado, sem reutilizar lacunas. Ao regenerar o N2, preserve o registro `docqui:n3-ids`. O ID é imutável, não uma posição da jornada — ver `engine/N3-IDS.md`.
+> Na tabela **Funcionalidades**, renderize
+> **sempre** como `[**Nome da Funcionalidade**](f-….md) <small>[SIGLA]-[SAF]-NN</small>`
 > (link do N3 envolvendo o negrito + ID em `<small>` ao lado — nunca `**[Nome](...)**`,
-> que quebra a extração automática do nome). Na coluna **Features atendidas** das
-> **Telas** (só referência cruzada, sem link) use `**Nome da Feature** <small>[SIGLA]-[SFS]-NN</small>`
+> que quebra a extração automática do nome). Na coluna **Funcionalidades atendidas** das
+> **Telas** (só referência cruzada, sem link) use `**Nome da Funcionalidade** <small>[SIGLA]-[SAF]-NN</small>`
 > (múltiplas separadas por `<br>`). Nunca use o formato `**ID**: Nome` nem uma coluna
 > de ID ou de arquivo separada.
 
 > **Regra das Permissões** — A seção `## Permissões por perfil` é **sempre** a
-> **matriz** perfis (linhas) × ações/features (colunas), precedida da nota de fonte
+> **matriz** perfis (linhas) × ações/funcionalidades (colunas), precedida da nota de fonte
 > única e da linha `Perfis: ...`. Células: `✓` (pode) e `—` (não pode). Detalhes vão em
 > bullets **após** a tabela. Nunca use lista solta ou texto corrido.
 
-> **Conformidade estrutural (não desvie)** — O título é **sempre** `# Feature Set:
-> [Nome]`; o subtítulo é a linha de blockquote exata (hífens `-`, `Major Feature Set: [Nome]`, ID
-> em crase) — não use em-dash, não escreva "Feature Set" no lugar do domínio nem
+> **Conformidade estrutural (não desvie)** — O título é **sempre** `# Agrupamento Funcional:
+> [Nome]`; o subtítulo é a linha de blockquote exata (hífens `-`, `Domínio: [Nome]`, ID
+> em crase) — não use em-dash, não escreva "Agrupamento Funcional" no lugar do domínio nem
 > adicione linhas `> **Domínio**`/`> **Artefato**`. **Não inclua** as seções
-> `## Regras de negócio` nem `## Campos` no N2: regras que valem para o Feature Set
-> inteiro vão para as **Regras transversais do N1**; regras e campos de uma feature vão
+> `## Regras de negócio` nem `## Campos` no N2: regras que valem para o Agrupamento Funcional
+> inteiro vão para as **Regras transversais do N1**; regras e campos de uma funcionalidade vão
 > para o **N3**; campos físicos, para o **data-model**. Use os títulos e o casing exatos
 > (`## Fluxo Principal`). Todas as seções são obrigatórias — não omita **Telas** nem
-> **Dependências entre features** — exceto nos arquétipos `ml-dados`/`cli-biblioteca`,
-> onde **Telas** e **Permissões por perfil** podem ser omitidas se o Feature Set não
+> **Dependências entre funcionalidades** — exceto nos arquétipos `ml-dados`/`cli-biblioteca`,
+> onde **Telas** e **Permissões por perfil** podem ser omitidas se o Agrupamento Funcional não
 > tiver UI (mantendo a ordem das demais).
 
 Após apresentar, pergunte:
-> "O N2 de [Feature Set] está correto?
-> Ajusta algo ou avanço para o próximo Feature Set?"
+> "O N2 de [Agrupamento Funcional] está correto?
+> Ajusta algo ou avanço para o próximo Agrupamento Funcional?"
 
-Repita o Passo 2 para cada Feature Set que eu indicar.
+Repita o Passo 2 para cada Agrupamento Funcional que eu indicar.
 
 ---
 
 ## PASSO 3 — Atualização do N1 (nível imediatamente anterior)
 
-Sempre que um Feature Set (N2) for gerado ou alterado, verifique se o N1 do
+Sempre que um Agrupamento Funcional (N2) for gerado ou alterado, verifique se o N1 do
 domínio (`modules/[dominio]/README.md`) e o `modules/INDEX.md` ainda refletem
 a realidade e atualize-os quando necessário:
 
-- **Feature Sets do domínio (link e contagem)**: o Feature Set já consta na tabela
-  do N1 com seu ID `[SIGLA]-[SFS]` (definido no N1). **Mantenha o ID como está**; agora
-  que o N2 existe, preencha o link **direto no nome do Feature Set** —
-  `[**Nome**](./[feature-set]/README.md) <small>[SIGLA]-[SFS]</small>` — e a contagem de
-  **Features** coerente com o N2, e garanta que o rodapé `*Links: ...*` do N1 aponte para
-  este Feature Set. Só se o N1 estiver desatualizado (Feature Set ausente ou sem ID),
+- **Agrupamentos Funcionais do domínio (link e contagem)**: o Agrupamento Funcional já consta na tabela
+  do N1 com seu ID `[SIGLA]-[SAF]` (definido no N1). **Mantenha o ID como está**; agora
+  que o N2 existe, preencha o link **direto no nome do Agrupamento Funcional** —
+  `[**Nome**](./[agrupamento-funcional]/README.md) <small>[SIGLA]-[SAF]</small>` — e a contagem de
+  **Funcionalidades** coerente com o N2, e garanta que o rodapé `*Links: ...*` do N1 aponte para
+  este Agrupamento Funcional. Só se o N1 estiver desatualizado (Agrupamento Funcional ausente ou sem ID),
   inclua-o no formato acima, sem link, com o ID definido no PASSO 1.
 - **Regras transversais**: se o N2 revelou uma regra que vale para o domínio
   inteiro, proponha incluí-la nas Regras transversais do N1.
@@ -323,24 +323,24 @@ Apresente as alterações propostas e peça aprovação antes de gravar:
 
 ## PASSO 4 — Confirmação de cobertura
 
-Após todos os Feature Sets do domínio aprovados, confirme:
-> "Todos os Feature Sets do domínio [nome] foram detalhados.
-> Para especificar as features individualmente, use o PROMPT_3A."
+Após todos os Agrupamentos Funcionais do domínio aprovados, confirme:
+> "Todos os Agrupamentos Funcionais do domínio [nome] foram detalhados.
+> Para especificar as funcionalidades individualmente, use o PROMPT_3A."
 
 ---
 
 ## Checklist de conformidade do N2
 
-Antes de apresentar cada Feature Set, confira (todos os itens são obrigatórios):
+Antes de apresentar cada Agrupamento Funcional, confira (todos os itens são obrigatórios):
 
-- [ ] Título exatamente `# Feature Set: [Nome]`
-- [ ] Subtítulo em blockquote: `> **Nível 2** - Major Feature Set: [Nome] - [ID]` (hífens `-`, sem em-dash, ID em crase)
+- [ ] Título exatamente `# Agrupamento Funcional: [Nome]`
+- [ ] Subtítulo em blockquote: `> **Nível 2** - Domínio: [Nome] - [ID]` (hífens `-`, sem em-dash, ID em crase)
 - [ ] Descrição (2-3 frases) seguida da linha `**Não faz**:`
-- [ ] **Features**: 2 colunas; coluna *Feature* no formato `[**Nome**](f-*.md) <small>[SIGLA]-[SFS]-NN</small>` com o link do N3 embutido no nome
+- [ ] **Funcionalidades**: 2 colunas; coluna *Funcionalidade* no formato `[**Nome**](f-*.md) <small>[SIGLA]-[SAF]-NN</small>` com o link do N3 embutido no nome
 - [ ] **Fluxo Principal**: bloco `mermaid` `flowchart TD`, todo nó entre **aspas duplas**, sem `\n`, sem lista numerada depois
 - [ ] **Fluxo Principal sem caminho de volta**: setas só para frente; ramos de decisão convergem para o nó final; sem loops nem retorno a etapas anteriores (retornos/exceções ficam no N3). Única exceção: iteração de processo anotada `-.->|itera: motivo|`
-- [ ] **Dependências entre features** presente
-- [ ] **Telas**: 4 colunas; *Features atendidas* como `**Nome** <small>ID</small>` (múltiplas separadas por `<br>`) — *opcional (pode ser omitida) nos arquétipos `ml-dados`/`cli-biblioteca` sem UI*
+- [ ] **Dependências entre funcionalidades** presente
+- [ ] **Telas**: 4 colunas; *Funcionalidades atendidas* como `**Nome** <small>ID</small>` (múltiplas separadas por `<br>`) — *opcional (pode ser omitida) nos arquétipos `ml-dados`/`cli-biblioteca` sem UI*
 - [ ] **Permissões por perfil**: nota de fonte única + linha `Perfis:` + matriz perfil × ação (`✓`/`—`) + bullets de detalhe — *opcional (pode ser omitida) nos arquétipos `ml-dados`/`cli-biblioteca` sem UI*
 - [ ] **Changelog** + rodapé `*Links: ...*`
 - [ ] **Nenhuma** seção extra (sem `## Regras de negócio`, sem `## Campos`, sem renomear títulos)

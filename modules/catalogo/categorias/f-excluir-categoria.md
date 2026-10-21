@@ -1,7 +1,7 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 id: CAT-CTG-04
-feature_set: CAT-CTG
+agrupamento_funcional: CAT-CTG
 dominio: CAT
 entidade: Categoria
 data_model_ref: data-models/catalogo.md#categoria
@@ -24,7 +24,7 @@ contagem:
 ---
 
 # Excluir Categoria
-> **Nível 3** - Feature Set: Categorias — Major Feature Set: Catálogo - `CAT-CTG-04`
+> **Nível 3** - Agrupamento Funcional: Categorias — Domínio: Catálogo - `CAT-CTG-04`
 
 ## Descrição
 
@@ -105,11 +105,11 @@ Feature: Excluir Categoria
 
 | Label PO | Valor | Quando |
 |---|---|---|
-| — | Nenhum campo é preenchido automaticamente nesta feature | — |
+| — | Nenhum campo é preenchido automaticamente nesta funcionalidade | — |
 
 ## Dados lidos e gravados
 
-| Entidade | Papel | Por que a feature a toca |
+| Entidade | Papel | Por que a funcionalidade a toca |
 |---|---|---|
 | Produto | lê | Verificar se há produtos vinculados à categoria antes de excluir (RN-02) |
 
@@ -150,7 +150,7 @@ A exclusão é acionada pelo ícone de excluir em cada linha da Pesquisa de Cate
 |---|---|---|---|---|---|---|---|
 | Excluir Categoria | principal | — | — | — | — | — | — |
 
-A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
+A contagem está pendente e deve nascer da análise desta funcionalidade via CT, com memória de cálculo.
 
 ## Origem
 
@@ -165,3 +165,4 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 | 2026-10-18 | Claude | N3 criado | Exclusão definitiva de categoria, com bloqueio por produtos vinculados (RC-09), derivada do cadastro, a partir do ticket fictício STRY0013170; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

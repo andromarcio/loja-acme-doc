@@ -5,7 +5,7 @@
 > extrai/atualiza N1 e N2 a partir da transcrição, cruzando níveis. Este prompt
 > permanece apenas como referência histórica.
 
-> **Modelo de estrutura**: `engine/templates/modules/_template-dominio/_template-feature-set/_template-feature.md` *(referência humana — o prompt já embute o esqueleto)*
+> **Modelo de estrutura**: `engine/templates/modules/_template-dominio/_template-agrupamento-funcional/_template-funcionalidade.md` *(referência humana — o prompt já embute o esqueleto)*
 > **Modo**: PO
 > **Entrada**: transcrição de reunião + contexto do projeto
 > **Saída**: artefato N3 negocial com lacunas sinalizadas
@@ -19,7 +19,7 @@
 
 Você é um analista de requisitos. Você receberá a transcrição de uma reunião
 de levantamento de requisitos e deve extrair dela a especificação negocial
-de uma ou mais features no formato N3.
+de uma ou mais funcionalidades no formato N3.
 
 ### Regras de extração
 
@@ -44,8 +44,8 @@ de uma ou mais features no formato N3.
    - processamento em segundo plano (não job assíncrono)
    - referência a outro cadastro (não FK)
 
-5. **Uma feature por artefato.** Se a transcrição cobrir mais de uma feature,
-   gere um artefato separado para cada uma. Ao final, liste as features
+5. **Uma funcionalidade por artefato.** Se a transcrição cobrir mais de uma funcionalidade,
+   gere um artefato separado para cada uma. Ao final, liste as funcionalidades
    identificadas e pergunte se a separação está correta.
 
 6. **Preserve falas relevantes.** Quando uma regra de negócio vier de uma
@@ -65,8 +65,8 @@ de uma ou mais features no formato N3.
 
 Após gerar todos os artefatos, apresente obrigatoriamente:
 
-1. **Lista de features identificadas** — confirmar se a separação está correta
-2. **Resumo de lacunas por feature** — lista de todos os ❓ agrupados
+1. **Lista de funcionalidades identificadas** — confirmar se a separação está correta
+2. **Resumo de lacunas por funcionalidade** — lista de todos os ❓ agrupados
 3. **Inferências para validação** — lista de todos os 🔍 agrupados
 4. **Conflitos identificados** — lista de todos os ⚠️ agrupados
 5. **Próximos passos sugeridos** — o que precisa ser resolvido antes do PROMPT 3B
@@ -84,8 +84,8 @@ Após gerar todos os artefatos, apresente obrigatoriamente:
 === N1 DO DOMÍNIO ===
 [cole aqui o README.md do domínio]
 
-=== N2 DO FEATURE SET ===
-[cole aqui o README.md do Feature Set]
+=== N2 DO FUNCIONALIDADE SET ===
+[cole aqui o README.md do Agrupamento Funcional]
 
 ---
 
@@ -98,13 +98,13 @@ Após gerar todos os artefatos, apresente obrigatoriamente:
 
 ## FORMATO DO ARTEFATO GERADO
 
-Para cada feature identificada, gere o arquivo no formato abaixo.
+Para cada funcionalidade identificada, gere o arquivo no formato abaixo.
 Não omita nenhuma seção — se não houver informação, use ❓.
 
 ---
 
 # [nome extraído da transcrição ou ❓]
-> **Nível 3** - Feature Set: [do N2 fornecido] — Major Feature Set: [do N1 fornecido] - `[ID provisório ou ❓]`
+> **Nível 3** - Agrupamento Funcional: [do N2 fornecido] — Domínio: [do N1 fornecido] - `[ID provisório ou ❓]`
 > **Origem**: Transcrição de reunião — [data se mencionada ou ❓]
 > **Participantes**: [nomes mencionados na transcrição ou ❓]
 
@@ -112,7 +112,7 @@ Não omita nenhuma seção — se não houver informação, use ❓.
 
 ## Descrição
 [Extraído da transcrição. Se não houver descrição clara: ❓ Descrição não
-mencionada na reunião — descrever em uma frase o que esta feature faz.]
+mencionada na reunião — descrever em uma frase o que esta funcionalidade faz.]
 
 ---
 
@@ -144,7 +144,7 @@ mencionada na reunião — descrever em uma frase o que esta feature faz.]
 ## Cenários
 
 ```gherkin
-Feature: [nome da feature]
+Feature: [nome da funcionalidade]
 
   Background:
     Given que o usuário está autenticado
@@ -242,7 +242,7 @@ definir se é formulário, modal, botão em lista ou página própria.]
 ---
 
 ## Implementação
-*Com o inventário `repos/INDEX.md`, preencha já Item e Repositório — o nome exato do inventário, uma linha por repositório que realiza a feature (num sistema de microsserviços, cada serviço). No perfil `requisitos`, que não tem 3B, esta é a única passada que liga a feature aos repositórios; no `completo`, o 3B (PASSO 5) confere e completa. Caminho e Branch/Tag ficam para depois da implementação. Sem inventário, deixe a linha de traços.*
+*Com o inventário `repos/INDEX.md`, preencha já Item e Repositório — o nome exato do inventário, uma linha por repositório que realiza a funcionalidade (num sistema de microsserviços, cada serviço). No perfil `requisitos`, que não tem 3B, esta é a única passada que liga a funcionalidade aos repositórios; no `completo`, o 3B (PASSO 5) confere e completa. Caminho e Branch/Tag ficam para depois da implementação. Sem inventário, deixe a linha de traços.*
 
 | Item | Repositório | Caminho | Branch/Tag |
 |---|---|---|---|
@@ -260,13 +260,13 @@ definir se é formulário, modal, botão em lista ou página própria.]
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
-| [data de geração] | [Claude / autor] | Feature criada | N3 negocial gerado a partir de transcrição de reunião |
+| [data de geração] | [Claude / autor] | Funcionalidade criada | N3 negocial gerado a partir de transcrição de reunião |
 
 ---
 
-*Feature Set: [nome] · Major Feature Set: [nome] · Gerado em: [data] · Origem: transcrição de reunião*
+*Agrupamento Funcional: [nome] · Domínio: [nome] · Gerado em: [data] · Origem: transcrição de reunião*
 
-*Links: [N2 do Feature Set] · [N1 do domínio] · [INDEX geral]*
+*Links: [N2 do Agrupamento Funcional] · [N1 do domínio] · [INDEX geral]*
 
 ---
 
@@ -276,20 +276,20 @@ Após gerar todos os artefatos, apresente obrigatoriamente esta seção:
 
 ---
 
-### Features identificadas na transcrição
+### Funcionalidades identificadas na transcrição
 
-| # | Feature | Artefato gerado | Cobertura |
+| # | Funcionalidade | Artefato gerado | Cobertura |
 |---|---|---|---|
 | 1 | [nome] | [nome-do-arquivo].md | 🟢 Boa / 🟡 Parcial / 🔴 Insuficiente |
 
-> A separação acima está correta? Alguma feature foi agrupada ou separada
+> A separação acima está correta? Alguma funcionalidade foi agrupada ou separada
 > de forma diferente do esperado?
 
 ---
 
-### Lacunas por feature (❓)
+### Lacunas por funcionalidade (❓)
 
-**[Nome da feature]**
+**[Nome da funcionalidade]**
 - ❓ [lacuna 1]
 - ❓ [lacuna 2]
 
@@ -297,7 +297,7 @@ Após gerar todos os artefatos, apresente obrigatoriamente esta seção:
 
 ### Inferências para validação (🔍)
 
-**[Nome da feature]**
+**[Nome da funcionalidade]**
 - 🔍 [inferência 1]
 - 🔍 [inferência 2]
 
@@ -305,7 +305,7 @@ Após gerar todos os artefatos, apresente obrigatoriamente esta seção:
 
 ### Conflitos identificados (⚠️)
 
-**[Nome da feature]**
+**[Nome da funcionalidade]**
 - ⚠️ [conflito 1 — trecho A diz X, trecho B diz Y]
 
 ---

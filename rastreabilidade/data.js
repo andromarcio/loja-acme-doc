@@ -4,9 +4,9 @@ window.TRACE_DATA = {
   "meta": {
     "system": "Loja ACME",
     "subtitle": "índice de rastreabilidade gerado por scripts/build-trace-data.mjs",
-    "generatedAt": "2026-10-20",
-    "engineVersion": "6.4.26",
-    "repo": "https://github.com/CAIXA-EFRS/loja-acme-doc.git"
+    "generatedAt": "2026-10-21",
+    "engineVersion": "7.0.0",
+    "repo": "https://github.com/andromarcio/loja-acme-doc"
   },
   "nodes": [
     {
@@ -21,7 +21,7 @@ window.TRACE_DATA = {
       "id": "ADM",
       "type": "dominio",
       "label": "Administração",
-      "sub": "Major Feature Set · ADM",
+      "sub": "Domínio · ADM",
       "desc": "Responde pela operação da Loja ACME: quem tem acesso e com que perfil, e quais faixas de CEP a loja atende, com o valor do frete de cada uma. Mantém os usuár…",
       "path": "modules/administracao/README.md"
     },
@@ -29,7 +29,7 @@ window.TRACE_DATA = {
       "id": "ADM-FRT",
       "type": "featureset",
       "label": "Faixas de Frete",
-      "sub": "Feature Set · ADM-FRT",
+      "sub": "Agrupamento Funcional · ADM-FRT",
       "domain": "ADM",
       "desc": "Reúne as operações de manutenção das faixas de frete: pesquisar, cadastrar, editar, excluir e visualizar uma faixa de CEP com o valor da entrega. Permite ao …",
       "path": "modules/administracao/faixas-frete/README.md"
@@ -38,7 +38,7 @@ window.TRACE_DATA = {
       "id": "ADM-USR",
       "type": "featureset",
       "label": "Usuários",
-      "sub": "Feature Set · ADM-USR",
+      "sub": "Agrupamento Funcional · ADM-USR",
       "domain": "ADM",
       "desc": "Reúne as operações de manutenção dos usuários da loja: pesquisar, cadastrar, editar, inativar e visualizar um usuário. Permite ao administrador definir quem …",
       "path": "modules/administracao/usuarios/README.md"
@@ -47,7 +47,7 @@ window.TRACE_DATA = {
       "id": "CAT",
       "type": "dominio",
       "label": "Catálogo",
-      "sub": "Major Feature Set · CAT",
+      "sub": "Domínio · CAT",
       "desc": "Responde pelos produtos que a Loja ACME vende e pelas categorias que os organizam, sendo a fonte única do que existe para vender. Mantém as categorias, com a…",
       "path": "modules/catalogo/README.md"
     },
@@ -55,7 +55,7 @@ window.TRACE_DATA = {
       "id": "CAT-CTG",
       "type": "featureset",
       "label": "Categorias",
-      "sub": "Feature Set · CAT-CTG",
+      "sub": "Agrupamento Funcional · CAT-CTG",
       "domain": "CAT",
       "desc": "Reúne as operações de manutenção das categorias de produtos: pesquisar, cadastrar, editar, excluir e visualizar uma categoria. Permite ao gestor de catálogo …",
       "path": "modules/catalogo/categorias/README.md"
@@ -64,7 +64,7 @@ window.TRACE_DATA = {
       "id": "CAT-PRD",
       "type": "featureset",
       "label": "Produtos",
-      "sub": "Feature Set · CAT-PRD",
+      "sub": "Agrupamento Funcional · CAT-PRD",
       "domain": "CAT",
       "desc": "Cadastro dos produtos à venda; é o exercício STRY0013150 da mentoria",
       "path": "modules/catalogo/README.md"
@@ -73,7 +73,7 @@ window.TRACE_DATA = {
       "id": "VND",
       "type": "dominio",
       "label": "Vendas",
-      "sub": "Major Feature Set · VND",
+      "sub": "Domínio · VND",
       "desc": "Vendas reúne o carrinho, o checkout e a gestão dos pedidos da Loja ACME. O cliente monta o carrinho com os produtos do Catálogo e conhece o valor da entrega …",
       "path": "modules/vendas/README.md"
     },
@@ -81,7 +81,7 @@ window.TRACE_DATA = {
       "id": "VND-CAR",
       "type": "featureset",
       "label": "Carrinho",
-      "sub": "Feature Set · VND-CAR",
+      "sub": "Agrupamento Funcional · VND-CAR",
       "domain": "VND",
       "desc": "Reúne as operações do cliente sobre os itens escolhidos antes da compra: adicionar um produto ao carrinho, ver os itens com o total, alterar a quantidade de …",
       "path": "modules/vendas/carrinho/README.md"
@@ -90,7 +90,7 @@ window.TRACE_DATA = {
       "id": "VND-CHK",
       "type": "featureset",
       "label": "Checkout",
-      "sub": "Feature Set · VND-CHK",
+      "sub": "Agrupamento Funcional · VND-CHK",
       "domain": "VND",
       "desc": "Checkout é a etapa em que o cliente informa onde quer receber e consulta o valor da entrega antes de confirmar o pedido. O exemplo inicial cobre o cálculo do…",
       "path": "modules/vendas/checkout/README.md"
@@ -99,7 +99,7 @@ window.TRACE_DATA = {
       "id": "VND-PED",
       "type": "featureset",
       "label": "Gestão de Pedidos",
-      "sub": "Feature Set · VND-PED",
+      "sub": "Agrupamento Funcional · VND-PED",
       "domain": "VND",
       "desc": "Reúne as operações do atendimento sobre os pedidos já confirmados: pesquisar pedidos, ver o detalhe de um pedido e cancelá-lo. Permite ao atendente localizar…",
       "path": "modules/vendas/gestao-pedidos/README.md"
@@ -108,7 +108,7 @@ window.TRACE_DATA = {
       "id": "VIT",
       "type": "dominio",
       "label": "Vitrine",
-      "sub": "Major Feature Set · VIT",
+      "sub": "Domínio · VIT",
       "desc": "Responde pelo que a pessoa vê ao visitar a Loja ACME: os destaques da página inicial, a busca de produtos e a página de cada produto. Mantém os destaques, co…",
       "path": "modules/vitrine/README.md"
     },
@@ -116,7 +116,7 @@ window.TRACE_DATA = {
       "id": "VIT-DST",
       "type": "featureset",
       "label": "Destaques",
-      "sub": "Feature Set · VIT-DST",
+      "sub": "Agrupamento Funcional · VIT-DST",
       "domain": "VIT",
       "desc": "Reúne as operações de manutenção dos destaques da página inicial: pesquisar, cadastrar, editar, excluir e visualizar um destaque. Permite ao gestor de catálo…",
       "path": "modules/vitrine/destaques/README.md"
@@ -125,7 +125,7 @@ window.TRACE_DATA = {
       "id": "VIT-NAV",
       "type": "featureset",
       "label": "Navegação",
-      "sub": "Feature Set · VIT-NAV",
+      "sub": "Agrupamento Funcional · VIT-NAV",
       "domain": "VIT",
       "desc": "Reúne o que a pessoa faz ao visitar a loja: ver os destaques da página inicial, pesquisar produtos por nome ou categoria e abrir a página de um produto. Perm…",
       "path": "modules/vitrine/navegacao/README.md"
@@ -136,7 +136,7 @@ window.TRACE_DATA = {
       "label": "Cadastrar Faixa de Frete",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · ADM-FRT-02",
+      "sub": "Funcionalidade · ADM-FRT-02",
       "domain": "ADM",
       "desc": "Permite que o administrador cadastre uma faixa de CEP com o valor do frete, e os CEPs dela passam a ser atendidos no cálculo de frete do checkout.",
       "path": "modules/administracao/faixas-frete/f-cadastrar-faixa-frete.md"
@@ -147,7 +147,7 @@ window.TRACE_DATA = {
       "label": "Editar Faixa de Frete",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · ADM-FRT-03",
+      "sub": "Funcionalidade · ADM-FRT-03",
       "domain": "ADM",
       "desc": "Permite que o administrador altere o intervalo de CEP e o valor do frete de uma faixa, com a alteração valendo para os próximos cálculos de frete e os pedido…",
       "path": "modules/administracao/faixas-frete/f-editar-faixa-frete.md"
@@ -158,7 +158,7 @@ window.TRACE_DATA = {
       "label": "Excluir Faixa de Frete",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · ADM-FRT-04",
+      "sub": "Funcionalidade · ADM-FRT-04",
       "domain": "ADM",
       "desc": "Permite que o administrador exclua definitivamente uma faixa de frete que não atende pedidos, e os CEPs dela deixam de ser atendidos no cálculo de frete.",
       "path": "modules/administracao/faixas-frete/f-excluir-faixa-frete.md"
@@ -169,7 +169,7 @@ window.TRACE_DATA = {
       "label": "Pesquisar Faixas de Frete",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · ADM-FRT-01",
+      "sub": "Funcionalidade · ADM-FRT-01",
       "domain": "ADM",
       "desc": "Permite que o administrador e o atendente pesquisem as faixas de frete por parte da região ou por um CEP atendido, vendo o intervalo de CEP e o valor da entr…",
       "path": "modules/administracao/faixas-frete/f-pesquisar-faixa-frete.md"
@@ -180,7 +180,7 @@ window.TRACE_DATA = {
       "label": "Visualizar Faixa de Frete",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · ADM-FRT-05",
+      "sub": "Funcionalidade · ADM-FRT-05",
       "domain": "ADM",
       "desc": "Permite que o administrador e o atendente consultem todos os dados de uma faixa de frete, inclusive quantos pedidos ela atende, sem alterar nada.",
       "path": "modules/administracao/faixas-frete/f-visualizar-faixa-frete.md"
@@ -191,7 +191,7 @@ window.TRACE_DATA = {
       "label": "Cadastrar Usuário",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · ADM-USR-02",
+      "sub": "Funcionalidade · ADM-USR-02",
       "domain": "ADM",
       "desc": "Permite que o administrador cadastre um usuário da loja com nome completo, e-mail e perfil, deixando-o ativo e pronto para ser reconhecido pela loja.",
       "path": "modules/administracao/usuarios/f-cadastrar-usuario.md"
@@ -202,7 +202,7 @@ window.TRACE_DATA = {
       "label": "Editar Usuário",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · ADM-USR-03",
+      "sub": "Funcionalidade · ADM-USR-03",
       "domain": "ADM",
       "desc": "Permite que o administrador altere o nome completo, o CPF, o telefone e o perfil de um usuário ativo, mantendo o e-mail que o identifica.",
       "path": "modules/administracao/usuarios/f-editar-usuario.md"
@@ -213,7 +213,7 @@ window.TRACE_DATA = {
       "label": "Inativar Usuário",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · ADM-USR-04",
+      "sub": "Funcionalidade · ADM-USR-04",
       "domain": "ADM",
       "desc": "Permite que o administrador inative um usuário, tirando o acesso dele à loja sem apagá-lo dos pedidos e do histórico.",
       "path": "modules/administracao/usuarios/f-inativar-usuario.md"
@@ -224,7 +224,7 @@ window.TRACE_DATA = {
       "label": "Pesquisar Usuários",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · ADM-USR-01",
+      "sub": "Funcionalidade · ADM-USR-01",
       "domain": "ADM",
       "desc": "Permite que o administrador pesquise os usuários da loja por nome, e-mail, perfil e situação, vendo de cada um o perfil e se está ativo.",
       "path": "modules/administracao/usuarios/f-pesquisar-usuario.md"
@@ -235,7 +235,7 @@ window.TRACE_DATA = {
       "label": "Visualizar Usuário",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · ADM-USR-05",
+      "sub": "Funcionalidade · ADM-USR-05",
       "domain": "ADM",
       "desc": "Permite que o administrador consulte a ficha completa de um usuário, ativo ou inativo, com o perfil, a situação e, se inativo, quando e por que perdeu o acesso.",
       "path": "modules/administracao/usuarios/f-visualizar-usuario.md"
@@ -246,7 +246,7 @@ window.TRACE_DATA = {
       "label": "Cadastrar Categoria",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · CAT-CTG-02",
+      "sub": "Funcionalidade · CAT-CTG-02",
       "domain": "CAT",
       "desc": "Permite que o gestor de catálogo cadastre uma nova categoria de produtos, com nome único e uma descrição opcional, que passa a existir como ativa no catálogo.",
       "path": "modules/catalogo/categorias/f-cadastrar-categoria.md"
@@ -257,7 +257,7 @@ window.TRACE_DATA = {
       "label": "Editar Categoria",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · CAT-CTG-03",
+      "sub": "Funcionalidade · CAT-CTG-03",
       "domain": "CAT",
       "desc": "Permite que o gestor de catálogo altere a descrição e a situação de uma categoria, mantendo o nome; ao inativá-la, os produtos dela saem da vitrine sem sair …",
       "path": "modules/catalogo/categorias/f-editar-categoria.md"
@@ -268,7 +268,7 @@ window.TRACE_DATA = {
       "label": "Excluir Categoria",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · CAT-CTG-04",
+      "sub": "Funcionalidade · CAT-CTG-04",
       "domain": "CAT",
       "desc": "Permite que o gestor de catálogo exclua definitivamente uma categoria que não tem produtos, tirando-a do catálogo.",
       "path": "modules/catalogo/categorias/f-excluir-categoria.md"
@@ -279,7 +279,7 @@ window.TRACE_DATA = {
       "label": "Pesquisar Categorias",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · CAT-CTG-01",
+      "sub": "Funcionalidade · CAT-CTG-01",
       "domain": "CAT",
       "desc": "Permite que o gestor de catálogo pesquise as categorias de produtos pelo nome e pela situação, vendo de cada uma quantos produtos ela agrupa.",
       "path": "modules/catalogo/categorias/f-pesquisar-categoria.md"
@@ -290,7 +290,7 @@ window.TRACE_DATA = {
       "label": "Visualizar Categoria",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · CAT-CTG-05",
+      "sub": "Funcionalidade · CAT-CTG-05",
       "domain": "CAT",
       "desc": "Permite que o gestor de catálogo visualize todos os dados de uma categoria e quantos produtos ela tem, sem alterar nada.",
       "path": "modules/catalogo/categorias/f-visualizar-categoria.md"
@@ -301,7 +301,7 @@ window.TRACE_DATA = {
       "label": "Adicionar Item ao Carrinho",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VND-CAR-01",
+      "sub": "Funcionalidade · VND-CAR-01",
       "domain": "VND",
       "desc": "Permite que o cliente adicione um produto ao carrinho na quantidade escolhida, com o preço do momento em que o item entra.",
       "path": "modules/vendas/carrinho/f-adicionar-item-carrinho.md"
@@ -312,7 +312,7 @@ window.TRACE_DATA = {
       "label": "Alterar Quantidade do Item",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VND-CAR-03",
+      "sub": "Funcionalidade · VND-CAR-03",
       "domain": "VND",
       "desc": "Permite que o cliente altere a quantidade de um item do carrinho, até a quantidade em estoque, com o subtotal e o total dos itens recalculados.",
       "path": "modules/vendas/carrinho/f-alterar-quantidade-item.md"
@@ -323,7 +323,7 @@ window.TRACE_DATA = {
       "label": "Listar Itens do Carrinho",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VND-CAR-02",
+      "sub": "Funcionalidade · VND-CAR-02",
       "domain": "VND",
       "desc": "Permite que o cliente visualize os itens do seu carrinho, com o preço unitário, a quantidade e o subtotal de cada item e o total dos itens.",
       "path": "modules/vendas/carrinho/f-listar-item-carrinho.md"
@@ -334,7 +334,7 @@ window.TRACE_DATA = {
       "label": "Remover Item do Carrinho",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VND-CAR-04",
+      "sub": "Funcionalidade · VND-CAR-04",
       "domain": "VND",
       "desc": "Permite que o cliente remova um item do carrinho, que deixa de contar no total dos itens.",
       "path": "modules/vendas/carrinho/f-remover-item-carrinho.md"
@@ -345,7 +345,7 @@ window.TRACE_DATA = {
       "label": "Calcular Frete",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VND-CHK-01",
+      "sub": "Funcionalidade · VND-CHK-01",
       "domain": "VND",
       "desc": "Permite que o cliente calcule o frete do pedido pelo CEP de entrega, conhecendo o valor antes de confirmar a compra.",
       "path": "modules/vendas/checkout/f-calcular-frete.md"
@@ -356,7 +356,7 @@ window.TRACE_DATA = {
       "label": "Cancelar Pedido",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VND-PED-03",
+      "sub": "Funcionalidade · VND-PED-03",
       "domain": "VND",
       "desc": "Permite que o atendente cancele um pedido confirmado quando o cliente pede, deixando registrados o motivo, a data e quem cancelou.",
       "path": "modules/vendas/gestao-pedidos/f-cancelar-pedido.md"
@@ -367,7 +367,7 @@ window.TRACE_DATA = {
       "label": "Pesquisar Pedidos",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VND-PED-01",
+      "sub": "Funcionalidade · VND-PED-01",
       "domain": "VND",
       "desc": "Permite que o atendente encontre os pedidos confirmados e cancelados dos clientes por número, cliente, situação e período da confirmação, vendo o total de ca…",
       "path": "modules/vendas/gestao-pedidos/f-pesquisar-pedido.md"
@@ -378,7 +378,7 @@ window.TRACE_DATA = {
       "label": "Visualizar Pedido",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VND-PED-02",
+      "sub": "Funcionalidade · VND-PED-02",
       "domain": "VND",
       "desc": "Permite que o atendente veja o pedido completo de um cliente — itens, entrega, frete, total e situação —, com o motivo, a data e o responsável quando o pedid…",
       "path": "modules/vendas/gestao-pedidos/f-visualizar-pedido.md"
@@ -389,7 +389,7 @@ window.TRACE_DATA = {
       "label": "Cadastrar Destaque",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VIT-DST-02",
+      "sub": "Funcionalidade · VIT-DST-02",
       "domain": "VIT",
       "desc": "Permite que o gestor de catálogo ponha um produto em destaque na página inicial da loja, com uma chamada, a ordem de exibição e o período em que o destaque f…",
       "path": "modules/vitrine/destaques/f-cadastrar-destaque.md"
@@ -400,7 +400,7 @@ window.TRACE_DATA = {
       "label": "Editar Destaque",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VIT-DST-03",
+      "sub": "Funcionalidade · VIT-DST-03",
       "domain": "VIT",
       "desc": "Permite que o gestor de catálogo altere a chamada, a ordem de exibição e a vigência de um destaque que ainda não terminou, sem trocar o produto em destaque.",
       "path": "modules/vitrine/destaques/f-editar-destaque.md"
@@ -411,7 +411,7 @@ window.TRACE_DATA = {
       "label": "Excluir Destaque",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VIT-DST-04",
+      "sub": "Funcionalidade · VIT-DST-04",
       "domain": "VIT",
       "desc": "Permite que o gestor de catálogo exclua um destaque, que sai na hora da página inicial da loja e da pesquisa de destaques.",
       "path": "modules/vitrine/destaques/f-excluir-destaque.md"
@@ -422,7 +422,7 @@ window.TRACE_DATA = {
       "label": "Pesquisar Destaques",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VIT-DST-01",
+      "sub": "Funcionalidade · VIT-DST-01",
       "domain": "VIT",
       "desc": "Permite que o gestor de catálogo encontre os destaques da página inicial pelo produto e pela situação, vendo de relance o que está no ar, o que vai entrar e …",
       "path": "modules/vitrine/destaques/f-pesquisar-destaque.md"
@@ -433,7 +433,7 @@ window.TRACE_DATA = {
       "label": "Visualizar Destaque",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VIT-DST-05",
+      "sub": "Funcionalidade · VIT-DST-05",
       "domain": "VIT",
       "desc": "Permite que o gestor de catálogo consulte todos os dados de um destaque — produto, chamada, ordem, vigência, situação e data de cadastro — sem risco de alter…",
       "path": "modules/vitrine/destaques/f-visualizar-destaque.md"
@@ -444,7 +444,7 @@ window.TRACE_DATA = {
       "label": "Listar Destaques",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VIT-NAV-01",
+      "sub": "Funcionalidade · VIT-NAV-01",
       "domain": "VIT",
       "desc": "Permite que a pessoa que visita a loja veja, na página inicial, os produtos em destaque vigentes, com a chamada, o preço e a disponibilidade de cada um, na o…",
       "path": "modules/vitrine/navegacao/f-listar-destaque.md"
@@ -455,7 +455,7 @@ window.TRACE_DATA = {
       "label": "Pesquisar Produtos na Vitrine",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VIT-NAV-02",
+      "sub": "Funcionalidade · VIT-NAV-02",
       "domain": "VIT",
       "desc": "Permite que a pessoa que visita a loja pesquise os produtos à venda por parte do nome e por categoria, vendo o nome, a categoria, o preço e a disponibilidade…",
       "path": "modules/vitrine/navegacao/f-pesquisar-produto-vitrine.md"
@@ -466,7 +466,7 @@ window.TRACE_DATA = {
       "label": "Visualizar Produto na Vitrine",
       "status": "spec",
       "pf": null,
-      "sub": "Feature · VIT-NAV-03",
+      "sub": "Funcionalidade · VIT-NAV-03",
       "domain": "VIT",
       "desc": "Permite que a pessoa que visita a loja abra a página de um produto e veja o nome, a descrição, a categoria, o preço e se há estoque, sabendo quanto vai pagar…",
       "path": "modules/vitrine/navegacao/f-visualizar-produto-vitrine.md"

@@ -4,7 +4,7 @@ Como levar a especificação validada (N3 + globais) até **código + testes** r
 
 ## Quando usar
 
-Depois que todos os N3 de um **Feature Set** estão com `estado: especificado` (gates CP1+CP2+CP3 aprovados na esteira de checkpoints). Roteie para `engine/prompts/PROMPT_SPECKIT_EXPORT.md`.
+Depois que todos os N3 de um **Agrupamento Funcional** estão com `estado: especificado` (gates CP1+CP2+CP3 aprovados na esteira de checkpoints). Roteie para `engine/prompts/PROMPT_SPECKIT_EXPORT.md`.
 
 ## A tese do encaixe
 
@@ -15,18 +15,18 @@ N3 aprovados + globais
    └─ PROMPT_SPECKIT_EXPORT  (resolve todo ponteiro "→ ver X" inlinando o conteúdo)
         └─ workspace spec-kit (vanilla):
              .specify/memory/constitution.md
-             specs/NNN-[feature-set]/{spec.md, plan.md, data-model.md, contracts/, quickstart.md}
+             specs/NNN-[agrupamento-funcional]/{spec.md, plan.md, data-model.md, contracts/, quickstart.md}
         └─ spec-kit VANILLA: /speckit.tasks → /speckit.implement → código + testes
 ```
 
-**Granularidade**: 1 Feature Set (N2) = 1 "feature" do spec-kit; cada N3 = 1 User Story.
+**Granularidade**: 1 Agrupamento Funcional (N2) = 1 "feature" do spec-kit; cada N3 = 1 User Story.
 
 ## Mapeamento artefato-a-artefato
 
 | Artefato spec-kit | Fonte no engine |
 |---|---|
 | `constitution.md` | `MASTER.md` (proibições, decisões, envelope) + `API-PATTERNS` + `NFR` + `DESIGN-SYSTEM` |
-| `spec.md` › User Story | cada N3, na ordem da tabela de Features do N2 |
+| `spec.md` › User Story | cada N3, na ordem da tabela de Funcionalidades do N2 |
 | `spec.md` › Acceptance Scenarios | Gherkin "Caminho feliz" + "Erros de validação" |
 | `spec.md` › Edge Cases | Gherkin "Conflitos…" + "Estados especiais" |
 | `spec.md` › FR-### | `## Regras de negócio` (RULES-DICTIONARY resolvido) |

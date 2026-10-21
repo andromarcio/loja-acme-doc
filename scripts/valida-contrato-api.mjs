@@ -145,7 +145,7 @@ function confere(arq) {
     }
   }
 
-  // E5 — campo da API aponta para campo da feature
+  // E5 — campo da API aponta para campo da funcionalidade
   const labels = new Set();
   for (const [nomeSec, re] of [['Campos', /^label po/], ['Campos automáticos', /^label po/], ['Colunas do resultado', /^coluna/]]) {
     for (const tb of tabelas(secao(lines, nomeSec))) {
@@ -197,7 +197,7 @@ for (const a of arquivos) {
 }
 const nota = semTabela ? ` ${semTabela} N3 com a API ainda em exemplo, sem tabela de campos (aviso).` : '';
 if (total) {
-  console.log(`\n${total} problema(s) em ${comErro} N3. O front-matter espelha \`## API\` e \`## Mapeamento de erros\`; todo código existe no ERROR-DICTIONARY; todo campo da API aponta para um campo da feature.${nota}`);
+  console.log(`\n${total} problema(s) em ${comErro} N3. O front-matter espelha \`## API\` e \`## Mapeamento de erros\`; todo código existe no ERROR-DICTIONARY; todo campo da API aponta para um campo da funcionalidade.${nota}`);
   process.exit(1);
 }
-console.log(`✓ ${arquivos.length} N3 conferido(s): o contrato da API concorda com o front-matter, o Mapeamento de erros, o ERROR-DICTIONARY e os campos da feature.${nota}`);
+console.log(`✓ ${arquivos.length} N3 conferido(s): o contrato da API concorda com o front-matter, o Mapeamento de erros, o ERROR-DICTIONARY e os campos da funcionalidade.${nota}`);

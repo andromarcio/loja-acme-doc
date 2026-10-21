@@ -1,13 +1,13 @@
 # PROMPT_PROTOTYPE_FLOW — Protótipo de Fluxo (N2)
 
-> **Modelo de estrutura**: `engine/templates/prototypes/_template/_template-dominio/_template-feature-set/README.md` *(referência humana — o prompt já embute o esqueleto)*
+> **Modelo de estrutura**: `engine/templates/prototypes/_template/_template-dominio/_template-agrupamento-funcional/README.md` *(referência humana — o prompt já embute o esqueleto)*
 > **Quem participa**: dev / designer / PO técnico
-> **Insumo necessário**: DESIGN-SYSTEM.md + N2 do Feature Set
+> **Insumo necessário**: DESIGN-SYSTEM.md + N2 do Agrupamento Funcional
 > **Entrega**: arquivo `flow.html` navegável mostrando como as telas do
-> Feature Set se conectam, seguindo os padrões do Design System
+> Agrupamento Funcional se conectam, seguindo os padrões do Design System
 >
 > **Pré-requisito**: N2 aprovado (PROMPT_2A concluído)
-> **Onde salvar**: `prototypes/[dominio]/[feature-set]/flow.html`
+> **Onde salvar**: `prototypes/[dominio]/[agrupamento-funcional]/flow.html`
 >
 > **v2 (2026-06-11)**: regras 10–21, seção de anti-padrões, checklist de
 > conferência e snippets canônicos — para alinhar o resultado entre diferentes
@@ -22,7 +22,7 @@
 > **Manifesto de fidelidade (obrigatório).** Ao gerar o(s) protótipo(s), registre/atualize a linha em `prototypes/INDEX.md` — caminho · N3 · **fidelidade** (lida da `## Superfície` do N3) · status **rascunho**. Na aprovação o status vira **aprovado** (quem/quando): só então a tela é contrato para a codificação. Telas `obrigatória` são verificadas na implementação pela checklist `node scripts/fidelity-checklist.mjs <pasta> <N3>`.
 
 
-Você vai gerar um protótipo de fluxo HTML para um Feature Set.
+Você vai gerar um protótipo de fluxo HTML para um Agrupamento Funcional.
 O protótipo deve mostrar visualmente como as telas se conectam,
 seguindo rigorosamente os padrões definidos no DESIGN-SYSTEM.md.
 
@@ -68,19 +68,19 @@ seguindo rigorosamente os padrões definidos no DESIGN-SYSTEM.md.
 
 6. **Dados fictícios realistas**: preencher tabelas, listas e formulários com
    dados fictícios que façam sentido para o domínio — nunca "Lorem ipsum" ou
-   "Teste 1, Teste 2". Os dados devem refletir o contexto real da feature.
+   "Teste 1, Teste 2". Os dados devem refletir o contexto real da funcionalidade.
    Tabelas de listagem/histórico devem ter **no mínimo 5 linhas** para não
    parecerem vazias, com pelo menos uma linha de cada status relevante
    (ex.: ativo/inativo; sucesso/atualizado/falha).
 
-7. **N3s opcionais, mas vinculantes se fornecidos**: os N3s das features são
+7. **N3s opcionais, mas vinculantes se fornecidos**: os N3s das funcionalidades são
    insumo opcional. Porém, **quando fornecidos, passam a ser de uso obrigatório** —
    campos, labels, mensagens, validações e estados de cada tela devem refletir
    exatamente o N3 correspondente, e não apenas o resumo do N2. Não ignore nem
    resuma o conteúdo de um N3 fornecido.
 
 8. **Tela de pesquisa — todos os filtros**: quando uma tela for de pesquisa/
-   listagem e os N3s das features forem fornecidos, o card de filtros deve conter
+   listagem e os N3s das funcionalidades forem fornecidos, o card de filtros deve conter
    **um input para cada campo marcado `(filtro)`** na tabela "Campos" do N3
    correspondente — nunca resumir ou omitir filtros. Os campos `(resultado)`
    viram colunas da tabela. Confira a lista de filtros do N3 antes de entregar.
@@ -160,7 +160,7 @@ seguindo rigorosamente os padrões definidos no DESIGN-SYSTEM.md.
     real da seção "Permissões por perfil" do N2). Nunca reduzir o header a um
     `<strong>` solto com um `dsc-avatar`.
 
-21. **Um único arquivo por N2**: o protótipo de fluxo de um Feature Set é sempre
+21. **Um único arquivo por N2**: o protótipo de fluxo de um Agrupamento Funcional é sempre
     **um só** `flow.html`, contendo **todas** as telas do N2 como seções
     `.dsc-screen` alternadas por JS (`showScreen`). Nunca dividir o fluxo em
     vários HTMLs, nem criar arquivos paralelos de versão/variação
@@ -233,17 +233,17 @@ Se algum falhar, corrija antes de entregar:
 === DESIGN-SYSTEM.md ===
 [cole aqui o conteúdo do DESIGN-SYSTEM.md]
 
-=== N2 DO FEATURE SET ===
-[cole aqui o README.md do Feature Set]
+=== N2 DO FUNCIONALIDADE SET ===
+[cole aqui o README.md do Agrupamento Funcional]
 
-=== N3s DAS FEATURES (opcional — mas, se fornecido, de uso obrigatório) ===
-[cole aqui os N3s das features do Feature Set, se disponíveis]
+=== N3s DAS FUNCIONALIDADES (opcional — mas, se fornecido, de uso obrigatório) ===
+[cole aqui os N3s das funcionalidades do Agrupamento Funcional, se disponíveis]
 
 ---
 
 ## PASSO 1 — Mapeamento de telas
 
-Leia o N2 e liste as telas identificadas na seção "Telas". Se os N3s das features
+Leia o N2 e liste as telas identificadas na seção "Telas". Se os N3s das funcionalidades
 forem fornecidos, leia-os também: o N2 define **quais** telas existem, e cada N3
 define os **campos, mensagens e estados** da tela correspondente — ambos são de
 uso obrigatório quando presentes (ver regra 7).
@@ -283,7 +283,7 @@ Após aprovação do mapa, gere o arquivo `flow.html` com:
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Protótipo: [Feature Set] — [Domínio]</title>
+  <title>Protótipo: [Agrupamento Funcional] — [Domínio]</title>
   <!-- Biblioteca de componentes (CAIXA DS) — ajuste os ../ conforme a profundidade -->
   <link rel="stylesheet" href="../../_biblioteca-ds/ds.css">
 </head>
@@ -299,7 +299,7 @@ Após aprovação do mapa, gere o arquivo `flow.html` com:
       <div class="dsc-sidebar-backdrop" onclick="dscToggleMenu()"></div>
       <div class="dsc-sidebar-brand"><span class="dsc-brand-mark">C</span> Sistema</div>
       <ul class="dsc-menu">
-        <li class="dsc-menu-section">[Feature Set]</li>
+        <li class="dsc-menu-section">[Agrupamento Funcional]</li>
         <li><a class="dsc-menu-item is-active" href="#" onclick="showScreen('screen-list')">[Tela 1]</a></li>
         <li><a class="dsc-menu-item" href="#" onclick="showScreen('screen-detail')">[Tela 2]</a></li>
       </ul>
@@ -484,13 +484,13 @@ Após gerar o HTML, informe:
 
 > "✅ Protótipo de fluxo gerado.
 >
-> **Salvar como**: `prototypes/[dominio]/[feature-set]/flow.html`
+> **Salvar como**: `prototypes/[dominio]/[agrupamento-funcional]/flow.html`
 >
-> **Atualizar**: `prototypes/[dominio]/[feature-set]/README.md`
+> **Atualizar**: `prototypes/[dominio]/[agrupamento-funcional]/README.md`
 > — adicionar linha na tabela de protótipos com status '🎨 Mockup' — e
 > `prototypes/[dominio]/README.md` — o índice do domínio (crie a partir de
 > `engine/templates/prototypes/_template/_template-dominio/README.md` se ainda não existir) —
-> com a linha do Feature Set. A pasta `prototypes/` espelha `modules/`, com um README em cada nível.
+> com a linha do Agrupamento Funcional. A pasta `prototypes/` espelha `modules/`, com um README em cada nível.
 >
 > **Telas cobertas**: [lista]
 > **Telas não cobertas** (⚠️): [lista, se houver]"

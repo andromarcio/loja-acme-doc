@@ -1,6 +1,6 @@
-<!-- docqui: 6.4.10 | prompt: IDS_N3 | atualizado: 2026-10-18 -->
-# Feature Set: Categorias
-> **Nível 2** - Major Feature Set: Catálogo - `CAT-CTG`
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+# Agrupamento Funcional: Categorias
+> **Nível 2** - Domínio: Catálogo - `CAT-CTG`
 
 ## Descrição
 
@@ -8,11 +8,11 @@ Reúne as operações de manutenção das categorias de produtos: pesquisar, cad
 
 **Não faz**: cadastrar produtos (Produtos, exercício STRY0013150) nem decidir o que aparece em destaque (Vitrine › Destaques).
 
-## Features
+## Funcionalidades
 
 <!-- docqui:n3-ids {"version":1,"ids":{"CAT-CTG-01":"f-pesquisar-categoria.md","CAT-CTG-02":"f-cadastrar-categoria.md","CAT-CTG-03":"f-editar-categoria.md","CAT-CTG-04":"f-excluir-categoria.md","CAT-CTG-05":"f-visualizar-categoria.md"}} -->
 
-| Feature | Descrição |
+| Funcionalidade | Descrição |
 |---|---|
 | [**Pesquisar Categorias**](f-pesquisar-categoria.md) <small>CAT-CTG-01</small> | Encontrar categorias por nome e situação |
 | [**Cadastrar Categoria**](f-cadastrar-categoria.md) <small>CAT-CTG-02</small> | Incluir uma categoria com nome único |
@@ -37,7 +37,7 @@ flowchart TD
     F --> Z
 ```
 
-## Dependências entre features
+## Dependências entre funcionalidades
 
 - **Pesquisar Categorias** é o ponto de entrada; **Cadastrar Categoria** independe das demais.
 - **Editar Categoria**, **Excluir Categoria** e **Visualizar Categoria** exigem uma categoria existente, alcançada pela pesquisa.
@@ -45,13 +45,13 @@ flowchart TD
 
 ## Telas
 
-| Tela | Rota sugerida | Features atendidas | Descrição |
+| Tela | Rota sugerida | Funcionalidades atendidas | Descrição |
 |---|---|---|---|
 | Pesquisa de Categorias | `/catalogo/categorias` | **Pesquisar Categorias** <small>CAT-CTG-01</small><br>**Cadastrar Categoria** <small>CAT-CTG-02</small><br>**Editar Categoria** <small>CAT-CTG-03</small><br>**Excluir Categoria** <small>CAT-CTG-04</small><br>**Visualizar Categoria** <small>CAT-CTG-05</small> | Filtros e lista das categorias; cadastro, edição e visualização abrem em modal sobre a pesquisa, e a exclusão é ação na linha |
 
 ## Permissões por perfil
 
-> **Fonte única de permissões** deste Feature Set. As features (N3) não tratam de perfis nem permissões; qualquer acesso novo ou diferente entra nesta matriz.
+> **Fonte única de permissões** deste Agrupamento Funcional. As funcionalidades (N3) não tratam de perfis nem permissões; qualquer acesso novo ou diferente entra nesta matriz.
 
 Perfis: **Gestor de catálogo**, **Administrador**.
 
@@ -69,5 +69,6 @@ Perfis: **Gestor de catálogo**, **Administrador**.
 |---|---|---|---|
 | 2026-10-18 | ids-n3 | IDs reservados | Registro dos IDs existentes, sem renumeração; IDs imutáveis. |
 | 2026-10-18 | Claude | N2 criado | CRUD de Categorias gerado pelo PROMPT CRUD a partir do ticket fictício STRY0013170; cadastro, edição e visualização em modal; sem aprovação de checkpoint. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |
 
 *Links: [N1 Catálogo](../README.md) · [INDEX geral](../../INDEX.md)*

@@ -1,8 +1,8 @@
 # PROMPT_PROTOTYPE_FLOW_COMPONENT — Protótipo de Fluxo (Componente)
 
-> **Modelo de estrutura**: `engine/templates/prototypes/_template/_template-dominio/_template-feature-set/README.md` *(referência humana — o prompt já embute o esqueleto)*
+> **Modelo de estrutura**: `engine/templates/prototypes/_template/_template-dominio/_template-agrupamento-funcional/README.md` *(referência humana — o prompt já embute o esqueleto)*
 > **Quem participia**: dev / designer / PO técnico
-> **Insumo necessário**: DESIGN-SYSTEM.md + N2 do Feature Set
+> **Insumo necessário**: DESIGN-SYSTEM.md + N2 do Agrupamento Funcional
 > **Entrega**: arquivo `flow-component.html` mostrando o fluxo de navegação
 > entre as áreas de conteúdo das telas, **sem** sidebar, topbar ou shell
 > de aplicação — apenas o conteúdo principal de cada tela
@@ -14,7 +14,7 @@
 > - Quer gerar múltiplas variações para comparação sem repetir o layout
 >
 > **Pré-requisito**: N2 aprovado (PROMPT_2A concluído)
-> **Onde salvar**: `prototypes/[dominio]/[feature-set]/flow-component.html`
+> **Onde salvar**: `prototypes/[dominio]/[agrupamento-funcional]/flow-component.html`
 
 ---
 
@@ -78,10 +78,10 @@ apenas para permitir alternar entre as telas durante a revisão.
 === DESIGN-SYSTEM.md ===
 [cole aqui o conteúdo do DESIGN-SYSTEM.md]
 
-=== N2 DO FEATURE SET ===
-[cole aqui o README.md do Feature Set]
+=== N2 DO FUNCIONALIDADE SET ===
+[cole aqui o README.md do Agrupamento Funcional]
 
-=== N3s DAS FEATURES (opcional) ===
+=== N3s DAS FUNCIONALIDADES (opcional) ===
 [cole aqui os N3s disponíveis, se quiser mais fidelidade]
 
 ---
@@ -123,7 +123,7 @@ Após aprovação, gere `flow-component.html`:
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[Feature Set] — Fluxo (Componente)</title>
+  <title>[Agrupamento Funcional] — Fluxo (Componente)</title>
   <!-- Biblioteca de componentes (CAIXA DS) — ajuste os ../ conforme a profundidade -->
   <link rel="stylesheet" href="../../_biblioteca-ds/ds.css">
   <style>
@@ -138,7 +138,7 @@ Após aprovação, gere `flow-component.html`:
 
   <!-- Navegador do protótipo (troca telas) -->
   <nav class="proto-nav">
-    <span>🎨 PROTÓTIPO COMPONENTE — [Feature Set]</span>
+    <span>🎨 PROTÓTIPO COMPONENTE — [Agrupamento Funcional]</span>
     <button class="is-active" onclick="showScreen('screen-list', this)">[Tela 1]</button>
     <button onclick="showScreen('screen-detail', this)">[Tela 2]</button>
     <button onclick="showScreen('screen-form', this)">[Tela 3]</button>
@@ -207,7 +207,7 @@ Após aprovação, gere `flow-component.html`:
 
     <!-- Notas do protótipo -->
     <div class="dsc-proto-notes">
-      <strong>📋 Notas — Componente [Feature Set]:</strong>
+      <strong>📋 Notas — Componente [Agrupamento Funcional]:</strong>
       <ul>
         <li>Este componente assume que recebe <code>organizationId</code> do contexto global.</li>
         <li>[Outro comportamento não representado aqui]</li>
@@ -246,12 +246,12 @@ Após aprovação, gere `flow-component.html`:
 
 > "✅ Protótipo de fluxo (componente) gerado.
 >
-> **Salvar como**: `prototypes/[dominio]/[feature-set]/flow-component.html`
+> **Salvar como**: `prototypes/[dominio]/[agrupamento-funcional]/flow-component.html`
 >
-> **Atualizar**: `prototypes/[dominio]/[feature-set]/README.md` (linha do protótipo) e
+> **Atualizar**: `prototypes/[dominio]/[agrupamento-funcional]/README.md` (linha do protótipo) e
 > `prototypes/[dominio]/README.md` — o índice do domínio (crie a partir de
 > `engine/templates/prototypes/_template/_template-dominio/README.md` se ainda não existir) —
-> com a linha do Feature Set. A pasta `prototypes/` espelha `modules/`, com um README em cada nível.
+> com a linha do Agrupamento Funcional. A pasta `prototypes/` espelha `modules/`, com um README em cada nível.
 >
 > **Quando usar o FULL em vez deste**: quando precisar validar o layout
 > completo com sidebar e topbar, ou para apresentações ao cliente.

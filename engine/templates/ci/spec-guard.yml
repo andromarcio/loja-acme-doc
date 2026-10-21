@@ -9,7 +9,7 @@
 #   estrutura      → validate-doc.mjs em todos os artefatos de nível (N0–N3, data-model)
 #                    + IDs imutáveis dos N3 e reservas da primeira jornada no N2
 #                    + diagrama ER (global/DIAGRAMA-ER.md) fresco + índice de repositórios
-#                    (repos/INDEX.md → Features por repositório) fresco
+#                    (repos/INDEX.md → Funcionalidades por repositório) fresco
 #   rastreabilidade→ audit-trace-links.mjs (elos nos 3 lugares) + suspect-links.mjs
 #                    (alvo mudou depois da verificação — carimbos trace-verified,
 #                    fingerprint de conteúdo: independe do histórico do git)
@@ -72,7 +72,7 @@ jobs:
       - name: diagrama ER está fresco
         run: node scripts/gera-diagrama-er.mjs --check
       - name: índice de repositórios está fresco
-        # repos/INDEX.md → "Features por repositório", gerado do ## Implementação dos N3
+        # repos/INDEX.md → "Funcionalidades por repositório", gerado do ## Implementação dos N3
         run: node scripts/gera-indice-repos.mjs --check
 
   rastreabilidade:
@@ -81,7 +81,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: "20" }
-      - name: elos ticket↔feature consistentes nas três fontes
+      - name: elos ticket↔funcionalidade consistentes nas três fontes
         run: node scripts/audit-trace-links.mjs
       - name: elos suspeitos (alvo mudou após a verificação)
         run: node scripts/suspect-links.mjs

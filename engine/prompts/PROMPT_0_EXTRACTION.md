@@ -4,7 +4,7 @@
 > **Quem participa**: PO / Analista de Requisitos
 > **Insumo necessário**: transcrições de reuniões, manuais, PDFs, notas
 > soltas, prints de protótipos, regras de negócio informais
-> **Entrega**: documento estruturado com domínios, features, campos e
+> **Entrega**: documento estruturado com domínios, funcionalidades, campos e
 > regras organizados — pronto para ser usado nos PROMPTS 1A, 2A e 3A
 >
 > **Onde salvar**: `modules/_base-conhecimento/[assunto-central].md`
@@ -80,9 +80,9 @@ Quando autorizado:
 
 Agrupe os requisitos identificados:
 
-- **Possíveis Major Feature Sets (N1)**: ex: Vendas, Suporte, Usuários
-- **Possíveis Feature Sets (N2)** por domínio: ex: em Vendas → Carrinho, Checkout
-- **Possíveis Features (N3)**: ex: Calcular Frete, Adicionar Item
+- **Possíveis Domínios (N1)**: ex: Vendas, Suporte, Usuários
+- **Possíveis Agrupamentos Funcionais (N2)** por domínio: ex: em Vendas → Carrinho, Checkout
+- **Possíveis Funcionalidades (N3)**: ex: Calcular Frete, Adicionar Item
 
 Apresente em forma de árvore **numerada** (`1.`, `1.1`, `1.1.1`) para que
 cada item possa ser referenciado com precisão nas revisões. Exemplo:
@@ -149,13 +149,13 @@ Use a estrutura abaixo (espelho do template
 ## Visão Geral e Atores
 - ...
 
-## Árvore de Funcionalidades (Major Feature Sets → Feature Sets → Features)
+## Árvore de Funcionalidades (Domínios → Agrupamentos Funcionais → Funcionalidades)
 - 1. [Domínio A]
-  - 1.1 [Feature Set 1]
-    - 1.1.1 [Feature]
-    - 1.1.2 [Feature]
-  - 1.2 [Feature Set 2]
-    - 1.2.1 [Feature]
+  - 1.1 [Agrupamento Funcional 1]
+    - 1.1.1 [Funcionalidade]
+    - 1.1.2 [Funcionalidade]
+  - 1.2 [Agrupamento Funcional 2]
+    - 1.2.1 [Funcionalidade]
 
 ## Dicionário de Campos Extraídos
 | Campo mencionado | Tipo inferido | Regras mencionadas |

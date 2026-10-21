@@ -10,7 +10,7 @@
 > - `repos/INDEX.md` preenchido — vira o **inventário canônico**: o 3B (PASSO 5)
 >   só aceita repositórios de destino que constem nele (cruzado pelo `validate-doc.mjs`)
 > - Um `repos/[nome-repo].md` por repositório
-> - Rascunho do mapa FDD: qual repo corresponde a qual Domínio/Feature Set
+> - Rascunho do mapa FDD: qual repo corresponde a qual Domínio/Agrupamento Funcional
 > - `modules/INDEX.md` com os domínios identificados (sem N1s ainda)
 >
 > **Próximo passo**: PROMPT_REVERSE_ENGINEERING — um repo de cada vez
@@ -20,7 +20,7 @@
 ## INSTRUÇÕES PARA O CLAUDE
 
 Você vai mapear os repositórios de um sistema existente para a estrutura
-FDD (Domínio → Feature Set → Feature), criando a base de navegação
+FDD (Domínio → Agrupamento Funcional → Funcionalidade), criando a base de navegação
 do repositório de documentação.
 
 **Controle de fluxo — Máquina de Estados:**
@@ -119,17 +119,17 @@ Apresente sua análise e pergunte **uma pergunta de cada vez**:
 dezenas ou centenas de microsserviços continua sendo **uma sigla**: uma instância, uma
 fronteira de contagem. Agrupe os serviços em domínios de negócio — o *bounded context*,
 quando a arquitetura segue DDD; o prefixo do nome costuma dizê-lo — e **não** crie um
-N1 ou N2 por serviço: uma feature na visão do usuário atravessa vários deles (o BFF, o
+N1 ou N2 por serviço: uma funcionalidade na visão do usuário atravessa vários deles (o BFF, o
 serviço de domínio, o worker), e organizada por serviço apareceria picada e contada
 duas vezes. O serviço entra pelo inventário e pela coluna Repositório da
 `## Implementação` de cada N3. Serviços técnicos — gateway, autenticação, configuração,
 observabilidade, bibliotecas internas — são apoio: entram no inventário (Tipo
-`técnico`) e nos globais (`PATTERNS`, `NFR`, `API-PATTERNS`), não viram feature.
+`técnico`) e nos globais (`PATTERNS`, `NFR`, `API-PATTERNS`), não viram funcionalidade.
 Chamada entre serviços da mesma sigla é interna à fronteira: não é AIE nem transação a
 mais na contagem (`SIZING.md`); AIE é dado de **outra sigla**.
 
 **Pergunta 3 — Repositório de frontend**
-> "Existe um repositório de frontend? Se sim, ele serve todas as features
+> "Existe um repositório de frontend? Se sim, ele serve todas as funcionalidades
 > ou há frontends separados por domínio/produto?"
 
 ---
@@ -147,11 +147,11 @@ Domínios identificados:
 ├── [Domínio A]
 │   ├── Repos backend: [repo-x, repo-y]
 │   ├── Repo frontend: [repo-frontend] (parcial — seções A e B)
-│   └── Feature Sets prováveis: [fs-1, fs-2] ← inferido das descrições
+│   └── Agrupamentos Funcionais prováveis: [fs-1, fs-2] ← inferido das descrições
 │
 ├── [Domínio B]
 │   ├── Repo: [repo-z]
-│   └── Feature Sets prováveis: [fs-3]
+│   └── Agrupamentos Funcionais prováveis: [fs-3]
 │
 └── Infra / sem N1 (somente repos de APOIO — o produto nunca entra aqui):
     └── [repo-w] — CI/CD, scripts de deploy
@@ -186,7 +186,7 @@ Após aprovação do mapa, gere todos os arquivos de uma vez:
 O nome na coluna Repositório é **exatamente** o do git: é por ele que a
 `## Implementação` do N3 cita o repositório (o `validate-doc` cruza os dois), que a CI
 de cada repositório se identifica (`valida-artefatos-previstos --repo <nome>=…`) e que o
-`gera-indice-repos.mjs` monta, no fim deste arquivo, a seção gerada **Features por
+`gera-indice-repos.mjs` monta, no fim deste arquivo, a seção gerada **Funcionalidades por
 repositório** — o índice reverso, que não se escreve à mão.
 
 ---
@@ -214,8 +214,8 @@ com sistema externo).
 ## Como rodar localmente
 [a preencher]
 
-## Features implementadas neste repositório
-→ ver `repos/INDEX.md` → *Features por repositório* (gerada do `## Implementação`
+## Funcionalidades implementadas neste repositório
+→ ver `repos/INDEX.md` → *Funcionalidades por repositório* (gerada do `## Implementação`
 dos N3 pelo `node scripts/gera-indice-repos.mjs` — não mantenha a lista aqui)
 ```
 

@@ -1,10 +1,10 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # CONTAGEM-PF.md
 > Consolidado de Pontos de Função da Loja ACME. A contagem nasce no N3 e no DATA-MODEL; este arquivo só espelha os valores revisados.
 
 ## Pendências de contagem
 
-| Feature (N3) | Domínio | Alteração pendente (ticket) | Desde |
+| Funcionalidade (N3) | Domínio | Alteração pendente (ticket) | Desde |
 |---|---|---|---|
 | [VND-CHK-01 — Calcular Frete](../modules/vendas/checkout/f-calcular-frete.md) | Vendas | STRY0013101 — criação didática | 2026-10-14 |
 | [CAT-CTG-01 — Pesquisar Categorias](../modules/catalogo/categorias/f-pesquisar-categoria.md) | Catálogo | STRY0013170 — criação didática | 2026-10-18 |
@@ -40,7 +40,7 @@
 
 ## 1. Funções de Transação — Processos Elementares (PE)
 
-| # | Feature (N3) | Papel | Domínio | Tipo | ALR | DER | Complexidade | PF | Data | Status | Observação |
+| # | Funcionalidade (N3) | Papel | Domínio | Tipo | ALR | DER | Complexidade | PF | Data | Status | Observação |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 
 Nenhum PE revisado. Os números mostrados no simulador não são copiados para esta instância.

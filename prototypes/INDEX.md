@@ -1,10 +1,10 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_PROTOTYPE_FLOW_FULL | atualizado: 2026-10-18 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # Protótipos — Manifesto de fidelidade e aprovação
 > Fonte de verdade do vínculo **protótipo ↔ N3**, do nível de **fidelidade** e do
 > **status de aprovação**. Uma tela com fidelidade **obrigatória** só vira **contrato
 > de implementação** quando o protótipo está **aprovado** aqui (com quem e quando).
 
-| Protótipo | Feature (N3) | Fidelidade | Status | Aprovado por | Data |
+| Protótipo | Funcionalidade (N3) | Fidelidade | Status | Aprovado por | Data |
 |---|---|---|---|---|---|
 | [prototypes/catalogo/categorias/flow.html](./catalogo/categorias/flow.html) | `CAT-CTG-01` | referência | rascunho | — | — |
 | [prototypes/catalogo/categorias/flow.html](./catalogo/categorias/flow.html) | `CAT-CTG-02` | referência | rascunho | — | — |
@@ -40,7 +40,7 @@
 
 ## Como manter
 
-- A pasta `prototypes/` **espelha `modules/`**: `prototypes/[dominio]/[feature-set]/[feature]/`, com os mesmos nomes de pasta e um `README.md` em cada nível — domínio (índice dos Feature Sets com protótipo), Feature Set (protótipo de fluxo) e feature (protótipos de estado). Modelos em `engine/templates/prototypes/_template/`.
+- A pasta `prototypes/` **espelha `modules/`**: `prototypes/[dominio]/[agrupamento-funcional]/[funcionalidade]/`, com os mesmos nomes de pasta e um `README.md` em cada nível — domínio (índice dos Agrupamentos Funcionais com protótipo), Agrupamento Funcional (protótipo de fluxo) e funcionalidade (protótipos de estado). Modelos em `engine/templates/prototypes/_template/`.
 - Ao **gerar** um protótipo, registre a linha com status **rascunho** e a fidelidade lida do N3 (linha `Fidelidade ao protótipo` na `## Superfície`).
 - Na **aprovação**, troque o status para **aprovado** e preencha **quem** e **quando**. Só então a tela é **contrato** para a codificação.
 - A implementação de telas **obrigatória** exige a **checklist de fidelidade** — `node scripts/fidelity-checklist.mjs <pasta-do-protótipo> <N3.md>` — com **todos os estados cobertos** (✅, ou ⚠️ com desvio aprovado; nenhum ❌).

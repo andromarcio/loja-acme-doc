@@ -1,7 +1,7 @@
 # Estrutura do N3 — Template de Referência
 
 Espelho do template canônico
-`engine/templates/modules/_template-dominio/_template-feature-set/_template-feature.md`:
+`engine/templates/modules/_template-dominio/_template-agrupamento-funcional/_template-funcionalidade.md`:
 mesma ordem, mesmos headings, mesma visibilidade. **Em divergência, vale o template** — e o
 `scripts/eval/run-evals.mjs` confere que os headings daqui, do esqueleto do `PROMPT_3A`
 (PASSO 3) e da estrutura do `PROMPT_3B` (PASSO 7) batem com os dele. As orientações longas
@@ -15,12 +15,12 @@ Todo N3 abre com um bloco YAML que **espelha**, de forma parseável, informaçõ
 
 ```yaml
 ---
-id: [SIGLA]-[SFS]-[NN]
-feature_set: [SIGLA]-[SFS]
+id: [SIGLA]-[SAF]-[NN]
+agrupamento_funcional: [SIGLA]-[SAF]
 dominio: [SIGLA]
 entidade: [Entidade principal]
 data_model_ref: data-models/[dominio].md#[entidade]
-endpoints: []                       # preenchido no 3B (espelha ## API) — só p/ feature que expõe API
+endpoints: []                       # preenchido no 3B (espelha ## API) — só p/ funcionalidade que expõe API
 error_codes: []                     # preenchido no 3B (espelha ## Mapeamento de erros)
 depende_de: []                      # IDs de N3 pré-requisito (ordena fases no spec-kit)
 origem:                             # ticket de origem (plugável — ver MASTER.md); omitir se não houver
@@ -56,8 +56,8 @@ contagem:                           # status de contagem APF — INDEPENDENTE do
 > A `## Superfície` é negocial e fica fora do `dev-only`, logo antes da seção de manifestação que ela decide. A `## Origem` também é negocial, mas é rastreabilidade: fica no fecho, logo antes do `## Changelog`. Seção marcada "só se…" é omitida quando a condição não vale.
 
 ````markdown
-# [Nome da Feature]
-> **Nível 3** - Feature Set: [Nome do Feature Set] — Major Feature Set: [Nome do Domínio] - `[SIGLA]-[SFS]-[NN]`
+# [Nome da Funcionalidade]
+> **Nível 3** - Agrupamento Funcional: [Nome do Agrupamento Funcional] — Domínio: [Nome do Domínio] - `[SIGLA]-[SAF]-[NN]`
 
 ## Descrição
 
@@ -71,18 +71,18 @@ em Job/CLI, o que dispara a execução.]
 
 ## Regras de negócio
 
-- **RN-01** — [Regra específica desta feature — uma invariante; a reação do sistema vai para os Cenários]
+- **RN-01** — [Regra específica desta funcionalidade — uma invariante; a reação do sistema vai para os Cenários]
 - **RN-02** — [Regra canônica] → ver RULES-DICTIONARY: [RC-NN] — [nome] (parâmetro: [valor])
-- **RN-03** — [Regra de domínio] → ver N1 [Major Feature Set]: Regras transversais do domínio: [N]
+- **RN-03** — [Regra de domínio] → ver N1 [Domínio]: Regras transversais do domínio: [N]
 
-<!-- ID `RN-NN`: sequencial na feature, nunca reaproveitado. Toda regra tem ao menos um cenário com a tag `@RN-NN` na linha acima do `Scenario:`. -->
+<!-- ID `RN-NN`: sequencial na funcionalidade, nunca reaproveitado. Toda regra tem ao menos um cenário com a tag `@RN-NN` na linha acima do `Scenario:`. -->
 
 ---
 
 ## Cenários
 
 ```gherkin
-Feature: [Nome da feature em linguagem natural]
+Feature: [Nome da funcionalidade em linguagem natural]
 
   Background:
     Given que o usuário está autenticado na organização "[org]"
@@ -111,8 +111,8 @@ Feature: [Nome da feature em linguagem natural]
   # ── Restrições de acesso ───────────────────────────────────────
   # Só a reação — quem pode é a matriz "Permissões por perfil" do N2.
 
-  Scenario: [usuário sem acesso a esta feature]
-    Given que o perfil do usuário não tem acesso a "[Nome da feature]" na matriz do N2
+  Scenario: [usuário sem acesso a esta funcionalidade]
+    Given que o perfil do usuário não tem acesso a "[Nome da funcionalidade]" na matriz do N2
     When o usuário tenta [ação]
     Then o sistema exibe: "[texto de NO_PERMISSION no MESSAGE-DICTIONARY]"
 
@@ -149,7 +149,7 @@ Feature: [Nome da feature em linguagem natural]
 ---
 
 ## Colunas do resultado
-<!-- Só em feature de Pesquisa/Listagem — o validador exige a seção nelas. -->
+<!-- Só em funcionalidade de Pesquisa/Listagem — o validador exige a seção nelas. -->
 
 | Coluna (Label PO) | Origem | Ordenação |
 |---|---|---|
@@ -166,19 +166,19 @@ Feature: [Nome da feature em linguagem natural]
 ---
 
 ## Dados lidos e gravados
-<!-- Só se a feature lê ou grava entidade SEM contribuir campo para a tela (o registro de
+<!-- Só se a funcionalidade lê ou grava entidade SEM contribuir campo para a tela (o registro de
      execução que recebe o status, o cronograma que define a janela). Completa a coluna
      Entidade de ## Campos — não a repete. É fonte do ALR da contagem. -->
 
-| Entidade | Papel | Por que a feature a toca |
+| Entidade | Papel | Por que a funcionalidade a toca |
 |---|---|---|
-| [Entidade] | [lê / grava / lê e grava] | [o que a feature faz com ela — cite a regra que a motiva] |
+| [Entidade] | [lê / grava / lê e grava] | [o que a funcionalidade faz com ela — cite a regra que a motiva] |
 
 ---
 
 ## Superfície
 
-**[Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API]** — [tela própria: rota `/...` · modal: origem: [Feature/Tela] · ação em tela: origem: [Feature/Tela] · CLI: comando · Job/Pipeline: gatilho · API: consumidor]
+**[Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API]** — [tela própria: rota `/...` · modal: origem: [Funcionalidade/Tela] · ação em tela: origem: [Funcionalidade/Tela] · CLI: comando · Job/Pipeline: gatilho · API: consumidor]
 
 <!-- MAIS DE UMA ROTA? Escreva em LISTA, uma linha por rota, com o critério que as
      distingue à esquerda (tipo, canal, variante) — em parágrafo corrido não se
@@ -190,7 +190,7 @@ Feature: [Nome da feature em linguagem natural]
      - Autocadastro · Pessoa Física — `/cadastro/pessoa-fisica`
      - Autocadastro · Pessoa Jurídica — `/cadastro/pessoa-juridica` -->
 
-**Fidelidade ao protótipo**: [obrigatória | referência | n/a] · [caminho do protótipo quando houver] · [[abrir o protótipo ↗](../../../prototypes/[dominio]/[feature-set]/[feature]/[estado].html)]
+**Fidelidade ao protótipo**: [obrigatória | referência | n/a] · [caminho do protótipo quando houver] · [[abrir o protótipo ↗](../../../prototypes/[dominio]/[agrupamento-funcional]/[funcionalidade]/[estado].html)]
 
 <!-- O validador usa a Superfície para exigir a seção de manifestação certa:
      Tela própria/Modal/Ação em tela → ## Comportamento de tela
@@ -202,7 +202,7 @@ Feature: [Nome da feature em linguagem natural]
 <!-- Quando a Superfície é Tela própria/Modal/Ação em tela. Para CLI/Job/Pipeline/API, omita e use "## Execução e operação". -->
 
 ### Onde fica
-[em qual rota e componente a feature aparece]
+[em qual rota e componente a funcionalidade aparece]
 
 ### Estados da tela
 
@@ -258,7 +258,7 @@ Por que cada ALR:
 **Total: [N] PF**
 ````
 
-> **Métricas de tamanho** nasce na passada técnica (`PROMPT_3B`, passo 6) ou na opção CT (`PROMPT_CONTAGEM`) — o 3A não a gera. Memória obrigatória em toda linha contada, com a enumeração no bloco ```json (listas de nomes, do tamanho do ALR e do DER — gate F8); feature que não é processo elementar fica como linha com PF 0 e `—`, e o bloco `{"pe", "motivo"}`. Ver `global/SIZING.md`.
+> **Métricas de tamanho** nasce na passada técnica (`PROMPT_3B`, passo 6) ou na opção CT (`PROMPT_CONTAGEM`) — o 3A não a gera. Memória obrigatória em toda linha contada, com a enumeração no bloco ```json (listas de nomes, do tamanho do ALR e do DER — gate F8); funcionalidade que não é processo elementar fica como linha com PF 0 e `—`, e o bloco `{"pe", "motivo"}`. Ver `global/SIZING.md`.
 
 > **Mapeamento de cenários → spec.md** (na exportação): "Caminho feliz" + "Erros de
 > validação" viram *Acceptance Scenarios*; "Conflitos com dados existentes" + "Estados
@@ -303,7 +303,7 @@ Por que cada ALR:
 ### [MÉTODO] /api/v1/[rota]
 **Acesso**: [público / autenticado — roles]
 
-**Requisição** (tabela `Campo | Tipo | Obrigatório | Label PO`) · **Resposta de sucesso** (HTTP + tabela `Campo | Tipo | Label PO`) · **Respostas de erro** (HTTP | Code | Situação). Label PO = campo da feature, ou `—` se técnico; conferência: `node scripts/valida-contrato-api.mjs`
+**Requisição** (tabela `Campo | Tipo | Obrigatório | Label PO`) · **Resposta de sucesso** (HTTP + tabela `Campo | Tipo | Label PO`) · **Respostas de erro** (HTTP | Code | Situação). Label PO = campo da funcionalidade, ou `—` se técnico; conferência: `node scripts/valida-contrato-api.mjs`
 
 ---
 
@@ -352,7 +352,7 @@ Por que cada ALR:
 </div>
 ````
 
-A coluna **Repositório** é preenchida **no 3B** (PASSO 5), com nomes que existem em `repos/INDEX.md` — é ela que diz ao implementador em qual repo (MFE, microsserviço, back, front) cada parte da feature nasce ou evolui. `Caminho` e `Branch/Tag` podem ficar como placeholder até o dev. A partir de `estado: em-desenvolvimento`, o `validate-doc.mjs` exige ao menos uma linha com repositório real.
+A coluna **Repositório** é preenchida **no 3B** (PASSO 5), com nomes que existem em `repos/INDEX.md` — é ela que diz ao implementador em qual repo (MFE, microsserviço, back, front) cada parte da funcionalidade nasce ou evolui. `Caminho` e `Branch/Tag` podem ficar como placeholder até o dev. A partir de `estado: em-desenvolvimento`, o `validate-doc.mjs` exige ao menos uma linha com repositório real.
 
 ---
 
@@ -364,7 +364,7 @@ A coluna **Repositório** é preenchida **no 3B** (PASSO 5), com nomes que exist
 
 | Ticket (AIMM) | Tipo | Critérios cobertos |
 |---|---|---|
-| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIMM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta feature realiza desses critérios] |
+| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIMM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta funcionalidade realiza desses critérios] |
 
 ---
 
@@ -375,13 +375,13 @@ A coluna **Repositório** é preenchida **no 3B** (PASSO 5), com nomes que exist
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico anterior preservado. |
-| [AAAA-MM-DD] | [autor] | Feature criada | [descrição] |
+| [AAAA-MM-DD] | [autor] | Funcionalidade criada | [descrição] |
 
 ---
 
-*Feature Set: [Nome] · Major Feature Set: [Nome] · Última revisão: —*
+*Agrupamento Funcional: [Nome] · Domínio: [Nome] · Última revisão: —*
 
-*Links: [N2 do Feature Set](./README.md) · [N1 do domínio](../README.md) · [INDEX geral](../../INDEX.md)*
+*Links: [N2 do Agrupamento Funcional](./README.md) · [N1 do domínio](../README.md) · [INDEX geral](../../INDEX.md)*
 ````
 
 ---

@@ -93,7 +93,7 @@ def describe(text, path):
     title = re.search(r"^#\s+(.+)", text, re.MULTILINE)
     item = {
         "level": int(number), "id": identifier,
-        "title": re.sub(r"^(?:Feature Set|Domínio|Major Feature Set):\s*", "", title[1]) if title else identifier,
+        "title": re.sub(r"^(?:Agrupamento Funcional|Feature Set|Domínio|Major Feature Set):\s*", "", title[1]) if title else identifier,
         "path": path, "domain": identifier.split("-")[0],
     }
     if number == "3":
@@ -162,7 +162,7 @@ def aim_item(text, path):
     meta = gates.parse_front_matter(text)
     meta = meta if isinstance(meta, dict) else {}
     kind = str(meta.get("tipo") or "ticket")
-    section = re.search(rf"^## {'Tickets da sprint' if kind == 'sprint' else 'Features'}[ \t]*\n([\s\S]*?)(?=\n## |\Z)",
+    section = re.search(rf"^## {'Tickets da sprint' if kind == 'sprint' else '(?:Funcionalidades|Features)'}[ \t]*\n([\s\S]*?)(?=\n## |\Z)",
                         text, re.MULTILINE)
     body = section[1] if section else ""
     return {
@@ -291,7 +291,7 @@ def build_snapshot(root, git_root=None, branch=None, base=None):
         number, identifier = str(item["level"]), item["id"]
         artifacts.append(item)
         if number == "2":
-            section = re.search(r"^## Features[ \t]*\n([\s\S]*?)(?=\n## |\Z)", text, re.MULTILINE)
+            section = re.search(r"^## (?:Funcionalidades|Features)[ \t]*\n([\s\S]*?)(?=\n## |\Z)", text, re.MULTILINE)
             if section:
                 for link in re.finditer(r"\[([^\n]+?)\]\((?:<)?(\.?/?f-[^)\s>]+\.md)(?:>)?\)", section[1]):
                     target = file.parent / link[2]

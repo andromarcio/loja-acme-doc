@@ -29,7 +29,7 @@
   const section = (title, body) => `<section class="dashboard-panel"><h2>${title}</h2>${body}</section>`;
 
   // Visão da sprint (ou da história): nos previews de branch de entrega, o gera-dashboard.py
-  // recebe a base e grava em `delivery` o que a branch mudou — documentos, features com o
+  // recebe a base e grava em `delivery` o que a branch mudou — documentos, funcionalidades com o
   // estado antes e agora, tickets pelas chaves dos commits e pelas AIMMs.
   const aimStates = {
     rascunho: 'Rascunho', 'em-análise': 'Em análise', 'escopo-aprovado': 'Escopo aprovado',
@@ -38,7 +38,7 @@
   const changes = { A: 'Incluída', M: 'Alterada', D: 'Excluída', R: 'Renomeada', C: 'Incluída', T: 'Alterada' };
   const fileChanges = { A: 'Incluído', M: 'Alterado', D: 'Excluído', R: 'Renomeado', C: 'Copiado', T: 'Alterado' };
   const categories = [
-    ['n3', 'Features (N3)'], ['n2', 'Feature Sets (N2)'], ['n1', 'Domínios (N1)'], ['aim', 'Análises de impacto'],
+    ['n3', 'Funcionalidades (N3)'], ['n2', 'Agrupamentos Funcionais (N2)'], ['n1', 'Domínios (N1)'], ['aim', 'Análises de impacto'],
     ['modelo', 'Modelo de dados'], ['dicionario', 'Dicionários'], ['global', 'Outros documentos globais'],
     ['prototipo', 'Protótipos'], ['qa', 'Planos de teste'], ['modulos', 'Índices dos módulos'],
   ];
@@ -98,26 +98,26 @@
         comparada com a base desde o ancestral comum <code>${esc(delivery.base)}</code> · ${delivery.commits} commit(s)${review}</p>
       <div class="dashboard-stats">
         ${card('deliveryDocs', 'Documentos alterados', spec.length, `${site.length} arquivo(s) do site e de scripts à parte`)}
-        ${card('deliveryFeatures', 'Features tocadas', touched.length, `${count('A') + count('C')} incluída(s) · ${count('M') + count('R') + count('T')} alterada(s) · ${count('D')} excluída(s)`)}
+        ${card('deliveryFeatures', 'Funcionalidades tocadas', touched.length, `${count('A') + count('C')} incluída(s) · ${count('M') + count('R') + count('T')} alterada(s) · ${count('D')} excluída(s)`)}
         ${card('deliveryTickets', 'Tickets', delivery.tickets.length, `${delivery.tickets.filter(item => item.path).length} com AIMM nesta branch`)}
-        ${card('deliveryWaiting', 'Aguardando checkpoint', alive.filter(item => item.after.nextGate).length, 'Entre as features tocadas')}
-        ${card('deliveryReady', 'Prontas para desenvolvimento', alive.filter(item => ['especificado', 'em-desenvolvimento', 'implementado'].includes(item.after.state)).length, 'Entre as features tocadas')}
+        ${card('deliveryWaiting', 'Aguardando checkpoint', alive.filter(item => item.after.nextGate).length, 'Entre as funcionalidades tocadas')}
+        ${card('deliveryReady', 'Prontas para desenvolvimento', alive.filter(item => ['especificado', 'em-desenvolvimento', 'implementado'].includes(item.after.state)).length, 'Entre as funcionalidades tocadas')}
         ${card('deliveryCommits', 'Commits', delivery.commits, `${delivery.commitsWithoutKey} sem chave de ticket`)}
       </div>
-      ${section(`Features da ${word}`, table(['Feature', 'Ticket', 'Mudança', 'Estado', 'Próximo checkpoint'], featureRows,
+      ${section(`Funcionalidades da ${word}`, table(['Funcionalidade', 'Ticket', 'Mudança', 'Estado', 'Próximo checkpoint'], featureRows,
         'Esta branch ainda não mexe em nenhum N3.'))}
-      ${section('Tickets', `${sprintAim}${table(['Ticket', 'AIMM', 'Features', 'Commits'], ticketRows,
+      ${section('Tickets', `${sprintAim}${table(['Ticket', 'AIMM', 'Funcionalidades', 'Commits'], ticketRows,
         'Nenhum ticket citado nos commits, nas AIMMs da branch ou na AIMM da sprint.')}`)}
       ${section('Documentos alterados', `${groups || '<p class="dashboard-empty">Nenhum documento de especificação alterado.</p>'}
         ${site.length ? `<details class="dashboard-more"><summary>Site, scripts e engine (${site.length})</summary>
           ${table(['Arquivo', 'Mudança', 'Linhas', 'Ticket'], site.map(documentRow), '')}</details>` : ''}`)}
-      ${section('Estados das features tocadas', alive.length ? `<div class="dashboard-state-list">${Object.entries(states).map(([state, label]) => {
+      ${section('Estados das funcionalidades tocadas', alive.length ? `<div class="dashboard-state-list">${Object.entries(states).map(([state, label]) => {
         const total = alive.filter(item => item.after.state === state).length;
         return total ? `<div><span>${label}</span><strong>${total}</strong><progress value="${total}" max="${alive.length}" aria-label="${label}: ${total}"></progress></div>` : '';
-      }).join('')}</div>` : '<p class="dashboard-empty">Nenhuma feature tocada continua na branch.</p>')}
+      }).join('')}</div>` : '<p class="dashboard-empty">Nenhuma funcionalidade tocada continua na branch.</p>')}
       ${section('Como ler esta visão', `
         <p><strong>Base:</strong> a mesma do Ver alterações — o ancestral comum com a base do PR (sem PR, a main). O que chegou à base depois que a branch saiu não conta como mudança desta ${word}.</p>
-        <p><strong>Ticket:</strong> a chave que os commits citam no assunto (na cadência sprint, todo commit de spec cita uma). A coluna mostra os tickets dos commits que tocaram o documento; a origem do N3 guarda o ticket que criou a feature e não entra aqui.</p>
+        <p><strong>Ticket:</strong> a chave que os commits citam no assunto (na cadência sprint, todo commit de spec cita uma). A coluna mostra os tickets dos commits que tocaram o documento; a origem do N3 guarda o ticket que criou a funcionalidade e não entra aqui.</p>
         <p><strong>Estado:</strong> o da esteira na base e na branch, lido dos gates de cada N3. O painel não concede aprovações.</p>`)}
       </div>`;
     container.querySelectorAll('.dashboard-views button').forEach(button => button.addEventListener('click', () => render(data, '', button.dataset.view)));
@@ -161,7 +161,7 @@
     const definitions = `
       <p><strong>Artefatos:</strong> arquivos N1/N2/N3 efetivamente existentes, identificados pelo subtítulo. Templates, relatórios, exemplos e índices não entram nesse total.</p>
       <p><strong>Aprovação:</strong> formal somente para N3, pelos gates da fonte. “Requisitos aprovados” é CP1; não significa modelo aprovado nem especificação pronta. “Especificado” inclui etapas posteriores e exige os gates de especificação do perfil. Deprecados não entram nesses indicadores.</p>
-      <p><strong>Pendentes:</strong> N3 com próximo checkpoint definido. Sem gates e registros inconsistentes são mostrados separadamente, nunca tratados como aprovados. As contagens de pendências de aprovação e revisão de contagem podem se sobrepor. “N3 sem arquivo” mede os caminhos declarados nas tabelas de Features dos N2; um caminho desatualizado também aparece e deve ser inspecionado antes de concluir que falta especificar.</p>
+      <p><strong>Pendentes:</strong> N3 com próximo checkpoint definido. Sem gates e registros inconsistentes são mostrados separadamente, nunca tratados como aprovados. As contagens de pendências de aprovação e revisão de contagem podem se sobrepor. “N3 sem arquivo” mede os caminhos declarados nas tabelas de Funcionalidades dos N2; um caminho desatualizado também aparece e deve ser inspecionado antes de concluir que falta especificar.</p>
       <p><strong>Branches:</strong> nomes únicos das refs locais e remotas disponíveis no checkout; uma branch local rastreada no remoto conta uma vez no total. Não é consulta em tempo real ao GitHub; execute fetch antes de regenerar localmente. Branches de entrega existentes não significam necessariamente previews abertos.</p>
       <p><strong>Recorte:</strong> os documentos e seu perfil correspondem ao checkout usado na geração. O filtro por domínio não muda os indicadores de branches, protótipos e modelos de dados, que são do repositório inteiro.</p>`;
     // Lista própria, não <select>: a nativa do macOS abre por cima do campo (como no seletor
@@ -178,8 +178,8 @@
         </details></div></div>
       <div class="dashboard-stats">
         ${card('n1', 'Domínios (N1)', artifacts.filter(item => item.level === 1).length, 'Documentos presentes')}
-        ${card('n2', 'Feature Sets (N2)', artifacts.filter(item => item.level === 2).length, 'Documentos presentes')}
-        ${card('n3', 'Features (N3)', features.length, 'Inclui deprecados, quando existentes')}
+        ${card('n2', 'Agrupamentos Funcionais (N2)', artifacts.filter(item => item.level === 2).length, 'Documentos presentes')}
+        ${card('n3', 'Funcionalidades (N3)', features.length, 'Inclui deprecados, quando existentes')}
         ${card('artifacts', 'Artefatos de especificação', artifacts.length, 'Soma de N1 + N2 + N3')}
         ${card('branches', 'Branches conhecidas', branches.length, `${local} locais · ${remote} com referência remota`)}
         ${card('delivery', 'Branches de entrega', delivery, 'sprint/ e historia/ — recorte do Git')}
@@ -197,15 +197,15 @@
       }).join('')}</div>`)}
       ${section('Cobertura por domínio', table(['Domínio', 'N2', 'N3', 'CP1 aprovado', 'Especificados', 'N3 sem arquivo'], byDomain, 'Nenhum domínio neste recorte.'))}
       ${section('Fila de aprovação e governança', `<p>Abra a especificação para revisar o próximo checkpoint. Este painel não concede aprovações.</p>
-        ${table(['Feature', 'Estado', 'Próxima ação'], queued.map(item => [featureLink(item), esc(states[item.state] || item.state), esc(pendingReason(item))]), 'Nenhuma pendência de aprovação registrada neste recorte.')}`)}
-      ${section('Pendências de especificação', table(['Feature prevista', 'Feature Set'], missing.map(item =>
-        [esc(item.title), link(item.path, item.featureSet)]), 'Todos os N3 declarados nas tabelas de Features dos N2 possuem arquivo.'))}
+        ${table(['Funcionalidade', 'Estado', 'Próxima ação'], queued.map(item => [featureLink(item), esc(states[item.state] || item.state), esc(pendingReason(item))]), 'Nenhuma pendência de aprovação registrada neste recorte.')}`)}
+      ${section('Pendências de especificação', table(['Funcionalidade prevista', 'Agrupamento Funcional'], missing.map(item =>
+        [esc(item.title), link(item.path, item.featureSet)]), 'Todos os N3 declarados nas tabelas de Funcionalidades dos N2 possuem arquivo.'))}
       ${section('Revisão de contagem', `<div class="dashboard-stats">
         ${card('countPending', 'Revisões pendentes', countPending.length, 'contagem.pendente = true')}
         ${card('countReviewed', 'Revisões registradas', active.filter(item => item.countPending === false).length, 'contagem.pendente = false')}
         ${card('countUnknown', 'Sem status de contagem', noCountStatus.length, 'Ausência não significa contagem revisada')}
       </div><p>Não soma PF nem transforma os valores históricos em medição aprovada.</p>
-        ${table(['Feature', 'Situação'], countPending.map(item => [featureLink(item), 'Revisão de contagem pendente']), 'Nenhuma revisão de contagem pendente registrada neste recorte.')}`)}
+        ${table(['Funcionalidade', 'Situação'], countPending.map(item => [featureLink(item), 'Revisão de contagem pendente']), 'Nenhuma revisão de contagem pendente registrada neste recorte.')}`)}
       ${section('Branches do repositório', `<p>${branches.length} nomes únicos. Referências locais/remotas podem coexistir; não são somadas em duplicidade.</p>
         ${table(['Branch', 'Local', 'Remotos', 'Último commit'], branches.map(item =>
           [esc(item.name), item.local ? 'Sim' : 'Não', esc(item.remotes.join(', ') || '—'), `<code>${esc(item.commit)}</code><br>${esc(item.updated)}`]), 'Nenhuma branch encontrada no checkout.')}`)}

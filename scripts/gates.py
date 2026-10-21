@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Esteira de checkpoints (gates) do docqui.
 
-Lê o front-matter YAML dos N3 (features) e governa a máquina de estados do ciclo
+Lê o front-matter YAML dos N3 (funcionalidades) e governa a máquina de estados do ciclo
 de vida de cada requisito — da especificação ao código. Cada *gate* é um
 checkpoint humano; a próxima etapa só é permitida quando a anterior foi aprovada.
 
@@ -15,9 +15,9 @@ Subcomandos
   check     valida, num Pull Request, que nenhum gate foi pulado e que a
             transição é legal (uso típico: workflow gate-check.yml). No PR de
             uma branch de entrega (`sprint/<id>`, `historia/<CHAVE>`), confere
-            commit a commit: a sprint acumula vários gates por feature, e a
+            commit a commit: a sprint acumula vários gates por funcionalidade, e a
             regra vira um gate por commit, na ordem (ver `cmd_check`).
-  status    imprime a esteira (readiness) de todas as features em stdout.
+  status    imprime a esteira (readiness) de todas as funcionalidades em stdout.
   promote   regenera a seção de gates do INDEX.md a partir dos N3
             (com --write, grava o arquivo; uso típico: promote-estado.yml).
 
@@ -141,7 +141,7 @@ GATE_TO_ESTADO_PADRAO = {
 # entrega é a spec pronta para quem vai construir: `especificado` (📋 pronto para
 # desenvolvimento). Sem isso a esteira negocial terminava em `modelo-validado` —
 # "aguardando testes", uma espera que nenhum QA vem encerrar numa instância só de
-# requisitos —, e nenhuma feature aparecia como pronta. Espelhado no
+# requisitos —, e nenhuma funcionalidade aparecia como pronta. Espelhado no
 # `lib/instancia.mjs` (ESTADO_FINAL), que os scripts JS usam — a AIMM no fechamento.
 ESTADO_POR_PERFIL = {
     "requisitos": {"modelo-dados": "especificado"},
@@ -370,7 +370,7 @@ def validar_estado(meta, rotulo, erros):
     if declarado in ESTADOS_MANUAIS:
         if declarado == "em-desenvolvimento" and derivado != "especificado":
             erros.append(
-                f"{rotulo}: estado 'em-desenvolvimento' exige a feature especificada "
+                f"{rotulo}: estado 'em-desenvolvimento' exige a funcionalidade especificada "
                 f"— os gates {'+'.join(g for g in GATE_ORDER if GATE_TO_ESTADO[g] != 'implementado')} "
                 f"aprovados (estado derivado atual: '{derivado}')."
             )
@@ -482,7 +482,7 @@ def _uniao(a, b):
 def cmd_check_entrega(args, branch):
     """Na branch de entrega, a esteira é conferida commit a commit.
 
-    A sprint (ou a história) acumula vários checkpoints por feature, cada um no seu PR
+    A sprint (ou a história) acumula vários checkpoints por funcionalidade, cada um no seu PR
     para a branch de entrega; comparada de uma vez com a `main`, ela pareceria aprovar
     dois gates juntos. Aqui cada passo da cadeia de primeiro pai — um commit direto ou o
     merge de um PR de checkpoint — aprova no máximo um gate, na ordem, com `por`/`em`.
@@ -645,14 +645,14 @@ def render_tabela(linhas, data: str, papeis=None) -> str:
     out.append("")
     out.append(
         "> ⚙️ **Seção gerada por `scripts/gates.py` — não editar à mão.** "
-        f"Espelha o estado de cada feature na esteira ({esteira}). "
+        f"Espelha o estado de cada funcionalidade na esteira ({esteira}). "
         f"Reflete o estado em **{data}**."
     )
     out.append("")
     if not linhas:
-        out.append("_Nenhuma feature com esteira de gates ainda._")
+        out.append("_Nenhuma funcionalidade com esteira de gates ainda._")
     else:
-        out.append("| Feature | Origem | Estado | Situação |")
+        out.append("| Funcionalidade | Origem | Estado | Situação |")
         out.append("|---|---|---|---|")
         for l in linhas:
             out.append(
@@ -662,7 +662,7 @@ def render_tabela(linhas, data: str, papeis=None) -> str:
         prontas = sum(1 for l in linhas if l["estado"] == "especificado")
         out.append("")
         out.append(
-            f"**{prontas}** de **{len(linhas)}** feature(s) prontas para desenvolvimento."
+            f"**{prontas}** de **{len(linhas)}** funcionalidade(s) prontas para desenvolvimento."
         )
     out.append(MARK_FIM)
     return "\n".join(out)

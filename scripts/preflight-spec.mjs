@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 // preflight-spec.mjs — reporta o ESTADO ATUAL da instância antes de especificar
 // (F1: "sempre verificar o que já existe"). Determinístico: varre o disco e imprime
-// o que existe — N0, Major Feature Sets (N1), Feature Sets (N2) e Features (N3) com seus IDs —
+// o que existe — N0, Domínios (N1), Agrupamentos Funcionais (N2) e Funcionalidades (N3) com seus IDs —
 // para o modelo confrontar ANTES de gerar, em vez de assumir. Não escreve nada.
 //
 // Uso (a partir da raiz da instância):
 //   node scripts/preflight-spec.mjs                     # panorama geral
 //   node scripts/preflight-spec.mjs <dominio>           # foca 1 domínio (sigla ou pasta)
-//   node scripts/preflight-spec.mjs <dominio> <feature-set>  # foca 1 Feature Set
+//   node scripts/preflight-spec.mjs <dominio> <agrupamento-funcional>  # foca 1 Agrupamento Funcional
 //
 // Saída: relatório legível em stdout. Sempre sai 0 (é informativo, não um gate).
 
@@ -52,8 +52,8 @@ const n0 = read(join(ROOT, 'global', 'N0_PRODUCT_VISION.md'));
 p('');
 p(`N0 (Visão de Produto): ${n0 ? '✔ existe (global/N0_PRODUCT_VISION.md)' : '✘ ainda não existe'}`);
 if (n0) {
-  // N1 previstos: linhas de tabela na seção "Major Feature Sets previstos (N1)"
-  // (N0 anteriores à renomeação usam "Domínios previstos (N1)").
+  // N1 previstos: linhas de tabela na seção "Domínios previstos (N1)"
+  // (N0 de antes da 7.0.0 usam "Major Feature Sets previstos (N1)").
   const dom = [];
   const lines = n0.split(/\r?\n/);
   const start = lines.findIndex((l) => /##\s+(?:Major Feature Sets|Domínios) previstos/.test(l));
@@ -66,7 +66,7 @@ if (n0) {
       }
     }
   }
-  if (dom.length) { p('  Major Feature Sets previstos no N0:'); dom.forEach((d) => p(`    - ${d}`)); }
+  if (dom.length) { p('  Domínios previstos no N0:'); dom.forEach((d) => p(`    - ${d}`)); }
 }
 
 // INDEX
@@ -78,7 +78,7 @@ p(`INDEX geral: ${hasIndex ? '✔ modules/INDEX.md — ATUALIZE-O ao concluir' :
 const modulesDir = join(ROOT, 'modules');
 const domainFolders = subdirs(modulesDir).filter((n) => !n.startsWith('_'));
 p('');
-p(`Major Feature Sets especificados (N1) em modules/: ${domainFolders.length}`);
+p(`Domínios especificados (N1) em modules/: ${domainFolders.length}`);
 
 // Resolve o domínio-alvo (por pasta ou por sigla no subtítulo do N1).
 function resolveDomain(arg) {
@@ -96,7 +96,7 @@ const targetDomain = resolveDomain(domArg);
 function reportFeatureSet(domFolder, fsFolder) {
   const n2 = read(join(modulesDir, domFolder, fsFolder, 'README.md'));
   const id = levelId(n2);
-  p(`    Feature Set: ${fsFolder}  ${n2 ? `[N2 ✔ ${id || '?'}]` : '[N2 ✘ ainda não existe]'}`);
+  p(`    Agrupamento Funcional: ${fsFolder}  ${n2 ? `[N2 ✔ ${id || '?'}]` : '[N2 ✘ ainda não existe]'}`);
   const feats = mdFiles(join(modulesDir, domFolder, fsFolder)).filter((n) => n.startsWith('f-'));
   for (const f of feats) {
     const fid = levelId(read(join(modulesDir, domFolder, fsFolder, f)));
@@ -118,21 +118,21 @@ function reportFeatureSet(domFolder, fsFolder) {
 
 if (domArg && !targetDomain) {
   p('');
-  p(`⚠ Major Feature Set "${domArg}" não encontrado em modules/ (nem por pasta nem por sigla).`);
+  p(`⚠ Domínio "${domArg}" não encontrado em modules/ (nem por pasta nem por sigla).`);
   p('  Fluxo bottom-up: o N1/N2 pode não existir ainda — confirme antes de criar pasta nova.');
 }
 
 if (targetDomain) {
   const n1 = read(join(modulesDir, targetDomain, 'README.md'));
   p('');
-  p(`Major Feature Set alvo: ${targetDomain}  ${n1 ? `[N1 ✔ ${levelId(n1) || '?'} — ${titleName(n1) || ''}]` : '[N1 ✘]'}`);
+  p(`Domínio alvo: ${targetDomain}  ${n1 ? `[N1 ✔ ${levelId(n1) || '?'} — ${titleName(n1) || ''}]` : '[N1 ✘]'}`);
   const fsFolders = subdirs(join(modulesDir, targetDomain)).filter((n) => !n.startsWith('_'));
   if (fsArg) {
     const match = fsFolders.includes(fsArg) ? fsArg : fsFolders.find((f) => levelId(read(join(modulesDir, targetDomain, f, 'README.md'))) === fsArg.toUpperCase());
     if (match) reportFeatureSet(targetDomain, match);
-    else { p(`    ⚠ Feature Set "${fsArg}" não encontrado neste domínio — confirme antes de criar.`); }
+    else { p(`    ⚠ Agrupamento Funcional "${fsArg}" não encontrado neste domínio — confirme antes de criar.`); }
   } else {
-    p(`  Feature Sets neste domínio: ${fsFolders.length}`);
+    p(`  Agrupamentos Funcionais neste domínio: ${fsFolders.length}`);
     fsFolders.forEach((f) => reportFeatureSet(targetDomain, f));
   }
 } else if (!domArg) {
@@ -140,14 +140,14 @@ if (targetDomain) {
   for (const f of domainFolders) {
     const n1 = read(join(modulesDir, f, 'README.md'));
     const fsCount = subdirs(join(modulesDir, f)).filter((n) => !n.startsWith('_')).length;
-    p(`    - ${f}  ${n1 ? `\`${levelId(n1) || '?'}\`` : '(sem N1)'} — ${fsCount} Feature Set(s)`);
+    p(`    - ${f}  ${n1 ? `\`${levelId(n1) || '?'}\`` : '(sem N1)'} — ${fsCount} Agrupamento Funcional(s)`);
   }
 }
 
 p('');
 p('──────────────────────────────────────────────────────────────');
 p(' Antes de gerar, produza o bloco "Contexto verificado" reconciliando:');
-p('  • esta feature/FS/domínio já existe? (não duplicar ID nem pasta)');
+p('  • esta funcionalidade/FS/domínio já existe? (não duplicar ID nem pasta)');
 p('  • quais regras/campos já são canônicos → referenciar, não reescrever');
 p('  • o artefato cabe no escopo do N0 e do N1?');
 p('──────────────────────────────────────────────────────────────');

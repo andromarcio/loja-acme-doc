@@ -1,11 +1,11 @@
 # PROMPT 1A — N1 Negócio
-## Major Feature Sets do sistema · Parte negocial
+## Domínios do sistema · Parte negocial
 
 > **Modelo de estrutura**: `engine/templates/modules/_template-dominio/README.md` *(referência humana — o prompt já embute o esqueleto)*
 > **Quem participa**: PO + dev (ou só PO)
 > **Insumo necessário**: visão geral do sistema em linguagem natural
 > **Entrega**: rascunho do README.md de cada domínio com descrições,
-> limites e Feature Sets — sem campos de banco ou detalhes técnicos
+> limites e Agrupamentos Funcionais — sem campos de banco ou detalhes técnicos
 >
 > **Próximo passo**: após aprovação, usar PROMPT_1B com cada README.md gerado
 
@@ -14,7 +14,7 @@
 ## INSTRUÇÕES PARA O CLAUDE
 
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
-> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [agrupamento-funcional]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
 > 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
@@ -69,20 +69,20 @@ uma de cada vez, aguardando minha resposta:
 > Para cada grupo: nome e uma linha do que engloba.
 > Pense em termos do que o usuário faz, não de como o sistema funciona."
 
-> **Atribua aqui o ID de cada Feature Set.** Para cada grupo identificado, proponha
-> uma **sigla de 3 letras maiúsculas** derivada do nome, formando o ID `[SIGLA]-[SFS]`
+> **Atribua aqui o ID de cada Agrupamento Funcional.** Para cada grupo identificado, proponha
+> uma **sigla de 3 letras maiúsculas** derivada do nome, formando o ID `[SIGLA]-[SAF]`
 > (ex.: no domínio `CAD`, "Fundos Geridos" → `CAD-GFG`), **única dentro do domínio**.
 > Confirme antes de seguir:
-> > "Feature Sets de **[área]** (`[SIGLA]`) e IDs propostos:
+> > "Agrupamentos Funcionais de **[área]** (`[SIGLA]`) e IDs propostos:
 > >
-> > | Feature Set | ID |
+> > | Agrupamento Funcional | ID |
 > > |---|---|
-> > | [Nome] | [SIGLA]-[SFS] |
+> > | [Nome] | [SIGLA]-[SAF] |
 > >
 > > Ajusto algum ou sigo?"
 >
 > Esse ID é **definitivo** e nasce no N1: o PROMPT_2A e os atalhos (CRUD/Wizard)
-> **reutilizam** essa sigla, não geram outra. Isso permite referenciar o Feature Set
+> **reutilizam** essa sigla, não geram outra. Isso permite referenciar o Agrupamento Funcional
 > (ex.: "vamos especificar `CAD-GFG`") antes mesmo de o N2 existir.
 
 **Pergunta 3 — Regras que valem para tudo nesta área**
@@ -111,7 +111,7 @@ Com as respostas, gere o artefato parcial:
 **Gere exatamente esta estrutura — sem adicionar seções, subtítulos ou elementos não listados abaixo:**
 
 ```
-# Major Feature Set: [Nome]
+# Domínio: [Nome]
 > **Nível 1** - Visão estratégica do domínio - `[SIGLA]`
 
 ## Descrição
@@ -124,17 +124,17 @@ Com as respostas, gere o artefato parcial:
 
 ---
 
-## Feature Sets
+## Agrupamentos Funcionais
 
-| Feature Set | Descrição | Features |
+| Agrupamento Funcional | Descrição | Funcionalidades |
 |---|---|---|
-| [**Nome do Feature Set**](./[pasta]/README.md) <small>[SIGLA]-[SFS]</small> | [descrição em uma linha] | [N] |
+| [**Nome do Agrupamento Funcional**](./[pasta]/README.md) <small>[SIGLA]-[SAF]</small> | [descrição em uma linha] | [N] |
 
 ---
 
 ## Regras transversais de negócio
 
-1. [Regra que se aplica a todas as features deste domínio]
+1. [Regra que se aplica a todas as funcionalidades deste domínio]
 
 ---
 
@@ -164,7 +164,7 @@ Com as respostas, gere o artefato parcial:
 
 *Última revisão: —*
 
-*Links: [Feature Set 1](./[pasta]/README.md) · [INDEX geral](../INDEX.md)*
+*Links: [Agrupamento Funcional 1](./[pasta]/README.md) · [INDEX geral](../INDEX.md)*
 ```
 
 > **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
@@ -182,13 +182,13 @@ Com as respostas, gere o artefato parcial:
 > Responde por todo o cadastro e a gestão dos clientes da empresa, sendo a fonte única de identificação de pessoas físicas e jurídicas para os demais domínios. Mantém os dados cadastrais, a situação do cliente e seu histórico de relacionamento. É consumido por Vendas, Faturamento e Atendimento sempre que precisam identificar quem é o cliente.
 > ```
 
-> **Tabela de Feature Sets** — renderize cada Feature Set como
-> `[**Nome**](./[pasta]/README.md) <small>[SIGLA]-[SFS]</small>` (link envolve o negrito,
+> **Tabela de Agrupamentos Funcionais** — renderize cada Agrupamento Funcional como
+> `[**Nome**](./[pasta]/README.md) <small>[SIGLA]-[SAF]</small>` (link envolve o negrito,
 > ID em `<small>` ao lado — nunca `**[Nome](...)**`, que quebra a extração automática do
-> nome). O **ID `[SIGLA]-[SFS]` é atribuído aqui no N1** (Pergunta 2) e é definitivo — o
-> PROMPT_2A o reutiliza. O link para `./[pasta]/README.md` e a contagem de **Features**
-> (`[N]`) só são preenchidos quando o Feature Set é detalhado no PROMPT_2A — até lá, o
-> nome fica sem link. O rodapé `*Links:*` também aponta para os Feature Sets do domínio.
+> nome). O **ID `[SIGLA]-[SAF]` é atribuído aqui no N1** (Pergunta 2) e é definitivo — o
+> PROMPT_2A o reutiliza. O link para `./[pasta]/README.md` e a contagem de **Funcionalidades**
+> (`[N]`) só são preenchidos quando o Agrupamento Funcional é detalhado no PROMPT_2A — até lá, o
+> nome fica sem link. O rodapé `*Links:*` também aponta para os Agrupamentos Funcionais do domínio.
 
 Seções deixadas em branco para o PROMPT 1B:
 - Entidades e campos
@@ -207,7 +207,7 @@ Após todos os domínios aprovados, gere:
 📄 `modules/INDEX.md` — versão negocial
 
 Conteúdo:
-- Tabela de domínios com nome, descrição e Feature Sets
+- Tabela de domínios com nome, descrição e Agrupamentos Funcionais
 - Mapa de dependências entre domínios em linguagem de negócio
 - Lista de regras que cruzam mais de um domínio
 
@@ -220,7 +220,7 @@ Após apresentar o INDEX, prossiga para o Passo 4.
 Sempre que um domínio (N1) for gerado ou alterado, confronte-o com o
 `N0_PRODUCT_VISION.md`:
 
-- Verifique se o domínio e seus Feature Sets são coerentes com a visão de
+- Verifique se o domínio e seus Agrupamentos Funcionais são coerentes com a visão de
   produto (objetivos, escopo, público-alvo).
 - Se o N0 mantém uma lista de domínios/áreas e o novo domínio não estiver
   refletido, proponha incluí-lo.
@@ -241,10 +241,10 @@ Ao finalizar, informe:
 
 Antes de apresentar cada domínio, confira (todos os itens são obrigatórios):
 
-- [ ] Título exatamente `# Major Feature Set: [Nome]`
+- [ ] Título exatamente `# Domínio: [Nome]`
 - [ ] Subtítulo em blockquote: `> **Nível 1** - Visão estratégica do domínio - [SIGLA]` (SIGLA de **3 letras maiúsculas** em crase, hífens `-`)
 - [ ] Descrição (2-3 frases) seguida da subseção `### O que este domínio NÃO faz` (tabela Descrição | Pertence a)
-- [ ] **Feature Sets**: tabela (Feature Set | Descrição | Features); coluna *Feature Set* no formato `[**Nome**](./[pasta]/README.md) <small>[SIGLA]-[SFS]</small>` com o **ID já atribuído** (`[SFS]` de 3 letras, único no domínio) e o link direto para `./[pasta]/README.md`; rodapé `*Links:*` apontando para os Feature Sets
+- [ ] **Agrupamentos Funcionais**: tabela (Agrupamento Funcional | Descrição | Funcionalidades); coluna *Agrupamento Funcional* no formato `[**Nome**](./[pasta]/README.md) <small>[SIGLA]-[SAF]</small>` com o **ID já atribuído** (`[SAF]` de 3 letras, único no domínio) e o link direto para `./[pasta]/README.md`; rodapé `*Links:*` apontando para os Agrupamentos Funcionais
 - [ ] **Regras transversais de negócio**: lista numerada de **invariantes** (o *quê* a área garante) — qualidade do sistema (desempenho/segurança/auditoria) **não** entra aqui, vai para `global/NFR.md`
 - [ ] **Integrações com outros domínios**: tabelas de Leitura e Escrita em linguagem de negócio (a coluna *Como* pode ficar para o dev confirmar no PROMPT_1B)
 - [ ] **Changelog**
@@ -253,5 +253,5 @@ Antes de apresentar cada domínio, confira (todos os itens são obrigatórios):
 
 > **Gate determinístico** — após gravar o N1, rode `node scripts/validate-doc.mjs <arquivo>`.
 > Ele detecta o nível pelo subtítulo e exige as seções obrigatórias do N1 (Descrição +
-> `### O que este domínio NÃO faz`, Feature Sets, Regras transversais de negócio, Changelog).
+> `### O que este domínio NÃO faz`, Agrupamentos Funcionais, Regras transversais de negócio, Changelog).
 > O artefato só é conforme quando o validador retorna `✓` (sai com código 0).

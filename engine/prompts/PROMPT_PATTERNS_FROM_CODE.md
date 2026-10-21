@@ -32,7 +32,7 @@ de projeto** do sistema. O objetivo não é inventariar tudo o que o código faz
 capturar as **soluções estruturais reutilizáveis** (Strategy, Repository, Facade,
 Template Method, Observer, State, Factory, Builder, DTO, Mapper, Proxy/Cache…) que
 darão ao agente/dev um **vocabulário compartilhado** e uma realização única — para
-que features geradas em momentos diferentes resolvam a mesma variabilidade do mesmo
+que funcionalidades geradas em momentos diferentes resolvam a mesma variabilidade do mesmo
 jeito (evita *drift* de implementação).
 
 **Princípios fundamentais:**
@@ -298,4 +298,4 @@ Ao finalizar, informe:
 >    referência" do `MASTER.md` (se ainda não estiver).
 > 2. Leve as convenções listadas para o `MASTER.md` (Convenções de código) / `NFR.md`.
 > 3. Daqui em diante, o **PROMPT_SDD** referencia este catálogo em vez de reinventar
->    os padrões por feature."
+>    os padrões por funcionalidade."

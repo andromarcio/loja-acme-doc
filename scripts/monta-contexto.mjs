@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// monta-contexto.mjs — o pacote de contexto de uma feature (ou de um Feature Set): o N3 e,
+// monta-contexto.mjs — o pacote de contexto de uma funcionalidade (ou de um Agrupamento Funcional): o N3 e,
 // de cada artefato global, só o que ele usa. É o insumo de quem desenha, implementa ou
-// testa a feature.
+// testa a funcionalidade.
 //
 // Por quê (pedido do PO, 2026-10-10): 32 prompts pedem "cole aqui o conteúdo de…". Ou o
 // agente recebe os dicionários inteiros — ruído, e a entrada certa disputa atenção com
@@ -10,20 +10,20 @@
 // cita entra; o que ele cita e não existe aparece como ❓, em vez de sumir.
 //
 // O que entra, nesta ordem:
-//   1. o N3 inteiro (no modo --fs, cada N3 do Feature Set);
+//   1. o N3 inteiro (no modo --agrupamento, cada N3 do Agrupamento Funcional);
 //   2. o N2: a matriz "Permissões por perfil" (quem pode vive só nela) e as dependências;
-//   3. o N1: as regras transversais do domínio (valem para toda feature dele);
-//   4. as entidades do data-model que a feature toca — front-matter `entidade`, coluna
+//   3. o N1: as regras transversais do domínio (valem para toda funcionalidade dele);
+//   4. as entidades do data-model que a funcionalidade toca — front-matter `entidade`, coluna
 //      Entidade de `## Campos`, `## Dados lidos e gravados` — com a seção inteira;
 //   5. as entradas citadas do RULES (`RC-NN`), FIELD, MESSAGE e ERROR-DICTIONARY — e os
 //      códigos do `## Mapeamento de erros`, do `error_codes` e, desde a 6.4.0, todo código
 //      do dicionário que o N3 cita em qualquer lugar (o `error.code "AUTH_FORBIDDEN"` de um
 //      cenário técnico ficava de fora — achado na validação do modelo no siesa-doc);
 //   6. os NFR citados pelo ID (a herança dos demais fica dita, não repetida);
-//   7. as features de `depende_de` e, desde a 6.4.0, as citadas no texto (`→ ver
+//   7. as funcionalidades de `depende_de` e, desde a 6.4.0, as citadas no texto (`→ ver
 //      XXX-YYY-NN`, menção na Descrição ou num cenário): título, Descrição e as rotas da API;
 //   8. os protótipos citados;
-//   9. desde a 6.4.0, as decisões de percurso que citam a feature — os parágrafos de
+//   9. desde a 6.4.0, as decisões de percurso que citam a funcionalidade — os parágrafos de
 //      `global/PLANO-IMPLEMENTACAO.md` e de `decisions/*.md` com o ID. Decisão que só
 //      existia ali (ordem de prioridade, cache, código de erro) era deduzida por quem lia
 //      só o N3;
@@ -32,9 +32,9 @@
 //
 // Uso (a partir da raiz da instância):
 //   node scripts/monta-contexto.mjs <ID | caminho do N3> [--base main] [--out <arquivo>]
-//   node scripts/monta-contexto.mjs --fs <SIGLA-SFS | pasta do N2> [--out <arquivo>]
-//   (sem --out, escreve na saída padrão). O --fs junta as features do Feature Set num
-//   pacote só: N1, N2, entidades e dicionários uma vez, em vez de repetidos por feature.
+//   node scripts/monta-contexto.mjs --agrupamento <SIGLA-SAF | pasta do N2> [--out <arquivo>]
+//   (sem --out, escreve na saída padrão). O --agrupamento junta as funcionalidades do Agrupamento Funcional num
+//   pacote só: N1, N2, entidades e dicionários uma vez, em vez de repetidos por funcionalidade.
 
 import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, resolve, relative, dirname } from 'node:path';
@@ -47,10 +47,10 @@ import { secao } from './lib/regras.mjs';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
 const opt = (n) => { const i = args.indexOf(n); return i >= 0 ? args[i + 1] : null; };
-const alvo = args.find((a, i) => !a.startsWith('--') && !['--base', '--out', '--root', '--fs'].includes(args[i - 1]));
-const FS = opt('--fs');
+const alvo = args.find((a, i) => !a.startsWith('--') && !['--base', '--out', '--root', '--agrupamento', '--fs'].includes(args[i - 1]));
+const FS = opt('--agrupamento') || opt('--fs');
 const ROOT = resolve(opt('--root') || '.');
-const USO = 'uso: node scripts/monta-contexto.mjs <ID | caminho do N3> [--base main] [--out <arquivo>]\n     node scripts/monta-contexto.mjs --fs <SIGLA-SFS | pasta do N2> [--out <arquivo>]';
+const USO = 'uso: node scripts/monta-contexto.mjs <ID | caminho do N3> [--base main] [--out <arquivo>]\n     node scripts/monta-contexto.mjs --agrupamento <SIGLA-SAF | pasta do N2> [--out <arquivo>]';
 if (!alvo && !FS) { console.error(USO); process.exit(2); }
 
 const chave = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -80,7 +80,7 @@ function trecho(txt, casa, nivel) {
   return ls.slice(ini, fim).join('\n').trim();
 }
 
-// ── as features do pacote ────────────────────────────────────────────────────
+// ── as funcionalidades do pacote ────────────────────────────────────────────────────
 const n3s = arquivosN3(ROOT);
 const porId = new Map(n3s.map((f) => [idDe(readFileSync(f, 'utf8')), f]));
 let arquivos;
@@ -88,7 +88,7 @@ if (FS) {
   const pasta = existsSync(resolve(FS)) ? resolve(FS) : null;
   arquivos = n3s.filter((f) => (pasta ? dirname(f) === pasta : (idDe(readFileSync(f, 'utf8')) || '').startsWith(`${FS}-`)))
     .sort((a, b) => (idDe(readFileSync(a, 'utf8')) || '').localeCompare(idDe(readFileSync(b, 'utf8')) || ''));
-  if (!arquivos.length) { console.error(`monta-contexto: nenhum N3 do Feature Set ${FS} em modules/.`); process.exit(2); }
+  if (!arquivos.length) { console.error(`monta-contexto: nenhum N3 do Agrupamento Funcional ${FS} em modules/.`); process.exit(2); }
 } else {
   const arq = existsSync(resolve(alvo)) ? resolve(alvo) : porId.get(alvo);
   if (!arq) { console.error(`monta-contexto: nenhum N3 com o ID ${alvo} em modules/.`); process.exit(2); }
@@ -106,7 +106,7 @@ const falta = (f) => { if (!faltas.includes(f)) faltas.push(f); };
 const partes = [];
 const bloco = (t, corpo, origem) => partes.push(`## ${t}\n\n${literal(origem, corpo)}\n`);
 
-for (const f of features) bloco(`A feature — ${f.ID} — ${f.titulo}`, f.texto.replace(/^<!--.*?-->\s*/, ''), rel(f.arq));
+for (const f of features) bloco(`A funcionalidade — ${f.ID} — ${f.titulo}`, f.texto.replace(/^<!--.*?-->\s*/, ''), rel(f.arq));
 
 // ── N2 e N1 ──────────────────────────────────────────────────────────────────
 for (const pasta of [...new Set(features.map((f) => dirname(f.arq)))]) {
@@ -114,14 +114,14 @@ for (const pasta of [...new Set(features.map((f) => dirname(f.arq)))]) {
   if (n2) {
     const perm = trecho(n2, (h) => /^Permiss/.test(h), 2);
     const dep = trecho(n2, (h) => /^Depend/.test(h), 2);
-    if (perm || dep) bloco('O Feature Set (N2) — quem pode e de quem depende', [perm, dep].filter(Boolean).join('\n\n'), rel(join(pasta, 'README.md')));
+    if (perm || dep) bloco('O Agrupamento Funcional (N2) — quem pode e de quem depende', [perm, dep].filter(Boolean).join('\n\n'), rel(join(pasta, 'README.md')));
     else falta('N2 sem "## Permissões por perfil"');
   } else falta(`N2 ausente (${rel(join(pasta, 'README.md'))})`);
 }
 for (const pasta of [...new Set(features.map((f) => dirname(dirname(f.arq))))]) {
   const n1 = ler(join(pasta, 'README.md'));
   const rt = n1 && trecho(n1, (h) => /^Regras transversais/.test(h), 2);
-  if (rt) bloco('O domínio (N1) — regras transversais, valem para toda feature dele', rt, rel(join(pasta, 'README.md')));
+  if (rt) bloco('O domínio (N1) — regras transversais, valem para toda funcionalidade dele', rt, rel(join(pasta, 'README.md')));
 }
 
 // ── data-model ───────────────────────────────────────────────────────────────
@@ -155,7 +155,7 @@ for (const e of entidades) {
   }
   if (!achou) falta(`entidade "${e}" sem seção no data-model`);
 }
-if (achadas.length) partes.push(`## As entidades que a feature toca (data-model)\n\n${achadas.join('\n\n')}\n`);
+if (achadas.length) partes.push(`## As entidades que a funcionalidade toca (data-model)\n\n${achadas.join('\n\n')}\n`);
 
 // ── dicionários ──────────────────────────────────────────────────────────────
 const dic = (n) => join(ROOT, 'global', `${n}-DICTIONARY.md`);
@@ -214,7 +214,7 @@ for (const [sigla, set] of Object.entries(citados)) {
   }
   if (achados.length) entradas.push(`### ${sigla}-DICTIONARY\n\n${literal(rel(dic(sigla)), achados.join('\n\n'))}`);
 }
-if (entradas.length) partes.push(`## As entradas de dicionário que a feature cita\n\n${entradas.join('\n\n')}\n`);
+if (entradas.length) partes.push(`## As entradas de dicionário que a funcionalidade cita\n\n${entradas.join('\n\n')}\n`);
 
 // ── NFR ──────────────────────────────────────────────────────────────────────
 const nfr = ler(join(ROOT, 'global', 'NFR.md'));
@@ -225,7 +225,7 @@ if (nfr) {
   partes.push(`## Os NFR citados\n\nOs demais valem por herança e não se repetem aqui.\n\n${ts.length ? literal('global/NFR.md', ts.join('\n\n')) : '_O N3 não cita NFR pelo ID._'}\n`);
 }
 
-// ── dependências, features citadas e protótipos ──────────────────────────────
+// ── dependências, funcionalidades citadas e protótipos ──────────────────────────────
 const resumo = (d) => {
   const f = porId.get(d);
   const t = readFileSync(f, 'utf8');
@@ -237,14 +237,14 @@ const resumo = (d) => {
 const deps = [...new Set(features.flatMap((f) => (frontMatterLista(f.lines, 'depende_de') || []).filter((d) => !d.startsWith('['))))].filter((d) => !doPacote.has(d));
 const ds = [];
 for (const d of deps) { if (porId.has(d)) ds.push(resumo(d)); else falta(`depende_de: ${d} sem N3`); }
-if (ds.length) partes.push(`## As features de que esta depende\n\n${ds.join('\n\n')}\n`);
+if (ds.length) partes.push(`## As funcionalidades de que esta depende\n\n${ds.join('\n\n')}\n`);
 // Citadas no texto (fora do front-matter e do Changelog) — só as que existem: um ID
 // inexistente no texto pode ser exemplo; o de `depende_de` é contrato e falta como ❓.
 const citadas = [...new Set(features.flatMap((f) => semChangelog(f.texto.replace(/^---[\s\S]*?\n---\n/, '')).match(ID_RE) || []))]
   .filter((d) => !doPacote.has(d) && !deps.includes(d) && porId.has(d)).sort();
-if (citadas.length) partes.push(`## As features citadas no texto\n\n${citadas.map(resumo).join('\n\n')}\n`);
-// O protótipo da feature é o da linha "Fidelidade ao protótipo" e o de link markdown —
-// caminho que aparece como VALOR num exemplo da API não é protótipo desta feature.
+if (citadas.length) partes.push(`## As funcionalidades citadas no texto\n\n${citadas.map(resumo).join('\n\n')}\n`);
+// O protótipo da funcionalidade é o da linha "Fidelidade ao protótipo" e o de link markdown —
+// caminho que aparece como VALOR num exemplo da API não é protótipo desta funcionalidade.
 const linhasProto = features.flatMap((f) => f.lines.filter((l) => /Fidelidade ao prot[oó]tipo/i.test(l) || /\]\([^)]*prototypes\//.test(l)));
 const protos = [...new Set(linhasProto.flatMap((l) => [...l.matchAll(/prototypes\/[^\s)`'"\]]+\.html/g)].map((m) => m[0].replace(/^(\.\.\/)+/, ''))))]
   .filter((p) => !/[[#]/.test(p));
@@ -273,7 +273,7 @@ for (const r of registros) {
   const comId = pars.filter((p) => features.some((f) => new RegExp(`\\b${f.ID}\\b`).test(p)));
   if (comId.length) decisoes.push(literal(rel(r), comId.join('\n\n')));
 }
-if (decisoes.length) partes.push(`## As decisões de percurso que citam a feature\n\nO que foi decidido fora do N3 (plano de implementação, ADR). Decisão que só existe aqui e muda o comportamento é defeito da especificação: leve-a ao N3.\n\n${decisoes.join('\n\n')}\n`);
+if (decisoes.length) partes.push(`## As decisões de percurso que citam a funcionalidade\n\nO que foi decidido fora do N3 (plano de implementação, ADR). Decisão que só existe aqui e muda o comportamento é defeito da especificação: leve-a ao N3.\n\n${decisoes.join('\n\n')}\n`);
 
 // ── delta ────────────────────────────────────────────────────────────────────
 const BASE = opt('--base');
@@ -285,11 +285,11 @@ if (BASE) {
 }
 
 const umaSo = features.length === 1 && !FS;
-const nomeFs = FS && ((ler(join(dirname(features[0].arq), 'README.md')) || '').match(/^# (?:Feature Set:\s*)?(.+)$/m) || [])[1];
-const titulo = umaSo ? `${features[0].ID} — ${features[0].titulo}` : `Feature Set ${nomeFs ? `${nomeFs.trim()} ` : ''}(${features.map((f) => f.ID).join(' · ')})`;
-const comando = umaSo ? `${features[0].ID}${BASE ? ` --base ${BASE}` : ''}` : `--fs ${FS}${BASE ? ` --base ${BASE}` : ''}`;
+const nomeFs = FS && ((ler(join(dirname(features[0].arq), 'README.md')) || '').match(/^# (?:(?:Agrupamento Funcional|Feature Set):\s*)?(.+)$/m) || [])[1];
+const titulo = umaSo ? `${features[0].ID} — ${features[0].titulo}` : `Agrupamento Funcional ${nomeFs ? `${nomeFs.trim()} ` : ''}(${features.map((f) => f.ID).join(' · ')})`;
+const comando = umaSo ? `${features[0].ID}${BASE ? ` --base ${BASE}` : ''}` : `--agrupamento ${FS}${BASE ? ` --base ${BASE}` : ''}`;
 const cab = [`# Contexto — ${titulo}`, '',
-  `> Gerado por \`node scripts/monta-contexto.mjs ${comando}\` — não editar: a fonte é a instância. Traz o N3 e, de cada artefato global, só o que ele usa. A regra da feature se cita como \`${umaSo ? features[0].ID : '<ID>'}/RN-NN\`.`, ''];
+  `> Gerado por \`node scripts/monta-contexto.mjs ${comando}\` — não editar: a fonte é a instância. Traz o N3 e, de cada artefato global, só o que ele usa. A regra da funcionalidade se cita como \`${umaSo ? features[0].ID : '<ID>'}/RN-NN\`.`, ''];
 if (faltas.length) cab.push('**❓ Citado e não encontrado** — resolver antes de usar o pacote; nada aqui é para ser deduzido:', '', ...faltas.map((f) => `- ❓ ${f}`), '');
 const saida = `${cab.join('\n')}\n${partes.join('\n---\n\n')}`;
 const OUT = opt('--out');

@@ -18,7 +18,7 @@
 
 ## Baseline de validação
 
-> Mensagens genéricas reutilizadas por qualquer campo/feature. Ajuste o texto ao
+> Mensagens genéricas reutilizadas por qualquer campo/funcionalidade. Ajuste o texto ao
 > tom de voz definido no N0. Use o marcador `# ← MESSAGE-DICTIONARY: BASELINE`
 > nos cenários em vez de reescrevê-las.
 

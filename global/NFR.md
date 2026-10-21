@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.1 | prompt: PROMPT_NFR | atualizado: 2026-10-17 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # NFR.md
 > Catálogo de **Requisitos Não-Funcionais** (Especificação Suplementar, à la RUP).
 > Reúne as **qualidades** do sistema — *quão bem* ele faz algo (desempenho,
@@ -16,13 +16,13 @@ Antes de criar um NFR, classifique:
 
 - **É NFR** → uma **qualidade** do sistema: tempo de resposta, segurança, disponibilidade, auditoria, usabilidade, restrição técnica. Registre aqui.
 - **Não é NFR**:
-  - **invariante de negócio** (*o quê* o sistema garante) → `RULES-DICTIONARY.md` (canônica) ou N1 (transversal de domínio) ou N3 (específica da feature);
+  - **invariante de negócio** (*o quê* o sistema garante) → `RULES-DICTIONARY.md` (canônica) ou N1 (transversal de domínio) ou N3 (específica da funcionalidade);
   - **mensagem de UI** → `MESSAGE-DICTIONARY.md`;
   - **código de erro** → `ERROR-DICTIONARY.md`.
 
 ## Herança
 
-NFRs são **herdados** por todas as features — não se repetem nos N3. Um N3 só **referencia** um NFR quando precisa apontá-lo explicitamente (ex.: a seção `## AuditLog` aponta `→ ver NFR: AUD-01`). Nunca reescreva a qualidade no N3.
+NFRs são **herdados** por todas as funcionalidades — não se repetem nos N3. Um N3 só **referencia** um NFR quando precisa apontá-lo explicitamente (ex.: a seção `## AuditLog` aponta `→ ver NFR: AUD-01`). Nunca reescreva a qualidade no N3.
 
 ---
 

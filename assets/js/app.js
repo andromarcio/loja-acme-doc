@@ -152,7 +152,7 @@
     return root;
   }
 
-  // Extrai um título legível do conteúdo Markdown (primeiro H1), sem prefixos como 'Domínio:', 'Feature Set:', 'Data Model:'
+  // Extrai um título legível do conteúdo Markdown (primeiro H1), sem prefixos como 'Domínio:', 'Agrupamento Funcional:', 'Data Model:'
   function titleFromMarkdown(content) {
     const match = content.match(/^#\s+(.+)$/m);
     if (!match) return null;
@@ -198,7 +198,7 @@
   ];
 
   // Resolve o rótulo de um arquivo na árvore lateral.
-  // Para arquivos de feature (3º nível de modules) e para arquivos dentro de
+  // Para arquivos de funcionalidade (3º nível de modules) e para arquivos dentro de
   // TITLE_FROM_CONTENT_DIRS, usa o título H1 do conteúdo Markdown.
   function getFileDisplayName(item) {
     if (typeof repoFilesContent !== 'undefined') {

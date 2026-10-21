@@ -38,7 +38,7 @@ Use-o como **única fonte de verdade** para tokens, componentes e classes `.dsc-
 
 A partir de `$ARGUMENTS`, identifique:
 
-1. **Onde mora** → o Major Feature Set e o Feature Set do fluxo, com os **mesmos nomes de pasta de `modules/`** (`[dominio]/[feature-set]`). Sem N2 correspondente, pergunte — a pasta `prototypes/` espelha `modules/`
+1. **Onde mora** → o Domínio e o Agrupamento Funcional do fluxo, com os **mesmos nomes de pasta de `modules/`** (`[dominio]/[agrupamento-funcional]`). Sem N2 correspondente, pergunte — a pasta `prototypes/` espelha `modules/`
 2. **Telas** → quais telas compõem o fluxo (listagem, cadastro, detalhe, wizard, modal...)
 3. **Campos por tela** → nome, tipo (`texto` / `data` / `select` / `toggle` / `arquivo` / `número` / `textarea`)
 4. **Disposição** → layout descrito (cards lado a lado, grid, modal, tabs, drawer...)
@@ -57,7 +57,7 @@ Apresente o mapa de navegação e o caminho de saída **antes** de gerar qualque
          ──"Ação"──→ [Modal C]
 ```
 
-**Arquivo de saída:** `prototypes/[dominio]/[feature-set]/flow.html`
+**Arquivo de saída:** `prototypes/[dominio]/[agrupamento-funcional]/flow.html`
 
 Pergunte:
 > "O mapa acima reflete o que você quer? Posso gerar o `flow.html`?"
@@ -284,11 +284,11 @@ Gere um **único** arquivo `flow.html` com todas as telas como seções `.dsc-sc
 
 ## PASSO 4 — Salvar e entregar
 
-Crie o diretório `prototypes/[dominio]/[feature-set]/` se não existir e salve o arquivo como `prototypes/[dominio]/[feature-set]/flow.html`. Crie ou atualize o `README.md` do Feature Set e o do domínio (`prototypes/[dominio]/README.md`) a partir dos modelos em `engine/templates/prototypes/_template/` — um README em cada nível, como em `modules/`.
+Crie o diretório `prototypes/[dominio]/[agrupamento-funcional]/` se não existir e salve o arquivo como `prototypes/[dominio]/[agrupamento-funcional]/flow.html`. Crie ou atualize o `README.md` do Agrupamento Funcional e o do domínio (`prototypes/[dominio]/README.md`) a partir dos modelos em `engine/templates/prototypes/_template/` — um README em cada nível, como em `modules/`.
 
 Informe ao final:
 
-> ✅ Protótipo gerado em `prototypes/[dominio]/[feature-set]/flow.html`
+> ✅ Protótipo gerado em `prototypes/[dominio]/[agrupamento-funcional]/flow.html`
 >
 > **Telas cobertas**: [lista]
 > **Abra no navegador** — navegação e toasts são funcionais.

@@ -2,9 +2,9 @@
 ## Ponte: especificação (N3) → workspace do GitHub spec-kit
 
 > **Modo**: DEV
-> **Entrada**: N3 **técnicos aprovados** (3B concluído) de um Feature Set + artefatos globais
+> **Entrada**: N3 **técnicos aprovados** (3B concluído) de um Agrupamento Funcional + artefatos globais
 > **Saída**: workspace que o **spec-kit vanilla** consome — `.specify/memory/constitution.md`,
-> `.specify/feature.json`, `specs/NNN-[feature-set]/{spec.md, plan.md, data-model.md, contracts/, quickstart.md}`
+> `.specify/feature.json`, `specs/NNN-[agrupamento-funcional]/{spec.md, plan.md, data-model.md, contracts/, quickstart.md}`
 > **Pré-requisito**: todos os N3 do escopo com `estado: especificado` no front-matter (gates CP1+CP2+CP3 aprovados na esteira de checkpoints) e no `INDEX.md`
 > **Próximo passo (fora deste prompt)**: no projeto-alvo, rodar o spec-kit **vanilla**:
 > `/speckit.tasks` → (opcional `/speckit.analyze`) → `/speckit.implement`
@@ -22,8 +22,8 @@ ele já lê. A geração de `tasks.md` e do código fica para os comandos vanill
 
 ### Princípio de granularidade
 
-- **1 Feature Set (N2) = 1 "feature" do spec-kit** (uma pasta `specs/NNN-…/`).
-- **1 N3 (verbo + entidade) = 1 User Story** no `spec.md`, na ordem da tabela de Features do N2.
+- **1 Agrupamento Funcional (N2) = 1 "feature" do spec-kit** (uma pasta `specs/NNN-…/`).
+- **1 N3 (verbo + entidade) = 1 User Story** no `spec.md`, na ordem da tabela de Funcionalidades do N2.
 - O CRUD do engine (5 N3) vira 5 user stories → fatias independentes no `/speckit.tasks`.
 
 ### Regras de geração
@@ -44,9 +44,9 @@ ele já lê. A geração de `tasks.md` e do código fica para os comandos vanill
    anexe a "Sequência de implementação" e o "Design de testes" (estilo `PROMPT_SDD`)
    como *guidance* no `plan.md`, mas sem substituir o `/speckit.tasks`.
 6. **A regra viaja com o ID.** A regra `- **RN-NN** —` do N3 vira FR que cita
-   `[SIGLA]-[SFS]-NN/RN-NN` (`FR-003 — SIS-CAD-01/RN-02: …`), e o cenário marcado
+   `[SIGLA]-[SAF]-NN/RN-NN` (`FR-003 — SIS-CAD-01/RN-02: …`), e o cenário marcado
    `@RN-NN` leva a citação completa no Acceptance Scenario e no contrato — numa pasta
-   de várias features, `@RN-02` sozinho não diz de qual. É a cadeia regra → cenário →
+   de várias funcionalidades, `@RN-02` sozinho não diz de qual. É a cadeia regra → cenário →
    teste que o `valida-artefatos-previstos` confere depois, no código gerado.
 7. **Toda seção do N3 tem destino.** Nada fica para trás porque o spec-kit não tem a
    seção de mesmo nome — a tabela do PASSO 3 diz para onde cada uma vai.
@@ -56,11 +56,11 @@ ele já lê. A geração de `tasks.md` e do código fica para os comandos vanill
 ## CONTEXTO DO PROJETO
 
 > **Pacote de contexto (6.3.0)** — em vez de colar os blocos abaixo, gere-o:
-> `node scripts/monta-contexto.mjs <ID da feature> --out /tmp/contexto-<ID>.md` — para o Feature Set inteiro, `--fs <SIGLA-SFS>` (N1, N2, entidades e
-> dicionários uma vez, em vez de repetidos por feature). Traz o
-> N3 e, de cada artefato global, só o que a feature usa (matriz de permissões do N2,
+> `node scripts/monta-contexto.mjs <ID da funcionalidade> --out /tmp/contexto-<ID>.md` — para o Agrupamento Funcional inteiro, `--agrupamento <SIGLA-SAF>` (N1, N2, entidades e
+> dicionários uma vez, em vez de repetidos por funcionalidade). Traz o
+> N3 e, de cada artefato global, só o que a funcionalidade usa (matriz de permissões do N2,
 > regras transversais do N1, entidades do data-model, entradas citadas dos dicionários,
-> NFR citados, features de `depende_de`, protótipos); o que o N3 cita e não existe vem
+> NFR citados, funcionalidades de `depende_de`, protótipos); o que o N3 cita e não existe vem
 > como ❓ — resolva antes de usar, não deduza. Os blocos abaixo ficam para o que o pacote
 > não cobre (MASTER, DESIGN-SYSTEM, API-PATTERNS) e para o modo copiar-colar.
 
@@ -84,13 +84,13 @@ ele já lê. A geração de `tasks.md` e do código fica para os comandos vanill
 [cole/leia os dicionários globais]
 
 === DATA-MODEL (fragmento do domínio) ===
-[cole/leia global/data-models/[dominio].md do domínio do Feature Set]
+[cole/leia global/data-models/[dominio].md do domínio do Agrupamento Funcional]
 
-=== N2 DO FEATURE SET ===
-[cole/leia modules/[dominio]/[feature-set]/README.md]
+=== N2 DO FUNCIONALIDADE SET ===
+[cole/leia modules/[dominio]/[agrupamento-funcional]/README.md]
 
-=== N3(s) DO FEATURE SET (técnicos, estado: especificado) ===
-[cole/leia todos os .md de feature do Feature Set]
+=== N3(s) DO FUNCIONALIDADE SET (técnicos, estado: especificado) ===
+[cole/leia todos os .md de funcionalidade do Agrupamento Funcional]
 
 ---
 
@@ -98,20 +98,20 @@ ele já lê. A geração de `tasks.md` e do código fica para os comandos vanill
 
 **Não exporte** se qualquer item abaixo falhar. Apresente um relatório e pare.
 
-> **Itens sensíveis à Superfície**: `endpoints`/`## API` valem para features que
+> **Itens sensíveis à Superfície**: `endpoints`/`## API` valem para funcionalidades que
 > **expõem API** (Superfície `API`, ou `Tela própria`/`Modal`/`Ação em tela` com backend).
-> Uma feature `CLI`/`Job/Pipeline` **não é barrada por não ter endpoints** — o
+> Uma funcionalidade `CLI`/`Job/Pipeline` **não é barrada por não ter endpoints** — o
 > equivalente dela é a seção `## Execução e operação` (e o contrato de execução do
 > PASSO 6). O data-model referenciado pode ser o fragmento de **entidades** ou o de
 > **artefatos** (`Modelo de artefatos (dados persistidos)`), conforme o caso.
 
 ```
 [ ] Todos os N3 do escopo têm front-matter com estado: especificado (gates requisitos+modelo-dados+testes aprovados)?
-[ ] O estado no modules/INDEX.md de cada feature é 📋 especificado?
+[ ] O estado no modules/INDEX.md de cada funcionalidade é 📋 especificado?
 [ ] Todo campo de cada N3 resolve no data-model do domínio (entidades: Label PO → Label Dev → campo banco; artefatos: campo/atributo na estrutura do artefato)?
 [ ] Todo error_code do front-matter existe no ERROR-DICTIONARY.md?
-[ ] Feature que expõe API: todo endpoint do front-matter tem seção ## API correspondente no N3?
-[ ] Feature CLI/Job/Pipeline: a seção ## Execução e operação está preenchida (comando/gatilho, parâmetros, reexecução, saídas)?
+[ ] Funcionalidade que expõe API: todo endpoint do front-matter tem seção ## API correspondente no N3?
+[ ] Funcionalidade CLI/Job/Pipeline: a seção ## Execução e operação está preenchida (comando/gatilho, parâmetros, reexecução, saídas)?
 [ ] Todo ponteiro "→ ver X" do N3 aponta para um alvo existente e resolvível?
 [ ] O MASTER.md tem o bloco "Technical Context" preenchido (ou marcado NEEDS CLARIFICATION)?
 ```
@@ -129,14 +129,14 @@ origem) e oriente: complete via `PROMPT_3B` / `PROMPT_4B` antes de reexportar.
 
 ## PASSO 1 — Resolver destino e numeração
 
-1. Defina o **short-name** a partir do **nome** do Feature Set — o título
-   `# Feature Set: [Nome]` do N2 —, em kebab-case (ex.: `Contatos` → `contatos`). Não
+1. Defina o **short-name** a partir do **nome** do Agrupamento Funcional — o título
+   `# Agrupamento Funcional: [Nome]` do N2 —, em kebab-case (ex.: `Contatos` → `contatos`). Não
    use a pasta do N2 nem a sigla.
 2. Numere a pasta sequencialmente olhando `specs/` no diretório de saída
    (`001`, `002`, …). Resultado: `specs/NNN-[short-name]/`.
 3. Garanta a existência de `.specify/memory/` no diretório de saída (o projeto-alvo
    deve ter sido inicializado com `specify init`; se não, avise o usuário).
-4. **Vários Feature Sets na mesma execução**: uma pasta `specs/NNN-…` para cada, na
+4. **Vários Agrupamentos Funcionais na mesma execução**: uma pasta `specs/NNN-…` para cada, na
    ordem de dependência; a `constitution.md` é uma só (gerada na primeira, **acrescida**
    nas seguintes — nunca sobrescrita), e o `.specify/feature.json` aponta a última.
 
@@ -166,15 +166,15 @@ Governance). Cada princípio: nome, descrição imperativa ("MUST …") e a orig
 
 ## PASSO 3 — Gerar `specs/NNN-[short-name]/spec.md`
 
-Cabeçalho: `# Feature Specification: [Nome do Feature Set]`. Preencha as seções
+Cabeçalho: `# Funcionalidade Specification: [Nome do Agrupamento Funcional]`. Preencha as seções
 **mandatórias** do `spec-template.md` do spec-kit a partir dos N3:
 
-### User Scenarios & Testing — **uma User Story por N3**, na ordem da tabela de Features do N2
+### User Scenarios & Testing — **uma User Story por N3**, na ordem da tabela de Funcionalidades do N2
 
-Para cada N3, na ordem em que o N2 lista as features (a jornada que o PO confirmou):
+Para cada N3, na ordem em que o N2 lista as funcionalidades (a jornada que o PO confirmou):
 
 ```markdown
-### User Story N - [Nome da feature do N3]
+### User Story N - [Nome da funcionalidade do N3]
 
 [Descrição em linguagem de negócio — da seção ## Descrição do N3]
 
@@ -229,7 +229,7 @@ Para cada N3, na ordem em que o N2 lista as features (a jornada que o PO confirm
 
 Use `plan-template.md` do spec-kit:
 
-- **Summary**: objetivo do Feature Set (do N2) + abordagem técnica (da stack do MASTER).
+- **Summary**: objetivo do Agrupamento Funcional (do N2) + abordagem técnica (da stack do MASTER).
 - **Technical Context**: copie o bloco "Technical Context" do `MASTER.md`
   (Language/Version, Primary Dependencies, Storage, Testing, Target Platform, Project
   Type, Performance Goals, Constraints, Scale/Scope), **resolvendo** os ponteiros
@@ -258,7 +258,7 @@ Este é o arquivo que carrega Label Dev e campo banco — que o `spec.md` **não
 
 ## PASSO 6 — Gerar `specs/NNN-[short-name]/contracts/`
 
-**Features que expõem API** — um arquivo por endpoint (de `endpoints` no
+**Funcionalidades que expõem API** — um arquivo por endpoint (de `endpoints` no
 front-matter + seção `## API` do N3), **resolvendo** o `API-PATTERNS.md`. Se o
 `API-PATTERNS.md` da instância define o formato do contrato (ex.: OpenAPI 3.1), gere
 nele; senão, em markdown. As tabelas de campos do N3 (Campo | Tipo | Obrigatório |
@@ -274,7 +274,7 @@ Label PO) e de erros (HTTP | code) vão como estão, e a rota é a do N3:
 **Paginação/Filtros**: [quando GET de coleção — padrão do API-PATTERNS]
 ```
 
-**Features `CLI`/`Job/Pipeline`** — um arquivo por comando/execução (da seção
+**Funcionalidades `CLI`/`Job/Pipeline`** — um arquivo por comando/execução (da seção
 `## Execução e operação` do N3), o **contrato de execução**:
 
 ```markdown
@@ -304,7 +304,7 @@ Label PO) e de erros (HTTP | code) vão como estão, e a rota é a do N3:
 Antes de encerrar, rode a checagem e apresente o resultado:
 
 ```
-[ ] Cada N3 virou uma User Story no spec.md, na ordem da tabela de Features do N2?
+[ ] Cada N3 virou uma User Story no spec.md, na ordem da tabela de Funcionalidades do N2?
 [ ] Toda regra de negócio virou um FR-### que cita <ID>/RN-NN?
 [ ] Todo cenário negocial virou Acceptance Scenario ou Edge Case, e todo técnico está em contracts/?
 [ ] Toda seção do N3 foi para o destino da tabela do PASSO 3?
@@ -319,7 +319,7 @@ Depois informe:
 > Agora, **no projeto-alvo** (vanilla), rode:
 > 1. `/speckit.tasks` — gera `tasks.md` organizado pelas user stories
 > 2. (opcional) `/speckit.analyze` — consistência cruzada spec/plan/tasks
-> 3. `/speckit.implement` — gera o código + testes (na **reconciliação** — feature já
+> 3. `/speckit.implement` — gera o código + testes (na **reconciliação** — funcionalidade já
 >    implementada —, não: rode o `/speckit.analyze` contra o código existente)
 >
 > Escopo desta ponte: **código + testes**. CI, container e deploy ficam fora

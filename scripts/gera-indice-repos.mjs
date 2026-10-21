@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// gera-indice-repos.mjs — o índice reverso: para cada repositório, as features que ele
+// gera-indice-repos.mjs — o índice reverso: para cada repositório, as funcionalidades que ele
 // implementa. Seção gerada em `repos/INDEX.md`.
 //
 // Por quê (pedido do PO, 2026-10-07): num sistema de microsserviços — uma sigla da Caixa
@@ -16,8 +16,8 @@
 // `requisitos`, o 3A o preenche quando o inventário existe.
 //
 // O que a seção traz:
-//   - uma linha por repositório que implementa ao menos uma feature, com o domínio (do
-//     inventário, ou o dos N1 das features) e as features como `ID — Nome`, com link;
+//   - uma linha por repositório que implementa ao menos uma funcionalidade, com o domínio (do
+//     inventário, ou o dos N1 das funcionalidades) e as funcionalidades como `ID — Nome`, com link;
 //   - os repositórios do inventário que nenhum N3 cita (o de doc fica de fora);
 //   - os repositórios citados em N3 que não estão no inventário — nome errado ou
 //     inventário incompleto (o validate-doc reprova isso só em `em-desenvolvimento` e
@@ -48,7 +48,7 @@ if (!existsSync(INDEX)) {
 const inv = (inventario(ROOT) || []).filter((r) => !ehRepoDeDoc(r, ROOT));
 const noInv = new Map(inv.map((r) => [r.nome.toLowerCase(), r]));
 
-// repositório (minúsculo) → { nome, features: [{ id, titulo, link, dominio }] }
+// repositório (minúsculo) → { nome, funcionalidades: [{ id, titulo, link, dominio }] }
 const porRepo = new Map();
 for (const arq of arquivosN3(ROOT)) {
   const texto = readFileSync(arq, 'utf8');
@@ -73,10 +73,10 @@ const foraDoInv = [...porRepo.entries()].filter(([k]) => !noInv.has(k)).sort((a,
 const semFeature = inv.filter((r) => !porRepo.has(r.nome.toLowerCase())).map((r) => r.nome).sort();
 const lista = (fs) => fs.sort((a, b) => a.id.localeCompare(b.id)).map((f) => `[${f.id} — ${f.titulo}](${f.link})`).join(' · ');
 
-linhas.push(INI, '## Features por repositório', '');
-linhas.push('> ⚙️ **Seção gerada por `scripts/gera-indice-repos.mjs` — não editar à mão.** O índice reverso do `## Implementação` dos N3: as features que cada repositório implementa — o que muda se ele mudar. A fonte é o N3; corrija lá e regenere.', '');
+linhas.push(INI, '## Funcionalidades por repositório', '');
+linhas.push('> ⚙️ **Seção gerada por `scripts/gera-indice-repos.mjs` — não editar à mão.** O índice reverso do `## Implementação` dos N3: as funcionalidades que cada repositório implementa — o que muda se ele mudar. A fonte é o N3; corrija lá e regenere.', '');
 if (comFeature.length) {
-  linhas.push('| Repositório | Domínio | Features |', '|---|---|---|');
+  linhas.push('| Repositório | Domínio | Funcionalidades |', '|---|---|---|');
   for (const [k, r] of comFeature) {
     const dom = noInv.get(k).dominio || [...new Set(r.features.map((f) => f.dominio))].sort().join(' · ');
     linhas.push(`| \`${r.nome}\` | ${dom} | ${r.features.length}: ${lista(r.features)} |`);
@@ -85,7 +85,7 @@ if (comFeature.length) {
   linhas.push('_Nenhum N3 declara repositório do inventário no `## Implementação` ainda._');
 }
 linhas.push('');
-linhas.push(`**Sem feature declarada** (${semFeature.length}): ${semFeature.length ? semFeature.map((n) => `\`${n}\``).join(' · ') : '—'}`, '');
+linhas.push(`**Sem funcionalidade declarada** (${semFeature.length}): ${semFeature.length ? semFeature.map((n) => `\`${n}\``).join(' · ') : '—'}`, '');
 if (foraDoInv.length) {
   linhas.push(`**Fora do inventário** — citados no \`## Implementação\` e ausentes da tabela acima; corrija o nome no N3 ou registre o repositório (${foraDoInv.length}):`, '');
   for (const [, r] of foraDoInv) linhas.push(`- \`${r.nome}\` — ${lista(r.features)}`);
@@ -99,14 +99,14 @@ const novo = atual.includes(INI) && atual.includes(FIM)
   ? atual.slice(0, atual.indexOf(INI)) + bloco + atual.slice(atual.indexOf(FIM) + FIM.length)
   : `${atual.replace(/\s*$/, '')}\n\n---\n\n${bloco}\n`;
 
-const resumo = `${comFeature.length} repositório(s) com feature · ${semFeature.length} sem · ${foraDoInv.length} fora do inventário`;
+const resumo = `${comFeature.length} repositório(s) com funcionalidade · ${semFeature.length} sem · ${foraDoInv.length} fora do inventário`;
 if (CHECK) {
   if (novo !== atual) {
-    console.log(`✗ repos/INDEX.md: a seção "Features por repositório" está desatualizada (${resumo}). Rode: node scripts/gera-indice-repos.mjs`);
+    console.log(`✗ repos/INDEX.md: a seção "Funcionalidades por repositório" está desatualizada (${resumo}). Rode: node scripts/gera-indice-repos.mjs`);
     process.exit(1);
   }
   console.log(`✓ repos/INDEX.md: índice de repositórios em dia (${resumo}).`);
   process.exit(0);
 }
 if (novo === atual) console.log(`repos/INDEX.md já está em dia — ${resumo}.`);
-else { writeFileSync(INDEX, novo); console.log(`✓ repos/INDEX.md: "Features por repositório" escrita — ${resumo}.`); }
+else { writeFileSync(INDEX, novo); console.log(`✓ repos/INDEX.md: "Funcionalidades por repositório" escrita — ${resumo}.`); }

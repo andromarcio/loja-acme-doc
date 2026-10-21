@@ -4,7 +4,7 @@ Como transformar o delta de uma sprint em número auditável. Pressupõe familia
 
 ## As duas colunas
 
-**PFB — Ponto de Função Bruto.** O tamanho funcional medido, sem desconto. Para features que já existem, vem do baseline APF da instância, atribuído por feature. Para o que não está no baseline, é contagem nova ou estimativa.
+**PFB — Ponto de Função Bruto.** O tamanho funcional medido, sem desconto. Para funcionalidades que já existem, vem do baseline APF da instância, atribuído por funcionalidade. Para o que não está no baseline, é contagem nova ou estimativa.
 
 **PFL — Ponto de Função Líquido.** O que a evolução vale pela regra de projeto de melhoria:
 
@@ -23,7 +23,7 @@ Não é convenção local. O CPM define o escopo do projeto de melhoria como o *
 
 Isso inverte a ordem do trabalho: **os tickets dizem quais funções entram e por quê; a contagem vem depois, sobre os artefatos já consolidados.** A AIMM de cada ticket guarda os fatos — que função foi tocada, o que mudou nela, que DER/RLR se mexeram —, e o PFB/PFL que ela mostra espelha o N3; o apurável é o da AIMM da sprint, onde cada função entra uma vez. Nunca some as AIMMs dos tickets: a função tocada por dois tickets aparece nas duas, e a soma a conta duas vezes.
 
-**A chave de deduplicação é o processo elementar, não a feature.** Uma feature costuma absorver mais de um PE — a conciliação Feature ↔ PE do `SIZING.md` marca isso como `(+N)`. Dois itens que tocam a mesma feature em PEs diferentes são **duas** funções alteradas; deduplicar por feature subconta. O manual trata o caso simétrico — uma mudança em rotina comum que atinge vários PEs conta vários — e a leitura inversa vale igual: "as funções alteradas devem ser identificadas baseadas nos processos elementares que incorporam aquela lógica".
+**A chave de deduplicação é o processo elementar, não a funcionalidade.** Uma funcionalidade costuma absorver mais de um PE — a conciliação Funcionalidade ↔ PE do `SIZING.md` marca isso como `(+N)`. Dois itens que tocam a mesma funcionalidade em PEs diferentes são **duas** funções alteradas; deduplicar por funcionalidade subconta. O manual trata o caso simétrico — uma mudança em rotina comum que atinge vários PEs conta vários — e a leitura inversa vale igual: "as funções alteradas devem ser identificadas baseadas nos processos elementares que incorporam aquela lógica".
 
 Entre sprints a regra não se aplica: a mesma função alterada de novo na sprint seguinte conta de novo, porque é outro projeto de melhoria. O colapso é **dentro** de um projeto. Isso pressupõe que a instância trate cada sprint como um projeto de melhoria — decisão da instância, não regra do CPM; registre-a no `SIZING.md` se ainda não estiver lá.
 
@@ -90,9 +90,9 @@ O apurável é a `## Apurável da sprint` da AIMM da sprint: Transações, Funç
 
 | | Natureza | PFB | PFL |
 |---|---|---|---|
-| Features alteradas com contagem no baseline | alteradas · 50% | … | … |
-| Features sem contagem no baseline | incluídas · 100% | … (E) | … (E) |
-| Features novas | incluídas · 100% | … (E) | … (E) |
+| Funcionalidades alteradas com contagem no baseline | alteradas · 50% | … | … |
+| Funcionalidades sem contagem no baseline | incluídas · 100% | … (E) | … (E) |
+| Funcionalidades novas | incluídas · 100% | … (E) | … (E) |
 | Transações | — | … | … |
 | Funções de dados | alteradas · 50% | … | … |
 | **Total** | — | … | … |
@@ -101,11 +101,11 @@ Regras que mantêm essa tabela honesta:
 
 - **`(E)` em toda estimativa**, e no total que a contém. Diga quantos dos N pontos são estimados; é a primeira coisa que a métrica vai querer saber.
 - **Nada de "a contar" sem dizer o que falta.** Ou tem número, ou tem o motivo de não ter.
-- **Zero é um número válido** e precisa de justificativa. "Conta zero porque a entrega já está dentro de outra feature" é uma linha legítima; um zero mudo volta como pergunta.
-- **Confira a soma com script** depois de cada rodada de números. Contas de cabeça sobrevivem a revisões visuais. O `validate-impact` faz a conta da AIMM da sprint — o Total contra as linhas de `## Alterações na spec, por Feature Set` e de `## Funções de dados alteradas`, e cada subtotal contra a sua —; a quebra por origem é sua: as linhas dela somam o subtotal de Transações.
+- **Zero é um número válido** e precisa de justificativa. "Conta zero porque a entrega já está dentro de outra funcionalidade" é uma linha legítima; um zero mudo volta como pergunta.
+- **Confira a soma com script** depois de cada rodada de números. Contas de cabeça sobrevivem a revisões visuais. O `validate-impact` faz a conta da AIMM da sprint — o Total contra as linhas de `## Alterações na spec, por Agrupamento Funcional` e de `## Funções de dados alteradas`, e cada subtotal contra a sua —; a quebra por origem é sua: as linhas dela somam o subtotal de Transações.
 
 ## Onde a estimativa pode viver
 
-Só no relatório de impacto. Os artefatos que servem de fonte de medição — o índice de rastreabilidade, o documento de convenções de contagem — continuam registrando `—` para features sem contagem oficial.
+Só no relatório de impacto. Os artefatos que servem de fonte de medição — o índice de rastreabilidade, o documento de convenções de contagem — continuam registrando `—` para funcionalidades sem contagem oficial.
 
 Escreva essa fronteira dentro do próprio relatório. Sem ela, alguém vai copiar a estimativa para o índice e ela vira "medição" na próxima leitura.

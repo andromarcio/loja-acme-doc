@@ -1,9 +1,9 @@
 <!-- docqui: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # VOCABULARY-OVERRIDES.md — ajustes de vocabulário desta instância
 
-> Ajusta o vocabulário canônico do framework (`engine/FEATURE-DEFINITION.md`) **para
+> Ajusta o vocabulário canônico do framework (`engine/DEFINICAO-FUNCIONALIDADE.md`) **para
 > esta instância**, sem editar o engine. Lido automaticamente pelo gate semântico
-> (`scripts/validate-feature-semantics.mjs`) — as tabelas abaixo são **máquina-legíveis**
+> (`scripts/valida-semantica-funcionalidade.mjs`) — as tabelas abaixo são **máquina-legíveis**
 > (primeira coluna = termo, grafia sem acento, como nas tabelas do engine).
 >
 > Um termo não é técnico ou negocial *por natureza* — depende do produto (Regra 10 da
@@ -13,7 +13,7 @@
 >
 > Mantenha este arquivo **enxuto**: cada linha aqui é uma exceção ao contrato do
 > framework. Se a exceção vale para qualquer produto do mesmo tipo, proponha a mudança
-> no próprio `FEATURE-DEFINITION.md` do engine (via CHANGELOG) em vez de acumulá-la aqui.
+> no próprio `DEFINICAO-FUNCIONALIDADE.md` do engine (via CHANGELOG) em vez de acumulá-la aqui.
 
 ---
 

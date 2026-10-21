@@ -5,12 +5,12 @@
 > do ticket + o delta dos N3 (`node scripts/delta-n3.mjs --aimm …`) + os N3 atuais
 > **Saída**: SDD completo pronto para guiar a implementação — no modo alteração, o SDD de
 > alteração: só o que muda
-> **Pré-requisito**: todos os N3 da feature ou módulo a ser implementado
+> **Pré-requisito**: todos os N3 da funcionalidade ou módulo a ser implementado
 > devem estar com `estado: especificado` no front-matter — CP1, CP2 e CP3 aprovados
 > na esteira; é o 📋 da seção *Esteira de checkpoints* do `modules/INDEX.md`
 > (`python3 scripts/gates.py status`). No modo alteração, o pré-requisito é o aval do PO
 > no escopo: a AIMM do ticket em `escopo-aprovado` ou adiante, com `avalizado-por`
-> **Onde salvar**: `arquitetura/sdd/SDD-[SIGLA]-[SFS].md` (um por Feature Set) — no modo
+> **Onde salvar**: `arquitetura/sdd/SDD-[SIGLA]-[SAF].md` (um por Agrupamento Funcional) — no modo
 > alteração, `arquitetura/sdd/SDD-AIMM-<CHAVE>.md`. O `validate-doc` reconhece o SDD pelo
 > título e confere as seções numeradas e a consolidação dos ❓ e 🏛️
 
@@ -26,13 +26,13 @@ O SDD não repete o que está nas specs — ele traduz as specs em decisões
 de design, estruturas de código e contratos técnicos que o dev pode
 seguir diretamente para implementar.
 
-> **Qual modo?** Feature **nova** — linha `criar` no `## Artefatos impactados` da AIMM, ou
-> N3 que não existe na `main` — vai para o **SDD completo** (abaixo). Feature que **já
+> **Qual modo?** Funcionalidade **nova** — linha `criar` no `## Artefatos impactados` da AIMM, ou
+> N3 que não existe na `main` — vai para o **SDD completo** (abaixo). Funcionalidade que **já
 > existe** e muda — linha `alterar` na AIMM — vai para o **modo alteração** (seção
-> *MODO ALTERAÇÃO*, no fim deste prompt): o N3 é a foto completa da feature, e
+> *MODO ALTERAÇÃO*, no fim deste prompt): o N3 é a foto completa da funcionalidade, e
 > redesenhá-la inteira por um campo novo no filtro gera retrabalho e risco de regressão.
 > Um ticket com as duas coisas gera um SDD de cada tipo. O `delta-n3.mjs` já separa:
-> marca a feature nova como "SDD completo" e entrega o delta das demais.
+> marca a funcionalidade nova como "SDD completo" e entrega o delta das demais.
 
 > **Antes de gerar — pronto para dev?** Leia o `estado` no front-matter de cada N3 do
 > escopo (ou rode `python3 scripts/gates.py status`). Só `especificado` (📋 — CP1, CP2 e
@@ -40,7 +40,7 @@ seguir diretamente para implementar.
 > falta e não gere o design dele. O status da tabela de rastreabilidade não decide —
 > quem decide é a esteira.
 
-> **SDD retroativo — feature já em `em-desenvolvimento` ou `implementado`.** Só quando o
+> **SDD retroativo — funcionalidade já em `em-desenvolvimento` ou `implementado`.** Só quando o
 > pedido é documentar o desenho que existe ou validar a especificação. Gere o SDD completo
 > com as 15 seções e diga na §1 que é retroativo e se o código foi consultado (qual
 > repositório e caminho) ou não. A §1.1 traz o estado real da spec, e a §14 vira a lista
@@ -51,7 +51,7 @@ seguir diretamente para implementar.
 
 ### Regras de geração
 
-> **Fidelidade ao protótipo:** para telas cuja feature (N3) declara `Fidelidade ao protótipo: obrigatória`, o design **referencia o protótipo aprovado** (`prototypes/…`) como fonte de verdade do layout, componentes e estados — não reinterprete a tela pelo texto; desvio vira decisão 🏛️ e exige aprovação.
+> **Fidelidade ao protótipo:** para telas cuja funcionalidade (N3) declara `Fidelidade ao protótipo: obrigatória`, o design **referencia o protótipo aprovado** (`prototypes/…`) como fonte de verdade do layout, componentes e estados — não reinterprete a tela pelo texto; desvio vira decisão 🏛️ e exige aprovação.
 > **Treino ≠ jogo — a fidelidade é de comportamento visual, NUNCA de código.** O
 > protótipo é autocontido e procedural de propósito (HTML/CSS/JS de simulação);
 > **copiar seu código para a produção é desvio por definição**. A realização vem
@@ -63,7 +63,7 @@ seguir diretamente para implementar.
 1. **Referência, não repetição.** Sempre que uma regra ou campo já
    estiver definido nas specs, referencie o artefato de origem em vez
    de copiar o conteúdo. Use a notação: `→ ver [arquivo]: [seção]`. A regra da
-   feature se cita pelo ID: `[SIGLA]-[SFS]-NN/RN-NN` — no SDD e no comentário do
+   funcionalidade se cita pelo ID: `[SIGLA]-[SAF]-NN/RN-NN` — no SDD e no comentário do
    código que a implementa (`// → ADM-USR-04/RN-02`); nunca pela posição na lista.
 
 2. **Decisões explícitas.** Toda escolha de design que não esteja
@@ -85,7 +85,7 @@ seguir diretamente para implementar.
    "Pontos a resolver antes de implementar".
 
 6. **Escopo declarado.** Ao iniciar, liste explicitamente quais
-   domínios, Feature Sets e features o SDD cobre, com base nos
+   domínios, Agrupamentos Funcionais e funcionalidades o SDD cobre, com base nos
    artefatos fornecidos.
 
 7. **A stack é a da instância.** Os exemplos da estrutura abaixo — `route.ts`,
@@ -95,10 +95,10 @@ seguir diretamente para implementar.
    `MASTER.md`, do `PATTERNS.md` e do `API-PATTERNS.md` da instância. Onde a
    instância não define (ex.: o nome dos pacotes), a escolha é 🏛️.
 
-8. **Tela ou consulta compartilhada.** Quando várias features do escopo usam a
-   mesma tela ou a mesma consulta (um GET que alimenta seções de features
+8. **Tela ou consulta compartilhada.** Quando várias funcionalidades do escopo usam a
+   mesma tela ou a mesma consulta (um GET que alimenta seções de funcionalidades
    diferentes), descreva-a uma vez — subseção *Telas e consultas compartilhadas*
-   na §4 ou na §7 — e aponte para ela das features. O contrato dela é ❓ se
+   na §4 ou na §7 — e aponte para ela das funcionalidades. O contrato dela é ❓ se
    nenhum N3 o define.
 
 ---
@@ -106,11 +106,11 @@ seguir diretamente para implementar.
 ## CONTEXTO DO PROJETO
 
 > **Pacote de contexto (6.3.0)** — em vez de colar os blocos abaixo, gere-o:
-> `node scripts/monta-contexto.mjs <ID da feature> [--base main] --out /tmp/contexto-<ID>.md` — para o Feature Set inteiro, `--fs <SIGLA-SFS>` (N1, N2, entidades e
-> dicionários uma vez, em vez de repetidos por feature). Traz o
-> N3 e, de cada artefato global, só o que a feature usa (matriz de permissões do N2,
+> `node scripts/monta-contexto.mjs <ID da funcionalidade> [--base main] --out /tmp/contexto-<ID>.md` — para o Agrupamento Funcional inteiro, `--agrupamento <SIGLA-SAF>` (N1, N2, entidades e
+> dicionários uma vez, em vez de repetidos por funcionalidade). Traz o
+> N3 e, de cada artefato global, só o que a funcionalidade usa (matriz de permissões do N2,
 > regras transversais do N1, entidades do data-model, entradas citadas dos dicionários,
-> NFR citados, features de `depende_de`, protótipos); o que o N3 cita e não existe vem
+> NFR citados, funcionalidades de `depende_de`, protótipos); o que o N3 cita e não existe vem
 > como ❓ — resolva antes de usar, não deduza. Os blocos abaixo ficam para o que o pacote
 > não cobre (MASTER, DESIGN-SYSTEM, API-PATTERNS) e para o modo copiar-colar.
 
@@ -136,11 +136,11 @@ seguir diretamente para implementar.
 === N1(s) — DOMÍNIOS ===
 [cole aqui os README.md dos domínios envolvidos]
 
-=== N2(s) — FEATURE SETS ===
-[cole aqui os README.md dos Feature Sets envolvidos]
+=== N2(s) — FUNCIONALIDADE SETS ===
+[cole aqui os README.md dos Agrupamentos Funcionais envolvidos]
 
-=== N3(s) — FEATURES ===
-[cole aqui os .md de todas as features a implementar]
+=== N3(s) — FUNCIONALIDADES ===
+[cole aqui os .md de todas as funcionalidades a implementar]
 
 ---
 
@@ -164,15 +164,15 @@ na ordem apresentada.
 ## 1. Escopo deste documento
 
 ### 1.1 O que este SDD cobre
-[Lista de domínios, Feature Sets e features incluídos,
+[Lista de domínios, Agrupamentos Funcionais e funcionalidades incluídos,
 com link para cada N3 de origem.]
 
-| Feature | N3 de origem | Estado da spec |
+| Funcionalidade | N3 de origem | Estado da spec |
 |---|---|---|
-| [feature] | [link] | 📋 especificado |
+| [funcionalidade] | [link] | 📋 especificado |
 
 ### 1.2 O que está fora do escopo
-[Features ou domínios explicitamente excluídos e por quê.]
+[Funcionalidades ou domínios explicitamente excluídos e por quê.]
 
 ### 1.3 Dependências com outros módulos
 [Módulos ou serviços externos que este SDD pressupõe existentes,
@@ -295,19 +295,19 @@ export async function [METHOD](req: Request) {
   const { organizationId, userId, role } = await getSession(req)
 
   // 2. Validar body/params com Zod
-  const body = schema.[feature]Schema.parse(await req.json())
+  const body = schema.[funcionalidade]Schema.parse(await req.json())
 
   // 3. Chamar service
-  const result = await [feature]Service.[acao](organizationId, userId, body)
+  const result = await [funcionalidade]Service.[acao](organizationId, userId, body)
 
   // 4. Retornar resposta
   return Response.json({ data: result, meta: null }, { status: [código] })
 }
 ```
 
-**Schema de validação Zod** (`lib/validations/[feature].ts`):
+**Schema de validação Zod** (`lib/validations/[funcionalidade].ts`):
 ```typescript
-export const [feature]Schema = z.object({
+export const [funcionalidade]Schema = z.object({
   [campo]: z.[tipo]([validações]),  // → FIELD-DICTIONARY: [campo] se canônico
 })
 ```
@@ -453,7 +453,7 @@ const [erro, setErro] = useState<string | null>(null)
 
 ## 8. Design de jobs assíncronos
 
-*(Incluir apenas se houver processamento assíncrono nas features do escopo)*
+*(Incluir apenas se houver processamento assíncrono nas funcionalidades do escopo)*
 
 ### [NomeDoJob] (`lib/workers/[job].worker.ts`)
 → Especificação de origem: ver [N3]: [seção relevante]
@@ -524,27 +524,27 @@ prisma/migrations/[ts]_[nome].ts      criar — [descrição da migration]
 prisma/schema.prisma                  alterar — adicionar [entidade(s)]
 
 ── Validações ─────────────────────────────────────────────────
-lib/validations/[modulo].ts           criar — schemas Zod de [feature(s)]
+lib/validations/[modulo].ts           criar — schemas Zod de [funcionalidade(s)]
 
 ── Repositórios ───────────────────────────────────────────────
 lib/repositories/[modulo].repository.ts  criar — acesso a dados de [Entidade]
 
 ── Serviços ───────────────────────────────────────────────────
-lib/services/[modulo].service.ts      criar — lógica de negócio de [feature(s)]
+lib/services/[modulo].service.ts      criar — lógica de negócio de [funcionalidade(s)]
 
 ── Eventos ────────────────────────────────────────────────────
 lib/events/handlers/[evento].handler.ts  criar — handler de [evento]
 
 ── API ────────────────────────────────────────────────────────
-app/api/v1/[rota]/route.ts            criar — endpoint(s) de [feature]
+app/api/v1/[rota]/route.ts            criar — endpoint(s) de [funcionalidade]
 
 ── Frontend ───────────────────────────────────────────────────
-app/(auth)/[rota]/page.tsx            criar — tela de [feature]
+app/(auth)/[rota]/page.tsx            criar — tela de [funcionalidade]
 components/[modulo]/[Componente].tsx  criar — [descrição]
 components/ui/[Componente].tsx        criar/alterar — [descrição]
 
 ── Workers ────────────────────────────────────────────────────
-lib/workers/[job].worker.ts           criar — job de [feature]
+lib/workers/[job].worker.ts           criar — job de [funcionalidade]
 ```
 
 ---
@@ -578,8 +578,8 @@ Ordem recomendada para implementar sem travar em dependências:
 | Unitário | Validação Zod: campos válidos e inválidos | `[modulo].validation.spec.ts` |
 | Integração | Endpoint: request → response com banco real | `[rota].integration.spec.ts` |
 | Integração | Job: processamento completo com casos de erro | `[job].worker.spec.ts` |
-| Integração | **Segurança**: cenários de abuso do N3 — sem permissão (SEG-01), fora do tenant, entrada maliciosa; para features que alimentam agentes de IA, os testes adversariais de injeção (SEG-08+) | `[rota].security.spec.ts` |
-| E2E | Caminho feliz e permissões pela tela — o plano de `qa/` (`PROMPT_QA`) | `[pasta de E2E do MASTER]/[dominio]/[feature].spec.ts` |
+| Integração | **Segurança**: cenários de abuso do N3 — sem permissão (SEG-01), fora do tenant, entrada maliciosa; para funcionalidades que alimentam agentes de IA, os testes adversariais de injeção (SEG-08+) | `[rota].security.spec.ts` |
+| E2E | Caminho feliz e permissões pela tela — o plano de `qa/` (`PROMPT_QA`) | `[pasta de E2E do MASTER]/[dominio]/[funcionalidade].spec.ts` |
 
 ### Mapeamento cenários Gherkin → testes
 
@@ -587,11 +587,11 @@ Para cada grupo de cenários do N3:
 
 | Cenário Gherkin | Tipo de teste | Método de teste |
 |---|---|---|
-| [descrição do cenário] | Unitário / Integração / E2E | `[SIGLA]-[SFS]-NN/RN-NN — [o que verifica]` |
+| [descrição do cenário] | Unitário / Integração / E2E | `[SIGLA]-[SAF]-NN/RN-NN — [o que verifica]` |
 
 O nome do teste cita a regra que o cenário verifica (`@RN-NN` no N3) — é o texto que o
 `valida-artefatos-previstos` procura no código. Cenário sem regra (técnico, de segurança)
-cita só o ID da feature. Cenário cujo "Então" acontece em outro módulo (a esteira, um
+cita só o ID da funcionalidade. Cenário cujo "Então" acontece em outro módulo (a esteira, um
 agente) é testado pelo módulo dono: aponte a suíte dele em vez de duplicar o teste.
 
 ---
@@ -661,14 +661,14 @@ O dev deve marcar cada item ao concluir:
 >
 > Padrão de projeto **novo** adotado aqui, ou divergência de uma entrada de
 > `global/PATTERNS.md`, deve ser propagado para o catálogo (a decisão de adotar/
-> mudar padrão é de arquitetura — não fica só no SDD de uma feature).
+> mudar padrão é de arquitetura — não fica só no SDD de uma funcionalidade).
 ```
 
 ---
 
-## MODO ALTERAÇÃO — SDD de uma feature que já existe
+## MODO ALTERAÇÃO — SDD de uma funcionalidade que já existe
 
-O N3 continua sendo o estado completo da feature; o que muda **não se escreve à mão**,
+O N3 continua sendo o estado completo da funcionalidade; o que muda **não se escreve à mão**,
 deriva-se do git. O "antes" é o N3 na `main`; o "depois", o N3 na branch do ticket, já
 com o 4A/4B aplicado. O `delta-n3.mjs` entrega a diferença por seção — linhas de tabela
 incluídas, alteradas e removidas, cenários e regras novos —, sem o Changelog e sem a
@@ -716,11 +716,11 @@ esteira (`estado`, `gates`, `contagem`).
 > AIMM: [link] · estado [escopo-aprovado | em-execução] · avalizado por [PO]
 
 ## 1. Escopo
-| Feature | N3 | Seções alteradas (do delta) |
+| Funcionalidade | N3 | Seções alteradas (do delta) |
 |---|---|---|
 | [ID — Nome] | [link] | Campos · Cenários |
 
-Features novas deste ticket (SDD completo à parte): [lista, ou "nenhuma"].
+Funcionalidades novas deste ticket (SDD completo à parte): [lista, ou "nenhuma"].
 
 ## 2. O que muda, por camada
 > Só as camadas que o delta toca; as demais saem desta seção.
@@ -765,7 +765,7 @@ Features novas deste ticket (SDD completo à parte): [lista, ou "nenhuma"].
 
 Após gerar o SDD de alteração: confirme que **cada** seção alterada do delta virou item na
 seção 2, na 4 ou foi declarada sem efeito no código (regra 5) — seção do delta sem destino
-é mudança que ninguém vai implementar. Liste as features novas que pedem SDD completo.
+é mudança que ninguém vai implementar. Liste as funcionalidades novas que pedem SDD completo.
 
 ---
 

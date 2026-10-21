@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.26 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013200
@@ -36,9 +36,9 @@ Hoje a tabela de frete só muda com a equipe de sistemas; o administrador precis
 | CA-4 | Faixa usada em pedidos não pode ser excluída. |
 | CA-5 | O administrador consulta todos os dados de uma faixa. |
 
-## Features
+## Funcionalidades
 
-| Feature (N3) | Domínio · Feature Set | Operação | Critérios cobertos | Status |
+| Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
 | [`ADM-FRT-01`: Pesquisar Faixas de Frete](../modules/administracao/faixas-frete/f-pesquisar-faixa-frete.md) | Administração · Faixas de Frete | Criação | `CA-1` | ✏️ Rascunho |
 | [`ADM-FRT-02`: Cadastrar Faixa de Frete](../modules/administracao/faixas-frete/f-cadastrar-faixa-frete.md) | Administração · Faixas de Frete | Criação | `CA-2` | ✏️ Rascunho |
@@ -52,7 +52,7 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 
 | Artefato | Tipo | Operação | Seção | Natureza | O quê | Proveniência |
 |---|---|---|---|---|---|---|
-| `modules/administracao/README.md` | N1 | alterar | Feature Sets | funcional | Faixas de Frete entra entre os Feature Sets da Administração | elicitado |
+| `modules/administracao/README.md` | N1 | alterar | Agrupamentos Funcionais | funcional | Faixas de Frete entra entre os Agrupamentos Funcionais da Administração | elicitado |
 | `modules/administracao/faixas-frete/README.md` | N2 | criar | — | funcional | CRUD de Faixas de Frete, telas e permissões | elicitado |
 | `modules/administracao/faixas-frete/f-pesquisar-faixa-frete.md` | N3 | criar | — | funcional | ADM-FRT-01 — Pesquisar Faixas de Frete | derivado: âncora |
 | `modules/administracao/faixas-frete/f-cadastrar-faixa-frete.md` | N3 | criar | — | funcional | ADM-FRT-02 — Cadastrar Faixa de Frete | derivado: âncora |
@@ -64,17 +64,17 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `global/MESSAGE-DICTIONARY.md` | MESSAGE-DICT | alterar | Administração | funcional | Região duplicada, intervalo inválido, sobreposição, exclusão bloqueada e aviso de edição | elicitado |
 | `prototypes/administracao/faixas-frete/flow.html` | PROTÓTIPO | criar | — | funcional | Pesquisa, cadastro, edição, visualização e exclusão de faixas | derivado: espelho do N2 |
 
-## Alterações na spec, por Feature Set
+## Alterações na spec, por Agrupamento Funcional
 
 ### Faixas de Frete
 
-| Feature | CA-n | Natureza | Mudança | Regras | Cenários |
+| Funcionalidade | CA-n | Natureza | Mudança | Regras | Cenários |
 | --- | --- | --- | --- | --- | --- |
-| `ADM-FRT-01`<br>**Pesquisar Faixas de Frete** | CA-1 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: encontrar faixas por região ou por um CEP que elas atendem. | +4 | +9 |
-| `ADM-FRT-02`<br>**Cadastrar Faixa de Frete** | CA-2 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: incluir uma faixa de CEP com o valor do frete. | +6 | +11 |
-| `ADM-FRT-03`<br>**Editar Faixa de Frete** | CA-3 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: alterar o intervalo de CEP e o valor. | +6 | +12 |
-| `ADM-FRT-04`<br>**Excluir Faixa de Frete** | CA-4 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: remover uma faixa que não atende pedidos. | +3 | +6 |
-| `ADM-FRT-05`<br>**Visualizar Faixa de Frete** | CA-5 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: ver todos os dados de uma faixa. | +2 | +6 |
+| `ADM-FRT-01`<br>**Pesquisar Faixas de Frete** | CA-1 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: encontrar faixas por região ou por um CEP que elas atendem. | +4 | +9 |
+| `ADM-FRT-02`<br>**Cadastrar Faixa de Frete** | CA-2 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: incluir uma faixa de CEP com o valor do frete. | +6 | +11 |
+| `ADM-FRT-03`<br>**Editar Faixa de Frete** | CA-3 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: alterar o intervalo de CEP e o valor. | +6 | +12 |
+| `ADM-FRT-04`<br>**Excluir Faixa de Frete** | CA-4 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: remover uma faixa que não atende pedidos. | +3 | +6 |
+| `ADM-FRT-05`<br>**Visualizar Faixa de Frete** | CA-5 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: ver todos os dados de uma faixa. | +2 | +6 |
 
 ## Entidades alteradas
 
@@ -103,3 +103,4 @@ Não encerrada. Esta AIMM está em análise e não declara entrega, aprovação 
 | 2026-10-20 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: nome abaixo do ID, entidades sem PF. |
 | 2026-10-18 | Claude | Demonstração | Ticket fictício e Feature Set Faixas de Frete preenchidos, com 5 features em rascunho, sem aval e com a contagem pendente. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

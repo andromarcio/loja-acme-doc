@@ -7,7 +7,7 @@
 | [nome-frontend] | [URL] | [domínio] | frontend | [responsabilidade] | [stack] | [nome] |
 | [nome-workers] | [URL] | [domínio] | worker | [responsabilidade] | [stack] | [nome] |
 
-> Uma linha por repositório — num sistema de microsserviços, uma por serviço, com o nome **exato** do git: é por ele que a `## Implementação` do N3 o cita e que a CI de cada repositório se identifica. **Domínio** é o N1 (o domínio de negócio, não um por serviço); **Tipo** separa os serviços de negócio dos técnicos, que não viram feature. As features de cada repositório não se listam aqui à mão: a seção *Features por repositório*, no fim deste arquivo, é gerada pelo `node scripts/gera-indice-repos.mjs`.
+> Uma linha por repositório — num sistema de microsserviços, uma por serviço, com o nome **exato** do git: é por ele que a `## Implementação` do N3 o cita e que a CI de cada repositório se identifica. **Domínio** é o N1 (o domínio de negócio, não um por serviço); **Tipo** separa os serviços de negócio dos técnicos, que não viram funcionalidade. As funcionalidades de cada repositório não se listam aqui à mão: a seção *Funcionalidades por repositório*, no fim deste arquivo, é gerada pelo `node scripts/gera-indice-repos.mjs`.
 
 ---
 
@@ -45,19 +45,19 @@
 |---|---|---|
 | `main` | Produção | PR aprovado |
 | `develop` | Desenvolvimento | PR aprovado |
-| `feature/[nome]` | Nova feature | PR para develop |
+| `funcionalidade/[nome]` | Nova funcionalidade | PR para develop |
 | `fix/[nome]` | Correção de bug | PR para develop |
 | `hotfix/[nome]` | Correção urgente | PR para main e develop |
 
 ---
 
 <!-- REPOS-FEATURES:INICIO -->
-## Features por repositório
+## Funcionalidades por repositório
 
-> ⚙️ **Seção gerada por `scripts/gera-indice-repos.mjs` — não editar à mão.** O índice reverso do `## Implementação` dos N3: as features que cada repositório implementa — o que muda se ele mudar. A fonte é o N3; corrija lá e regenere.
+> ⚙️ **Seção gerada por `scripts/gera-indice-repos.mjs` — não editar à mão.** O índice reverso do `## Implementação` dos N3: as funcionalidades que cada repositório implementa — o que muda se ele mudar. A fonte é o N3; corrija lá e regenere.
 
 _Nenhum N3 declara repositório do inventário no `## Implementação` ainda._
 
-**Sem feature declarada** (0): —
+**Sem funcionalidade declarada** (0): —
 
 <!-- REPOS-FEATURES:FIM -->

@@ -1,7 +1,7 @@
 # PROMPT 4B — N3 Update Técnico
-## Atualização de Feature Existente · Parte técnica
+## Atualização de Funcionalidade Existente · Parte técnica
 
-> **Modelo de estrutura**: `engine/templates/modules/_template-dominio/_template-feature-set/_template-feature.md` *(referência humana — o prompt já embute o esqueleto)*
+> **Modelo de estrutura**: `engine/templates/modules/_template-dominio/_template-agrupamento-funcional/_template-funcionalidade.md` *(referência humana — o prompt já embute o esqueleto)*
 > **Quem participa**: dev
 > **Insumo necessário**: N3 negocial atualizado (PROMPT_4A aprovado) +
 > data-models/[dominio].md + N3 original completo
@@ -10,17 +10,17 @@
 > **Pré-requisito**: PROMPT_4A concluído e aprovado pelo PO
 >
 > ⚠️ **Use este prompt para manutenção (Brownfield).**
-> Para features novas do zero, use PROMPT_3B.
+> Para funcionalidades novas do zero, use PROMPT_3B.
 
 ---
 
 ## INSTRUÇÕES PARA O CLAUDE
 
-**ID imutável:** preserve o ID do N3 em toda atualização técnica. Não recalcule o número pela ordem da jornada ou da implementação. Uma feature nova recebe uma reserva própria pelo N2 com `scripts/ids-n3.mjs`, nunca o ID de uma feature existente — ver `engine/N3-IDS.md`.
+**ID imutável:** preserve o ID do N3 em toda atualização técnica. Não recalcule o número pela ordem da jornada ou da implementação. Uma funcionalidade nova recebe uma reserva própria pelo N2 com `scripts/ids-n3.mjs`, nunca o ID de uma funcionalidade existente — ver `engine/N3-IDS.md`.
 
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
-> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
-> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) **e** `node scripts/validate-feature-semantics.mjs <arquivo>` (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [agrupamento-funcional]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) **e** `node scripts/valida-semantica-funcionalidade.mjs <arquivo>` (é mesmo uma funcionalidade? — critérios FD de `engine/DEFINICAO-FUNCIONALIDADE.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
 Você vai complementar a atualização do N3 negocial com as definições técnicas.
@@ -34,7 +34,7 @@ Para evitar quebra de fluxo, você agirá como uma **Máquina de Estados**:
 ```
 
 Regras da sessão:
-- **Localize a feature antes de editar.** Confirme com o usuário qual N3 original e
+- **Localize a funcionalidade antes de editar.** Confirme com o usuário qual N3 original e
   qual `data-models/[dominio].md` serão a base, buscando-os no repositório quando
   possível — não assuma o alvo
 - Foque apenas nas partes técnicas afetadas pela mudança
@@ -52,10 +52,10 @@ Regras da sessão:
 ## CONTEXTO DO PROJETO
 
 > **Pacote de contexto (6.3.0)** — em vez de colar os blocos abaixo, gere-o:
-> `node scripts/monta-contexto.mjs <ID da feature> --base main --out /tmp/contexto-<ID>.md`. Traz o
-> N3 e, de cada artefato global, só o que a feature usa (matriz de permissões do N2,
+> `node scripts/monta-contexto.mjs <ID da funcionalidade> --base main --out /tmp/contexto-<ID>.md`. Traz o
+> N3 e, de cada artefato global, só o que a funcionalidade usa (matriz de permissões do N2,
 > regras transversais do N1, entidades do data-model, entradas citadas dos dicionários,
-> NFR citados, features de `depende_de`, protótipos); o que o N3 cita e não existe vem
+> NFR citados, funcionalidades de `depende_de`, protótipos); o que o N3 cita e não existe vem
 > como ❓ — resolva antes de usar, não deduza. Os blocos abaixo ficam para o que o pacote
 > não cobre (MASTER, DESIGN-SYSTEM, API-PATTERNS) e para o modo copiar-colar.
 
@@ -79,7 +79,7 @@ Regras da sessão:
 [cole aqui o conteúdo do ERROR-DICTIONARY.md]
 
 === N3 COMPLETO ORIGINAL ===
-[**No Claude Code**: deixe em branco — o engine localiza a feature no passo
+[**No Claude Code**: deixe em branco — o engine localiza a funcionalidade no passo
 LOCALIZACAO_FEATURE. **No fluxo copy-paste**: cole aqui o .md completo original.]
 
 === N3 NEGOCIAL ATUALIZADO (gerado pelo PROMPT_4A) ===
@@ -92,19 +92,19 @@ LOCALIZACAO_FEATURE. **No fluxo copy-paste**: cole aqui o .md completo original.
 **[Estado: INICIALIZACAO]**
 
 Confirme o que foi recebido e aguarde:
-> "Vamos complementar a parte técnica de uma atualização de feature. Posso iniciar
-> localizando a feature?"
+> "Vamos complementar a parte técnica de uma atualização de funcionalidade. Posso iniciar
+> localizando a funcionalidade?"
 
 ---
 
-## PASSO 2 — Localização da feature
+## PASSO 2 — Localização da funcionalidade
 
 **[Estado: LOCALIZACAO_FEATURE]**
 
-Antes de analisar breaking changes, confirme qual feature será atualizada e quais
+Antes de analisar breaking changes, confirme qual funcionalidade será atualizada e quais
 artefatos servem de base — não assuma o alvo.
 
-**1. Identifique a feature** (pelo nome/ID informado ou pela atualização negocial do
+**1. Identifique a funcionalidade** (pelo nome/ID informado ou pela atualização negocial do
 PROMPT_4A que motivou esta sessão).
 
 **2. Localize os insumos:**
@@ -115,7 +115,7 @@ PROMPT_4A que motivou esta sessão).
 
 **3. Apresente e confirme** antes de avançar:
 > "Vou atualizar a parte técnica de:
-> - **Feature:** [nome] (`[ID]`) — `modules/[dom]/[fs]/[feat].md`
+> - **Funcionalidade:** [nome] (`[ID]`) — `modules/[dom]/[fs]/[feat].md`
 > - **Data-model:** `global/data-models/[dominio].md`
 >
 > Confirma estes arquivos como base? Posso iniciar a análise de breaking changes?"
@@ -188,10 +188,10 @@ Atualize apenas as seções técnicas (`dev-only`) afetadas:
   nas linhas recontadas. Mudança **puramente técnica** que não altera a lógica de
   processamento (ótica do usuário) **não** gera nova contagem — registre que a contagem
   permanece inalterada.
-  **Linha `↪ [ID](…)` (PE reutilizado):** o PE conta na feature `ID` e é lá que ele é alterado e
+  **Linha `↪ [ID](…)` (PE reutilizado):** o PE conta na funcionalidade `ID` e é lá que ele é alterado e
   recontado — a linha contada, a memória, a Data, a `## Origem` e o Changelog daquela
-  feature, com a contagem dela pendente —; aqui a linha `↪` não muda. Se a mudança separa
-  as listas (vale só para esta tela), esta feature passa a contar o seu PE e declara
+  funcionalidade, com a contagem dela pendente —; aqui a linha `↪` não muda. Se a mudança separa
+  as listas (vale só para esta tela), esta funcionalidade passa a contar o seu PE e declara
   `> Distinto de <ID> · <PE>: <o que difere>` na memória.
   O cabeçalho `## Métricas de tamanho` deve ficar **seguido diretamente pela tabela**:
   não insira texto explicativo entre eles e, se encontrar notas legadas nessa posição
@@ -217,7 +217,7 @@ A nova linha entra **no topo da tabela** (logo abaixo do cabeçalho), mantendo o
 
 Ao finalizar, informe obrigatoriamente:
 
-> "✅ Atualização do N3 de [feature] concluída.
+> "✅ Atualização do N3 de [funcionalidade] concluída.
 >
 > **Ações obrigatórias antes de implementar:**
 >
@@ -226,15 +226,15 @@ Ao finalizar, informe obrigatoriamente:
 >    `## Arquivos Lógicos (APF)` se a contagem do ALI mudou)
 > 2. Conferir a entrada técnica no topo do `## Changelog` do N3 e, se a mudança veio
 >    de um ticket, o Changelog da AIMM `analise-impacto/AIMM-<CHAVE>.md` (PROMPT_4A, PASSO 7)
-> 3. Se a feature já estava ✅ `implementado`, a spec agora está à frente do código:
+> 3. Se a funcionalidade já estava ✅ `implementado`, a spec agora está à frente do código:
 >    declare o estado manual `estado: revisao-necessaria` no front-matter, rode
 >    `python3 scripts/gates.py promote --write` (o espelho da esteira mostra ⚠️) e leve
->    o ⚠️ à coluna Status da linha da feature no `modules/INDEX.md` e na
->    `## Features` da AIMM do ticket. Quem devolve o `estado` ao derivado dos gates
+>    o ⚠️ à coluna Status da linha da funcionalidade no `modules/INDEX.md` e na
+>    `## Funcionalidades` da AIMM do ticket. Quem devolve o `estado` ao derivado dos gates
 >    (`implementado`) é a entrega: o fechamento da AIMM (skill `analise-impacto`, passo
->    7) — o `validate-impact` não deixa a AIMM ir a `concluído` com a feature em
+>    7) — o `validate-impact` não deixa a AIMM ir a `concluído` com a funcionalidade em
 >    `revisao-necessaria`. Com a Cadência declarada no MASTER, isso acontece na branch da
->    unidade de entrega, antes do merge (`valida-entrega.mjs`). Feature ainda não
+>    unidade de entrega, antes do merge (`valida-entrega.mjs`). Funcionalidade ainda não
 >    implementada não muda de estado: a esteira segue de onde estava.
 > 4. Rodar a revisão da contagem: opção **CT** (`PROMPT_CONTAGEM`) com escopo = [ID],
 >    **mesmo que o número não tenha mudado** — o 4A deixou `contagem.pendente: true`, e a

@@ -6,8 +6,8 @@ alteracoes:
     tipo: create
     artefato: N3
     dominio: "[sigla do domínio]"
-    feature_set: "[nome do feature set]"
-    feature: "[nome da feature]"
+    agrupamento_funcional: "[nome do agrupamento funcional]"
+    funcionalidade: "[nome da funcionalidade]"
     descricao: "[o que precisa ser criado]"
     prompt_sugerido: 3A
     aprovado: null
@@ -40,28 +40,28 @@ alteracoes:
 
 ## Novos artefatos a criar
 
-### [Nome da feature / artefato]
+### [Nome da funcionalidade / artefato]
 
 | Campo | Valor |
 |---|---|
 | **Tipo** | N3 |
 | **Domínio** | [sigla] |
-| **Feature Set** | [nome] |
+| **Agrupamento Funcional** | [nome] |
 | **Descrição** | [o que precisa ser criado] |
-| **Prompt sugerido** | 3A — Especificar feature negócio |
+| **Prompt sugerido** | 3A — Especificar funcionalidade negócio |
 
 ---
 
 ## Alterações em artefatos existentes
 
-### [Nome da feature] — `[caminho/relativo/da/feature.md]`
+### [Nome da funcionalidade] — `[caminho/relativo/da/feature.md]`
 
 | Campo | Valor |
 |---|---|
 | **O que muda** | [descrição objetiva] |
 | **Motivo** | [por que o delta exige isto] |
 | **Impacto** | [efeito no comportamento ou nas regras] |
-| **Prompt sugerido** | 4A — Atualizar feature negócio |
+| **Prompt sugerido** | 4A — Atualizar funcionalidade negócio |
 | **Aprovado** | ❌ Pendente |
 
 > Para aprovar: altere `aprovado: false` → `aprovado: true` no frontmatter acima.
@@ -70,4 +70,4 @@ alteracoes:
 
 ## Artefatos mantidos (sem alteração)
 
-- [Nome da feature] — `[caminho/relativo/da/feature.md]` ✅
+- [Nome da funcionalidade] — `[caminho/relativo/da/feature.md]` ✅

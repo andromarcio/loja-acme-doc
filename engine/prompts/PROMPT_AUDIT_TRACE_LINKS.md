@@ -1,14 +1,14 @@
-# PROMPT AUDIT TRACE — Consistência dos elos Ticket ↔ Feature
+# PROMPT AUDIT TRACE — Consistência dos elos Ticket ↔ Funcionalidade
 
 > **Quem participa**: Analista de Requisitos / Tech Lead
 > **Insumo necessário**: `modules/INDEX.md`, as AIMMs dos tickets em
-> `analise-impacto/AIMM-*.md` e os N3 (features) — de um domínio ou do sistema inteiro
-> **Entrega**: relatório dos elos de rastreabilidade ticket ↔ feature, apontando
+> `analise-impacto/AIMM-*.md` e os N3 (funcionalidades) — de um domínio ou do sistema inteiro
+> **Entrega**: relatório dos elos de rastreabilidade ticket ↔ funcionalidade, apontando
 > elos unilaterais (registrados só de um lado), ausências no `INDEX.md`, órfãos e
 > referências quebradas — com sugestões de patch para fechar cada elo
 >
 > **Quando rodar**: periodicamente (antes de um release, após uma rodada de 3A/4A,
-> ou quando suspeitar que o caminho inverso "quais features um ticket impactou?"
+> ou quando suspeitar que o caminho inverso "quais funcionalidades um ticket impactou?"
 > está incompleto)
 >
 > **Gate determinístico primeiro**: a metade ESTRUTURAL desta auditoria (elos
@@ -21,8 +21,8 @@
 > patches. Elos cujo ALVO mudou após a verificação são acusados por
 > `node scripts/suspect-links.mjs` (carimbos `trace-verified`).
 >
-> **Próximo passo**: aplicar os patches sugeridos para que todo par ticket↔feature
-> apareça nos **três lugares**: `## Origem` do N3, `## Features` da AIMM do ticket e
+> **Próximo passo**: aplicar os patches sugeridos para que todo par ticket↔funcionalidade
+> apareça nos **três lugares**: `## Origem` do N3, `## Funcionalidades` da AIMM do ticket e
 > a tabela consolidada do `INDEX.md`
 
 ---
@@ -30,24 +30,24 @@
 ## INSTRUÇÕES PARA O CLAUDE
 
 Você é um Especialista em Engenharia de Requisitos. Sua missão é verificar a
-**consistência bidirecional** da rastreabilidade ticket ↔ feature.
+**consistência bidirecional** da rastreabilidade ticket ↔ funcionalidade.
 
-O elo ticket ↔ feature é **M:N** e, por convenção do framework, deve ficar
+O elo ticket ↔ funcionalidade é **M:N** e, por convenção do framework, deve ficar
 registrado em **três lugares** que precisam concordar entre si:
 
 1. **`## Origem`** de cada N3 — lista os tickets que originaram ou alteraram
-   aquela feature, cada um com o link da sua AIMM (feature → ticket);
-2. **`## Features`** da AIMM de cada ticket, em `analise-impacto/AIMM-<CHAVE>.md`
-   (ticket → feature);
+   aquela funcionalidade, cada um com o link da sua AIMM (funcionalidade → ticket);
+2. **`## Funcionalidades`** da AIMM de cada ticket, em `analise-impacto/AIMM-<CHAVE>.md`
+   (ticket → funcionalidade);
 3. **`## Rastreabilidade: ticket → spec → código`** do `modules/INDEX.md`
    (índice consolidado, uma linha por par).
 
 Um elo registrado em apenas um desses lugares é um **elo unilateral** — é
-exatamente o que torna o caminho inverso (ticket → features) não confiável.
+exatamente o que torna o caminho inverso (ticket → funcionalidades) não confiável.
 
 Regras da sessão:
 - Compare por **identificadores**: a chave do ticket na ferramenta de origem
-  (`STRYxxxxxxx`, `ISSUE-NNN`, `EXP-…`) e o ID + caminho do N3 da feature.
+  (`STRYxxxxxxx`, `ISSUE-NNN`, `EXP-…`) e o ID + caminho do N3 da funcionalidade.
   Normalize maiúsculas/minúsculas.
 - Trate caminhos relativos: a `## Origem` aponta para
   `../../../analise-impacto/AIMM-<CHAVE>.md` e a AIMM aponta para
@@ -69,7 +69,7 @@ Regras da sessão:
 === AIMMs DOS TICKETS (analise-impacto/AIMM-*.md) ===
 [**No Claude Code**: lidas do disco — todas as AIMMs de ticket do escopo.
 **No copy-paste**: cole cada AIMM, com o caminho como título — incluindo o
-front-matter e a seção `## Features`.]
+front-matter e a seção `## Funcionalidades`.]
 
 === ARQUIVOS N3 A VARRER ===
 [**No Claude Code**: lidos do disco — os N3 do escopo. **No copy-paste**: cole
@@ -83,7 +83,7 @@ cada N3 incluindo (no mínimo) o cabeçalho com o ID e a seção `## Origem`.]
 
 Confirme o que foi recebido e aguarde autorização:
 
-> "Recebi [N] AIMMs de ticket (`analise-impacto/`), [N] features (N3) e o `INDEX.md`
+> "Recebi [N] AIMMs de ticket (`analise-impacto/`), [N] funcionalidades (N3) e o `INDEX.md`
 > com [N] linhas de rastreabilidade. Escopo: [domínio(s) / sistema inteiro].
 > Posso iniciar a verificação dos elos?"
 
@@ -94,24 +94,24 @@ Confirme o que foi recebido e aguarde autorização:
 **[Estado: VARREDURA]**
 
 Monte uma tabela interna (não exiba ainda) com **um registro por par
-ticket↔feature**, marcando em quais das três fontes ele aparece:
+ticket↔funcionalidade**, marcando em quais das três fontes ele aparece:
 
-- **Lado feature** — para cada N3, leia a `## Origem` e registre cada ticket citado.
-- **Lado ticket** — para cada `analise-impacto/AIMM-<CHAVE>.md`, leia a `## Features`
-  e registre cada feature citada.
-- **Índice** — para cada linha do `INDEX.md`, registre o par ticket↔feature.
+- **Lado funcionalidade** — para cada N3, leia a `## Origem` e registre cada ticket citado.
+- **Lado ticket** — para cada `analise-impacto/AIMM-<CHAVE>.md`, leia a `## Funcionalidades`
+  e registre cada funcionalidade citada.
+- **Índice** — para cada linha do `INDEX.md`, registre o par ticket↔funcionalidade.
 
 Inventário interno (exemplo de estrutura):
 
-| Par (Ticket ↔ Feature) | Em `## Origem` (N3)? | Em `## Features` (AIMM)? | Em `INDEX.md`? |
+| Par (Ticket ↔ Funcionalidade) | Em `## Origem` (N3)? | Em `## Funcionalidades` (AIMM)? | Em `INDEX.md`? |
 |---|---|---|---|
 | `STRY0012345` ↔ `USR-PRM-01` | ✅ | ❌ | ✅ |
 
 Também colete, à parte:
-- **Tickets sem nenhuma feature** (AIMM com a `## Features` vazia ou só placeholder);
-- **Features a especificar** (Status `📋 A especificar` na `## Features`, sem N3 com o
+- **Tickets sem nenhuma funcionalidade** (AIMM com a `## Funcionalidades` vazia ou só placeholder);
+- **Funcionalidades a especificar** (Status `📋 A especificar` na `## Funcionalidades`, sem N3 com o
   ID — o roteamento as propôs e o 3A ainda não as criou);
-- **Features sem `## Origem`** (legítimo no bottom-up / legado — não é defeito, mas registre);
+- **Funcionalidades sem `## Origem`** (legítimo no bottom-up / legado — não é defeito, mas registre);
 - **Referências de arquivo** (links) que apontam para caminhos inexistentes.
 
 ---
@@ -124,11 +124,11 @@ Classifique cada par e cada item solto:
 
 | Tipo | Critério |
 |---|---|
-| 🟢 **Elo completo** | Presente nos três lugares (Origem + Features da AIMM + INDEX) |
-| 🔴 **Elo unilateral** | Citado de um lado mas não do recíproco (a feature cita o ticket, mas a AIMM não cita a feature — ou o inverso) |
+| 🟢 **Elo completo** | Presente nos três lugares (Origem + Funcionalidades da AIMM + INDEX) |
+| 🔴 **Elo unilateral** | Citado de um lado mas não do recíproco (a funcionalidade cita o ticket, mas a AIMM não cita a funcionalidade — ou o inverso) |
 | 🟠 **Ausente do INDEX** | Par consistente no N3 e na AIMM, mas sem linha no `INDEX.md` |
 | 🟡 **Status divergente** | Mesmo par com status diferente entre as três fontes |
-| ⚫ **Órfão** | AIMM de ticket sem nenhuma feature *(ok enquanto a AIMM está em `rascunho` e o roteamento não terminou — sinalize sem tratar como erro)*; feature a especificar (`📋 A especificar`) ainda sem N3 *(pendência da rota 3A — o script também a trata como informativa; com o N3 criado, o elo volta às regras de sempre)*; ou feature sem `## Origem` *(ok no bottom-up/legado)* |
+| ⚫ **Órfão** | AIMM de ticket sem nenhuma funcionalidade *(ok enquanto a AIMM está em `rascunho` e o roteamento não terminou — sinalize sem tratar como erro)*; funcionalidade a especificar (`📋 A especificar`) ainda sem N3 *(pendência da rota 3A — o script também a trata como informativa; com o N3 criado, o elo volta às regras de sempre)*; ou funcionalidade sem `## Origem` *(ok no bottom-up/legado)* |
 | ⚠️ **Referência quebrada** | Link aponta para um N3 ou uma AIMM inexistente |
 
 Um **elo unilateral** é o achado central desta auditoria: deixe explícito qual
@@ -143,30 +143,30 @@ Apresente o relatório no formato abaixo e pergunte:
 > correto? Posso gerar as sugestões de patch?"
 
 ```markdown
-## Relatório de Rastreabilidade Ticket ↔ Feature — [data]
+## Relatório de Rastreabilidade Ticket ↔ Funcionalidade — [data]
 
 ### Escopo varrido
 - AIMMs de ticket (`analise-impacto/`): [N]
-- Features (N3): [N]
+- Funcionalidades (N3): [N]
 - Linhas no INDEX.md: [N]
 
 ---
 
 ### 🔴 Elos unilaterais (registrados só de um lado)
 
-| Ticket | Feature | Onde consta | Onde FALTA |
+| Ticket | Funcionalidade | Onde consta | Onde FALTA |
 |---|---|---|---|
-| `STRY0012345` | `USR-PRM-01` | `## Origem` do N3 | `## Features` de `analise-impacto/AIMM-STRY0012345.md` |
+| `STRY0012345` | `USR-PRM-01` | `## Origem` do N3 | `## Funcionalidades` de `analise-impacto/AIMM-STRY0012345.md` |
 
 ### 🟠 Ausentes do INDEX.md
 
-| Ticket | Feature | Observação |
+| Ticket | Funcionalidade | Observação |
 |---|---|---|
 | `STRY0012345` | `USR-PRM-02` | Par consistente nos dois lados, mas sem linha no INDEX |
 
 ### 🟡 Status divergente
 
-| Ticket | Feature | Origem (N3) | Features (AIMM) | INDEX |
+| Ticket | Funcionalidade | Origem (N3) | Funcionalidades (AIMM) | INDEX |
 |---|---|---|---|---|
 | `STRY0012345` | `USR-PRM-01` | 📋 | 🔄 | 📋 |
 
@@ -174,9 +174,9 @@ Apresente o relatório no formato abaixo e pergunte:
 
 | Item | Tipo | Observação |
 |---|---|---|
-| `STRY0099999` | AIMM sem feature | AIMM em `rascunho` — terminar o roteamento (PROMPT_AIMM, passo 3) |
-| `STRY0012345` ↔ `USR-PRM-03` | Feature a especificar | `📋 A especificar` na AIMM, ainda sem N3 — rodar 3A |
-| `USR-PRM-09` | Feature sem `## Origem` | Bottom-up/legado — sem ticket de origem conhecido |
+| `STRY0099999` | AIMM sem funcionalidade | AIMM em `rascunho` — terminar o roteamento (PROMPT_AIMM, passo 3) |
+| `STRY0012345` ↔ `USR-PRM-03` | Funcionalidade a especificar | `📋 A especificar` na AIMM, ainda sem N3 — rodar 3A |
+| `USR-PRM-09` | Funcionalidade sem `## Origem` | Bottom-up/legado — sem ticket de origem conhecido |
 
 ### ⚠️ Referências quebradas
 
@@ -211,9 +211,9 @@ com a ausência do outro (a menos que o usuário confirme que o elo é espúrio)
 
 Adicione a linha que falta no lado recíproco, espelhando o lado existente.
 
-Se falta na **AIMM do ticket** (`analise-impacto/AIMM-<CHAVE>.md`), em `## Features`:
+Se falta na **AIMM do ticket** (`analise-impacto/AIMM-<CHAVE>.md`), em `## Funcionalidades`:
 ```diff
-+ | [`[ID]`: Nome da Feature](../modules/[dominio]/[fs]/[arquivo].md) | [Domínio] · [FS] | Criação / Alteração | [`CA-n`] | [status] |
++ | [`[ID]`: Nome da Funcionalidade](../modules/[dominio]/[fs]/[arquivo].md) | [Domínio] · [FS] | Criação / Alteração | [`CA-n`] | [status] |
 ```
 
 Se falta na **`## Origem`** do N3:
@@ -258,6 +258,6 @@ Após os patches aprovados, conclua:
 > - Status alinhados: [N]
 > - Pendências que dependem de decisão: [N] (listadas acima)
 >
-> O caminho inverso — ticket → features impactadas — agora está consistente nas
+> O caminho inverso — ticket → funcionalidades impactadas — agora está consistente nas
 > três fontes. Agende a próxima auditoria para [próximo release / após a próxima
 > rodada de 3A/4A]."

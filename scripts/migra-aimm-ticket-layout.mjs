@@ -6,6 +6,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { impactFiles } from './lib/impact-files.mjs';
 import { frontMatterCampos } from './lib/trace-index.mjs';
+import { ehSecao } from './lib/niveis.mjs';
 
 const args = process.argv.slice(2);
 const rootIndex = args.indexOf('--root');
@@ -23,7 +24,7 @@ const tableLine = values => `| ${values.join(' | ')} |`;
 const isSeparator = line => /^\|[\s:|-]+\|$/.test(line.trim());
 
 function section(lines, title) {
-  const start = lines.findIndex(line => line.trim() === `## ${title}`);
+  const start = lines.findIndex(line => ehSecao(line, title));
   if (start < 0) return null;
   const end = lines.findIndex((line, index) => index > start && /^##\s/.test(line));
   return { start, end: end < 0 ? lines.length : end };
@@ -42,12 +43,12 @@ function migrate(text, version, date) {
   const fm = frontMatterCampos(lines);
   if (String(fm.tipo || '').toLowerCase() !== 'ticket') return text;
   let changed = false;
-  const alterations = section(lines, 'Alterações na spec, por Feature Set');
+  const alterations = section(lines, 'Alterações na spec, por Agrupamento Funcional');
   if (alterations) {
     const headerIndex = lines.findIndex((line, index) => index > alterations.start && index < alterations.end && line.trim().startsWith('|') && !isSeparator(line));
     if (headerIndex >= 0) {
       const header = cells(lines[headerIndex]);
-      const pfb = column(header, 'pfb'), pfl = column(header, 'pfl'), feature = column(header, 'feature');
+      const pfb = column(header, 'pfb'), pfl = column(header, 'pfl'), feature = Math.max(column(header, 'funcionalidade'), column(header, 'feature'));
       if (pfb >= 0 || pfl >= 0) {
         const remove = [pfb, pfl].filter(index => index >= 0).sort((a, b) => b - a);
         for (let index = headerIndex; index < alterations.end; index++) {

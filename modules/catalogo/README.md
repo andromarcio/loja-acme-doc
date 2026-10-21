@@ -1,5 +1,5 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_1A_N1_negocio | atualizado: 2026-10-18 -->
-# Major Feature Set: Catálogo
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+# Domínio: Catálogo
 > **Nível 1** - Visão estratégica do domínio - `CAT`
 
 ## Descrição
@@ -14,9 +14,9 @@ Responde pelos produtos que a Loja ACME vende e pelas categorias que os organiza
 | Montar o carrinho, calcular o frete e acompanhar os pedidos | Vendas |
 | Comprar, repor e controlar fisicamente o estoque | Fora do escopo do produto (N0) |
 
-## Feature Sets
+## Agrupamentos Funcionais
 
-| Feature Set | Descrição | Features |
+| Agrupamento Funcional | Descrição | Funcionalidades |
 |---|---|---|
 | [**Categorias**](categorias/README.md) <small>CAT-CTG</small> | Organização dos produtos em categorias | 5 |
 | **Produtos** <small>CAT-PRD</small> — planejado, sem N2 | Cadastro dos produtos à venda; é o exercício STRY0013150 da mentoria | 0 |
@@ -44,5 +44,6 @@ Nenhum outro domínio altera dados do Catálogo. A baixa de estoque na confirma�
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N1 criado | Catálogo com Categorias especificado e Produtos planejado, preservado como exercício STRY0013150; exemplo em rascunho. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |
 
 *Links: [Categorias](categorias/README.md) · [INDEX geral](../INDEX.md)*

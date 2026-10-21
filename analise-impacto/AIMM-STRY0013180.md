@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.26 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013180
@@ -36,9 +36,9 @@ A equipe de vendas decide o que fica em evidência na página inicial e por quan
 | CA-4 | A equipe exclui um destaque, que sai da página inicial. |
 | CA-5 | A equipe consulta todos os dados de um destaque. |
 
-## Features
+## Funcionalidades
 
-| Feature (N3) | Domínio · Feature Set | Operação | Critérios cobertos | Status |
+| Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
 | [`VIT-DST-01`: Pesquisar Destaques](../modules/vitrine/destaques/f-pesquisar-destaque.md) | Vitrine · Destaques | Criação | `CA-1` | ✏️ Rascunho |
 | [`VIT-DST-02`: Cadastrar Destaque](../modules/vitrine/destaques/f-cadastrar-destaque.md) | Vitrine · Destaques | Criação | `CA-2` | ✏️ Rascunho |
@@ -52,7 +52,7 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 
 | Artefato | Tipo | Operação | Seção | Natureza | O quê | Proveniência |
 |---|---|---|---|---|---|---|
-| `modules/vitrine/README.md` | N1 | alterar | Feature Sets | funcional | Destaques entra entre os Feature Sets da Vitrine | elicitado |
+| `modules/vitrine/README.md` | N1 | alterar | Agrupamentos Funcionais | funcional | Destaques entra entre os Agrupamentos Funcionais da Vitrine | elicitado |
 | `modules/vitrine/destaques/README.md` | N2 | criar | — | funcional | CRUD de Destaques, telas e permissões | elicitado |
 | `modules/vitrine/destaques/f-pesquisar-destaque.md` | N3 | criar | — | funcional | VIT-DST-01 — Pesquisar Destaques | derivado: âncora |
 | `modules/vitrine/destaques/f-cadastrar-destaque.md` | N3 | criar | — | funcional | VIT-DST-02 — Cadastrar Destaque | derivado: âncora |
@@ -66,17 +66,17 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `global/MESSAGE-DICTIONARY.md` | MESSAGE-DICT | alterar | Vitrine | funcional | Ordem inválida, destaque sobreposto e destaque encerrado | elicitado |
 | `prototypes/vitrine/destaques/flow.html` | PROTÓTIPO | criar | — | funcional | Pesquisa, cadastro, edição e visualização de destaques | derivado: espelho do N2 |
 
-## Alterações na spec, por Feature Set
+## Alterações na spec, por Agrupamento Funcional
 
 ### Destaques
 
-| Feature | CA-n | Natureza | Mudança | Regras | Cenários |
+| Funcionalidade | CA-n | Natureza | Mudança | Regras | Cenários |
 | --- | --- | --- | --- | --- | --- |
-| `VIT-DST-01`<br>**Pesquisar Destaques** | CA-1 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: encontrar destaques por produto e situação. | +2 | +10 |
-| `VIT-DST-02`<br>**Cadastrar Destaque** | CA-2 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: pôr um produto em destaque, com chamada, ordem e vigência. | +4 | +11 |
-| `VIT-DST-03`<br>**Editar Destaque** | CA-3 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: alterar a chamada, a ordem e a vigência. | +6 | +13 |
-| `VIT-DST-04`<br>**Excluir Destaque** | CA-4 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: tirar um destaque da página inicial. | +3 | +6 |
-| `VIT-DST-05`<br>**Visualizar Destaque** | CA-5 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: ver todos os dados de um destaque. | +2 | +6 |
+| `VIT-DST-01`<br>**Pesquisar Destaques** | CA-1 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: encontrar destaques por produto e situação. | +2 | +10 |
+| `VIT-DST-02`<br>**Cadastrar Destaque** | CA-2 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: pôr um produto em destaque, com chamada, ordem e vigência. | +4 | +11 |
+| `VIT-DST-03`<br>**Editar Destaque** | CA-3 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: alterar a chamada, a ordem e a vigência. | +6 | +13 |
+| `VIT-DST-04`<br>**Excluir Destaque** | CA-4 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: tirar um destaque da página inicial. | +3 | +6 |
+| `VIT-DST-05`<br>**Visualizar Destaque** | CA-5 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: ver todos os dados de um destaque. | +2 | +6 |
 
 ## Entidades alteradas
 
@@ -105,3 +105,4 @@ Não encerrada. Esta AIMM está em análise e não declara entrega, aprovação 
 | 2026-10-20 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: nome abaixo do ID, entidades sem PF. |
 | 2026-10-18 | Claude | Demonstração | Ticket fictício e Feature Set Destaques preenchidos, com 5 features em rascunho, sem aval e com a contagem pendente. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

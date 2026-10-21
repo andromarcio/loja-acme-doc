@@ -1,10 +1,10 @@
-# PROMPT N3→N1 — Síntese do Major Feature Set a partir dos N2s (ou N3s)
+# PROMPT N3→N1 — Síntese do Domínio a partir dos N2s (ou N3s)
 
 > **Modelo de estrutura**: `engine/templates/modules/_template-dominio/README.md` *(referência humana — o prompt já embute o esqueleto)*
 > **Quem participa**: Analista de Requisitos / Tech Lead
 > **Insumo necessário**: todos os N2s de um domínio — ou, na ausência de N2s,
 > os N3s diretamente (o prompt trata os dois casos)
-> **Entrega**: README.md do N1 (Major Feature Set) sintetizado a partir das specs existentes
+> **Entrega**: README.md do N1 (Domínio) sintetizado a partir das specs existentes
 >
 > **Quando usar**: sistema existente cujos N2s (e/ou N3s) já foram escritos
 > mas o N1 ainda não existe — ou precisa ser regenerado para refletir o estado atual
@@ -17,7 +17,7 @@
 ## INSTRUÇÕES PARA O CLAUDE
 
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
-> 1. **Antes de sintetizar** — rode `node scripts/preflight-spec.mjs [dominio]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + os N2 do domínio) e apresente um bloco **"Contexto verificado"**: o N1 que já existe (se for regenerar), os IDs dos Feature Sets e das features — a síntese reusa esses IDs, não cria outros.
+> 1. **Antes de sintetizar** — rode `node scripts/preflight-spec.mjs [dominio]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + os N2 do domínio) e apresente um bloco **"Contexto verificado"**: o N1 que já existe (se for regenerar), os IDs dos Agrupamentos Funcionais e das funcionalidades — a síntese reusa esses IDs, não cria outros.
 > 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs modules/[dominio]/README.md`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
@@ -39,11 +39,11 @@ Regras da sessão:
 ## CONTEXTO DO PROJETO
 
 === IDENTIFICAÇÃO ===
-Major Feature Set: [nome do Domínio]
+Domínio: [nome do Domínio]
 Caminho de destino: `modules/[dominio]/README.md`
 
 === N2s DO DOMÍNIO ===
-[cole aqui cada N2 — separe com `---` e indique o nome do Feature Set como título]
+[cole aqui cada N2 — separe com `---` e indique o nome do Agrupamento Funcional como título]
 
 === N3s ADICIONAIS (se não houver N2s, ou para complementar) ===
 [cole aqui N3s que não têm N2 gerado — ou remova esta seção]
@@ -59,13 +59,13 @@ uma linha de descrição de cada — para que o Claude identifique dependências
 Confirme o que foi recebido e identifique o modo:
 
 > **Modo A — N2s disponíveis:**
-> "Recebi [N] Feature Sets do domínio **[nome]**: [lista].
+> "Recebi [N] Agrupamentos Funcionais do domínio **[nome]**: [lista].
 > Posso sintetizar o N1 a partir deles?"
 
 > **Modo B — Apenas N3s disponíveis:**
-> "Não recebi N2s. Recebi [N] features (N3) diretamente: [lista agrupada por
-> Feature Set inferido].
-> Vou inferir os Feature Sets antes de sintetizar o N1. Posso prosseguir?"
+> "Não recebi N2s. Recebi [N] funcionalidades (N3) diretamente: [lista agrupada por
+> Agrupamento Funcional inferido].
+> Vou inferir os Agrupamentos Funcionais antes de sintetizar o N1. Posso prosseguir?"
 
 ---
 
@@ -76,7 +76,7 @@ Confirme o que foi recebido e identifique o modo:
 ### Seções negociais (visíveis para PO)
 
 1. **Descrição do domínio** — qual problema de negócio unifica todos
-   os Feature Sets? O que está explicitamente fora do escopo deste domínio?
+   os Agrupamentos Funcionais? O que está explicitamente fora do escopo deste domínio?
    *(Derive das seções "Descrição" e "Não faz" dos N2s)*
 
 2. **O que este domínio NÃO faz** — cruze os limites declarados nos N2s e
@@ -85,12 +85,12 @@ Confirme o que foi recebido e identifique o modo:
 3. **ID do domínio** — derive dos IDs presentes nos N2s/N3s (sigla já existente)
    ou proponha uma sigla de exatamente 3 letras maiúsculas se ainda não existir
 
-4. **Índice de Feature Sets** — nome, pasta, ID e descrição de cada um,
-   com contagem de features
+4. **Índice de Agrupamentos Funcionais** — nome, pasta, ID e descrição de cada um,
+   com contagem de funcionalidades
    *(Derive dos N2s ou do agrupamento dos N3s no Modo B)*
 
 4. **Regras transversais de negócio** — regras de negócio presentes em 2 ou
-   mais Feature Sets do domínio; são candidatas a regra de domínio
+   mais Agrupamentos Funcionais do domínio; são candidatas a regra de domínio
    *(Cruze as seções "Regras de negócio" dos N3s ou N2s)*
 
 5. **Integrações com outros domínios** — identifique referências a entidades,
@@ -135,7 +135,7 @@ Após aprovação, gere o arquivo completo seguindo o template N1:
   Versão DEV → sem CSS adicional
 -->
 
-# Major Feature Set: [Nome do Domínio]
+# Domínio: [Nome do Domínio]
 > **Nível 1** - Visão estratégica do domínio - `[SIGLA]`
 
 ## Descrição
@@ -148,17 +148,17 @@ Após aprovação, gere o arquivo completo seguindo o template N1:
 
 ---
 
-## Feature Sets
+## Agrupamentos Funcionais
 
-| Feature Set | Descrição | Features |
+| Agrupamento Funcional | Descrição | Funcionalidades |
 |---|---|---|
-| [**Nome do Feature Set**](./[pasta]/README.md) <small>[SIGLA]-[SFS]</small> | [descrição em uma linha] | [N] |
+| [**Nome do Agrupamento Funcional**](./[pasta]/README.md) <small>[SIGLA]-[SAF]</small> | [descrição em uma linha] | [N] |
 
 ---
 
 ## Regras transversais de negócio
 
-1. [Regra que se aplica a todas as features deste domínio]
+1. [Regra que se aplica a todas as funcionalidades deste domínio]
 
 ---
 
@@ -216,7 +216,7 @@ Após aprovação, gere o arquivo completo seguindo o template N1:
 
 *Última revisão: [data]*
 
-*Links: [Feature Set 1](./[pasta]/README.md) · [INDEX geral](../INDEX.md)*
+*Links: [Agrupamento Funcional 1](./[pasta]/README.md) · [INDEX geral](../INDEX.md)*
 ```
 
 Ao finalizar, informe:

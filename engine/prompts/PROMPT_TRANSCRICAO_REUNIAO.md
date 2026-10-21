@@ -6,7 +6,7 @@
 > níveis que a reunião tocou, com lacunas sinalizadas e um **relatório da reunião**
 >
 > **Quando usar**: reuniões de refino com o PO, que normalmente detalham um
-> Feature Set (N2) **e** suas features (N3) na mesma conversa — e às vezes
+> Agrupamento Funcional (N2) **e** suas funcionalidades (N3) na mesma conversa — e às vezes
 > revelam algo de domínio (N1).
 > **Substitui** o antigo `PROMPT_3A_N3_negocio_transcricao.md` (absorve o N3 e
 > amplia para N2/N1, com consciência de atualização).
@@ -17,17 +17,17 @@
 
 ## INSTRUÇÕES PARA O CLAUDE
 
-**Identidade das features:** confirme a jornada extraída da reunião na tabela Features do N2 antes da primeira numeração com `scripts/ids-n3.mjs` (modo seco; depois `--write`). A ordem das falas não determina os IDs. Preserve todo ID já usado e as reservas `docqui:n3-ids`; a nova ordem de jornada não renumera N3s — ver `engine/N3-IDS.md`.
+**Identidade das funcionalidades:** confirme a jornada extraída da reunião na tabela Funcionalidades do N2 antes da primeira numeração com `scripts/ids-n3.mjs` (modo seco; depois `--write`). A ordem das falas não determina os IDs. Preserve todo ID já usado e as reservas `docqui:n3-ids`; a nova ordem de jornada não renumera N3s — ver `engine/N3-IDS.md`.
 
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
-> 1. **Antes do mapa da reunião (Passo 1)** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` para cada Feature Set que a reunião toca (só `[dominio]`, se ela ficou no N1; ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). É esse bloco que decide, no mapa, o que é **criar** e o que é **atualizar**. Não duplique ID/pasta/regra/campo existente.
-> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` em **cada** N1, N2 e N3 gravado (estrutura) **e** `node scripts/validate-feature-semantics.mjs <arquivo>` em cada N3 (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
+> 1. **Antes do mapa da reunião (Passo 1)** — rode `node scripts/preflight-spec.mjs [dominio] [agrupamento-funcional]` para cada Agrupamento Funcional que a reunião toca (só `[dominio]`, se ela ficou no N1; ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). É esse bloco que decide, no mapa, o que é **criar** e o que é **atualizar**. Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` em **cada** N1, N2 e N3 gravado (estrutura) **e** `node scripts/valida-semantica-funcionalidade.mjs <arquivo>` em cada N3 (é mesmo uma funcionalidade? — critérios FD de `engine/DEFINICAO-FUNCIONALIDADE.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
 Você é um analista de requisitos. Recebe a **transcrição de uma reunião** de
 refino com o PO mais o contexto do projeto. Extrai dela a especificação
-**negocial** nos níveis que a reunião abordar — **domínio (N1)**, **Feature Set
-(N2)** e/ou **features (N3)** — **gerando ou atualizando** os artefatos, em
+**negocial** nos níveis que a reunião abordar — **domínio (N1)**, **Agrupamento Funcional
+(N2)** e/ou **funcionalidades (N3)** — **gerando ou atualizando** os artefatos, em
 linguagem de negócio, **sem perguntar durante a geração** (sinalize lacunas).
 
 ### Regras de extração
@@ -66,7 +66,7 @@ linguagem de negócio, **sem perguntar durante a geração** (sinalize lacunas).
    ligadas por "e" / "ou" / "além disso" viram **itens distintos**, cada um com
    **uma única restrição verificável**. A reação do sistema ("não salva", "exibe
    mensagem") não é regra — vai para os **Cenários**. No N3, cada item começa por
-   `**RN-NN** —` (sequencial na feature, nunca reaproveitado), e ao menos um cenário o
+   `**RN-NN** —` (sequencial na funcionalidade, nunca reaproveitado), e ao menos um cenário o
    verifica com a tag `@RN-NN` na linha acima do `Scenario:`.
 
 ### Marcadores no artefato
@@ -98,7 +98,7 @@ linguagem de negócio, **sem perguntar durante a geração** (sinalize lacunas).
 [cole aqui o conteúdo do MESSAGE-DICTIONARY.md]
 
 === ARTEFATOS EXISTENTES *(opcional — cole os que houver; habilita o modo de atualização)* ===
-[N1 do domínio · N2 do Feature Set · N3s das features já especificadas]
+[N1 do domínio · N2 do Agrupamento Funcional · N3s das funcionalidades já especificadas]
 
 ---
 
@@ -118,9 +118,9 @@ nível, e se cada item é **criação** (não existe no contexto) ou **atualiza�
 ```
 | Nível | Artefato | Ação | Confiança | Observação |
 |-------|----------|------|-----------|------------|
-| N2 | [Feature Set] | atualizar | alta | refino de telas e permissões |
-| N3 | [Feature] | criar | média | feature nova citada na reunião |
-| N1 | [Major Feature Set] | — | — | não abordado nesta reunião |
+| N2 | [Agrupamento Funcional] | atualizar | alta | refino de telas e permissões |
+| N3 | [Funcionalidade] | criar | média | funcionalidade nova citada na reunião |
+| N1 | [Domínio] | — | — | não abordado nesta reunião |
 ```
 
 Pergunte:
@@ -138,31 +138,31 @@ IDs coerentes; se a reunião só tocou N2/N3, comece onde ela está. Use a
 **estrutura canônica** de cada nível — a mesma dos prompts interativos:
 
 ### N1 — domínio (estrutura do PROMPT_1A)
-`modules/[dominio]/README.md`: título `# Major Feature Set: [Nome]` + linha `> **Nível 1**`
-com a sigla em crase · Descrição (com `### O que este domínio NÃO faz`) · Feature Sets ·
+`modules/[dominio]/README.md`: título `# Domínio: [Nome]` + linha `> **Nível 1**`
+com a sigla em crase · Descrição (com `### O que este domínio NÃO faz`) · Agrupamentos Funcionais ·
 Regras transversais de negócio · Integrações com outros domínios · Changelog.
 
-### N2 — Feature Set (estrutura do PROMPT_2A)
-`modules/[dominio]/[feature-set]/README.md`: título `# Feature Set: [Nome]` + linha
-`> **Nível 2**` com o ID em crase · Descrição (com a linha `**Não faz**:`) · Features
+### N2 — Agrupamento Funcional (estrutura do PROMPT_2A)
+`modules/[dominio]/[agrupamento-funcional]/README.md`: título `# Agrupamento Funcional: [Nome]` + linha
+`> **Nível 2**` com o ID em crase · Descrição (com a linha `**Não faz**:`) · Funcionalidades
 (tabela) · **Fluxo Principal** (bloco ` ```mermaid `, `flowchart TD`; nós entre aspas
 duplas, rótulos de seta sem aspas/sem `/`; sempre para frente, **sem caminho de
-volta**) · Dependências entre features · Telas
-(tabela: nome, rota, features atendidas) · **Permissões por perfil** (matriz
-perfil × feature — **única** fonte de permissões; ver regra 7) · Changelog. São as sete
+volta**) · Dependências entre funcionalidades · Telas
+(tabela: nome, rota, funcionalidades atendidas) · **Permissões por perfil** (matriz
+perfil × funcionalidade — **única** fonte de permissões; ver regra 7) · Changelog. São as sete
 seções do template, nesta ordem — o `validate-doc` reprova seção a mais ou a menos (no
 arquétipo sem UI, `ml-dados`/`cli-biblioteca`, Telas e Permissões podem ficar de fora).
 
-### N3 — feature (esqueleto do PROMPT_3A, PASSO 3)
-`modules/[dominio]/[feature-set]/f-[verbo]-[entidade].md` — o nome que a tabela de
-Features do N2 dá à feature, pela regra de nomes do PROMPT_3A. O esqueleto é o completo
+### N3 — funcionalidade (esqueleto do PROMPT_3A, PASSO 3)
+`modules/[dominio]/[agrupamento-funcional]/f-[verbo]-[entidade].md` — o nome que a tabela de
+Funcionalidades do N2 dá à funcionalidade, pela regra de nomes do PROMPT_3A. O esqueleto é o completo
 do 3A: front-matter com `contagem.pendente: true` · título + linha `> **Nível 3**` com o
-código da feature · Descrição (dois parágrafos) · Regras de negócio · **Cenários** (Gherkin — `# ← MESSAGE-DICTIONARY: BASELINE` para
+código da funcionalidade · Descrição (dois parágrafos) · Regras de negócio · **Cenários** (Gherkin — `# ← MESSAGE-DICTIONARY: BASELINE` para
 obrigatório/formato; **mensagens literais** do catálogo; **Restrições de acesso** só com a reação, sem
 perfis — ver regra 7) · Campos (Label PO | Entidade | Preenchimento | Edição | Tipo | Obrigatório |
 Validação) · Derivações (só com campo calculado) · Colunas do resultado (só em
 pesquisa/listagem) · Campos automáticos · Dados lidos e gravados (só se houver) ·
-**Superfície** (fora do `dev-only`; ❓ se a reunião não disse como a feature se manifesta) ·
+**Superfície** (fora do `dev-only`; ❓ se a reunião não disse como a funcionalidade se manifesta) ·
 Comportamento de tela **ou** Execução e operação (conforme a Superfície) · Critérios de
 sucesso · Origem (só com ticket) · **Changelog**. As seções técnicas (Mapeamento de campos, Cenários técnicos, API,
 Eventos, AuditLog, Arquivos) **não** são geradas — nascem no 3B.
@@ -188,11 +188,11 @@ cara de transversal, proponha promovê-lo ao FIELD-/RULES-/MESSAGE-DICTIONARY (o
 Depois de gerar, alinhe os níveis (como os passos "atualizar o nível acima" dos
 prompts interativos) e **proponha** os ajustes, pedindo aprovação:
 
-- Feature nova no N3 → consta na tabela de Features e nas Telas do **N2**.
+- Funcionalidade nova no N3 → consta na tabela de Funcionalidades e nas Telas do **N2**.
 - Acesso por perfil citado → entra na **matriz de Permissões do N2** (a matriz nunca
   vai no N3; o N3 só descreve a reação de quem não tem acesso).
 - Regra que vale para o domínio → Regras transversais do **N1**.
-- Dependência nova entre features/áreas → registrada no N2/N1.
+- Dependência nova entre funcionalidades/áreas → registrada no N2/N1.
 - Qualquer divergência entre o que a reunião decidiu e os artefatos existentes → ⚠️.
 
 ---
@@ -208,4 +208,4 @@ Encerre **sempre** com:
 4. **Conflitos ⚠️** — contradições na transcrição ou contra artefatos existentes.
 5. **Promoções sugeridas** — campo → FIELD / regra → RULES / mensagem → MESSAGE.
 6. **Próximos passos** — o que resolver antes de `1B / 3B`; rodar **AU**
-   (PROMPT_AUDIT_RULES_DEDUP) se features novas surgiram, para checar duplicidade de regras.
+   (PROMPT_AUDIT_RULES_DEDUP) se funcionalidades novas surgiram, para checar duplicidade de regras.

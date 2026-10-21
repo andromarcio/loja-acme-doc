@@ -1,7 +1,7 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 id: CAT-CTG-03
-feature_set: CAT-CTG
+agrupamento_funcional: CAT-CTG
 dominio: CAT
 entidade: Categoria
 data_model_ref: data-models/catalogo.md#categoria
@@ -24,7 +24,7 @@ contagem:
 ---
 
 # Editar Categoria
-> **Nível 3** - Feature Set: Categorias — Major Feature Set: Catálogo - `CAT-CTG-03`
+> **Nível 3** - Agrupamento Funcional: Categorias — Domínio: Catálogo - `CAT-CTG-03`
 
 ## Descrição
 
@@ -137,11 +137,11 @@ Feature: Editar Categoria
 
 | Label PO | Valor | Quando |
 |---|---|---|
-| — | Nenhum campo é preenchido automaticamente nesta feature | — |
+| — | Nenhum campo é preenchido automaticamente nesta funcionalidade | — |
 
 ## Dados lidos e gravados
 
-| Entidade | Papel | Por que a feature a toca |
+| Entidade | Papel | Por que a funcionalidade a toca |
 |---|---|---|
 | Produto | lê | Saber se a categoria tem produtos, para pedir a confirmação ao inativá-la (RN-02) |
 
@@ -183,7 +183,7 @@ A edição abre em modal sobre a Pesquisa de Categorias, pelo ícone de editar d
 |---|---|---|---|---|---|---|---|
 | Editar Categoria | principal | — | — | — | — | — | — |
 
-A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
+A contagem está pendente e deve nascer da análise desta funcionalidade via CT, com memória de cálculo.
 
 ## Origem
 
@@ -198,3 +198,4 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 | 2026-10-18 | Claude | N3 criado | Edição de categoria em modal, derivada do cadastro, a partir do ticket fictício STRY0013170: nome imutável e confirmação ao inativar categoria com produtos; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

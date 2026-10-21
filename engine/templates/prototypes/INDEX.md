@@ -4,13 +4,13 @@
 > **status de aprovação**. Uma tela com fidelidade **obrigatória** só vira **contrato
 > de implementação** quando o protótipo está **aprovado** aqui (com quem e quando).
 
-| Protótipo | Feature (N3) | Fidelidade | Status | Aprovado por | Data |
+| Protótipo | Funcionalidade (N3) | Fidelidade | Status | Aprovado por | Data |
 |---|---|---|---|---|---|
-| [prototypes/[dominio]/[feature-set]/[feature]/](./[dominio]/[feature-set]/[feature]/) | `[SIGLA-SFS-NN]` | obrigatória / referência | rascunho / aprovado | [nome / —] | [AAAA-MM-DD / —] |
+| [prototypes/[dominio]/[agrupamento-funcional]/[funcionalidade]/](./[dominio]/[agrupamento-funcional]/[funcionalidade]/) | `[SIGLA-SAF-NN]` | obrigatória / referência | rascunho / aprovado | [nome / —] | [AAAA-MM-DD / —] |
 
 ## Como manter
 
-- A pasta `prototypes/` **espelha `modules/`**: `prototypes/[dominio]/[feature-set]/[feature]/`, com os mesmos nomes de pasta e um `README.md` em cada nível — domínio (índice dos Feature Sets com protótipo), Feature Set (protótipo de fluxo) e feature (protótipos de estado). Modelos em `engine/templates/prototypes/_template/`.
+- A pasta `prototypes/` **espelha `modules/`**: `prototypes/[dominio]/[agrupamento-funcional]/[funcionalidade]/`, com os mesmos nomes de pasta e um `README.md` em cada nível — domínio (índice dos Agrupamentos Funcionais com protótipo), Agrupamento Funcional (protótipo de fluxo) e funcionalidade (protótipos de estado). Modelos em `engine/templates/prototypes/_template/`.
 - Ao **gerar** um protótipo, registre a linha com status **rascunho** e a fidelidade lida do N3 (linha `Fidelidade ao protótipo` na `## Superfície`).
 - Na **aprovação**, troque o status para **aprovado** e preencha **quem** e **quando**. Só então a tela é **contrato** para a codificação.
 - A implementação de telas **obrigatória** exige a **checklist de fidelidade** — `node scripts/fidelity-checklist.mjs <pasta-do-protótipo> <N3.md>` — com **todos os estados cobertos** (✅, ou ⚠️ com desvio aprovado; nenhum ❌).

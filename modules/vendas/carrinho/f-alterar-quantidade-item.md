@@ -1,7 +1,7 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 id: VND-CAR-03
-feature_set: VND-CAR
+agrupamento_funcional: VND-CAR
 dominio: VND
 entidade: ItemPedido
 data_model_ref: data-models/vendas.md#itempedido
@@ -24,7 +24,7 @@ contagem:
 ---
 
 # Alterar Quantidade do Item
-> **Nível 3** - Feature Set: Carrinho — Major Feature Set: Vendas - `VND-CAR-03`
+> **Nível 3** - Agrupamento Funcional: Carrinho — Domínio: Vendas - `VND-CAR-03`
 
 ## Descrição
 
@@ -131,7 +131,7 @@ Feature: Alterar Quantidade do Item
 
 | Label PO | Valor | Quando |
 |---|---|---|
-| — | Nenhum campo é preenchido automaticamente nesta feature | — |
+| — | Nenhum campo é preenchido automaticamente nesta funcionalidade | — |
 
 ## Superfície
 
@@ -171,7 +171,7 @@ Na tela **Carrinho** (VND-CAR-02 — Listar Itens do Carrinho), o campo **Quanti
 |---|---|---|---|---|---|---|---|
 | Alterar Quantidade do Item | principal | — | — | — | — | — | — |
 
-A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
+A contagem está pendente e deve nascer da análise desta funcionalidade via CT, com memória de cálculo.
 
 ## Origem
 
@@ -186,3 +186,4 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 | 2026-10-18 | Claude | N3 criado | Alteração da quantidade de um item do carrinho a partir do ticket fictício STRY0013185, com limite de estoque e recálculo do subtotal e do total; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

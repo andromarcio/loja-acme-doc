@@ -43,7 +43,7 @@ Nunca avance de estado sem confirmação do usuário.
 [cole aqui o conteúdo do MASTER.md]
 
 === modules/INDEX.md ===
-[cole aqui o índice de domínios e feature sets existentes]
+[cole aqui o índice de domínios e agrupamentos funcionais existentes]
 
 === RULES-DICTIONARY.md ===
 [cole aqui o dicionário de regras de negócio existentes]
@@ -78,7 +78,7 @@ Leia todos os insumos recebidos. Confirme o que foi recebido e aguarde:
 **[Estado: LEITURA_DELTA]**
 
 Extraia do delta todos os blocos que representam uma unidade de documentação:
-domínios (N1), feature sets (N2), features (N3), regras de negócio, campos,
+domínios (N1), agrupamentos funcionais (N2), funcionalidades (N3), regras de negócio, campos,
 modelos de dados, etc.
 
 Para cada bloco, registre internamente:
@@ -146,8 +146,8 @@ alteracoes:
     tipo: create
     artefato: [N1 | N2 | N3 | REGRA | CAMPO | DATA-MODEL]
     dominio: [sigla ou nome do domínio]
-    feature_set: [nome do feature set, se aplicável]
-    feature: [nome da feature, se aplicável]
+    agrupamento_funcional: [nome do agrupamento funcional, se aplicável]
+    funcionalidade: [nome da funcionalidade, se aplicável]
     descricao: "[o que precisa ser criado]"
     prompt_sugerido: [1A | 2A | 3A | 3B | etc.]
     aprovado: null
@@ -188,9 +188,9 @@ alteracoes:
 |---|---|
 | **Tipo** | [N1 / N2 / N3 / etc.] |
 | **Domínio** | [domínio] |
-| **Feature Set** | [feature set, se aplicável] |
+| **Agrupamento Funcional** | [agrupamento funcional, se aplicável] |
 | **Descrição** | [o que precisa ser criado] |
-| **Prompt sugerido** | [ex: 3A — Especificar feature negócio] |
+| **Prompt sugerido** | [ex: 3A — Especificar funcionalidade negócio] |
 
 ---
 
@@ -198,14 +198,14 @@ alteracoes:
 
 [Para cada item `modify`:]
 
-### [nome da feature / artefato] — `[arquivo]`
+### [nome da funcionalidade / artefato] — `[arquivo]`
 
 | Campo | Valor |
 |---|---|
 | **O que muda** | [descrição objetiva] |
 | **Motivo** | [por que o delta exige isto] |
 | **Impacto** | [efeito no comportamento ou nas regras] |
-| **Prompt sugerido** | [ex: 4A — Atualizar feature negócio] |
+| **Prompt sugerido** | [ex: 4A — Atualizar funcionalidade negócio] |
 | **Aprovado** | ❌ Pendente |
 
 > Para aprovar: altere `aprovado: false` para `aprovado: true` no frontmatter acima.

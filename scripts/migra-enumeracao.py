@@ -121,7 +121,7 @@ def memoria(linhas):
                              `- **DER (17)** — entrada (2): x · y. Saída (13): …`
 
     Devolve `{nome do PE: (alr, der)}`. A chave `""` guarda o que não pôde ser
-    atribuído a um PE — é o que a feature de um PE só usa, e o que as de dois ou
+    atribuído a um PE — é o que a funcionalidade de um PE só usa, e o que as de dois ou
     mais PE recebem quando o nome não casa.
 
     Estes são os dialetos que nasceram nas instâncias. O formato que os prompts do

@@ -7,9 +7,9 @@
 > **Insumo necessário**: arquivos de código do repositório
 > **Entrega**:
 > - Entradas para `global/data-models/[dominio].md` (entidades e campos)
-> - Rascunho de N1 (domínio) e de N2 (Feature Sets) **no formato dos templates** — os
+> - Rascunho de N1 (domínio) e de N2 (Agrupamentos Funcionais) **no formato dos templates** — os
 >   mesmos headings que o `validate-doc` exige
-> - Rascunho de N3 por feature **no formato do template** `_template-feature.md`: o
+> - Rascunho de N3 por funcionalidade **no formato do template** `_template-funcionalidade.md`: o
 >   front-matter com a esteira (`estado: rascunho`) e a contagem pendente, e as seções do
 >   template na ordem dele — as negociais e o bloco `dev-only` preenchidos do código
 > - Lista de lacunas ❓ que o código não responde — requerem entrevista com PO
@@ -25,8 +25,8 @@
 ## INSTRUÇÕES PARA O CLAUDE
 
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
-> 1. **Antes de nomear Feature Sets e features (Passo 4)** — rode `node scripts/preflight-spec.mjs [dominio]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
-> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` em **cada** N1, N2 e N3 gravado (estrutura) **e** `node scripts/validate-feature-semantics.mjs <arquivo>` em cada N3 (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando. Rascunho não é exceção: o que é lacuna leva ❓, mas a estrutura é a do template.
+> 1. **Antes de nomear Agrupamentos Funcionais e funcionalidades (Passo 4)** — rode `node scripts/preflight-spec.mjs [dominio]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` em **cada** N1, N2 e N3 gravado (estrutura) **e** `node scripts/valida-semantica-funcionalidade.mjs <arquivo>` em cada N3 (é mesmo uma funcionalidade? — critérios FD de `engine/DEFINICAO-FUNCIONALIDADE.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando. Rascunho não é exceção: o que é lacuna leva ❓, mas a estrutura é a do template.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
 Você é um engenheiro de software lendo código legado para extrair
@@ -62,7 +62,7 @@ comportamentos a partir do código, **sem inventar** o que não está lá.
      ao `global/NFR.md`. Se o código a evidenciar, sinalize 🔍 e proponha o ID
      do NFR; auditoria de ação = NFR **AUD-01** (herdado), não vira regra.
 
-6. **A jornada orienta apenas a primeira numeração.** Confirme a ordem com o PO e registre as features na tabela do N2 antes de atribuir IDs com `scripts/ids-n3.mjs` (modo seco; depois `--write`). A ordem de controllers/entry points não determina os números. Preserve todo ID já usado no N2/N3 e o registro `docqui:n3-ids`; novas features continuam depois do maior reservado — ver `engine/N3-IDS.md`.
+6. **A jornada orienta apenas a primeira numeração.** Confirme a ordem com o PO e registre as funcionalidades na tabela do N2 antes de atribuir IDs com `scripts/ids-n3.mjs` (modo seco; depois `--write`). A ordem de controllers/entry points não determina os números. Preserve todo ID já usado no N2/N3 e o registro `docqui:n3-ids`; novas funcionalidades continuam depois do maior reservado — ver `engine/N3-IDS.md`.
 
 **Marcadores usados nos artefatos:**
 
@@ -240,55 +240,55 @@ Para cada entidade identificada, monte a tabela de campos:
 2. **Configs** (grupo 2B): cada parâmetro que o usuário decide vira uma linha de
    campo de negócio (Label PO 🔍 inferido do nome + docstring/comentário; tipo
    negocial; obrigatório = tem default?; validação = asserts/checagens do código).
-   Grupos de config (ex.: `model`/`train`/`data`) sugerem a divisão por feature.
+   Grupos de config (ex.: `model`/`train`/`data`) sugerem a divisão por funcionalidade.
 
 Ao finalizar a análise de entidades, apresente e pergunte:
 > "Identifiquei [N] entidades com [M] campos no total.
-> Antes de avançar para a análise de features:
+> Antes de avançar para a análise de funcionalidades:
 > Alguma entidade importante está faltando ou foi nomeada incorretamente?"
 
 ---
 
-## PASSO 4 — Análise de features
+## PASSO 4 — Análise de funcionalidades
 
 **[Estado: ANALISE_FEATURES]**
 
-Com base nas rotas, controllers e serviços, identifique as features.
+Com base nas rotas, controllers e serviços, identifique as funcionalidades.
 
-### 4A — Identificação de Feature Sets
+### 4A — Identificação de Agrupamentos Funcionais
 
-**Trilha A** — agrupe as rotas e controllers em Feature Sets lógicos. A feature é a
-**ação de negócio** que passa nos cinco testes de `engine/FEATURE-DEFINITION.md`
-(§ Definição) — não a rota: uma feature costuma usar mais de uma rota (a que grava e as
-que carregam o formulário), e rota só vira feature se a ação que ela serve passa nos
-testes. A rota que só alimenta uma lista de seleção (combo, autocomplete) não é feature:
-é a lista consultada da feature **dona da tela** (`global/SIZING.md` → *Regra da lista
-consultada*) e aparece no N3 dela como campo `seleção → [Entidade]`. Nome da feature:
+**Trilha A** — agrupe as rotas e controllers em Agrupamentos Funcionais lógicos. A funcionalidade é a
+**ação de negócio** que passa nos cinco testes de `engine/DEFINICAO-FUNCIONALIDADE.md`
+(§ Definição) — não a rota: uma funcionalidade costuma usar mais de uma rota (a que grava e as
+que carregam o formulário), e rota só vira funcionalidade se a ação que ela serve passa nos
+testes. A rota que só alimenta uma lista de seleção (combo, autocomplete) não é funcionalidade:
+é a lista consultada da funcionalidade **dona da tela** (`global/SIZING.md` → *Regra da lista
+consultada*) e aparece no N3 dela como campo `seleção → [Entidade]`. Nome da funcionalidade:
 verbo de negócio no infinitivo + entidade (*cadastrar cliente*), nunca o verbo HTTP.
 
 ```
-Feature Sets identificados em [repo]:
+Agrupamentos Funcionais identificados em [repo]:
 
-[Feature Set A] — 📍 controllers/[arquivo]
-  ├── [Feature 1] → [o que entrega]    ⟵ [VERBO] [rota] · [VERBO] [rota de lista]
-  ├── [Feature 2] → [o que entrega]    ⟵ [VERBO] [rota]
-  └── [Feature 3] → [o que entrega]    ⟵ [VERBO] [rota]
+[Agrupamento Funcional A] — 📍 controllers/[arquivo]
+  ├── [Funcionalidade 1] → [o que entrega]    ⟵ [VERBO] [rota] · [VERBO] [rota de lista]
+  ├── [Funcionalidade 2] → [o que entrega]    ⟵ [VERBO] [rota]
+  └── [Funcionalidade 3] → [o que entrega]    ⟵ [VERBO] [rota]
 
-[Feature Set B] — 📍 controllers/[arquivo]
+[Agrupamento Funcional B] — 📍 controllers/[arquivo]
   └── ...
 
-Rotas sem feature própria: [VERBO] [rota] → lista consultada de [Feature 1] ·
+Rotas sem funcionalidade própria: [VERBO] [rota] → lista consultada de [Funcionalidade 1] ·
 [VERBO] [rota] → ⚠️ sem uso aparente (rota morta?)
 ```
 
-**Trilha B** — a feature é **entry point + estágio** (não verbo HTTP + rota):
+**Trilha B** — a funcionalidade é **entry point + estágio** (não verbo HTTP + rota):
 cada comando/subcomando/estágio que o usuário executa com resultado observável
 é um N3 (verbos típicos: `preparar`, `treinar`, `avaliar`, `servir`, `validar`,
-`exportar` — categoria "Engenharia e dados" do FEATURE-DEFINITION.md). Os
-Feature Sets são os macro-estágios do pipeline:
+`exportar` — categoria "Engenharia e dados" do DEFINICAO-FUNCIONALIDADE.md). Os
+Agrupamentos Funcionais são os macro-estágios do pipeline:
 
 ```
-Feature Sets identificados em [repo]:
+Agrupamentos Funcionais identificados em [repo]:
 
 [Preparação de dados] — 📍 scripts/prepare_*.py
   ├── [Preparar corpus]:      python prepare.py [args] → [artefato produzido]
@@ -302,17 +302,17 @@ Feature Sets identificados em [repo]:
   └── [Avaliar modelo]:       python eval.py [tarefas] → [métricas/relatório]
 ```
 
-> Um mesmo entry point pode abrigar mais de uma feature (ex.: treinar × retomar)
+> Um mesmo entry point pode abrigar mais de uma funcionalidade (ex.: treinar × retomar)
 > quando cada uma tem começo/fim e resultado observável próprios — e execuções
-> disparadas por agendador/estágio anterior são features de superfície
+> disparadas por agendador/estágio anterior são funcionalidades de superfície
 > **Job/Pipeline** (o ator é o próprio sistema, agindo pelo negócio).
 
-### 4B — Extração de regras de negócio por feature
+### 4B — Extração de regras de negócio por funcionalidade
 
-Para cada feature identificada, extraia do código de serviço:
+Para cada funcionalidade identificada, extraia do código de serviço:
 
 ```markdown
-#### [Nome da Feature]
+#### [Nome da Funcionalidade]
 📍 `[caminho/arquivo:linha]`
 
 **Regras de negócio (invariantes apenas — regra ≠ comportamento):**
@@ -337,10 +337,10 @@ Para cada feature identificada, extraia do código de serviço:
 - Campo [Y] é alterado em condição [Z] sem comentário explicativo
 ```
 
-Ao finalizar a análise de features, pergunte:
-> "Identifiquei [N] Feature Sets com [M] features no total.
+Ao finalizar a análise de funcionalidades, pergunte:
+> "Identifiquei [N] Agrupamentos Funcionais com [M] funcionalidades no total.
 > O agrupamento faz sentido para o negócio?
-> Alguma feature importante está faltando?"
+> Alguma funcionalidade importante está faltando?"
 
 ---
 
@@ -352,7 +352,7 @@ Gere todos os artefatos marcando claramente o que é extração direta
 do código (sem marcador) versus inferência (🔍) versus lacuna (❓).
 
 Cada artefato vai para o caminho do template — N1 em `modules/[dominio]/README.md`, N2 em
-`modules/[dominio]/[feature-set]/README.md`, N3 ao lado do N2 —, com as pastas em
+`modules/[dominio]/[agrupamento-funcional]/README.md`, N3 ao lado do N2 —, com as pastas em
 kebab-case e sem prefixo, como nos prompts 1A/2A/3A. **No Claude Code**, grave direto
 nesses caminhos (os hooks validam cada arquivo gravado); **no fluxo copy-paste**,
 apresente cada arquivo com o caminho. Os marcadores vão no texto das seções e nunca
@@ -389,7 +389,7 @@ checagem é uma invariante, com 📍 arquivo:linha).
 seções negociais do PROMPT_1A e o bloco `dev-only` do PROMPT_1B, que o código já responde.
 
 ```markdown
-# Major Feature Set: [Nome]
+# Domínio: [Nome]
 > **Nível 1** - Visão estratégica do domínio - `[SIGLA]`
 
 ## Descrição
@@ -402,11 +402,11 @@ seções negociais do PROMPT_1A e o bloco `dev-only` do PROMPT_1B, que o código
 
 ---
 
-## Feature Sets
+## Agrupamentos Funcionais
 
-| Feature Set | Descrição | Features |
+| Agrupamento Funcional | Descrição | Funcionalidades |
 |---|---|---|
-| [**Nome do Feature Set**](./[pasta]/README.md) <small>[SIGLA]-[SFS]</small> | 🔍 [descrição em uma linha] — 📍 `[controllers/arquivo]` | [N] |
+| [**Nome do Agrupamento Funcional**](./[pasta]/README.md) <small>[SIGLA]-[SAF]</small> | 🔍 [descrição em uma linha] — 📍 `[controllers/arquivo]` | [N] |
 
 ---
 
@@ -471,22 +471,22 @@ seções negociais do PROMPT_1A e o bloco `dev-only` do PROMPT_1B, que o código
 
 *Última revisão: —*
 
-*Links: [Feature Set 1](./[pasta]/README.md) · [INDEX geral](../INDEX.md)*
+*Links: [Agrupamento Funcional 1](./[pasta]/README.md) · [INDEX geral](../INDEX.md)*
 ```
 
 ---
 
-### Artefato 3 — Rascunho de N2 por Feature Set
+### Artefato 3 — Rascunho de N2 por Agrupamento Funcional
 
-📄 `modules/[dominio]/[feature-set]/README.md` — estrutura do template
-`_template-feature-set/README.md`, a mesma do PROMPT_2A: as sete seções, nesta ordem e com
+📄 `modules/[dominio]/[agrupamento-funcional]/README.md` — estrutura do template
+`_template-agrupamento-funcional/README.md`, a mesma do PROMPT_2A: as sete seções, nesta ordem e com
 estes títulos (o `validate-doc` reprova seção a mais, a menos ou fora de ordem). No
 arquétipo `ml-dados`/`cli-biblioteca`, **Telas** e **Permissões por perfil** podem ficar
-de fora quando o Feature Set não tem UI (Trilha B).
+de fora quando o Agrupamento Funcional não tem UI (Trilha B).
 
 ````markdown
-# Feature Set: [Nome]
-> **Nível 2** - Major Feature Set: [Nome do Domínio] - `[SIGLA]-[SFS]`
+# Agrupamento Funcional: [Nome]
+> **Nível 2** - Domínio: [Nome do Domínio] - `[SIGLA]-[SAF]`
 
 ## Descrição
 🔍 [2-3 frases, começando por "Reúne as operações de…" — Regra da Descrição do PROMPT_2A]
@@ -495,11 +495,11 @@ de fora quando o Feature Set não tem UI (Trilha B).
 
 ---
 
-## Features
+## Funcionalidades
 
-| Feature | Descrição |
+| Funcionalidade | Descrição |
 |---|---|
-| [**Nome da Feature**](f-[verbo]-[entidade].md) <small>[SIGLA]-[SFS]-NN</small> | 🔍 [o que entrega, em uma linha] — 📍 `[controller/entry point]` |
+| [**Nome da Funcionalidade**](f-[verbo]-[entidade].md) <small>[SIGLA]-[SAF]-NN</small> | 🔍 [o que entrega, em uma linha] — 📍 `[controller/entry point]` |
 
 ---
 
@@ -507,41 +507,41 @@ de fora quando o Feature Set não tem UI (Trilha B).
 
 ```mermaid
 flowchart TD
-    A(["[ponto de entrada]"]) --> B["[Feature 1]"]
-    B --> C["[Feature 2]"]
+    A(["[ponto de entrada]"]) --> B["[Funcionalidade 1]"]
+    B --> C["[Funcionalidade 2]"]
     C --> D(["[resultado]"])
 ```
 
 ---
 
-## Dependências entre features
+## Dependências entre funcionalidades
 
-- 🔍 [Feature B] exige [Feature A] antes — 📍 `[onde o código checa o pré-requisito]`
+- 🔍 [Funcionalidade B] exige [Funcionalidade A] antes — 📍 `[onde o código checa o pré-requisito]`
 - ❓ [ordem que o código não evidencia]
 
 ---
 
 ## Telas
 
-| Tela | Rota sugerida | Features atendidas | Descrição |
+| Tela | Rota sugerida | Funcionalidades atendidas | Descrição |
 |---|---|---|---|
-| 🔍 [nome — ❓ se só há backend] | `/[rota do front, se o código a revela]` | **[Nome da Feature]** <small>[SIGLA]-[SFS]-NN</small> | [descrição] |
+| 🔍 [nome — ❓ se só há backend] | `/[rota do front, se o código a revela]` | **[Nome da Funcionalidade]** <small>[SIGLA]-[SAF]-NN</small> | [descrição] |
 
 ---
 
 ## Permissões por perfil
 
-> **Fonte única de permissões** deste Feature Set. As features (N3) não tratam de
+> **Fonte única de permissões** deste Agrupamento Funcional. As funcionalidades (N3) não tratam de
 > perfis nem permissões — qualquer acesso novo ou diferente entra nesta matriz.
 
 Perfis: **[Perfil A]**, **[Perfil B]**.
 
-| Perfil | [Feature 1] | [Feature 2] |
+| Perfil | [Funcionalidade 1] | [Funcionalidade 2] |
 |---|---|---|
 | **[Perfil A]** | ✓ | ✓ |
 | **[Perfil B]** | ✓ | — |
 
-* 🔍 Matriz extraída de middleware/guards — 📍 `[arquivo:linha]`. ❓ [feature cuja regra de acesso o código não mostra].
+* 🔍 Matriz extraída de middleware/guards — 📍 `[arquivo:linha]`. ❓ [funcionalidade cuja regra de acesso o código não mostra].
 
 ---
 
@@ -559,32 +559,32 @@ Perfis: **[Perfil A]**, **[Perfil B]**.
 ````
 
 **Fluxo Principal** — Mermaid `flowchart TD` 🔍 inferido do encadeamento que o código
-evidencia (a feature que exige outra antes vem depois dela), com as regras do PROMPT_2A:
+evidencia (a funcionalidade que exige outra antes vem depois dela), com as regras do PROMPT_2A:
 sempre para frente, sem caminho de volta; nós entre aspas duplas; rótulos de seta sem
 aspas e sem `/`. O diagrama existe mesmo quando a ordem é palpite: a ordem não confirmada
 vai para as lacunas (Passo 6), não para um texto no lugar do diagrama.
 
 ---
 
-### Artefato 4 — Rascunho de N3 por feature
+### Artefato 4 — Rascunho de N3 por funcionalidade
 
-📄 `modules/[dominio]/[feature-set]/f-[verbo]-[entidade].md` — o nome que a tabela de
-Features do N2 (Artefato 3) dá à feature, pela regra de nomes do PROMPT_3A (verbo de
-negócio, nunca o verbo HTTP). Para cada feature, gere um rascunho **no formato exato do
-template** `_template-feature.md`: o front-matter e as seções abaixo, nesta ordem. Seção
+📄 `modules/[dominio]/[agrupamento-funcional]/f-[verbo]-[entidade].md` — o nome que a tabela de
+Funcionalidades do N2 (Artefato 3) dá à funcionalidade, pela regra de nomes do PROMPT_3A (verbo de
+negócio, nunca o verbo HTTP). Para cada funcionalidade, gere um rascunho **no formato exato do
+template** `_template-funcionalidade.md`: o front-matter e as seções abaixo, nesta ordem. Seção
 marcada "só se…" aparece apenas quando a condição vale; nas demais, o que o código não
 responde leva ❓ — a seção fica.
 
 ````markdown
 ---
-id: [SIGLA]-[SFS]-[NN]
-feature_set: [SIGLA]-[SFS]
+id: [SIGLA]-[SAF]-[NN]
+agrupamento_funcional: [SIGLA]-[SAF]
 dominio: [SIGLA]
 entidade: [Entidade principal]
 data_model_ref: data-models/[dominio].md#[entidade]
 endpoints: []                       # 🔍 espelho de ## API — ex.: ["POST /api/v1/recurso"]
 error_codes: []                     # 🔍 espelho de ## Mapeamento de erros
-depende_de: []                      # 🔍 IDs das features que esta exige antes (N2: Dependências entre features)
+depende_de: []                      # 🔍 IDs das funcionalidades que esta exige antes (N2: Dependências entre funcionalidades)
 estado: rascunho
 gates:
   requisitos:   { aprovado: false, por: "", em: "", pr: "" }
@@ -598,7 +598,7 @@ contagem:                           # status APF — independente dos gates; só
 ---
 
 # [Verbo] [entidade]
-> **Nível 3** - Feature Set: [Nome] — Major Feature Set: [Nome] - `[SIGLA]-[SFS]-[NN]`
+> **Nível 3** - Agrupamento Funcional: [Nome] — Domínio: [Nome] - `[SIGLA]-[SAF]-[NN]`
 
 ## Descrição
 🔍 [Permite que [ator] [ação] [entidade], [resultado observável] — inferido da rota e da lógica do serviço; 1-2 frases de negócio (FD-8)]
@@ -621,7 +621,7 @@ contagem:                           # status APF — independente dos gates; só
 ## Cenários
 
 ```gherkin
-Feature: [Nome da feature em linguagem natural]
+Feature: [Nome da funcionalidade em linguagem natural]
 
   # ← FIELD-DICTIONARY / RULES-DICTIONARY: [importar quando houver campo/regra canônico]
   # Background só na Trilha A (usuário autenticado); em CLI/Job, omita
@@ -650,8 +650,8 @@ Feature: [Nome da feature em linguagem natural]
 
   # ── Restrições de acesso ───────────────────────────────────────
 
-  Scenario: [usuário sem acesso a esta feature]
-    Given que o perfil do usuário não tem acesso a "[Nome da feature]" na matriz do N2
+  Scenario: [usuário sem acesso a esta funcionalidade]
+    Given que o perfil do usuário não tem acesso a "[Nome da funcionalidade]" na matriz do N2
     When o usuário tenta [ação]
     Then o sistema exibe: "[texto de NO_PERMISSION no MESSAGE-DICTIONARY]"
 
@@ -715,7 +715,7 @@ banco, Label Dev, tipo SQL e a FK ficam só no DATA-MODEL.md; o N3 nunca os rees
 ## Dados lidos e gravados
 <!-- Só se o serviço lê ou grava entidade que não aparece na coluna Entidade de ## Campos; senão, OMITA. -->
 
-| Entidade | Papel | Por que a feature a toca |
+| Entidade | Papel | Por que a funcionalidade a toca |
 |---|---|---|
 | 🔍 [Entidade] | [lê / grava / lê e grava] | [o que o serviço faz com ela — a regra/campo automático que a motiva] — 📍 `[arquivo:linha]` |
 
@@ -790,8 +790,8 @@ pelo código (GPU, storage, artefato de entrada pronto)]
 
 ❓ Não conte aqui. A contagem nasce depois que o PO validar o N3 — pela passada técnica
 (PROMPT_3B, passo 6) ou pela opção **CT** (`PROMPT_CONTAGEM`) —, pelos critérios do
-`global/SIZING.md`: a unidade é a feature (N3) e a transação se classifica pela intenção
-primária, não pelo verbo HTTP; backend em BFF interno **não** zera a feature.
+`global/SIZING.md`: a unidade é a funcionalidade (N3) e a transação se classifica pela intenção
+primária, não pelo verbo HTTP; backend em BFF interno **não** zera a funcionalidade.
 
 ---
 
@@ -833,13 +833,13 @@ Body/params e respostas extraídos do controller/DTO; tipos completos → DATA-M
 ---
 
 ## Arquivos a criar ou alterar
-🔍 Os arquivos que implementam a feature hoje — é neles que uma mudança vai mexer:
+🔍 Os arquivos que implementam a funcionalidade hoje — é neles que uma mudança vai mexer:
 `[caminho/arquivo]` ← [o que faz] 📍
 
 ---
 
 ## Dependências
-- 🔍 **[Lib/Serviço]** — [para que o código da feature o usa]
+- 🔍 **[Lib/Serviço]** — [para que o código da funcionalidade o usa]
 
 ---
 
@@ -861,7 +861,7 @@ Body/params e respostas extraídos do controller/DTO; tipos completos → DATA-M
 
 | Ticket (AIM) | Tipo | Critérios cobertos |
 |---|---|---|
-| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIM-[CHAVE].md) | Criação | — [o que esta feature realiza do ticket] |
+| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIM-[CHAVE].md) | Criação | — [o que esta funcionalidade realiza do ticket] |
 
 ---
 
@@ -871,13 +871,13 @@ Body/params e respostas extraídos do controller/DTO; tipos completos → DATA-M
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
-| [data atual] | Claude (eng. reversa) | Feature criada | N3 rascunhado do código de `[repo]` — requer validação do PO |
+| [data atual] | Claude (eng. reversa) | Funcionalidade criada | N3 rascunhado do código de `[repo]` — requer validação do PO |
 
 ---
 
-*Feature Set: [Nome] · Major Feature Set: [Nome] · Última revisão: —*
+*Agrupamento Funcional: [Nome] · Domínio: [Nome] · Última revisão: —*
 
-*Links: [N2 do Feature Set](./README.md) · [N1 do domínio](../README.md) · [INDEX geral](../../INDEX.md)*
+*Links: [N2 do Agrupamento Funcional](./README.md) · [N1 do domínio](../README.md) · [INDEX geral](../../INDEX.md)*
 ````
 
 **Contagem pendente e esteira**: todo N3 gerado aqui fica com `contagem.pendente: true` e
@@ -917,8 +917,8 @@ Gere a lista completa de pontos que precisam de entrevista com o PO:
 
 ## Sugestão de sessões de entrevista
 Para resolver as lacunas acima, sugiro [N] sessões com o PO:
-- Sessão 1: cobrir [Feature Sets A e B] — prioridade alta
-- Sessão 2: cobrir [Feature Sets C e D]
+- Sessão 1: cobrir [Agrupamentos Funcionais A e B] — prioridade alta
+- Sessão 2: cobrir [Agrupamentos Funcionais C e D]
 ```
 
 Ao finalizar, informe:
@@ -927,8 +927,8 @@ Ao finalizar, informe:
 >
 > **Resumo:**
 > - [N] entidades extraídas → adicionar a `data-models/[dominio].md`
-> - [N] Feature Sets identificados → rascunhos de N2 gerados
-> - [N] features identificadas → rascunhos de N3 gerados (✏️ rascunho, contagem pendente)
+> - [N] Agrupamentos Funcionais identificados → rascunhos de N2 gerados
+> - [N] funcionalidades identificadas → rascunhos de N3 gerados (✏️ rascunho, contagem pendente)
 > - Validadores do protocolo: `✓` em todos os N1/N2/N3 gravados
 > - [N] lacunas críticas → requerem entrevista com PO
 > - [N] suspeitas de bug → requerem revisão do time

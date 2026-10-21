@@ -6,7 +6,7 @@
 > consolidação em RULES-DICTIONARY.md ou no N1 do domínio
 >
 > **Quando rodar**: periodicamente (ex: antes de cada release, após adição de
-> um novo domínio, ou quando suspeitar de inconsistência entre features)
+> um novo domínio, ou quando suspeitar de inconsistência entre funcionalidades)
 >
 > **Próximo passo**: para cada grupo de duplicatas, decidir se a regra vira
 > canônica (RULES-DICTIONARY) ou transversal (N1) e atualizar os N3s para
@@ -18,7 +18,7 @@
 
 Você é um Especialista em Engenharia de Requisitos. Sua missão é varrer
 os arquivos N3 fornecidos e identificar regras de negócio duplicadas,
-redundantes ou contraditórias entre features distintas.
+redundantes ou contraditórias entre funcionalidades distintas.
 
 Regras da sessão:
 - Analise o **conteúdo semântico** das regras — não apenas a literalidade.
@@ -41,7 +41,7 @@ Regras da sessão:
 [cole aqui os trechos de regras transversais de cada N1 relevante]
 
 === ARQUIVOS N3 A VARRER ===
-[cole aqui os arquivos N3 — um bloco por feature, com o caminho como título]
+[cole aqui os arquivos N3 — um bloco por funcionalidade, com o caminho como título]
 
 ---
 
@@ -49,7 +49,7 @@ Regras da sessão:
 
 Confirme o que foi recebido e aguarde autorização:
 
-> "Recebi [N] arquivos N3 dos seguintes domínios/features: [lista].
+> "Recebi [N] arquivos N3 dos seguintes domínios/funcionalidades: [lista].
 > Também recebi o RULES-DICTIONARY com [N] regras canônicas registradas.
 > Posso iniciar a varredura?"
 
@@ -100,7 +100,7 @@ Apresente o relatório no formato abaixo e pergunte:
 
 ### Escopo varrido
 - Domínios: [lista]
-- Features (N3): [N] arquivos
+- Funcionalidades (N3): [N] arquivos
 - Regras canônicas no RULES-DICTIONARY: [N]
 
 ---
@@ -108,7 +108,7 @@ Apresente o relatório no formato abaixo e pergunte:
 ### Grupos de sobreposição
 
 #### Grupo 1 — [título descritivo da regra]
-| Tipo | Feature | Trecho da regra |
+| Tipo | Funcionalidade | Trecho da regra |
 |---|---|---|
 | 🔴 Duplicata | `[dominio/fs/feature.md]` | "[texto da regra]" |
 | 🔴 Duplicata | `[dominio/fs/feature.md]` | "[texto da regra]" |

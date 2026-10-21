@@ -14,7 +14,7 @@ Qual checkpoint este PR conclui? (marque **um**)
 - [ ] O checkpoint **anterior** já está aprovado na `main` (a esteira não permite pular etapas).
 - [ ] Rodei `python scripts/gates.py promote --write` e **incluí o `modules/INDEX.md` atualizado** neste PR (o gate-check reprova espelho defasado).
 - [ ] (CP2) Incluí as mudanças do `DATA-MODEL.md` neste PR, para o DBA ser revisor obrigatório.
-- [ ] (CP3) Incluí o **plano de testes** em `qa/[dominio]/[feature-set]/[feature].md` neste PR — o gate-check exige, e é o que torna o QA revisor obrigatório.
+- [ ] (CP3) Incluí o **plano de testes** em `qa/[dominio]/[agrupamento-funcional]/[funcionalidade].md` neste PR — o gate-check exige, e é o que torna o QA revisor obrigatório.
 - [ ] (CP4) Incluí o **registro da implementação** em `repos/` (e a `## Implementação` do N3 preenchida) neste PR — o gate-check exige, e é o que torna o Tech Lead revisor obrigatório.
 
 > A verificação automática **Esteira de gates — check** valida a ordem; o review
@@ -24,6 +24,6 @@ Qual checkpoint este PR conclui? (marque **um**)
 
 ---
 
-**Feature(s):** `[SIGLA]-[SFS]-[NN]` · **Ticket:** `[STRYxxxxxxx]` — AIM em `analise-impacto/AIM-[CHAVE].md`
+**Funcionalidade(s):** `[SIGLA]-[SAF]-[NN]` · **Ticket:** `[STRYxxxxxxx]` — AIM em `analise-impacto/AIM-[CHAVE].md`
 
 [Descreva a mudança.]

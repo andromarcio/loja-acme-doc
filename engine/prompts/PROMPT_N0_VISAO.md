@@ -13,7 +13,7 @@
 ## INSTRUÇÕES PARA O CLAUDE
 
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
-> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [agrupamento-funcional]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
 > 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
@@ -101,15 +101,15 @@ Monte as listas **Está dentro** e **Está fora (não-objetivos)**.
 
 ---
 
-## PASSO 6 — Major Feature Sets previstos (N1)
+## PASSO 6 — Domínios previstos (N1)
 
 **[Estado: COLETA_DOMINIOS]**
 
 > "Quais são as **grandes áreas de negócio** que você imagina que comporão o sistema? Para cada uma: um nome e uma frase do que ela cuida. Esta é uma visão **preliminar** — cada área vira um domínio (N1) e será detalhada depois."
 
-Para cada área, proponha uma **sigla de 3 letras maiúsculas** como ID do domínio (mesmo padrão do PROMPT_1A) e confirme a lista comigo antes de seguir. Monte a tabela **Major Feature Sets previstos (N1)** (Major Feature Set | SIGLA | O que cuida).
+Para cada área, proponha uma **sigla de 3 letras maiúsculas** como ID do domínio (mesmo padrão do PROMPT_1A) e confirme a lista comigo antes de seguir. Monte a tabela **Domínios previstos (N1)** (Domínio | SIGLA | O que cuida).
 
-> Esta lista é **preliminar**: a verdade dos domínios nasce no PROMPT_1A, que **reaproveita** as siglas propostas aqui — não gere outras lá. Mantenha-a alinhada com `modules/INDEX.md`. Não detalhe Feature Sets nem features no N0.
+> Esta lista é **preliminar**: a verdade dos domínios nasce no PROMPT_1A, que **reaproveita** as siglas propostas aqui — não gere outras lá. Mantenha-a alinhada com `modules/INDEX.md`. Não detalhe Agrupamentos Funcionais nem funcionalidades no N0.
 
 ---
 
@@ -191,12 +191,12 @@ Antes de escrever o conteúdo, leia a versão vigente em `VERSION` e componha o 
 
 ---
 
-## Major Feature Sets previstos (N1)
+## Domínios previstos (N1)
 
 > Visão preliminar das grandes áreas que comporão o sistema. Cada uma será
 > detalhada em seu próprio N1. Mantenha esta lista alinhada com `modules/INDEX.md`.
 
-| Major Feature Set | SIGLA | O que cuida |
+| Domínio | SIGLA | O que cuida |
 |---|---|---|
 | [Nome] | [ABC] | [uma frase] |
 
@@ -242,9 +242,9 @@ Ao gerar ou alterar qualquer N1/N2/N3:
 > o produto faz a respeito. A Proposta de valor sintetiza o **ganho** — não repita o
 > Propósito; diga o que o usuário leva embora ao adotar o produto.
 
-> **Regra dos Major Feature Sets previstos** — A tabela é **preliminar** e existe só para dar
+> **Regra dos Domínios previstos** — A tabela é **preliminar** e existe só para dar
 > nome às grandes áreas. Proponha siglas de 3 letras maiúsculas; o PROMPT_1A as
-> confirma e reaproveita. Não detalhe Feature Sets nem features aqui.
+> confirma e reaproveita. Não detalhe Agrupamentos Funcionais nem funcionalidades aqui.
 
 Após apresentar, pergunte:
 > "A Visão de Produto (N0) está correta? Ajusta algo ou aprovo para derivar os domínios (N1) com o PROMPT_1A?"
@@ -269,7 +269,7 @@ Antes de apresentar, confira (todos os itens são obrigatórios):
 - [ ] **Público-alvo e personas**: tabela (Persona | Quem é | Principal dor | O que espera do produto)
 - [ ] **Objetivos do produto** (lista numerada) e **Métricas de sucesso (KPIs)** (tabela KPI | O que mede | Meta)
 - [ ] **Escopo** com as subseções `### Está dentro` e `### Está fora (não-objetivos)`
-- [ ] **Major Feature Sets previstos (N1)**: tabela (Major Feature Set | SIGLA | O que cuida), siglas de 3 letras maiúsculas
+- [ ] **Domínios previstos (N1)**: tabela (Domínio | SIGLA | O que cuida), siglas de 3 letras maiúsculas
 - [ ] **Tom de voz e princípios de experiência** e **Restrições e premissas**
 - [ ] **Changelog** + **Instrução para a LLM**
 - [ ] **Linguagem de negócio pura** — sem telas, campos, endpoints ou tecnologias
@@ -278,6 +278,6 @@ Antes de apresentar, confira (todos os itens são obrigatórios):
 > **Gate determinístico** — após gravar o N0, rode `node scripts/validate-doc.mjs <arquivo>`.
 > Ele detecta o nível pelo subtítulo `**Nível 0**` e exige as seções obrigatórias do N0
 > (Propósito, Proposta de valor, Público-alvo e personas, Objetivos do produto, Métricas
-> de sucesso (KPIs), Escopo, Major Feature Sets previstos (N1), Tom de voz e princípios de
+> de sucesso (KPIs), Escopo, Domínios previstos (N1), Tom de voz e princípios de
 > experiência, Restrições e premissas, Changelog). O artefato só é conforme quando o
 > validador retorna `✓` (sai com código 0).

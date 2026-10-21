@@ -1,7 +1,7 @@
 <!-- docqui: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 # RULES-DICTIONARY.md
 > Dicionário de **regras de negócio canônicas** — invariantes que se repetem em
-> várias features (maioridade, registro vinculado não excluível, etc.).
+> várias funcionalidades (maioridade, registro vinculado não excluível, etc.).
 >
 > Registrá-las **uma vez** evita repetir (e divergir) a mesma regra em cada N3.
 > Cada regra aqui descreve a **invariante** ("o quê"); a reação do sistema ("não
@@ -50,7 +50,7 @@
 <!-- /usado-em -->
 
 - **Invariante**: a pessoa associada ao registro deve ter pelo menos a idade mínima na data de referência.
-- **Parâmetros (por feature)**: idade mínima (ex.: 18); data de referência (cadastro / evento).
+- **Parâmetros (por funcionalidade)**: idade mínima (ex.: 18); data de referência (cadastro / evento).
 - **Mensagem**: "É necessário ter no mínimo [idade] anos."
 
 ```gherkin
@@ -67,7 +67,7 @@ Scenario: Pessoa abaixo da idade mínima
 <!-- /usado-em -->
 
 - **Invariante**: o upload é aceito apenas se respeitar o tamanho e os tipos permitidos.
-- **Parâmetros (por feature)**: tamanho máximo (ex.: 5 MB); tipos aceitos (ex.: PDF, PNG).
+- **Parâmetros (por funcionalidade)**: tamanho máximo (ex.: 5 MB); tipos aceitos (ex.: PDF, PNG).
 - **Mensagem**: "Arquivo excede o tamanho máximo de [tamanho]." / "Tipo de arquivo não permitido."
 
 ```gherkin
@@ -84,7 +84,7 @@ Scenario: Arquivo acima do tamanho permitido
 <!-- /usado-em -->
 
 - **Invariante**: um registro referenciado por outros não pode ser removido enquanto houver vínculos.
-- **Parâmetros (por feature)**: entidade(s) vinculada(s); ação alternativa (inativar em vez de excluir).
+- **Parâmetros (por funcionalidade)**: entidade(s) vinculada(s); ação alternativa (inativar em vez de excluir).
 - **Mensagem**: "Não é possível excluir: existem [entidade] vinculados a este registro."
 
 ```gherkin
@@ -99,7 +99,7 @@ Scenario: Exclusão de registro com vínculos
 
 ## Como adicionar uma regra canônica
 
-Uma regra vira canônica quando a **mesma invariante** aparece em **2+ features** (detectável via auditoria — ver `PROMPT_AUDIT_RULES_DEDUP.md`). Para promovê-la:
+Uma regra vira canônica quando a **mesma invariante** aparece em **2+ funcionalidades** (detectável via auditoria — ver `PROMPT_AUDIT_RULES_DEDUP.md`). Para promovê-la:
 
 1. Atribua o próximo **`RC-NN`** (o maior já usado + 1 — nunca reaproveite) e adicione a linha ao **Índice** (ID, nome, invariante, parâmetros em aberto).
 2. Crie a **entrada** `### RC-NN — Nome` (invariante, parâmetros, mensagem, cenários).

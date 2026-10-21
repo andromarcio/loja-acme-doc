@@ -3,6 +3,7 @@ import { basename, dirname, join, relative, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { frontMatter } from './front-matter.mjs';
 import { FEATURE_ID_RE, splitRow } from './trace-index.mjs';
+import { ehSecao } from './niveis.mjs';
 import { impactFiles } from './impact-files.mjs';
 
 const LEDGER = /^<!-- docqui:n3-ids (.+) -->\r?$/gm;
@@ -19,8 +20,8 @@ export function artifactId(text, level) {
 
 export function readN2(text) {
   const lines = text.split(/\r?\n/);
-  const start = lines.findIndex(line => /^## Features\s*$/.test(line));
-  if (start < 0) throw new Error('N2 sem seção ## Features.');
+  const start = lines.findIndex(line => ehSecao(line, 'Funcionalidades'));
+  if (start < 0) throw new Error('N2 sem seção ## Funcionalidades.');
   let end = lines.findIndex((line, index) => index > start && /^## /.test(line));
   if (end < 0) end = lines.length;
   let header = null;
@@ -30,22 +31,22 @@ export function readN2(text) {
     if (!line.trim().startsWith('|') || /^\|[\s:|-]+\|$/.test(line.trim())) continue;
     const cells = splitRow(line);
     if (!header) { header = cells; continue; }
-    const column = header.findIndex(name => /^Feature(?:\s|\(|$)/i.test(name));
-    if (column < 0) throw new Error('Tabela Features sem coluna Feature.');
+    const column = header.findIndex(name => /^(?:Funcionalidade|Feature)(?:\s|\(|$)/i.test(name));
+    if (column < 0) throw new Error('Tabela Funcionalidades sem coluna Funcionalidade.');
     const cell = cells[column];
     const link = cell?.match(/\[([^\]]+)\]\(([^)]+)\)/);
-    if (!link) throw new Error(`Linha ${index + 1}: feature sem link para o N3.`);
+    if (!link) throw new Error(`Linha ${index + 1}: funcionalidade sem link para o N3.`);
     const path = link[2].replace(/^\.\//, '');
     if (!/^f-[^/\\<>[\]#?]+\.md$/.test(path)) throw new Error(`Linha ${index + 1}: caminho de N3 inválido: ${path}.`);
     const idColumn = header.findIndex(name => /^ID(?:\s|$)/i.test(plain(name)));
     const declared = [...cell.matchAll(/<small>(.*?)<\/small>/g)].map(match => plain(match[1]));
     if (idColumn >= 0) declared.push(plain(cells[idColumn]));
     for (const value of declared) {
-      if (!value || value === '—' || /[\[\]<>]|\b(?:SIGLA|SFS|NN)\b/.test(value)) continue;
+      if (!value || value === '—' || /[\[\]<>]|\b(?:SIGLA|SAF|SFS|NN)\b/.test(value)) continue;
       if (!validId(value)) throw new Error(`Linha ${index + 1}: ID declarado inválido: ${value}; não será renumerado.`);
     }
     const ids = [...new Set([...idsIn(cell), ...(idColumn >= 0 ? idsIn(cells[idColumn]) : [])])];
-    if (ids.length > 1) throw new Error(`Linha ${index + 1}: mais de um ID na feature.`);
+    if (ids.length > 1) throw new Error(`Linha ${index + 1}: mais de um ID na funcionalidade.`);
     rows.push({ path, name: plain(link[1]), id: ids[0] || null, index, column, idColumn });
   }
   const ledgers = [...text.matchAll(LEDGER)];
@@ -60,7 +61,7 @@ export function readN2(text) {
       throw new Error(`Reserva inválida no registro docqui:n3-ids: ${id}.`);
     }
   }
-  if (!header || (!rows.length && !ledger)) throw new Error('Tabela Features vazia; confirme a jornada antes de numerar.');
+  if (!header || (!rows.length && !ledger)) throw new Error('Tabela Funcionalidades vazia; confirme a jornada antes de numerar.');
   const telas = lines.findIndex(line => /^## Telas\s*$/.test(line));
   const references = [];
   if (telas >= 0) for (let i = telas + 1; i < lines.length && !/^## /.test(lines[i]); i++) {
@@ -129,26 +130,26 @@ export function planN3Ids(root, readme, { base = null } = {}) {
   root = resolve(root);
   readme = resolve(readme);
   const folder = relative(root, dirname(readme)).replace(/\\/g, '/');
-  if (!/^modules\/[^/]+\/[^/]+$/.test(folder) || basename(readme) !== 'README.md') throw new Error('Informe o README.md de um Feature Set em modules\\<domínio>\\<feature-set>.');
+  if (!/^modules\/[^/]+\/[^/]+$/.test(folder) || basename(readme) !== 'README.md') throw new Error('Informe o README.md de um Agrupamento Funcional em modules\\<domínio>\\<agrupamento-funcional>.');
   const text = read(readme);
   if (!text) throw new Error(`N2 não encontrado: ${readme}. Confirme e registre a jornada antes de atribuir IDs.`);
   const current = readN2(text);
-  if (!current.id) throw new Error('N2 sem ID de Feature Set válido no subtítulo.');
+  if (!current.id) throw new Error('N2 sem ID de Agrupamento Funcional válido no subtítulo.');
   const previous = baseline(root, folder, base);
   const oldText = previous.files.get('README.md');
   const old = oldText ? readN2(oldText) : null;
-  if (old?.id && old.id !== current.id) throw new Error(`ID do Feature Set imutável: ${old.id}; recebido ${current.id}.`);
+  if (old?.id && old.id !== current.id) throw new Error(`ID do Agrupamento Funcional imutável: ${old.id}; recebido ${current.id}.`);
   if (old?.ledger && !current.ledger) throw new Error('Registro docqui:n3-ids removido: restaure as reservas da base, sem renumerar.');
   if (previous.shallow && !current.ledger) throw new Error('Histórico Git raso: complete o histórico antes de registrar reservas (git fetch --unshallow).');
   const reserved = new Map(), owners = new Map(), errors = [];
   const maxKnown = new Set();
   function reserve(id, path, source) {
-    if (!validId(id) || !id.startsWith(current.id + '-')) { errors.push(`${source}: ID inválido ou de outro Feature Set: ${id}.`); return; }
+    if (!validId(id) || !id.startsWith(current.id + '-')) { errors.push(`${source}: ID inválido ou de outro Agrupamento Funcional: ${id}.`); return; }
     maxKnown.add(id);
     const renamed = previous.renames.get(path) || path;
     const existing = reserved.get(id);
     if (reserved.has(id) && existing !== renamed) {
-      errors.push(`${source}: ID imutável ${id} já reservado para ${existing || 'feature retirada'}.`); return;
+      errors.push(`${source}: ID imutável ${id} já reservado para ${existing || 'funcionalidade retirada'}.`); return;
     }
     if (renamed && owners.has(renamed) && owners.get(renamed) !== id) {
       errors.push(`${source}: ${renamed} já tem o ID imutável ${owners.get(renamed)}, não ${id}.`); return;
@@ -179,7 +180,7 @@ export function planN3Ids(root, readme, { base = null } = {}) {
     const id = subtitle || fm;
     if (!id) {
       if (current.rows.some(row => row.path === name)) missingN3Ids.push(name);
-      else errors.push(`${name}: N3 sem ID e fora da tabela Features do N2.`);
+      else errors.push(`${name}: N3 sem ID e fora da tabela Funcionalidades do N2.`);
     }
     else reserve(id, name, 'N3 atual');
   }
@@ -198,7 +199,7 @@ export function planN3Ids(root, readme, { base = null } = {}) {
   const paths = new Set(), names = new Set(), pending = [];
   let next = Math.max(0, ...[...maxKnown].map(id => Number(id.slice(-2)))) + 1;
   const rows = current.rows.map(row => {
-    if (paths.has(row.path)) errors.push(`Feature duplicada na tabela: ${row.path}.`);
+    if (paths.has(row.path)) errors.push(`Funcionalidade duplicada na tabela: ${row.path}.`);
     if (names.has(row.name)) errors.push(`Nome repetido na tabela: ${row.name}.`);
     paths.add(row.path); names.add(row.name);
     let id = owners.get(row.path);
@@ -217,7 +218,7 @@ export function planN3Ids(root, readme, { base = null } = {}) {
 
 export function checkN3Identity(root, file, base = null) {
   const folder = relative(root, dirname(file)).replace(/\\/g, '/');
-  if (!/^modules\/[^/]+\/[^/]+$/.test(folder)) throw new Error('N3 fora de modules\\<domínio>\\<feature-set>.');
+  if (!/^modules\/[^/]+\/[^/]+$/.test(folder)) throw new Error('N3 fora de modules\\<domínio>\\<agrupamento-funcional>.');
   const current = read(file);
   if (!current) throw new Error(`N3 inexistente: ${file}.`);
   const id = artifactId(current, 3), fm = frontMatter(current.split(/\r?\n/))?.id;
@@ -259,7 +260,7 @@ export function applyN3IdPlan(plan, version, date) {
   const existing = lines.findIndex(line => /^<!-- docqui:n3-ids /.test(line));
   if (existing >= 0) lines[existing] = comment;
   else {
-    const section = lines.findIndex(line => /^## Features\s*$/.test(line));
+    const section = lines.findIndex(line => ehSecao(line, 'Funcionalidades'));
     lines.splice(section + 1, 0, '', comment);
   }
   const changelog = lines.findIndex(line => /^## Changelog\s*$/.test(line));

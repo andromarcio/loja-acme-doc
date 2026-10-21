@@ -1,9 +1,9 @@
 # PROMPT 4A — N3 Update Negócio
-## Atualização de Feature Existente · Parte negocial
+## Atualização de Funcionalidade Existente · Parte negocial
 
-> **Modelo de estrutura**: `engine/templates/modules/_template-dominio/_template-feature-set/_template-feature.md` *(referência humana — o prompt já embute o esqueleto)*
+> **Modelo de estrutura**: `engine/templates/modules/_template-dominio/_template-agrupamento-funcional/_template-funcionalidade.md` *(referência humana — o prompt já embute o esqueleto)*
 > **Quem participa**: PO + dev (ou só PO)
-> **Insumo necessário**: descrição da mudança desejada + a feature alvo
+> **Insumo necessário**: descrição da mudança desejada + a funcionalidade alvo
 > (informada por nome/palavra-chave e **localizada pelo engine**, ou colada manualmente)
 > **Entrega**: N3 negocial atualizado com as mudanças solicitadas e changelog
 >
@@ -11,20 +11,20 @@
 > **Próximo passo**: após aprovação, usar PROMPT_4B para a parte técnica
 >
 > ⚠️ **Use este prompt para manutenção (Brownfield).**
-> Para features novas do zero, use PROMPT_3A.
+> Para funcionalidades novas do zero, use PROMPT_3A.
 
 ---
 
 ## INSTRUÇÕES PARA O CLAUDE
 
-**ID imutável:** a atualização preserva o ID do N3. Reorganizar a jornada não renumera as features; se a alteração exigir outra feature, reserve um novo ID pelo N2 com `scripts/ids-n3.mjs`, depois do maior reservado, sem reutilizar lacunas — ver `engine/N3-IDS.md`.
+**ID imutável:** a atualização preserva o ID do N3. Reorganizar a jornada não renumera as funcionalidades; se a alteração exigir outra funcionalidade, reserve um novo ID pelo N2 com `scripts/ids-n3.mjs`, depois do maior reservado, sem reutilizar lacunas — ver `engine/N3-IDS.md`.
 
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
-> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
-> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) **e** `node scripts/validate-feature-semantics.mjs <arquivo>` (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [agrupamento-funcional]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) **e** `node scripts/valida-semantica-funcionalidade.mjs <arquivo>` (é mesmo uma funcionalidade? — critérios FD de `engine/DEFINICAO-FUNCIONALIDADE.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
-Você vai me ajudar a atualizar uma especificação de feature (N3) já existente
+Você vai me ajudar a atualizar uma especificação de funcionalidade (N3) já existente
 do ponto de vista de negócio. Você **não reescreverá** tudo do zero —
 apenas aplicará a mudança solicitada sobre o conteúdo atual.
 
@@ -37,10 +37,10 @@ Estados**. Toda resposta deve iniciar informando o estado atual:
 ```
 
 Regras da sessão:
-- **Localize a feature antes de editar.** Nunca assuma qual é a feature alvo:
+- **Localize a funcionalidade antes de editar.** Nunca assuma qual é a funcionalidade alvo:
   pergunte qual é, busque-a no repositório e **confirme com o usuário** o que foi
   encontrado antes de coletar a mudança
-- Trabalhe apenas na feature solicitada
+- Trabalhe apenas na funcionalidade solicitada
 - Verifique se a mudança afeta outras regras, fluxos ou campos — se sim, pergunte
 - Mantenha linguagem de negócio — sem mencionar tabelas, endpoints ou tecnologias
 - **Mensagens de UI**: toda mensagem exibida num cenário sai do `MESSAGE-DICTIONARY`.
@@ -64,10 +64,10 @@ Regras da sessão:
 === RULES-DICTIONARY.md ===
 [cole aqui o conteúdo do RULES-DICTIONARY.md]
 
-=== N3 EXISTENTE DA FEATURE ===
-[**No Claude Code**: deixe em branco — o engine localiza a feature no passo
+=== N3 EXISTENTE DA FUNCIONALIDADE ===
+[**No Claude Code**: deixe em branco — o engine localiza a funcionalidade no passo
 LOCALIZACAO_FEATURE a partir do nome/palavra-chave que você informar.
-**No fluxo copy-paste**: cole aqui o .md negocial atual da feature.]
+**No fluxo copy-paste**: cole aqui o .md negocial atual da funcionalidade.]
 
 === AIMM DO TICKET *(opcional — do PROMPT_AIMM)* ===
 [cole aqui a AIMM do ticket que motiva esta alteração — `analise-impacto/AIMM-<CHAVE>.md`.
@@ -81,34 +81,34 @@ da AIMM e Tipo "Alteração", e registre-a no changelog.]
 **[Estado: INICIALIZACAO]**
 
 Confirme o que foi recebido e aguarde:
-> "Vamos atualizar uma feature existente. Posso iniciar localizando a feature que
+> "Vamos atualizar uma funcionalidade existente. Posso iniciar localizando a funcionalidade que
 > você quer alterar?"
 
 ---
 
-## PASSO 2 — Localização da feature
+## PASSO 2 — Localização da funcionalidade
 
 **[Estado: LOCALIZACAO_FEATURE]**
 
-Nunca assuma qual é a feature alvo. Identifique-a junto com o usuário antes de
+Nunca assuma qual é a funcionalidade alvo. Identifique-a junto com o usuário antes de
 qualquer coleta de mudança.
 
-**1. Pergunte qual feature** (se ainda não foi informada por nome/ID/palavra-chave):
-> "Qual feature você quer alterar? Pode informar o nome, o ID (ex.: `USR-PRM-01`)
+**1. Pergunte qual funcionalidade** (se ainda não foi informada por nome/ID/palavra-chave):
+> "Qual funcionalidade você quer alterar? Pode informar o nome, o ID (ex.: `USR-PRM-01`)
 > ou uma palavra-chave do que ela faz."
 
-**2. Busque a feature no repositório:**
+**2. Busque a funcionalidade no repositório:**
 - **No Claude Code (com ferramentas de arquivo):** procure nos N3 em
-  `modules/**/[feature].md` por correspondências no nome do arquivo, na `## Descrição`,
+  `modules/**/[funcionalidade].md` por correspondências no nome do arquivo, na `## Descrição`,
   no ID e nos campos. Não peça para colar o conteúdo — leia direto do disco.
 - **No fluxo copy-paste:** use o N3 colado na seção CONTEXTO; se nenhum foi colado,
-  peça que cole o N3 da feature.
+  peça que cole o N3 da funcionalidade.
 
 **3. Apresente o que foi encontrado e confirme** antes de avançar:
 - Se houver **uma** correspondência clara, mostre um cartão de identificação e peça
   confirmação:
-  > "Encontrei esta feature:
-  > - **Feature:** [nome] (`[ID]`)
+  > "Encontrei esta funcionalidade:
+  > - **Funcionalidade:** [nome] (`[ID]`)
   > - **Caminho:** `modules/[dom]/[fs]/[feat].md`
   > - **Descrição:** [1º parágrafo da ## Descrição — a entrega]
   > - **Campos:** [lista curta dos Label PO]
@@ -116,10 +116,10 @@ qualquer coleta de mudança.
   > É esta que você quer alterar?"
 - Se houver **mais de uma** correspondência, liste as candidatas (nome, ID, caminho,
   descrição em uma linha) e peça para o usuário escolher — **uma pergunta**.
-- Se **nenhuma** for encontrada, informe e pergunte se a feature usa outro nome ou se
+- Se **nenhuma** for encontrada, informe e pergunte se a funcionalidade usa outro nome ou se
   ainda não foi especificada (nesse caso, é caso de PROMPT_3A, não de manutenção).
 
-Só transite para `IDENTIFICACAO_MUDANCA` após o usuário confirmar a feature. A partir
+Só transite para `IDENTIFICACAO_MUDANCA` após o usuário confirmar a funcionalidade. A partir
 daqui, leia o N3 confirmado como base e trabalhe apenas sobre ele.
 
 ---
@@ -129,7 +129,7 @@ daqui, leia o N3 confirmado como base e trabalhe apenas sobre ele.
 **[Estado: IDENTIFICACAO_MUDANCA]**
 
 Faça esta pergunta e aguarde:
-> "O que você deseja alterar, adicionar ou remover nesta feature?
+> "O que você deseja alterar, adicionar ou remover nesta funcionalidade?
 > Descreva a necessidade em linguagem de negócio.
 > Se a mudança vem de um ticket (ServiceNow, issue, experimento), informe a chave
 > (ex.: `STRYxxxxxxx`) para eu registrá-la na seção `## Origem` e no changelog."
@@ -161,14 +161,14 @@ Para cada ponto com impacto, formule uma pergunta de esclarecimento —
   alterada tem ao menos um cenário com a tag `@RN-NN`; a tag da regra removida sai do
   cenário (`node scripts/valida-regras-cenarios.mjs <N3>`).
 - **Comportamento de tela**: a UI precisará de mudanças?
-- **Lista ou funcionalidade compartilhada**: se a mudança toca um PE que esta feature
+- **Lista ou funcionalidade compartilhada**: se a mudança toca um PE que esta funcionalidade
   reutiliza — linha com `↪ [ID](…)` na `## Métricas de tamanho` (`SIZING.md` → *PE
   reutilizado*) —, ela vale para toda tela que o usa. Pergunte se é isso: sendo, a
   alteração vai para o PE onde ele conta — o ticket entra também na `## Origem` e no
-  Changelog da feature `ID`, com a contagem pendente — e as outras features que o
+  Changelog da funcionalidade `ID`, com a contagem pendente — e as outras funcionalidades que o
   reutilizam entram na AIMM como regressão (`node scripts/generate-impact-draft.mjs`
   as lista). Se a mudança vale só para esta tela, a lista deixa de ser a mesma: esta
-  feature passa a ter um PE próprio.
+  funcionalidade passa a ter um PE próprio.
 
 Exemplo de pergunta:
 > "Notei que você quer adicionar 'Data de validade'. Esse campo será obrigatório?"
@@ -193,8 +193,8 @@ alinhadas e confirme:
 Gere a versão atualizada das seções negociais do N3 afetadas,
 evidenciando o que mudou. Se a alteração veio de um ticket, adicione a linha
 correspondente à seção `## Origem` (Tipo "Alteração", com o link da AIMM do ticket). O bloco
-`origem:` do front-matter **não muda**: ele guarda só o ticket que criou a feature (é a coluna
-Origem da esteira no `modules/INDEX.md`), e a feature que nasceu sem ticket continua sem ele —
+`origem:` do front-matter **não muda**: ele guarda só o ticket que criou a funcionalidade (é a coluna
+Origem da esteira no `modules/INDEX.md`), e a funcionalidade que nasceu sem ticket continua sem ele —
 o histórico de tickets é a `## Origem`. Adicione ou atualize a
 seção de changelog. **Insira a nova linha no topo da tabela** (logo abaixo do
 cabeçalho), mantendo o changelog em **ordem decrescente por data** — a entrada
@@ -216,14 +216,14 @@ defina `contagem.pendente: true` (deixe `revisada_em`/`revisada_ate` como estava
 manter o histórico da última revisão). Isso vale **mesmo que você ache que a contagem não
 muda** — quem decide é a revisão via opção CT. Propague o marcador: na tabela de
 rastreabilidade do `modules/INDEX.md`, coluna **Contagem** = 📋 (pendente) para esta
-feature; e acrescente-a a `global/CONTAGEM-PF.md → ## Pendências de contagem` (se ainda não
+funcionalidade; e acrescente-a a `global/CONTAGEM-PF.md → ## Pendências de contagem` (se ainda não
 constar). Não toque nos gates nem em `estado`.
 
 Apresente apenas as seções alteradas (não repita o que não mudou).
 Se houver promoções aprovadas a dicionários, liste-as como ação pendente
 (⚠️ aplicar no FIELD-DICTIONARY / RULES-DICTIONARY antes de implementar).
 Pergunte:
-> "A atualização negocial do N3 de [feature] está correta?
+> "A atualização negocial do N3 de [funcionalidade] está correta?
 > Ajusta algo ou avanço para a parte técnica via PROMPT_4B?"
 
 ---
@@ -233,20 +233,20 @@ Pergunte:
 **[Estado: GERACAO_ATUALIZACAO]**
 
 > Execute **somente se** um ticket motivou esta alteração (uma linha Tipo
-> "Alteração" foi adicionada à `## Origem` no PASSO 6). O elo ticket ↔ feature
+> "Alteração" foi adicionada à `## Origem` no PASSO 6). O elo ticket ↔ funcionalidade
 > é **M:N** e precisa ficar registrado dos dois lados mais o índice — senão o
-> caminho inverso ("quais features este ticket alterou?") fica incompleto.
+> caminho inverso ("quais funcionalidades este ticket alterou?") fica incompleto.
 
 Atualize os outros dois lados, espelhando a linha que entrou na `## Origem`:
 
-**1. `analise-impacto/AIM-<CHAVE>.md`** — na seção `## Features` da AIM do ticket,
-adicione a linha desta feature se ainda não constar (Operação "Alteração"), e
-registre uma linha no topo do Changelog da AIM ("Feature alterada") — mantendo o
-Changelog em ordem decrescente por data. A linha da feature no changeset da AIM
+**1. `analise-impacto/AIM-<CHAVE>.md`** — na seção `## Funcionalidades` da AIM do ticket,
+adicione a linha desta funcionalidade se ainda não constar (Operação "Alteração"), e
+registre uma linha no topo do Changelog da AIM ("Funcionalidade alterada") — mantendo o
+Changelog em ordem decrescente por data. A linha da funcionalidade no changeset da AIM
 (`## Artefatos impactados`) é a desta passada: a execução segue o escopo que o PO
 avalizou.
 
-**2. `modules/INDEX.md`** — garanta que existe a linha do par ticket↔feature na
+**2. `modules/INDEX.md`** — garanta que existe a linha do par ticket↔funcionalidade na
 tabela `## Rastreabilidade: ticket → spec → código` (adicione se faltar;
 atualize o Status se ele mudou com esta alteração).
 

@@ -1,5 +1,5 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_1A_N1_negocio | atualizado: 2026-10-18 -->
-# Major Feature Set: Administração
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+# Domínio: Administração
 > **Nível 1** - Visão estratégica do domínio - `ADM`
 
 ## Descrição
@@ -14,9 +14,9 @@ Responde pela operação da Loja ACME: quem tem acesso e com que perfil, e quais
 | Manter categorias e destaques | Catálogo e Vitrine |
 | Definir a senha e dar acesso à loja (entrar na conta) | Não especificado no exemplo |
 
-## Feature Sets
+## Agrupamentos Funcionais
 
-| Feature Set | Descrição | Features |
+| Agrupamento Funcional | Descrição | Funcionalidades |
 |---|---|---|
 | [**Usuários**](usuarios/README.md) <small>ADM-USR</small> | Quem acessa a loja e com que perfil | 5 |
 | [**Faixas de Frete**](faixas-frete/README.md) <small>ADM-FRT</small> | Faixas de CEP atendidas e o valor do frete de cada uma | 5 |
@@ -43,5 +43,6 @@ Nenhum outro domínio altera dados da Administração. A Administração é que 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N1 criado | Administração com Usuários e Faixas de Frete especificados; exemplo em rascunho. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |
 
 *Links: [Usuários](usuarios/README.md) · [Faixas de Frete](faixas-frete/README.md) · [INDEX geral](../INDEX.md)*

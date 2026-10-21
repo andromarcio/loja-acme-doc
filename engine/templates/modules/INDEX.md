@@ -6,7 +6,7 @@
 
 ## Domínios
 
-| Domínio | Pasta | Responsabilidade | Feature Sets |
+| Domínio | Pasta | Responsabilidade | Agrupamentos Funcionais |
 |---|---|---|---|
 | [Nome do Domínio](./[dominio]/README.md) | `modules/[dominio]/` | [responsabilidade em uma frase] | [N] |
 
@@ -14,31 +14,31 @@
 
 ## Rastreabilidade: ticket → spec → código
 
-| Ticket (AIMM) | Feature | Domínio | Status | Contagem | PF | CFP | Repositórios |
+| Ticket (AIMM) | Funcionalidade | Domínio | Status | Contagem | PF | CFP | Repositórios |
 |---|---|---|---|---|---|---|---|
-| [`STRYxxxxxxx`](../analise-impacto/AIMM-[CHAVE].md) | [[SIGLA]-[SFS]-[NN]: Nome da Feature](./[dominio]/[feature-set]/[feature].md) | [Domínio] | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRYxxxxxxx`](../analise-impacto/AIMM-[CHAVE].md) | [[SIGLA]-[SAF]-[NN]: Nome da Funcionalidade](./[dominio]/[agrupamento-funcional]/[funcionalidade].md) | [Domínio] | ✏️ Rascunho | 📋 | — | — | — |
 
 <!--
-  Ticket: chave do ticket que originou ou alterou a feature (seção "Origem" do N3),
+  Ticket: chave do ticket que originou ou alterou a funcionalidade (seção "Origem" do N3),
   com o link da AIMM do ticket (`analise-impacto/AIMM-<CHAVE>.md`).
-  Uma feature pode ter mais de um ticket; um ticket, mais de uma feature.
+  Uma funcionalidade pode ter mais de um ticket; um ticket, mais de uma funcionalidade.
   Status: o `estado` do front-matter do N3, com o ícone da legenda abaixo — um N3
     recém-gerado é ✏️ Rascunho. Avança com os gates (um PR por checkpoint, que
     regenera a seção Esteira de checkpoints); nunca se escreve adiantado. Vale o mesmo
-    na ## Features da AIMM do ticket: o audit compara as duas.
+    na ## Funcionalidades da AIMM do ticket: o audit compara as duas.
   PF: a opção CT (PROMPT_CONTAGEM, passo 5) o propaga depois da revisão — o 3B e o 4B
     contam só no N3. Ver critérios em global/SIZING.md.
-  Contagem: status de contagem APF da feature — espelha `contagem.pendente` do
+  Contagem: status de contagem APF da funcionalidade — espelha `contagem.pendente` do
     front-matter do N3 (INDEPENDENTE dos gates/Status). ✅ = contada (revisão de PF
     feita para a última alteração do changelog, mesmo Δ PF = 0) · 📋 = pendente
     (há alteração ainda não revisada). Alteração de spec (3A/4A/CRUD/WIZARD/RT/R1/R3) → 📋;
     revisão via opção CT / PROMPT_CONTAGEM → ✅. Lista consolidada de pendentes em
     global/CONTAGEM-PF.md → ## Pendências de contagem.
-  Totais vigentes excluem features ❌ Deprecadas.
+  Totais vigentes excluem funcionalidades ❌ Deprecadas.
 
   GATES DETERMINÍSTICOS desta tabela:
-  - `node scripts/audit-trace-links.mjs` prova que cada par ticket↔feature está
-    nos TRÊS lugares (## Origem do N3 + ## Features da AIMM + esta linha)
+  - `node scripts/audit-trace-links.mjs` prova que cada par ticket↔funcionalidade está
+    nos TRÊS lugares (## Origem do N3 + ## Funcionalidades da AIMM + esta linha)
     — roda no hook de gravação e no CI (engine/templates/ci/spec-guard.yml).
   - `node scripts/suspect-links.mjs --mark` troca o Status para ⚠️ Revisão necessária
     quando o outro lado do elo mudou depois da última verificação (carimbos
@@ -52,9 +52,9 @@
 <!-- GATES:INICIO -->
 ## Esteira de checkpoints (gates)
 
-> ⚙️ **Seção gerada por `scripts/gates.py` — não editar à mão.** Espelha o estado de cada feature na esteira (CP1 requisitos (PO/Negócio) → CP2 modelo-dados (DBA/Arquiteto) → CP3 testes (QA) → CP4 codigo (Tech Lead)). Reflete o estado em **[AAAA-MM-DD]**.
+> ⚙️ **Seção gerada por `scripts/gates.py` — não editar à mão.** Espelha o estado de cada funcionalidade na esteira (CP1 requisitos (PO/Negócio) → CP2 modelo-dados (DBA/Arquiteto) → CP3 testes (QA) → CP4 codigo (Tech Lead)). Reflete o estado em **[AAAA-MM-DD]**.
 
-_Nenhuma feature com esteira de gates ainda._
+_Nenhuma funcionalidade com esteira de gates ainda._
 <!-- GATES:FIM -->
 
 ---
@@ -73,15 +73,15 @@ _Nenhuma feature com esteira de gates ainda._
 
 | Item | Nível | Origem | Rota |
 |---|---|---|---|
-| [Cancelar pedido] | N3 | [`STRYxxxxxxx`](../analise-impacto/AIMM-[CHAVE].md) · N2 [Feature Set] | 3A |
+| [Cancelar pedido] | N3 | [`STRYxxxxxxx`](../analise-impacto/AIMM-[CHAVE].md) · N2 [Agrupamento Funcional] | 3A |
 
 ### Conteúdo (⚠️ em aberto)
 
 > O artefato **existe**, mas tem lacunas/suposições aguardando esclarecimento.
 
-| Feature | Lacuna | Arquivo |
+| Funcionalidade | Lacuna | Arquivo |
 |---|---|---|
-| [Nome da feature] | [pergunta em aberto, ex.: idade mínima exigida?] | [arquivo.md](./[dominio]/[feature-set]/[feature].md) |
+| [Nome da funcionalidade] | [pergunta em aberto, ex.: idade mínima exigida?] | [arquivo.md](./[dominio]/[agrupamento-funcional]/[funcionalidade].md) |
 <!-- PENDENCIAS:FIM -->
 
 ---
@@ -123,4 +123,4 @@ Estados da **esteira de checkpoints**, derivados dos `gates` no front-matter de 
 | 🔄 | em-desenvolvimento | — | Implementação em andamento (estado manual) |
 | ✅ | implementado | CP4 (code review) | Em produção, rastreabilidade preenchida |
 | ⚠️ | revisao-necessaria | — | Spec e código (ou spec e ticket) divergem — a spec mudou depois da implementação, o código mudou sem a spec, ou o outro lado de um elo mudou (estado manual; o `suspect-links` também o marca) |
-| ❌ | deprecado | — | Feature removida do sistema |
+| ❌ | deprecado | — | Funcionalidade removida do sistema |

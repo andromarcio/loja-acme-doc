@@ -19,7 +19,7 @@
 
 ## [NomeDoArtefato]
 
-> **Artefato**: [dataset | cache | checkpoint | índice | relatório] — formato: [JSONL | binário + manifest JSON | safetensors | Parquet | …] · produzido por: [feature/estágio `SIGLA-SFS-NN`] · consumido por: [features/estágios]
+> **Artefato**: [dataset | cache | checkpoint | índice | relatório] — formato: [JSONL | binário + manifest JSON | safetensors | Parquet | …] · produzido por: [funcionalidade/estágio `SIGLA-SAF-NN`] · consumido por: [funcionalidades/estágios]
 
 [1–2 frases: o que este artefato representa para o negócio do pipeline — ex.: "Cache de ativações do modelo-alvo que alimenta o treino; evita reprocessar o corpus a cada experimento".]
 
@@ -54,9 +54,9 @@
 
 | Fase | O que acontece | Responsável |
 |---|---|---|
-| Produção | [quando/como é gerado ou regenerado] | [feature/estágio] |
-| Validação | [checagem na produção e/ou na leitura — ex.: `validar` antes do consumo] | [feature/validador] |
-| Consumo | [quem lê e para quê] | [features/estágios] |
+| Produção | [quando/como é gerado ou regenerado] | [funcionalidade/estágio] |
+| Validação | [checagem na produção e/ou na leitura — ex.: `validar` antes do consumo] | [funcionalidade/validador] |
+| Consumo | [quem lê e para quê] | [funcionalidades/estágios] |
 | Retenção/descarte | [por quanto tempo vive, quando pode ser apagado/recriado, tamanho esperado] | [operação] |
 
 ### Invariantes de compatibilidade

@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.26 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013190
@@ -34,9 +34,9 @@ O atendente precisa localizar o pedido de um cliente e cancelá-lo durante o ate
 | CA-2 | O detalhe do pedido mostra o cliente, os itens, o CEP de entrega, o frete, o total e a situação. |
 | CA-3 | Só pedido confirmado pode ser cancelado, e o motivo é obrigatório. |
 
-## Features
+## Funcionalidades
 
-| Feature (N3) | Domínio · Feature Set | Operação | Critérios cobertos | Status |
+| Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
 | [`VND-PED-01`: Pesquisar Pedidos](../modules/vendas/gestao-pedidos/f-pesquisar-pedido.md) | Vendas · Gestão de Pedidos | Criação | `CA-1` | ✏️ Rascunho |
 | [`VND-PED-02`: Visualizar Pedido](../modules/vendas/gestao-pedidos/f-visualizar-pedido.md) | Vendas · Gestão de Pedidos | Criação | `CA-2` | ✏️ Rascunho |
@@ -48,7 +48,7 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 
 | Artefato | Tipo | Operação | Seção | Natureza | O quê | Proveniência |
 |---|---|---|---|---|---|---|
-| `modules/vendas/README.md` | N1 | alterar | Feature Sets | funcional | Gestão de Pedidos entra entre os Feature Sets de Vendas | elicitado |
+| `modules/vendas/README.md` | N1 | alterar | Agrupamentos Funcionais | funcional | Gestão de Pedidos entra entre os Agrupamentos Funcionais de Vendas | elicitado |
 | `modules/vendas/gestao-pedidos/README.md` | N2 | criar | — | funcional | Jornada do atendimento, telas e permissões | elicitado |
 | `modules/vendas/gestao-pedidos/f-pesquisar-pedido.md` | N3 | criar | — | funcional | VND-PED-01 — Pesquisar Pedidos | derivado: âncora |
 | `modules/vendas/gestao-pedidos/f-visualizar-pedido.md` | N3 | criar | — | funcional | VND-PED-02 — Visualizar Pedido | derivado: âncora |
@@ -57,15 +57,15 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `global/MESSAGE-DICTIONARY.md` | MESSAGE-DICT | alterar | Baseline; Vendas | funcional | Período inválido, registro não encontrado e mensagens do cancelamento | elicitado |
 | `prototypes/vendas/gestao-pedidos/flow.html` | PROTÓTIPO | criar | — | funcional | Pesquisa, detalhe e cancelamento do pedido | derivado: espelho do N2 |
 
-## Alterações na spec, por Feature Set
+## Alterações na spec, por Agrupamento Funcional
 
 ### Gestão de Pedidos
 
-| Feature | CA-n | Natureza | Mudança | Regras | Cenários |
+| Funcionalidade | CA-n | Natureza | Mudança | Regras | Cenários |
 | --- | --- | --- | --- | --- | --- |
-| `VND-PED-01`<br>**Pesquisar Pedidos** | CA-1 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: encontrar pedidos por número, cliente, situação e período. | +5 | +11 |
-| `VND-PED-02`<br>**Visualizar Pedido** | CA-2 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: ver o cliente, os itens, a entrega, o frete e o total. | +6 | +8 |
-| `VND-PED-03`<br>**Cancelar Pedido** | CA-3 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: cancelar um pedido confirmado, com o motivo. | +4 | +9 |
+| `VND-PED-01`<br>**Pesquisar Pedidos** | CA-1 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: encontrar pedidos por número, cliente, situação e período. | +5 | +11 |
+| `VND-PED-02`<br>**Visualizar Pedido** | CA-2 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: ver o cliente, os itens, a entrega, o frete e o total. | +6 | +8 |
+| `VND-PED-03`<br>**Cancelar Pedido** | CA-3 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: cancelar um pedido confirmado, com o motivo. | +4 | +9 |
 
 ## Entidades alteradas
 
@@ -93,3 +93,4 @@ Não encerrada. Esta AIMM está em análise e não declara entrega, aprovação 
 | 2026-10-20 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: nome abaixo do ID, entidades sem PF. |
 | 2026-10-18 | Claude | Demonstração | Ticket fictício e Feature Set Gestão de Pedidos preenchidos, com 3 features em rascunho, sem aval e com a contagem pendente. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

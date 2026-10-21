@@ -14,7 +14,7 @@
 
 `modules/INDEX.md` + árvore `modules/`:
 
-| Domínio | Feature Set | Feature (N3) | Arquivo | Status |
+| Domínio | Agrupamento Funcional | Funcionalidade (N3) | Arquivo | Status |
 |---|---|---|---|---|
 | Cadastro (`CAD`) | Fundos Geridos (`CAD-FUN`) | `F01` Cadastrar fundo gerido | `f-cadastrar-fundo-gerido.md` | 📋 Especificado |
 | | | `F02` Pesquisar fundo gerido | `f-pesquisar-fundo-gerido.md` | ✅ Implementado |
@@ -51,7 +51,7 @@ Entendi a necessidade como originada de uma **reunião de refino**. Quebrei em
 
 | # | Sub-necessidade | Nível aparente | Direção |
 |---|---|---|---|
-| 1 | Excluir um fundo gerido | N3 (feature) | bottom-up (dentro de um FS que já existe) |
+| 1 | Excluir um fundo gerido | N3 (funcionalidade) | bottom-up (dentro de um FS que já existe) |
 | 2 | Novo campo "Data de encerramento" no cadastro de fundo | N3 (alteração) | bottom-up |
 | 3 | Exportar a lista de fundos para Excel (na pesquisa) | N3 (alteração) | bottom-up |
 | 4 | Portal público para investidores consultarem fundos | N1/N2 (área nova) | top-down |
@@ -79,7 +79,7 @@ Confere? Posso descobrir o que já existe sobre cada item?
 | Cadastrar fundo gerido (`F01`) | N3 | `modules/cadastro/fundos-geridos/f-cadastrar-fundo-gerido.md` | Inclui um novo fundo gerido com seus dados básicos | **Cobre em parte** (não tem "Data de encerramento") |
 | Pesquisar fundo gerido (`F02`) | N3 | `…/f-pesquisar-fundo-gerido.md` | Pesquisa/lista fundos por filtros e exibe resultados | **Cobre em parte** (sem exportação para Excel) |
 | Editar fundo gerido (`F03`) | N3 | `…/f-editar-fundo-gerido.md` | Edita os dados de um fundo existente | **Relacionado** (a "Data de encerramento" também reflete aqui) |
-| Feature Set Fundos Geridos (`CAD-FUN`) | N2 | `modules/cadastro/fundos-geridos/README.md` | Operações sobre fundos geridos (cadastrar, pesquisar, editar) | **Não cobre** exclusão |
+| Agrupamento Funcional Fundos Geridos (`CAD-FUN`) | N2 | `modules/cadastro/fundos-geridos/README.md` | Operações sobre fundos geridos (cadastrar, pesquisar, editar) | **Não cobre** exclusão |
 | *(exclusão de fundo)* | — | — | — | **Não cobre** — candidato a criação |
 | *(portal público de investidores)* | — | — | — | **Não cobre** — área (domínio/FS) inexistente |
 
@@ -98,8 +98,8 @@ fora? Posso fechar a recomendação?
 |---|---|---|---|---|
 | Excluir fundo gerido | **Criar (derivado)** | novo `f-excluir-fundo-gerido.md` em `CAD-FUN` | **3A** | Derivação CRUD a partir do cadastro `F01`; o 3A vai perguntar exclusão **física × lógica** e o que fazer com vínculos |
 | Campo "Data de encerramento" no cadastro | **Alterar** | `f-cadastrar-fundo-gerido.md` | **4A → 4B** | ⚠️ Avaliar se é campo canônico (*data futura*) no FIELD-DICTIONARY; refletir também na edição (`F03`) |
-| Exportar lista para Excel (pesquisa) | **Alterar** | `f-pesquisar-fundo-gerido.md` | **4A → 4B** | `F02` já está **implementada** → o 4B avalia *breaking change*. Se virar um relatório com regras próprias, pode ser feature nova (3A) |
-| Portal público de investidores | **Criar (domínio novo)** | novo domínio + feature set | **1A → 2A → 3A** | ⚠️ "Mais pra frente" e **possível mudança de escopo do produto** — validar contra o `N0_PRODUCT_VISION.md` com o PO **antes** de especificar |
+| Exportar lista para Excel (pesquisa) | **Alterar** | `f-pesquisar-fundo-gerido.md` | **4A → 4B** | `F02` já está **implementada** → o 4B avalia *breaking change*. Se virar um relatório com regras próprias, pode ser funcionalidade nova (3A) |
+| Portal público de investidores | **Criar (domínio novo)** | novo domínio + agrupamento funcional | **1A → 2A → 3A** | ⚠️ "Mais pra frente" e **possível mudança de escopo do produto** — validar contra o `N0_PRODUCT_VISION.md` com o PO **antes** de especificar |
 
 **Em resumo:** a necessidade é **mista** — parte se resolve **alterando** o que já
 existe (`f-cadastrar-…`, `f-pesquisar-…`), parte exige **criar** (exclusão de fundo

@@ -1,7 +1,7 @@
 <!-- docqui: [versão] | prompt: PROMPT_QA | atualizado: [YYYY-MM-DD] -->
-# Plano de testes — [SIGLA]-[SFS]-NN — [Nome da feature]
+# Plano de testes — [SIGLA]-[SAF]-NN — [Nome da funcionalidade]
 
-> **N3**: [[SIGLA]-[SFS]-NN — [Nome da feature]](../../../modules/[dominio]/[feature-set]/[feature].md) · **Framework**: [Playwright / Cypress / Cucumber / roteiro manual] · **Script**: `[repositório]/[pasta de E2E do MASTER]/[dominio]/[feature].spec.ts`
+> **N3**: [[SIGLA]-[SAF]-NN — [Nome da funcionalidade]](../../../modules/[dominio]/[agrupamento-funcional]/[funcionalidade].md) · **Framework**: [Playwright / Cypress / Cucumber / roteiro manual] · **Script**: `[repositório]/[pasta de E2E do MASTER]/[dominio]/[funcionalidade].spec.ts`
 
 <!--
 Molde do PROMPT_QA. O plano testa o comportamento do N3 — regras, cenários negociais e técnicos, estados da tela — e não a implementação. Não repita a regra aqui: cite-a pelo ID (`[ID]/RN-NN`) e o leitor a lê no N3. O que a documentação não responde vai para "Pontos a resolver" com ❓, nunca inventado no script.
@@ -9,11 +9,11 @@ Molde do PROMPT_QA. O plano testa o comportamento do N3 — regras, cenários ne
 
 ## Escopo e premissas
 
-[O que o plano cobre e o que fica de fora (ex.: o "Então" que acontece em outra feature). Ambiente: endereço do front e da API, de onde vêm.]
+[O que o plano cobre e o que fica de fora (ex.: o "Então" que acontece em outra funcionalidade). Ambiente: endereço do front e da API, de onde vêm.]
 
 ## Massa de teste
 
-[Como cada teste obtém os dados: pela API de quais features (`ID — Nome` e endpoint), o que cada teste cria para si e o que é compartilhado e congelado, os usuários por perfil (matriz do N2) e as dependências externas com a variável de ambiente que as configura. Teste sem massa falha ou pula com o motivo — nunca passa.]
+[Como cada teste obtém os dados: pela API de quais funcionalidades (`ID — Nome` e endpoint), o que cada teste cria para si e o que é compartilhado e congelado, os usuários por perfil (matriz do N2) e as dependências externas com a variável de ambiente que as configura. Teste sem massa falha ou pula com o motivo — nunca passa.]
 
 | Dado | Como é criado | Variável de ambiente |
 |---|---|---|
@@ -45,12 +45,12 @@ Toda regra do N3 tem ao menos um teste com `[ID]/RN-NN` no nome — é o texto q
 
 ## 📐 NFR aplicáveis
 
-- [Só os IDs que existem no `global/NFR.md` da instância e que a feature exercita.]
+- [Só os IDs que existem no `global/NFR.md` da instância e que a funcionalidade exercita.]
 
 ## Script base
 
 ```ts
-// [ID] — [Nome da feature]
+// [ID] — [Nome da funcionalidade]
 ```
 
 ## Pontos a resolver (❓)

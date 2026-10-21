@@ -1,6 +1,6 @@
-<!-- docqui: 6.4.10 | prompt: IDS_N3 | atualizado: 2026-10-18 -->
-# Feature Set: Faixas de Frete
-> **Nível 2** - Major Feature Set: Administração - `ADM-FRT`
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+# Agrupamento Funcional: Faixas de Frete
+> **Nível 2** - Domínio: Administração - `ADM-FRT`
 
 ## Descrição
 
@@ -8,11 +8,11 @@ Reúne as operações de manutenção das faixas de frete: pesquisar, cadastrar,
 
 **Não faz**: calcular o frete de um pedido (Checkout › Calcular Frete) nem definir o prazo de entrega (exercício STRY0013120).
 
-## Features
+## Funcionalidades
 
 <!-- docqui:n3-ids {"version":1,"ids":{"ADM-FRT-01":"f-pesquisar-faixa-frete.md","ADM-FRT-02":"f-cadastrar-faixa-frete.md","ADM-FRT-03":"f-editar-faixa-frete.md","ADM-FRT-04":"f-excluir-faixa-frete.md","ADM-FRT-05":"f-visualizar-faixa-frete.md"}} -->
 
-| Feature | Descrição |
+| Funcionalidade | Descrição |
 |---|---|
 | [**Pesquisar Faixas de Frete**](f-pesquisar-faixa-frete.md) <small>ADM-FRT-01</small> | Encontrar faixas por região ou por um CEP que elas atendem |
 | [**Cadastrar Faixa de Frete**](f-cadastrar-faixa-frete.md) <small>ADM-FRT-02</small> | Incluir uma faixa de CEP com o valor do frete |
@@ -37,16 +37,16 @@ flowchart TD
     F --> Z
 ```
 
-## Dependências entre features
+## Dependências entre funcionalidades
 
 - **Pesquisar Faixas de Frete** é o ponto de entrada; **Cadastrar Faixa de Frete** independe das demais.
 - **Editar Faixa de Frete**, **Excluir Faixa de Frete** e **Visualizar Faixa de Frete** exigem uma faixa existente, alcançada pela pesquisa.
 - **Excluir Faixa de Frete** depende de a faixa não atender pedidos (Pedido, de [Vendas](../../vendas/README.md)).
-- As faixas mantidas aqui são as que **Calcular Frete** <small>VND-CHK-01</small>, do Feature Set [Checkout](../../vendas/checkout/README.md), usa.
+- As faixas mantidas aqui são as que **Calcular Frete** <small>VND-CHK-01</small>, do Agrupamento Funcional [Checkout](../../vendas/checkout/README.md), usa.
 
 ## Telas
 
-| Tela | Rota sugerida | Features atendidas | Descrição |
+| Tela | Rota sugerida | Funcionalidades atendidas | Descrição |
 |---|---|---|---|
 | Pesquisa de Faixas de Frete | `/administracao/faixas-frete` | **Pesquisar Faixas de Frete** <small>ADM-FRT-01</small><br>**Excluir Faixa de Frete** <small>ADM-FRT-04</small> | Filtros e lista das faixas; origem das ações |
 | Cadastrar Faixa de Frete | `/administracao/faixas-frete/novo` | **Cadastrar Faixa de Frete** <small>ADM-FRT-02</small> | Formulário de cadastro |
@@ -55,7 +55,7 @@ flowchart TD
 
 ## Permissões por perfil
 
-> **Fonte única de permissões** deste Feature Set. As features (N3) não tratam de perfis nem permissões; qualquer acesso novo ou diferente entra nesta matriz.
+> **Fonte única de permissões** deste Agrupamento Funcional. As funcionalidades (N3) não tratam de perfis nem permissões; qualquer acesso novo ou diferente entra nesta matriz.
 
 Perfis: **Administrador**, **Atendente**.
 
@@ -73,5 +73,6 @@ Perfis: **Administrador**, **Atendente**.
 |---|---|---|---|
 | 2026-10-18 | ids-n3 | IDs reservados | Registro dos IDs existentes, sem renumeração; IDs imutáveis. |
 | 2026-10-18 | Claude | N2 criado | CRUD de Faixas de Frete gerado pelo PROMPT CRUD a partir do ticket fictício STRY0013200; mantém a TabelaFrete de Vendas; sem aprovação de checkpoint. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |
 
 *Links: [N1 Administração](../README.md) · [INDEX geral](../../INDEX.md)*

@@ -1,7 +1,7 @@
 # PROMPT_CONTAGEM — Contagem de Pontos de Função (APF) por escopo
 
 > **Quando usar**: você quer **contar (ou recontar) Pontos de Função** de um
-> recorte do sistema já especificado — uma **feature**, um **feature set** ou um
+> recorte do sistema já especificado — uma **funcionalidade**, um **agrupamento funcional** ou um
 > **domínio** inteiro — em **uma única passada**, sem a elicitação
 > pergunta-a-pergunta. O prompt lê a documentação existente (N3, DATA-MODEL),
 > aplica as regras do IFPUG CPM 4.3.1, **grava a contagem na fonte onde ela já
@@ -11,7 +11,7 @@
 > **Quem participa**: Dev/Analista de Métricas (conduz) + Tech Lead/PO (confirma).
 >
 > **Insumo necessário**:
-> - Um **código de escopo** (ver *Passo 0*): feature, feature set ou domínio.
+> - Um **código de escopo** (ver *Passo 0*): funcionalidade, agrupamento funcional ou domínio.
 > - Os N3 do escopo já especificados (idealmente pós-`PROMPT_3B`).
 > - `global/DATA-MODEL.md` e os fragmentos `global/data-models/[dominio].md`.
 > - Critérios em `global/SIZING.md` (regras CAIXA — **prevalecem** sobre o genérico).
@@ -64,19 +64,19 @@ permitida é o **portão de confirmação** antes de tocar o consolidado.
    na fonte.
 
    3b. **Contagem de sprint carrega a origem.** Quando a contagem é a de uma sprint —
-   as features impactadas por uma entrega —, cada feature sai com a **chave do ticket**
+   as funcionalidades impactadas por uma entrega —, cada funcionalidade sai com a **chave do ticket**
    e, se a fonte numerar os critérios de aceite, o **número do critério** (`CA-n`) que
    ela realiza. Os dois já estão na seção `## Origem` do N3; a contagem os repete, não
    os reinventa. Fonte que não numera critérios → `—` na coluna do critério. A AIMM da
    sprint (`analise-impacto/AIMM-<sprint>.md`) é escrita pela skill `analise-impacto`.
 
-4. **Unidade de contagem = a feature (N3) inteira (front + BFF), não o endpoint.**
+4. **Unidade de contagem = a funcionalidade (N3) inteira (front + BFF), não o endpoint.**
    Ver `SIZING.md → Arquitetura BFF`.
 
-5. **Fronteira das funções de dados = a aplicação, não a feature.** Mesmo quando o
-   escopo pedido é **uma feature**, resolva as **funções de dados lendo o DATA-MODEL do
-   domínio inteiro** — uma entidade pode ser *mantida* por outra feature do mesmo
-   domínio (logo é ALI), e olhá-la por uma feature só a faria parecer AIE. As
+5. **Fronteira das funções de dados = a aplicação, não a funcionalidade.** Mesmo quando o
+   escopo pedido é **uma funcionalidade**, resolva as **funções de dados lendo o DATA-MODEL do
+   domínio inteiro** — uma entidade pode ser *mantida* por outra funcionalidade do mesmo
+   domínio (logo é ALI), e olhá-la por uma funcionalidade só a faria parecer AIE. As
    **transações** ficam restritas ao escopo pedido; as **funções de dados** são sempre
    resolvidas no nível do domínio.
 
@@ -94,9 +94,9 @@ Receba um **código de escopo** e determine o nível:
 
 | Formato informado | Nível | O que entra na contagem |
 |---|---|---|
-| `f-<slug>` ou ID de feature (ex.: `CAD-GFG-03`) ou caminho de um `f-*.md` | **Feature** | 1 N3 (transações dessa feature) + funções de dados do **domínio** dela |
-| nome da pasta do Feature Set (ex.: `contratos`), ID `SIGLA-SFS` (ex.: `CTR-FAB`) ou caminho de um `README.md` de N2 | **Feature Set** | todas as features `f-*` da pasta do Feature Set + funções de dados do **domínio** |
-| nome do módulo (ex.: `contagem-metricas`) | **Domínio** | todos os feature sets do módulo + todas as funções de dados do domínio |
+| `f-<slug>` ou ID de funcionalidade (ex.: `CAD-GFG-03`) ou caminho de um `f-*.md` | **Funcionalidade** | 1 N3 (transações dessa funcionalidade) + funções de dados do **domínio** dela |
+| nome da pasta do Agrupamento Funcional (ex.: `contratos`), ID `SIGLA-SAF` (ex.: `CTR-FAB`) ou caminho de um `README.md` de N2 | **Agrupamento Funcional** | todas as funcionalidades `f-*` da pasta do Agrupamento Funcional + funções de dados do **domínio** |
+| nome do módulo (ex.: `contagem-metricas`) | **Domínio** | todos os agrupamentos funcionais do módulo + todas as funções de dados do domínio |
 
 - Liste os N3 que entram no escopo e o **domínio** ao qual pertencem. Se o código for
   ambíguo (casa com mais de um item), **pergunte qual** — esta é a única pergunta
@@ -117,23 +117,23 @@ Para **cada N3 no escopo**, usando a skill `apf-cpm`:
 2. **Verificar unicidade** (mesmo conjunto de DER + ALR + lógica = mesmo PE) — no escopo **e
    na aplicação**: cada PE conta uma vez (`SIZING.md` → *PE reutilizado*).
    `node scripts/valida-acessorio-tela.mjs --pe "<nome do PE>"` diz se ele já é contado
-   noutra feature. Se é, a linha vira referência: o nome do PE contado, `↪ [ID](caminho do
+   noutra funcionalidade. Se é, a linha vira referência: o nome do PE contado, `↪ [ID](caminho do
    N3)` no Tipo e `—` em Papel, ALR, DER, Complexidade e PF, sem memória. Se o filtro difere, é
    outro PE: conte, e declare na memória `> Distinto de <ID> · <PE>: <o que difere>`. PE
-   contado duas vezes que você achar na revisão vira referência na feature que o contou
+   contado duas vezes que você achar na revisão vira referência na funcionalidade que o contou
    depois — e o Δ PF negativo é correção, registrada no histórico.
 3. **Classificar EE/SE/CE** pela intenção primária + as 13 formas de lógica. **Liste as
    formas de lógica** que justificam o tipo (a skill exige isso em caso de ambiguidade).
-   Junto, o **Papel** de cada linha — `principal` (realiza a feature) ou `acessório` (a
-   feature só o hospeda ou consome); `—` na linha `↪` e na ainda não medida (`SIZING.md` →
-   *Papel do PE em relação à feature*). A linha medida sem papel reprova no
+   Junto, o **Papel** de cada linha — `principal` (realiza a funcionalidade) ou `acessório` (a
+   funcionalidade só o hospeda ou consome); `—` na linha `↪` e na ainda não medida (`SIZING.md` →
+   *Papel do PE em relação à funcionalidade*). A linha medida sem papel reprova no
    `valida-contagem-consolidada`.
 4. **Contar ALR — ALIs/AIEs lidos ou mantidos pela transação, em quatro fontes:**
    - **(a)** a coluna **Entidade** da tabela `## Campos` — as entidades distintas ali são
      arquivos lógicos referenciados. `externo: [Sistema]` = AIE; **`dado de código` não
      conta** (valores fixos, sem cadastro — CPM 5.4.2d); `derivado ↓` → ver (b).
    - **(b)** as entidades-fonte de `## Derivações`.
-   - **(c)** a seção **`## Dados lidos e gravados`** — as entidades que a feature toca sem
+   - **(c)** a seção **`## Dados lidos e gravados`** — as entidades que a funcionalidade toca sem
      contribuir campo para a tela.
    - **(d)** **varredura obrigatória de `## Regras de negócio` e `## Campos automáticos`**
      atrás de entidade citada que não apareça em (a)–(c).
@@ -240,12 +240,12 @@ Por que cada ALR:
   (entidades distintas), as entidades-fonte de `## Derivações`, `## Dados lidos e
   gravados` e a varredura de `## Regras de negócio` e `## Campos automáticos`; a memória
   só torna essa leitura explícita e nomeia o motivo de cada leitura.
-- **Feature que não é PE, ou PE descartado**: a linha fica na tabela com PF `0` e `—` em
+- **Funcionalidade que não é PE, ou PE descartado**: a linha fica na tabela com PF `0` e `—` em
   Tipo, ALR, DER e Complexidade, e a memória diz por quê: `**<nome do PE>** — 0 PF` e o
   bloco `{"pe": "<nome do PE>", "motivo": "<por que não conta>"}`. Com só o `Total: 0 PF`, sem a linha, o `valida-contagem-consolidada.mjs` não
-  enxerga a feature.
+  enxerga a funcionalidade.
 - **Memória em formato antigo** (enumeração em prosa, bloco `<details>`, `ALR = N (…)`):
-  reescreva-a no formato acima ao revisar a feature, mesmo nas linhas cujo número não muda —
+  reescreva-a no formato acima ao revisar a funcionalidade, mesmo nas linhas cujo número não muda —
   a `Data` delas fica. Para a instância inteira, `python3 scripts/migra-enumeracao.py`
   converte em lote (simulação por padrão) e lista o que pede decisão humana.
 - `Data` = a data em que a linha foi contada/atualizada (hoje, formato ISO `AAAA-MM-DD`).
@@ -253,7 +253,7 @@ Por que cada ALR:
 - Registre uma entrada no `## Changelog` do N3 (tipo "Contagem"/"Recontagem"), inserindo a nova linha **no topo da tabela** — o changelog fica em **ordem decrescente por data**.
 - **Marque o status de contagem no front-matter** (bloco `contagem`, independente dos gates):
   `pendente: false`, `revisada_em: <hoje AAAA-MM-DD>` e `revisada_ate: <chave do ticket da
-  alteração de changelog mais recente coberta — ex.: STRY03800234>` (feature sem ticket:
+  alteração de changelog mais recente coberta — ex.: STRY03800234>` (funcionalidade sem ticket:
   `criação`). Faça isso **mesmo que
   a recontagem conclua Δ PF = 0** — o status registra que a **revisão** foi feita, não que o
   número mudou. Não mexa nos gates nem em `estado`. A entrada "Contagem"/"Recontagem" acima
@@ -304,17 +304,17 @@ Só execute depois do "confirmo".
    - Acrescente a coluna `Data` aos cabeçalhos do `CONTAGEM-PF.md` caso ainda não exista.
    - **Regra de ouro**: nenhum número aqui que não exista na fonte (Passo 3).
 2. **Propagar o total** para `modules/INDEX.md` (tabela de rastreabilidade + linha de
-   total). Features `❌ Deprecadas` saem do total vigente. Na tabela de rastreabilidade,
-   marque a coluna **Contagem** = ✅ (contada) para cada feature revisada neste escopo.
+   total). Funcionalidades `❌ Deprecadas` saem do total vigente. Na tabela de rastreabilidade,
+   marque a coluna **Contagem** = ✅ (contada) para cada funcionalidade revisada neste escopo.
 3. **Atualizar as pendências de contagem** em `CONTAGEM-PF.md → ## Pendências de contagem`:
-   **remova** as features que acabaram de ser revisadas (agora `contagem.pendente: false`).
-   A seção deve refletir exatamente as features com `contagem.pendente: true` no front-matter.
+   **remova** as funcionalidades que acabaram de ser revisadas (agora `contagem.pendente: false`).
+   A seção deve refletir exatamente as funcionalidades com `contagem.pendente: true` no front-matter.
 4. **Registrar** no `## Histórico de recontagens` do `CONTAGEM-PF.md` uma linha:
    `| Data | Autor | O que mudou | Δ PF | Total |`.
 
 Ao final, rode `node scripts/valida-contagem-consolidada.mjs` — ele confere o número (N3 ×
 consolidado) e a pendência (front-matter × `## Pendências de contagem` × coluna Contagem do
-INDEX) — e `node scripts/valida-acessorio-tela.mjs` — o PE na feature dona da tela e cada
+INDEX) — e `node scripts/valida-acessorio-tela.mjs` — o PE na funcionalidade dona da tela e cada
 PE uma vez na aplicação —, e confirme o que foi alterado (arquivos tocados, Δ PF, novo
 total).
 
@@ -323,7 +323,7 @@ total).
 ## Checklist de saída
 
 ```
-[ ] Escopo resolvido e nível declarado (feature / feature set / domínio)
+[ ] Escopo resolvido e nível declarado (funcionalidade / agrupamento funcional / domínio)
 [ ] Tipo de contagem, fronteira e escopo declarados
 [ ] Transações classificadas com formas de lógica justificadas (skill apf-cpm)
 [ ] Funções de dados resolvidas no nível do DOMÍNIO

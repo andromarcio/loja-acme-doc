@@ -1,7 +1,7 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 id: VND-CHK-01
-feature_set: VND-CHK
+agrupamento_funcional: VND-CHK
 dominio: VND
 entidade: Pedido
 data_model_ref: data-models/vendas.md#pedido
@@ -24,7 +24,7 @@ contagem:
 ---
 
 # Calcular Frete
-> **Nível 3** - Feature Set: Checkout — Major Feature Set: Vendas - `VND-CHK-01`
+> **Nível 3** - Agrupamento Funcional: Checkout — Domínio: Vendas - `VND-CHK-01`
 
 ## Descrição
 
@@ -153,7 +153,7 @@ O campo **CEP de entrega** e o botão **Calcular** ficam na tela de Checkout, co
 |---|---|---|---|---|---|---|---|
 | Calcular Frete | principal | — | — | — | — | — | — |
 
-A contagem está pendente. Não foi deduzida do valor de PF mostrado no simulador; deve nascer da análise desta feature via CT, com memória de cálculo.
+A contagem está pendente. Não foi deduzida do valor de PF mostrado no simulador; deve nascer da análise desta funcionalidade via CT, com memória de cálculo.
 
 ## Origem
 
@@ -170,3 +170,4 @@ A contagem está pendente. Não foi deduzida do valor de PF mostrado no simulado
 | 2026-10-17 | Claude | Ajuste | Saem `prioridade` e `mvp` do front-matter e a linha de Prioridade e MVP do cabeçalho: a priorização das features saiu do método no engine 6.4.4. Nenhuma regra, cenário ou campo muda. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

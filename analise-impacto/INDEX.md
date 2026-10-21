@@ -1,7 +1,7 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # Análises de Impacto — Loja ACME
 
-| Ticket | AIMM | Feature | Estado |
+| Ticket | AIMM | Funcionalidade | Estado |
 |---|---|---|---|
 | STRY0013101 | [Calcular frete no checkout](AIMM-STRY0013101.md) | VND-CHK-01 — Calcular Frete | Em análise; N3 em rascunho |
 | STRY0013170 | [Categorias de produtos](AIMM-STRY0013170.md) | CAT-CTG-01 a CAT-CTG-05 — Categorias (CRUD) | Em análise; N3 em rascunho |
