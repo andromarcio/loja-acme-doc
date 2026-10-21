@@ -14,6 +14,7 @@ framework que o produziu**.
 - A versão vigente vive em [`../VERSION`](../VERSION) (uma linha, SemVer, ex.: `6.2.1`).
 - Toda evolução do engine registra uma entrada em [`../CHANGELOG.md`](../CHANGELOG.md)
   e faz o *bump* de `VERSION` conforme o impacto (MAJOR/MINOR/PATCH — ver o changelog).
+- **Renomear uma seção ou um nome do contrato mantendo a leitura do nome anterior é MINOR**, não PATCH: o artefato novo muda, e quem lê o antigo continua funcionando. PATCH é o que não muda o que se escreve no artefato. A 7.1.0 (seções da AIMM renomeadas, Contexto fora do ticket, nomes anteriores ainda lidos) quase saiu como 7.0.1.
 - `VERSION` é a **fonte única da verdade**. Nenhum prompt ou template embute o número
   literal — todos leem `VERSION` no momento da geração.
 - **O site mostra a versão** num selo no topo, em toda página. Ele é servido só
