@@ -13,8 +13,8 @@ origem:
   chave: STRY0013170
 estado: especificado
 gates:
-  requisitos: { aprovado: true, por: "Andro Márcio", em: "2026-10-21", pr: "" }
-  modelo-dados: { aprovado: true, por: "Andro Márcio", em: "2026-10-21", pr: "" }
+  requisitos: { aprovado: true, por: "Andro Márcio", em: "2026-10-21", pr: 25 }
+  modelo-dados: { aprovado: true, por: "Andro Márcio", em: "2026-10-21", pr: 25 }
   testes: { aprovado: false, por: "", em: "", pr: "" }
   codigo: { aprovado: false, por: "", em: "", pr: "" }
 contagem:
