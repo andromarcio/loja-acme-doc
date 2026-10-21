@@ -58,7 +58,7 @@ function walk(dir, acc = []) {
   return acc;
 }
 
-// ID da feature: linha "Nível 3" com `SIGLA-SFS-NN` (mesma extração do trace-index).
+// ID da funcionalidade: linha "Nível 3" com `SIGLA-SAF-NN` (mesma extração do trace-index).
 function featureId(raw, path) {
   const lvl = raw.split(/\r?\n/).find((l) => /N[íi]vel 3/.test(l));
   const id = lvl && (lvl.match(/`([A-Z]{3}-[A-Z]{3}-\d{2})`/) || [])[1];
@@ -85,7 +85,7 @@ function keysFromTail(dict, tail) {
 }
 // Ponteiro sem chave numa linha de tabela — `| CODIGO | 409 | … (→ ver ERROR-DICTIONARY) |`:
 // a chave é a primeira célula. Antes, o `)` que fecha o parêntese virava a chave (achado no
-// siesa-doc, 2026-10-11: uma linha `)` com 17 features no índice do ERROR-DICTIONARY, e os
+// siesa-doc, 2026-10-11: uma linha `)` com 17 funcionalidades no índice do ERROR-DICTIONARY, e os
 // códigos dessas linhas fora do índice).
 function keysFromRow(raw, idx) {
   const ini = raw.lastIndexOf('\n', idx) + 1;

@@ -5,15 +5,15 @@
 // instância, ele é GERADO por este script — nenhum dado novo, só a projeção do que
 // já está nos .md:
 //
-//   cabeçalho do N3 (ID + título)        → nó feature (status/PF vêm do INDEX.md)
-//   seção ## Origem do N3                → aresta ticket (AIMM) → feature (origina)
-//   seção ## Implementação do N3         → aresta feature → repositório (implementa)
+//   cabeçalho do N3 (ID + título)        → nó funcionalidade (status/PF vêm do INDEX.md)
+//   seção ## Origem do N3                → aresta ticket (AIMM) → funcionalidade (origina)
+//   seção ## Implementação do N3         → aresta funcionalidade → repositório (implementa)
 //   árvore modules/ + N1/N2              → hierarquia                   (contem)
 //   ## Integrações com outros domínios   → aresta domínio → domínio     (integra)
 //
-// Feature set sem README de N2 (bottom-up legítimo: N3 antes de N2) não deixa a
-// feature solta: o nó vem da tabela ## Feature Sets do N1 ou, em último caso, é
-// sintetizado a partir do ID da feature — mesmo comportamento do
+// Agrupamento funcional sem README de N2 (bottom-up legítimo: N3 antes de N2) não deixa a
+// funcionalidade solta: o nó vem da tabela ## Agrupamentos Funcionais do N1 ou, em último caso, é
+// sintetizado a partir do ID da funcionalidade — mesmo comportamento do
 // generate-trace-index.mjs.
 //
 // Uso (a partir da raiz da instância, ou com --root):
@@ -116,10 +116,10 @@ if (existsSync(n0Path)) {
   hasN0 = true;
 }
 
-// --- N1 (domínios) + N2 (feature sets) ----------------------------------------
+// --- N1 (domínios) + N2 (agrupamentos funcionais) ----------------------------------------
 const modulesDir = join(root, 'modules');
 const domainMeta = []; // { sigla, label, folder, lines } — p/ resolver integrações por nome
-const fsIds = new Set(); // feature sets já materializados como nó (N2, tabela do N1 ou síntese)
+const fsIds = new Set(); // agrupamentos funcionais já materializados como nó (N2, tabela do N1 ou síntese)
 for (const folder of subdirs(modulesDir).filter((n) => !n.startsWith('_'))) {
   const n1File = join(modulesDir, folder, 'README.md');
   if (!existsSync(n1File)) continue;
@@ -129,7 +129,7 @@ for (const folder of subdirs(modulesDir).filter((n) => !n.startsWith('_'))) {
   const label = titleOf(lines) || folder;
   domainMeta.push({ sigla, label, folder, lines });
   nodes.push({
-    id: sigla, type: 'dominio', label, sub: `Major Feature Set · ${sigla}`,
+    id: sigla, type: 'dominio', label, sub: `Domínio · ${sigla}`,
     desc: firstParagraph(lines, 'Descrição'), path: relp('modules', folder, 'README.md'),
   });
   if (hasN0) addEdge('N0', sigla, 'contem');
@@ -143,15 +143,15 @@ for (const folder of subdirs(modulesDir).filter((n) => !n.startsWith('_'))) {
     fsIds.add(fsId);
     nodes.push({
       id: fsId, type: 'featureset', label: titleOf(n2Lines) || fsFolder,
-      sub: `Feature Set · ${fsId}`, domain: sigla,
+      sub: `Agrupamento Funcional · ${fsId}`, domain: sigla,
       desc: firstParagraph(n2Lines, 'Descrição'), path: relp('modules', folder, fsFolder, 'README.md'),
     });
     addEdge(sigla, fsId, 'contem');
   }
 
-  // Fallback: feature sets listados na tabela ## Feature Sets do N1 mas ainda
+  // Fallback: agrupamentos funcionais listados na tabela ## Agrupamentos Funcionais do N1 mas ainda
   // sem README de N2 — o nó nasce da linha da tabela (nome, descrição).
-  const fsTable = sectionSlice(lines, 'Feature Sets');
+  const fsTable = sectionSlice(lines, 'Agrupamentos Funcionais');
   if (fsTable) {
     for (const row of tableRowsOf(fsTable.lines)) {
       const cells = splitRow(row);
@@ -160,7 +160,7 @@ for (const folder of subdirs(modulesDir).filter((n) => !n.startsWith('_'))) {
       fsIds.add(fsId);
       const name = (String(cells[0]).match(/\*\*(.+?)\*\*/) || [])[1] || fsId;
       nodes.push({
-        id: fsId, type: 'featureset', label: name, sub: `Feature Set · ${fsId}`,
+        id: fsId, type: 'featureset', label: name, sub: `Agrupamento Funcional · ${fsId}`,
         domain: sigla, desc: (cells[1] || '').trim(), path: relp('modules', folder, 'README.md'),
       });
       addEdge(sigla, fsId, 'contem');
@@ -195,7 +195,7 @@ for (const d of domainMeta) {
   }
 }
 
-// --- N3 (features) — status/PF consolidados pelo INDEX.md ----------------------
+// --- N3 (funcionalidades) — status/PF consolidados pelo INDEX.md ----------------------
 const indexByFeat = new Map();
 if (model.index) for (const r of model.index.rows) indexByFeat.set(r.featId, r);
 const repoNodes = new Map();
@@ -205,9 +205,9 @@ const repoIndexPath = existsSync(join(root, 'repos', 'INDEX.md')) ? 'repos/INDEX
 let _remote = '';
 try { _remote = execFileSync('git', ['-C', root, 'remote', 'get-url', 'origin'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { /* sem git */ }
 const orgBase = _remote ? _remote.replace(/\.git$/, '').replace(/\/[^/]+$/, '/') : '';
-// Camada de código: liga cada feature aos ARQUIVOS reais (o par [x]-backend/[x]-frontend
+// Camada de código: liga cada funcionalidade aos ARQUIVOS reais (o par [x]-backend/[x]-frontend
 // e os repositórios do inventário `repos/INDEX.md` que estiverem no disco)
-// — o "das features até o código". Sem os repos irmãos, byFeat vem vazio e o grafo
+// — o "das funcionalidades até o código". Sem os repos irmãos, byFeat vem vazio e o grafo
 // para no nó de repositório (scripts/lib/mapa-codigo.mjs é somente-leitura).
 const codLink = ligarCodigo({ docRoot: root, featIds: model.features.filter((x) => x.id).map((x) => x.id) });
 const codNodes = new Map();
@@ -221,11 +221,11 @@ for (const f of model.features.filter((x) => x.id)) {
   const pfNum = idx ? parseInt(String(idx.pf).replace(/\D/g, ''), 10) : NaN;
   const fsId = f.id.replace(/-\d{2}$/, '');
   if (!fsIds.has(fsId)) {
-    // Feature especificada antes do N2 e fora da tabela do N1 — sintetiza o nó
-    // do feature set a partir do ID para a feature não ficar solta no mapa.
+    // Funcionalidade especificada antes do N2 e fora da tabela do N1 — sintetiza o nó
+    // do agrupamento funcional a partir do ID para a funcionalidade não ficar solta no mapa.
     fsIds.add(fsId);
     nodes.push({
-      id: fsId, type: 'featureset', label: fsId, sub: `Feature Set · ${fsId}`,
+      id: fsId, type: 'featureset', label: fsId, sub: `Agrupamento Funcional · ${fsId}`,
       domain: f.id.slice(0, 3), desc: '', path: '',
     });
     addEdge(f.id.slice(0, 3), fsId, 'contem');
@@ -233,7 +233,7 @@ for (const f of model.features.filter((x) => x.id)) {
   const lines = read(f.file).split(/\r?\n/);
   nodes.push({
     id: f.id, type: 'feature', label: f.title || f.id, status, pf: Number.isNaN(pfNum) ? null : pfNum,
-    sub: `Feature · ${f.id}`, domain: f.id.slice(0, 3),
+    sub: `Funcionalidade · ${f.id}`, domain: f.id.slice(0, 3),
     desc: firstParagraph(lines, 'Descrição'), path: f.path,
   });
   addEdge(fsId, f.id, 'contem');
@@ -251,7 +251,7 @@ for (const f of model.features.filter((x) => x.id)) {
     addEdge(f.id, repo, 'implementa');
   }
 
-  // Desce até os ARQUIVOS: cada arquivo é um nó `codigo`; a aresta feature → arquivo
+  // Desce até os ARQUIVOS: cada arquivo é um nó `codigo`; a aresta funcionalidade → arquivo
   // é `implementa`. Garante o nó de repositório do arquivo (para link e filtro).
   const cod = codLink.byFeat[f.id];
   if (cod) {

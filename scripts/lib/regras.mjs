@@ -1,9 +1,9 @@
 // regras.mjs — as regras de negócio do N3 e os cenários que as cobrem.
 //
-// Por quê (pedido do PO, 2026-10-10): a regra específica da feature era numerada pela
+// Por quê (pedido do PO, 2026-10-10): a regra específica da funcionalidade era numerada pela
 // posição ("1.", "2."), e nada a ligava ao cenário que a verifica. Quem gera o teste —
 // pessoa ou agente — deduzia qual cenário cobre qual regra, e a regra sem cenário passava
-// sem ninguém notar. Agora cada regra tem um ID estável na feature, `RN-NN`, e o cenário
+// sem ninguém notar. Agora cada regra tem um ID estável na funcionalidade, `RN-NN`, e o cenário
 // declara as regras que verifica com a tag Gherkin `@RN-NN`:
 //
 //   ## Regras de negócio
@@ -13,7 +13,7 @@
 //   @RN-02
 //   Scenario: Desativar o último Administrador
 //
-// O ID é da feature: fora do N3 ele se cita com o da feature — `ADM-USR-04/RN-02` — no
+// O ID é da funcionalidade: fora do N3 ele se cita com o da funcionalidade — `ADM-USR-04/RN-02` — no
 // SDD, no código e no nome ou na tag do teste. Como o `RC-NN` do RULES-DICTIONARY, nunca
 // é reaproveitado: a regra removida leva o número com ela.
 

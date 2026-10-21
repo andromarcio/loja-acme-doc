@@ -19,7 +19,7 @@
 //   comportamento pelos `## Cenários`, e a exportação para o spec-kit (Acceptance
 //   Scenarios) a perde (achado no siesa-doc, 2026-10-11: 8 regras do domínio Sistemas).
 // A migração dá o ID (`node scripts/migra-regras-rn.mjs <N3>`); a tag no cenário é
-// análise, não mecânica, e vem junto, feature a feature.
+// análise, não mecânica, e vem junto, funcionalidade a funcionalidade.
 //
 // Uso:  node scripts/valida-regras-cenarios.mjs [arquivo f-*.md | pasta] …
 //       (sem argumentos: todo `modules/**/f-*.md`)
@@ -55,7 +55,7 @@ function confere(texto) {
   for (const r of regras.filter((x) => !x.id)) erros.push(`linha ${r.linha}: regra sem ID — "${r.texto.slice(0, 70)}". Toda regra do N3 leva \`**RN-NN** —\`, com o próximo número livre.`);
   const ids = new Set();
   for (const r of comId) {
-    if (ids.has(r.id)) erros.push(`linha ${r.linha}: ${r.id} repetido — o ID é único na feature e nunca reaproveitado.`);
+    if (ids.has(r.id)) erros.push(`linha ${r.linha}: ${r.id} repetido — o ID é único na funcionalidade e nunca reaproveitado.`);
     ids.add(r.id);
   }
   const cobertas = new Set(), deNegocio = new Set();

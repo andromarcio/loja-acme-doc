@@ -9,16 +9,16 @@
 //
 //     N3, seção ## Origem:
 //       <!-- trace-verified: STRY0012345 @ a1b2c3d4e5f6 -->   (fingerprint da AIMM do ticket)
-//     AIMM do ticket, seção ## Features:
+//     AIMM do ticket, seção ## Funcionalidades:
 //       <!-- trace-verified: USR-PRM-01 @ f6e5d4c3b2a1 -->    (fingerprint do N3)
 //
 //   Na AIMM, o fingerprint é só do que o ticket PEDE — a `## Descrição do ticket` e os
 //   `## Critérios de aceite`. O resto da AIMM muda ao longo do processo (o changeset, a
-//   visão final, a reconciliação) e não torna suspeito o elo da feature com o ticket.
+//   visão final, a reconciliação) e não torna suspeito o elo da funcionalidade com o ticket.
 //
 //   Se o conteúdo do alvo mudar (commitado ou não), o fingerprint atual diverge do
 //   carimbado e o elo fica SUSPEITO: o outro lado mudou e ninguém reverificou. O
-//   PROMPT_4A/4B, ao atualizar a feature, re-carimba — o que limpa a suspeita.
+//   PROMPT_4A/4B, ao atualizar a funcionalidade, re-carimba — o que limpa a suspeita.
 //   Quando há git disponível, o relatório indica o último commit que tocou o alvo.
 //
 // Uso (a partir da raiz da instância, ou com --root):
@@ -80,7 +80,7 @@ for (const f of model.features) {
 for (const s of model.stories) {
   if (!s.key) continue;
   for (const fe of s.feats) {
-    links.push({ holder: s, section: 'Features', targetId: fe.id, target: feats.get(fe.id) || null });
+    links.push({ holder: s, section: 'Funcionalidades', targetId: fe.id, target: feats.get(fe.id) || null });
   }
 }
 

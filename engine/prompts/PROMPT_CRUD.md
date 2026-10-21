@@ -1,12 +1,12 @@
-# PROMPT CRUD — Feature Set CRUD padrão (N2 + N3 negocial)
+# PROMPT CRUD — Agrupamento Funcional CRUD padrão (N2 + N3 negocial)
 ## Atalho de especificação para cadastros
 
-> **Modelo de estrutura (N2)**: `engine/templates/modules/_template-dominio/_template-feature-set/README.md`
-> **Modelo de estrutura (N3)**: `engine/templates/modules/_template-dominio/_template-feature-set/_template-feature.md`
+> **Modelo de estrutura (N2)**: `engine/templates/modules/_template-dominio/_template-agrupamento-funcional/README.md`
+> **Modelo de estrutura (N3)**: `engine/templates/modules/_template-dominio/_template-agrupamento-funcional/_template-funcionalidade.md`
 > *(referência humana — o prompt já embute os esqueletos)*
 > **Quem participa**: PO + dev (ou só PO)
 > **Insumo necessário**: descrição da entidade + tabela de campos. N1 do domínio é opcional.
-> **Entrega**: o `README.md` (N2) do Feature Set **e** os N3 negociais das cinco
+> **Entrega**: o `README.md` (N2) do Agrupamento Funcional **e** os N3 negociais das cinco
 > operações CRUD — `f-pesquisar-[entidade].md`, `f-cadastrar-[entidade].md`, `f-editar-[entidade].md`, `f-excluir-[entidade].md`,
 > `f-visualizar-[entidade].md`.
 >
@@ -19,13 +19,13 @@
 ## INSTRUÇÕES PARA O CLAUDE
 
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
-> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
-> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) **e** `node scripts/validate-feature-semantics.mjs <arquivo>` (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [agrupamento-funcional]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) **e** `node scripts/valida-semantica-funcionalidade.mjs <arquivo>` (é mesmo uma funcionalidade? — critérios FD de `engine/DEFINICAO-FUNCIONALIDADE.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
-Você vai especificar, numa única sessão, um Feature Set de **cadastro (CRUD)**
+Você vai especificar, numa única sessão, um Agrupamento Funcional de **cadastro (CRUD)**
 seguindo o padrão do framework. A partir de **uma descrição da entidade e da
-tabela de campos**, produza o N2 do Feature Set e os N3 negociais das cinco
+tabela de campos**, produza o N2 do Agrupamento Funcional e os N3 negociais das cinco
 operações: **Pesquisar, Cadastrar, Editar, Excluir e Visualizar**.
 
 Princípio do atalho: o usuário descreve a entidade **uma vez**. O N3 de
@@ -52,14 +52,14 @@ Regras da sessão:
   independentes ligadas por "e" / "ou" / "além disso" viram **itens distintos**,
   cada um com **uma única restrição verificável**. A reação do sistema ("não
   salva", "exibe mensagem") não é regra — vai para os **Cenários**. Cada item
-  começa por `**RN-NN** —` (sequencial na feature, nunca reaproveitado), e ao menos
+  começa por `**RN-NN** —` (sequencial na funcionalidade, nunca reaproveitado), e ao menos
   um cenário o verifica com a tag `@RN-NN` na linha acima do `Scenario:`.
 - **Nunca resuma uma contagem sem nomear os itens.** Se a frase disser "as N
   configurações/campos/grupos/abas…", liste os N itens ali mesmo (ou garanta
   que já estão numa tabela da mesma seção) — cada N3 é autocontido; quem lê
   só ele não pode depender de abrir outro arquivo para saber quais são.
 - **Quem pode vive só no N2.** Colete perfis e permissões por operação uma
-  vez e registre-os apenas na matriz do `README.md` do Feature Set. Os N3 não trazem
+  vez e registre-os apenas na matriz do `README.md` do Agrupamento Funcional. Os N3 não trazem
   regra de permissão nem lista de perfis: no grupo **Restrições de acesso** eles
   descrevem só a reação do sistema a quem não tem acesso (mensagem do catálogo).
 - Um artefato de cada vez: gere, aguarde aprovação, só então avance.
@@ -91,7 +91,7 @@ Regras da sessão:
 [cole aqui o README.md do domínio]
 
 === IDENTIFICAÇÃO MANUAL *(preencher quando o N1 não for fornecido)* ===
-Major Feature Set: [nome do domínio]
+Domínio: [nome do domínio]
 Sigla do domínio: [3 letras maiúsculas — ex.: CAD]
 
 ---
@@ -111,9 +111,9 @@ explícita antes de transitar de um estado de geração para o próximo.
 ## PASSO 1 — `[COLETA_ENTIDADE]`
 
 Confirme o domínio e a sigla (do N1, se fornecido; senão da identificação
-manual). **Se o N1 já definir este Feature Set, reutilize o ID `[SIGLA]-[SFS]` dele**;
-caso contrário, derive uma sigla de 3 letras para o Feature Set, formando o ID
-`[SIGLA]-[SFS]` (e proponha incluí-lo no N1). Então pergunte, em um bloco:
+manual). **Se o N1 já definir este Agrupamento Funcional, reutilize o ID `[SIGLA]-[SAF]` dele**;
+caso contrário, derive uma sigla de 3 letras para o Agrupamento Funcional, formando o ID
+`[SIGLA]-[SAF]` (e proponha incluí-lo no N1). Então pergunte, em um bloco:
 
 > 1. Qual o nome da entidade que será cadastrada (ex.: Fundo Gerido, Cliente)?
 > 2. Em 2-3 frases, o que este cadastro permite fazer? E o que ele
@@ -151,7 +151,7 @@ Ao receber os campos:
 ## PASSO 3 — `[COLETA_POLITICA_CRUD]`
 
 Faça apenas as perguntas que a tabela de campos não responde e que valem para
-o Feature Set inteiro:
+o Agrupamento Funcional inteiro:
 
 > 6. **Exclusão**: é **física** (remove do banco) ou **lógica** (marca como
 >    inativo/arquivado, mantendo o registro)?
@@ -174,9 +174,9 @@ o Feature Set inteiro:
 
 ## PASSO 4 — `[GERACAO_N2]`
 
-Monte a tabela de Features na ordem da jornada confirmada. A sequência abaixo vale apenas para a primeira atribuição, quando não houver IDs usados. Preserve qualquer ID existente no N2/N3, mesmo que a jornada seja reorganizada; novas features recebem números depois do maior reservado, sem preencher lacunas. Rode `node scripts/ids-n3.mjs modules/[dominio]/[feature-set]/README.md` em modo seco e, conferido, com `--write`, antes de gerar os N3s. Preserve o registro `docqui:n3-ids` do N2 — ver `engine/N3-IDS.md`. A ordem de geração (Cadastro primeiro, depois os derivados) não é a ordem dos IDs.
+Monte a tabela de Funcionalidades na ordem da jornada confirmada. A sequência abaixo vale apenas para a primeira atribuição, quando não houver IDs usados. Preserve qualquer ID existente no N2/N3, mesmo que a jornada seja reorganizada; novas funcionalidades recebem números depois do maior reservado, sem preencher lacunas. Rode `node scripts/ids-n3.mjs modules/[dominio]/[agrupamento-funcional]/README.md` em modo seco e, conferido, com `--write`, antes de gerar os N3s. Preserve o registro `docqui:n3-ids` do N2 — ver `engine/N3-IDS.md`. A ordem de geração (Cadastro primeiro, depois os derivados) não é a ordem dos IDs.
 
-| Ordem | Feature | Arquivo |
+| Ordem | Funcionalidade | Arquivo |
 |---|---|---|
 | 01 | Pesquisar [Entidade] | `f-pesquisar-[entidade].md` |
 | 02 | Cadastrar [Entidade] | `f-cadastrar-[entidade].md` |
@@ -187,18 +187,18 @@ Monte a tabela de Features na ordem da jornada confirmada. A sequência abaixo v
 > `[entidade]` é a entidade do PASSO 1 em kebab-case, no singular, com o adjetivo
 > qualificador quando houver — a regra de nomes do PROMPT_3A (ex.: *Fundo Gerido* →
 > `f-pesquisar-fundo-gerido.md`). Sem a entidade no nome, o gate semântico reprova a
-> feature (FD-1) e o `valida-acessorio-tela.mjs` não reconhece o Editar (procura
+> funcionalidade (FD-1) e o `valida-acessorio-tela.mjs` não reconhece o Editar (procura
 > `f-editar-*`).
 
 Gere o N2 — **exatamente esta estrutura**, idêntica à do PROMPT_2A:
 
-📄 `modules/[dominio]/[feature-set]/README.md`
+📄 `modules/[dominio]/[agrupamento-funcional]/README.md`
 
-> **Nome da pasta do Feature Set (obrigatório):** `[feature-set]` é o **slug em kebab-case do nome do Feature Set, SEM prefixo** — ex.: *Gestão de Fábricas* → `gestao-fabricas`; *Sistemas* → `sistemas`. **A pasta não leva prefixo** (nada de `g-`); só os **arquivos de feature** levam `f-`. O nome é também o segmento de rota (`/[dominio]/[feature-set]`).
+> **Nome da pasta do Agrupamento Funcional (obrigatório):** `[agrupamento-funcional]` é o **slug em kebab-case do nome do Agrupamento Funcional, SEM prefixo** — ex.: *Gestão de Fábricas* → `gestao-fabricas`; *Sistemas* → `sistemas`. **A pasta não leva prefixo** (nada de `g-`); só os **arquivos de funcionalidade** levam `f-`. O nome é também o segmento de rota (`/[dominio]/[agrupamento-funcional]`).
 
 ```
-# Feature Set: [Nome do Feature Set]
-> **Nível 2** - Major Feature Set: [Nome do Domínio] - `[SIGLA]-[SFS]`
+# Agrupamento Funcional: [Nome do Agrupamento Funcional]
+> **Nível 2** - Domínio: [Nome do Domínio] - `[SIGLA]-[SAF]`
 
 ## Descrição
 [2-3 frases sobre o que o cadastro faz]
@@ -207,15 +207,15 @@ Gere o N2 — **exatamente esta estrutura**, idêntica à do PROMPT_2A:
 
 ---
 
-## Features
+## Funcionalidades
 
-| Feature | Descrição |
+| Funcionalidade | Descrição |
 |---|---|
-| [**Pesquisar [Entidade]**](f-pesquisar-[entidade].md) <small>[SIGLA]-[SFS]-01</small> | [uma linha] |
-| [**Cadastrar [Entidade]**](f-cadastrar-[entidade].md) <small>[SIGLA]-[SFS]-02</small> | [uma linha] |
-| [**Editar [Entidade]**](f-editar-[entidade].md) <small>[SIGLA]-[SFS]-03</small> | [uma linha] |
-| [**Excluir [Entidade]**](f-excluir-[entidade].md) <small>[SIGLA]-[SFS]-04</small> | [uma linha] |
-| [**Visualizar [Entidade]**](f-visualizar-[entidade].md) <small>[SIGLA]-[SFS]-05</small> | [uma linha] |
+| [**Pesquisar [Entidade]**](f-pesquisar-[entidade].md) <small>[SIGLA]-[SAF]-01</small> | [uma linha] |
+| [**Cadastrar [Entidade]**](f-cadastrar-[entidade].md) <small>[SIGLA]-[SAF]-02</small> | [uma linha] |
+| [**Editar [Entidade]**](f-editar-[entidade].md) <small>[SIGLA]-[SAF]-03</small> | [uma linha] |
+| [**Excluir [Entidade]**](f-excluir-[entidade].md) <small>[SIGLA]-[SAF]-04</small> | [uma linha] |
+| [**Visualizar [Entidade]**](f-visualizar-[entidade].md) <small>[SIGLA]-[SAF]-05</small> | [uma linha] |
 
 ---
 
@@ -227,7 +227,7 @@ nem acompanhe de lista numerada — a estrutura é fixa para todo CRUD]
 
 ---
 
-## Dependências entre features
+## Dependências entre funcionalidades
 
 [Pesquisa é o ponto de entrada; Cadastro independe; Edição, Exclusão e
 Visualização exigem um registro existente, alcançado pela Pesquisa]
@@ -236,23 +236,23 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 
 ## Telas
 
-| Tela | Rota sugerida | Features atendidas | Descrição |
+| Tela | Rota sugerida | Funcionalidades atendidas | Descrição |
 |---|---|---|---|
-| Pesquisa de [Entidade] | `/[dominio]/[feature-set]` | **Pesquisar [Entidade]** <small>[SIGLA]-[SFS]-01</small><br>**Excluir [Entidade]** <small>[SIGLA]-[SFS]-04</small> | listagem + filtros; origem das ações |
-| Cadastrar [Entidade] | `/[dominio]/[feature-set]/novo` | **Cadastrar [Entidade]** <small>[SIGLA]-[SFS]-02</small> | formulário de cadastro |
-| Editar [Entidade] | `/[dominio]/[feature-set]/:id/editar` | **Editar [Entidade]** <small>[SIGLA]-[SFS]-03</small> | mesmo formulário em modo edição |
-| Visualizar [Entidade] | `/[dominio]/[feature-set]/:id` | **Visualizar [Entidade]** <small>[SIGLA]-[SFS]-05</small> | ficha somente leitura |
+| Pesquisa de [Entidade] | `/[dominio]/[agrupamento-funcional]` | **Pesquisar [Entidade]** <small>[SIGLA]-[SAF]-01</small><br>**Excluir [Entidade]** <small>[SIGLA]-[SAF]-04</small> | listagem + filtros; origem das ações |
+| Cadastrar [Entidade] | `/[dominio]/[agrupamento-funcional]/novo` | **Cadastrar [Entidade]** <small>[SIGLA]-[SAF]-02</small> | formulário de cadastro |
+| Editar [Entidade] | `/[dominio]/[agrupamento-funcional]/:id/editar` | **Editar [Entidade]** <small>[SIGLA]-[SAF]-03</small> | mesmo formulário em modo edição |
+| Visualizar [Entidade] | `/[dominio]/[agrupamento-funcional]/:id` | **Visualizar [Entidade]** <small>[SIGLA]-[SAF]-05</small> | ficha somente leitura |
 
-> Rotas determinísticas conforme `global/ROUTING.md`: `[feature-set]` é o slug (kebab)
-> da pasta do Feature Set. Exclusão não tem rota (ação em tela, da listagem). O que abre
+> Rotas determinísticas conforme `global/ROUTING.md`: `[agrupamento-funcional]` é o slug (kebab)
+> da pasta do Agrupamento Funcional. Exclusão não tem rota (ação em tela, da listagem). O que abre
 > em **modal** (pergunta 11) também não tem rota nem linha própria: some da tabela, e a
-> feature entra em *Features atendidas* da tela de Pesquisa.
+> funcionalidade entra em *Funcionalidades atendidas* da tela de Pesquisa.
 
 ---
 
 ## Permissões por perfil
 
-> **Fonte única de permissões** deste Feature Set.
+> **Fonte única de permissões** deste Agrupamento Funcional.
 
 | Perfil | Pesquisar | Cadastrar | Editar | Excluir | Visualizar |
 |---|---|---|---|---|---|
@@ -277,14 +277,14 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 
 > **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
 > parágrafo em **uma única linha contínua** (sem quebras internas). Comece pela
-> **capacidade que o conjunto entrega ao usuário** — o Feature Set *agrupa operações*.
+> **capacidade que o conjunto entrega ao usuário** — o Agrupamento Funcional *agrupa operações*.
 > Em ordem de preferência: **1) "Reúne as operações de…"** (estruturalmente exato: um
-> conjunto reúne operações, já antecipando as features); **2) "Agrupa as funcionalidades
+> conjunto reúne operações, já antecipando as funcionalidades); **2) "Agrupa as funcionalidades
 > que permitem…"**; **3) "Permite ao [perfil] …"** (quando o destaque é o valor para o
 > perfil). **Não use** verbos de domínio (*Responde por, Concentra*) — confundem o nível.
-> Ordene as frases assim: (1ª) quais operações reúne, já antecipando as features · (2ª) o
+> Ordene as frases assim: (1ª) quais operações reúne, já antecipando as funcionalidades · (2ª) o
 > que isso permite ao perfil. A linha `**Não faz**:` delimita o escopo negativo do conjunto.
-> Exemplo (Feature Set **Cadastro de Clientes** `CLI-CAD`):
+> Exemplo (Agrupamento Funcional **Cadastro de Clientes** `CLI-CAD`):
 > ```
 > ## Descrição
 > Reúne as operações de manutenção do cadastro de clientes: incluir, pesquisar, editar, visualizar e desativar um cliente. Permite ao operador manter os dados cadastrais sempre atualizados a partir de uma única área do sistema.
@@ -295,7 +295,7 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 > **Regra do Fluxo principal (CRUD)** — O `## Fluxo Principal` do CRUD é um
 > **esqueleto canônico fixo**: copie o diagrama abaixo e apenas troque `{Entidade}`
 > pelo nome da entidade. **Não** redesenhe os nós nem as setas — a estrutura é a mesma
-> para todo CRUD, o que torna o fluxo determinístico e idêntico entre features do mesmo
+> para todo CRUD, o que torna o fluxo determinístico e idêntico entre funcionalidades do mesmo
 > tipo, independente da LLM. O diagrama é a única representação do fluxo (sem lista
 > numerada) e, como todo fluxo principal de N2, é **só para frente**: todos os ramos
 > da decisão convergem para o nó final `Z`, **sem caminho de volta** (sem loops nem
@@ -323,7 +323,7 @@ Visualização exigem um registro existente, alcançado pela Pesquisa]
 > texto corrido; notas de detalhe vão em bullets **após** a tabela.
 
 Apresente e pergunte:
-> "O N2 do Feature Set está correto? Ajusta algo ou avanço para gerar os N3?"
+> "O N2 do Agrupamento Funcional está correto? Ajusta algo ou avanço para gerar os N3?"
 
 Aguarde aprovação antes do PASSO 5.
 
@@ -336,18 +336,18 @@ do PASSO 2 e siga **exatamente** o esqueleto completo do PROMPT_3A (PASSO 3):
 front-matter com `contagem.pendente: true` · Descrição (dois parágrafos) · Regras de
 negócio · Cenários (os 5 grupos) · Campos (7 colunas) · Derivações (só com campo
 calculado) · Colunas do resultado (só na Pesquisa) · Campos automáticos · Dados lidos
-e gravados (só se a feature toca entidade sem campo na tela) · Superfície ·
+e gravados (só se a funcionalidade toca entidade sem campo na tela) · Superfície ·
 Comportamento de tela · Critérios de sucesso · Origem (só com ticket) · Changelog.
 
 > **`## Superfície` é visível**, fora do `dev-only`, logo antes do `## Comportamento de
 > tela`; a **`## Origem`** fica logo antes do `## Changelog`. Emita as duas exatamente
 > como no esqueleto do PROMPT_3A (PASSO 3).
 
-> **DESTINO DOS ARQUIVOS (obrigatório — não erre a pasta).** Todos os N3 deste CRUD vão na **mesma pasta** do `README.md` do Feature Set: `modules/[dominio]/[feature-set]/`. `[feature-set]` é o nome exato dessa pasta — a mesma do N2 gerado nesta sessão. **Nunca** grave na raiz, `global/`, `engine/`, outro domínio ou outro Feature Set. Se em dúvida, pergunte antes de gravar.
+> **DESTINO DOS ARQUIVOS (obrigatório — não erre a pasta).** Todos os N3 deste CRUD vão na **mesma pasta** do `README.md` do Agrupamento Funcional: `modules/[dominio]/[agrupamento-funcional]/`. `[agrupamento-funcional]` é o nome exato dessa pasta — a mesma do N2 gerado nesta sessão. **Nunca** grave na raiz, `global/`, `engine/`, outro domínio ou outro Agrupamento Funcional. Se em dúvida, pergunte antes de gravar.
 
-📄 `modules/[dominio]/[feature-set]/f-cadastrar-[entidade].md` (ID `[SIGLA]-[SFS]-02`)
+📄 `modules/[dominio]/[agrupamento-funcional]/f-cadastrar-[entidade].md` (ID `[SIGLA]-[SAF]-02`)
 
-- **Superfície**: pela pergunta 11 — **Tela própria** — Cadastrar [Entidade] (`/[dominio]/[feature-set]/novo`), acessada da Pesquisa — ou **Modal**, com origem na Pesquisa.
+- **Superfície**: pela pergunta 11 — **Tela própria** — Cadastrar [Entidade] (`/[dominio]/[agrupamento-funcional]/novo`), acessada da Pesquisa — ou **Modal**, com origem na Pesquisa.
 - O campo identificador único entra como obrigatório e **único**.
 - Cenários Gherkin: caminho feliz + duplicidade do campo único + baseline de
   validação (obrigatório/formato via marcadores de dicionário).
@@ -369,11 +369,11 @@ fornecido" daquele passo. Gere um por vez, aguardando aprovação entre eles:
 1. 📄 `f-pesquisar-[entidade].md` (`...-01`) — **Derivação para Pesquisa / Listagem**:
    filtros mapeados por tipo de campo + colunas do resultado (máx. 6). Aplique a
    ordenação/carga/limite da pergunta 9. Superfície: **Tela própria** — Pesquisa
-   de [Entidade] (`/[dominio]/[feature-set]`).
+   de [Entidade] (`/[dominio]/[agrupamento-funcional]`).
 
 2. 📄 `f-editar-[entidade].md` (`...-03`) — **Derivação para Edição**: mesmo formulário do
    cadastro; identificador único **imutável** (coluna *Edição*); campos automáticos mantidos.
-   Superfície pela pergunta 11: **Tela própria** — Editar [Entidade] (`/[dominio]/[feature-set]/:id/editar`) — ou **Modal**, com origem na Pesquisa.
+   Superfície pela pergunta 11: **Tela própria** — Editar [Entidade] (`/[dominio]/[agrupamento-funcional]/:id/editar`) — ou **Modal**, com origem na Pesquisa.
 
 3. 📄 `f-excluir-[entidade].md` (`...-04`) — **Derivação para Exclusão**: identificação pelo
    campo único + confirmação explícita; aplique a política física/lógica
@@ -383,7 +383,7 @@ fornecido" daquele passo. Gere um por vez, aguardando aprovação entre eles:
 4. 📄 `f-visualizar-[entidade].md` (`...-05`) — **Derivação para Visualização**: todos os
    campos do cadastro em **somente leitura** (nenhum editável, sem ações de
    gravação); sem auditoria (é leitura). Superfície pela pergunta 11: **Tela própria** —
-   Visualizar [Entidade] (`/[dominio]/[feature-set]/:id`) — ou **Modal**, com origem na Pesquisa.
+   Visualizar [Entidade] (`/[dominio]/[agrupamento-funcional]/:id`) — ou **Modal**, com origem na Pesquisa.
 
 Cada N3 derivado segue o mesmo esqueleto completo do PROMPT_3A (PASSO 3), listado no
 PASSO 5 — `## Colunas do resultado` só na Pesquisa. Não repita as perguntas de campos
@@ -400,10 +400,10 @@ opção CT; o `estado` avança pelos gates.
 
 ## PASSO 7 — `[REVISAO_CONSISTENCIA]`
 
-Com as cinco features aprovadas, rode a revisão de consistência do Feature Set:
+Com as cinco funcionalidades aprovadas, rode a revisão de consistência do Agrupamento Funcional:
 
 ```
-[ ] As 5 features do N2 têm N3 correspondente?
+[ ] As 5 funcionalidades do N2 têm N3 correspondente?
 [ ] Label PO é idêntico entre N2 e os cinco N3?
 [ ] O identificador único é único no Cadastro, imutável na Edição, somente leitura na
     Visualização e critério de identificação na Exclusão?
@@ -416,12 +416,12 @@ Com as cinco features aprovadas, rode a revisão de consistência do Feature Set
 [ ] Campos e regras canônicas estão referenciados pelos dicionários?
 ```
 
-Se o N1 do domínio foi fornecido, verifique se o Feature Set consta na tabela de
-Feature Sets do N1 (e no `modules/INDEX.md`) **com o nome em link para o README do
-N2** — `[Nome](./[feature-set]/README.md)`; se faltar a entrada ou o link, inclua-o
+Se o N1 do domínio foi fornecido, verifique se o Agrupamento Funcional consta na tabela de
+Agrupamentos Funcionais do N1 (e no `modules/INDEX.md`) **com o nome em link para o README do
+N2** — `[Nome](./[agrupamento-funcional]/README.md)`; se faltar a entrada ou o link, inclua-o
 (e ajuste a linha `*Links: ...*` do N1). Proponha a atualização e aguarde aprovação
 antes de gravar.
 
 Encerre:
-> "Feature Set CRUD concluído (N2 + 5 N3 negociais). Para complementar a parte
+> "Agrupamento Funcional CRUD concluído (N2 + 5 N3 negociais). Para complementar a parte
 > técnica e atualizar o data-model, use o **3B** passando cada N3 como contexto."

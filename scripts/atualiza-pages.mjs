@@ -2,7 +2,7 @@
 // atualiza-pages.mjs — regenera, na ordem certa, tudo que o site de documentação deriva.
 //
 // Para quê: o visualizador não lê o repositório em tempo real — ele lê ARTEFATOS
-// GERADOS (a árvore com o conteúdo embutido, o mapa de features, o grafo de
+// GERADOS (a árvore com o conteúdo embutido, o mapa de funcionalidades, o grafo de
 // rastreabilidade, o espelho da esteira). Cada um tem o seu script, e esquecer um
 // deixa o site mostrando um retrato velho sem nenhum aviso. Este script é o único
 // comando a rodar depois de mexer nos .md.
@@ -11,7 +11,7 @@
 // entrega de mais valioso:
 //   1. o espelho da esteira reescreve o modules/INDEX.md;
 //   2. o HTML das AIMMs (analise-impacto/) nasce do .md;
-//   3. o mapa de features e o grafo leem os N3; o diagrama ER, os fragmentos do data-model;
+//   3. o mapa de funcionalidades e o grafo leem os N3; o diagrama ER, os fragmentos do data-model;
 //   4. a ÁRVORE vem depois de tudo, porque embute o CONTEÚDO dos .md — inclusive o
 //      INDEX.md que o passo 1 acabou de reescrever. Rodar a árvore antes congela a
 //      versão velha;
@@ -59,10 +59,10 @@ const PIPELINE = [
     cmd: ['node', ['scripts/gera-html-impacto.mjs', 'analise-impacto/']],
   },
   {
-    nome: 'Mapa de features (assets/mapa-data.js)',
-    quando: () => tem('scripts/gera-mapa-features.mjs'),
+    nome: 'Mapa de funcionalidades (assets/mapa-data.js)',
+    quando: () => tem('scripts/gera-mapa-funcionalidades.mjs'),
     porQueAqui: 'lê os N3; independe da árvore',
-    cmd: ['node', ['scripts/gera-mapa-features.mjs']],
+    cmd: ['node', ['scripts/gera-mapa-funcionalidades.mjs']],
   },
   {
     nome: 'Grafo de rastreabilidade (rastreabilidade/data.js)',

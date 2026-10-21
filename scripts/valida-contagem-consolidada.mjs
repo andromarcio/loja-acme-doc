@@ -7,7 +7,7 @@
 //
 //   1. O NÚMERO: confronta cada linha contada do N3 com a linha correspondente do
 //      consolidado e acusa PF divergente, PE contado que o consolidado ignora e linha
-//      do consolidado sem fonte no N3. Feature com a contagem PENDENTE é exceção: só o
+//      do consolidado sem fonte no N3. Funcionalidade com a contagem PENDENTE é exceção: só o
 //      CT espelha no consolidado, então a diferença é esperada até ele — sai como
 //      "aguardando a revisão", não como erro.
 //   2. A PENDÊNCIA: o status de contagem mora no front-matter (`contagem.pendente`) e
@@ -15,12 +15,12 @@
 //      Contagem da rastreabilidade do `modules/INDEX.md` (📋 pendente · ✅ revisada). O
 //      passo 5 do PROMPT_CONTAGEM reconcilia os três; esta checagem acusa o que ficou
 //      para trás. N3 sem o bloco `contagem` (anteriores a ele) ficam de fora, contados.
-//   3. O PAPEL (SIZING.md → Papel do PE em relação à feature): a tabela de `## Métricas
+//   3. O PAPEL (SIZING.md → Papel do PE em relação à funcionalidade): a tabela de `## Métricas
 //      de tamanho` tem a coluna Papel, e toda linha medida diz `principal` ou `acessório`
 //      — a linha `↪` e a ainda não medida (PF `—`) saem com `—`. O consolidado espelha
-//      a coluna: por feature, a soma de PF dos PE `principal` tem de bater com a da
-//      fonte. Avisos, não erros: feature contada sem nenhum `principal` (o PE que a
-//      realiza não foi contado) e EE `acessório` que não é principal em feature nenhuma.
+//      a coluna: por funcionalidade, a soma de PF dos PE `principal` tem de bater com a da
+//      fonte. Avisos, não erros: funcionalidade contada sem nenhum `principal` (o PE que a
+//      realiza não foi contado) e EE `acessório` que não é principal em funcionalidade nenhuma.
 //
 // Uso: node scripts/valida-contagem-consolidada.mjs [raiz-da-instância]
 // Saída: 0 se espelham; 1 se houver divergência; 2 em erro de uso.
@@ -187,7 +187,7 @@ if (existsSync(INDEX)) {
     if (!ls[i].trim().startsWith('|')) continue;
     const { cab, linhas } = tabela(ls, i, (l) => /^#{1,3}\s/.test(l));
     const iCont = (cab || []).findIndex((c) => /^Contagem$/i.test(c));
-    const iFeat = (cab || []).findIndex((c) => /^Feature/i.test(c));
+    const iFeat = (cab || []).findIndex((c) => /^(?:Funcionalidade|Feature)/i.test(c));
     if (iCont >= 0 && iFeat >= 0) {
       indexTemColuna = true;
       for (const c of linhas) {
@@ -203,9 +203,9 @@ if (existsSync(INDEX)) {
   }
 }
 
-// Feature com a contagem PENDENTE ainda não passou pelo CT, o único que espelha no
+// Funcionalidade com a contagem PENDENTE ainda não passou pelo CT, o único que espelha no
 // consolidado: diferença de PF é o estado esperado (a passada técnica contou, o 4B
-// recontou), não erro. Vira `aguardando`; o erro fica para a feature já revisada.
+// recontou), não erro. Vira `aguardando`; o erro fica para a funcionalidade já revisada.
 const aguardando = new Set();
 const erros = [];
 const divergePF = (id, msg) => (status.get(id)?.pendente === 'true' ? aguardando.add(id) : erros.push(msg));
@@ -227,7 +227,7 @@ const avisos = [];
 const errosPapel = [];
 
 // Papel — a coluna existe no N3, toda linha medida tem papel válido, e o consolidado a
-// espelha (soma de PF dos principais por feature).
+// espelha (soma de PF dos principais por funcionalidade).
 const principais = new Set();
 for (const { linhas } of papeisFonte.values()) for (const l of linhas || []) if (l.papel === 'principal') principais.add(l.nome);
 for (const [id, { linhas, arquivo }] of papeisFonte) {
@@ -235,11 +235,11 @@ for (const [id, { linhas, arquivo }] of papeisFonte) {
   const maus = linhas.filter((l) => medida(l.pf) && !PAPEIS.has(l.papel)).map((l) => l.papel || '(vazio)');
   if (maus.length) errosPapel.push(`${id} — Papel inválido em linha medida: ${[...new Set(maus)].map((v) => `"${v}"`).join(', ')} (use principal ou acessório) · ${arquivo}`);
   if (linhas.some((l) => medida(l.pf)) && !linhas.some((l) => l.papel === 'principal' && medida(l.pf))) {
-    avisos.push(`${id} — nenhum PE \`principal\` contado: o PE que realiza a feature não está contado. Registre a lacuna com ⚠️; não promova um acessório · ${arquivo}`);
+    avisos.push(`${id} — nenhum PE \`principal\` contado: o PE que realiza a funcionalidade não está contado. Registre a lacuna com ⚠️; não promova um acessório · ${arquivo}`);
   }
   for (const l of linhas) {
     if (l.papel === 'acessório' && /^EE$/i.test(l.tipo) && !principais.has(l.nome)) {
-      avisos.push(`${id} · ${l.nome} — EE \`acessório\` que não é principal em feature nenhuma: ação que grava ou altera dado de negócio sem feature que a realize — ou é principal desta, ou é feature própria (SIZING.md → Papel do PE) · ${arquivo}`);
+      avisos.push(`${id} · ${l.nome} — EE \`acessório\` que não é principal em funcionalidade nenhuma: ação que grava ou altera dado de negócio sem funcionalidade que a realize — ou é principal desta, ou é funcionalidade própria (SIZING.md → Papel do PE) · ${arquivo}`);
     }
   }
   if (consTemPapel && consolidado.has(id) && linhas.length && !maus.length) {
@@ -274,16 +274,16 @@ for (const [id, vals] of contagemIndex) {
 }
 
 const nPend = [...status.values()].filter((s) => s.pendente === 'true').length;
-console.log(`${fonte.size} feature(s) contada(s) no N3 · ${consolidado.size} no consolidado`);
+console.log(`${fonte.size} funcionalidade(s) contada(s) no N3 · ${consolidado.size} no consolidado`);
 console.log(`${nPend} pendente(s) no front-matter · ${pendentesCons ? pendentesCons.size : '—'} em ## Pendências de contagem` +
   `${indexTemColuna ? '' : ' · INDEX.md sem a coluna Contagem'}${semBloco ? ` · ${semBloco} N3 sem o bloco contagem (fora desta conferência)` : ''}`);
 for (const a of avisos) console.log(`- ${a}`);
 if (aguardando.size) {
-  console.log(`- ${aguardando.size} feature(s) aguardando a revisão pelo CT — contagem pendente, número ainda fora do consolidado: ${[...aguardando].sort().join(', ')}`);
+  console.log(`- ${aguardando.size} funcionalidade(s) aguardando a revisão pelo CT — contagem pendente, número ainda fora do consolidado: ${[...aguardando].sort().join(', ')}`);
 }
 if (!erros.length && !pendencias.length && !errosPapel.length) {
   console.log(aguardando.size
-    ? '✓ O consolidado espelha a fonte nas features revisadas; as pendentes esperam o CT.'
+    ? '✓ O consolidado espelha a fonte nas funcionalidades revisadas; as pendentes esperam o CT.'
     : '✓ O consolidado espelha a fonte.');
   process.exit(0);
 }
@@ -295,7 +295,7 @@ if (erros.length) {
 if (errosPapel.length) {
   console.error(`\n✗ ${errosPapel.length} problema(s) na coluna Papel — toda linha medida diz principal ou acessório, e o consolidado a espelha:`);
   for (const e of errosPapel) console.error(`  - ${e}`);
-  console.error('\nVer SIZING.md → Papel do PE em relação à feature.');
+  console.error('\nVer SIZING.md → Papel do PE em relação à funcionalidade.');
 }
 if (pendencias.length) {
   console.error(`\n✗ ${pendencias.length} divergência(s) de pendência de contagem — o front-matter manda:`);

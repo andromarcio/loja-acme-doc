@@ -1,8 +1,8 @@
 # PROMPT_PROTOTYPE_SCREEN_COMPONENT — Protótipos de Estado (Componente)
 
-> **Modelo de estrutura**: `engine/templates/prototypes/_template/_template-dominio/_template-feature-set/_template-feature/README.md` *(referência humana — o prompt já embute o esqueleto)*
+> **Modelo de estrutura**: `engine/templates/prototypes/_template/_template-dominio/_template-agrupamento-funcional/_template-funcionalidade/README.md` *(referência humana — o prompt já embute o esqueleto)*
 > **Quem participa**: dev / designer / PO técnico
-> **Insumo necessário**: DESIGN-SYSTEM.md + N3 da feature
+> **Insumo necessário**: DESIGN-SYSTEM.md + N3 da funcionalidade
 > **Entrega**: um arquivo HTML por estado, mostrando **apenas a área de conteúdo**
 > da tela — sem sidebar, topbar ou shell de aplicação
 >
@@ -13,7 +13,7 @@
 > - Quer embutir em Storybook, design token preview ou documentação técnica
 >
 > **Pré-requisito**: N3 aprovado (PROMPT_3B concluído)
-> **Onde salvar**: `prototypes/[dominio]/[feature-set]/[feature]/[estado]-component.html`
+> **Onde salvar**: `prototypes/[dominio]/[agrupamento-funcional]/[funcionalidade]/[estado]-component.html`
 
 ---
 
@@ -22,7 +22,7 @@
 > **Manifesto de fidelidade (obrigatório).** Ao gerar o(s) protótipo(s), registre/atualize a linha em `prototypes/INDEX.md` — caminho · N3 · **fidelidade** (lida da `## Superfície` do N3) · status **rascunho**. Na aprovação o status vira **aprovado** (quem/quando): só então a tela é contrato para a codificação. Telas `obrigatória` são verificadas na implementação pela checklist `node scripts/fidelity-checklist.mjs <pasta> <N3>`.
 
 
-Você vai gerar protótipos HTML de cada estado de tela de uma feature,
+Você vai gerar protótipos HTML de cada estado de tela de uma funcionalidade,
 focados **exclusivamente na área de conteúdo** — sem sidebar, topbar ou
 qualquer shell de aplicação.
 
@@ -66,9 +66,9 @@ no browser ou embutido como componente.
    anote a origem (`GET /api/v1/[recurso]?search=`) no painel de notas.
 
 6. **Componente autoexplicativo**: use o badge da biblioteca no topo do
-   `<body>` para identificar feature e estado:
+   `<body>` para identificar funcionalidade e estado:
    ```html
-   <div class="dsc-proto-badge">🔲 COMPONENTE — [Feature] / [Estado]</div>
+   <div class="dsc-proto-badge">🔲 COMPONENTE — [Funcionalidade] / [Estado]</div>
    ```
    e registre o caminho da spec na última linha do `.dsc-proto-notes`
    (`→ spec: [caminho do N3]`).
@@ -86,8 +86,8 @@ no browser ou embutido como componente.
 === DESIGN-SYSTEM.md ===
 [cole aqui o conteúdo do DESIGN-SYSTEM.md]
 
-=== N3 DA FEATURE ===
-[cole aqui o arquivo completo da feature]
+=== N3 DA FUNCIONALIDADE ===
+[cole aqui o arquivo completo da funcionalidade]
 
 ---
 
@@ -131,13 +131,13 @@ Gere um estado por vez. Aguarde aprovação antes de avançar.
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[Feature] — [Estado] (Componente)</title>
+  <title>[Funcionalidade] — [Estado] (Componente)</title>
   <!-- Biblioteca de componentes (CAIXA DS) — ajuste os ../ conforme a profundidade -->
   <link rel="stylesheet" href="../../../_biblioteca-ds/ds.css">
 </head>
 <body>
 
-  <div class="dsc-proto-badge">🔲 COMPONENTE — [Feature] / [Estado]</div>
+  <div class="dsc-proto-badge">🔲 COMPONENTE — [Funcionalidade] / [Estado]</div>
 
   <!-- Componente sem shell: dsc-component-only centraliza com max-width + padding -->
   <main class="dsc-component-only">
@@ -158,7 +158,7 @@ Gere um estado por vez. Aguarde aprovação antes de avançar.
 
     <!-- Notas do protótipo + dependências esperadas do componente pai -->
     <div class="dsc-proto-notes">
-      <strong>📋 Notas — [Feature] / [Estado]:</strong>
+      <strong>📋 Notas — [Funcionalidade] / [Estado]:</strong>
       <ul>
         <li>[comportamento não representado neste arquivo]</li>
       </ul>
@@ -215,11 +215,11 @@ Gere um estado por vez. Aguarde aprovação antes de avançar.
 ## PASSO 3 — Geração do README do nível
 
 Após gerar todos os estados aprovados, gere ou atualize o
-`prototypes/[dominio]/[feature-set]/[feature]/README.md`
+`prototypes/[dominio]/[agrupamento-funcional]/[funcionalidade]/README.md`
 adicionando os arquivos `*-component.html` na tabela de estados
 com status `🎨 Mockup`.
-Se ainda não existirem, crie também o README do Feature Set
-(`prototypes/[dominio]/[feature-set]/README.md`) e o do domínio
+Se ainda não existirem, crie também o README do Agrupamento Funcional
+(`prototypes/[dominio]/[agrupamento-funcional]/README.md`) e o do domínio
 (`prototypes/[dominio]/README.md`) a partir dos modelos em
 `engine/templates/prototypes/_template/` — a pasta `prototypes/` espelha `modules/`, com um
 README em cada nível.
@@ -228,9 +228,9 @@ README em cada nível.
 
 ## PASSO 4 — Entrega
 
-> "✅ Protótipos de componente de [feature] gerados.
+> "✅ Protótipos de componente de [funcionalidade] gerados.
 >
-> **Salvar em**: `prototypes/[dominio]/[feature-set]/[feature]/`
+> **Salvar em**: `prototypes/[dominio]/[agrupamento-funcional]/[funcionalidade]/`
 >
 > **Arquivos gerados** (sufixo `-component`):
 > - `form-component.html`

@@ -2,9 +2,9 @@
 #
 # ONDE VIVE: em cada repositório de CÓDIGO ([x]-backend, [x]-frontend ou cada um dos
 # microsserviços), não no de doc.
-# É o CP4 mecânico: quando um PR de código entra, confere que toda feature N3 marcada
+# É o CP4 mecânico: quando um PR de código entra, confere que toda funcionalidade N3 marcada
 # `estado: implementado` na spec tem, no repositório declarado em "## Implementação",
-# ao menos um arquivo referenciando o ID da feature (convenção do mapa-codigo:
+# ao menos um arquivo referenciando o ID da funcionalidade (convenção do mapa-codigo:
 # `@ExigeFuncionalidade("EST-APR-06")`, semente do catálogo, migração, cabeçalho).
 #
 # COMO USAR:

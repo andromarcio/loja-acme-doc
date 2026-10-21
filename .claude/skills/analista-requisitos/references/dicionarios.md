@@ -6,7 +6,7 @@ Este arquivo lista os dicionários canônicos do repositório e como usá-los. O
 
 ## FIELD-DICTIONARY.md (`global/FIELD-DICTIONARY.md`)
 
-Campos que se repetem em múltiplas features. Ao identificar um campo canônico, as validações são aplicadas automaticamente — **não pergunte ao usuário** sobre elas.
+Campos que se repetem em múltiplas funcionalidades. Ao identificar um campo canônico, as validações são aplicadas automaticamente — **não pergunte ao usuário** sobre elas.
 
 ### Campos cobertos
 
@@ -44,7 +44,7 @@ Campos que se repetem em múltiplas features. Ao identificar um campo canônico,
 
 ## RULES-DICTIONARY.md (`global/RULES-DICTIONARY.md`)
 
-Regras de negócio que se repetem em múltiplas features. Ao identificar uma regra canônica, o comportamento é aplicado automaticamente — pergunte apenas os **parâmetros**.
+Regras de negócio que se repetem em múltiplas funcionalidades. Ao identificar uma regra canônica, o comportamento é aplicado automaticamente — pergunte apenas os **parâmetros**.
 
 ### Regras cobertas
 
@@ -100,7 +100,7 @@ Mensagens de UI (texto que a pessoa usuária lê) e baseline de validação.
 
 ## NFR.md (`global/NFR.md`)
 
-Requisitos **não-funcionais** que valem para o sistema inteiro (a *Especificação Suplementar* do RUP): desempenho, segurança, confiabilidade, auditoria, usabilidade e restrições de stack. Valem por padrão para toda feature.
+Requisitos **não-funcionais** que valem para o sistema inteiro (a *Especificação Suplementar* do RUP): desempenho, segurança, confiabilidade, auditoria, usabilidade e restrições de stack. Valem por padrão para toda funcionalidade.
 
 ### Como roteá-los na coleta
 
@@ -112,12 +112,12 @@ Ao identificar um requisito durante a sessão, separe-o:
 | *O que* o sistema faz (invariante de negócio) | Regra de negócio (N3 / N1 / RULES-DICTIONARY conforme alcance) |
 
 - **NFR existente** → não duplicar; citar `→ ver NFR: [ID]` só em exceção da
-  feature ou no ponto técnico que o materializa (ex.: `## AuditLog` → AUD-01).
+  funcionalidade ou no ponto técnico que o materializa (ex.: `## AuditLog` → AUD-01).
 - **NFR novo** → propor com ⚠️ para adição ao NFR.md, aguardar aprovação.
 
 ### Como usar nos artefatos
 
-- O N3 **não repete** NFRs — eles são herdados. Só cite quando a feature diverge
+- O N3 **não repete** NFRs — eles são herdados. Só cite quando a funcionalidade diverge
   do padrão (declarar exceção com ⚠️) ou no ponto técnico correspondente.
 
 ---

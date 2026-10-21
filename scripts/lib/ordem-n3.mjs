@@ -1,6 +1,6 @@
 // ordem-n3.mjs — a ordem canônica das seções do N3 (decisão do PO, 2026-10-18).
 //
-// O conteúdo da feature vem primeiro; a `## Superfície` fica logo antes da seção de
+// O conteúdo da funcionalidade vem primeiro; a `## Superfície` fica logo antes da seção de
 // manifestação que ela decide (`## Comportamento de tela` ou `## Execução e operação`),
 // fora do `dev-only`; a `## Origem` — rastreabilidade, como o Changelog — fica no fim,
 // logo antes do `## Changelog`, depois das seções técnicas do perfil `completo`.

@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 // generate-impact-draft.mjs — o changeset derivado da AIMM do ticket (PROMPT_AIMM, passo 5).
 //
-// A partir das features-âncora — as da `## Features` da AIMM, ou as passadas com
-// `--feature` —, DERIVA dos elos que já vivem nos artefatos a lista de documentos que o
+// A partir das funcionalidades-âncora — as da `## Funcionalidades` da AIMM, ou as passadas com
+// `--funcionalidade` —, DERIVA dos elos que já vivem nos artefatos a lista de documentos que o
 // ticket vai tocar: o changeset que o PO aprova ANTES de qualquer spec mudar. O que não
 // é derivável (sobretudo NFR e os limiares dos testes não-funcionais) fica como linha
 // `elicitar` para a passada do analista. Determinístico onde dá, humano onde não dá.
 //
 // Elos usados (todos já presentes nos artefatos):
-//   N3 âncora            → o próprio arquivo (cabeçalho `Nível 3` + `SIGLA-SFS-NN`)
-//   QA (plano E2E)       → espelho de path do N3: qa/<dom>/<fs>/<feature>.md (não no perfil `requisitos`)
+//   N3 âncora            → o próprio arquivo (cabeçalho `Nível 3` + `SIGLA-SAF-NN`)
+//   QA (plano E2E)       → espelho de path do N3: qa/<dom>/<fs>/<funcionalidade>.md (não no perfil `requisitos`)
 //   DATA-MODEL           → seção `## Campos` toca coluna → data-model do domínio
 //   dicionários          → refs `→ ver/← (RULES|FIELD|MESSAGE|ERROR)-DICTIONARY`
 //   protótipo            → seção `## Superfície` (Tela própria ou Modal)
@@ -26,23 +26,24 @@
 // exemplo do template saem. Sem `--aim`, imprime a tabela na saída padrão.
 //
 // Uso:
-//   node scripts/generate-impact-draft.mjs --root <inst> --aim analise-impacto/AIMM-<CHAVE>.md [--feature <ID|caminho>]…
-//   node scripts/generate-impact-draft.mjs --root <inst> --feature <ID|caminho> [--feature …]
+//   node scripts/generate-impact-draft.mjs --root <inst> --aim analise-impacto/AIMM-<CHAVE>.md [--funcionalidade <ID|caminho>]…
+//   node scripts/generate-impact-draft.mjs --root <inst> --funcionalidade <ID|caminho> [--funcionalidade …]
 
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, relative, basename, isAbsolute } from 'node:path';
 import { pesDoN3, chavePE, contado } from './lib/pe.mjs';
 import { perfilDa } from './lib/instancia.mjs';
 import { resolveImpactFile } from './lib/impact-files.mjs';
+import { ehSecao } from './lib/niveis.mjs';
 
 const args = process.argv.slice(2);
 const opt = (n, d = null) => { const i = args.indexOf(n); return i !== -1 && args[i + 1] ? args[i + 1] : d; };
 const opts = (n) => args.flatMap((a, i) => (a === n && args[i + 1] ? [args[i + 1]] : []));
 const ROOT = opt('--root', '.');
 const AIMM = opt('--aimm') || opt('--aim');
-let FEATURES = opts('--feature');
-const USO = 'Uso: node scripts/generate-impact-draft.mjs --root <inst> --aim analise-impacto/AIMM-<CHAVE>.md [--feature <ID|caminho>]…\n' +
-  '     node scripts/generate-impact-draft.mjs --root <inst> --feature <ID|caminho> [--feature …]';
+let FEATURES = [...opts('--funcionalidade'), ...opts('--feature')];
+const USO = 'Uso: node scripts/generate-impact-draft.mjs --root <inst> --aim analise-impacto/AIMM-<CHAVE>.md [--funcionalidade <ID|caminho>]…\n' +
+  '     node scripts/generate-impact-draft.mjs --root <inst> --funcionalidade <ID|caminho> [--funcionalidade …]';
 if (args.includes('--out') || args.includes('--id') || args.includes('--need')) {
   console.error('✗ --out, --id e --need eram do PROMPT_IMPACTO: o changeset agora vai para a AIMM do ticket (--aim).\n' + USO);
   process.exit(2);
@@ -63,7 +64,7 @@ function walk(dir, acc = []) {
   return acc;
 }
 function sectionSlice(lines, name) {
-  const start = lines.findIndex((l) => l.trim() === `## ${name}`);
+  const start = lines.findIndex((l) => ehSecao(l, name));
   if (start === -1) return null;
   const out = [];
   for (let i = start + 1; i < lines.length; i++) {
@@ -76,13 +77,13 @@ const idOf = (raw) => {
   const lvl = raw.split(/\r?\n/).find((l) => /N[íi]vel 3/.test(l));
   return (lvl && (lvl.match(/`([A-Z]{3}-[A-Z]{3}-\d{2})`/) || [])[1]) || null;
 };
-// Título do N3 (a linha `# …`) — é o nome canônico da feature, não uma paráfrase.
+// Título do N3 (a linha `# …`) — é o nome canônico da funcionalidade, não uma paráfrase.
 const nomeOf = (raw) => (raw.split(/\r?\n/).find((l) => /^#\s/.test(l)) || '').replace(/^#\s+/, '').trim();
-// `SIGLA-SFS-NN Nome da feature`: código sozinho não diz nada a quem lê a AIMM,
+// `SIGLA-SAF-NN Nome da funcionalidade`: código sozinho não diz nada a quem lê a AIMM,
 // e obriga a abrir os N3 um a um só para saber do que se trata.
 const rotulo = (id) => (NOMES.get(id) ? `${id} — ${NOMES.get(id)}` : id);
 
-/* --------------------- resolve as features-âncora --------------------- */
+/* --------------------- resolve as funcionalidades-âncora --------------------- */
 const allN3 = walk(join(ROOT, 'modules')).filter((p) => /\/f-[^/]+\.md$/.test(p));
 // Lido de uma vez: o conteúdo serve tanto ao índice de nomes quanto à busca de
 // regressão adiante, que antes relia cada arquivo três vezes.
@@ -91,12 +92,12 @@ const NOMES = new Map();
 for (const [p, r] of N3RAW) { const i = idOf(r); if (i) NOMES.set(i, nomeOf(r)); }
 const aimRaw = aimPath ? readFileSync(aimPath, 'utf8') : '';
 if (aimPath && !FEATURES.length) {
-  // As features da `## Features` da AIMM — o elo recíproco da `## Origem` dos N3.
-  FEATURES = [...new Set((sectionSlice(aimRaw.split(/\r?\n/), 'Features') || [])
+  // As funcionalidades da `## Funcionalidades` da AIMM — o elo recíproco da `## Origem` dos N3.
+  FEATURES = [...new Set((sectionSlice(aimRaw.split(/\r?\n/), 'Funcionalidades') || [])
     .filter((l) => l.trim().startsWith('|'))
     .map((l) => (splitRow(l)[0] || '').match(/\b[A-Z]{3}-[A-Z]{3}-\d{2}\b/))
-    .filter((m) => m && m[0] !== 'SIGLA-SFS-NN').map((m) => m[0]))];
-  if (!FEATURES.length) { console.error(`✗ ${AIMM}: a \`## Features\` não tem feature — preencha o roteamento (PROMPT_AIMM, passo 3) ou passe --feature.`); process.exit(1); }
+    .filter((m) => m && !/^SIGLA-S(?:AF|FS)-NN$/.test(m[0])).map((m) => m[0]))];
+  if (!FEATURES.length) { console.error(`✗ ${AIMM}: a \`## Funcionalidades\` não tem funcionalidade — preencha o roteamento (PROMPT_AIMM, passo 3) ou passe --funcionalidade.`); process.exit(1); }
 }
 const ancoras = [];
 const semN3 = [];
@@ -107,7 +108,7 @@ for (const f of FEATURES) {
   else p = allN3.find((x) => idOf(N3RAW.get(x)) === f.toUpperCase());
   if (p) ancoras.push(p); else semN3.push(f);
 }
-if (!ancoras.length) { console.error(`✗ Nenhuma feature-âncora com N3: ${FEATURES.join(', ')}`); process.exit(1); }
+if (!ancoras.length) { console.error(`✗ Nenhuma funcionalidade-âncora com N3: ${FEATURES.join(', ')}`); process.exit(1); }
 
 /* --------------------------- deriva linhas --------------------------- */
 // row: { artefato, tipo, operacao, secao, natureza, oque, proveniencia }
@@ -133,13 +134,13 @@ for (const n3path of ancoras) {
   push({ artefato: rel, tipo: 'N3', operacao: 'alterar', secao: 'Campos/Regras/Cenários',
     natureza: 'funcional', oque: `o que muda em ${rotulo(fid)}`, proveniencia: 'derivado: âncora' });
 
-  // 2) QA — espelho de path (qa/<dom>/<fs>/<feature sem f->.md)
+  // 2) QA — espelho de path (qa/<dom>/<fs>/<funcionalidade sem f->.md)
   const qa = `qa/${dom}/${fs}/${file.replace(/^f-/, '')}`;
   push({ artefato: qa, tipo: 'QA', operacao: opOf(qa), natureza: 'funcional',
     oque: 'plano E2E: smoke + negativos + permissão (converte os Cenários do N3)',
     proveniencia: 'derivado: espelho do N3' });
 
-  // 3) DATA-MODEL do domínio (se a feature persiste dados)
+  // 3) DATA-MODEL do domínio (se a funcionalidade persiste dados)
   const dmCandidates = [`global/data-models/${dom}.md`, `global/data-models/${fs}.md`];
   const dm = dmCandidates.find((p) => existsSync(join(ROOT, p)));
   if (dm && sectionSlice(lines, 'Campos')) {
@@ -207,11 +208,11 @@ for (const n3path of ancoras) {
   // 8b) PE reutilizado (SIZING.md → PE reutilizado): o PE conta uma vez na aplicação.
   //     (a) A âncora reutiliza um PE (`↪ [ID](…)`): se a mudança o tocar, ele é alterado e
   //         recontado onde conta — o ticket vai para a Origem e o Changelog daquela
-  //         feature —, e a tela dela é re-testada.
-  //     (b) Toda feature que reutiliza um PE contado (ou reutilizado) pela âncora é regressão.
+  //         funcionalidade —, e a tela dela é re-testada.
+  //     (b) Toda funcionalidade que reutiliza um PE contado (ou reutilizado) pela âncora é regressão.
   //     São candidatos: só entram se a mudança tocar o PE — o rascunho não sabe, o PO decide.
   const minhas = pesDoN3(raw);
-  const ondeConta = new Map(); // chave do PE -> ID da feature onde ele conta
+  const ondeConta = new Map(); // chave do PE -> ID da funcionalidade onde ele conta
   for (const pe of minhas) {
     if (contado(pe)) ondeConta.set(chavePE(pe.nome), fid);
     else if (pe.reuso) ondeConta.set(chavePE(pe.nome), pe.reuso);
@@ -220,7 +221,7 @@ for (const n3path of ancoras) {
     const alvo = caminhoDe.get(pe.reuso);
     const art = alvo ? relative(ROOT, alvo) : pe.reuso;
     push({ artefato: art, tipo: 'N3', operacao: 'alterar', secao: 'Métricas de tamanho', natureza: 'derivado',
-      oque: `candidato — se a mudança toca o PE "${pe.nome}": é alterado e recontado aqui, onde conta (${rotulo(pe.reuso)}); o ticket entra na Origem e no Changelog desta feature`,
+      oque: `candidato — se a mudança toca o PE "${pe.nome}": é alterado e recontado aqui, onde conta (${rotulo(pe.reuso)}); o ticket entra na Origem e no Changelog desta funcionalidade`,
       proveniencia: 'derivado: ↪ PE reutilizado' });
     push({ artefato: `qa/ de ${rotulo(pe.reuso)}`, tipo: 'QA', operacao: 'alterar', secao: 'regressão', natureza: 'funcional',
       oque: `re-teste — candidato: a tela onde o PE "${pe.nome}" é contado`, proveniencia: 'derivado: ↪ PE reutilizado' });

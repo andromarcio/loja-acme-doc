@@ -1,6 +1,6 @@
-# Protótipos de Estado: [Nome da Feature]
-> Feature: [Nome] — Feature Set: [Nome] — Major Feature Set: [Nome]
-> Spec de referência: [../../../../modules/[dom]/[fs]/[feature].md](../../../../modules/[dom]/[fs]/[feature].md)
+# Protótipos de Estado: [Nome da Funcionalidade]
+> Funcionalidade: [Nome] — Agrupamento Funcional: [Nome] — Domínio: [Nome]
+> Spec de referência: [../../../../modules/[dom]/[fs]/[funcionalidade].md](../../../../modules/[dom]/[fs]/[funcionalidade].md)
 
 ---
 
@@ -17,13 +17,13 @@
 | [Estado customizado] | [custom.html](./custom.html) | HTML | ✏️ Sketch | — |
 | [Sketch externo] | [link](https://figma.com/...) | Figma | 🔲 Wireframe | — |
 
-> Remova as linhas que não se aplicam a esta feature.
+> Remova as linhas que não se aplicam a esta funcionalidade.
 
 ---
 
 ## Regras de design aplicadas
 
-> Liste aqui os padrões do DESIGN-SYSTEM.md usados nesta feature,
+> Liste aqui os padrões do DESIGN-SYSTEM.md usados nesta funcionalidade,
 > e qualquer exceção justificada.
 
 - Botão primário: [posição conforme Design System / exceção: ...]
@@ -44,7 +44,7 @@
 
 ---
 
-## Decisões de design desta feature
+## Decisões de design desta funcionalidade
 
 - [ex: "Campo 'Responsável' bloqueado para agent — exibe tooltip explicativo"]
 - [ex: "Tags usam chip removível em vez de select múltiplo"]
@@ -57,9 +57,9 @@
 
 **Aprovado por**: [nome do PO] em [data] *(preencher quando aprovado)*
 
-> ⚠️ Se o N3 desta feature for atualizado via PROMPT_4A/4B,
+> ⚠️ Se o N3 desta funcionalidade for atualizado via PROMPT_4A/4B,
 > marcar este README como ⚠️ Desatualizado até revisão.
 
 ---
 
-*Links: [N3 da spec](../../../../modules/[dom]/[fs]/[feature].md) · [Fluxo do Feature Set](../README.md) · [Índice de protótipos](../../../INDEX.md)*
+*Links: [N3 da spec](../../../../modules/[dom]/[fs]/[funcionalidade].md) · [Fluxo do Agrupamento Funcional](../README.md) · [Índice de protótipos](../../../INDEX.md)*

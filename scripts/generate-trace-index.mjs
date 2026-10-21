@@ -3,21 +3,21 @@
 // `modules/` + `global/`) e emite dois artefatos derivados dos próprios `.md`:
 //
 //   1) data.js      → window.TRACE_DATA para o grafo em docs/rastreabilidade/
-//   2) features.json → catálogo de features (N3) para sincronizar no ServiceNow
+//   2) features.json → catálogo de funcionalidades (N3) para sincronizar no ServiceNow
 //
 // Determinístico e sem dependências (mesmo espírito de validate-doc.mjs). A
 // informação já vive nos artefatos; este script só a projeta:
-//   - cabeçalho do N3 (`SIGLA-SFS-NN`) + `**Status**` + `**Total: N PF**`  → feature
-//   - seção `## Origem`         → arestas ticket → feature (kind: origina)
-//   - seção `## Implementação`  → arestas feature → repositório (kind: implementa)
-//   - `## Feature Sets` do N1   → hierarquia domínio → feature set (kind: contem)
+//   - cabeçalho do N3 (`SIGLA-SAF-NN`) + `**Status**` + `**Total: N PF**`  → funcionalidade
+//   - seção `## Origem`         → arestas ticket → funcionalidade (kind: origina)
+//   - seção `## Implementação`  → arestas funcionalidade → repositório (kind: implementa)
+//   - `## Agrupamentos Funcionais` do N1   → hierarquia domínio → agrupamento funcional (kind: contem)
 //   - `## Integrações …` do N1  → arestas domínio ↔ domínio (kind: integra)
 //   - `analise-impacto/AIMM-*.md` → rótulo/URL das AIMMs dos tickets (`tipo: ticket`)
 //
 // Uso:
 //   node scripts/generate-trace-index.mjs --root <instância> \
 //        [--out-data docs/rastreabilidade/data.js] \
-//        [--out-features build/features.json] \
+//        [--out-funcionalidades build/features.json] \
 //        [--repo https://github.com/acme/simpf-doc] [--branch main]
 //
 // Sem --out-*, imprime um resumo e não escreve nada (dry-run).
@@ -26,6 +26,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 
 import { join, relative, dirname, basename } from 'node:path';
 import { frontMatterEstado } from './lib/front-matter.mjs';
 import { keyOf, frontMatterCampos } from './lib/trace-index.mjs';
+import { ehSecao } from './lib/niveis.mjs';
 
 /* ----------------------------- CLI ----------------------------- */
 const args = process.argv.slice(2);
@@ -35,11 +36,11 @@ function opt(name, def = null) {
 }
 const ROOT = opt('--root');
 const OUT_DATA = opt('--out-data');
-const OUT_FEATURES = opt('--out-features');
+const OUT_FEATURES = opt('--out-funcionalidades') || opt('--out-features');
 const REPO = (opt('--repo', '') || '').replace(/\/$/, '');
 const BRANCH = opt('--branch', 'main');
 if (!ROOT) {
-  console.error('Uso: node scripts/generate-trace-index.mjs --root <instância> [--out-data …] [--out-features …] [--repo …] [--branch …]');
+  console.error('Uso: node scripts/generate-trace-index.mjs --root <instância> [--out-data …] [--out-funcionalidades …] [--repo …] [--branch …]');
   process.exit(2);
 }
 
@@ -53,7 +54,7 @@ const firstTitle = (lines) => (lines.find((l) => /^# /.test(l.trim())) || '').re
 const PLACEHOLDER_KEY_RE = /STRYx|ISSUE-N|EXP-…|\[chave\]/i;
 
 function sectionSlice(lines, name) {
-  const start = lines.findIndex((l) => l.trim() === `## ${name}`);
+  const start = lines.findIndex((l) => ehSecao(l, name));
   if (start === -1) return null;
   const out = [];
   for (let i = start + 1; i < lines.length; i++) {
@@ -151,7 +152,7 @@ for (const file of files) {
     const sigla = (levelLine.match(/`([A-Z]{3})`/) || [])[1];
     if (!sigla) continue;
     const fs = [];
-    for (const row of tableRows(lines, 'Feature Sets')) {
+    for (const row of tableRows(lines, 'Agrupamentos Funcionais')) {
       const c = splitRow(row);
       const id = (c[0].match(/([A-Z]{3}-[A-Z]{3})/) || [])[1];
       const name = (c[0].match(/\*\*(.+?)\*\*/) || [])[1] || (id || '');
@@ -201,7 +202,7 @@ for (const file of files) {
 /* ---------------- resolver nomes de domínio → sigla ---------------- */
 const nameToSigla = new Map();
 for (const [sigla, d] of domains) nameToSigla.set(d.name.toLowerCase(), sigla);
-const fsName = new Map();  // SIGLA-SFS -> name
+const fsName = new Map();  // SIGLA-SAF -> name
 for (const [, d] of domains) for (const f of d.featureSets) fsName.set(f.id, f.name);
 
 /* ----------------------- montar nós/arestas ----------------------- */
@@ -214,23 +215,23 @@ const specUrl = (p) => (REPO ? `${REPO}/blob/${BRANCH}/${p}` : p);
 if (product) addNode({ id: 'N0', type: 'produto', label: product.label, sub: 'Visão de Produto', path: product.path });
 
 for (const [sigla, d] of domains) {
-  addNode({ id: sigla, type: 'dominio', label: d.name, sub: `Major Feature Set · ${sigla}`, path: d.path });
+  addNode({ id: sigla, type: 'dominio', label: d.name, sub: `Domínio · ${sigla}`, path: d.path });
   if (product) addEdge('N0', sigla, 'contem');
   for (const f of d.featureSets) {
-    addNode({ id: f.id, type: 'featureset', label: f.name, sub: `Feature Set · ${f.id}`, domain: sigla, path: d.path });
+    addNode({ id: f.id, type: 'featureset', label: f.name, sub: `Agrupamento Funcional · ${f.id}`, domain: sigla, path: d.path });
     addEdge(sigla, f.id, 'contem');
   }
 }
 
 for (const f of features) {
   addNode({
-    id: f.id, type: 'feature', label: f.name, sub: `Feature · ${f.id}`,
+    id: f.id, type: 'feature', label: f.name, sub: `Funcionalidade · ${f.id}`,
     domain: f.domain, status: f.status, pf: f.pf, desc: f.desc, path: f.path,
   });
-  // hierarquia feature set → feature (cria o FS se o N1 não o listou)
-  if (!nodes.has(f.fs)) addNode({ id: f.fs, type: 'featureset', label: fsName.get(f.fs) || f.fs, sub: `Feature Set · ${f.fs}`, domain: f.domain });
+  // hierarquia agrupamento funcional → funcionalidade (cria o FS se o N1 não o listou)
+  if (!nodes.has(f.fs)) addNode({ id: f.fs, type: 'featureset', label: fsName.get(f.fs) || f.fs, sub: `Agrupamento Funcional · ${f.fs}`, domain: f.domain });
   addEdge(f.fs, f.id, 'contem');
-  // tickets (AIMM) → feature
+  // tickets (AIMM) → funcionalidade
   for (const s of f.stories) {
     if (!nodes.has(s.id)) {
       const b = backlog.get(s.id);
@@ -238,14 +239,14 @@ for (const f of features) {
     }
     addEdge(s.id, f.id, 'origina', s.note || undefined);
   }
-  // feature → repositório
+  // funcionalidade → repositório
   for (const r of f.repos) {
     if (!nodes.has(r)) addNode({ id: r, type: 'repo', label: r, sub: 'Repositório' });
     addEdge(f.id, r, 'implementa');
   }
 }
 
-// AIMMs de tickets ainda sem feature especificada (aparecem soltas — visão de pendência)
+// AIMMs de tickets ainda sem funcionalidade especificada (aparecem soltas — visão de pendência)
 for (const [key, b] of backlog) {
   if (!nodes.has(key)) addNode({ id: key, type: 'aim', label: b.label, sub: `AIMM · ${key}`, path: b.path });
 }
@@ -314,6 +315,6 @@ const pfTotal = features.reduce((a, f) => a + (f.status !== 'deprecado' && f.pf 
 console.log(`Sistema: ${systemName} · engine ${engineVersion}`);
 console.log(`Nós:    ${nodeList.length}  (` + Object.entries(byType).map(([k, v]) => `${k}:${v}`).join(', ') + ')');
 console.log(`Arestas:${edges.length}  (` + Object.entries(byKind).map(([k, v]) => `${k}:${v}`).join(', ') + ')');
-console.log(`Features (N3): ${features.length} · PF vigente: ${pfTotal}`);
+console.log(`Funcionalidades (N3): ${features.length} · PF vigente: ${pfTotal}`);
 console.log(OUT_DATA ? `→ data.js:      ${OUT_DATA}` : '  (data.js: dry-run — use --out-data para escrever)');
-console.log(OUT_FEATURES ? `→ features.json: ${OUT_FEATURES}` : '  (features.json: dry-run — use --out-features para escrever)');
+console.log(OUT_FEATURES ? `→ features.json: ${OUT_FEATURES}` : '  (features.json: dry-run — use --out-funcionalidades para escrever)');

@@ -1,9 +1,9 @@
-# PROMPT N3→N2 — Síntese do Feature Set a partir dos N3s
+# PROMPT N3→N2 — Síntese do Agrupamento Funcional a partir dos N3s
 
-> **Modelo de estrutura**: `engine/templates/modules/_template-dominio/_template-feature-set/README.md` *(referência humana — o prompt já embute o esqueleto)*
+> **Modelo de estrutura**: `engine/templates/modules/_template-dominio/_template-agrupamento-funcional/README.md` *(referência humana — o prompt já embute o esqueleto)*
 > **Quem participa**: Analista de Requisitos / Tech Lead
-> **Insumo necessário**: todos os N3s de um mesmo Feature Set
-> **Entrega**: README.md do N2 (Feature Set) sintetizado a partir das specs existentes
+> **Insumo necessário**: todos os N3s de um mesmo Agrupamento Funcional
+> **Entrega**: README.md do N2 (Agrupamento Funcional) sintetizado a partir das specs existentes
 >
 > **Quando usar**: sistema existente cujos N3s já foram escritos mas o N2
 > ainda não existe — ou precisa ser regenerado para refletir o estado atual
@@ -15,12 +15,12 @@
 ## INSTRUÇÕES PARA O CLAUDE
 
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
-> 1. **Antes de sintetizar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1 do domínio) e apresente um bloco **"Contexto verificado"**: o N2 que já existe (se for regenerar), o ID do Feature Set e os IDs das features — a síntese reusa esses IDs, não cria outros.
-> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs modules/[dominio]/[feature-set]/README.md`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
+> 1. **Antes de sintetizar** — rode `node scripts/preflight-spec.mjs [dominio] [agrupamento-funcional]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1 do domínio) e apresente um bloco **"Contexto verificado"**: o N2 que já existe (se for regenerar), o ID do Agrupamento Funcional e os IDs das funcionalidades — a síntese reusa esses IDs, não cria outros.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs modules/[dominio]/[agrupamento-funcional]/README.md`; se reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com o validador reprovando.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
 Você é um Analista de Requisitos Sênior. Sua missão é ler um conjunto de
-features (N3) de um mesmo Feature Set e consolidar as informações em um
+funcionalidades (N3) de um mesmo Agrupamento Funcional e consolidar as informações em um
 README.md de N2 coerente, sem inventar nada que não esteja nos N3s.
 
 Regras da sessão:
@@ -35,21 +35,21 @@ Regras da sessão:
 ## CONTEXTO DO PROJETO
 
 === IDENTIFICAÇÃO ===
-Feature Set: [nome do Feature Set]
-Major Feature Set: [nome do Domínio]
-Caminho de destino: `modules/[dominio]/[feature-set]/README.md`
+Agrupamento Funcional: [nome do Agrupamento Funcional]
+Domínio: [nome do Domínio]
+Caminho de destino: `modules/[dominio]/[agrupamento-funcional]/README.md`
 
-=== N3s DO FEATURE SET ===
+=== N3s DO FUNCIONALIDADE SET ===
 [cole aqui cada N3 — separe com `---` e indique o nome do arquivo como título]
 
 ---
 
 ## PASSO 1 — Confirmação do escopo
 
-Liste as features recebidas e confirme antes de prosseguir:
+Liste as funcionalidades recebidas e confirme antes de prosseguir:
 
-> "Recebi [N] features para o Feature Set **[nome]** do domínio **[nome]**:
-> [lista numerada das features]
+> "Recebi [N] funcionalidades para o Agrupamento Funcional **[nome]** do domínio **[nome]**:
+> [lista numerada das funcionalidades]
 > Posso iniciar a síntese?"
 
 ---
@@ -60,34 +60,34 @@ Liste as features recebidas e confirme antes de prosseguir:
 
 Leia todos os N3s e extraia:
 
-1. **Descrição do Feature Set** — qual problema de negócio unifica
-   todas as features deste conjunto? O que está fora do escopo?
+1. **Descrição do Agrupamento Funcional** — qual problema de negócio unifica
+   todas as funcionalidades deste conjunto? O que está fora do escopo?
 
-2. **ID do Feature Set** — se um N1 já existir e já trouxer o ID deste Feature Set,
+2. **ID do Agrupamento Funcional** — se um N1 já existir e já trouxer o ID deste Agrupamento Funcional,
    **reutilize-o**; caso contrário, derive do ID do domínio (presente nos N3s) e atribua
-   uma sigla de exatamente 3 letras maiúsculas derivada do nome do Feature Set, formando
-   `[SIGLA]-[SFS]` (ex.: Usuários → `[SIGLA]-USR`), única dentro do domínio;
-   confirme os IDs já existentes nos N3s e preserve-os, mesmo fora da ordem da jornada. Para uma entrada ainda sem ID, organize a tabela Features na jornada confirmada e reserve o próximo número com `scripts/ids-n3.mjs` (modo seco; depois `--write`), sem renumerar os N3s existentes nem preencher lacunas. Preserve o registro `docqui:n3-ids` do N2 ao regenerá-lo — ver `engine/N3-IDS.md`.
+   uma sigla de exatamente 3 letras maiúsculas derivada do nome do Agrupamento Funcional, formando
+   `[SIGLA]-[SAF]` (ex.: Usuários → `[SIGLA]-USR`), única dentro do domínio;
+   confirme os IDs já existentes nos N3s e preserve-os, mesmo fora da ordem da jornada. Para uma entrada ainda sem ID, organize a tabela Funcionalidades na jornada confirmada e reserve o próximo número com `scripts/ids-n3.mjs` (modo seco; depois `--write`), sem renumerar os N3s existentes nem preencher lacunas. Preserve o registro `docqui:n3-ids` do N2 ao regenerá-lo — ver `engine/N3-IDS.md`.
 
-3. **Índice de features** — nome, arquivo, ID e descrição de uma linha de cada
-   feature (extraído da seção "Descrição" de cada N3)
+3. **Índice de funcionalidades** — nome, arquivo, ID e descrição de uma linha de cada
+   funcionalidade (extraído da seção "Descrição" de cada N3)
 
 4. **Fluxo principal** — qual a sequência ou relação de uso entre as
-   features? Derive das dependências e pré-condições descritas nos N3s.
+   funcionalidades? Derive das dependências e pré-condições descritas nos N3s.
    É a **jornada de sucesso** e deve seguir **só para frente**, do início ao fim,
    **sem caminho de volta** — sem loops nem setas que retornem a uma etapa
    anterior. Retornos, cancelamentos e validações que devolvem ao passo anterior
    são exceção e ficam nos N3, não no fluxo principal.
 
-5. **Dependências entre features** — features que exigem outra como
+5. **Dependências entre funcionalidades** — funcionalidades que exigem outra como
    pré-requisito (derive dos campos `Given` dos cenários Gherkin e das
    regras de negócio dos N3s)
 
 6. **Telas e rotas** — consolide a seção "Comportamento de tela / Onde fica"
-   de cada N3 em uma tabela de telas únicas com as features que cada uma atende
+   de cada N3 em uma tabela de telas únicas com as funcionalidades que cada uma atende
 
 7. **Permissões por perfil** — consolide as restrições de acesso de todos
-   os N3s em uma matriz perfil × feature
+   os N3s em uma matriz perfil × funcionalidade
 
 ---
 
@@ -95,10 +95,10 @@ Leia todos os N3s e extraia:
 
 Apresente o rascunho do N2 no formato do template e pergunte:
 
-> "N2 sintetizado para **[Feature Set]**. Verifique:
+> "N2 sintetizado para **[Agrupamento Funcional]**. Verifique:
 > - ⚠️ Há [N] ponto(s) que não puderam ser inferidos dos N3s — marcados com ⚠️.
 > - O fluxo principal está correto?
-> - Falta alguma dependência entre features?
+> - Falta alguma dependência entre funcionalidades?
 > Posso gerar o arquivo final?"
 
 ---
@@ -108,8 +108,8 @@ Apresente o rascunho do N2 no formato do template e pergunte:
 Após aprovação, gere o arquivo completo no formato abaixo:
 
 ```markdown
-# Feature Set: [Nome do Feature Set]
-> **Nível 2** - Major Feature Set: [Nome do Domínio] - `[SIGLA]-[SFS]`
+# Agrupamento Funcional: [Nome do Agrupamento Funcional]
+> **Nível 2** - Domínio: [Nome do Domínio] - `[SIGLA]-[SAF]`
 
 ## Descrição
 [síntese em 2-3 frases]
@@ -118,39 +118,39 @@ Após aprovação, gere o arquivo completo no formato abaixo:
 
 ---
 
-## Features
+## Funcionalidades
 
-| Feature | Descrição |
+| Funcionalidade | Descrição |
 |---|---|
-| [**Nome da Feature**](f-[verbo]-[entidade].md) <small>[SIGLA]-[SFS]-NN</small> | [descrição em uma linha] |
+| [**Nome da Funcionalidade**](f-[verbo]-[entidade].md) <small>[SIGLA]-[SAF]-NN</small> | [descrição em uma linha] |
 
 ---
 
 ## Fluxo Principal
 
 [diagrama Mermaid (` ```mermaid ` com `flowchart TD`) derivado das dependências entre
-as features — ver "Regra do Fluxo Principal" abaixo]
+as funcionalidades — ver "Regra do Fluxo Principal" abaixo]
 
 ---
 
-## Dependências entre features
+## Dependências entre funcionalidades
 
-[lista descrevendo pré-requisitos e relações entre as features — ex.: "[Feature A]
-depende de [Feature B] porque..."]
+[lista descrevendo pré-requisitos e relações entre as funcionalidades — ex.: "[Funcionalidade A]
+depende de [Funcionalidade B] porque..."]
 
 ---
 
 ## Telas
 
-| Tela | Rota sugerida | Features atendidas | Descrição |
+| Tela | Rota sugerida | Funcionalidades atendidas | Descrição |
 |---|---|---|---|
-| [nome] | `/[rota]` | **[Nome da Feature]** <small>[SIGLA]-[SFS]-NN</small> | [o que a tela mostra] |
+| [nome] | `/[rota]` | **[Nome da Funcionalidade]** <small>[SIGLA]-[SAF]-NN</small> | [o que a tela mostra] |
 
 ---
 
 ## Permissões por perfil
 
-> **Fonte única de permissões** deste Feature Set. As features (N3) não tratam de
+> **Fonte única de permissões** deste Agrupamento Funcional. As funcionalidades (N3) não tratam de
 > perfis nem permissões — qualquer acesso novo ou diferente entra nesta matriz.
 
 Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
@@ -180,10 +180,10 @@ Perfis: **[Perfil A]**, **[Perfil B]**, **[Perfil C]**.
 
 > **Regra do Fluxo Principal** — mesma do PROMPT_2A: bloco ` ```mermaid ` com
 > `flowchart TD`, **só para frente** (sem caminho de volta — sem loops nem setas que
-> retornem a etapas anteriores), derivado das dependências entre as features; nós
+> retornem a etapas anteriores), derivado das dependências entre as funcionalidades; nós
 > entre aspas duplas, rótulos de seta sem aspas e sem `/`, `(` ou `)`.
 
 Ao finalizar, informe:
-> "✅ N2 de **[Feature Set]** gerado. Salve em `modules/[dominio]/[feature-set]/README.md`.
+> "✅ N2 de **[Agrupamento Funcional]** gerado. Salve em `modules/[dominio]/[agrupamento-funcional]/README.md`.
 > Para sintetizar o N1 do domínio, use PROMPT_N3_TO_N1 passando este N2
 > junto com os demais N2s do domínio."

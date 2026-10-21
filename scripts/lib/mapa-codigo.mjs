@@ -1,13 +1,13 @@
 #!/usr/bin/env node
-// mapa-codigo.mjs — liga cada feature (ID N3) aos ARQUIVOS REAIS que a implementam
+// mapa-codigo.mjs — liga cada funcionalidade (ID N3) aos ARQUIVOS REAIS que a implementam
 // nos repositórios de código da instância ([x]-backend, [x]-frontend), para o "Mapa
-// de features" descer de spec até código. Somente-leitura e determinístico.
+// de funcionalidades" descer de spec até código. Somente-leitura e determinístico.
 //
-// Vínculo: um arquivo implementa a feature X quando referencia o token do ID de X
+// Vínculo: um arquivo implementa a funcionalidade X quando referencia o token do ID de X
 // (`ADM-MOD-01`) no conteúdo — a mesma convenção que o próprio código já usa
 // (`@ExigeFuncionalidade("X")`, semente do catálogo, migração, comentário de
 // contrato, cabeçalho de spec). Duas fontes de ruído são removidas:
-//   • Registro compartilhado: arquivo que cita muitas features (catálogo, enum,
+//   • Registro compartilhado: arquivo que cita muitas funcionalidades (catálogo, enum,
 //     switch) não é específico de nenhuma — vai para `registros`, não para cada uma.
 //   • Citação pedagógica "lição DEM-PAI-01": referência a uma lição, não
 //     implementação — removida antes de casar os IDs.
@@ -21,7 +21,7 @@
 // gerando, só sem a camada de código daquele repositório.
 //
 // Uso direto (relatório de conferência):
-//   node scripts/lib/mapa-codigo.mjs            # tabela feature × arquivos BE/FE
+//   node scripts/lib/mapa-codigo.mjs            # tabela funcionalidade × arquivos BE/FE
 import { readdirSync, statSync, readFileSync, existsSync } from 'node:fs';
 import { join, basename, resolve } from 'node:path';
 import { inventario, ehRepoDeDoc } from './repos.mjs';
@@ -30,7 +30,7 @@ const ID_RE = /\b[A-Z]{3}-[A-Z]{3}-\d{2}\b/g;
 // citação pedagógica ("lição DEM-PAI-01"), não implementação — tolera quebra de
 // linha e prefixo de comentário entre "lição" e o ID (`lição\n * DEM-PAI-01`).
 const LICAO_RE = /li[çc][ãa]o[\s*]+[A-Z]{3}-[A-Z]{3}-\d{2}/gi;
-const LIMIAR_REGISTRO = 6; // arquivo que cita >= 6 features é registro/catálogo compartilhado
+const LIMIAR_REGISTRO = 6; // arquivo que cita >= 6 funcionalidades é registro/catálogo compartilhado
 const IGNORAR_DIR = new Set(['node_modules', 'target', 'dist', 'build', '.git', '.angular', 'coverage']);
 
 // Prioridade de exibição das camadas do back-end (borda → dentro → schema → teste).
@@ -101,7 +101,7 @@ function ordenar(arquivos, ordem) {
 
 // Extensões varridas por papel do repositório. O par legado (backend Java, frontend
 // Angular) mantém as de sempre; o microsserviço do inventário pode ser de qualquer
-// stack — o ID da feature aparece no código, na migração ou na configuração.
+// stack — o ID da funcionalidade aparece no código, na migração ou na configuração.
 const EXT = {
   back: ['.java', '.sql', '.yml', '.yaml', '.properties'],
   front: ['.ts', '.tsx', '.jsx', '.vue', '.html', '.scss', '.css'],
@@ -141,9 +141,9 @@ function reposCandidatos(docRoot, opts) {
   return lista;
 }
 
-// API principal: devolve o vínculo feature → código de cada repositório acessível.
+// API principal: devolve o vínculo funcionalidade → código de cada repositório acessível.
 //   byFeat[id].porRepo[nome] — os arquivos de cada repositório que citam o ID;
-//   byFeat[id].back / .front — os do par legado, como antes (o mapa de features e o
+//   byFeat[id].back / .front — os do par legado, como antes (o mapa de funcionalidades e o
 //   grafo da instância os leem).
 export function ligarCodigo(opts = {}) {
   const docRoot = opts.docRoot || process.cwd();
@@ -153,7 +153,7 @@ export function ligarCodigo(opts = {}) {
   const be = repos.find((r) => r.legado && r.papel === 'back');
   const fe = repos.find((r) => r.legado && r.papel === 'front');
 
-  // Com featIds (as features REAIS do modules/), só elas entram — IDs achados só em
+  // Com featIds (as funcionalidades REAIS do modules/), só elas entram — IDs achados só em
   // fixtures de teste (XXX-YYY-99, CRE-PRO-*) não viram nó. Sem featIds, devolve tudo
   // o que foi achado (modo relatório). O limiar de registro usa TODOS os tokens do
   // arquivo, então isso não muda a detecção de registro compartilhado.
@@ -196,10 +196,10 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     .flatMap((p) => (readFileSync(p, 'utf8').match(/^id:\s*([A-Z]{3}-[A-Z]{3}-\d{2})/m) || []).slice(1));
   const r = ligarCodigo({ docRoot, featIds });
   const ids = Object.keys(r.byFeat).sort();
-  console.log(`backend=${r.backend || '—'}  frontend=${r.frontend || '—'}  features=${ids.length}`);
+  console.log(`backend=${r.backend || '—'}  frontend=${r.frontend || '—'}  funcionalidades=${ids.length}`);
   console.log(`registros compartilhados: back=${r.registros.back.length} front=${r.registros.front.length}\n`);
   let comBack = 0, comFront = 0, arqBE = 0, arqFE = 0;
-  console.log('FEATURE         BE  (camadas)                          FE  (tipos)');
+  console.log('FUNCIONALIDADE         BE  (camadas)                          FE  (tipos)');
   for (const id of ids) {
     const b = r.byFeat[id].back, f = r.byFeat[id].front;
     if (b.length) comBack++; if (f.length) comFront++;

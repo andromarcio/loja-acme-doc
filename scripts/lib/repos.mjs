@@ -1,12 +1,12 @@
 // repos.mjs — o inventário de repositórios da instância (`repos/INDEX.md`) e a ligação
-// feature → repositório declarada no `## Implementação` de cada N3.
+// funcionalidade → repositório declarada no `## Implementação` de cada N3.
 //
 // Por quê (pedido do PO, 2026-10-07): um sistema pode ter centenas de repositórios — na
 // Caixa, uma sigla com mais de 200 microsserviços. A especificação continua organizada
-// por negócio (N1 → N2 → N3); o microsserviço é ONDE a feature vive, e entra pelo
+// por negócio (N1 → N2 → N3); o microsserviço é ONDE a funcionalidade vive, e entra pelo
 // inventário (uma linha por repositório) e pela tabela `## Implementação` do N3 (uma
-// linha por repositório que realiza a feature). Daqui saem o índice reverso
-// repositório → features (gera-indice-repos.mjs) e a descoberta dos repositórios de
+// linha por repositório que realiza a funcionalidade). Daqui saem o índice reverso
+// repositório → funcionalidades (gera-indice-repos.mjs) e a descoberta dos repositórios de
 // código que o mapa-codigo varre.
 //
 // O inventário é a PRIMEIRA tabela do arquivo cujo cabeçalho começa por "Repositório";

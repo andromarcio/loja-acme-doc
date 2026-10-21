@@ -127,13 +127,13 @@ Aplique **todos** os checks transversais e os específicos do nível detectado.
 5. **Canônicos por referência.** Campo/regra/erro canônico → `→ ver FIELD/RULES/ERROR-DICTIONARY: [nome]`, sem reescrever as validações. Mensagem de UI → **texto literal** do MESSAGE-DICTIONARY, nunca "conforme o Design System".
 6. **NFR no lugar certo.** Qualidade do sistema (desempenho, segurança, auditoria, disponibilidade) não é regra de negócio → `global/NFR.md`.
 7. **Pendências ⚠️.** Toda suposição/lacuna marcada com ⚠️ deve estar listada e ter rota; ⚠️ "esquecido" no corpo sem fechamento é achado.
-8. **Consistência entre níveis.** Label PO idêntico em N1/N2/N3; IDs (`SIGLA`, `SIGLA-SFS`, `SIGLA-SFS-NN`) coerentes; links entre níveis resolvem.
+8. **Consistência entre níveis.** Label PO idêntico em N1/N2/N3; IDs (`SIGLA`, `SIGLA-SAF`, `SIGLA-SAF-NN`) coerentes; links entre níveis resolvem.
 
 ### Específicos por nível
 
-**N0** — Propósito focado na **dor** (não na solução); Proposta de valor = **benefício** (não repete o Propósito); personas com dor + expectativa; objetivos em linguagem de negócio com KPI mensurável; Escopo com *Está fora* real; Major Feature Sets previstos preliminares (siglas de 3 letras); linguagem 100% negocial.
+**N0** — Propósito focado na **dor** (não na solução); Proposta de valor = **benefício** (não repete o Propósito); personas com dor + expectativa; objetivos em linguagem de negócio com KPI mensurável; Escopo com *Está fora* real; Domínios previstos preliminares (siglas de 3 letras); linguagem 100% negocial.
 
-**N1** — Descrição começa por verbo de **responsabilidade/abrangência** (Responde por/Concentra/Governa), não de ação operacional; `### O que este domínio NÃO faz` presente e real; Feature Sets com ID `SIGLA-SFS`; Regras transversais são **invariantes do domínio** (não NFR); **nenhuma** seção técnica (entidades/campos/dependências são do 1B); coerente com o N0.
+**N1** — Descrição começa por verbo de **responsabilidade/abrangência** (Responde por/Concentra/Governa), não de ação operacional; `### O que este domínio NÃO faz` presente e real; Agrupamentos Funcionais com ID `SIGLA-SAF`; Regras transversais são **invariantes do domínio** (não NFR); **nenhuma** seção técnica (entidades/campos/dependências são do 1B); coerente com o N0.
 
 **N2** — Exatamente as 7 seções, sem extras (sem `## Regras de negócio`, sem `## Campos`); Descrição começa pela **capacidade que entrega** (Reúne as operações de…); Fluxo é Mermaid `flowchart TD` **sem caminho de volta** (retornos/exceções são do N3); Permissões = **matriz** perfil × ação + nota de fonte única (o N3 não repete a matriz — descreve só a reação de quem não tem acesso).
 

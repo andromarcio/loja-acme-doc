@@ -1,13 +1,13 @@
 <!-- docqui: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
 ---
-id: [SIGLA]-[SFS]-[NN]
-feature_set: [SIGLA]-[SFS]
+id: [SIGLA]-[SAF]-[NN]
+agrupamento_funcional: [SIGLA]-[SAF]
 dominio: [SIGLA]
 entidade: [Entidade principal]
 data_model_ref: data-models/[dominio].md#[entidade]
-endpoints: []                       # ex.: ["POST /api/v1/recurso"] — preencher no 3B (se a feature expõe API)
+endpoints: []                       # ex.: ["POST /api/v1/recurso"] — preencher no 3B (se a funcionalidade expõe API)
 error_codes: []                     # ex.: ["ENTIDADE_ERRO"] — preencher no 3B
-depende_de: []                      # ex.: ["SIGLA-SFS-01"]
+depende_de: []                      # ex.: ["SIGLA-SAF-01"]
 origem:
   tipo: [servicenow | issue | experimento]
   chave: [STRYxxxxxxx | ISSUE-NNN | EXP-…]
@@ -29,7 +29,7 @@ contagem:
   como o título do N3 por quem procura a primeira linha `# ` do arquivo. Dentro do
   bloco, comentário só no fim da linha (`campo: valor  # …`).
 
-  id · feature_set · dominio · entidade · data_model_ref · endpoints
+  id · agrupamento_funcional · dominio · entidade · data_model_ref · endpoints
   · error_codes · depende_de — fonte estruturada para a exportação ao spec-kit
   (PROMPT_SPECKIT_EXPORT). O corpo do N3 continua sendo a fonte de verdade legível; estes
   campos apenas espelham, de forma parseável, o que já está no corpo. Mantê-los em
@@ -43,7 +43,7 @@ contagem:
     (instâncias ≤1.5.x usavam a linha `servicenow: STRY…`; os scripts seguem aceitando.)
 
   estado · gates — a esteira de checkpoints: fonte de verdade do ciclo de vida desta
-  feature, validada por scripts/gates.py.
+  funcionalidade, validada por scripts/gates.py.
     'estado' é DERIVADO dos gates (não editar à mão): rascunho → requisitos-aprovados
     → modelo-validado → especificado → implementado. Manuais: em-desenvolvimento,
     revisao-necessaria, deprecado. No perfil `requisitos` (MASTER), a esteira tem só CP1 e
@@ -71,17 +71,17 @@ contagem:
   ─────────────────────────────────────────────────────────────────
 -->
 
-# [Nome da Feature]
-> **Nível 3** - Feature Set: [Nome do Feature Set] — Major Feature Set: [Nome do Domínio] - `[SIGLA]-[SFS]-[NN]`
+# [Nome da Funcionalidade]
+> **Nível 3** - Agrupamento Funcional: [Nome do Agrupamento Funcional] — Domínio: [Nome do Domínio] - `[SIGLA]-[SAF]-[NN]`
 
 ## Descrição
 
-<!-- ID da feature: copie a reserva exata da tabela Features do N2. A primeira sequência segue a jornada confirmada; qualquer ID já usado é imutável, mesmo quando a ordem da jornada muda. Não renumere no 3B/4A/4B nem na síntese bottom-up. Ver engine/N3-IDS.md e scripts/ids-n3.mjs. -->
+<!-- ID da funcionalidade: copie a reserva exata da tabela Funcionalidades do N2. A primeira sequência segue a jornada confirmada; qualquer ID já usado é imutável, mesmo quando a ordem da jornada muda. Não renumere no 3B/4A/4B nem na síntese bottom-up. Ver engine/N3-IDS.md e scripts/ids-n3.mjs. -->
 
 <!--
-  O CONTRATO DE ENTREGA da feature (FEATURE-DEFINITION.md, FD-8): 1-2 frases de
+  O CONTRATO DE ENTREGA da funcionalidade (DEFINICAO-FUNCIONALIDADE.md, FD-8): 1-2 frases de
   negócio, para alguém que nunca viu o sistema, respondendo "o que eu ganho quando
-  esta feature estiver pronta?". Entrega ÚNICA (uma coisa, e desta feature — não
+  esta funcionalidade estiver pronta?". Entrega ÚNICA (uma coisa, e desta funcionalidade — não
   copie a descrição de outra), TANGÍVEL (ação + resultado, não intenção: nada de
   "facilita/otimiza/melhora a experiência", "etc.", "de forma eficiente") e
   NEGOCIAL (sem endpoint/API/banco — Modo PO).
@@ -96,7 +96,7 @@ contagem:
   longe da entrega e as duas camadas se leem melhor juntas.
 -->
 
-[Descrição em 1-2 frases do que esta feature ENTREGA, em linguagem de negócio, para alguém que nunca viu o sistema.]
+[Descrição em 1-2 frases do que esta funcionalidade ENTREGA, em linguagem de negócio, para alguém que nunca viu o sistema.]
 
 [Uma ou duas frases de COMO SE USA: por onde se chega, o que se informa e o que se aciona — ou, em Job/CLI, o que dispara a execução.]
 
@@ -107,7 +107,7 @@ contagem:
 <!--
   Regras canônicas: referenciar o dicionário em vez de repetir.
   Regras de domínio: referenciar o N1 em vez de repetir.
-  Regras específicas desta feature: descrever aqui.
+  Regras específicas desta funcionalidade: descrever aqui.
 
   REGRA ≠ COMPORTAMENTO — uma regra é a invariante/condição ("o quê"),
   não a reação do sistema ("como"). Apare a cauda de comportamento:
@@ -120,14 +120,14 @@ contagem:
   o TEXTO LITERAL no cenário (ou usar o marcador BASELINE de validação).
 
   ID DA REGRA — `RN-NN` (6.3.0). Toda regra desta seção, inclusive a que só cita o
-  dicionário ou o N1, começa por `**RN-NN** —`: sequencial na feature e NUNCA
+  dicionário ou o N1, começa por `**RN-NN** —`: sequencial na funcionalidade e NUNCA
   reaproveitado (a regra removida leva o número; a nova pega o próximo livre). É por ele
   que o cenário diz o que verifica (tag `@RN-NN` em "## Cenários") e que o SDD, o código
-  e o teste citam a regra — fora do N3, com o ID da feature: `[SIGLA]-[SFS]-[NN]/RN-NN`.
+  e o teste citam a regra — fora do N3, com o ID da funcionalidade: `[SIGLA]-[SAF]-[NN]/RN-NN`.
   Toda regra tem ao menos um cenário com a tag dela: node scripts/valida-regras-cenarios.mjs
 -->
 
-- **RN-01** — [Regra específica desta feature em linguagem de negócio] → ver RULES-DICTIONARY: [RC-NN] — [nome da regra] *(se for regra canônica)* → ver [N1 do domínio]: Regras transversais de negócio: [N] *(se for regra de domínio)*
+- **RN-01** — [Regra específica desta funcionalidade em linguagem de negócio] → ver RULES-DICTIONARY: [RC-NN] — [nome da regra] *(se for regra canônica)* → ver [N1 do domínio]: Regras transversais de negócio: [N] *(se for regra de domínio)*
 
 - **RN-02** — [Regra específica]
 
@@ -153,12 +153,12 @@ contagem:
   na linha logo acima dele, a tag `@RN-NN` dela (várias, se verifica mais de uma). Toda
   regra tem ao menos um cenário com a sua tag; cenário sem tag é permitido (campo
   obrigatório, formato, acesso). A tag vale só no cenário — no `Feature:` não cobre nada.
-  É ela que o teste herda (`[SIGLA]-[SFS]-[NN]/RN-NN` no nome ou na tag do teste).
+  É ela que o teste herda (`[SIGLA]-[SAF]-[NN]/RN-NN` no nome ou na tag do teste).
 -->
 
 
 ```gherkin
-Feature: [Nome da feature em linguagem natural]
+Feature: [Nome da funcionalidade em linguagem natural]
 
   Background:
     Given que o usuário está autenticado na organização "[org]"
@@ -195,8 +195,8 @@ Feature: [Nome da feature em linguagem natural]
 
   # ── Restrições de acesso ───────────────────────────────────────
 
-  Scenario: [Usuário sem acesso a esta feature]
-    Given que o perfil do usuário não tem acesso a "[Nome da feature]" na matriz do N2
+  Scenario: [Usuário sem acesso a esta funcionalidade]
+    Given que o perfil do usuário não tem acesso a "[Nome da funcionalidade]" na matriz do N2
     When o usuário tenta [ação]
     Then o sistema exibe: "[texto de NO_PERMISSION no MESSAGE-DICTIONARY]"
 
@@ -225,7 +225,7 @@ Feature: [Nome da feature em linguagem natural]
   ALIs/AIEs referenciados → ALR). É uma REFERÊNCIA à entidade — o detalhe técnico
   (Label Dev, campo banco, tipo SQL) continua só no dev-only `## Mapeamento de campos`
   e no DATA-MODEL. Preenchimento:
-   - campo próprio da feature → a **entidade principal** (padrão);
+   - campo próprio da funcionalidade → a **entidade principal** (padrão);
    - campo que pertence a outra entidade → o nome dessa entidade;
    - campo de seleção/lookup (Tipo `seleção → [Entidade]`) → a entidade origem;
    - campo cuja lista é de **valores fixos** (não vem de cadastro nenhum) → `dado de
@@ -268,7 +268,7 @@ Feature: [Nome da feature em linguagem natural]
 ---
 
 ## Colunas do resultado
-<!-- Apenas para features de Pesquisa/Listagem — colunas exibidas em cada linha do resultado da busca. Em features que NÃO são de busca, OMITA esta seção. -->
+<!-- Apenas para funcionalidades de Pesquisa/Listagem — colunas exibidas em cada linha do resultado da busca. Em funcionalidades que NÃO são de busca, OMITA esta seção. -->
 
 | Coluna (Label PO) | Origem | Ordenação |
 |---|---|---|
@@ -286,7 +286,7 @@ Feature: [Nome da feature em linguagem natural]
 
 ## Dados lidos e gravados
 <!--
-  Entidades que a feature lê ou grava SEM contribuir campo para a tela — as que a
+  Entidades que a funcionalidade lê ou grava SEM contribuir campo para a tela — as que a
   tabela `## Campos` não revela. Não repita aqui entidade que já apareça na coluna
   `Entidade`: esta seção COMPLETA aquela, não a espelha. Se toda entidade tocada já
   está em `## Campos`, OMITA esta seção.
@@ -294,25 +294,25 @@ Feature: [Nome da feature em linguagem natural]
   POR QUE ELA EXISTE: as demais fontes de arquivo lógico do N3 (`Entidade` em
   `## Campos`, entidades-fonte de `## Derivações`, `Tipo: seleção → X`) são todas
   ancoradas em campo. A tabela de campos descreve **a tela**; o ALR da APF descreve
-  **a transação** — recortes diferentes. Uma entidade que a feature toca sem exibir
+  **a transação** — recortes diferentes. Uma entidade que a funcionalidade toca sem exibir
   campo algum (o registro de execução que recebe o status, o cronograma que define a
   janela válida, o painel entregue junto do dado) fica invisível às três, e o ALR sai
-  menor do que a feature realmente referencia. É daqui que a contagem o fecha.
+  menor do que a funcionalidade realmente referencia. É daqui que a contagem o fecha.
 
   Papel: `lê` · `grava` · `lê e grava`. Justifique cada linha pelo que a motiva —
   a regra de negócio, o campo automático, o cenário.
 -->
 
-| Entidade | Papel | Por que a feature a toca |
+| Entidade | Papel | Por que a funcionalidade a toca |
 |---|---|---|
-| [Entidade] | [lê / grava / lê e grava] | [o que a feature faz com ela — ex.: "Recebe o status do processamento e o relatório de erros (RN-08)"] |
+| [Entidade] | [lê / grava / lê e grava] | [o que a funcionalidade faz com ela — ex.: "Recebe o status do processamento e o relatório de erros (RN-08)"] |
 
 ---
 
 ## Superfície
 
 <!--
-  Classifica COMO a feature se manifesta — marcador escaneável lido pelo validador
+  Classifica COMO a funcionalidade se manifesta — marcador escaneável lido pelo validador
   (validate-doc.mjs), que decide qual seção de detalhamento exigir:
 
   - **Tela própria** — página/rota ou formulário dedicado.        → exige ## Comportamento de tela
@@ -327,19 +327,19 @@ Feature: [Nome da feature em linguagem natural]
   Caixa de diálogo (confirmação, alerta) não é Modal: é parte da Ação em tela que a abre.
   Modal que é subformulário de outro formulário — os dados só são gravados com o
   registro-pai — não é N3 nem Superfície: fica no `## Comportamento de tela` e nos
-  `## Campos` da feature do pai. *(decisão do PO, 2026-09-27)*
+  `## Campos` da funcionalidade do pai. *(decisão do PO, 2026-09-27)*
   - **CLI** — comando de terminal executado pelo ator.             → exige ## Execução e operação
   - **Job/Pipeline** — execução disparada por agendamento/evento/  → exige ## Execução e operação
     estágio de pipeline (sem interação durante a execução).
   - **API** — operação exposta para consumo por outro sistema      → exige ## Execução e operação
     (a "tela" é de terceiros; o contrato vive no dev-only/3B).
 
-  Esta linha apenas classifica. O mapa tela↔feature (N:N), quando uma tela atende
-  várias features, é consolidado no N2 (seção Telas — arquétipo transacional).
+  Esta linha apenas classifica. O mapa tela↔funcionalidade (N:N), quando uma tela atende
+  várias funcionalidades, é consolidado no N2 (seção Telas — arquétipo transacional).
 
-  MAIS DE UMA ROTA NA MESMA FEATURE? Escreva em LISTA, uma linha por rota, com o
+  MAIS DE UMA ROTA NA MESMA FUNCIONALIDADE? Escreva em LISTA, uma linha por rota, com o
   critério que as distingue à esquerda (tipo, canal, variante). Em parágrafo
-  corrido não se percebe quantas são (REP-038 do portal-compras: uma feature
+  corrido não se percebe quantas são (REP-038 do portal-compras: uma funcionalidade
   carregava cinco rotas numa frase só). Assim:
 
       **Tela própria** — são **três** rotas, uma por canal e tipo de cliente:
@@ -356,9 +356,9 @@ Feature: [Nome da feature em linguagem natural]
   argumento, não inventário, e a lista quebra o raciocínio no meio.
 -->
 
-**[Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API]** — [tela própria: rota `/...` · modal: origem: [Feature/Tela] (`/rota`) · ação em tela: origem: [Feature/Tela] (`/rota`) · CLI: comando `...` · Job/Pipeline: gatilho (cron/evento/estágio) · API: consumidor previsto]
+**[Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API]** — [tela própria: rota `/...` · modal: origem: [Funcionalidade/Tela] (`/rota`) · ação em tela: origem: [Funcionalidade/Tela] (`/rota`) · CLI: comando `...` · Job/Pipeline: gatilho (cron/evento/estágio) · API: consumidor previsto]
 
-**Fidelidade ao protótipo**: [obrigatória | referência | n/a] · [caminho do protótipo quando houver, ex.: `prototypes/[dominio]/[feature-set]/[feature]/[estado].html`] · [[abrir o protótipo ↗](../../../prototypes/[dominio]/[feature-set]/[feature]/[estado].html)]
+**Fidelidade ao protótipo**: [obrigatória | referência | n/a] · [caminho do protótipo quando houver, ex.: `prototypes/[dominio]/[agrupamento-funcional]/[funcionalidade]/[estado].html`] · [[abrir o protótipo ↗](../../../prototypes/[dominio]/[agrupamento-funcional]/[funcionalidade]/[estado].html)]
 <!-- obrigatória = a implementação deve reproduzir o protótipo (exige o caminho); referência (padrão) = protótipo guia, ajustes permitidos no Design System; n/a = sem tela/protótipo (padrão para CLI/Job/API). A fidelidade "obrigatória" é checada pelo validador. O link "abrir o protótipo ↗" é relativo a este N3 (sobe três níveis até a raiz) — é a forma que funciona no GitHub e no editor; o visualizador da instância o abre em outra aba. -->
 
 ---
@@ -367,7 +367,7 @@ Feature: [Nome da feature em linguagem natural]
 <!-- Obrigatória quando a Superfície é Tela própria/Modal/Ação em tela. Se a Superfície é CLI/Job/API, OMITA esta seção e preencha "## Execução e operação". -->
 
 ### Onde fica
-[Descrever em qual rota e componente a feature aparece: formulário em página própria, modal, botão em listagem, etc.]
+[Descrever em qual rota e componente a funcionalidade aparece: formulário em página própria, modal, botão em listagem, etc.]
 
 ### Estados da tela
 
@@ -412,13 +412,13 @@ Feature: [Nome da feature em linguagem natural]
 ## Critérios de sucesso
 
 <!--
-  Resultados MENSURÁVEIS e AGNÓSTICOS DE TECNOLOGIA que comprovam que a feature
+  Resultados MENSURÁVEIS e AGNÓSTICOS DE TECNOLOGIA que comprovam que a funcionalidade
   entrega valor. Alimentam a seção "Success Criteria" (SC-###) do spec.md na
   exportação ao spec-kit. Derivar de: cobertura dos cenários + NFRs herdados.
   - ✓ observável e medível: "90% dos usuários concluem o cadastro em < 2 min"
   - ✗ não citar stack/implementação: "endpoint responde em < 200ms" é NFR técnico,
     referencie via → ver NFR: [ID] em vez de repetir aqui.
-  Se a feature não tiver métrica própria, herde do NFR aplicável.
+  Se a funcionalidade não tiver métrica própria, herde do NFR aplicável.
 -->
 
 | # | Critério mensurável | Origem |
@@ -435,9 +435,9 @@ Feature: [Nome da feature em linguagem natural]
   Critérios de contagem: ver global/SIZING.md
 
   IMPORTANTE — Arquitetura BFF (Java + Angular):
-  A unidade de contagem é a FEATURE (N3) inteira, não o endpoint (ver global/SIZING.md).
-  O front e o BFF são camadas internas da mesma feature: ter o backend em BFF interno
-  NÃO é, por si só, motivo para não contar. A feature conta se satisfaz os critérios de
+  A unidade de contagem é a FUNCIONALIDADE (N3) inteira, não o endpoint (ver global/SIZING.md).
+  O front e o BFF são camadas internas da mesma funcionalidade: ter o backend em BFF interno
+  NÃO é, por si só, motivo para não contar. A funcionalidade conta se satisfaz os critérios de
   processo elementar (PE) e se classifica como EE/SE/CE.
   Registrar aqui apenas Funções de Transação (EE, SE, CE).
   Funções de Dados (ALI, AIE) são contadas centralmente no DATA-MODEL.md.
@@ -445,12 +445,12 @@ Feature: [Nome da feature em linguagem natural]
 
 | Função de Transação | Papel | Tipo | ALR | DER | Complexidade | PF | Data |
 |---|---|---|---|---|---|---|---|
-| [Nome da Feature] | principal | [EE / SE / CE] | [N] | [N] | Baixa / Média / Alta | [3/4/5/6/7] | [AAAA-MM-DD] |
+| [Nome da Funcionalidade] | principal | [EE / SE / CE] | [N] | [N] | Baixa / Média / Alta | [3/4/5/6/7] | [AAAA-MM-DD] |
 | [Consultar Rótulo do campo (combo)] | acessório | [CE / SE] | [N] | [N] | Baixa / Média / Alta | [3/4] | [AAAA-MM-DD] |
 
-> **Papel** = o que o PE é **em relação à feature**: `principal` realiza a feature (mesma intenção e objeto do nome dela, inclusive as variantes por canal, por tipo e por completude); `acessório` a feature só hospeda ou consome (lista consultada, consulta implícita, exportação, ação vizinha que é principal de outra feature). Toda feature contada tem ao menos um `principal`; a linha `↪` e a ainda não medida levam `—`. Não muda o PF — diz o que a análise de impacto mede por padrão (os principais). Regras em `global/SIZING.md` → *Papel do PE em relação à feature*; conferência: `node scripts/valida-contagem-consolidada.mjs`.
+> **Papel** = o que o PE é **em relação à funcionalidade**: `principal` realiza a funcionalidade (mesma intenção e objeto do nome dela, inclusive as variantes por canal, por tipo e por completude); `acessório` a funcionalidade só hospeda ou consome (lista consultada, consulta implícita, exportação, ação vizinha que é principal de outra funcionalidade). Toda funcionalidade contada tem ao menos um `principal`; a linha `↪` e a ainda não medida levam `—`. Não muda o PF — diz o que a análise de impacto mede por padrão (os principais). Regras em `global/SIZING.md` → *Papel do PE em relação à funcionalidade*; conferência: `node scripts/valida-contagem-consolidada.mjs`.
 
-> **ALR** = nº de ALIs/AIEs lidos ou mantidos pela transação, apurado nas quatro fontes do `global/SIZING.md` · **DER** = campos distintos que cruzam a fronteira (entrada ∪ saída, uma vez cada) **+1** capacidade de mensagens **+1** ação que dispara. O par ALR × DER define a complexidade pela tabela da EE ou pela da SE/CE do `global/SIZING.md`. · **Data** = quando a linha foi contada/atualizada (ISO `AAAA-MM-DD`); linha inalterada numa recontagem mantém a data anterior. · **PF 0** = feature que não é processo elementar, ou PE descartado: a linha fica, com `—` em Tipo, ALR, DER e Complexidade, e a memória diz por quê — é esse porquê que a planilha de entrega mostra na linha, para o PO ver que a feature foi impactada e não contada. · **PE reutilizado** = PE já contado noutra feature (cada PE conta uma vez na aplicação): a linha leva o nome dele, `↪ [ID](caminho do N3)` no Tipo e `—` em ALR, DER, Complexidade e PF, sem memória — ver `global/SIZING.md` → *PE reutilizado*. Antes de contar, confira: `node scripts/valida-acessorio-tela.mjs --pe "<nome do PE>"`.
+> **ALR** = nº de ALIs/AIEs lidos ou mantidos pela transação, apurado nas quatro fontes do `global/SIZING.md` · **DER** = campos distintos que cruzam a fronteira (entrada ∪ saída, uma vez cada) **+1** capacidade de mensagens **+1** ação que dispara. O par ALR × DER define a complexidade pela tabela da EE ou pela da SE/CE do `global/SIZING.md`. · **Data** = quando a linha foi contada/atualizada (ISO `AAAA-MM-DD`); linha inalterada numa recontagem mantém a data anterior. · **PF 0** = funcionalidade que não é processo elementar, ou PE descartado: a linha fica, com `—` em Tipo, ALR, DER e Complexidade, e a memória diz por quê — é esse porquê que a planilha de entrega mostra na linha, para o PO ver que a funcionalidade foi impactada e não contada. · **PE reutilizado** = PE já contado noutra funcionalidade (cada PE conta uma vez na aplicação): a linha leva o nome dele, `↪ [ID](caminho do N3)` no Tipo e `—` em ALR, DER, Complexidade e PF, sem memória — ver `global/SIZING.md` → *PE reutilizado*. Antes de contar, confira: `node scripts/valida-acessorio-tela.mjs --pe "<nome do PE>"`.
 
 ### Memória de cálculo
 
@@ -495,7 +495,7 @@ Por que cada ALR:
 → ver DATA-MODEL.md: Entidade [Nome da Entidade]
 
 <!--
-  Todos os campos desta feature — Label Dev, campo banco, tipo SQL
+  Todos os campos desta funcionalidade — Label Dev, campo banco, tipo SQL
   e constraints — estão centralizados no DATA-MODEL.md.
   Campos novos aprovados durante a sessão devem ser adicionados
   ao DATA-MODEL.md antes de iniciar a implementação.
@@ -537,7 +537,7 @@ Por que cada ALR:
   CONTRATO EM TABELA (6.3.0). Requisição e resposta são tabelas de campos, não exemplo
   JSON: o exemplo mostra UM caso e deixa tipo, obrigatoriedade e origem por conta de quem
   lê — é ali que o agente que gera o código inventa campo. A coluna Label PO liga o campo
-  da API ao campo da feature (`## Campos`, `## Campos automáticos` ou `## Colunas do
+  da API ao campo da funcionalidade (`## Campos`, `## Campos automáticos` ou `## Colunas do
   resultado`); campo técnico (id, versão, paginação) leva `—`. Tipos e constraints
   completos continuam no DATA-MODEL. O envelope (`data`/`meta`/`error`) é o do
   API-PATTERNS e não se repete. Conferência: node scripts/valida-contrato-api.mjs
@@ -615,14 +615,14 @@ logAction({
 ## Implementação
 
 <!--
-  Onde o código desta feature vive. A coluna Repositório é preenchida no 3B
+  Onde o código desta funcionalidade vive. A coluna Repositório é preenchida no 3B
   (PASSO 5) — no perfil `requisitos`, no 3A, quando há o inventário — com nomes
-  que EXISTEM em repos/INDEX.md — uma linha por parte da feature (endpoint → repo
+  que EXISTEM em repos/INDEX.md — uma linha por parte da funcionalidade (endpoint → repo
   do serviço; componente/tela → repo do front/MFE; job → repo do pipeline; num
   sistema de microsserviços, cada serviço que a realiza). Caminho e Branch/Tag
   podem ficar como placeholder até o dev. A partir de `estado: em-desenvolvimento`,
   o validate-doc.mjs exige ao menos uma linha com repositório real (não
-  placeholder). O índice reverso — as features de cada repositório — sai daqui:
+  placeholder). O índice reverso — as funcionalidades de cada repositório — sai daqui:
   `node scripts/gera-indice-repos.mjs` (seção gerada no repos/INDEX.md).
 -->
 
@@ -635,12 +635,12 @@ logAction({
 <!--
   Elo spec → código. Para que a cadeia ticket → N3 → código fique completa,
   referencie ambos os IDs nos commits e no PR:
-    tipo(SIGLA-SFS-NN): resumo da mudança ([origem] [chave])
-  Assim a feature (ID do N3) e o ticket de origem (chave desta seção "Origem")
+    tipo(SIGLA-SAF-NN): resumo da mudança ([origem] [chave])
+  Assim a funcionalidade (ID do N3) e o ticket de origem (chave desta seção "Origem")
   são localizáveis a partir do histórico do git.
 -->
 
-**Rastreabilidade no git**: commits/PR referenciam o ID da feature e o ticket de origem — `tipo([SIGLA]-[SFS]-[NN]): [resumo] ([origem] [chave])` (ex.: `(ServiceNow STRY0012345)`, `(issue ISSUE-482)`, `(experimento EXP-2026-003)`)
+**Rastreabilidade no git**: commits/PR referenciam o ID da funcionalidade e o ticket de origem — `tipo([SIGLA]-[SAF]-[NN]): [resumo] ([origem] [chave])` (ex.: `(ServiceNow STRY0012345)`, `(issue ISSUE-482)`, `(experimento EXP-2026-003)`)
 
 ---
 
@@ -650,10 +650,10 @@ logAction({
 
 <!--
   Os tickets (história do ServiceNow, issue, experimento — ver MASTER.md → "Origem do
-  ticket") que originaram ou alteraram esta feature, cada um com o link para a sua AIMM
-  (`analise-impacto/AIMM-<CHAVE>.md`). Elo recíproco da seção `## Features` da AIMM.
-  Relação M:N: uma feature pode atender a vários tickets; um ticket pode gerar várias
-  features. A chave da ferramenta de origem é a fonte de verdade — não inventar IDs aqui.
+  ticket") que originaram ou alteraram esta funcionalidade, cada um com o link para a sua AIMM
+  (`analise-impacto/AIMM-<CHAVE>.md`). Elo recíproco da seção `## Funcionalidades` da AIMM.
+  Relação M:N: uma funcionalidade pode atender a vários tickets; um ticket pode gerar várias
+  funcionalidades. A chave da ferramenta de origem é a fonte de verdade — não inventar IDs aqui.
 
   CARIMBO DE VERIFICAÇÃO (elo suspeito): após fechar/rever o elo, rode
   `node scripts/suspect-links.mjs --stamp --file <este arquivo>` — ele grava aqui
@@ -666,17 +666,17 @@ logAction({
 
 | Ticket (AIMM) | Tipo | Critérios cobertos |
 |---|---|---|
-| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIMM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta feature realiza desses critérios] |
+| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIMM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta funcionalidade realiza desses critérios] |
 
 <!--
   A célula "Critérios cobertos" ABRE com as referências `CA-n` quando o ticket
   numera os critérios (ver a linha de Numeração na AIMM do ticket) — é delas que a
-  contagem por sprint monta a rastreabilidade ticket › critério › feature.
-  Formato: `CA-1, CA-4` seguido de travessão e da prosa do que a feature realiza.
+  contagem por sprint monta a rastreabilidade ticket › critério › funcionalidade.
+  Formato: `CA-1, CA-4` seguido de travessão e da prosa do que a funcionalidade realiza.
   Quando a fonte NÃO numera, abra a célula com `—` e mantenha só a prosa: a
   rastreabilidade fica pela chave do ticket. Nunca invente número de critério.
-  Entre as features de um mesmo ticket, os `CA-n` não devem se repetir nem faltar:
-  a união dos critérios das features é o conjunto de critérios do ticket.
+  Entre as funcionalidades de um mesmo ticket, os `CA-n` não devem se repetir nem faltar:
+  a união dos critérios das funcionalidades é o conjunto de critérios do ticket.
 -->
 
 ---
@@ -688,10 +688,10 @@ logAction({
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico anterior preservado. |
-| [AAAA-MM-DD] | [autor] | Feature criada | [descrição] |
+| [AAAA-MM-DD] | [autor] | Funcionalidade criada | [descrição] |
 
 ---
 
-*Feature Set: [Nome] · Major Feature Set: [Nome] · Última revisão: —*
+*Agrupamento Funcional: [Nome] · Domínio: [Nome] · Última revisão: —*
 
-*Links: [N2 do Feature Set](./README.md) · [N1 do domínio](../README.md) · [INDEX geral](../../INDEX.md)*
+*Links: [N2 do Agrupamento Funcional](./README.md) · [N1 do domínio](../README.md) · [INDEX geral](../../INDEX.md)*

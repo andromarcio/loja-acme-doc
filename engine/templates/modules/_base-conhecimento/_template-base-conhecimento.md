@@ -32,7 +32,7 @@
 
 ---
 
-## Árvore de Funcionalidades (Major Feature Sets → Feature Sets → Features)
+## Árvore de Funcionalidades (Domínios → Agrupamentos Funcionais → Funcionalidades)
 
 <!--
   Árvore NUMERADA (1., 1.1, 1.1.1) para que cada item seja referenciável com
@@ -41,11 +41,11 @@
 -->
 
 - 1. [Domínio A]
-  - 1.1 [Feature Set 1]
-    - 1.1.1 [Feature]
-    - 1.1.2 [Feature]
-  - 1.2 [Feature Set 2]
-    - 1.2.1 [Feature]
+  - 1.1 [Agrupamento Funcional 1]
+    - 1.1.1 [Funcionalidade]
+    - 1.1.2 [Funcionalidade]
+  - 1.2 [Agrupamento Funcional 2]
+    - 1.2.1 [Funcionalidade]
 
 ---
 

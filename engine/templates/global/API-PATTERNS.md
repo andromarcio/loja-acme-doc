@@ -186,7 +186,7 @@ GET /api/v1/contacts?search=joão&tag=cliente&ownerId=uuid&cursor=...
 - Retorna o objeto atualizado completo com HTTP 200
 
 ### Campos imutáveis após criação
-Alguns campos não podem ser alterados via PATCH após a criação. O N3 de cada feature deve listar explicitamente quais são. Exemplos comuns: `createdAt`, `id`, e a chave de negócio (ex.: `isin`). Tentativa de alterar campo imutável retorna HTTP 422 com `code: FIELD_IMMUTABLE`.
+Alguns campos não podem ser alterados via PATCH após a criação. O N3 de cada funcionalidade deve listar explicitamente quais são. Exemplos comuns: `createdAt`, `id`, e a chave de negócio (ex.: `isin`). Tentativa de alterar campo imutável retorna HTTP 422 com `code: FIELD_IMMUTABLE`.
 
 ---
 
@@ -241,7 +241,7 @@ Formato: `DOMINIO_DESCRICAO` em screaming_snake_case.
 | TASK_ALREADY_COMPLETED  | 409  | Work         | Tarefa já foi concluída                 |
 | FORM_SLUG_TAKEN         | 409  | Capture      | Slug do formulário já em uso            |
 
-**Regra**: cada N3 define e documenta os códigos de erro específicos da sua feature. O índice do domínio (gerado na Etapa 5 do prompt de criação) consolida todos os códigos.
+**Regra**: cada N3 define e documenta os códigos de erro específicos da sua funcionalidade. O índice do domínio (gerado na Etapa 5 do prompt de criação) consolida todos os códigos.
 
 ---
 
@@ -267,7 +267,7 @@ onEvent('contact.created', async (payload) => {
 - Nome do evento: `{entidade}.{acao}` em snake_case
 - Payload inclui o ID da entidade principal (e a chave de negócio quando útil)
 - Eventos são assíncronos — nunca bloquear a resposta HTTP aguardando um handler
-- O N3 da feature deve declarar quais eventos ela **publica** e quais ela **consome**
+- O N3 da funcionalidade deve declarar quais eventos ela **publica** e quais ela **consome**
 
 ---
 

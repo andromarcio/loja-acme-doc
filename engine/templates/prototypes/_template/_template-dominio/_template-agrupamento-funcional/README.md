@@ -1,6 +1,6 @@
-# Protótipo de Fluxo: [Nome do Feature Set]
-> Feature Set: [Nome] — Major Feature Set: [Nome]
-> Spec de referência: [../../../modules/[dominio]/[feature-set]/README.md](../../../modules/[dominio]/[feature-set]/README.md)
+# Protótipo de Fluxo: [Nome do Agrupamento Funcional]
+> Agrupamento Funcional: [Nome] — Domínio: [Nome]
+> Spec de referência: [../../../modules/[dominio]/[agrupamento-funcional]/README.md](../../../modules/[dominio]/[agrupamento-funcional]/README.md)
 
 ---
 
@@ -20,8 +20,8 @@
 
 | Tela | Rota | Protótipo de estado |
 |---|---|---|
-| [Nome da tela] | `/[rota]` | [ver pasta ./[feature]/](./[feature]/) |
-| [Nome da tela] | `/[rota]` | [ver pasta ./[feature]/](./[feature]/) |
+| [Nome da tela] | `/[rota]` | [ver pasta ./[funcionalidade]/](./[funcionalidade]/) |
+| [Nome da tela] | `/[rota]` | [ver pasta ./[funcionalidade]/](./[funcionalidade]/) |
 
 ---
 
@@ -43,4 +43,4 @@
 
 ---
 
-*Links: [N2 da spec](../../../modules/[dominio]/[feature-set]/README.md) · [Protótipos do domínio](../README.md) · [Índice de protótipos](../../INDEX.md)*
+*Links: [N2 da spec](../../../modules/[dominio]/[agrupamento-funcional]/README.md) · [Protótipos do domínio](../README.md) · [Índice de protótipos](../../INDEX.md)*

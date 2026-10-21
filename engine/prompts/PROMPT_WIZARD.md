@@ -1,13 +1,13 @@
-# PROMPT WIZARD — Feature Set de processo guiado multi-etapas (N2 + N3 negocial)
+# PROMPT WIZARD — Agrupamento Funcional de processo guiado multi-etapas (N2 + N3 negocial)
 ## Atalho de especificação para fluxos do tipo assistente (wizard)
 
-> **Modelo de estrutura (N2)**: `engine/templates/modules/_template-dominio/_template-feature-set/README.md`
-> **Modelo de estrutura (N3)**: `engine/templates/modules/_template-dominio/_template-feature-set/_template-feature.md`
+> **Modelo de estrutura (N2)**: `engine/templates/modules/_template-dominio/_template-agrupamento-funcional/README.md`
+> **Modelo de estrutura (N3)**: `engine/templates/modules/_template-dominio/_template-agrupamento-funcional/_template-funcionalidade.md`
 > *(referência humana — o prompt já embute os esqueletos)*
 > **Quem participa**: PO + dev (ou só PO)
 > **Insumo necessário**: descrição do processo + a lista ordenada de etapas e o que cada
 > etapa coleta. N1 do domínio é opcional.
-> **Entrega**: o `README.md` (N2) do Feature Set **e** o N3 negocial da feature principal
+> **Entrega**: o `README.md` (N2) do Agrupamento Funcional **e** o N3 negocial da funcionalidade principal
 > multi-etapas — mais os N3 auxiliares que o usuário optar (retomar rascunho, acompanhar
 > status, cancelar).
 >
@@ -29,30 +29,30 @@ Diferença fundamental de granularidade em relação ao CRUD:
 
 | | CRUD | Wizard |
 |---|---|---|
-| Unidade | 1 entidade → **5 features** (pesquisar/cadastrar/editar/excluir/visualizar) | 1 processo → **1 feature principal** (uma ação com começo, meio, fim e resultado) que percorre N telas |
-| As "etapas" | — | **não são features** — são **telas** da mesma feature, descritas em `## Comportamento de tela` |
-| Features auxiliares | — | opcionais: *retomar rascunho*, *acompanhar status*, *cancelar solicitação* |
+| Unidade | 1 entidade → **5 funcionalidades** (pesquisar/cadastrar/editar/excluir/visualizar) | 1 processo → **1 funcionalidade principal** (uma ação com começo, meio, fim e resultado) que percorre N telas |
+| As "etapas" | — | **não são funcionalidades** — são **telas** da mesma funcionalidade, descritas em `## Comportamento de tela` |
+| Funcionalidades auxiliares | — | opcionais: *retomar rascunho*, *acompanhar status*, *cancelar solicitação* |
 
-> **Regra de granularidade** (skill de requisitos): uma feature é *um verbo + uma
-> entidade* — "Abrir conta" é **uma** feature mesmo cobrindo 5 telas. As etapas do
-> wizard são a superfície da feature, não features distintas. **Não crie um N3 por etapa.**
+> **Regra de granularidade** (skill de requisitos): uma funcionalidade é *um verbo + uma
+> entidade* — "Abrir conta" é **uma** funcionalidade mesmo cobrindo 5 telas. As etapas do
+> wizard são a superfície da funcionalidade, não funcionalidades distintas. **Não crie um N3 por etapa.**
 
 ---
 
 ## INSTRUÇÕES PARA O CLAUDE
 
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
-> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
-> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) **e** `node scripts/validate-feature-semantics.mjs <arquivo>` (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [agrupamento-funcional]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) **e** `node scripts/valida-semantica-funcionalidade.mjs <arquivo>` (é mesmo uma funcionalidade? — critérios FD de `engine/DEFINICAO-FUNCIONALIDADE.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
-Você vai especificar, numa única sessão, um Feature Set do tipo **processo guiado
+Você vai especificar, numa única sessão, um Agrupamento Funcional do tipo **processo guiado
 (wizard)** seguindo o padrão do framework. A partir de **uma descrição do processo e
-da lista ordenada de etapas**, produza o N2 do Feature Set e o N3 negocial da
-**feature principal multi-etapas** (mais os N3 auxiliares que o usuário escolher).
+da lista ordenada de etapas**, produza o N2 do Agrupamento Funcional e o N3 negocial da
+**funcionalidade principal multi-etapas** (mais os N3 auxiliares que o usuário escolher).
 
 Princípio do atalho: o usuário descreve o processo e suas etapas **uma vez**. A
-**feature principal** é a fonte canônica; *retomar*, *acompanhar status* e *cancelar*,
+**funcionalidade principal** é a fonte canônica; *retomar*, *acompanhar status* e *cancelar*,
 quando existirem, são **derivadas dela**.
 
 Regras da sessão:
@@ -74,10 +74,10 @@ Regras da sessão:
   ligadas por "e" / "ou" / "além disso" viram **itens distintos**, cada um com **uma
   única restrição verificável**. A reação do sistema ("não avança", "exibe mensagem")
   não é regra — vai para os **Cenários**. Cada item começa por `**RN-NN** —` (sequencial
-  na feature, nunca reaproveitado), e ao menos um cenário o verifica com a tag `@RN-NN`
+  na funcionalidade, nunca reaproveitado), e ao menos um cenário o verifica com a tag `@RN-NN`
   na linha acima do `Scenario:`.
-- **Quem pode vive só no N2.** Colete perfis e permissões por feature uma vez e
-  registre-os apenas na matriz do `README.md` do Feature Set. Os N3 não trazem regra de
+- **Quem pode vive só no N2.** Colete perfis e permissões por funcionalidade uma vez e
+  registre-os apenas na matriz do `README.md` do Agrupamento Funcional. Os N3 não trazem regra de
   permissão nem lista de perfis: no grupo **Restrições de acesso** eles descrevem só a
   reação do sistema a quem não tem acesso (mensagem do catálogo).
 - Um artefato de cada vez: gere, aguarde aprovação, só então avance.
@@ -109,7 +109,7 @@ Regras da sessão:
 [cole aqui o README.md do domínio]
 
 === IDENTIFICAÇÃO MANUAL *(preencher quando o N1 não for fornecido)* ===
-Major Feature Set: [nome do domínio]
+Domínio: [nome do domínio]
 Sigla do domínio: [3 letras maiúsculas — ex.: CAD]
 
 ---
@@ -129,9 +129,9 @@ antes de transitar de um estado de geração para o próximo.
 ## PASSO 1 — `[COLETA_PROCESSO]`
 
 Confirme o domínio e a sigla (do N1, se fornecido; senão da identificação manual).
-**Se o N1 já definir este Feature Set, reutilize o ID `[SIGLA]-[SFS]` dele**; caso
-contrário, derive uma sigla de 3 letras para o Feature Set, formando o ID
-`[SIGLA]-[SFS]` (e proponha incluí-lo no N1). Então
+**Se o N1 já definir este Agrupamento Funcional, reutilize o ID `[SIGLA]-[SAF]` dele**; caso
+contrário, derive uma sigla de 3 letras para o Agrupamento Funcional, formando o ID
+`[SIGLA]-[SAF]` (e proponha incluí-lo no N1). Então
 pergunte, em um bloco:
 
 > 1. Qual o nome do processo guiado (ex.: Abertura de Conta, Contratação de Seguro)?
@@ -182,14 +182,14 @@ Faça apenas as perguntas que as etapas não responderam e que valem para o proc
 > 10. **Cancelamento/abandono**: o que acontece se o usuário abandonar o processo no
 >     meio (descarta? mantém rascunho? exige confirmação)?
 > 11. **Acompanhamento**: depois de concluído, existe uma tela para **acompanhar o
->     status** da solicitação? *(vira feature auxiliar)*
+>     status** da solicitação? *(vira funcionalidade auxiliar)*
 > 12. **Permissões** (fonte única do projeto): quais **perfis** existem e, para cada
->     feature (iniciar o processo, retomar rascunho, acompanhar status, cancelar),
+>     funcionalidade (iniciar o processo, retomar rascunho, acompanhar status, cancelar),
 >     quais perfis podem executá-la? Descreva em linguagem de negócio.
 > 13. Este processo precisa ficar registrado no **histórico de auditoria**? (sim/não —
 >     servirá para o 3B preencher a seção AuditLog; não vira regra de negócio)
 
-A partir das respostas 7, 10 e 11, defina quais **features auxiliares** existem:
+A partir das respostas 7, 10 e 11, defina quais **funcionalidades auxiliares** existem:
 *Retomar rascunho* (se 7 = sim), *Acompanhar status* (se 11 = sim), *Cancelar
 solicitação* (se 10 exigir uma ação dedicada). Liste-as ao usuário e confirme antes do
 PASSO 4.
@@ -198,9 +198,9 @@ PASSO 4.
 
 ## PASSO 4 — `[GERACAO_N2]`
 
-Monte a tabela de Features pela jornada confirmada, começando pela principal e seguindo com as auxiliares. A sequência abaixo vale apenas para a primeira atribuição; omita auxiliares não confirmadas antes de numerar. Preserve todo ID existente no N2/N3, inclusive ao inserir uma auxiliar no meio da jornada; novas features seguem o maior reservado, sem reutilizar números. Rode `node scripts/ids-n3.mjs modules/[dominio]/[feature-set]/README.md` em modo seco e, conferido, com `--write`, antes de gerar N3s. Preserve o registro `docqui:n3-ids` do N2 — ver `engine/N3-IDS.md`. As etapas da principal não recebem IDs de feature próprios.
+Monte a tabela de Funcionalidades pela jornada confirmada, começando pela principal e seguindo com as auxiliares. A sequência abaixo vale apenas para a primeira atribuição; omita auxiliares não confirmadas antes de numerar. Preserve todo ID existente no N2/N3, inclusive ao inserir uma auxiliar no meio da jornada; novas funcionalidades seguem o maior reservado, sem reutilizar números. Rode `node scripts/ids-n3.mjs modules/[dominio]/[agrupamento-funcional]/README.md` em modo seco e, conferido, com `--write`, antes de gerar N3s. Preserve o registro `docqui:n3-ids` do N2 — ver `engine/N3-IDS.md`. As etapas da principal não recebem IDs de funcionalidade próprios.
 
-| Ordem | Feature | Arquivo |
+| Ordem | Funcionalidade | Arquivo |
 |---|---|---|
 | 01 | [Verbo] [processo] *(principal — multi-etapas)* | `f-[verbo]-[entidade].md` |
 | 02 | Retomar [processo] *(se houver rascunho — resposta 7)* | `f-retomar-[entidade].md` |
@@ -209,13 +209,13 @@ Monte a tabela de Features pela jornada confirmada, começando pela principal e 
 
 Gere o N2 — **exatamente esta estrutura**, idêntica à do PROMPT_2A:
 
-📄 `modules/[dominio]/[feature-set]/README.md`
+📄 `modules/[dominio]/[agrupamento-funcional]/README.md`
 
-> **Nome da pasta do Feature Set (obrigatório):** `[feature-set]` é o **slug em kebab-case do nome do Feature Set, SEM prefixo** — ex.: *Gestão de Fábricas* → `gestao-fabricas`; *Sistemas* → `sistemas`. **A pasta não leva prefixo** (nada de `g-`); só os **arquivos de feature** levam `f-`. O nome é também o segmento de rota (`/[dominio]/[feature-set]`).
+> **Nome da pasta do Agrupamento Funcional (obrigatório):** `[agrupamento-funcional]` é o **slug em kebab-case do nome do Agrupamento Funcional, SEM prefixo** — ex.: *Gestão de Fábricas* → `gestao-fabricas`; *Sistemas* → `sistemas`. **A pasta não leva prefixo** (nada de `g-`); só os **arquivos de funcionalidade** levam `f-`. O nome é também o segmento de rota (`/[dominio]/[agrupamento-funcional]`).
 
 ```
-# Feature Set: [Nome do Feature Set]
-> **Nível 2** - Major Feature Set: [Nome do Domínio] - `[SIGLA]-[SFS]`
+# Agrupamento Funcional: [Nome do Agrupamento Funcional]
+> **Nível 2** - Domínio: [Nome do Domínio] - `[SIGLA]-[SAF]`
 
 ## Descrição
 [2-3 frases sobre o que o processo faz]
@@ -224,14 +224,14 @@ Gere o N2 — **exatamente esta estrutura**, idêntica à do PROMPT_2A:
 
 ---
 
-## Features
+## Funcionalidades
 
-| Feature | Descrição |
+| Funcionalidade | Descrição |
 |---|---|
-| [**[Verbo] [processo]**](f-[verbo]-[entidade].md) <small>[SIGLA]-[SFS]-01</small> | [uma linha — feature principal multi-etapas] |
-| [**Retomar [processo]**](f-retomar-[entidade].md) <small>[SIGLA]-[SFS]-02</small> | [uma linha — se houver] |
-| [**Acompanhar [processo]**](f-acompanhar-[entidade].md) <small>[SIGLA]-[SFS]-03</small> | [uma linha — se houver] |
-| [**Cancelar [processo]**](f-cancelar-[entidade].md) <small>[SIGLA]-[SFS]-04</small> | [uma linha — se houver] |
+| [**[Verbo] [processo]**](f-[verbo]-[entidade].md) <small>[SIGLA]-[SAF]-01</small> | [uma linha — funcionalidade principal multi-etapas] |
+| [**Retomar [processo]**](f-retomar-[entidade].md) <small>[SIGLA]-[SAF]-02</small> | [uma linha — se houver] |
+| [**Acompanhar [processo]**](f-acompanhar-[entidade].md) <small>[SIGLA]-[SAF]-03</small> | [uma linha — se houver] |
+| [**Cancelar [processo]**](f-cancelar-[entidade].md) <small>[SIGLA]-[SAF]-04</small> | [uma linha — se houver] |
 
 ---
 
@@ -244,9 +244,9 @@ lista numerada]
 
 ---
 
-## Dependências entre features
+## Dependências entre funcionalidades
 
-[A feature principal é o ponto de entrada e cria o processo; Retomar exige um rascunho
+[A funcionalidade principal é o ponto de entrada e cria o processo; Retomar exige um rascunho
 salvo pela principal; Acompanhar e Cancelar exigem uma solicitação já iniciada pela
 principal]
 
@@ -254,20 +254,20 @@ principal]
 
 ## Telas
 
-| Tela | Rota sugerida | Features atendidas | Descrição |
+| Tela | Rota sugerida | Funcionalidades atendidas | Descrição |
 |---|---|---|---|
-| [Processo] — Etapas 1..N | `/[dominio]/[feature-set]/novo` | **[Verbo] [processo]** <small>[SIGLA]-[SFS]-01</small> | assistente multi-etapas (uma rota, etapas internas) |
-| Acompanhar [Processo] | `/[dominio]/[feature-set]/:id` | **Acompanhar [processo]** <small>[SIGLA]-[SFS]-03</small> | status da solicitação (somente leitura) |
+| [Processo] — Etapas 1..N | `/[dominio]/[agrupamento-funcional]/novo` | **[Verbo] [processo]** <small>[SIGLA]-[SAF]-01</small> | assistente multi-etapas (uma rota, etapas internas) |
+| Acompanhar [Processo] | `/[dominio]/[agrupamento-funcional]/:id` | **Acompanhar [processo]** <small>[SIGLA]-[SAF]-03</small> | status da solicitação (somente leitura) |
 
-> Rotas determinísticas conforme `global/ROUTING.md`: `[feature-set]` é o slug (kebab) da
-> pasta do Feature Set. O assistente vive em **uma** rota; as etapas são estados internos
+> Rotas determinísticas conforme `global/ROUTING.md`: `[agrupamento-funcional]` é o slug (kebab) da
+> pasta do Agrupamento Funcional. O assistente vive em **uma** rota; as etapas são estados internos
 > da tela, não rotas distintas.
 
 ---
 
 ## Permissões por perfil
 
-> **Fonte única de permissões** deste Feature Set.
+> **Fonte única de permissões** deste Agrupamento Funcional.
 
 | Perfil | [Verbo] | Retomar | Acompanhar | Cancelar |
 |---|---|---|---|---|
@@ -292,14 +292,14 @@ principal]
 
 > **Regra da Descrição** — Escreva 2–3 frases em **linguagem de negócio pura**, cada
 > parágrafo em **uma única linha contínua** (sem quebras internas). Comece pela
-> **capacidade que o conjunto entrega ao usuário** — como o Feature Set é um processo
+> **capacidade que o conjunto entrega ao usuário** — como o Agrupamento Funcional é um processo
 > guiado, prefira um verbo de condução. Em ordem de preferência: **1) "Conduz o [perfil],
 > passo a passo, …"**; **2) "Reúne as etapas de…"**; **3) "Permite ao [perfil] …"**.
 > **Não use** verbos de domínio (*Responde por, Concentra*) — confundem o nível. Ordene as
 > frases assim: (1ª) o que o processo conduz e em que etapas · (2ª) o que isso permite ao
 > perfil (iniciar, retomar, acompanhar, cancelar). A linha `**Não faz**:` delimita o
 > escopo negativo.
-> Exemplo (Feature Set **Abertura de Conta** `CTA-ABR`):
+> Exemplo (Agrupamento Funcional **Abertura de Conta** `CTA-ABR`):
 > ```
 > ## Descrição
 > Conduz o cliente, passo a passo, pela abertura de uma nova conta, reunindo as etapas de identificação, envio de documentos e confirmação. Permite ao cliente iniciar a solicitação, salvá-la como rascunho, retomá-la depois e acompanhar seu andamento até a aprovação.
@@ -348,12 +348,12 @@ principal]
 > `Voltar` para a etapa anterior — antes da Revisão.)*
 
 > **Regra das Permissões** — A seção `## Permissões por perfil` **sempre** é uma
-> **tabela Markdown** (perfis nas linhas × as features nas colunas). Células: `✓` para
+> **tabela Markdown** (perfis nas linhas × as funcionalidades nas colunas). Células: `✓` para
 > "pode executar" e `—` para "não pode". Nunca use listas ou texto corrido; notas de
 > detalhe vão em bullets **após** a tabela.
 
 Apresente e pergunte:
-> "O N2 do Feature Set está correto? Ajusta algo ou avanço para gerar os N3?"
+> "O N2 do Agrupamento Funcional está correto? Ajusta algo ou avanço para gerar os N3?"
 
 Aguarde aprovação antes do PASSO 5.
 
@@ -361,11 +361,11 @@ Aguarde aprovação antes do PASSO 5.
 
 ## PASSO 5 — `[GERACAO_N3_PRINCIPAL]`
 
-Gere o N3 da **feature principal** — a fonte canônica das auxiliares. Use as etapas e
+Gere o N3 da **funcionalidade principal** — a fonte canônica das auxiliares. Use as etapas e
 campos do PASSO 2 e siga **exatamente** o esqueleto completo do PROMPT_3A (PASSO 3):
 front-matter com `contagem.pendente: true` · Descrição (dois parágrafos) · Regras de
 negócio · Cenários (os 5 grupos) · Campos (7 colunas) · Derivações (só com campo
-calculado) · Campos automáticos · Dados lidos e gravados (só se a feature toca entidade
+calculado) · Campos automáticos · Dados lidos e gravados (só se a funcionalidade toca entidade
 sem campo na tela) · Superfície · Comportamento de tela · Critérios de sucesso · Origem
 (só com ticket) · Changelog.
 
@@ -373,11 +373,11 @@ sem campo na tela) · Superfície · Comportamento de tela · Critérios de suce
 > tela`; a **`## Origem`** fica logo antes do `## Changelog`. Emita as duas exatamente
 > como no esqueleto do PROMPT_3A (PASSO 3).
 
-> **DESTINO DOS ARQUIVOS (obrigatório — não erre a pasta).** Todos os N3 deste wizard vão na **mesma pasta** do `README.md` do Feature Set: `modules/[dominio]/[feature-set]/`. `[feature-set]` é o nome exato dessa pasta — a mesma do N2 gerado nesta sessão. **Nunca** grave na raiz, `global/`, `engine/`, outro domínio ou outro Feature Set. Se em dúvida, pergunte antes de gravar.
+> **DESTINO DOS ARQUIVOS (obrigatório — não erre a pasta).** Todos os N3 deste wizard vão na **mesma pasta** do `README.md` do Agrupamento Funcional: `modules/[dominio]/[agrupamento-funcional]/`. `[agrupamento-funcional]` é o nome exato dessa pasta — a mesma do N2 gerado nesta sessão. **Nunca** grave na raiz, `global/`, `engine/`, outro domínio ou outro Agrupamento Funcional. Se em dúvida, pergunte antes de gravar.
 
-📄 `modules/[dominio]/[feature-set]/f-[verbo]-[entidade].md` (ID `[SIGLA]-[SFS]-01`)
+📄 `modules/[dominio]/[agrupamento-funcional]/f-[verbo]-[entidade].md` (ID `[SIGLA]-[SAF]-01`)
 
-- **Superfície**: Tela própria — assistente multi-etapas (`/[dominio]/[feature-set]/novo`).
+- **Superfície**: Tela própria — assistente multi-etapas (`/[dominio]/[agrupamento-funcional]/novo`).
 - **`## Campos`**: liste **todos** os campos de **todas** as etapas na tabela padrão
   (Label PO | Entidade | Preenchimento | Edição | Tipo | Obrigatório | Validação). Preencha a
   **Entidade** dona de cada campo (etapas distintas podem escrever em entidades
@@ -400,7 +400,7 @@ sem campo na tela) · Superfície · Comportamento de tela · Critérios de suce
     cancelamento.
 
 Apresente e pergunte:
-> "O N3 da feature principal está correto? Posso derivar as features auxiliares
+> "O N3 da funcionalidade principal está correto? Posso derivar as funcionalidades auxiliares
 > (Retomar / Acompanhar / Cancelar) a partir dele?"
 
 Aguarde aprovação antes do PASSO 6.
@@ -409,7 +409,7 @@ Aguarde aprovação antes do PASSO 6.
 
 ## PASSO 6 — `[DERIVACAO_N3_AUXILIARES]`
 
-Derive os N3 auxiliares **confirmados no PASSO 3** a partir da feature principal
+Derive os N3 auxiliares **confirmados no PASSO 3** a partir da funcionalidade principal
 recém-aprovada. Gere um por vez, aguardando aprovação entre eles. Cada N3 segue o mesmo
 esqueleto completo do PROMPT_3A (PASSO 3), listado no PASSO 5; não repita as perguntas
 de campos já coletadas — informe o que foi derivado e peça apenas confirmação ou ajustes.
@@ -423,15 +423,15 @@ de campos já coletadas — informe o que foi derivado e peça apenas confirmaç
 2. 📄 `f-acompanhar-[entidade].md` (`...-03`) — **Acompanhar status**: todos os dados da
    solicitação em **somente leitura** + o **status atual** do processo; sem ações de
    gravação. Superfície: **Tela própria** — Acompanhar [Processo]
-   (`/[dominio]/[feature-set]/:id`). Sem auditoria (é leitura).
+   (`/[dominio]/[agrupamento-funcional]/:id`). Sem auditoria (é leitura).
 
 3. 📄 `f-cancelar-[entidade].md` (`...-04`) — **Cancelar solicitação**: identificação da
    solicitação em andamento pelo identificador único + confirmação explícita; aplique a
    política de abandono (resposta 10). Superfície: **Ação em tela**, disparada do
    acompanhamento ou do próprio assistente.
 
-> Se no PASSO 3 nenhuma auxiliar foi confirmada, **pule este passo** — um Feature Set do
-> tipo wizard pode ter só a feature principal.
+> Se no PASSO 3 nenhuma auxiliar foi confirmada, **pule este passo** — um Agrupamento Funcional do
+> tipo wizard pode ter só a funcionalidade principal.
 
 **Contagem pendente e esteira** (PROMPT_3A, PASSO 3.6): cada N3 gerado nesta sessão — a
 principal e as auxiliares — nasce com `contagem.pendente: true` e entra em
@@ -444,11 +444,11 @@ vem depois, na passada técnica (3B) ou pela opção CT; o `estado` avança pelo
 
 ## PASSO 7 — `[REVISAO_CONSISTENCIA]`
 
-Com as features aprovadas, rode a revisão de consistência do Feature Set:
+Com as funcionalidades aprovadas, rode a revisão de consistência do Agrupamento Funcional:
 
 ```
-[ ] Todas as features do N2 têm N3 correspondente?
-[ ] A feature principal é UMA só (as etapas estão em Comportamento de tela, não viraram features)?
+[ ] Todas as funcionalidades do N2 têm N3 correspondente?
+[ ] A funcionalidade principal é UMA só (as etapas estão em Comportamento de tela, não viraram funcionalidades)?
 [ ] Label PO é idêntico entre N2 e os N3?
 [ ] Cada campo do N3 principal indica a sua etapa na coluna Validação?
 [ ] Os N3 nasceram com `contagem.pendente: true`, constam em `## Pendências de contagem` e
@@ -460,12 +460,12 @@ Com as features aprovadas, rode a revisão de consistência do Feature Set:
 [ ] Campos e regras canônicas estão referenciados pelos dicionários?
 ```
 
-Se o N1 do domínio foi fornecido, verifique se o Feature Set consta na tabela de
-Feature Sets do N1 (e no `modules/INDEX.md`) **com o nome em link para o README do
-N2** — `[Nome](./[feature-set]/README.md)`; se faltar a entrada ou o link, inclua-o
+Se o N1 do domínio foi fornecido, verifique se o Agrupamento Funcional consta na tabela de
+Agrupamentos Funcionais do N1 (e no `modules/INDEX.md`) **com o nome em link para o README do
+N2** — `[Nome](./[agrupamento-funcional]/README.md)`; se faltar a entrada ou o link, inclua-o
 (e ajuste a linha `*Links: ...*` do N1). Proponha a atualização e aguarde aprovação
 antes de gravar.
 
 Encerre:
-> "Feature Set Wizard concluído (N2 + N3 negociais). Para complementar a parte técnica e
+> "Agrupamento Funcional Wizard concluído (N2 + N3 negociais). Para complementar a parte técnica e
 > atualizar o data-model, use o **3B** passando cada N3 como contexto."

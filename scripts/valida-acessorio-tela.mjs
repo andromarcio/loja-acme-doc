@@ -1,15 +1,15 @@
 #!/usr/bin/env node
-// valida-acessorio-tela.mjs — onde o PE mora: o acessório na feature dona da tela, e
+// valida-acessorio-tela.mjs — onde o PE mora: o acessório na funcionalidade dona da tela, e
 // cada PE uma vez na aplicação.
 //
 // Combo, autocomplete, carrossel, consulta implícita, exportação e ação vizinha são PE
-// DA TELA: contam-se junto com o PE principal da feature cuja `## Superfície` é *Tela
-// própria*. Uma feature de *Ação em tela* (botão, formulário ou painel aberto sobre a
-// tela de outra feature) não carrega acessório — a combo que o formulário dela usa é da
-// tela, e vai para a feature dona da tela (SIZING.md → *Regra da lista consultada*,
-// "registrada na feature dona da tela"). Caso que motivou a checagem (2026-09-23):
+// DA TELA: contam-se junto com o PE principal da funcionalidade cuja `## Superfície` é *Tela
+// própria*. Uma funcionalidade de *Ação em tela* (botão, formulário ou painel aberto sobre a
+// tela de outra funcionalidade) não carrega acessório — a combo que o formulário dela usa é da
+// tela, e vai para a funcionalidade dona da tela (SIZING.md → *Regra da lista consultada*,
+// "registrada na funcionalidade dona da tela"). Caso que motivou a checagem (2026-09-23):
 // `SDC-SOL-10`, ação sobre a vitrine de `SDC-VIT-01`, carregava as combos de UO e CR da
-// vitrine — e a duplicidade dessas combos em `SDC-VIT-03` apontava para a feature errada.
+// vitrine — e a duplicidade dessas combos em `SDC-VIT-03` apontava para a funcionalidade errada.
 //
 // O que confere, em cada N3 (`modules/**/f-*.md`):
 //   - o tipo da Superfície: o primeiro negrito de `## Superfície` ("Tela própria",
@@ -17,30 +17,30 @@
 //   - os PE acessórios da primeira tabela de `## Métricas de tamanho` — pela coluna
 //     Papel quando ela existe; sem a coluna, pelo nome (lista consultada `(combo)`,
 //     `(carrossel)`, `(botões)`…, `(implícita)`, exportação);
-//   - acessório numa feature que NÃO é dona de tela (Ação em tela, Job, API) é
-//     ERRO, com as candidatas a dona: as features de Tela própria citadas na Superfície
+//   - acessório numa funcionalidade que NÃO é dona de tela (Ação em tela, Job, API) é
+//     ERRO, com as candidatas a dona: as funcionalidades de Tela própria citadas na Superfície
 //     (seguindo uma citação intermediária, ex.: SDC-SOL-10 → SDC-VIT-04 → SDC-VIT-01) ou
 //     que declaram a mesma rota. O Modal é dona de tela como a Tela própria: superfície
 //     oficial (decisão do PO, 2026-09-27; antes, 2026-09-23, sobre SDC-SOL-05) para o
 //     modal com conteúdo próprio — detalhe de um registro, consulta ou formulário que não
 //     é subformulário de outro —, e seus acessórios ficam nele. Caixa de diálogo não é
 //     Modal: é parte da Ação em tela que a abre;
-//   - a consulta implícita `(implícita)` fica SEMPRE com a feature Editar do Feature Set
+//   - a consulta implícita `(implícita)` fica SEMPRE com a funcionalidade Editar do Agrupamento Funcional
 //     (`f-editar-*.md`), mesmo quando o Editar é Ação em tela — é a leitura que abre o
 //     formulário de edição preenchido (decisão do PO, 2026-09-23); fora do Editar é ERRO,
 //     com o Editar da pasta como candidato; sem Editar na pasta, vale a regra da tela.
 //
 // Cada PE conta UMA vez na aplicação (decisão do PO, 2026-09-27; SIZING.md → *PE
-// reutilizado*): a mesma lista em duas telas é um PE só. A feature que usa um PE contado
+// reutilizado*): a mesma lista em duas telas é um PE só. A funcionalidade que usa um PE contado
 // noutra grava a linha com `↪ [ID](caminho do N3)` na coluna Tipo, e esta checagem confere:
-//   - o mesmo PE contado em duas features é ERRO — o nome decide, sem o componente entre
+//   - o mesmo PE contado em duas funcionalidades é ERRO — o nome decide, sem o componente entre
 //     parênteses (combo e autocomplete da mesma lista são o mesmo PE); mesmo rótulo com
 //     filtro diferente passa quando um dos dois declara `> Distinto de <ID> · <PE>: …`;
-//   - a referência `↪` precisa achar o PE contado: feature que existe, com a linha do
+//   - a referência `↪` precisa achar o PE contado: funcionalidade que existe, com a linha do
 //     mesmo nome contada (não outra referência, nem linha sem PF), e não `deprecado`;
 //   - o ID da referência é link para o N3 onde o PE conta (decisão do PO, 2026-09-27):
 //     sem link, ou com link para outro arquivo, é ERRO — a mensagem traz o link certo,
-//     relativo à feature que reutiliza;
+//     relativo à funcionalidade que reutiliza;
 //   - a linha `↪` não é contada aqui, então não entra na regra da dona da tela.
 // `--pe "<nome>"` responde se um PE já é contado, onde, e quem o reutiliza — é a consulta
 // do 3B e do CT antes de contar.
@@ -154,14 +154,14 @@ if (CONSULTA) {
   const k = chavePE(CONSULTA);
   const onde = contadoEm.get(k) || [];
   const quem = reusos.get(k) || [];
-  if (!onde.length) console.log(`"${CONSULTA}" não é contado em nenhuma feature — conte-o na feature dona da tela.`);
+  if (!onde.length) console.log(`"${CONSULTA}" não é contado em nenhuma funcionalidade — conte-o na funcionalidade dona da tela.`);
   for (const o of onde) console.log(`"${o.nome}" é contado em ${o.id} (${o.tipo}, ${o.pf} PF) · ${todos.get(o.id).arquivo}`);
   if (quem.length) console.log(`reutilizado por: ${quem.map((r) => `${r.id} (↪ ${r.alvo})`).join(' · ')}`);
-  if (onde.length) console.log('Não conte de novo: na feature nova, a linha leva o nome do PE e, na coluna Tipo, `↪ [<ID>](<caminho do N3 acima, relativo à feature nova>)` (SIZING.md → PE reutilizado).');
+  if (onde.length) console.log('Não conte de novo: na funcionalidade nova, a linha leva o nome do PE e, na coluna Tipo, `↪ [<ID>](<caminho do N3 acima, relativo à funcionalidade nova>)` (SIZING.md → PE reutilizado).');
   process.exit(0);
 }
 
-// Feature Editar de cada pasta (Feature Set): dona natural da consulta implícita.
+// Funcionalidade Editar de cada pasta (Agrupamento Funcional): dona natural da consulta implícita.
 const editarPorPasta = new Map();
 for (const [id, f] of feats) if (/^f-editar-/.test(f.base)) editarPorPasta.set(f.dir, [...(editarPorPasta.get(f.dir) || []), id]);
 
@@ -197,25 +197,25 @@ for (const [id, f] of feats) {
     if (IMPLICITA.test(pe.nome)) {
       if (souEditar) continue;
       if (editares.length) {
-        erros.push(`${id} · ${rot} — consulta implícita fora da feature Editar: é a leitura que abre o formulário de edição preenchido e fica sempre com o Editar → candidata: ${editares.join(' · ')} (Editar do mesmo Feature Set) · ${f.arquivo}`);
+        erros.push(`${id} · ${rot} — consulta implícita fora da funcionalidade Editar: é a leitura que abre o formulário de edição preenchido e fica sempre com o Editar → candidata: ${editares.join(' · ')} (Editar do mesmo Agrupamento Funcional) · ${f.arquivo}`);
         continue;
       }
       // sem Editar na pasta: vale a regra da tela, abaixo
     }
     if (donas.has(id)) continue;
     if (cands === null) cands = candidatas(id);
-    const onde = cands.length ? cands.map((c) => `${c.id} (${c.motivo})`).join(' · ') : 'nenhuma feature de Tela própria ou Modal citada nem com a mesma rota — declare a dona';
+    const onde = cands.length ? cands.map((c) => `${c.id} (${c.motivo})`).join(' · ') : 'nenhuma funcionalidade de Tela própria ou Modal citada nem com a mesma rota — declare a dona';
     if (SEM_TELA.test(tipo)) {
       // Ação em tela não tem formulário próprio: com lista, ou a Superfície é Modal, ou a lista é da tela de origem.
-      const modal = /^a[çc][ãa]o em tela/i.test(tipo) ? ' (se a feature abre formulário próprio, a Superfície dela é Modal)' : '';
-      erros.push(`${id} · ${rot} — acessório numa feature de "${tipo}": o acessório mora na feature dona da tela${modal} → candidata: ${onde} · ${f.arquivo}`);
+      const modal = /^a[çc][ãa]o em tela/i.test(tipo) ? ' (se a funcionalidade abre formulário próprio, a Superfície dela é Modal)' : '';
+      erros.push(`${id} · ${rot} — acessório numa funcionalidade de "${tipo}": o acessório mora na funcionalidade dona da tela${modal} → candidata: ${onde} · ${f.arquivo}`);
     } else {
       avisos.push(`${id} · ${rot} — Superfície "${tipo}" não reconhecida (Tela própria / Modal / Ação em tela / Job); confira à mão · ${f.arquivo}`);
     }
   }
 }
 
-// Uma vez na aplicação: o mesmo PE contado em duas features, sem `Distinto de` entre elas.
+// Uma vez na aplicação: o mesmo PE contado em duas funcionalidades, sem `Distinto de` entre elas.
 const unicidade = [];
 const declarado = (a, b, k) => [a, b].some((x, i) => (todos.get(x).distintos || []).some((d) => d.id === [b, a][i] && d.chave === k));
 for (const [k, lista] of contadoEm) {
@@ -240,9 +240,9 @@ for (const [id, t] of todos) {
     const k = chavePE(pe.nome);
     const onde = `${id} · ${pe.nome} [↪ ${pe.reuso}] · ${t.arquivo}`;
     const alvo = todos.get(pe.reuso);
-    if (pe.reuso === id) { referencias.push(`${onde} — a referência aponta para a própria feature`); continue; }
+    if (pe.reuso === id) { referencias.push(`${onde} — a referência aponta para a própria funcionalidade`); continue; }
     if (!alvo) { referencias.push(`${onde} — ${pe.reuso} não existe (nenhum N3 com esse ID)`); continue; }
-    // O ID é link para o N3 onde o PE conta: sem ele, quem lê a feature não chega ao PE
+    // O ID é link para o N3 onde o PE conta: sem ele, quem lê a funcionalidade não chega ao PE
     // contado. A mensagem traz o link certo, relativo a este N3.
     const grave = `grave \`↪ [${pe.reuso}](${relative(dirname(t.abs), alvo.abs).split(sep).join('/')})\``;
     if (!pe.reusoLink) referencias.push(`${onde} — sem link para o N3 de ${pe.reuso}: ${grave}`);
@@ -262,7 +262,7 @@ for (const [id, t] of todos) {
         : `${onde} — em ${pe.reuso} esse PE não está contado (PF ${linhas[0].pf === null ? '—' : linhas[0].pf})`);
       continue;
     }
-    if (alvo.estado === 'deprecado') referencias.push(`${onde} — ${pe.reuso} está deprecada: a contagem do PE passa para uma das features que o reutilizam`);
+    if (alvo.estado === 'deprecado') referencias.push(`${onde} — ${pe.reuso} está deprecada: a contagem do PE passa para uma das funcionalidades que o reutilizam`);
   }
 }
 erros.push(...unicidade, ...referencias);
@@ -270,14 +270,14 @@ erros.push(...unicidade, ...referencias);
 console.log(`${feats.size} N3 com Superfície (${semSuperficie} sem) · ${donas.size} dona(s) de tela (Tela própria ou Modal) · ${totalAcessorios} PE acessório(s) · ${totalReusos} PE reutilizado(s) (↪)`);
 for (const a of avisos) console.log(`  ⚠️  ${a}`);
 if (!erros.length) {
-  console.log('✓ Todo acessório está numa feature dona de tela, e cada PE é contado uma vez na aplicação.');
+  console.log('✓ Todo acessório está numa funcionalidade dona de tela, e cada PE é contado uma vez na aplicação.');
   process.exit(0);
 }
 const naTela = erros.length - unicidade.length - referencias.length;
 if (naTela) {
-  console.error(`\n✗ ${naTela} acessório(s) fora da feature dona da tela:`);
+  console.error(`\n✗ ${naTela} acessório(s) fora da funcionalidade dona da tela:`);
   for (const e of erros.slice(0, naTela)) console.error(`  - ${e}`);
-  console.error('\nMova o PE para a feature dona da tela — a consulta implícita, para o Editar — (N3 + memória de cálculo + CONTAGEM-PF.md); ver SIZING.md → Regra da lista consultada e Regra da consulta implícita.');
+  console.error('\nMova o PE para a funcionalidade dona da tela — a consulta implícita, para o Editar — (N3 + memória de cálculo + CONTAGEM-PF.md); ver SIZING.md → Regra da lista consultada e Regra da consulta implícita.');
 }
 if (unicidade.length) {
   console.error(`\n✗ ${unicidade.length} PE contado(s) mais de uma vez na aplicação:`);

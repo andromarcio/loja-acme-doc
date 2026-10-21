@@ -6,7 +6,7 @@
   Versão DEV → sem CSS adicional
 -->
 
-# Major Feature Set: [Nome do Domínio]
+# Domínio: [Nome do Domínio]
 > **Nível 1** - Visão estratégica do domínio - `[SIGLA]`
 
 ## Descrição
@@ -19,18 +19,18 @@
 
 ---
 
-## Feature Sets
+## Agrupamentos Funcionais
 
-| Feature Set | Descrição | Features |
+| Agrupamento Funcional | Descrição | Funcionalidades |
 |---|---|---|
-| [**Nome do Feature Set**](./[pasta]/README.md) <small>[SIGLA]-[SFS]</small> | [descrição em uma linha] | [N] |
+| [**Nome do Agrupamento Funcional**](./[pasta]/README.md) <small>[SIGLA]-[SAF]</small> | [descrição em uma linha] | [N] |
 
 ---
 
 ## Regras transversais de negócio
 
-1. [Regra que se aplica a todas as features deste domínio]
-2. [Regra que se aplica a todas as features deste domínio]
+1. [Regra que se aplica a todas as funcionalidades deste domínio]
+2. [Regra que se aplica a todas as funcionalidades deste domínio]
 
 ---
 
@@ -92,4 +92,4 @@
 
 *Última revisão: —*
 
-*Links: [Feature Set 1](./[pasta]/README.md) · [INDEX geral](../INDEX.md)*
+*Links: [Agrupamento Funcional 1](./[pasta]/README.md) · [INDEX geral](../INDEX.md)*

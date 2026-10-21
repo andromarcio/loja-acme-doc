@@ -1,15 +1,15 @@
 # PROMPT 3A — N3 Negócio
-## Features · Parte negocial
+## Funcionalidades · Parte negocial
 
-> **Modelo de estrutura**: `engine/templates/modules/_template-dominio/_template-feature-set/_template-feature.md` *(referência humana — o prompt já embute o esqueleto)*
+> **Modelo de estrutura**: `engine/templates/modules/_template-dominio/_template-agrupamento-funcional/_template-funcionalidade.md` *(referência humana — o prompt já embute o esqueleto)*
 > **Quem participa**: PO + dev (ou só PO)
-> **Insumo necessário**: N1 do domínio + N2 do Feature Set escolhido
+> **Insumo necessário**: N1 do domínio + N2 do Agrupamento Funcional escolhido
 > *(ambos opcionais no fluxo bottom-up — ver Modo B abaixo)*
-> **Entrega**: rascunho do .md de cada feature com descrição, campos
+> **Entrega**: rascunho do .md de cada funcionalidade com descrição, campos
 > em Label PO, regras e cenários Gherkin negociais
 >
-> **Pré-requisito (fluxo top-down)**: PROMPT_2A concluído (N2 negocial) para o Feature Set escolhido
-> **Pré-requisito (fluxo bottom-up)**: nenhum — informe nome do domínio, Feature Set e feature
+> **Pré-requisito (fluxo top-down)**: PROMPT_2A concluído (N2 negocial) para o Agrupamento Funcional escolhido
+> **Pré-requisito (fluxo bottom-up)**: nenhum — informe nome do domínio, Agrupamento Funcional e funcionalidade
 > **Próximo passo**: após aprovação, usar PROMPT_3B
 
 ---
@@ -17,16 +17,16 @@
 ## INSTRUÇÕES PARA O CLAUDE
 
 > **Protocolo obrigatório desta sessão (F1 preflight · F2 autovalidação):**
-> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [feature-set]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
-> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) **e** `node scripts/validate-feature-semantics.mjs <arquivo>` (é mesmo uma feature? — critérios FD de `engine/FEATURE-DEFINITION.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
+> 1. **Antes de gerar** — rode `node scripts/preflight-spec.mjs [dominio] [agrupamento-funcional]` (ou, sem disco, leia o N0 + `modules/INDEX.md` + o N1/N2 pertinentes) e apresente um bloco **"Contexto verificado"**: o que já existe, IDs tomados, próximo NN livre, regras/campos já canônicos a **referenciar** (não reescrever). Não duplique ID/pasta/regra/campo existente.
+> 2. **Depois de gravar** — rode `node scripts/validate-doc.mjs <arquivo>` (estrutura) **e** `node scripts/valida-semantica-funcionalidade.mjs <arquivo>` (é mesmo uma funcionalidade? — critérios FD de `engine/DEFINICAO-FUNCIONALIDADE.md`); se algum reprovar, **apresente os desvios, corrija e repita até `✓`**. Nunca conclua com um validador reprovando.
 > *(No Claude Code os hooks em `.claude/settings.json` já enforçam isso automaticamente.)*
 
-Você vai especificar features do ponto de vista de negócio.
+Você vai especificar funcionalidades do ponto de vista de negócio.
 Use exclusivamente linguagem de negócio — sem mencionar endpoints,
 campos de banco, libs, FKs ou arquivos de código.
 
 Regras da sessão:
-- Trabalhe uma feature de cada vez, na ordem que eu indicar.
+- Trabalhe uma funcionalidade de cada vez, na ordem que eu indicar.
 - Apresente as perguntas em blocos temáticos, um bloco de cada vez.
 - Ao completar todos os blocos, gere o artefato e aguarde aprovação.
 - A tabela de campos usa Label PO, **Entidade**, Preenchimento, Edição, Tipo, Obrigatório e
@@ -47,9 +47,9 @@ Regras da sessão:
   configurações/campos/grupos/abas…", liste os N itens ali mesmo (ou garanta
   que já estão numa tabela da mesma seção) — cada N3 é autocontido; quem lê
   só ele não pode depender de abrir outro arquivo para saber quais são.
-- **Nomenclatura dos arquivos N3**: prefixo `f-` obrigatório + verbo no infinitivo + hífen + substantivo da entidade principal (singular) + adjetivo qualificador quando a entidade tiver um (derivar do nome do Feature Set), tudo em kebab-case. Padrão de caminho: `modules/[dominio]/[feature-set]/f-[verbo]-[entidade]-[adjetivo].md` ou `f-[verbo]-[entidade].md` quando não houver adjetivo. Aqui `[feature-set]` é o **nome exato da pasta do Feature Set** — a mesma onde já vive o `README.md` do N2 (ver **DESTINO** abaixo); não invente outra pasta nem acrescente/remova prefixo. Exemplos com adjetivo: `f-cadastrar-fundo-gerido.md`, `f-pesquisar-fundo-gerido.md`, `f-pesquisar-fundo-alocado.md`. Exemplos sem adjetivo: `f-cadastrar-cliente.md`, `f-excluir-usuario.md`. O adjetivo evita colisão entre features de Feature Sets distintos dentro do mesmo domínio. Nunca omita o prefixo `f-` nem use outro separador que não seja hífen. O **verbo** deve constar do vocabulário canônico de `engine/FEATURE-DEFINITION.md` (a definição testável do que é uma feature); termo na posição do verbo que denuncia não-feature ("cadastro", "gestão", "painel", nominalizações como "aprovação") é **reprovado** pelo gate semântico, e verbo legítimo ainda não catalogado gera **aviso** — proponha adicioná-lo à tabela do FEATURE-DEFINITION.
+- **Nomenclatura dos arquivos N3**: prefixo `f-` obrigatório + verbo no infinitivo + hífen + substantivo da entidade principal (singular) + adjetivo qualificador quando a entidade tiver um (derivar do nome do Agrupamento Funcional), tudo em kebab-case. Padrão de caminho: `modules/[dominio]/[agrupamento-funcional]/f-[verbo]-[entidade]-[adjetivo].md` ou `f-[verbo]-[entidade].md` quando não houver adjetivo. Aqui `[agrupamento-funcional]` é o **nome exato da pasta do Agrupamento Funcional** — a mesma onde já vive o `README.md` do N2 (ver **DESTINO** abaixo); não invente outra pasta nem acrescente/remova prefixo. Exemplos com adjetivo: `f-cadastrar-fundo-gerido.md`, `f-pesquisar-fundo-gerido.md`, `f-pesquisar-fundo-alocado.md`. Exemplos sem adjetivo: `f-cadastrar-cliente.md`, `f-excluir-usuario.md`. O adjetivo evita colisão entre funcionalidades de Agrupamentos Funcionais distintos dentro do mesmo domínio. Nunca omita o prefixo `f-` nem use outro separador que não seja hífen. O **verbo** deve constar do vocabulário canônico de `engine/DEFINICAO-FUNCIONALIDADE.md` (a definição testável do que é uma funcionalidade); termo na posição do verbo que denuncia não-funcionalidade ("cadastro", "gestão", "painel", nominalizações como "aprovação") é **reprovado** pelo gate semântico, e verbo legítimo ainda não catalogado gera **aviso** — proponha adicioná-lo à tabela do DEFINICAO-FUNCIONALIDADE.
 
-> **DESTINO DO ARQUIVO (obrigatório — não erre a pasta).** O N3 é gravado na **mesma pasta** do `README.md` do Feature Set (o N2): `modules/[dominio]/[feature-set]/`. **Localize** essa pasta pelo `modules/INDEX.md` / pelo N2 — **não a invente** nem crie uma paralela com nome diferente. O arquivo **nunca** vai para a raiz do repositório, `global/`, `engine/`, outro domínio ou outro Feature Set. Se o Feature Set ainda não tem pasta (bottom-up), crie-a com o **mesmo nome** que o N2 usa (ou usará) para o `README.md`. Em caso de dúvida sobre a pasta, **pergunte antes de gravar**.
+> **DESTINO DO ARQUIVO (obrigatório — não erre a pasta).** O N3 é gravado na **mesma pasta** do `README.md` do Agrupamento Funcional (o N2): `modules/[dominio]/[agrupamento-funcional]/`. **Localize** essa pasta pelo `modules/INDEX.md` / pelo N2 — **não a invente** nem crie uma paralela com nome diferente. O arquivo **nunca** vai para a raiz do repositório, `global/`, `engine/`, outro domínio ou outro Agrupamento Funcional. Se o Agrupamento Funcional ainda não tem pasta (bottom-up), crie-a com o **mesmo nome** que o N2 usa (ou usará) para o `README.md`. Em caso de dúvida sobre a pasta, **pergunte antes de gravar**.
 
 ---
 
@@ -73,19 +73,19 @@ Regras da sessão:
 === N1 DO DOMÍNIO *(opcional — omita se não existir ainda)* ===
 [cole aqui o README.md do domínio]
 
-=== N2 DO FEATURE SET *(opcional — omita se não existir ainda)* ===
-[cole aqui o README.md do Feature Set]
+=== N2 DO FUNCIONALIDADE SET *(opcional — omita se não existir ainda)* ===
+[cole aqui o README.md do Agrupamento Funcional]
 
 === AIMM DO TICKET *(opcional — do PROMPT_AIMM)* ===
 [cole aqui o conteúdo de analise-impacto/AIMM-<CHAVE>.md — a AIMM do ticket que
-originou esta feature. Quando presente, registre a chave do ticket na seção
+originou esta funcionalidade. Quando presente, registre a chave do ticket na seção
 `## Origem` do N3, com o link da AIMM, e analise cada critério de aceite: ele vira
 regra de negócio, cenário ou ambos.]
 
 === IDENTIFICAÇÃO MANUAL *(preencher apenas no fluxo bottom-up, quando N1/N2 não existem)* ===
-Major Feature Set: [nome do domínio]
-Feature Set: [nome do Feature Set]
-Feature(s) a especificar: [nome da feature — ou lista separada por vírgula]
+Domínio: [nome do domínio]
+Agrupamento Funcional: [nome do Agrupamento Funcional]
+Funcionalidade(s) a especificar: [nome da funcionalidade — ou lista separada por vírgula]
 
 ---
 
@@ -95,25 +95,25 @@ Feature(s) a especificar: [nome da feature — ou lista separada por vírgula]
 
 1. Levante o **estado atual** de forma determinística (Claude Code / CLI):
    ```
-   node scripts/preflight-spec.mjs [dominio] [feature-set]
+   node scripts/preflight-spec.mjs [dominio] [agrupamento-funcional]
    ```
-   Ele lista o N0, os domínios (N1), os Feature Sets (N2) e as Features (N3) já existentes, com seus IDs e o **próximo NN livre** do Feature Set. No modo copiar-colar (sem acesso ao disco), leia manualmente o `global/N0_PRODUCT_VISION.md`, o `modules/INDEX.md`, o N1 do domínio e o N2 do Feature Set colados no contexto.
+   Ele lista o N0, os domínios (N1), os Agrupamentos Funcionais (N2) e as Funcionalidades (N3) já existentes, com seus IDs e o **próximo NN livre** do Agrupamento Funcional. No modo copiar-colar (sem acesso ao disco), leia manualmente o `global/N0_PRODUCT_VISION.md`, o `modules/INDEX.md`, o N1 do domínio e o N2 do Agrupamento Funcional colados no contexto.
 
 2. Apresente ao usuário o bloco **Contexto verificado** — antes de qualquer coleta ou geração:
 
    > **Contexto verificado**
-   > - Major Feature Set: `[SIGLA]` [existe? / novo] · Feature Set: `[ID]` [existe? / novo] · próximo NN livre: `[SIGLA-SFS-NN]`
-   > - Features já existentes no Feature Set: [lista de IDs] → esta feature **é nova** ou **já existe**?
+   > - Domínio: `[SIGLA]` [existe? / novo] · Agrupamento Funcional: `[ID]` [existe? / novo] · próximo NN livre: `[SIGLA-SAF-NN]`
+   > - Funcionalidades já existentes no Agrupamento Funcional: [lista de IDs] → esta funcionalidade **é nova** ou **já existe**?
    > - Regras/campos já canônicos aplicáveis: [FIELD/RULES-DICTIONARY: …] — **referenciar, não reescrever**
    > - Cabe no escopo do N0 e do N1? [sim / ⚠️ divergência: …]
 
-3. Se a feature, o ID ou a pasta **já existem**, **não duplique**: confirme com o usuário se o caso é **edição** (PROMPT_4A) em vez de criação. Se o domínio/Feature Set ainda não existe (bottom-up), sinalize antes de criar pasta nova.
+3. Se a funcionalidade, o ID ou a pasta **já existem**, **não duplique**: confirme com o usuário se o caso é **edição** (PROMPT_4A) em vez de criação. Se o domínio/Agrupamento Funcional ainda não existe (bottom-up), sinalize antes de criar pasta nova.
 
 Só avance para o PASSO 1 após apresentar o **Contexto verificado**.
 
 ---
 
-## PASSO 1 — Detecção do modo e confirmação das features
+## PASSO 1 — Detecção do modo e confirmação das funcionalidades
 
 Verifique os insumos recebidos e bifurque:
 
@@ -122,7 +122,7 @@ Verifique os insumos recebidos e bifurque:
 ### AIMM do ticket fornecida (se houver)
 
 Se a **AIMM de um ticket** (`analise-impacto/AIMM-<CHAVE>.md`) foi colada no
-contexto, o ticket é a **origem** desta feature. Antes de bifurcar entre Modo A/B:
+contexto, o ticket é a **origem** desta funcionalidade. Antes de bifurcar entre Modo A/B:
 
 - Registre a **chave do ticket** para preencher a seção `## Origem` do N3, com o
   link da AIMM.
@@ -134,33 +134,33 @@ contexto, o ticket é a **origem** desta feature. Antes de bifurcar entre Modo A
 
   Isso garante o elo semântico ticket → spec (regra e/ou cenário), não só por ID.
 - Confirme com o usuário se esta sessão cobre **um critério, vários ou todos**
-  os do ticket (um ticket pode virar mais de uma feature — a `## Features` da AIMM
+  os do ticket (um ticket pode virar mais de uma funcionalidade — a `## Funcionalidades` da AIMM
   diz quais).
 
-> "Esta feature tem origem no ticket **[STRYxxxxxxx]**. Vou registrá-lo na
+> "Esta funcionalidade tem origem no ticket **[STRYxxxxxxx]**. Vou registrá-lo na
 > seção `## Origem` e desdobrar cada critério de aceite em regra de negócio,
-> cenário ou ambos. Esta feature cobre [todos os critérios | os critérios N, M]
+> cenário ou ambos. Esta funcionalidade cobre [todos os critérios | os critérios N, M]
 > do ticket?"
 
 ---
 
 ### Modo A — Top-down (N2 disponível)
 
-Se o N2 foi fornecido, leia a tabela de Features do N2 e extraia **exatamente**:
-- O nome da feature (em **negrito**, dentro do link, na coluna "Feature" do N2)
-- O ID já atribuído no formato `[SIGLA]-[SFS]-NN` (no N2 ele aparece em `<small>` ao lado do nome da feature)
-- O nome do arquivo já definido (ex: `f-cadastrar-cliente.md` — é o link embutido no nome da feature, `[**Nome**](f-cadastrar-cliente.md)`)
+Se o N2 foi fornecido, leia a tabela de Funcionalidades do N2 e extraia **exatamente**:
+- O nome da funcionalidade (em **negrito**, dentro do link, na coluna "Funcionalidade" do N2)
+- O ID já atribuído no formato `[SIGLA]-[SAF]-NN` (no N2 ele aparece em `<small>` ao lado do nome da funcionalidade)
+- O nome do arquivo já definido (ex: `f-cadastrar-cliente.md` — é o link embutido no nome da funcionalidade, `[**Nome**](f-cadastrar-cliente.md)`)
 
 **Não gere novos IDs nem novos nomes de arquivo** — use os que o N2 já define.
-Se uma feature ainda não tiver ID, confirme sua posição na jornada e reserve-o no N2 com `node scripts/ids-n3.mjs modules/[dominio]/[feature-set]/README.md` (modo seco; depois `--write`). Preserve IDs e reservas existentes; o N3 copia o ID atribuído pelo N2, não um número calculado pela ordem de geração. Arquivo ausente no N2 é uma lacuna a confirmar antes da reserva — ver `engine/N3-IDS.md`.
+Se uma funcionalidade ainda não tiver ID, confirme sua posição na jornada e reserve-o no N2 com `node scripts/ids-n3.mjs modules/[dominio]/[agrupamento-funcional]/README.md` (modo seco; depois `--write`). Preserve IDs e reservas existentes; o N3 copia o ID atribuído pelo N2, não um número calculado pela ordem de geração. Arquivo ausente no N2 é uma lacuna a confirmar antes da reserva — ver `engine/N3-IDS.md`.
 
 Pergunte:
 
-> "Identifiquei as seguintes features em **[Feature Set]**:
+> "Identifiquei as seguintes funcionalidades em **[Agrupamento Funcional]**:
 >
-> | Feature | ID | Arquivo |
+> | Funcionalidade | ID | Arquivo |
 > |---|---|---|
-> | [nome exato do N2] | [SIGLA]-[SFS]-NN | [arquivo do N2] |
+> | [nome exato do N2] | [SIGLA]-[SAF]-NN | [arquivo do N2] |
 >
 > Qual delas deseja especificar primeiro?"
 
@@ -168,11 +168,11 @@ Pergunte:
 
 ### Modo B — Bottom-up (sem N2)
 
-Se o N2 **não** foi fornecido, confronte os N3s e os IDs já usados. IDs existentes são imutáveis, inclusive os que já nasceram no fluxo bottom-up: a síntese via B2 conserva-os. Para uma feature ainda sem ID, confirme a jornada e registre primeiro a tabela Features do N2, reservando IDs com `scripts/ids-n3.mjs` antes de escrever o N3 — ver `engine/N3-IDS.md`. Confirme:
+Se o N2 **não** foi fornecido, confronte os N3s e os IDs já usados. IDs existentes são imutáveis, inclusive os que já nasceram no fluxo bottom-up: a síntese via B2 conserva-os. Para uma funcionalidade ainda sem ID, confirme a jornada e registre primeiro a tabela Funcionalidades do N2, reservando IDs com `scripts/ids-n3.mjs` antes de escrever o N3 — ver `engine/N3-IDS.md`. Confirme:
 
-> "Vou especificar a feature **[nome da feature]** do Feature Set
-> **[Feature Set]** no domínio **[Domínio]**.
-> ID reservado no N2: **[SIGLA]-[SFS]-[NN]** — imutável; a síntese via B2 não o renumera.
+> "Vou especificar a funcionalidade **[nome da funcionalidade]** do Agrupamento Funcional
+> **[Agrupamento Funcional]** no domínio **[Domínio]**.
+> ID reservado no N2: **[SIGLA]-[SAF]-[NN]** — imutável; a síntese via B2 não o renumera.
 >
 > ⚠️ O contexto completo do N1/N2 ainda será consolidado. A tabela da jornada e as reservas do N2 são registradas antes de atribuir IDs novos; as demais informações coletadas servirão à síntese via **B2** e **B1**, sem renumerar as identidades já usadas.
 >
@@ -180,8 +180,8 @@ Se o N2 **não** foi fornecido, confronte os N3s e os IDs já usados. IDs existe
 
 Em Modo B, ao longo dos blocos:
 - Sempre que o usuário mencionar regras que pareçam valer para outras
-  features do mesmo Feature Set, sinalize com:
-  > "⚠️ Esta regra pode ser transversal ao Feature Set — anote para
+  funcionalidades do mesmo Agrupamento Funcional, sinalize com:
+  > "⚠️ Esta regra pode ser transversal ao Agrupamento Funcional — anote para
   > incluir no N2 quando for gerado via B2."
 - Sempre que mencionar regras que pareçam valer para o domínio inteiro,
   sinalize com:
@@ -192,7 +192,7 @@ Em Modo B, ao longo dos blocos:
 
 ## PASSO 1.5 — Detecção de padrão CRUD
 
-Antes de iniciar o PASSO 2, verifique se o nome da feature sugere uma
+Antes de iniciar o PASSO 2, verifique se o nome da funcionalidade sugere uma
 operação derivada de um cadastro:
 
 - **Pesquisa / Listagem**: pesquisar, listar, consultar, buscar
@@ -200,13 +200,13 @@ operação derivada de um cadastro:
 - **Exclusão**: excluir, remover, deletar, inativar, arquivar
 - **Visualização**: visualizar, detalhar, exibir
 
-Se o nome da feature se encaixar em algum desses padrões, pergunte:
+Se o nome da funcionalidade se encaixar em algum desses padrões, pergunte:
 
-> "Esta feature parece ser derivada de um cadastro existente.
+> "Esta funcionalidade parece ser derivada de um cadastro existente.
 > Já existe um N3 de **cadastro / inclusão** para este módulo?
 > Se sim, cole o conteúdo aqui para que eu proponha os campos automaticamente."
 
-Se o N3 de cadastro for fornecido, aplique as regras abaixo para a feature
+Se o N3 de cadastro for fornecido, aplique as regras abaixo para a funcionalidade
 em questão **antes** de entrar no PASSO 2. Informe ao usuário o que foi derivado
 e peça apenas confirmação ou ajustes.
 
@@ -248,7 +248,7 @@ Apresente a proposta ao usuário:
 > Algum filtro deve ser removido ou adicionado?
 > Alguma coluna deve ser removida, adicionada ou reordenada?"
 
-> **Persistência (obrigatório):** as colunas confirmadas viram a seção `## Colunas do resultado` no artefato (logo após `## Campos`), com a tabela `Coluna (Label PO) | Origem | Ordenação`. Não basta propor — tem de constar no `.md`. O validador **exige** essa seção para features de pesquisa/listagem (`Pesquisar`/`Listar`/`Consultar`/`Buscar`).
+> **Persistência (obrigatório):** as colunas confirmadas viram a seção `## Colunas do resultado` no artefato (logo após `## Campos`), com a tabela `Coluna (Label PO) | Origem | Ordenação`. Não basta propor — tem de constar no `.md`. O validador **exige** essa seção para funcionalidades de pesquisa/listagem (`Pesquisar`/`Listar`/`Consultar`/`Buscar`).
 
 Após confirmação, **pule o BLOCO B** no PASSO 2 — os campos já estão derivados.
 Prossiga a partir do BLOCO C (Regras de negócio), focando nas regras
@@ -313,11 +313,11 @@ alternativos), focando nos casos de erro e integridade.
 
 **Superfície sugerida:** exclusão normalmente é **Ação em tela** — disparada da
 listagem de resultados da pesquisa (ícone/botão na linha + caixa de diálogo de
-confirmação), sem tela própria. Registre a feature/tela de origem na seção `## Superfície`.
+confirmação), sem tela própria. Registre a funcionalidade/tela de origem na seção `## Superfície`.
 
 ---
 
-### Campos de seleção (combobox que vem de outra feature)
+### Campos de seleção (combobox que vem de outra funcionalidade)
 
 Sempre que um campo — de cadastro **ou** de filtro — não for digitado livremente,
 mas **escolhido a partir de registros de outra entidade** (ex: escolher um Cliente,
@@ -327,7 +327,7 @@ lista de opções fixas.
 Diferencie:
 - **Lista de opções fixa (enum)**: valores fechados e estáveis, definidos no código
   (ex: Tipo = FOF / Espelho). Tipo na tabela de campos: `lista (opção A, opção B)`.
-- **Seleção de outra entidade (FK)**: as opções são registros vivos de outra feature
+- **Seleção de outra entidade (FK)**: as opções são registros vivos de outra funcionalidade
   e mudam conforme o cadastro. Tipo na tabela de campos: `seleção → [Entidade]`.
 
 Para campos de seleção, registre na tabela de campos do N3 assim:
@@ -337,7 +337,7 @@ Para campos de seleção, registre na tabela de campos do N3 assim:
 ```
 
 - **Tipo** = `seleção → [Entidade origem]` (nome da entidade em português).
-- **Validação** carrega o que é decisão de negócio desta feature:
+- **Validação** carrega o que é decisão de negócio desta funcionalidade:
   - **carga**: `lista completa` (poucas opções, carrega tudo) ou
     `autocomplete por [campo]` (muitas opções, busca conforme o usuário digita);
   - **filtro de origem**: quais registros podem aparecer (ex: "apenas ativos").
@@ -354,7 +354,7 @@ Pergunte ao usuário apenas o que a derivação não responde:
 
 ## PASSO 2 — Coleta negocial por blocos
 
-Para cada feature, percorra os blocos abaixo em ordem.
+Para cada funcionalidade, percorra os blocos abaixo em ordem.
 Apresente um bloco de cada vez e aguarde minhas respostas.
 
 > **Nota:** Se o PASSO 1.5 derivou campos de um N3 de cadastro existente,
@@ -413,15 +413,15 @@ Após receber os campos:
     sistema e lido por este = Arquivo de Interface Externa, para a contagem APF);
   - se for **somente leitura**, prefira `## Campos automáticos` a `## Campos`.
 - **Edição de cada campo** (coluna *Edição* da tabela `## Campos`): `editável`
-  (padrão), `somente leitura` (exibido, não altera nesta feature) ou `imutável`
+  (padrão), `somente leitura` (exibido, não altera nesta funcionalidade) ou `imutável`
   (nunca muda após a criação — ex.: chave de negócio). Em **cadastro** tudo nasce
   `editável`; em **Edição** o identificador é `imutável` e a derivação do cadastro
-  pergunta se há outros campos travados. Em features de **editar/alterar/atualizar**
+  pergunta se há outros campos travados. Em funcionalidades de **editar/alterar/atualizar**
   a coluna é **obrigatória** (o validador reprova sem ela).
 - **Entidade de cada campo** (coluna *Entidade* da tabela `## Campos`): nomeie, por
   **referência**, a entidade dona do campo — para rastrear campo→tabela (evolução,
   proveniência e leitura da APF), visível no Modo PO. Regra de preenchimento:
-  - campo próprio da feature → a **entidade principal** (a do front-matter `entidade`);
+  - campo próprio da funcionalidade → a **entidade principal** (a do front-matter `entidade`);
     preencha-a por padrão, não pergunte quando for óbvio;
   - campo que pertence a **outra** entidade (ex.: dado de endereço num cadastro de
     cliente) → o nome dessa entidade;
@@ -445,7 +445,7 @@ Após receber os campos:
 
 ### BLOCO C — Regras de negócio
 
-> **Ao fechar as regras, pergunte-se: que entidade esta feature toca sem mostrar campo
+> **Ao fechar as regras, pergunte-se: que entidade esta funcionalidade toca sem mostrar campo
 > nenhum?** O registro de execução que recebe o status, o cronograma que define a janela
 > válida, o painel entregue junto do dado. Toda entidade que aparecer nas regras e **não**
 > estiver na coluna `Entidade` de `## Campos` vai para `## Dados lidos e gravados` — é o
@@ -468,10 +468,10 @@ Após receber as regras:
   **uma única restrição verificável**. A reação do sistema ("não salva", "exibe
   mensagem") não é regra: vai para `## Cenários` (BLOCO D).
 - **ID da regra — `RN-NN`**: cada item de `## Regras de negócio` começa por
-  `**RN-NN** —`, sequencial na feature e nunca reaproveitado (a regra removida leva o
+  `**RN-NN** —`, sequencial na funcionalidade e nunca reaproveitado (a regra removida leva o
   número; a nova pega o próximo livre). Vale também para o item que só cita o
   RULES-DICTIONARY ou o N1. É por ele que o cenário, o SDD, o código e o teste citam a
-  regra (fora do N3: `[SIGLA]-[SFS]-NN/RN-NN`).
+  regra (fora do N3: `[SIGLA]-[SAF]-NN/RN-NN`).
 - Verificar se alguma é canônica (maioridade, responsável ativo,
   período de vigência, aprovação antes de publicar, limite por organização,
   slug único público, reenvio com cooldown, arquivo com tamanho máximo,
@@ -479,7 +479,7 @@ Após receber as regras:
 - Se for canônica: aplicar RULES-DICTIONARY e perguntar apenas os parâmetros
   que o dicionário deixa em aberto
 - **Roteamento regra × NFR**: registre em `## Regras de negócio` apenas
-  **invariantes de negócio** (o *que* a feature garante). Se a resposta trouxer
+  **invariantes de negócio** (o *que* a funcionalidade garante). Se a resposta trouxer
   uma **qualidade do sistema** — tempo de resposta, segurança, disponibilidade,
   auditoria, restrição técnica — ela é **não-funcional** e **não** entra como
   regra de negócio: pertence ao `global/NFR.md`. Se já houver NFR equivalente,
@@ -537,17 +537,17 @@ Após receber as regras:
 > 16. O que a execução produz (artefatos, relatórios, registros), e como o ator
 >     acompanha o andamento e sabe que terminou bem ou mal?
 
-Com a resposta da pergunta 13, **classifique a feature na seção `## Superfície`**:
+Com a resposta da pergunta 13, **classifique a funcionalidade na seção `## Superfície`**:
 - Página/rota ou formulário dedicado → **Tela própria** (registre a rota).
 - Janela aberta sobre outra tela, com conteúdo próprio — o detalhe de um registro, uma
   consulta ou um formulário que não é subformulário de outro → **Modal** (registre a
-  feature/tela de origem). Como a Tela própria, é dona dos seus acessórios.
+  funcionalidade/tela de origem). Como a Tela própria, é dona dos seus acessórios.
 - Disparada de dentro de outra tela (botão/ícone em listagem, menu de contexto), no
   máximo com uma caixa de diálogo de confirmação ou alerta → **Ação em tela** (registre
-  a feature/tela de origem). A caixa de diálogo não é Modal.
+  a funcionalidade/tela de origem). A caixa de diálogo não é Modal.
 - Modal que é **subformulário** de outro formulário (os dados só são gravados com o
   registro-pai) não é N3: vai para o `## Comportamento de tela` e os `## Campos` da
-  feature do pai (`FEATURE-DEFINITION.md`, teste 5).
+  funcionalidade do pai (`DEFINICAO-FUNCIONALIDADE.md`, teste 5).
 - Comando executado pelo ator → **CLI** (registre o comando em linguagem de negócio).
 - Execução agendada/disparada por evento ou estágio anterior → **Job/Pipeline**
   (registre o gatilho).
@@ -557,7 +557,7 @@ Com a resposta da pergunta 13, **classifique a feature na seção `## Superfíci
 A seção `## Superfície` é o classificador escaneável — **o validador a usa para
 exigir a seção de detalhamento certa**: Tela própria/Modal/Ação em tela → `## Comportamento
 de tela`; CLI/Job/Pipeline/API → `## Execução e operação` (omita a outra). Quando uma
-mesma tela atende várias features, isso será consolidado na seção **Telas** do N2.
+mesma tela atende várias funcionalidades, isso será consolidado na seção **Telas** do N2.
 A `## Superfície` é negocial e **visível no Modo PO**, fora do `dev-only`. No N3 ela fica
 logo antes da seção que decide (`## Comportamento de tela` ou `## Execução e operação`),
 e a `## Origem` fica no fim, logo antes do `## Changelog` — o `validate-doc` confere a ordem.
@@ -568,16 +568,16 @@ e a `## Origem` fica no fim, logo antes do `## Changelog` — o `validate-doc` c
 
 Com as respostas de todos os blocos, gere:
 
-📄 `modules/[dominio]/[feature-set]/[arquivo-do-N2]` — **na mesma pasta do `README.md` do N2** (ver DESTINO acima; nunca na raiz, `global/`, `engine/` ou outro domínio). Usar o nome de arquivo **exatamente como definido** na tabela de Features do N2 (Modo A), ou derivar do nome da feature em kebab-case (Modo B)
+📄 `modules/[dominio]/[agrupamento-funcional]/[arquivo-do-N2]` — **na mesma pasta do `README.md` do N2** (ver DESTINO acima; nunca na raiz, `global/`, `engine/` ou outro domínio). Usar o nome de arquivo **exatamente como definido** na tabela de Funcionalidades do N2 (Modo A), ou derivar do nome da funcionalidade em kebab-case (Modo B)
 
-> **Nome da pasta do Feature Set (obrigatório):** `[feature-set]` é o **slug em kebab-case do nome do Feature Set, SEM prefixo** — ex.: *Gestão de Fábricas* → `gestao-fabricas`; *Sistemas* → `sistemas`. **A pasta não leva prefixo** (nada de `g-`); só os **arquivos de feature** levam `f-`. O nome é também o segmento de rota (`/[dominio]/[feature-set]`).
+> **Nome da pasta do Agrupamento Funcional (obrigatório):** `[agrupamento-funcional]` é o **slug em kebab-case do nome do Agrupamento Funcional, SEM prefixo** — ex.: *Gestão de Fábricas* → `gestao-fabricas`; *Sistemas* → `sistemas`. **A pasta não leva prefixo** (nada de `g-`); só os **arquivos de funcionalidade** levam `f-`. O nome é também o segmento de rota (`/[dominio]/[agrupamento-funcional]`).
 
 **Gere exatamente esta estrutura — sem adicionar seções, subtítulos ou elementos não listados abaixo:**
 
 ```
 ---
-id: [ID do N2 — ex.: SIGLA-SFS-NN]
-feature_set: [SIGLA]-[SFS]
+id: [ID do N2 — ex.: SIGLA-SAF-NN]
+agrupamento_funcional: [SIGLA]-[SAF]
 dominio: [SIGLA]
 entidade: [Entidade principal]
 data_model_ref: data-models/[dominio].md#[entidade]
@@ -599,12 +599,12 @@ contagem:                           # status APF — independente dos gates; só
   revisada_ate: ""
 ---
 
-# [Nome da Feature — exatamente como consta no N2]
-> **Nível 3** - Feature Set: [Nome do Feature Set] — Major Feature Set: [Nome do Domínio] - `[SIGLA]-[SFS]-[NN]`
-<!-- Este é o CÓDIGO DA FEATURE (SIGLA do domínio + SFS do Feature Set + NN sequencial da primeira jornada, ex.: `CAD-CLI-01`) — NÃO o ID do Feature Set (`CAD-CLI`). Copie o código EXATO reservado no N2 (`<small>SIGLA-SFS-NN</small>`). IDs já usados no bottom-up são imutáveis; B2 não os renumera. Nunca omita o `-NN` nem recalcule a numeração pela ordem de geração. Ver engine/N3-IDS.md. -->
+# [Nome da Funcionalidade — exatamente como consta no N2]
+> **Nível 3** - Agrupamento Funcional: [Nome do Agrupamento Funcional] — Domínio: [Nome do Domínio] - `[SIGLA]-[SAF]-[NN]`
+<!-- Este é o CÓDIGO DA FUNCIONALIDADE (SIGLA do domínio + SAF do Agrupamento Funcional + NN sequencial da primeira jornada, ex.: `CAD-CLI-01`) — NÃO o ID do Agrupamento Funcional (`CAD-CLI`). Copie o código EXATO reservado no N2 (`<small>SIGLA-SAF-NN</small>`). IDs já usados no bottom-up são imutáveis; B2 não os renumera. Nunca omita o `-NN` nem recalcule a numeração pela ordem de geração. Ver engine/N3-IDS.md. -->
 
 ## Descrição
-[1-2 frases de negócio que declaram a ENTREGA — única, tangível e negocial (FEATURE-DEFINITION.md, FD-8). Fórmula: "Permite que [ator] [ação] [entidade], [resultado observável]." Sem "etc."/"de forma eficiente", sem termo técnico, sem repetir a descrição de outra feature]
+[1-2 frases de negócio que declaram a ENTREGA — única, tangível e negocial (DEFINICAO-FUNCIONALIDADE.md, FD-8). Fórmula: "Permite que [ator] [ação] [entidade], [resultado observável]." Sem "etc."/"de forma eficiente", sem termo técnico, sem repetir a descrição de outra funcionalidade]
 
 [SEGUNDO PARÁGRAFO — COMO SE USA: uma ou duas frases de como se opera a funcionalidade (por onde se chega, o que se informa, o que se aciona) ou, em Job/CLI, do que dispara a execução. É a 2ª camada da descrição e mora aqui, não em seção própria. Só o 1º parágrafo é medido pelo FD-8. Ao citar um conjunto de opções, cite até três precedidas de "como…"]
 
@@ -612,9 +612,9 @@ contagem:                           # status APF — independente dos gates; só
 
 ## Regras de negócio
 
-- **RN-01** — [Regra específica desta feature]
+- **RN-01** — [Regra específica desta funcionalidade]
 - **RN-02** — [Regra canônica] → ver RULES-DICTIONARY: [RC-NN] — [nome] (parâmetro: [valor])
-- **RN-03** — [Regra de domínio] → ver N1 [Major Feature Set]: Regras transversais de negócio: [N]
+- **RN-03** — [Regra de domínio] → ver N1 [Domínio]: Regras transversais de negócio: [N]
 
 ---
 
@@ -643,7 +643,7 @@ contagem:                           # status APF — independente dos gates; só
 ---
 
 ## Colunas do resultado
-<!-- Apenas para features de Pesquisa/Listagem — colunas exibidas em cada linha do resultado da busca. Em features que NÃO são de busca, OMITA esta seção. -->
+<!-- Apenas para funcionalidades de Pesquisa/Listagem — colunas exibidas em cada linha do resultado da busca. Em funcionalidades que NÃO são de busca, OMITA esta seção. -->
 
 | Coluna (Label PO) | Origem | Ordenação |
 |---|---|---|
@@ -660,19 +660,19 @@ contagem:                           # status APF — independente dos gates; só
 ---
 
 ## Dados lidos e gravados
-<!-- Entidades que a feature lê ou grava SEM contribuir campo para a tela — as que `## Campos` não revela. Não repita entidade já presente na coluna `Entidade`. Se não houver nenhuma, OMITA esta seção. -->
+<!-- Entidades que a funcionalidade lê ou grava SEM contribuir campo para a tela — as que `## Campos` não revela. Não repita entidade já presente na coluna `Entidade`. Se não houver nenhuma, OMITA esta seção. -->
 
-| Entidade | Papel | Por que a feature a toca |
+| Entidade | Papel | Por que a funcionalidade a toca |
 |---|---|---|
-| [Entidade] | [lê / grava / lê e grava] | [o que a feature faz com ela — cite a regra/campo automático que a motiva] |
+| [Entidade] | [lê / grava / lê e grava] | [o que a funcionalidade faz com ela — cite a regra/campo automático que a motiva] |
 
 ---
 
 ## Superfície
 
-**[Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API]** — [tela própria: rota `/...` · modal: origem: [Feature/Tela] · ação em tela: origem: [Feature/Tela] · CLI: comando · Job/Pipeline: gatilho · API: consumidor]
+**[Tela própria | Modal | Ação em tela | CLI | Job/Pipeline | API]** — [tela própria: rota `/...` · modal: origem: [Funcionalidade/Tela] · ação em tela: origem: [Funcionalidade/Tela] · CLI: comando · Job/Pipeline: gatilho · API: consumidor]
 
-**Fidelidade ao protótipo**: [obrigatória | referência | n/a] · [caminho do protótipo quando houver, ex.: `prototypes/[dominio]/[feature-set]/[feature]/[estado].html`] · [[abrir o protótipo ↗](../../../prototypes/[dominio]/[feature-set]/[feature]/[estado].html)]
+**Fidelidade ao protótipo**: [obrigatória | referência | n/a] · [caminho do protótipo quando houver, ex.: `prototypes/[dominio]/[agrupamento-funcional]/[funcionalidade]/[estado].html`] · [[abrir o protótipo ↗](../../../prototypes/[dominio]/[agrupamento-funcional]/[funcionalidade]/[estado].html)]
 <!-- obrigatória = a implementação deve reproduzir o protótipo (exige o caminho); referência (padrão) = protótipo guia, ajustes permitidos no Design System; n/a = sem tela/protótipo (padrão para CLI/Job/API). A fidelidade "obrigatória" é checada pelo validador. -->
 
 ---
@@ -681,7 +681,7 @@ contagem:                           # status APF — independente dos gates; só
 <!-- Somente quando a Superfície é Tela própria/Modal/Ação em tela. Para CLI/Job/Pipeline/API, OMITA esta seção e gere "## Execução e operação" no lugar. -->
 
 ### Onde fica
-[em qual rota e componente a feature aparece: página própria, modal, botão em listagem]
+[em qual rota e componente a funcionalidade aparece: página própria, modal, botão em listagem]
 
 ### Estados da tela
 
@@ -736,7 +736,7 @@ contagem:                           # status APF — independente dos gates; só
 
 | Ticket (AIMM) | Tipo | Critérios cobertos |
 |---|---|---|
-| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIMM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta feature realiza desses critérios] |
+| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIMM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta funcionalidade realiza desses critérios] |
 
 <!-- A célula abre com as referências `CA-n` quando o ticket numera os critérios
      (linha de Numeração da AIMM do ticket), seguidas de travessão e da prosa.
@@ -752,24 +752,24 @@ contagem:                           # status APF — independente dos gates; só
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico anterior preservado. |
-| [data atual] | [Claude / autor] | Feature criada | N3 negocial gerado |
+| [data atual] | [Claude / autor] | Funcionalidade criada | N3 negocial gerado |
 
 ---
 
-*Feature Set: [Nome] · Major Feature Set: [Nome] · Última revisão: —*
+*Agrupamento Funcional: [Nome] · Domínio: [Nome] · Última revisão: —*
 
-*Links: [N2 do Feature Set](./README.md) · [N1 do domínio](../README.md) · [INDEX geral](../../INDEX.md)*
+*Links: [N2 do Agrupamento Funcional](./README.md) · [N1 do domínio](../README.md) · [INDEX geral](../../INDEX.md)*
 ```
 
 **Preenchimento dos `Critérios de sucesso`**: derive 1–3 critérios **mensuráveis** e
 **agnósticos de tecnologia** a partir dos cenários e dos NFR herdados (consulte o
-`NFR.md` no contexto). Não invente métricas — se a feature não tiver métrica própria,
+`NFR.md` no contexto). Não invente métricas — se a funcionalidade não tiver métrica própria,
 referencie o NFR aplicável (`→ ver NFR: [ID]`). Apresente para confirmação do usuário.
 
 **Formato do bloco Gherkin** (seção `## Cenários`) — os cinco grupos do template, nesta
 ordem; grupo sem cenário aplicável fica de fora:
 ```gherkin
-Feature: [Nome da feature em linguagem natural]
+Feature: [Nome da funcionalidade em linguagem natural]
 
   Background:
     Given que o usuário está autenticado na organização "[org]"
@@ -800,8 +800,8 @@ Feature: [Nome da feature em linguagem natural]
 
   # ── Restrições de acesso ───────────────────────────────────────
 
-  Scenario: [usuário sem acesso a esta feature]
-    Given que o perfil do usuário não tem acesso a "[Nome da feature]" na matriz do N2
+  Scenario: [usuário sem acesso a esta funcionalidade]
+    Given que o perfil do usuário não tem acesso a "[Nome da funcionalidade]" na matriz do N2
     When o usuário tenta [ação]
     Then o sistema exibe: "[texto de NO_PERMISSION no MESSAGE-DICTIONARY]"
 
@@ -814,45 +814,45 @@ Feature: [Nome da feature em linguagem natural]
 ```
 
 Após apresentar, pergunte:
-> "O N3 negocial de [feature] está correto do ponto de vista de negócio?
-> Ajusta algo ou avanço para a próxima feature?"
+> "O N3 negocial de [funcionalidade] está correto do ponto de vista de negócio?
+> Ajusta algo ou avanço para a próxima funcionalidade?"
 
 ---
 
-## PASSO 3.5 — Fechar o elo recíproco (ticket ↔ feature)
+## PASSO 3.5 — Fechar o elo recíproco (ticket ↔ funcionalidade)
 
-> Execute este passo **somente se a feature tem origem num ticket** (a seção
-> `## Origem` foi preenchida no PASSO 3). O elo ticket ↔ feature é **M:N** e
+> Execute este passo **somente se a funcionalidade tem origem num ticket** (a seção
+> `## Origem` foi preenchida no PASSO 3). O elo ticket ↔ funcionalidade é **M:N** e
 > precisa ficar registrado nos **três lugares** — senão o caminho inverso
-> ("quais features este ticket impactou?") fica incompleto. A `## Origem` é só
-> o lado feature → ticket; os outros dois precisam ser atualizados na mesma passada.
+> ("quais funcionalidades este ticket impactou?") fica incompleto. A `## Origem` é só
+> o lado funcionalidade → ticket; os outros dois precisam ser atualizados na mesma passada.
 
 Após o N3 ser aprovado, atualize:
 
 **1. AIM do ticket — `analise-impacto/AIM-<CHAVE>.md`**
-Na seção `## Features`, adicione (ou atualize) a linha desta feature — espelho
+Na seção `## Funcionalidades`, adicione (ou atualize) a linha desta funcionalidade — espelho
 exato da `## Origem` do N3. Se o roteamento a deixou proposta (*(a confirmar no 3A)*,
 Status **📋 A especificar**), confirme o ID e o caminho, tire a marca e troque o Status
 pelo do N3 — com o N3 criado, o `audit-trace-links` volta a cobrar o elo inteiro:
 
 ```markdown
-| [`[ID]`: Nome da Feature](../modules/[dominio]/[feature-set]/[arquivo].md) | [Domínio] · [Feature Set] | Criação | `CA-1, CA-3` | ✏️ Rascunho |
+| [`[ID]`: Nome da Funcionalidade](../modules/[dominio]/[agrupamento-funcional]/[arquivo].md) | [Domínio] · [Agrupamento Funcional] | Criação | `CA-1, CA-3` | ✏️ Rascunho |
 ```
 
 A coluna Status espelha o `estado` do front-matter, com o ícone da legenda do
 `INDEX.md`: um N3 recém-gerado é **✏️ Rascunho** até o CP1. Nunca escreva um status
 adiantado (📋 *especificado* exige CP1+CP2+CP3 aprovados na esteira).
 
-Acrescente também uma linha **no topo** do Changelog da AIM ("Feature especificada")
+Acrescente também uma linha **no topo** do Changelog da AIM ("Funcionalidade especificada")
 — mantendo o Changelog em ordem decrescente por data.
 
 **2. Índice consolidado — `modules/INDEX.md`**
 Na tabela `## Rastreabilidade: ticket → spec → código`, adicione uma linha por
-par ticket↔feature (se ainda não existir), com o **Status** igual ao da AIM
+par ticket↔funcionalidade (se ainda não existir), com o **Status** igual ao da AIM
 (✏️ Rascunho) e a coluna **Contagem** = 📋 — a contagem nasce pendente (PASSO 3.6):
 
 ```markdown
-| [`STRYxxxxxxx`](../analise-impacto/AIM-[CHAVE].md) | [[ID]: Nome](./[dominio]/[feature-set]/[arquivo].md) | [Domínio] | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRYxxxxxxx`](../analise-impacto/AIM-[CHAVE].md) | [[ID]: Nome](./[dominio]/[agrupamento-funcional]/[arquivo].md) | [Domínio] | ✏️ Rascunho | 📋 | — | — | — |
 ```
 
 **No Claude Code (com ferramentas de arquivo):** edite os dois arquivos direto no
@@ -860,33 +860,33 @@ disco, na mesma passada da geração do N3 — não peça para o usuário colar 
 **No fluxo copy-paste:** apresente os dois blocos como patch para o usuário aplicar.
 
 Confirme ao final:
-> "Elo recíproco fechado: a feature consta na `## Origem` do N3, na
-> `## Features` da AIM `[STRYxxxxxxx]` e no `INDEX.md`. O caminho
-> inverso ticket → features está rastreável.
+> "Elo recíproco fechado: a funcionalidade consta na `## Origem` do N3, na
+> `## Funcionalidades` da AIM `[STRYxxxxxxx]` e no `INDEX.md`. O caminho
+> inverso ticket → funcionalidades está rastreável.
 > 💡 Para auditar todos os elos de uma vez (e detectar unilaterais), use a opção **AT**."
 
 ---
 
-## PASSO 3.6 — Registrar a feature nova: contagem pendente e esteira
+## PASSO 3.6 — Registrar a funcionalidade nova: contagem pendente e esteira
 
-> Execute este passo **sempre** — com ou sem ticket de origem. Toda feature nasce
+> Execute este passo **sempre** — com ou sem ticket de origem. Toda funcionalidade nasce
 > sem contagem revisada, e a lista de pendências precisa refletir exatamente as
-> features com `contagem.pendente: true` no front-matter.
+> funcionalidades com `contagem.pendente: true` no front-matter.
 
 Após o N3 ser aprovado, na mesma passada:
 
 1. **Front-matter**: confira `contagem.pendente: true` (já vem do esqueleto do PASSO 3),
    com `revisada_em` e `revisada_ate` vazios.
 2. **`global/CONTAGEM-PF.md → ## Pendências de contagem`**: acrescente a linha da
-   feature, se ainda não constar — a alteração pendente é a chave do ticket (quando
+   funcionalidade, se ainda não constar — a alteração pendente é a chave do ticket (quando
    houver) ou `criação`:
 
    ```markdown
-   | [ID](../modules/[dominio]/[feature-set]/[arquivo].md) | [Domínio] | [STRYxxxxxxx ou criação] | [data atual] |
+   | [ID](../modules/[dominio]/[agrupamento-funcional]/[arquivo].md) | [Domínio] | [STRYxxxxxxx ou criação] | [data atual] |
    ```
-3. **`modules/INDEX.md`**: se a feature tem linha na tabela de rastreabilidade (PASSO
+3. **`modules/INDEX.md`**: se a funcionalidade tem linha na tabela de rastreabilidade (PASSO
    3.5), a coluna **Contagem** = 📋.
-4. **Espelho da esteira**: rode `python3 scripts/gates.py promote --write` — a feature
+4. **Espelho da esteira**: rode `python3 scripts/gates.py promote --write` — a funcionalidade
    entra na seção *Esteira de checkpoints* do `modules/INDEX.md` como ✏️ rascunho — e
    inclua o `INDEX.md` no mesmo PR: o `gate-check` da instância reprova o PR com o
    espelho defasado.
@@ -900,40 +900,40 @@ PO sobre este N3).
 
 ## PASSO 4 — Confirmação de cobertura
 
-Após todas as features aprovadas, bifurque conforme o modo da sessão:
+Após todas as funcionalidades aprovadas, bifurque conforme o modo da sessão:
 
 **Modo A (top-down):**
-> "Parte negocial do N3 concluída para todas as features de [Feature Set].
+> "Parte negocial do N3 concluída para todas as funcionalidades de [Agrupamento Funcional].
 > Para complementar com a parte técnica e atualizar o DATA-MODEL.md,
 > use o PROMPT_3B passando cada .md gerado aqui como contexto."
 
 **Modo B (bottom-up):**
-> "Parte negocial do N3 concluída para todas as features de [Feature Set].
+> "Parte negocial do N3 concluída para todas as funcionalidades de [Agrupamento Funcional].
 >
 > **Próximos passos recomendados:**
 > 1. Use o **PROMPT_3B** para complementar cada N3 com a parte técnica
-> 2. Quando tiver N3s suficientes do Feature Set, use **B2** para gerar o N2
+> 2. Quando tiver N3s suficientes do Agrupamento Funcional, use **B2** para gerar o N2
 > 3. Com os N2s prontos, use **B1** para gerar o N1 do domínio
-> 4. Rode **AU** para verificar duplicatas de regras entre as features especificadas"
+> 4. Rode **AU** para verificar duplicatas de regras entre as funcionalidades especificadas"
 
 ---
 
 ## Checklist de conformidade do N3
 
-Antes de apresentar cada feature, confira (todos os itens são obrigatórios):
+Antes de apresentar cada funcionalidade, confira (todos os itens são obrigatórios):
 
-- [ ] Título `# [Nome da Feature]` (exatamente como no N2) + subtítulo `> **Nível 3** - Feature Set: [Nome] — Major Feature Set: [Nome] - [SIGLA]-[SFS]-NN` (o **código da feature** em crase, com o `-NN` — nunca só o ID do Feature Set)
+- [ ] Título `# [Nome da Funcionalidade]` (exatamente como no N2) + subtítulo `> **Nível 3** - Agrupamento Funcional: [Nome] — Domínio: [Nome] - [SIGLA]-[SAF]-NN` (o **código da funcionalidade** em crase, com o `-NN` — nunca só o ID do Agrupamento Funcional)
 - [ ] `## Origem` presente **somente** se houver ticket de origem — ServiceNow, issue, experimento (senão, omitir a seção), com o link da AIM do ticket
-- [ ] `## Superfície`: **Tela própria** (rota `/...`) · **Modal** (feature/tela de origem) · **Ação em tela** (feature/tela de origem) · **CLI** (comando) · **Job/Pipeline** (gatilho) · **API** (consumidor)
+- [ ] `## Superfície`: **Tela própria** (rota `/...`) · **Modal** (funcionalidade/tela de origem) · **Ação em tela** (funcionalidade/tela de origem) · **CLI** (comando) · **Job/Pipeline** (gatilho) · **API** (consumidor)
 - [ ] `## Descrição`: **dois parágrafos** — 1º declara a **entrega** (única, tangível, negocial; 1-2 frases; sem placeholder, termos vagos "etc."/"de forma eficiente" ou técnicos, sem duplicar a descrição de outro N3 — é o que o FD-8 mede) · 2º é o **como se usa** (por onde se chega, o que se informa, o que se aciona; em Job/CLI, o que dispara)
 - [ ] `## Regras de negócio`: itens **atômicos** (uma invariante cada); a reação do sistema e o texto da mensagem **não** entram aqui (vão para Cenários); canônicas como `→ ver RULES-DICTIONARY: [RC-NN] — [nome]`; **todo item com `**RN-NN** —`**
 - [ ] `## Cenários`: Gherkin com os grupos (Caminho feliz · Erros de validação · Conflitos com dados existentes · Restrições de acesso · Estados especiais), em Label PO, com os marcadores de importação dos canônicos; **toda regra com ao menos um cenário marcado `@RN-NN`** na linha acima do `Scenario:` (`node scripts/valida-regras-cenarios.mjs <N3>`)
-- [ ] Front-matter com o bloco `contagem` (`pendente: true`, `revisada_em` e `revisada_ate` vazios) e o PASSO 3.6 feito (a feature em `## Pendências de contagem` e no espelho da esteira, como ✏️ rascunho)
+- [ ] Front-matter com o bloco `contagem` (`pendente: true`, `revisada_em` e `revisada_ate` vazios) e o PASSO 3.6 feito (a funcionalidade em `## Pendências de contagem` e no espelho da esteira, como ✏️ rascunho)
 - [ ] `## Campos`: 7 colunas (Label PO | Entidade | Preenchimento | Edição | Tipo | Obrigatório | Validação) — **apenas Label PO** (nunca Label Dev nem campo banco); **Entidade** em todo campo (`dado de código` para lista de valores fixos); canônicos como `→ ver FIELD-DICTIONARY: [nome]`
 - [ ] `## Derivações` presente se houver campo `derivado ↓` (fórmula em Label PO + campos-fonte com a entidade)
-- [ ] `## Colunas do resultado` presente em feature de pesquisa/listagem
+- [ ] `## Colunas do resultado` presente em funcionalidade de pesquisa/listagem
 - [ ] `## Campos automáticos`: 3 colunas (Label PO | Valor | Quando)
-- [ ] `## Dados lidos e gravados` presente se a feature toca entidade que não aparece na coluna `Entidade` de `## Campos`
+- [ ] `## Dados lidos e gravados` presente se a funcionalidade toca entidade que não aparece na coluna `Entidade` de `## Campos`
 - [ ] `## Critérios de sucesso`: 1–3 critérios mensuráveis (`SC-##`), agnósticos de tecnologia
 - [ ] Seção de manifestação conforme a Superfície: **Tela própria/Modal/Ação em tela** → `## Comportamento de tela` · **CLI/Job/Pipeline/API** → `## Execução e operação` (nunca as duas) + `## Changelog`
 - [ ] **Nenhuma regra** de permissão nem lista de perfis no N3 — quem pode vive na matriz do N2; o grupo **Restrições de acesso** descreve só a reação do sistema, com a mensagem do catálogo. NFR **não** vira regra de negócio
@@ -943,13 +943,13 @@ Antes de apresentar cada feature, confira (todos os itens são obrigatórios):
 > **Gate determinístico de autovalidação (obrigatório — F2)** — após gravar o N3, rode:
 > ```
 > node scripts/validate-doc.mjs <arquivo>
-> node scripts/validate-feature-semantics.mjs <arquivo>
+> node scripts/valida-semantica-funcionalidade.mjs <arquivo>
 > ```
 > O primeiro (estrutura) exige as seções obrigatórias do N3 (Descrição, Superfície,
 > Regras de negócio, Cenários, Campos, Campos automáticos, Changelog, e — conforme a
 > Superfície — Comportamento de tela **ou** Execução e operação), **reprova** seção fora da
-> ordem do template e **reprova** se a tabela `## Campos` vazar camada técnica (Label Dev / campo banco). O segundo (semântico) verifica se o artefato **é mesmo uma feature**
-> segundo a definição canônica (`engine/FEATURE-DEFINITION.md`, critérios FD-1…FD-9 —
+> ordem do template e **reprova** se a tabela `## Campos` vazar camada técnica (Label Dev / campo banco). O segundo (semântico) verifica se o artefato **é mesmo uma funcionalidade**
+> segundo a definição canônica (`engine/DEFINICAO-FUNCIONALIDADE.md`, critérios FD-1…FD-9 —
 > os FD-10…FD-12 também rodam, como avisos de contagem que não reprovam):
 > verbo no infinitivo catalogado, título com a mesma ação, atomicidade (um verbo só),
 > nenhum termo de agrupador/nominalização/NFR na posição do verbo, todo cenário com
@@ -957,7 +957,7 @@ Antes de apresentar cada feature, confira (todos os itens são obrigatórios):
 > placeholder, sem termos vagos/técnicos, sem duplicar a descrição de outro N3).
 >
 > Se algum validador **reprovar**: **apresente os desvios apontados**, **corrija o arquivo** e
-> **rode de novo** — repita até ambos saírem `✓` (código 0). **Nunca** declare a feature concluída
+> **rode de novo** — repita até ambos saírem `✓` (código 0). **Nunca** declare a funcionalidade concluída
 > com um validador reprovando. Se você produziu algo fora do que este prompt define, o
 > caminho é **corrigir para o padrão**, não seguir adiante.
 >

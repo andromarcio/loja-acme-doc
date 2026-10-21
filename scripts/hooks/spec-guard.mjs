@@ -6,15 +6,15 @@
 //     devolve TODOS os desvios combinados ao modelo (exit 2) para ele corrigir até sair ✓.
 //     Model-agnostic: quem enforça é o harness, não o texto do prompt.
 //       F2 — estrutura (validate-doc) em artefatos de nível (N0–N3, data-model);
-//            + gate SEMÂNTICO (validate-feature-semantics) em N3: o artefato nomeado
-//            como feature é mesmo uma feature? (engine/FEATURE-DEFINITION.md, FD-1…FD-12;
+//            + gate SEMÂNTICO (valida-semantica-funcionalidade) em N3: o artefato nomeado
+//            como funcionalidade é mesmo uma funcionalidade? (engine/DEFINICAO-FUNCIONALIDADE.md, FD-1…FD-12;
 //            só reprovação volta ao modelo — os avisos FD-10…FD-12 ficam de fora)
 //       F3 — rastreabilidade (audit-trace-links) em N3, AIMM do ticket e INDEX.md:
-//            elo ticket↔feature só fecha quando os TRÊS lugares concordam.
+//            elo ticket↔funcionalidade só fecha quando os TRÊS lugares concordam.
 //       F6 — citação de dicionário (valida-citacoes-dicionario) em todo .md de global/ e
 //            modules/: `→ ver <X>-DICTIONARY: alvo` só vale se a entrada existir.
-//       F7 — Fluxo Principal (valida-fluxo-principal) em README.md de N2: toda feature
-//            da tabela "## Features" tem nó no diagrama.
+//       F7 — Fluxo Principal (valida-fluxo-principal) em README.md de N2: toda funcionalidade
+//            da tabela "## Funcionalidades" tem nó no diagrama.
 //       F8 — enumeração da contagem (valida-enumeracao-contagem) em N3: cada processo
 //            elementar medido tem o bloco ```json de ALR e DER na memória de cálculo,
 //            com nomes (não comentários) e do tamanho da tabela.
@@ -43,12 +43,12 @@ import { existsSync, readFileSync } from 'node:fs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const VALIDATOR = join(HERE, '..', 'validate-doc.mjs'); // scripts/validate-doc.mjs
-const SEM_VALIDATOR = join(HERE, '..', 'validate-feature-semantics.mjs'); // gate semântico de N3
+const SEM_VALIDATOR = join(HERE, '..', 'valida-semantica-funcionalidade.mjs'); // gate semântico de N3
 const TRACE_AUDIT = join(HERE, '..', 'audit-trace-links.mjs'); // scripts/audit-trace-links.mjs
 const N3_PATTERN = /(^|\/)modules\/[^/]+\/[^/]+\/f-[^/]+\.md$/;
 const N2_PATTERN = /(^|\/)modules\/[^/]+\/[^/]+\/README\.md$/;
 const CITACOES = join(HERE, '..', 'valida-citacoes-dicionario.mjs'); // `→ ver X-DICTIONARY:` que aponta para nada
-const FLUXO_PRINCIPAL = join(HERE, '..', 'valida-fluxo-principal.mjs'); // Fluxo Principal do N2 sem alguma feature da tabela
+const FLUXO_PRINCIPAL = join(HERE, '..', 'valida-fluxo-principal.mjs'); // Fluxo Principal do N2 sem alguma funcionalidade da tabela
 const ENUMERACAO = join(HERE, '..', 'valida-enumeracao-contagem.mjs'); // ALR/DER do PE fora do bloco JSON da memória
 const REGRAS_CENARIOS = join(HERE, '..', 'valida-regras-cenarios.mjs'); // regra sem RN-NN ou sem cenário @RN-NN
 const CONTRATO_API = join(HERE, '..', 'valida-contrato-api.mjs'); // front-matter × API × ERROR-DICTIONARY × Campos
@@ -66,10 +66,10 @@ const ARTIFACT_PATTERNS = [
   N3_PATTERN,                                          // N3
 ];
 
-// Artefatos que participam do elo ticket↔feature — gravou um deles, o elo é auditado.
+// Artefatos que participam do elo ticket↔funcionalidade — gravou um deles, o elo é auditado.
 const TRACE_PATTERNS = [
   N3_PATTERN,                                          // N3 (## Origem)
-  /(^|\/)analise-impacto\/AIMM?-[^/]+\.md$/,             // AIMM do ticket (## Features)
+  /(^|\/)analise-impacto\/AIMM?-[^/]+\.md$/,             // AIMM do ticket (## Funcionalidades)
   /(^|\/)modules\/INDEX\.md$/,                          // tabela consolidada
 ];
 
@@ -94,7 +94,7 @@ function main() {
     if ((N2_PATTERN.test(path) || N3_PATTERN.test(path)) && existsSync(IDS_N3)) {
       const ids = spawnSync('node', [IDS_N3, file, '--check'], { encoding: 'utf8' });
       if (ids.status !== 0) problems.push(
-        'GATE DE IDENTIDADE (ids-n3) reprovou: o ID de uma feature é imutável. Reserve novos IDs pela ordem da jornada na tabela Features do N2, depois do maior número usado; nunca renumere nem reutilize lacunas.\n' +
+        'GATE DE IDENTIDADE (ids-n3) reprovou: o ID de uma funcionalidade é imutável. Reserve novos IDs pela ordem da jornada na tabela Funcionalidades do N2, depois do maior número usado; nunca renumere nem reutilize lacunas.\n' +
         `${ids.stdout || ''}${ids.stderr || ids.error?.message || ''}`.trim(),
       );
     }
@@ -112,15 +112,15 @@ function main() {
       }
     }
 
-    // Gate SEMÂNTICO de N3: o artefato nomeado como feature é mesmo uma feature?
-    // (definição canônica: engine/FEATURE-DEFINITION.md, critérios FD-1…FD-12)
+    // Gate SEMÂNTICO de N3: o artefato nomeado como funcionalidade é mesmo uma funcionalidade?
+    // (definição canônica: engine/DEFINICAO-FUNCIONALIDADE.md, critérios FD-1…FD-12)
     if (N3_PATTERN.test(path) && existsSync(SEM_VALIDATOR)) {
       const s = spawnSync('node', [SEM_VALIDATOR, file], { encoding: 'utf8' });
       if (s.status && s.status !== 0) {
         problems.push(
-          'GATE SEMÂNTICO (validate-feature-semantics) reprovou: o artefato não passa na ' +
-          'definição canônica de feature (engine/FEATURE-DEFINITION.md). Corrija os critérios ' +
-          'FD abaixo e reescreva até sair ✓ (node scripts/validate-feature-semantics.mjs <arquivo>).\n\n' +
+          'GATE SEMÂNTICO (valida-semantica-funcionalidade) reprovou: o artefato não passa na ' +
+          'definição canônica de funcionalidade (engine/DEFINICAO-FUNCIONALIDADE.md). Corrija os critérios ' +
+          'FD abaixo e reescreva até sair ✓ (node scripts/valida-semantica-funcionalidade.mjs <arquivo>).\n\n' +
           `${s.stdout || ''}${s.stderr || ''}`.trim(),
         );
       }
@@ -134,21 +134,21 @@ function main() {
         problems.push(
           'GATE DE CITAÇÃO (valida-citacoes-dicionario) encontrou "→ ver <X>-DICTIONARY: …" sem entrada\n' +
           'do outro lado. Ou crie a entrada no dicionário (com ⚠️ no que depender de decisão do PO),\n' +
-          'ou escreva a validação na própria feature — citação que não leva a lugar nenhum é pior que\n' +
+          'ou escreva a validação na própria funcionalidade — citação que não leva a lugar nenhum é pior que\n' +
           'validação inline, porque parece resolvida (node scripts/valida-citacoes-dicionario.mjs <arquivo>).\n\n' +
           `${c.stdout || ''}${c.stderr || ''}`.trim(),
         );
       }
     }
 
-    // F7 — Fluxo Principal do N2 sem alguma feature da própria tabela "## Features": a
-    // feature nova entra na tabela e o diagrama não é revisitado; nada mais acusa.
+    // F7 — Fluxo Principal do N2 sem alguma funcionalidade da própria tabela "## Funcionalidades": a
+    // funcionalidade nova entra na tabela e o diagrama não é revisitado; nada mais acusa.
     if (N2_PATTERN.test(path) && existsSync(FLUXO_PRINCIPAL)) {
       const fp = spawnSync('node', [FLUXO_PRINCIPAL, file], { encoding: 'utf8' });
       if (fp.status && fp.status !== 0) {
         problems.push(
-          'GATE DE FLUXO (valida-fluxo-principal) encontrou feature(s) da tabela "## Features" ausentes\n' +
-          'do diagrama "## Fluxo Principal". Acrescente um nó com o nome EXATO da feature (mesmo texto\n' +
+          'GATE DE FLUXO (valida-fluxo-principal) encontrou funcionalidade(s) da tabela "## Funcionalidades" ausentes\n' +
+          'do diagrama "## Fluxo Principal". Acrescente um nó com o nome EXATO da funcionalidade (mesmo texto\n' +
           'da tabela) e rode até sair ✓ (node scripts/valida-fluxo-principal.mjs <arquivo>).\n\n' +
           `${fp.stdout || ''}${fp.stderr || ''}`.trim(),
         );
@@ -201,7 +201,7 @@ function main() {
       }
     }
 
-    // F3 — consistência dos elos ticket↔feature nas três fontes.
+    // F3 — consistência dos elos ticket↔funcionalidade nas três fontes.
     // exit 2 do audit = erro de uso, não achado → fail-open.
     if (TRACE_PATTERNS.some((re) => re.test(path)) && existsSync(TRACE_AUDIT)) {
       const a = spawnSync('node', [TRACE_AUDIT, '--root', dirname(file), '--file', file], { encoding: 'utf8' });
@@ -209,7 +209,7 @@ function main() {
         problems.push(
           'GATE DE RASTREABILIDADE (audit-trace-links) encontrou elos inconsistentes envolvendo este artefato.\n' +
           'Se esta gravação faz parte de uma passada em andamento (3A/4A), termine de fechar o elo nos TRÊS\n' +
-          'lugares (## Origem do N3 + ## Features da AIMM do ticket + linha do INDEX.md) — o gate sai ✓ ao final.\n' +
+          'lugares (## Origem do N3 + ## Funcionalidades da AIMM do ticket + linha do INDEX.md) — o gate sai ✓ ao final.\n' +
           'Não declare a etapa concluída com elo unilateral.\n\n' +
           `${a.stdout || ''}${a.stderr || ''}`.trim(),
         );
@@ -256,7 +256,7 @@ function main() {
   if (event === 'UserPromptSubmit') {
     // F4 — checkout atrasado. `origin/main..HEAD` responde o que falta subir; a pergunta
     // oposta, `HEAD..origin/main`, é a que diz se você está vendo o repositório como ele
-    // está. Ler só a primeira já fez um .docx de Feature Set criado no mesmo dia ser
+    // está. Ler só a primeira já fez um .docx de Agrupamento Funcional criado no mesmo dia ser
     // relatado como órfão e quase apagado. Usa o ref local (sem fetch: instantâneo) — na
     // prática a sessão já fez fetch, e é justamente aí que o desencontro aparece.
     try {
@@ -281,8 +281,8 @@ function main() {
     if (!SPEC_INTENT.test(text)) return 0;
     process.stdout.write(
       '⚠️ PREFLIGHT DE ESPECIFICAÇÃO (obrigatório antes de gerar N1/N2/N3):\n' +
-      '1. Rode `node scripts/preflight-spec.mjs <dominio> [feature-set]` e leia o estado atual.\n' +
-      '2. Confronte N0 (`global/N0_PRODUCT_VISION.md`) + `modules/INDEX.md` + o N1 do domínio + o N2 do Feature Set.\n' +
+      '1. Rode `node scripts/preflight-spec.mjs <dominio> [agrupamento-funcional]` e leia o estado atual.\n' +
+      '2. Confronte N0 (`global/N0_PRODUCT_VISION.md`) + `modules/INDEX.md` + o N1 do domínio + o N2 do Agrupamento Funcional.\n' +
       '3. Produza um bloco "Contexto verificado" (o que já existe, IDs tomados, próximo NN livre, ' +
       'regras/campos já canônicos a referenciar) ANTES de especificar — não recrie IDs nem pastas existentes.\n' +
       'Ao gravar, o hook roda `scripts/validate-doc.mjs` e devolve desvios estruturais para você corrigir até sair ✓.\n',

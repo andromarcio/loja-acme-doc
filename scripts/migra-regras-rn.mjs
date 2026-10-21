@@ -10,7 +10,7 @@
 // script que a "adivinhasse" a esconderia de novo. Por isso o script imprime, por N3, as
 // regras e os cenários lado a lado: é a lista de trabalho de quem vai marcar. Até a
 // marcação, o valida-regras-cenarios reprova o N3 migrado (regra sem cenário) — migre
-// feature a feature, junto com a marcação, e não a instância de uma vez.
+// funcionalidade a funcionalidade, junto com a marcação, e não a instância de uma vez.
 //
 // Uso:  node scripts/migra-regras-rn.mjs <arquivo f-*.md | pasta> …   # modo seco: mostra
 //       node scripts/migra-regras-rn.mjs <…> --aplicar [--autor <nome>]  # grava

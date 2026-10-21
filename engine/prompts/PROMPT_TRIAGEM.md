@@ -56,9 +56,9 @@ esse mapa depende do canal:
 
 - **No Claude Code (com ferramentas de arquivo):** **leia o repositório direto do disco** —
   não peça para colar nada. Use como mapa:
-  - `modules/INDEX.md` (índice consolidado de domínios, feature sets e rastreabilidade);
-  - a árvore `modules/**` — `README.md` dos domínios (N1) e feature sets (N2) e os `.md`
-    de feature (N3);
+  - `modules/INDEX.md` (índice consolidado de domínios, agrupamentos funcionais e rastreabilidade);
+  - a árvore `modules/**` — `README.md` dos domínios (N1) e agrupamentos funcionais (N2) e os `.md`
+    de funcionalidade (N3);
   - `global/data-models/[dominio].md`, `global/FIELD-DICTIONARY.md`,
     `global/RULES-DICTIONARY.md` (para reconhecer entidades, campos e regras já canônicos).
   Abra os artefatos candidatos para **julgar a aderência** (cobre / cobre em parte / não cobre).
@@ -74,7 +74,7 @@ esse mapa depende do canal:
 > No copy-paste/CLI, preencha o que tiver — o INDEX é o mínimo.
 
 === modules/INDEX.md ===
-[cole aqui o índice de domínios, feature sets e rastreabilidade existentes]
+[cole aqui o índice de domínios, agrupamentos funcionais e rastreabilidade existentes]
 
 === N0_PRODUCT_VISION.md *(opcional)* ===
 [cole aqui o N0 — ajuda a aferir se a necessidade está dentro do escopo do produto]
@@ -118,17 +118,17 @@ Capture a necessidade como ela veio. Em seguida, organize-a internamente:
 
 1. **Origem** — de onde veio? (ideia/insight, reunião de refino, bug, mudança regulatória,
    ticket do ServiceNow, issue, solicitação de mudança…). Se veio de um **ticket**, registre
-   que a **AIMM** do ticket precede a spec: é ela que liga o ticket às features e leva o
+   que a **AIMM** do ticket precede a spec: é ela que liga o ticket às funcionalidades e leva o
    escopo ao aval do PO.
 2. **Quebra em sub-necessidades** — uma mesma necessidade pode conter várias. Liste cada uma
    como uma unidade a triar separadamente.
 3. **Altitude** de cada sub-necessidade — ela fala de:
    - o **produto** como um todo (N0),
    - uma **grande área** nova/alterada (domínio · N1),
-   - um **conjunto de funcionalidades** (feature set · N2),
-   - uma **funcionalidade** concreta, campo a campo (feature · N3)?
+   - um **conjunto de funcionalidades** (agrupamento funcional · N2),
+   - uma **funcionalidade** concreta, campo a campo (funcionalidade · N3)?
 4. **Direção** — a necessidade desce do alto (**top-down**: começa no produto/domínio) ou sobe
-   do concreto (**bottom-up**: é uma feature específica cujo domínio/feature set talvez ainda
+   do concreto (**bottom-up**: é uma funcionalidade específica cujo domínio/agrupamento funcional talvez ainda
    não exista)?
 
 Se a necessidade estiver ambígua a ponto de impedir a triagem, faça **uma** pergunta de
@@ -147,7 +147,7 @@ esclarecimento. Caso contrário, apresente o entendimento e avance:
 Monte o mapa do que **já existe**, conforme o canal (ver "Dois canais" acima):
 
 - **Claude Code:** leia o `modules/INDEX.md` e percorra a árvore `modules/**`. Reúna os
-  domínios (N1), feature sets (N2) e features (N3) existentes, com nome, ID, caminho e o
+  domínios (N1), agrupamentos funcionais (N2) e funcionalidades (N3) existentes, com nome, ID, caminho e o
   resumo do objetivo. Note também entidades, campos e regras já canônicos.
 - **Copy-paste/CLI:** extraia o mesmo do INDEX colado (e dos artefatos relacionados, se houver).
 
@@ -160,7 +160,7 @@ Não apresente o mapa cru — ele é insumo do cruzamento. Avance.
 **[Estado: CRUZAMENTO]**
 
 Para **cada** sub-necessidade, procure no mapa os artefatos relacionados — por nome de
-domínio/feature set/feature (verbo + entidade), por entidade, por campo canônico ou por
+domínio/agrupamento funcional/funcionalidade (verbo + entidade), por entidade, por campo canônico ou por
 regra. Para cada candidato, julgue a **aderência** ao que a necessidade pede:
 
 | Aderência | Significado |
@@ -197,10 +197,10 @@ Para cada sub-necessidade, transforme a aderência em **veredito** e **rota**, u
 
 | Situação encontrada | Veredito | Rota (prompt) |
 |---|---|---|
-| Nada documentado cobre — é uma **feature** nova | **Criar** | **3A** *(ou **CRUD** se for um cadastro completo, com as 5 operações)* |
-| Nada documentado — é um **feature set** inteiro novo | **Criar** | **2A** → depois **3A** por feature |
+| Nada documentado cobre — é uma **funcionalidade** nova | **Criar** | **3A** *(ou **CRUD** se for um cadastro completo, com as 5 operações)* |
+| Nada documentado — é um **agrupamento funcional** inteiro novo | **Criar** | **2A** → depois **3A** por funcionalidade |
 | Nada documentado — é um **domínio** novo | **Criar** | **1A** → depois **2A** → **3A** |
-| Existe feature, mas **diverge/incompleta** (cobre em parte) | **Alterar** | **4A** → **4B** |
+| Existe funcionalidade, mas **diverge/incompleta** (cobre em parte) | **Alterar** | **4A** → **4B** |
 | Existe um **cadastro** e a necessidade é uma **nova operação** dele (pesquisar/editar/excluir/visualizar) | **Criar (derivado)** | **3A** *(derivação CRUD a partir do cadastro)* |
 | Já existe e **cobre** | **Manter** | nenhuma ação — apontar o artefato que já atende |
 | Existe algo que **conflita** com a necessidade | **Decidir** | levar o conflito ao PO antes de criar/alterar |
@@ -208,9 +208,9 @@ Para cada sub-necessidade, transforme a aderência em **veredito** e **rota**, u
 | A necessidade é um **ticket** (ServiceNow, issue, experimento) | **Abrir a AIMM antes** | **AIMM** → depois 3A/4A |
 
 Considere a **direção**:
-- **Bottom-up** (a feature é concreta, mas N1/N2 ainda não existem): recomende **3A em
+- **Bottom-up** (a funcionalidade é concreta, mas N1/N2 ainda não existem): recomende **3A em
   modo B**, anotando que N2/N1 serão sintetizados depois via **B2** e **B1**.
-- **Top-down** (a necessidade é de domínio/feature set): comece pelo nível mais alto
+- **Top-down** (a necessidade é de domínio/agrupamento funcional): comece pelo nível mais alto
   faltante (**1A**/**2A**) e desça.
 
 Apresente a recomendação final:

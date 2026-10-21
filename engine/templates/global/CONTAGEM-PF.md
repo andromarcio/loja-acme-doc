@@ -32,7 +32,7 @@ Procedimento da revisão, para um N3 ou uma entidade:
 1. **Reconte na fonte** seguindo `global/SIZING.md`:
    - mudou um N3? → revise a tabela `## Métricas de tamanho` do próprio N3;
    - mudou uma entidade/ALI? → revise a linha em `global/DATA-MODEL.md → ## Arquivos Lógicos (APF)`.
-2. **Compare com o valor registrado aqui.** Se for igual, as tabelas não mudam — mas a revisão foi feita: a feature sai de `## Pendências de contagem` e fica com `contagem.pendente: false` (registre no Changelog do N3 que a contagem permanece inalterada).
+2. **Compare com o valor registrado aqui.** Se for igual, as tabelas não mudam — mas a revisão foi feita: a funcionalidade sai de `## Pendências de contagem` e fica com `contagem.pendente: false` (registre no Changelog do N3 que a contagem permanece inalterada).
 3. **Havendo alteração**, atualize **neste arquivo**: a linha do PE/entidade, os subtotais e o **Total do sistema**.
 4. **Propague o total** para `modules/INDEX.md` (tabela de rastreabilidade + linha de total).
 5. **Registre** a recontagem no `## Changelog` do N3 (ou no histórico desta página, para mudança de entidade).
@@ -49,40 +49,40 @@ Procedimento da revisão, para um N3 ou uma entidade:
 
 ## Pendências de contagem
 
-> Features cuja **última alteração ainda não foi revisada** para Pontos de Função —
+> Funcionalidades cuja **última alteração ainda não foi revisada** para Pontos de Função —
 > espelho de `contagem.pendente: true` no front-matter dos N3 (status **independente**
-> da esteira de gates). Uma feature entra aqui quando é criada/alterada (3A/4A/CRUD/WIZARD/RT/R1/R3)
+> da esteira de gates). Uma funcionalidade entra aqui quando é criada/alterada (3A/4A/CRUD/WIZARD/RT/R1/R3)
 > e **sai** quando a contagem é revisada (opção `CT` / `PROMPT_CONTAGEM`) — mesmo que a
 > revisão conclua **Δ PF = 0** (o que se registra é a *revisão feita*, não a mudança do número).
 
-| Feature (N3) | Domínio | Alteração pendente (ticket) | Desde |
+| Funcionalidade (N3) | Domínio | Alteração pendente (ticket) | Desde |
 |---|---|---|---|
-| [ID](../modules/[dominio]/[feature-set]/[feature].md) | [Domínio] | [STRYxxxxxxx / criação] | [AAAA-MM-DD] |
+| [ID](../modules/[dominio]/[agrupamento-funcional]/[funcionalidade].md) | [Domínio] | [STRYxxxxxxx / criação] | [AAAA-MM-DD] |
 
-> Vazia = nenhuma contagem pendente (toda alteração já foi revisada). A visão por feature
+> Vazia = nenhuma contagem pendente (toda alteração já foi revisada). A visão por funcionalidade
 > fica na coluna **Contagem** (📋/✅) de `modules/INDEX.md`.
 
 ---
 
 ## 1. Funções de Transação — Processos Elementares (PE)
 
-> Unidade de contagem = a **feature (N3) inteira** (front + BFF), não o endpoint.
+> Unidade de contagem = a **funcionalidade (N3) inteira** (front + BFF), não o endpoint.
 > Ver *Arquitetura BFF* em `global/SIZING.md`. Cada PE classifica-se como **EE**, **SE** ou **CE**.
 
-| # | Feature (N3) | Papel | Domínio | Tipo | ALR | DER | Complexidade | PF | Data | Status | Observação |
+| # | Funcionalidade (N3) | Papel | Domínio | Tipo | ALR | DER | Complexidade | PF | Data | Status | Observação |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| [ID] | [Nome da feature](../modules/[dominio]/[feature-set]/[feature].md) | [principal/acessório/—] | [Domínio] | [EE/SE/CE] | [N] | [N] | [Baixa/Média/Alta] | [PF] | [AAAA-MM-DD] | [📋/🔄/✅] |
+| [ID] | [Nome da funcionalidade](../modules/[dominio]/[agrupamento-funcional]/[funcionalidade].md) | [principal/acessório/—] | [Domínio] | [EE/SE/CE] | [N] | [N] | [Baixa/Média/Alta] | [PF] | [AAAA-MM-DD] | [📋/🔄/✅] |
 
-> **PE reutilizado** — a linha `↪ [ID](…)` da tabela de um N3 — **não** ganha linha aqui: cada PE conta uma vez na aplicação, na feature onde é contado (`SIZING.md` → *PE reutilizado*).
+> **PE reutilizado** — a linha `↪ [ID](…)` da tabela de um N3 — **não** ganha linha aqui: cada PE conta uma vez na aplicação, na funcionalidade onde é contado (`SIZING.md` → *PE reutilizado*).
 
-> A coluna **Papel** espelha a da `## Métricas de tamanho` do N3 (`principal` · `acessório`; PE sem feature — workflow, integração, notificação — sai com `—`). Por feature, a soma de PF dos principais tem de bater com a da fonte — `SIZING.md` → *Papel do PE em relação à feature*.
+> A coluna **Papel** espelha a da `## Métricas de tamanho` do N3 (`principal` · `acessório`; PE sem funcionalidade — workflow, integração, notificação — sai com `—`). Por funcionalidade, a soma de PF dos principais tem de bater com a da fonte — `SIZING.md` → *Papel do PE em relação à funcionalidade*.
 
 > A coluna **Observação** guarda o que é do **processo elementar**, não de uma contagem específica: por que uma linha ficou sem PF, que convenção a equipe de métricas aplicou ali, que armadilha de leitura ela esconde. É o lugar de registrar o critério **uma vez**, para que a próxima recontagem não precise redescobri-lo — e para que uma linha zerada não se confunda com linha por preencher.
 
 
 **Subtotal Funções de Transação: [N] PF** ([N] PE).
 
-> Features `❌ Deprecadas` saem do total vigente (mantêm-se no histórico).
+> Funcionalidades `❌ Deprecadas` saem do total vigente (mantêm-se no histórico).
 
 ---
 

@@ -41,7 +41,7 @@ Cada **N3** carrega no front-matter a sua **esteira de gates**. Um gate é um **
    - *Require a pull request before merging*
    - *Require review from Code Owners*
    - *Require status checks to pass* → selecione **Esteira de gates — check**
-4. O **CP4 (código)** vive no(s) repositório(s) de implementação: replique lá um `CODEOWNERS` apontando o review para o Tech Lead. O elo com o N3 é a chave do ServiceNow + o ID da feature nos commits/PR (ver `## Implementação` do N3).
+4. O **CP4 (código)** vive no(s) repositório(s) de implementação: replique lá um `CODEOWNERS` apontando o review para o Tech Lead. O elo com o N3 é a chave do ServiceNow + o ID da funcionalidade nos commits/PR (ver `## Implementação` do N3).
 
 Para o Pages, selecione **GitHub Actions** como fonte e permita `main`, `sprint/*` e `historia/*` no ambiente `github-pages` (e a base do PR, se usar outro nome). O site de cada branch de entrega inclui o seletor **Branch** e **Ver alterações**, comparando com a base do PR aberto desde o ancestral comum; sem PR, a referência é a `main`, com aviso explícito. O template monta o visualizador da raiz; use `--site-dir docs` se ele estiver nessa pasta. A publicação depende de `scripts/monta-site-preview.mjs`, `scripts/lib/pages-preview.mjs` e `engine/publication/`, sincronizados pelo engine. O `sync-instance` não troca o workflow já adotado: integre este template preservando os ajustes locais, depois de a mudança estar na `main` do engine.
 
@@ -52,14 +52,14 @@ Para o Pages, selecione **GitHub Actions** como fonte e permita `main`, `sprint/
    ```yaml
    modelo-dados: { aprovado: true, por: "bru.dba", em: 2026-06-23, pr: 0 }
    ```
-   e ajuste `estado` para o derivado (ex.: `modelo-validado`). **Inclua o artefato da etapa no mesmo PR** — é ele que torna o dono do checkpoint revisor obrigatório: CP2 → `DATA-MODEL.md` · CP3 → plano de testes em `qa/[dominio]/[feature-set]/[feature].md` · CP4 → registro em `repos/`. Para CP3/CP4 o gate-check **exige** o artefato no diff.
+   e ajuste `estado` para o derivado (ex.: `modelo-validado`). **Inclua o artefato da etapa no mesmo PR** — é ele que torna o dono do checkpoint revisor obrigatório: CP2 → `DATA-MODEL.md` · CP3 → plano de testes em `qa/[dominio]/[agrupamento-funcional]/[funcionalidade].md` · CP4 → registro em `repos/`. Para CP3/CP4 o gate-check **exige** o artefato no diff.
 3. Regenere o espelho e inclua-o **no mesmo PR** (o gate-check reprova espelho defasado): `python scripts/gates.py promote --write` → commit do `modules/INDEX.md`.
 4. Abra o PR. O **gate-check** valida ordem + espelho; o **CODEOWNER** aprova; faça o merge. Nada é empurrado direto na `main` — o workflow de **drift** (`promote-estado.yml`) só confirma, após o merge, que o espelho seguiu em dia. No merge para a `main`, use *Create a merge commit* e acrescente ao corpo da mensagem `Approved-by: Nome <email>`: a mensagem padrão do GitHub não traz o trailer, e o job `aprovacao` do `spec-guard` reprova o push sem ele.
 
 ## Comandos locais
 
 ```bash
-python scripts/gates.py status                 # esteira (readiness) de todas as features
+python scripts/gates.py status                 # esteira (readiness) de todas as funcionalidades
 python scripts/gates.py promote --write        # regenera a seção no INDEX.md
 python scripts/gates.py check --base origin/main  # valida transições (como no CI)
 ```

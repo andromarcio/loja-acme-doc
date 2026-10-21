@@ -3,12 +3,12 @@
 //
 // Fase 1 (repo + presença de ID). Para cada N3 `estado: implementado`, cruza os
 // repositórios declarados na tabela "## Implementação" com o que o código
-// REALMENTE referencia — o token do ID da feature no conteúdo (mesma convenção
+// REALMENTE referencia — o token do ID da funcionalidade no conteúdo (mesma convenção
 // do mapa-codigo: `@ExigeFuncionalidade("EST-APR-06")`, semente do catálogo,
 // migração, cabeçalho de contrato). Reprova (exit 1):
 //   • repositório declarado que ESTÁ presente no checkout mas não tem NENHUM
 //     arquivo referenciando o ID — previu no repo X, o repo X está aqui, e nada
-//     nele aponta para a feature.
+//     nele aponta para a funcionalidade.
 // Avisa (não reprova):
 //   • repo que referencia o ID mas não está declarado na "## Implementação"
 //     (implementou onde a spec não previu — mantém a tabela honesta);
@@ -20,7 +20,7 @@
 // vira checagem de nível de arquivo quando as specs passarem a declarar paths.
 //
 // Fase 3 (6.3.0) — o caminho de volta: o que a spec declara como dado chegou ao código.
-//   • toda regra `RN-NN` da feature aparece como `<ID>/RN-NN` em algum arquivo de TESTE
+//   • toda regra `RN-NN` da funcionalidade aparece como `<ID>/RN-NN` em algum arquivo de TESTE
 //     (tag Cucumber `@ADM-USR-04/RN-02`, nome do teste, comentário) — o PROMPT_QA manda
 //     o teste herdar a tag do cenário;
 //   • todo código de `error_codes` aparece em algum arquivo de código.
@@ -42,7 +42,7 @@
 //   node scripts/valida-artefatos-previstos.mjs [--doc-root <dir>]
 //        [--repo <nome>=<dir> …] [--repos-dir <dir>]
 //        [--backend <dir>] [--frontend <dir>] [--estado implementado,em-desenvolvimento]
-//   exit 0 = ok/pulado · 1 = feature previu e não entregou · 2 = erro de uso
+//   exit 0 = ok/pulado · 1 = funcionalidade previu e não entregou · 2 = erro de uso
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
@@ -65,7 +65,7 @@ const ESTADOS = new Set((argOf('--estado') || 'implementado').split(',').map((s)
 
 // ---- helpers de leitura de N3 (espelham o validate-doc) ----------------------
 // Leitor único (lib/front-matter.mjs): tolera o carimbo antes do `---` e tira as aspas
-// do valor — `estado: "implementado"` deixava de ser reconhecido e a feature era pulada.
+// do valor — `estado: "implementado"` deixava de ser reconhecido e a funcionalidade era pulada.
 const frontMatter = (lines) => lerFrontMatter(lines) || {};
 function sectionSlice(lines, name) {
   const start = lines.findIndex((l) => l.trim() === `## ${name}`);
@@ -132,7 +132,7 @@ if (!alvos.length) {
   process.exit(0);
 }
 
-// ---- liga cada feature ao código real (por token do ID) ----------------------
+// ---- liga cada funcionalidade ao código real (por token do ID) ----------------------
 // `--repo nome=dir` pode vir várias vezes: a CI de um microsserviço passa o dela.
 const explicitos = process.argv.flatMap((a, i) => (process.argv[i - 1] === '--repo' ? [a] : []))
   .map((v) => { const k = v.indexOf('='); return k > 0 ? { nome: v.slice(0, k), dir: resolve(v.slice(k + 1)) } : null; })
@@ -181,7 +181,7 @@ for (const r of precisaFase3 ? cod.repos : []) {
 const textoDeCodigo = fontes.filter((f) => !f.teste).map((f) => f.txt).join('\n');
 
 let erros = 0, avisos = 0;
-console.log(`Verificando ${alvos.length} feature(s) contra: ${cod.repos.map((r) => r.nome).join(', ')}\n`);
+console.log(`Verificando ${alvos.length} funcionalidade(s) contra: ${cod.repos.map((r) => r.nome).join(', ')}\n`);
 
 for (const a of alvos) {
   const porRepo = (cod.byFeat[a.id] || {}).porRepo || {};
@@ -236,7 +236,7 @@ for (const a of alvos) {
 console.log('');
 if (erros) {
   console.log(`❌ ${erros} artefato(s) previsto(s) sem implementação correspondente${avisos ? ` · ${avisos} aviso(s)` : ''}.`);
-  console.log('   Cada feature `implementado` precisa que o código referencie o ID dela nos repositórios declarados, que toda regra RN-NN tenha teste (`<ID>/RN-NN`) e que todo código de error_codes esteja no código.');
+  console.log('   Cada funcionalidade `implementado` precisa que o código referencie o ID dela nos repositórios declarados, que toda regra RN-NN tenha teste (`<ID>/RN-NN`) e que todo código de error_codes esteja no código.');
   process.exit(1);
 }
 console.log(`✓ Todo artefato previsto tem código correspondente${avisos ? ` · ${avisos} aviso(s)` : ''}.`);

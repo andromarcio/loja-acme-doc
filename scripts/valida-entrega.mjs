@@ -11,7 +11,7 @@
 //      está `concluído` e passa no validate-impact — na sprint, conferida com as AIMMs dos
 //      tickets (S1–S4); na história, com a reconciliação contra a base (--git-base);
 //   2. toda AIMM de ticket que a branch trouxe está `concluído` e válida — o validate-impact
-//      exige cada feature dela no ESTADO FINAL da esteira (`implementado`; `especificado`
+//      exige cada funcionalidade dela no ESTADO FINAL da esteira (`implementado`; `especificado`
 //      no perfil `requisitos`) ou deprecada. AIMM aberta é ticket não entregue: sai da
 //      branch pelo `reverte-ticket.mjs` antes do merge;
 //   3. (sprint) todo arquivo de spec que a branch altera foi declarado por um ticket

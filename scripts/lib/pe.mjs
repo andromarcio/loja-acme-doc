@@ -5,8 +5,8 @@
 // é uma referência ou sobre quando dois nomes são o mesmo PE.
 //
 // PE reutilizado (SIZING.md → *PE reutilizado*): um PE conta UMA vez na aplicação. A
-// feature que usa um PE já contado noutra grava a linha com o nome do PE contado e, na
-// coluna Tipo, `↪` + o ID da feature onde ele conta, com link para o N3 dela; ALR, DER,
+// funcionalidade que usa um PE já contado noutra grava a linha com o nome do PE contado e, na
+// coluna Tipo, `↪` + o ID da funcionalidade onde ele conta, com link para o N3 dela; ALR, DER,
 // Complexidade e PF ficam `—`. O componente entre parênteses — combo, autocomplete… — é
 // marcação de conferência, não identidade: a mesma lista em combo numa tela e em
 // autocomplete noutra é o mesmo PE. Mesmo rótulo com filtro diferente é outro PE, e o
@@ -16,7 +16,7 @@ const ID = '[A-Z]{3}-[A-Z]{3}-\\d{2}';
 // `↪ [CRM-CTT-01](../contatos/f-pesquisar-contato.md)` é a forma que o SIZING manda gravar.
 // `↪ CRM-CTT-01` e `↪ \`CRM-CTT-01\`` também são lidas como referência — a linha não conta —,
 // mas saem com `reusoLink` nulo, e o valida-acessorio-tela as acusa (decisão do PO,
-// 2026-09-27): sem o link, quem lê a feature não chega ao PE contado.
+// 2026-09-27): sem o link, quem lê a funcionalidade não chega ao PE contado.
 const REUSO_RE = new RegExp(`^↪\\s*(?:\\[\`?(${ID})\`?\\]\\(\\s*(?:<([^>]+)>|([^)\\s]+))\\s*\\)|\\[?\`?(${ID})\`?\\]?)`);
 // Só o componente que a *Regra da lista consultada* manda pôr no nome sai da chave —
 // `(implícita)`, `(excel)` e cia. são outro PE, e continuam no nome.

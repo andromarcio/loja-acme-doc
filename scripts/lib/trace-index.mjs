@@ -1,9 +1,9 @@
-// trace-index.mjs — modelo compartilhado da rastreabilidade ticket ↔ feature ↔ código.
+// trace-index.mjs — modelo compartilhado da rastreabilidade ticket ↔ funcionalidade ↔ código.
 // Varre uma instância (modules/ + analise-impacto/) e devolve, em memória, o que está
 // registrado nas três fontes do elo:
 //
-//   1. `## Origem` de cada N3            (feature → tickets)
-//   2. `## Features` da AIMM de cada      (ticket → features)
+//   1. `## Origem` de cada N3            (funcionalidade → tickets)
+//   2. `## Funcionalidades` da AIMM de cada      (ticket → funcionalidades)
 //      ticket, `analise-impacto/AIMM-<CHAVE>.md` (`tipo: ticket`)
 //   3. `## Rastreabilidade: ticket → spec → código` do `modules/INDEX.md`
 //
@@ -17,12 +17,13 @@ import { join, dirname, resolve, relative } from 'node:path';
 import { createHash } from 'node:crypto';
 import { frontMatterEstado } from './front-matter.mjs';
 import { impactFiles, impactKey, resolveImpactFile } from './impact-files.mjs';
+import { nomesDaSecao } from './niveis.mjs';
 
 // Chave do ticket de origem — plugável (1.6.0): ServiceNow (STRY…), issue (ISSUE-123)
 // ou experimento (EXP-…, letras/dígitos/hífen/underscore — sem ponto, para a chave não
 // engolir a extensão do arquivo). Prefixos fixos mantêm a detecção determinística; não
 // use `EXP` como SIGLA de domínio. Prefixos estreitos de propósito — um padrão Jira
-// genérico ([A-Z]+-\d+) colidiria com os IDs de feature (ex.: CAR-01). Chave em outro
+// genérico ([A-Z]+-\d+) colidiria com os IDs de funcionalidade (ex.: CAR-01). Chave em outro
 // formato (Jira `PRJ25001-49`) é reconhecida pelo link para a AIMM do ticket
 // (`AIMM-<CHAVE>.md` — ver `keyOf`). Projeto novo com prefixo próprio se acrescenta aqui.
 export const STORY_KEY_RE = /\b(?:STRY\d{4,}|ISSUE-\d{1,7}|PDTIC\d+-\d{1,7}|EXP-[A-Za-z0-9][A-Za-z0-9_-]*)\b/i;
@@ -36,8 +37,8 @@ export const ICONE_DO_ESTADO = {
   rascunho: '✏️', 'requisitos-aprovados': '📝', 'modelo-validado': '🧱', especificado: '📋',
   'em-desenvolvimento': '🔄', implementado: '✅', 'revisao-necessaria': '⚠️', deprecado: '❌',
 };
-// Feature que o ticket cria e que ainda não tem N3: o roteamento do PROMPT_AIMM (passo 3)
-// a registra na `## Features` com o Status "📋 A especificar", e o 3A troca o Status ao
+// Funcionalidade que o ticket cria e que ainda não tem N3: o roteamento do PROMPT_AIMM (passo 3)
+// a registra na `## Funcionalidades` com o Status "📋 A especificar", e o 3A troca o Status ao
 // criá-la. Enquanto não existe N3 com o ID, é pendência, não inconsistência.
 export const A_ESPECIFICAR_RE = /\ba\s+especificar\b/i;
 export const STAMP_RE = /<!--\s*trace-verified:\s*(\S+)\s*@\s*([0-9a-f]{7,40})\s*-->/g;
@@ -76,7 +77,8 @@ export function findInstanceRoot(start) {
 // Linhas (cruas) da seção cujo título `## …` começa com `prefix`, até o próximo `## `.
 // Devolve { start, end, lines } com índices no array original, ou null.
 export function sectionSlice(lines, prefix) {
-  const start = lines.findIndex((l) => l.trim().startsWith(`## ${prefix}`));
+  const nomes = nomesDaSecao(prefix);
+  const start = lines.findIndex((l) => nomes.some((n) => l.trim().startsWith(`## ${n}`)));
   if (start === -1) return null;
   let end = lines.length;
   for (let i = start + 1; i < lines.length; i++) {
@@ -185,7 +187,7 @@ function collect(dir, pred, out) {
 }
 
 // Placeholder de template: célula/linha ainda não preenchida.
-const isPlaceholderCell = (s) => /\[(chave|dominio|feature|SIGLA|SFS|NN)\b/i.test(s) || /STRYx|ISSUE-NNN|EXP-…/i.test(s);
+const isPlaceholderCell = (s) => /\[(chave|dominio|funcionalidade|feature|SIGLA|SAF|SFS|NN)\b/i.test(s) || /STRYx|ISSUE-NNN|EXP-…/i.test(s);
 
 // ---------------------------------------------------------------------------
 // Varredura da instância
@@ -194,7 +196,7 @@ export function scanInstance(root) {
   const rel = (p) => relative(root, p).replace(/\\/g, '/');
   const model = { root, features: [], stories: [], index: null, problems: [] };
 
-  // --- N3 (features) --------------------------------------------------------
+  // --- N3 (funcionalidades) --------------------------------------------------------
   const n3Files = [];
   collect(join(root, 'modules'), (p) => /(^|\/)modules\/[^/]+\/[^/]+\/f-[^/]+\.md$/.test(p.replace(/\\/g, '/')), n3Files);
   for (const file of n3Files.sort()) {
@@ -251,12 +253,12 @@ export function scanInstance(root) {
         kind: 'story', key, file, path: rel(file), title: fm.titulo || titleOf(lines),
         feats: [], links: [], stamps: [],
       };
-      const sec = sectionSlice(lines, 'Features');
+      const sec = sectionSlice(lines, 'Funcionalidades');
       if (sec) {
         // Status pela coluna de nome "Status" — a tabela tem Operação e Critérios no meio.
         const cab = splitRow(sec.lines.map((l) => l.trim()).find((l) => l.startsWith('|')) || '').map((c) => c.toLowerCase());
         const iSt = Math.max(cab.findIndex((c) => /^status$/.test(c)), 0);
-        const aEspecificar = new Map(); // alvo do link → ID da feature a especificar
+        const aEspecificar = new Map(); // alvo do link → ID da funcionalidade a especificar
         for (const row of tableRowsOf(sec.lines)) {
           const cells = splitRow(row);
           if (!cells.length || isPlaceholderCell(cells[0])) continue;
@@ -267,7 +269,7 @@ export function scanInstance(root) {
           if (pendente) for (const t of linksOf([row])) aEspecificar.set(t, m[0]);
         }
         story.links.push(...linksOf(sec.lines).map((t) => ({
-          target: t, section: 'Features', ...(aEspecificar.has(t) ? { aEspecificar: aEspecificar.get(t) } : {}),
+          target: t, section: 'Funcionalidades', ...(aEspecificar.has(t) ? { aEspecificar: aEspecificar.get(t) } : {}),
         })));
         story.stamps.push(...stampsOf(sec.lines));
       }

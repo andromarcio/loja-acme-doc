@@ -77,7 +77,7 @@ Estão implícitos — não precisam ser listados nos arquivos de domínio.
 
 | Data | Entidade | Label PO | Label Dev | Campo banco | Tipo | N3 de origem |
 |---|---|---|---|---|---|---|
-| [data] | [Entidade] | [Label PO] | [labelDev] | [campo_banco] | [tipo] | [feature] |
+| [data] | [Entidade] | [Label PO] | [labelDev] | [campo_banco] | [tipo] | [funcionalidade] |
 <!-- /perfil:completo -->
 
 ---
@@ -120,7 +120,7 @@ Os campos de seleção dos N3 referenciam entidades deste modelo pelo nome de ne
 - **Filtro de origem** — restrição de negócio sobre quais registros podem aparecer (ex.: "apenas ativos").
 
 > A **estratégia de carga** (lista completa vs. autocomplete por digitação) é decisão
-> de cada feature e fica no N3 (coluna Validação do campo), não aqui.
+> de cada funcionalidade e fica no N3 (coluna Validação do campo), não aqui.
 
 ---
 

@@ -1,13 +1,13 @@
 # PROMPT_PROTOTYPE_SCREEN — Protótipos de Estado (N3)
 
-> **Modelo de estrutura**: `engine/templates/prototypes/_template/_template-dominio/_template-feature-set/_template-feature/README.md` *(referência humana — o prompt já embute o esqueleto)*
+> **Modelo de estrutura**: `engine/templates/prototypes/_template/_template-dominio/_template-agrupamento-funcional/_template-funcionalidade/README.md` *(referência humana — o prompt já embute o esqueleto)*
 > **Quem participa**: dev / designer / PO técnico
-> **Insumo necessário**: DESIGN-SYSTEM.md + N3 da feature
-> **Entrega**: um arquivo HTML por estado obrigatório da feature
+> **Insumo necessário**: DESIGN-SYSTEM.md + N3 da funcionalidade
+> **Entrega**: um arquivo HTML por estado obrigatório da funcionalidade
 > (form, loading, empty, error) + estados adicionais identificados no N3
 >
 > **Pré-requisito**: N3 aprovado (PROMPT_3B concluído)
-> **Onde salvar**: `prototypes/[dominio]/[feature-set]/[feature]/[estado].html`
+> **Onde salvar**: `prototypes/[dominio]/[agrupamento-funcional]/[funcionalidade]/[estado].html`
 >
 > **v2 (2026-06-11)**: regras 9–18, seção de anti-padrões, checklist de
 > conferência, snippets canônicos e header completo (regra 18) — para alinhar o
@@ -20,7 +20,7 @@
 > **Manifesto de fidelidade (obrigatório).** Ao gerar o(s) protótipo(s), registre/atualize a linha em `prototypes/INDEX.md` — caminho · N3 · **fidelidade** (lida da `## Superfície` do N3) · status **rascunho**. Na aprovação o status vira **aprovado** (quem/quando): só então a tela é contrato para a codificação. Telas `obrigatória` são verificadas na implementação pela checklist `node scripts/fidelity-checklist.mjs <pasta> <N3>`.
 
 
-Você vai gerar protótipos HTML de cada estado de tela de uma feature,
+Você vai gerar protótipos HTML de cada estado de tela de uma funcionalidade,
 seguindo rigorosamente os padrões do DESIGN-SYSTEM.md e as regras
 de comportamento descritas no N3.
 
@@ -139,7 +139,7 @@ de comportamento descritas no N3.
     `disabled` + tooltip.
 
 17. **Navegação consistente**: breadcrumb com o caminho completo
-    (Início › Domínio › Tela); item de menu da feature com `.is-active`; e toda
+    (Início › Domínio › Tela); item de menu da funcionalidade com `.is-active`; e toda
     interação presente no estado (modal, toast, "Tentar novamente") precisa funcionar.
 
 18. **Barra de título (header) completa**: o header não é só ☰ + avatar. Use o
@@ -201,8 +201,8 @@ falhar, corrija antes de entregar:
 === DESIGN-SYSTEM.md ===
 [cole aqui o conteúdo do DESIGN-SYSTEM.md]
 
-=== N3 DA FEATURE ===
-[cole aqui o arquivo completo da feature]
+=== N3 DA FUNCIONALIDADE ===
+[cole aqui o arquivo completo da funcionalidade]
 
 ---
 
@@ -249,7 +249,7 @@ Gere um estado por vez. Após gerar, pergunte se aprova antes de avançar.
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[Estado]: [Feature] — [Feature Set]</title>
+  <title>[Estado]: [Funcionalidade] — [Agrupamento Funcional]</title>
   <!-- Biblioteca de componentes (CAIXA DS) — ajuste os ../ conforme a profundidade -->
   <link rel="stylesheet" href="../../../_biblioteca-ds/ds.css">
 </head>
@@ -264,8 +264,8 @@ Gere um estado por vez. Após gerar, pergunte se aprova antes de avançar.
       <div class="dsc-sidebar-backdrop" onclick="dscToggleMenu()"></div>
       <div class="dsc-sidebar-brand"><span class="dsc-brand-mark">C</span> Sistema</div>
       <ul class="dsc-menu">
-        <li class="dsc-menu-section">[Feature Set]</li>
-        <li><a class="dsc-menu-item is-active" href="#" onclick="this.closest('.dsc-app').classList.remove('is-menu-open')">[Feature]</a></li>
+        <li class="dsc-menu-section">[Agrupamento Funcional]</li>
+        <li><a class="dsc-menu-item is-active" href="#" onclick="this.closest('.dsc-app').classList.remove('is-menu-open')">[Funcionalidade]</a></li>
       </ul>
     </aside>
 
@@ -289,7 +289,7 @@ Gere um estado por vez. Após gerar, pergunte se aprova antes de avançar.
       <main class="dsc-main">
         <nav class="dsc-breadcrumb">
           <a href="#">Início</a><span class="dsc-sep">›</span>
-          <span class="is-current">[Feature]</span>
+          <span class="is-current">[Funcionalidade]</span>
         </nav>
 
         <div class="dsc-page-header">
@@ -445,10 +445,10 @@ Gere um estado por vez. Após gerar, pergunte se aprova antes de avançar.
 ## PASSO 3 — Geração do README do nível
 
 Após gerar todos os estados aprovados, gere ou atualize o
-`prototypes/[dominio]/[feature-set]/[feature]/README.md`
+`prototypes/[dominio]/[agrupamento-funcional]/[funcionalidade]/README.md`
 preenchendo a tabela de estados com os arquivos gerados e status `🎨 Mockup`.
-Se ainda não existirem, crie também o README do Feature Set
-(`prototypes/[dominio]/[feature-set]/README.md`) e o do domínio
+Se ainda não existirem, crie também o README do Agrupamento Funcional
+(`prototypes/[dominio]/[agrupamento-funcional]/README.md`) e o do domínio
 (`prototypes/[dominio]/README.md`) a partir dos modelos em
 `engine/templates/prototypes/_template/` — a pasta `prototypes/` espelha `modules/`, com um
 README em cada nível.
@@ -459,9 +459,9 @@ README em cada nível.
 
 Ao finalizar todos os estados, informe:
 
-> "✅ Protótipos de [feature] gerados.
+> "✅ Protótipos de [funcionalidade] gerados.
 >
-> **Salvar em**: `prototypes/[dominio]/[feature-set]/[feature]/`
+> **Salvar em**: `prototypes/[dominio]/[agrupamento-funcional]/[funcionalidade]/`
 >
 > **Arquivos gerados**:
 > - `form.html` — [estado]

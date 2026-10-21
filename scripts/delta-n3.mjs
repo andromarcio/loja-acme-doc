@@ -2,13 +2,13 @@
 // delta-n3.mjs — o que mudou em cada N3 entre a base (main) e a branch do ticket, por
 // seção. É a entrada do PROMPT_SDD em modo alteração.
 //
-// Por quê: o N3 é a foto atual e completa da feature, e o SDD lê o N3 inteiro. Numa
+// Por quê: o N3 é a foto atual e completa da funcionalidade, e o SDD lê o N3 inteiro. Numa
 // alteração pequena — um campo novo no filtro de uma pesquisa — o SDD redesenharia a
 // pesquisa toda. O delta não se escreve à mão (divergiria do N3 na primeira correção):
 // deriva-se do git. O "antes" é o N3 na base; o "depois", o N3 na árvore de trabalho.
 //
 // Quais N3: os da AIMM do ticket (`--aim`, linhas `N3` do `## Artefatos impactados`) ou os
-// caminhos passados. Linha `criar` (ou N3 que não existe na base) é feature nova → SDD
+// caminhos passados. Linha `criar` (ou N3 que não existe na base) é funcionalidade nova → SDD
 // completo, sem delta. Linha `deprecar` só é listada.
 //
 // O que fica de fora do diff, por ser ruído para o design: comentários HTML, a seção
@@ -166,7 +166,7 @@ for (const { path, operacao } of alvos) {
   if (!depoisMd) { console.log('✗ Não existe na árvore de trabalho.'); continue; }
   if (operacao === 'criar' || antesMd === null) {
     novos++;
-    console.log(`Feature **nova** (${antesMd === null ? 'não existe na base' : 'linha `criar` na AIMM'}) → SDD completo, sem delta.`);
+    console.log(`Funcionalidade **nova** (${antesMd === null ? 'não existe na base' : 'linha `criar` na AIMM'}) → SDD completo, sem delta.`);
     continue;
   }
 

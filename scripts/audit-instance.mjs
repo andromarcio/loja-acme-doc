@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 // audit-instance.mjs — auditoria DETERMINÍSTICA de coerência cruzada da instância
 // (complementa o validate-doc.mjs, que é por-arquivo). Reporta:
-//   • IDs duplicados (SIGLA / SIGLA-SFS / SIGLA-SFS-NN)
-//   • N3 órfão — feature (f-*.md) num Feature Set sem README.md (N2)
-//   • Cobertura do INDEX — features cujo ID não aparece em modules/INDEX.md
+//   • IDs duplicados (SIGLA / SIGLA-SAF / SIGLA-SAF-NN)
+//   • N3 órfão — funcionalidade (f-*.md) num Agrupamento Funcional sem README.md (N2)
+//   • Cobertura do INDEX — funcionalidades cujo ID não aparece em modules/INDEX.md
 //
 // É ADVISORY (não é gate de gravação): roda sob demanda ou em CI/pre-PR. Ao contrário
 // do hook, NÃO bloqueia cada escrita — porque N3 antes de N2/INDEX é um estado legítimo
@@ -55,7 +55,7 @@ for (const [id, list] of byId) {
 // 2) N3 órfão (f-*.md sem README.md / N2 na mesma pasta)
 const n3s = files.filter((f) => /(^|\/)f-[^/]+\.md$/.test(f.replace(/\\/g, '/')) && /(^|\/)modules\//.test(f.replace(/\\/g, '/')));
 for (const f of n3s) {
-  if (!existsSync(join(dirname(f), 'README.md'))) issues.push(`N3 órfão (Feature Set sem N2/README.md): ${rel(f)}`);
+  if (!existsSync(join(dirname(f), 'README.md'))) issues.push(`N3 órfão (Agrupamento Funcional sem N2/README.md): ${rel(f)}`);
 }
 
 // 3) Cobertura do INDEX
@@ -64,7 +64,7 @@ if (existsSync(indexPath)) {
   const idx = readFileSync(indexPath, 'utf8');
   for (const f of n3s) {
     let id; try { id = levelId(readFileSync(f, 'utf8')); } catch { continue; }
-    if (id && !idx.includes(id)) issues.push(`Feature fora do INDEX (ID "${id}" não referenciado em modules/INDEX.md): ${rel(f)}`);
+    if (id && !idx.includes(id)) issues.push(`Funcionalidade fora do INDEX (ID "${id}" não referenciado em modules/INDEX.md): ${rel(f)}`);
   }
 } else {
   issues.push('modules/INDEX.md ausente — sem como auditar cobertura.');

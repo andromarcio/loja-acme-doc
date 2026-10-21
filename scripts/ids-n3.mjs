@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// Reserva IDs na ordem da tabela Features do N2, sem renumerar identificadores usados.
-// Uso: node scripts/ids-n3.mjs modules\<domínio>\<feature-set>\README.md [--write|--check] [--base ref]
-// Sem alvo, --check confere todos os Feature Sets da instância.
+// Reserva IDs na ordem da tabela Funcionalidades do N2, sem renumerar identificadores usados.
+// Uso: node scripts/ids-n3.mjs modules\<domínio>\<agrupamento-funcional>\README.md [--write|--check] [--base ref]
+// Sem alvo, --check confere todos os Agrupamentos Funcionais da instância.
 
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -54,11 +54,11 @@ try {
   for (const readme of readmes) {
     try {
       const plan = planN3Ids(root, readme, { base });
-      console.log(`${plan.id}: ${plan.rows.length} feature(s) na ordem da tabela; IDs existentes preservados.`);
+      console.log(`${plan.id}: ${plan.rows.length} funcionalidade(s) na ordem da tabela; IDs existentes preservados.`);
       for (const row of plan.rows) console.log(`  ${row.id} — ${row.name}${plan.pending.some(p => p.path === row.path) ? ' [reservar no N2]' : ' [preservado]'}`);
       if (check && (plan.pending.length || plan.missingN3Ids.length)) {
         failed = true;
-        console.error(`✗ ${readme}: ${plan.pending.length} feature(s) sem a reserva correta; ${plan.missingN3Ids.length} N3(s) ainda sem ID. Reserve no N2 em modo seco e, conferido, --write; copie o ID reservado para cada N3.`);
+        console.error(`✗ ${readme}: ${plan.pending.length} funcionalidade(s) sem a reserva correta; ${plan.missingN3Ids.length} N3(s) ainda sem ID. Reserve no N2 em modo seco e, conferido, --write; copie o ID reservado para cada N3.`);
       } else if (write && (plan.pending.length || plan.registration)) {
         const version = readFileSync(join(root, 'VERSION'), 'utf8').trim();
         if (!/^\d+\.\d+\.\d+(?:[-+].*)?$/.test(version)) throw new Error('VERSION inválido.');
@@ -74,7 +74,7 @@ try {
     for (const output of outputs) if (readFileSync(output.readme, 'utf8') !== output.before) throw new Error(`${output.readme} mudou durante a análise; nada foi aplicado.`);
     for (const output of outputs) writeFileSync(output.readme, output.text);
     console.log(`✓ ${outputs.length} N2 atualizado(s); nenhum N3 renumerado. Confira o diff antes do commit.`);
-  } else if (!failed) console.log(check ? `✓ ${readmes.size} Feature Set(s) conferido(s).` : 'Modo seco: nenhum arquivo alterado. Após conferir a jornada e o diff previsto, aplique com --write.');
+  } else if (!failed) console.log(check ? `✓ ${readmes.size} Agrupamento Funcional(s) conferido(s).` : 'Modo seco: nenhum arquivo alterado. Após conferir a jornada e o diff previsto, aplique com --write.');
   process.exitCode = failed ? 1 : 0;
 } catch (error) {
   console.error(`✗ ids-n3: ${error.message}`);
