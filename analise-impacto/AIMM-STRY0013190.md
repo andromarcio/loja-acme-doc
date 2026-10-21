@@ -34,9 +34,9 @@ Como atendente, quero encontrar os pedidos dos clientes, ver o detalhe de cada u
 
 | Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
-| [`VND-PED-01`: Pesquisar Pedidos](../modules/vendas/gestao-pedidos/f-pesquisar-pedido.md) | Vendas · Gestão de Pedidos | Criação | `CA-1` | ✏️ Rascunho |
-| [`VND-PED-02`: Visualizar Pedido](../modules/vendas/gestao-pedidos/f-visualizar-pedido.md) | Vendas · Gestão de Pedidos | Criação | `CA-2` | ✏️ Rascunho |
-| [`VND-PED-03`: Cancelar Pedido](../modules/vendas/gestao-pedidos/f-cancelar-pedido.md) | Vendas · Gestão de Pedidos | Criação | `CA-3` | ✏️ Rascunho |
+| [`VND-PED-01`: Pesquisar Pedidos](../modules/vendas/gestao-pedidos/f-pesquisar-pedido.md) | Vendas · Gestão de Pedidos | Criação | `CA-1` | 📋 Especificado |
+| [`VND-PED-02`: Visualizar Pedido](../modules/vendas/gestao-pedidos/f-visualizar-pedido.md) | Vendas · Gestão de Pedidos | Criação | `CA-2` | 📋 Especificado |
+| [`VND-PED-03`: Cancelar Pedido](../modules/vendas/gestao-pedidos/f-cancelar-pedido.md) | Vendas · Gestão de Pedidos | Criação | `CA-3` | 📋 Especificado |
 
 ## Artefatos impactados
 

@@ -36,7 +36,7 @@ A equipe de vendas precisa organizar os produtos da loja em categorias, para que
 
 | Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
-| [`CAT-CTG-01`: Pesquisar Categorias](../modules/catalogo/categorias/f-pesquisar-categoria.md) | Catálogo · Categorias | Criação | `CA-1` | ✏️ Rascunho |
+| [`CAT-CTG-01`: Pesquisar Categorias](../modules/catalogo/categorias/f-pesquisar-categoria.md) | Catálogo · Categorias | Criação | `CA-1` | 📋 Especificado |
 | [`CAT-CTG-02`: Cadastrar Categoria](../modules/catalogo/categorias/f-cadastrar-categoria.md) | Catálogo · Categorias | Criação | `CA-2` | ✏️ Rascunho |
 | [`CAT-CTG-03`: Editar Categoria](../modules/catalogo/categorias/f-editar-categoria.md) | Catálogo · Categorias | Criação | `CA-3` | ✏️ Rascunho |
 | [`CAT-CTG-04`: Excluir Categoria](../modules/catalogo/categorias/f-excluir-categoria.md) | Catálogo · Categorias | Criação | `CA-4` | ✏️ Rascunho |

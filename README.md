@@ -1,7 +1,7 @@
 <!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # Loja ACME — demonstração do Docqui Caixa
 
-Instância de demonstração de uma **loja virtual fictícia**, no perfil **requisitos** e cadência **sprint**. O exemplo preenchido cobre quatro domínios — Catálogo, Vitrine, Vendas e Administração —, com 31 funcionalidades em rascunho, cada uma ligada ao ticket fictício, à AIMM, ao modelo de entidades e ao protótipo do seu Agrupamento Funcional; **VND-CHK-01 — Calcular Frete** continua sendo o fio do roteiro. Os dados, tickets e valores são didáticos; não representam sistemas ou atendimentos reais da CAIXA.
+Instância de demonstração de uma **loja virtual fictícia**, no perfil **requisitos** e cadência **sprint**. O exemplo preenchido cobre quatro domínios — Catálogo, Vitrine, Vendas e Administração —, com 31 funcionalidades — 25 especificadas e 6 em rascunho —, cada uma ligada ao ticket fictício, à AIMM, ao modelo de entidades e ao protótipo do seu Agrupamento Funcional; **VND-CHK-01 — Calcular Frete** continua sendo o fio do roteiro. Os dados, tickets e valores são didáticos; não representam sistemas ou atendimentos reais da CAIXA.
 
 **AIMM — Análise de Impacto de Mudança para Manutenção** é o nome adotado na CAIXA para o artefato, com arquivos `AIMM-*`. A compatibilidade com o formato anterior e com os endereços antigos dos relatórios e do visualizador é preservada. Chaves, estados, gates e branches `historia/*` e `sprint/*` não mudam.
 
@@ -35,7 +35,7 @@ Confira o visual com `python scripts/testa-visual-pages.py` (Playwright e Chromi
 
 ## Estado da demonstração
 
-O exemplo está **preenchido, mas em rascunho**: nenhum checkpoint foi aprovado, nenhuma implementação foi declarada e a contagem de Pontos de Função continua pendente. As personas Ana, Rui e Bruno do simulador não são aprovadores reais deste repositório. A cópia didática da `main` não é um registro de specs entregues; nas evoluções, use branches `sprint/<id>` e siga a esteira real.
+O exemplo está **preenchido e, em parte, especificado**: 25 das 31 funcionalidades têm o CP1 e o CP2 aprovados juntos por Andro Márcio em 2026-10-21 (📋 especificado). Ficam em rascunho **VND-CHK-01 — Calcular Frete**, o fio do roteiro, e as cinco que a STRY0013205 ainda vai alterar, CAT-CTG-02 a CAT-CTG-05 e VIT-NAV-02. Nenhuma implementação foi declarada e a contagem de Pontos de Função continua pendente. As personas Ana, Rui e Bruno do simulador não são aprovadores reais deste repositório. A cópia didática da `main` não é um registro de specs entregues; nas evoluções, use branches `sprint/<id>` e siga a esteira real.
 
 ## Executar e atualizar o Pages
 

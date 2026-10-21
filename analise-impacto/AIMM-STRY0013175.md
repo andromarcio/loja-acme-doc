@@ -34,9 +34,9 @@ Como visitante da loja, quero ver os destaques, pesquisar produtos e abrir a pá
 
 | Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
-| [`VIT-NAV-01`: Listar Destaques](../modules/vitrine/navegacao/f-listar-destaque.md) | Vitrine · Navegação | Criação | `CA-1` | ✏️ Rascunho |
+| [`VIT-NAV-01`: Listar Destaques](../modules/vitrine/navegacao/f-listar-destaque.md) | Vitrine · Navegação | Criação | `CA-1` | 📋 Especificado |
 | [`VIT-NAV-02`: Pesquisar Produtos na Vitrine](../modules/vitrine/navegacao/f-pesquisar-produto-vitrine.md) | Vitrine · Navegação | Criação | `CA-2` | ✏️ Rascunho |
-| [`VIT-NAV-03`: Visualizar Produto na Vitrine](../modules/vitrine/navegacao/f-visualizar-produto-vitrine.md) | Vitrine · Navegação | Criação | `CA-3` | ✏️ Rascunho |
+| [`VIT-NAV-03`: Visualizar Produto na Vitrine](../modules/vitrine/navegacao/f-visualizar-produto-vitrine.md) | Vitrine · Navegação | Criação | `CA-3` | 📋 Especificado |
 
 ## Artefatos impactados
 

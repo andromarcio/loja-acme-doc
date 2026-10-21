@@ -35,10 +35,10 @@ Como cliente, quero colocar produtos no carrinho, ver o que escolhi, mudar quant
 
 | Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
-| [`VND-CAR-01`: Adicionar Item ao Carrinho](../modules/vendas/carrinho/f-adicionar-item-carrinho.md) | Vendas · Carrinho | Criação | `CA-1` | ✏️ Rascunho |
-| [`VND-CAR-02`: Listar Itens do Carrinho](../modules/vendas/carrinho/f-listar-item-carrinho.md) | Vendas · Carrinho | Criação | `CA-2` | ✏️ Rascunho |
-| [`VND-CAR-03`: Alterar Quantidade do Item](../modules/vendas/carrinho/f-alterar-quantidade-item.md) | Vendas · Carrinho | Criação | `CA-3` | ✏️ Rascunho |
-| [`VND-CAR-04`: Remover Item do Carrinho](../modules/vendas/carrinho/f-remover-item-carrinho.md) | Vendas · Carrinho | Criação | `CA-4` | ✏️ Rascunho |
+| [`VND-CAR-01`: Adicionar Item ao Carrinho](../modules/vendas/carrinho/f-adicionar-item-carrinho.md) | Vendas · Carrinho | Criação | `CA-1` | 📋 Especificado |
+| [`VND-CAR-02`: Listar Itens do Carrinho](../modules/vendas/carrinho/f-listar-item-carrinho.md) | Vendas · Carrinho | Criação | `CA-2` | 📋 Especificado |
+| [`VND-CAR-03`: Alterar Quantidade do Item](../modules/vendas/carrinho/f-alterar-quantidade-item.md) | Vendas · Carrinho | Criação | `CA-3` | 📋 Especificado |
+| [`VND-CAR-04`: Remover Item do Carrinho](../modules/vendas/carrinho/f-remover-item-carrinho.md) | Vendas · Carrinho | Criação | `CA-4` | 📋 Especificado |
 
 ## Artefatos impactados
 
