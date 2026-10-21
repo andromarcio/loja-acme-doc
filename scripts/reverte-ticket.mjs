@@ -5,7 +5,7 @@
 // `sprint`, a branch `sprint/<id>` junta as histórias planejadas; no fechamento, a que
 // ficou para a próxima sprint sai dela antes do merge. Como todo commit de spec cita uma
 // chave só (valida-commits-ticket), basta reverter os commits que citam a chave do ticket
-// — a spec dele, a AIM dele, as linhas dele no INDEX e nos dicionários —, e o resto da
+// — a spec dele, a AIMM dele, as linhas dele no INDEX e nos dicionários —, e o resto da
 // sprint fica intacto.
 //
 // Simulação por padrão: lista os commits do ticket e avisa os de OUTROS tickets que
@@ -14,7 +14,7 @@
 // chave. Conflito → desfaz o revert em andamento e para, sem deixar a branch pela metade.
 //
 // Depois do revert: regenere os artefatos (`node scripts/atualiza-pages.mjs`), tire o
-// ticket da AIM da sprint e, na próxima sprint, reaplique com `git cherry-pick` dos
+// ticket da AIMM da sprint e, na próxima sprint, reaplique com `git cherry-pick` dos
 // commits originais — o script imprime os SHAs.
 //
 // Uso: node scripts/reverte-ticket.mjs <CHAVE> [--root <inst>] [--base origin/main] [--write]
@@ -89,5 +89,5 @@ for (const c of [...doTicket].reverse()) {
 console.log(`\n✓ ${feitos.length} commit(s) de ${CHAVE} revertido(s) — a branch não tem mais a spec do ticket.`);
 console.log(`Próximos passos:
   1. node scripts/atualiza-pages.mjs  (espelho da esteira, diagrama ER, árvore do site) — commit marcado [gerado]
-  2. tire ${CHAVE} da AIM da sprint (\`analise-impacto/AIM-${unidade.id}.md\`) — commit com a chave ${unidade.id}
+  2. tire ${CHAVE} da AIMM da sprint (\`analise-impacto/AIMM-${unidade.id}.md\`) — commit com a chave ${unidade.id}
   3. na próxima sprint, reaplique na branch dela: git cherry-pick ${doTicket.map((c) => c.sha.slice(0, 12)).join(' ')}`);

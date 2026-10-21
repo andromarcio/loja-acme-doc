@@ -521,7 +521,7 @@ Ao finalizar, informe obrigatoriamente:
 > (QA — o plano em `qa/`) aprovados, um PR por checkpoint. Em cada um desses PRs,
 > `python3 scripts/gates.py promote --write` regenera a esteira do
 > modules/INDEX.md, e a coluna Status da linha da feature (INDEX e
-> `## Features` da AIM do ticket) passa ao estado novo.
+> `## Features` da AIMM do ticket) passa ao estado novo.
 >
 > 4. Solicitar a revisão da contagem: opção **CT** (`PROMPT_CONTAGEM`) com escopo
 > = [ID]. O CT confirma com o Tech Lead/PO e só então espelha em

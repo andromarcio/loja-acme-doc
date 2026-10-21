@@ -24,6 +24,6 @@ Qual checkpoint este PR conclui? (marque **um**)
 
 ---
 
-**Feature(s):** `[SIGLA]-[SFS]-[NN]` · **Ticket:** `[STRYxxxxxxx]` — AIM em `analise-impacto/AIM-[CHAVE].md`
+**Feature(s):** `[SIGLA]-[SFS]-[NN]` · **Ticket:** `[STRYxxxxxxx]` — AIMM em `analise-impacto/AIMM-[CHAVE].md`
 
 [Descreva a mudança.]

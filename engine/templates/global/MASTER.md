@@ -88,10 +88,12 @@
 
 | Cadência | Quando usar | Branch | Merge na `main` |
 |---|---|---|---|
-| `história` | Cada história é implementada e aprovada sozinha — desenvolvimento por agentes, com o humano aprovando cada entrega | `historia/<CHAVE>`, com a AIM do ticket | a história entregue: a AIM `concluído` e as features no estado final da esteira |
-| `sprint` | A entrega é a sprint — o caso mais comum em times com cerimônias de sprint | `sprint/<id>`, com a AIM da sprint (`AIM-<id>.md`, aberta no planejamento) e as AIMs dos tickets planejados | a sprint fechada com o relatório de entrega: só os tickets entregues — os que ficaram são retirados com `node scripts/reverte-ticket.mjs <CHAVE>` e voltam na próxima sprint |
+| `história` | Cada história é implementada e aprovada sozinha — desenvolvimento por agentes, com o humano aprovando cada entrega | `historia/<CHAVE>`, com a AIMM do ticket | a história entregue: a AIMM `concluído` e as features no estado final da esteira |
+| `sprint` | A entrega é a sprint — o caso mais comum em times com cerimônias de sprint | `sprint/<id>`, com a AIMM da sprint (`AIMM-<id>.md`, aberta no planejamento) e as AIMMs dos tickets planejados | a sprint fechada com o relatório de entrega: só os tickets entregues — os que ficaram são retirados com `node scripts/reverte-ticket.mjs <CHAVE>` e voltam na próxima sprint |
 
-> Na cadência `sprint`, todo commit que toca a spec (`modules/`, `global/`, `qa/`, `prototypes/`, `analise-impacto/`) cita **uma** chave — a do ticket, ou o id da sprint nos commits da AIM da sprint. É o que permite tirar uma história da branch sem arrastar outra (`node scripts/valida-commits-ticket.mjs`). Os requisitos da sprint em andamento ficam consultáveis no preview do site (`/sprint/<id>/`) até o merge.
+> Na cadência `sprint`, todo commit que toca a spec (`modules/`, `global/`, `qa/`, `prototypes/`, `analise-impacto/`) cita **uma** chave — a do ticket, ou o id da sprint nos commits da AIMM da sprint. É o que permite tirar uma história da branch sem arrastar outra (`node scripts/valida-commits-ticket.mjs`). Os requisitos da sprint em andamento ficam consultáveis no preview do site (`/sprint/<id>/`) até o merge.
+
+> **Prefixos canônicos:** `historia/<CHAVE>` identifica a branch de história (ex.: `historia/STRY0000000`), com a AIMM da mesma chave; `sprint/<id>` identifica a sprint. PRs temporários de um checkpoint usam `checkpoint/<CHAVE>-<etapa>` com destino à branch de entrega, como no simulador. Não trate a chave de uma história como id de sprint.
 
 ---
 
@@ -191,7 +193,7 @@ Cada nível da hierarquia de documentação possui um ID único para rastreabili
 | Feature (N3) | `[SIGLA]-[SFS]-[NN]` — 2 dígitos sequenciais dentro do Feature Set | `CRM-CLI-01` |
 
 **Regras:**
-- O ticket entra pela ferramenta de origem; o framework **referencia** a chave (nunca cria ID próprio para o ticket), abre a AIM do ticket em `analise-impacto/AIM-<CHAVE>.md` e registra a chave na seção `## Origem` do N3
+- O ticket entra pela ferramenta de origem; o framework **referencia** a chave (nunca cria ID próprio para o ticket), abre a AIMM do ticket em `analise-impacto/AIMM-<CHAVE>.md` e registra a chave na seção `## Origem` do N3
 - A sigla do domínio é definida uma única vez na criação do N1 e nunca alterada
 - A sigla do Feature Set é definida **no N1** (ao listar os Feature Sets do domínio) e **reutilizada** pelo N2; é única dentro do domínio e nunca reutilizada após exclusão; deriva do nome do Feature Set (ex.: Usuários → `USR`)
 - A numeração de Features é sequencial dentro do Feature Set e não reutilizada após exclusão
@@ -206,16 +208,16 @@ Cada nível da hierarquia de documentação possui um ID único para rastreabili
   o front-matter de cada N3 registra `origem: { tipo, chave }` (o campo legado
   `servicenow:` de instâncias ≤1.5.x continua aceito pelos scripts).
   Os scripts de rastreabilidade reconhecem a chave pelo prefixo (STRY\d+ | ISSUE-\d+ |
-  EXP-<id>) ou, em qualquer formato, pelo link da AIM (`AIM-<CHAVE>.md`).
+  EXP-<id>) ou, em qualquer formato, pelo link da AIMM (`AIMM-<CHAVE>.md`).
 -->
 
 - **Origem padrão desta instância**: [servicenow | issue | experimento] — [ferramenta/URL]
 
-| Tipo | Formato da chave | AIM em `analise-impacto/` | Exemplo |
+| Tipo | Formato da chave | AIMM em `analise-impacto/` | Exemplo |
 |---|---|---|---|
-| `servicenow` | `STRY` + dígitos | `AIM-STRY0012345.md` | `STRY0012345` |
-| `issue` | `ISSUE-` + número | `AIM-ISSUE-482.md` | `ISSUE-482` |
-| `experimento` | `EXP-` + identificador | `AIM-EXP-2026-003.md` | `EXP-2026-003` |
+| `servicenow` | `STRY` + dígitos | `AIMM-STRY0012345.md` | `STRY0012345` |
+| `issue` | `ISSUE-` + número | `AIMM-ISSUE-482.md` | `ISSUE-482` |
+| `experimento` | `EXP-` + identificador | `AIMM-EXP-2026-003.md` | `EXP-2026-003` |
 
 ### Rastreabilidade ponta a ponta (ticket → spec → código)
 
@@ -223,12 +225,12 @@ Todo desenvolvimento começa por um ticket na ferramenta de origem e é rastreá
 
 ```
 Ticket ([tipo] [chave] — ex.: ServiceNow STRYxxxxxxx, issue ISSUE-123, experimento EXP-…)
-   └─ AIM (analise-impacto/AIM-<CHAVE>.md)  ← o que o ticket pede, vai mudar e mudou
-        └─ N3 Feature (SIGLA-SFS-NN)  ← seção "Origem" guarda a chave e o link da AIM
+   └─ AIMM (analise-impacto/AIMM-<CHAVE>.md)  ← o que o ticket pede, vai mudar e mudou
+        └─ N3 Feature (SIGLA-SFS-NN)  ← seção "Origem" guarda a chave e o link da AIMM
              └─ Código (commit/PR)    ← referencia a feature e o ticket
 ```
 
-- **Ticket → N3**: a chave de origem é registrada na seção `## Origem` de cada feature, com o link da AIM; o elo recíproco é a `## Features` da AIM (`analise-impacto/AIM-<CHAVE>.md`). Cada critério de aceite é analisado e vira uma regra de negócio, um `## Cenário` (Gherkin) ou ambos — rastreabilidade semântica, não só por ID.
+- **Ticket → N3**: a chave de origem é registrada na seção `## Origem` de cada feature, com o link da AIMM; o elo recíproco é a `## Features` da AIMM (`analise-impacto/AIMM-<CHAVE>.md`). Cada critério de aceite é analisado e vira uma regra de negócio, um `## Cenário` (Gherkin) ou ambos — rastreabilidade semântica, não só por ID.
 - **Critério de aceite → N3** *(quando a fonte numera)*: a coluna `Critérios cobertos` do `## Origem` abre com as referências `CA-n`, no mesmo número que a ferramenta de origem usa. É o elo que a **contagem por sprint** exige: cada feature impactada sai com a chave do ticket **e** o número do critério. Quando a fonte não numera os critérios, a coluna sai `—` e a rastreabilidade fica só pela chave — não se inventa número.
 <!-- perfil:completo -->
 - **N3 → código**: seção `## Implementação` do N3 — a coluna **Repositório** é definida já no 3B (nomes do inventário `repos/INDEX.md`), dizendo em qual repo (MFE, microsserviço, back, front) cada parte da feature vive; caminho/branch entram após o dev — + coluna na tabela `Rastreabilidade` do `modules/INDEX.md`.

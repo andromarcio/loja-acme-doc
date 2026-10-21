@@ -11,7 +11,7 @@
 > **Pré-requisito**: nenhum — esta é a **porta de entrada** quando chega uma necessidade
 > e você ainda não sabe se ela é atendida alterando algo que já existe ou criando algo novo
 > **Próximo passo**: executar o prompt recomendado — **3A/CRUD/2A/1A** (criar) ·
-> **4A → 4B** (alterar) · **IV → EX** (lote) · **AIM** (abrir a AIM antes, se vier de um ticket)
+> **4A → 4B** (alterar) · **IV → EX** (lote) · **AIMM** (abrir a AIMM antes, se vier de um ticket)
 >
 > 💡 **Leve por natureza.** A triagem **não cria nem altera** artefatos — apenas mostra
 > o que existe e recomenda a rota. É a versão leve, para **uma necessidade isolada**, do
@@ -118,7 +118,7 @@ Capture a necessidade como ela veio. Em seguida, organize-a internamente:
 
 1. **Origem** — de onde veio? (ideia/insight, reunião de refino, bug, mudança regulatória,
    ticket do ServiceNow, issue, solicitação de mudança…). Se veio de um **ticket**, registre
-   que a **AIM** do ticket precede a spec: é ela que liga o ticket às features e leva o
+   que a **AIMM** do ticket precede a spec: é ela que liga o ticket às features e leva o
    escopo ao aval do PO.
 2. **Quebra em sub-necessidades** — uma mesma necessidade pode conter várias. Liste cada uma
    como uma unidade a triar separadamente.
@@ -205,7 +205,7 @@ Para cada sub-necessidade, transforme a aderência em **veredito** e **rota**, u
 | Já existe e **cobre** | **Manter** | nenhuma ação — apontar o artefato que já atende |
 | Existe algo que **conflita** com a necessidade | **Decidir** | levar o conflito ao PO antes de criar/alterar |
 | A necessidade afeta **vários artefatos** (mistura criar/alterar) | **Lote** | **IV** → aprovar `pending_changes.md` → **EX** |
-| A necessidade é um **ticket** (ServiceNow, issue, experimento) | **Abrir a AIM antes** | **AIM** → depois 3A/4A |
+| A necessidade é um **ticket** (ServiceNow, issue, experimento) | **Abrir a AIMM antes** | **AIMM** → depois 3A/4A |
 
 Considere a **direção**:
 - **Bottom-up** (a feature é concreta, mas N1/N2 ainda não existem): recomende **3A em
@@ -219,7 +219,7 @@ Apresente a recomendação final:
 >
 > | Parte da necessidade | Veredito | Artefato alvo | Prompt | Observação |
 > |---|---|---|---|---|
-> | [sub-necessidade] | Criar / Alterar / Manter / Lote / Decidir | [novo · ou `caminho/do/artefato.md`] | [3A / 4A / IV / AIM / …] | [⚠️ se houver] |
+> | [sub-necessidade] | Criar / Alterar / Manter / Lote / Decidir | [novo · ou `caminho/do/artefato.md`] | [3A / 4A / IV / AIMM / …] | [⚠️ se houver] |
 >
 > **Em resumo:** sua necessidade é atendida [criando X / alterando `caminho/Y` / parte
 > criando e parte alterando — caso de lote].

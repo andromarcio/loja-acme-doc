@@ -5,7 +5,7 @@
       "id": 0,
       "name": "analise-completa-sprint",
       "prompt": "Leia o arquivo .claude/skills/analise-impacto/evals/fixtures/ANALISE_SP06_novas_vs_alteradas.md — é o levantamento do que a Sprint 6 entregou. Faz a análise de impacto disso na nossa spec e me entrega um relatório: quais features são impactadas, o que precisa ser criado, o que mexeu no data-model e o que ficou em aberto.",
-      "expected_output": "AIMs em Markdown em analise-impacto/ — uma por item (# AIM <CHAVE>, tipo: ticket, estado concluído) e a da sprint (# AIM <sprint>, tipo: sprint) —, com features alteradas e novas identificadas por ID real da spec, impacto no data-model ligando migração→tabela→ALI, decisões pendentes, e a reclassificação da HU-042 (marcada NOVA no levantamento, mas sem N3 na spec — de fato nova) e da HU-041 (alteração de CFG-TIP-06).",
+      "expected_output": "AIMMs em Markdown em analise-impacto/ — uma por item (# AIMM <CHAVE>, tipo: ticket, estado concluído) e a da sprint (# AIMM <sprint>, tipo: sprint) —, com features alteradas e novas identificadas por ID real da spec, impacto no data-model ligando migração→tabela→ALI, decisões pendentes, e a reclassificação da HU-042 (marcada NOVA no levantamento, mas sem N3 na spec — de fato nova) e da HU-041 (alteração de CFG-TIP-06).",
       "files": [".claude/skills/analise-impacto/evals/fixtures/ANALISE_SP06_novas_vs_alteradas.md"]
     },
     {

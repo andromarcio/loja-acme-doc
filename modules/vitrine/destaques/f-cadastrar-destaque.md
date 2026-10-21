@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
 ---
 id: VIT-DST-02
 feature_set: VIT-DST
@@ -198,9 +198,9 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 
 ## Origem
 
-| Ticket (AIM) | Tipo | Critérios cobertos |
+| Ticket (AIMM) | Tipo | Critérios cobertos |
 |---|---|---|
-| [`STRY0013180`](../../../analise-impacto/AIM-STRY0013180.md) | Criação | `CA-2` — cadastro com produto, chamada, ordem e vigência, com o fim não anterior ao início e sem dois destaques do mesmo produto no mesmo período |
+| [`STRY0013180`](../../../analise-impacto/AIMM-STRY0013180.md) | Criação | `CA-2` — cadastro com produto, chamada, ordem e vigência, com o fim não anterior ao início e sem dois destaques do mesmo produto no mesmo período |
 
 ## Changelog
 
@@ -208,3 +208,4 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Cadastro de destaque do ticket fictício STRY0013180, com vigência (RC-03), ordem de 1 a 99 e sem sobreposição para o mesmo produto; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
+| 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |

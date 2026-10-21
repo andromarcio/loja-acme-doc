@@ -69,10 +69,10 @@ Regras da sessão:
 LOCALIZACAO_FEATURE a partir do nome/palavra-chave que você informar.
 **No fluxo copy-paste**: cole aqui o .md negocial atual da feature.]
 
-=== AIM DO TICKET *(opcional — do PROMPT_AIM)* ===
-[cole aqui a AIM do ticket que motiva esta alteração — `analise-impacto/AIM-<CHAVE>.md`.
+=== AIMM DO TICKET *(opcional — do PROMPT_AIMM)* ===
+[cole aqui a AIMM do ticket que motiva esta alteração — `analise-impacto/AIMM-<CHAVE>.md`.
 Quando presente, acrescente a chave do ticket à seção `## Origem` do N3, com o link
-da AIM e Tipo "Alteração", e registre-a no changelog.]
+da AIMM e Tipo "Alteração", e registre-a no changelog.]
 
 ---
 
@@ -166,7 +166,7 @@ Para cada ponto com impacto, formule uma pergunta de esclarecimento —
   reutilizado*) —, ela vale para toda tela que o usa. Pergunte se é isso: sendo, a
   alteração vai para o PE onde ele conta — o ticket entra também na `## Origem` e no
   Changelog da feature `ID`, com a contagem pendente — e as outras features que o
-  reutilizam entram na AIM como regressão (`node scripts/generate-impact-draft.mjs`
+  reutilizam entram na AIMM como regressão (`node scripts/generate-impact-draft.mjs`
   as lista). Se a mudança vale só para esta tela, a lista deixa de ser a mesma: esta
   feature passa a ter um PE próprio.
 
@@ -192,7 +192,7 @@ alinhadas e confirme:
 
 Gere a versão atualizada das seções negociais do N3 afetadas,
 evidenciando o que mudou. Se a alteração veio de um ticket, adicione a linha
-correspondente à seção `## Origem` (Tipo "Alteração", com o link da AIM do ticket). O bloco
+correspondente à seção `## Origem` (Tipo "Alteração", com o link da AIMM do ticket). O bloco
 `origem:` do front-matter **não muda**: ele guarda só o ticket que criou a feature (é a coluna
 Origem da esteira no `modules/INDEX.md`), e a feature que nasceu sem ticket continua sem ele —
 o histórico de tickets é a `## Origem`. Adicione ou atualize a
@@ -205,6 +205,7 @@ mais recente sempre primeiro:
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico anterior preservado. |
 | [data] | [nome] | Novo campo / Regra alterada / Correção | [o que mudou e por quê] |
 | [data anterior] | … | … | … |
 ```

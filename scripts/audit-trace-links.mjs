@@ -6,7 +6,7 @@
 //
 // As três fontes que precisam concordar (convenção do framework):
 //   1. `## Origem` de cada N3                          (feature → ticket)
-//   2. `## Features` da AIM do ticket, `analise-impacto/AIM-<CHAVE>.md` (ticket → feature)
+//   2. `## Features` da AIMM do ticket, `analise-impacto/AIMM-<CHAVE>.md` (ticket → feature)
 //   3. tabela `## Rastreabilidade: …` do `modules/INDEX.md` (uma linha por par)
 //
 // Uso (a partir da raiz da instância, ou com --root):
@@ -16,7 +16,7 @@
 //
 // Achados que REPROVAM (exit 1): elo unilateral, par fora do INDEX, linha do INDEX
 // sem respaldo nos artefatos, status divergente, referência quebrada.
-// Informativos (não reprovam): AIM sem feature; feature da `## Features` com o Status
+// Informativos (não reprovam): AIMM sem feature; feature da `## Features` com o Status
 // "📋 A especificar" e ainda sem N3 — o roteamento a propõe e o 3A a cria: enquanto
 // não existe N3 com o ID, nem o par nem o link para o caminho proposto reprovam; com o
 // N3 criado, valem as regras de sempre —; feature sem `## Origem` (legítimo no
@@ -99,7 +99,7 @@ for (const p of [...pairs.values()].filter(inScope)) {
 
   // Lado citado mas artefato inexistente → referência quebrada de fato.
   if ((p.inOrigem || p.inIndex) && !story) {
-    hard.push(`⚠️ ${p.key} ↔ ${p.featId}: ticket citado ${p.inOrigem ? `na ## Origem de ${feat ? feat.path : p.featId}` : 'no INDEX.md'}, mas não existe a AIM analise-impacto/AIM-${p.key}.md.`);
+    hard.push(`⚠️ ${p.key} ↔ ${p.featId}: ticket citado ${p.inOrigem ? `na ## Origem de ${feat ? feat.path : p.featId}` : 'no INDEX.md'}, mas não existe a AIMM analise-impacto/AIMM-${p.key}.md.`);
     continue;
   }
   if ((p.inStory || p.inIndex) && !feat) {
@@ -127,23 +127,23 @@ for (const p of [...pairs.values()].filter(inScope)) {
       hard.push(`🟠 ${p.key} ↔ ${p.featId}: par consistente nos dois artefatos, mas SEM linha na tabela de rastreabilidade do INDEX.md.`);
     }
     if (p.inIndex && !p.inOrigem && !p.inStory) {
-      hard.push(`🟠 ${p.key} ↔ ${p.featId}: linha do INDEX.md sem respaldo — o par não consta nem na ## Origem nem na ## Features da AIM.`);
+      hard.push(`🟠 ${p.key} ↔ ${p.featId}: linha do INDEX.md sem respaldo — o par não consta nem na ## Origem nem na ## Features da AIMM.`);
     }
   }
 
-  // Status divergente (AIM × INDEX — a ## Origem não carrega status).
+  // Status divergente (AIMM × INDEX — a ## Origem não carrega status).
   // ⚠️ no INDEX é tolerado: é a SINALIZAÇÃO de elo suspeito (suspect-links --mark),
   // que diverge de propósito até alguém reverificar — não é inconsistência de registro.
   if (p.storyStatus && p.indexStatus && p.indexStatus !== '⚠️' && p.storyStatus !== p.indexStatus) {
-    hard.push(`🟡 ${p.key} ↔ ${p.featId}: status divergente — ${p.storyStatus} na AIM, ${p.indexStatus} no INDEX.md.`);
+    hard.push(`🟡 ${p.key} ↔ ${p.featId}: status divergente — ${p.storyStatus} na AIMM, ${p.indexStatus} no INDEX.md.`);
   }
-  // Status da AIM × `estado` do N3 — a fonte. A tolerância ao ⚠️ acima vale para o
+  // Status da AIMM × `estado` do N3 — a fonte. A tolerância ao ⚠️ acima vale para o
   // INDEX, onde o suspect-links marca; o N3 o suspect-links não toca, então ali o ⚠️ só
-  // aparece declarado (PROMPT_4B), e a AIM tem de dizer o mesmo. Sem esta conferência, a
-  // feature alterada pelo ticket — ⚠️ no N3 e no INDEX, ✅ esquecido na AIM — passava.
+  // aparece declarado (PROMPT_4B), e a AIMM tem de dizer o mesmo. Sem esta conferência, a
+  // feature alterada pelo ticket — ⚠️ no N3 e no INDEX, ✅ esquecido na AIMM — passava.
   const icone = feat && ICONE_DO_ESTADO[feat.estado];
   if (p.storyStatus && icone && p.storyStatus !== icone) {
-    hard.push(`🟡 ${p.key} ↔ ${p.featId}: status divergente — ${p.storyStatus} na AIM, ${icone} ${feat.estado} no N3 (${feat.path}).`);
+    hard.push(`🟡 ${p.key} ↔ ${p.featId}: status divergente — ${p.storyStatus} na AIMM, ${icone} ${feat.estado} no N3 (${feat.path}).`);
   }
 }
 
@@ -168,7 +168,7 @@ for (const src of refSources) {
 // Órfãos (informativo).
 for (const s of model.stories) {
   if (onlyFile && resolve(s.file).replace(/\\/g, '/') !== onlyFile) continue;
-  if (!s.feats.length) info.push(`⚫ ${s.path}: AIM ainda sem feature (ok enquanto o roteamento não termina — PROMPT_AIM, passo 3).`);
+  if (!s.feats.length) info.push(`⚫ ${s.path}: AIMM ainda sem feature (ok enquanto o roteamento não termina — PROMPT_AIMM, passo 3).`);
 }
 for (const f of model.features) {
   if (onlyFile && resolve(f.file).replace(/\\/g, '/') !== onlyFile) continue;
@@ -185,9 +185,9 @@ if (hard.length) {
     for (const i of info) console.error(`    - ${i}`);
   }
   console.error('  Regra: todo par ticket↔feature fecha nos TRÊS lugares na mesma passada');
-  console.error('  (## Origem do N3 + ## Features da AIM do ticket + linha do INDEX.md).');
+  console.error('  (## Origem do N3 + ## Features da AIMM do ticket + linha do INDEX.md).');
   process.exit(1);
 }
-console.log(`✓ audit-trace-links: elos ticket↔feature consistentes nas três fontes${scoped} — ${pairs.size} par(es), ${model.stories.length} AIM(s), ${model.features.length} feature(s).`);
+console.log(`✓ audit-trace-links: elos ticket↔feature consistentes nas três fontes${scoped} — ${pairs.size} par(es), ${model.stories.length} AIMM(s), ${model.features.length} feature(s).`);
 for (const i of info) console.log(`    - ${i}`);
 process.exit(0);

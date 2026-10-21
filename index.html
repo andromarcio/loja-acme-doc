@@ -1525,6 +1525,17 @@
               Mapa de Features (Árvore)
             </a>
           </li>
+          <li class="nav-item-fixed">
+            <a href="#analise-impacto/INDEX.md" data-path="analise-impacto/INDEX.md" title="AIMM — Análise de Impacto de Mudança para Manutenção" onclick="navigateTo('analise-impacto/INDEX.md'); return false;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="8" y1="13" x2="16" y2="13"></line>
+                <line x1="8" y1="17" x2="16" y2="17"></line>
+              </svg>
+              Análises de impacto (AIMM)
+            </a>
+          </li>
         </ul>
       </div>
 
@@ -1589,7 +1600,7 @@
           </div>
         </details>
 
-        <!-- Outros: o que não é Dashboard, Visão do Produto, Mapa de Features nem as árvores -->
+        <!-- Outros: o que não é Dashboard, Visão do Produto, Mapa de Features, Análises de impacto nem as árvores -->
         <details class="nav-folder" id="outrosFolder">
           <summary>
             <div class="nav-folder-title">
@@ -1604,11 +1615,6 @@
           </summary>
           <div class="nav-folder-content">
             <ul class="nav-list">
-              <li class="nav-item-fixed">
-                <a href="#analise-impacto/INDEX.md" data-path="analise-impacto/INDEX.md" onclick="navigateTo('analise-impacto/INDEX.md'); return false;">
-                  AIMs dos tickets
-                </a>
-              </li>
               <li class="nav-item-fixed">
                 <a href="#arquivos/levantamentos/INDEX.md" data-path="arquivos/levantamentos/INDEX.md" onclick="navigateTo('arquivos/levantamentos/INDEX.md'); return false;">
                   Insumos de levantamento
@@ -2313,6 +2319,14 @@
   // ============================================================================
   function loadFile(filePath) {
     if (!filePath) filePath = "global/N0_PRODUCT_VISION.md";
+    if (/^analise-impacto\/AIM-[^/]+\.md$/.test(filePath) &&
+        typeof repoFilesContent !== 'undefined' && !repoFilesContent[filePath]) {
+      const current = filePath.replace('/AIM-', '/AIMM-');
+      if (repoFilesContent[current]) {
+        filePath = current;
+        history.replaceState(null, '', '#' + current);
+      }
+    }
     currentFilePath = filePath;
     // Nos previews de branch, o comparador desfaz o que marcou antes de o conteúdo trocar.
     const documento = document.getElementById('documentContainer');
@@ -2557,7 +2571,6 @@
   // "Métricas de tamanho" sem nada contado: nenhuma célula de Tipo, ALR, DER, Complexidade
   // ou PF preenchida e nenhuma Memória de cálculo. A linha de PF 0 (PE descartado) e a de PE
   // reutilizado (↪) contam como preenchidas, e tabela sem essas colunas não é julgada vazia.
-  // O mesmo critério da exportação Word do engine (docx-export, Docqui Caixa 6.4.14).
   function metricasVazia(md) {
     if (/^###\s+Mem[óo]ria de c[áa]lculo/mi.test(md)) return false;
     const COLUNAS = ['Tipo', 'ALR', 'DER', 'Complexidade', 'PF'];

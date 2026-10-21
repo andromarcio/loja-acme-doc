@@ -7,16 +7,17 @@
 //
 // A `main` só recebe o que foi ENTREGUE (decisão do PO, 2026-10-05). O trabalho em
 // andamento vive na branch da unidade de entrega:
-//   cadência `história` → `historia/<CHAVE>`  — a AIM do ticket; merge = a história entregue
-//   cadência `sprint`   → `sprint/<id>`       — a AIM da sprint (`AIM-<id>.md`) e as dos
+//   cadência `história` → `historia/<CHAVE>`  — a AIMM do ticket; merge = a história entregue
+//   cadência `sprint`   → `sprint/<id>`       — a AIMM da sprint (`AIMM-<id>.md`) e as dos
 //                                                tickets planejados; merge = a sprint
 //                                                fechada, só com o que foi entregue
 // Sem a linha Cadência, nada disso é exigido (instâncias anteriores à 6.0.0).
 
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { STORY_KEY_RE } from './trace-index.mjs';
+import { impactFiles, impactKey } from './impact-files.mjs';
 
 const semAcento = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
 
@@ -53,7 +54,7 @@ export function unidadeDaBranch(nome) {
 
 // ── commits da unidade de entrega ────────────────────────────────────────────
 // Na cadência `sprint`, todo commit que toca a spec cita UMA chave no assunto — a do
-// ticket, ou o id da sprint nos commits da AIM da sprint. É o que deixa o reverte-ticket
+// ticket, ou o id da sprint nos commits da AIMM da sprint. É o que deixa o reverte-ticket
 // tirar uma história da branch sem arrastar outra.
 
 // Caminhos de spec: o que vai para a `main` como o retrato do que foi entregue.
@@ -64,7 +65,7 @@ export const SPEC_RE = /^(modules|global|qa|prototypes|analise-impacto)\//;
 export const GERADO_RE = /^(modules\/INDEX\.md|global\/DIAGRAMA-ER\.md|global\/[A-Z-]+-DICTIONARY\.md)$/;
 
 // Chaves que o assunto cita: as do formato de ticket conhecido (STORY_KEY_RE) e as de toda
-// AIM que existe na instância — o que cobre chave de ferramenta nova e o id da sprint.
+// AIMM que existe na instância — o que cobre chave de ferramenta nova e o id da sprint.
 export function chavesDoAssunto(assunto, chavesConhecidas = []) {
   const achadas = new Set();
   for (const m of String(assunto).matchAll(new RegExp(STORY_KEY_RE.source, 'gi'))) achadas.add(m[0].toUpperCase());
@@ -75,12 +76,9 @@ export function chavesDoAssunto(assunto, chavesConhecidas = []) {
   return [...achadas];
 }
 
-// As chaves das AIMs da instância (`analise-impacto/AIM-<CHAVE>.md`, sem os templates).
+// As chaves das AIMMs da instância (`analise-impacto/AIMM-<CHAVE>.md`, sem os templates).
 export function chavesDasAims(root) {
-  try {
-    return readdirSync(join(root, 'analise-impacto'))
-      .map((n) => (n.match(/^AIM-(.+)\.md$/) || [])[1]).filter(Boolean);
-  } catch { return []; }
+  return impactFiles(join(root, 'analise-impacto')).map(impactKey);
 }
 
 export function git(root, ...a) {

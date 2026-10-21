@@ -1,16 +1,16 @@
 #!/usr/bin/env node
-// migra-aim.mjs — leva uma instância do formato anterior à AIM única (3.0.0).
+// migra-aim.mjs — leva uma instância do formato anterior à AIMM única (3.0.0).
 //
 // Antes da 3.0.0, o ticket vivia em três artefatos, cada um com o seu formato: o registro
-// `demandas/<chave>.md` do PROMPT_BACKLOG (ou `modules/_backlog/`, mais antigo), a AIM
-// `impactos/AIM-AAAA-NNN.md` do PROMPT_IMPACTO e o relatório `ANALISE_IMPACTO_<chave>.md`
+// `demandas/<chave>.md` do PROMPT_BACKLOG (ou `modules/_backlog/`, mais antigo), a AIMM
+// `impactos/AIMM-AAAA-NNN.md` do PROMPT_IMPACTO e o relatório `ANALISE_IMPACTO_<chave>.md`
 // da skill analise-impacto — mais o relatório agregado da sprint. Agora o ticket tem uma
-// AIM só, versionada (decisões do PO, 2026-09-28). Este script junta os três numa AIM por
-// ticket, `analise-impacto/AIM-<CHAVE>.md`, e o agregado na AIM da sprint, e troca os
+// AIMM só, versionada (decisões do PO, 2026-09-28). Este script junta os três numa AIMM por
+// ticket, `analise-impacto/AIMM-<CHAVE>.md`, e o agregado na AIMM da sprint, e troca os
 // elos: a `## Origem` dos N3, o INDEX (título, coluna e links) e o CONTAGEM-PF.
 //
 // SIMULAÇÃO por padrão: aplica a migração numa cópia temporária da instância, roda lá o
-// validate-impact em cada AIM, o audit-trace-links e o suspect-links, e relata — nada muda
+// validate-impact em cada AIMM, o audit-trace-links e o suspect-links, e relata — nada muda
 // na instância. `--write` aplica de verdade e apaga os arquivos do formato anterior (com o
 // .html gerado de cada um): o conteúdo continua no histórico do git. Rodar de novo depois
 // do --write não faz nada — não sobra formato anterior para migrar.
@@ -19,7 +19,7 @@
 //   node scripts/migra-aim.mjs [--root <instância>] [--write] [--avalizado-por "<quem>"]
 //                              [--relatorios <pasta>]… [--hoje AAAA-MM-DD]
 //
-//   --avalizado-por  quem avaliza as AIMs que nascem concluídas de um relatório sem AIM
+//   --avalizado-por  quem avaliza as AIMMs que nascem concluídas de um relatório sem AIMM
 //                    anterior. O validador exige `avalizado-por` em `concluído`, e a
 //                    migração não tem como saber quem avalizou (decisão do PO, 2026-09-28):
 //                    quem roda a migração declara — ex.: "PO Ana, migração 2026-10-01".
@@ -28,22 +28,22 @@
 //                    (padrão: demandas/, arquivos/demandas/ e impactos/). Repetível.
 //   --hoje           a data do Changelog da migração (padrão: hoje).
 //
-// De onde vem cada parte da AIM do ticket:
+// De onde vem cada parte da AIMM do ticket:
 //   registro   → Descrição do ticket (transcrição intacta), Contexto, Critérios de aceite,
 //                Features (Operação e Critérios lidos da `## Origem` do N3), Changelog
-//   AIM antiga (`origem:` = a chave) → Artefatos impactados, Reconciliação,
+//   AIMM antiga (`origem:` = a chave) → Artefatos impactados, Reconciliação,
 //                `avalizado-por`, estado, Changelog
 //   relatório  → Alterações na spec, Funções de dados, Dicionários, Decisões, `sprint`;
 //                a seção 1 (detalhe por item) vai para debaixo das Features
-//   Estado: com relatório, `concluído` (`aberta-na-entrega: true` se não havia AIM
-//   antiga); só com a AIM antiga, o estado dela; só com o registro, `rascunho`.
-//   Seção que não tem lugar na AIM (ex.: `## Impactos` do registro) fica, com o título,
+//   Estado: com relatório, `concluído` (`aberta-na-entrega: true` se não havia AIMM
+//   antiga); só com a AIMM antiga, o estado dela; só com o registro, `rascunho`.
+//   Seção que não tem lugar na AIMM (ex.: `## Impactos` do registro) fica, com o título,
 //   antes da Reconciliação.
 //
 // Carimbos trace-verified: a migração muda o conteúdo dos arquivos carimbados. O elo que
 // estava válido antes é recarimbado com o fingerprint novo; o suspeito continua suspeito.
 //
-// Não migra (e não apaga): AIM antiga sem `origem:`, ticket que já tem AIM no formato
+// Não migra (e não apaga): AIMM antiga sem `origem:`, ticket que já tem AIMM no formato
 // novo, chave inválida (placeholder) e fonte em dobro (dois registros ou dois relatórios
 // do mesmo ticket) — saem como pendência, para juntar à mão.
 
@@ -54,12 +54,13 @@ import { join, dirname, basename, relative, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { impactPath } from './lib/impact-files.mjs';
 import {
   scanInstance, sectionSlice, splitRow, STAMP_RE, STORY_KEY_RE, FEATURE_ID_RE, frontMatterCampos, fingerprintText,
 } from './lib/trace-index.mjs';
 
 const SCRIPTS = dirname(fileURLToPath(import.meta.url));
-const MOLDES_AIM = join(SCRIPTS, '..', 'engine', 'templates', 'analise-impacto');
+const MOLDES_AIMM = join(SCRIPTS, '..', 'engine', 'templates', 'analise-impacto');
 const USO = 'Uso: node scripts/migra-aim.mjs [--root <instância>] [--write] [--avalizado-por "<quem>"] [--relatorios <pasta>]… [--hoje AAAA-MM-DD]';
 
 const args = process.argv.slice(2);
@@ -189,6 +190,32 @@ function converteTabelas(linhas, { tiraChave = false, chaveVira = null } = {}) {
   return out;
 }
 
+// O layout atual da AIMM do ticket é narrativo: tamanho fica no N3/consolidado,
+// enquanto a AIMM registra a feature e a entidade alterada para auditoria do escopo.
+function layoutTicket(linhas) {
+  const out = [];
+  for (const b of blocos(linhas)) {
+    if (!b.tabela) {
+      out.push(...b.linhas.map(linha => linha.replace(/^###\s+(?:ALI|AIE):\s*(.+?)(?:\s+[—–]\s+.*)?$/i, '### $1')));
+      continue;
+    }
+    const t = tabela(b.linhas);
+    let cab = t.cab.map(c => /^tabela \/ coluna$/i.test(c) ? 'Tabela / atributo' : c);
+    let rows = t.linhas;
+    const iFeature = indiceCol(cab, /^feature$/i);
+    if (iFeature >= 0) {
+      const remove = [indiceCol(cab, /^pfb$/i), indiceCol(cab, /^pfl$/i)].filter(i => i >= 0).sort((a, b) => b - a);
+      cab = cab.filter((_, i) => !remove.includes(i));
+      rows = rows.map(row => row.filter((_, i) => !remove.includes(i)).map((cell, i) => {
+        if (i !== iFeature) return cell;
+        return cell.replace(/^(`?[A-Z]{3}-[A-Z]{3}-\d{2}`?)\s+(\*\*[^*]+\*\*)$/, '$1<br>$2');
+      }));
+    }
+    out.push(...renderTabela(cab, rows));
+  }
+  return out;
+}
+
 // Linhas de feature (`ID` **Nome**) das tabelas de uma seção de alterações.
 function featuresDasAlteracoes(linhas) {
   const out = [];
@@ -234,8 +261,8 @@ const ROTULO_ESTADO = {
   especificado: '📋 Especificado', 'em-desenvolvimento': '🔄 Em desenvolvimento', implementado: '✅ Implementado',
   'revisao-necessaria': '⚠️ Revisão necessária', deprecado: '❌ Deprecado',
 };
-const ESTADOS_AIM = ['rascunho', 'em-análise', 'escopo-aprovado', 'em-execução', 'concluído'];
-const estadoAim = (e) => ESTADOS_AIM.find((x) => semAcento(x) === semAcento(String(e || '').trim().toLowerCase())) || null;
+const ESTADOS_AIMM = ['rascunho', 'em-análise', 'escopo-aprovado', 'em-execução', 'concluído'];
+const estadoAim = (e) => ESTADOS_AIMM.find((x) => semAcento(x) === semAcento(String(e || '').trim().toLowerCase())) || null;
 const operacao = (tipo) => (/alter/i.test(tipo) ? 'Alteração' : /cria|inclu|nova/i.test(semAcento(tipo)) ? 'Criação' : (tipo || '—'));
 function criterios(nota) {
   const m = String(nota || '').replace(/`/g, '').match(/^\s*(CA-\d+(?:\s*,\s*CA-\d+)*)/i);
@@ -288,7 +315,7 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
     if (!t) return [];
     return tabela(t.linhas).linhas.map((c) => {
       const k = (c[0] || '').match(/`([^`]+)`/) || (c[0] || '').match(/\/([^/()]+)\.md\)/) || (c[0] || '').match(STORY_KEY_RE);
-      return { chave: k ? String(k[1] || k[0]).replace(/^AIM-/i, '').toUpperCase() : null, tipo: c[1] || '', nota: c[2] || '' };
+      return { chave: k ? String(k[1] || k[0]).replace(/^AIMM?-/i, '').toUpperCase() : null, tipo: c[1] || '', nota: c[2] || '' };
     });
   };
 
@@ -318,8 +345,8 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
     const fm = frontMatterCampos(txt.split(/\r?\n/));
     const ks = String(fm.origem || '').replace(/[`[\]]/g, ' ').trim().split(/[\s|,;]+/).filter(Boolean);
     const k = ks[0];
-    if (!k || /x{3,}|n{3,}/i.test(k) || !ehChaveValida(k)) { pend(`${rel(raiz, f)}: AIM antiga sem \`origem:\` — não migrada nem apagada; junte à AIM do ticket à mão.`); continue; }
-    if (ks.length > 1) pend(`${rel(raiz, f)}: AIM antiga com mais de uma origem (${ks.join(', ')}) — juntada à de \`${k}\`; confira as outras.`);
+    if (!k || /x{3,}|n{3,}/i.test(k) || !ehChaveValida(k)) { pend(`${rel(raiz, f)}: AIMM antiga sem \`origem:\` — não migrada nem apagada; junte à AIMM do ticket à mão.`); continue; }
+    if (ks.length > 1) pend(`${rel(raiz, f)}: AIMM antiga com mais de uma origem (${ks.join(', ')}) — juntada à de \`${k}\`; confira as outras.`);
     ticket(k, false).aims.push({ file: f, fm, partes: partes(txt) });
   }
   const agregados = [];
@@ -344,10 +371,10 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
 
   const secaoDe = (p, re) => p.secoes.filter((s) => re.test(semAcento(s.titulo).toLowerCase().replace(/^\d+\.\s*/, '')));
   const juntaSecoes = (lst) => lst.flatMap((s) => limpa(s.linhas));
-  const DIR_AIM = join(raiz, 'analise-impacto');
+  const DIR_AIMM = join(raiz, 'analise-impacto');
   const alvoFeature = (id, alvoAntigo) => {
     const n3 = n3PorId.get(id);
-    if (n3) return rel(DIR_AIM, n3.file);
+    if (n3) return rel(DIR_AIMM, n3.file);
     const resto = posix(alvoAntigo).replace(/^(\.\.?\/)+/, '').replace(/^modules\//, '');
     return `../modules/${resto}`;
   };
@@ -364,15 +391,15 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
   // Datas para o `aberta-em`.
   const datasDe = (linhas) => linhasDeChangelog(linhas).map((c) => c[0]).filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d));
 
-  // 4. A AIM de cada ticket.
+  // 4. A AIMM de cada ticket.
   const carimbosN3 = new Map(); // CHAVE → { validoAntes: Set(hash) }
   const planosAim = [];
   for (const t of [...tickets.values()].sort((a, b) => a.chave.localeCompare(b.chave))) {
     const K = t.chave;
-    const arqAim = join(DIR_AIM, `AIM-${K}.md`);
+    const arqAim = join(raiz, impactPath(raiz, K));
     const fontes = [
       ...(t.registro ? [`registro \`${rel(raiz, t.registro.file)}\``] : []),
-      ...t.aims.map((a) => `AIM \`${rel(raiz, a.file)}\``),
+      ...t.aims.map((a) => `AIMM \`${rel(raiz, a.file)}\``),
       ...(t.relatorio ? [`relatório \`${rel(raiz, t.relatorio.file)}\``] : []),
     ];
     if (existsSync(arqAim)) {
@@ -387,7 +414,7 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
 
     // Front-matter.
     const estadoAntigo = t.aims.map((a) => estadoAim(a.fm.estado)).filter(Boolean)
-      .sort((a, b) => ESTADOS_AIM.indexOf(b) - ESTADOS_AIM.indexOf(a))[0];
+      .sort((a, b) => ESTADOS_AIMM.indexOf(b) - ESTADOS_AIMM.indexOf(a))[0];
     const estado = rp ? 'concluído' : (estadoAntigo || 'rascunho');
     const abertaNaEntrega = Boolean(rp) && !t.aims.length;
     let sprint = rp ? rp.sprint : '';
@@ -400,7 +427,7 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
     const aval = avalAntigo || (estado === 'concluído' ? avalizadoPor : '');
     const tituloReg = reg ? reg.partes.h1.replace(/^(hist[óo]ria de usu[áa]rio|demanda|ticket)\s*[—–:-]\s*/i, '')
       .replace(new RegExp(`^\`?${K.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\`?\\s*[—–:-]\\s*`, 'i'), '').trim() : '';
-    const tituloAim = t.aims.map((a) => a.partes.h1.replace(/^AIM-[\w-]+\s*[—–-]\s*/i, '').trim()).find(Boolean) || '';
+    const tituloAim = t.aims.map((a) => a.partes.h1.replace(/^AIMM?-[\w-]+\s*[—–-]\s*/i, '').trim()).find(Boolean) || '';
     const detalhe = secRel(/detalhe por item/);
     const tituloRel = ((detalhe.find((l) => /^###\s/.test(l)) || '').match(/\s[—–-]\s+(.+?)(\s*\([^)]*\))?\s*$/) || [])[1] || '';
     const titulo = tituloReg || tituloAim || tituloRel || '';
@@ -465,7 +492,7 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
         const o = doN3(id);
         const nome = (fr && fr.nome) || (n3 && n3.title) || id;
         linhasFeat.push([
-          n3 ? `[\`${id}\`: ${nome}](${rel(DIR_AIM, n3.file)})` : `\`${id}\`: ${nome} *(sem N3)*`,
+          n3 ? `[\`${id}\`: ${nome}](${rel(DIR_AIMM, n3.file)})` : `\`${id}\`: ${nome} *(sem N3)*`,
           dirsDoN3(id),
           o ? operacao(o.tipo) : (fr ? (/inclu/i.test(semAcento(fr.natureza)) ? 'Criação' : 'Alteração') : '—'),
           o ? criterios(o.nota) : (fr && /CA-\d/i.test(fr.ca) ? `\`${fr.ca}\`` : '—'),
@@ -475,11 +502,11 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
       }
     }
     // O ticket só fecha com cada feature no estado final da esteira (validate-impact). A
-    // AIM antiga podia fechar com uma feature adiada; aqui ela vira decisão, não migração.
+    // AIMM antiga podia fechar com uma feature adiada; aqui ela vira decisão, não migração.
     if (estado === 'concluído') {
       for (const l of linhasFeat.filter((c) => /a especificar/i.test(c[c.length - 1] || ''))) {
         const id = (l[0].match(FEATURE_ID_RE) || [''])[0];
-        pend(`${rel(raiz, arqAim)}: concluída com \`${id}\` ainda a especificar — o ticket não fecha com feature sem N3: tire-a da \`## Features\` (ela vai para outro ticket) ou volte a AIM a \`em-execução\` (o validador cobra).`);
+        pend(`${rel(raiz, arqAim)}: concluída com \`${id}\` ainda a especificar — o ticket não fecha com feature sem N3: tire-a da \`## Features\` (ela vai para outro ticket) ou volte a AIMM a \`em-execução\` (o validador cobra).`);
       }
     }
 
@@ -515,11 +542,11 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
 
     // O resto do relatório.
     const alteracoes = converteTabelas(secRel(/alteracoes (aplicadas|na spec)/), { tiraChave: true });
-    const dados = converteTabelas(secRel(/tabelas alteradas|funcoes de dados/));
+    const dados = layoutTicket(converteTabelas(secRel(/tabelas alteradas|funcoes de dados/)));
     const dicionarios = secRel(/dicionario/);
     const decisoes = secRel(/decis/);
 
-    // Seções sem lugar na AIM ficam, com o título.
+    // Seções sem lugar na AIMM ficam, com o título.
     const conhecidas = [/^(historia|descricao)/, /^contexto/, /^criterios de aceite/, /^rastreabilidade/, /^changelog/,
       /^necessidade/, /^features/, /^artefatos impactados/, /^reconciliacao/, /detalhe por item/,
       /alteracoes (aplicadas|na spec)/, /tabelas alteradas|funcoes de dados/, /dicionario/, /decis/];
@@ -540,33 +567,33 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
     if (!reconc.length && estado === 'concluído') {
       reconc = [abertaNaEntrega
         ? `Aberta na entrega — migrada do relatório \`${rel(raiz, rp.file)}\`: não houve escopo prévio a reconciliar.`
-        : `Migrada da AIM ${t.aims.map((a) => `\`${rel(raiz, a.file)}\``).join(', ')} e do relatório \`${rel(raiz, rp.file)}\`: a AIM anterior não registrava a reconciliação.`];
+        : `Migrada da AIMM ${t.aims.map((a) => `\`${rel(raiz, a.file)}\``).join(', ')} e do relatório \`${rel(raiz, rp.file)}\`: a AIMM anterior não registrava a reconciliação.`];
     }
 
     // Changelog.
     const vistosCl = new Set();
     const cl = [
-      [hoje, 'migra-aim', 'AIM migrada', `${fontes.join(' + ')} → AIM única`],
+      [hoje, 'migra-aim', 'AIMM migrada', `${fontes.join(' + ')} → AIMM única`],
       ...[...(reg ? linhasDeChangelog(secReg(/^changelog/)) : []), ...t.aims.flatMap((a) => linhasDeChangelog(juntaSecoes(secaoDe(a.partes, /^changelog/))))]
         .sort((a, b) => String(b[0]).localeCompare(String(a[0]))),
     ].filter((c) => { const k = c.join('|'); if (vistosCl.has(k)) return false; vistosCl.add(k); return true; });
 
     if (estado === 'concluído' && !aval) pend(`${rel(raiz, arqAim)}: concluída sem \`avalizado-por\` — use --avalizado-por "<quem>" ou preencha à mão (o validador cobra).`);
-    if (estado === 'concluído' && !rp) pend(`${rel(raiz, arqAim)}: concluída na AIM antiga, sem relatório — falta a visão final (\`## Alterações na spec, por Feature Set\`), que a skill analise-impacto escreve.`);
+    if (estado === 'concluído' && !rp) pend(`${rel(raiz, arqAim)}: concluída na AIMM antiga, sem relatório — falta a visão final (\`## Alterações na spec, por Feature Set\`), que a skill analise-impacto escreve.`);
     if (estado === 'concluído' && !sprint) pend(`${rel(raiz, arqAim)}: concluída sem \`sprint\` — o relatório não dizia; preencha à mão (o validador cobra).`);
 
     const texto = [
       '---', 'tipo: ticket', `ticket: ${K}`, `ferramenta: ${valorFm(ferramenta)}`, `link: ${valorFm(link)}`, `titulo: ${valorFm(titulo)}`,
       `estado: ${estado}`, `aberta-na-entrega: ${abertaNaEntrega}`, `sprint: ${valorFm(sprint)}`, `avalizado-por: ${valorFm(aval)}`,
-      `aberta-em: ${abertaEm}`, '---', '', `# AIM ${K}`, '',
+      `aberta-em: ${abertaEm}`, '---', '', `# AIMM ${K}`, '',
       '## Descrição do ticket', '', ...descricao, '',
       '## Contexto', '', ...contexto, ...(contexto.length ? [''] : []),
       '## Critérios de aceite', '', ...crits, '',
       '## Features', '', ...renderTabela(cabFeat, linhasFeat), '@@CARIMBOS_FEATURES@@',
       ...(textoFeatures.length ? ['', ...textoFeatures] : []), ...(detalhe.length ? ['', ...detalhe] : []), '',
       '## Artefatos impactados', '', ...renderTabela(cabCs, cs), '',
-      '## Alterações na spec, por Feature Set', '', ...alteracoes, ...(alteracoes.length ? [''] : []),
-      '## Funções de dados alteradas', '', ...dados, ...(dados.length ? [''] : []),
+      '## Alterações na spec, por Feature Set', '', ...layoutTicket(alteracoes), ...(alteracoes.length ? [''] : []),
+      '## Entidades alteradas', '', ...dados, ...(dados.length ? [''] : []),
       '## Impacto em dicionários', '', ...dicionarios, ...(dicionarios.length ? [''] : []),
       '## Decisões de produto pendentes', '', ...decisoes, ...(decisoes.length ? [''] : []),
       ...extras.flatMap((x) => [`## ${x.titulo}`, '', `> Migrada de \`${x.origem}\`.`, '', ...x.corpo, '']),
@@ -578,11 +605,11 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
     planosAim.push({ K, arqAim, texto, carimbosFeat, fontes, estado, abertaNaEntrega, sprint, titulo, featsRel, t });
   }
 
-  // 5. A AIM de cada sprint (relatório agregado).
+  // 5. A AIMM de cada sprint (relatório agregado).
   const planosSprint = [];
   for (const ag of agregados) {
     const label = ag.sprint || ag.nome;
-    const arq = join(DIR_AIM, `AIM-${label}.md`);
+    const arq = join(DIR_AIMM, `AIMM-${label}.md`);
     if (existsSync(arq)) { pend(`${rel(raiz, arq)} já existe — o relatório \`${rel(raiz, ag.file)}\` não foi migrado nem apagado; junte à mão.`); continue; }
     const alt = juntaSecoes(secaoDe(ag.partes, /alteracoes (aplicadas|na spec)/));
     const feats = featuresDasAlteracoes(alt);
@@ -594,7 +621,7 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
       const plano = planosAim.find((p) => p.K.toUpperCase() === k.toUpperCase());
       const fs = feats.filter((f) => chavesDe(f.chaves).includes(k.toUpperCase()));
       const lista = (fs.length ? fs : (plano ? plano.featsRel : [])).map((f) => `\`${f.id}\`${f.nome ? ` **${f.nome}**` : ''}`);
-      return [`\`${k}\``, `[AIM-${k}](AIM-${k}.md)`, lista.join(' · ') || '—', (plano && plano.titulo) || '—'];
+      return [`\`${k}\``, `[AIMM-${k}](AIMM-${k}.md)`, lista.join(' · ') || '—', (plano && plano.titulo) || '—'];
     });
     const conhecidas = [/alteracoes (aplicadas|na spec)/, /tabelas alteradas|funcoes de dados/, /decis/, /^changelog/];
     const extras = ag.partes.secoes.filter((s) => !conhecidas.some((re) => re.test(semAcento(s.titulo).toLowerCase().replace(/^\d+\.\s*/, ''))))
@@ -608,19 +635,19 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
     const alteracoes = converteTabelas(alt, { chaveVira: 'Ticket' });
     const texto = [
       '---', 'tipo: sprint', `sprint: ${valorFm(label)}`, `entrega: ${valorFm(ag.entrega)}`, 'estado: concluído', '---', '',
-      `# AIM ${label}`, '',
-      '## Tickets da sprint', '', ...renderTabela(['Ticket', 'AIM', 'Features', 'Resumo'], linhasTk), '',
+      `# AIMM ${label}`, '',
+      '## Tickets da sprint', '', ...renderTabela(['Ticket', 'AIMM', 'Features', 'Resumo'], linhasTk), '',
       '## Alterações na spec, por Feature Set', '', ...alteracoes, '',
       '## Funções de dados alteradas', '', ...dados, ...(dados.length ? [''] : []),
       ...extras.flatMap((x) => [`## ${x.titulo}`, '', ...x.corpo, '']),
       '## Decisões de produto pendentes', '', ...decisoes, ...(decisoes.length ? [''] : []),
       '## Changelog', '', ...renderTabela(['Data', 'Autor', 'Tipo', 'Descrição'],
-        [[OPCOES.hoje, 'migra-aim', 'AIM da sprint migrada', `relatório agregado \`${rel(raiz, ag.file)}\` → AIM da sprint`]]), '',
+        [[OPCOES.hoje, 'migra-aim', 'AIMM da sprint migrada', `relatório agregado \`${rel(raiz, ag.file)}\` → AIMM da sprint`]]), '',
     ].join('\n');
     planosSprint.push({ label, arq, texto, ag, tickets: ks.length });
   }
 
-  // 6. Os N3: `## Origem` com o cabeçalho novo, os links para a AIM e os carimbos.
+  // 6. Os N3: `## Origem` com o cabeçalho novo, os links para a AIMM e os carimbos.
   const chaveDoAlvo = (nome) => {
     const K = apelido.get(nome.toLowerCase()) || nome.toUpperCase();
     return (tickets.get(K) || {}).chave || K;
@@ -630,8 +657,8 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
   const COMENTARIOS = [
     ['Incluir apenas se houver demanda de origem (história/issue/experimento)', 'Incluir apenas se houver ticket de origem (ServiceNow, issue, experimento)'],
     ['quando a demanda numera os critérios', 'quando o ticket numera os critérios'],
-    ['(linha de Numeração do artefato do backlog)', '(linha de Numeração da AIM do ticket)'],
-    ['Só se a extração atende a uma demanda registrada (ex.: a história que pediu a documentação do sistema)', 'Só se a extração atende a um ticket registrado (ex.: o ticket que pediu a documentação do sistema, com a sua AIM)'],
+    ['(linha de Numeração do artefato do backlog)', '(linha de Numeração da AIMM do ticket)'],
+    ['Só se a extração atende a uma demanda registrada (ex.: a história que pediu a documentação do sistema)', 'Só se a extração atende a um ticket registrado (ex.: o ticket que pediu a documentação do sistema, com a sua AIMM)'],
   ];
   const novoN3 = new Map(); // arquivo → texto novo
   for (const f of modelo.features) {
@@ -647,9 +674,9 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
       if (!cabFeito && /^\s*\|/.test(l)) {
         cabFeito = true;
         const cells = splitRow(l);
-        if (/demanda|hist[óo]ria/i.test(cells[0] || '')) { cells[0] = 'Ticket (AIM)'; l = linhaTab(cells); }
+        if (/demanda|hist[óo]ria/i.test(cells[0] || '')) { cells[0] = 'Ticket (AIMM)'; l = linhaTab(cells); }
       }
-      l = l.replace(LINK_ANTIGO, (_, _alvo, nome) => `](${rel(dirname(f.file), join(DIR_AIM, `AIM-${chaveDoAlvo(nome)}.md`))})`);
+      l = l.replace(LINK_ANTIGO, (_, _alvo, nome) => `](${rel(dirname(f.file), join(DIR_AIMM, `AIMM-${chaveDoAlvo(nome)}.md`))})`);
       for (const [a, b] of COMENTARIOS) l = l.split(a).join(b);
       const st = l.trim().match(new RegExp(STAMP_RE.source));
       if (st) {
@@ -698,9 +725,9 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
       if (naRastreab && !cabFeito && /^\s*\|/.test(l)) {
         cabFeito = true;
         const cells = splitRow(l);
-        if (/demanda|hist[óo]ria/i.test(cells[0] || '')) { cells[0] = 'Ticket (AIM)'; l = linhaTab(cells); }
+        if (/demanda|hist[óo]ria/i.test(cells[0] || '')) { cells[0] = 'Ticket (AIMM)'; l = linhaTab(cells); }
       }
-      l = l.replace(LINK_ANTIGO, (_, _alvo, nome) => `](../analise-impacto/AIM-${chaveDoAlvo(nome)}.md)`);
+      l = l.replace(LINK_ANTIGO, (_, _alvo, nome) => `](../analise-impacto/AIMM-${chaveDoAlvo(nome)}.md)`);
       linhas[i] = l;
     }
     const depois = linhas.join(eol);
@@ -714,7 +741,7 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
   }
 
   // 9. Grava.
-  mkdirSync(DIR_AIM, { recursive: true });
+  mkdirSync(DIR_AIMM, { recursive: true });
   for (const p of planosAim) {
     writeFileSync(p.arqAim, p.texto);
     r.aims.push(p.arqAim);
@@ -727,10 +754,10 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
   }
   for (const [f, txt] of novoN3) writeFileSync(f, txt);
   for (const [f, txt] of outros) { writeFileSync(f, txt); r.outros.push(rel(raiz, f)); }
-  for (const n of ['_TEMPLATE_AIM.md', '_TEMPLATE_AIM_SPRINT.md']) {
-    const dest = join(DIR_AIM, n);
+  for (const n of ['_TEMPLATE_AIMM.md', '_TEMPLATE_AIMM_SPRINT.md']) {
+    const dest = join(DIR_AIMM, n);
     if (existsSync(dest)) continue;
-    if (existsSync(join(MOLDES_AIM, n))) { copyFileSync(join(MOLDES_AIM, n), dest); r.moldes.push(rel(raiz, dest)); } else pend(`molde ${n} não encontrado no engine — copie de engine/templates/analise-impacto/.`);
+    if (existsSync(join(MOLDES_AIMM, n))) { copyFileSync(join(MOLDES_AIMM, n), dest); r.moldes.push(rel(raiz, dest)); } else pend(`molde ${n} não encontrado no engine — copie de engine/templates/analise-impacto/.`);
   }
 
   // 10. Apaga o formato anterior migrado (e o .html gerado de cada um).
@@ -765,7 +792,7 @@ function confere(raiz, aims) {
   };
 }
 // Arquivos da instância que ainda citam o formato anterior — revisão à mão (o CLAUDE.md,
-// o MASTER, o spec-guard.yml copiado do template antigo…). O engine e as AIMs, que citam
+// o MASTER, o spec-guard.yml copiado do template antigo…). O engine e as AIMMs, que citam
 // as fontes no Changelog de propósito, ficam de fora.
 function citamFormatoAnterior(raiz) {
   const out = [];
@@ -788,13 +815,13 @@ function relata(r, c, simulacao) {
   console.log(`migra-aim — ${RAIZ}${simulacao ? '  (simulação: nada foi gravado — --write aplica)' : ''}\n`);
   const nada = !r || ![r.tickets, r.sprints, r.n3, r.outros, r.apagados, r.moldes].some((x) => x.length);
   if (nada) {
-    console.log('✓ Nada a migrar: não há registro, AIM antiga nem relatório no formato anterior que a migração junte.');
+    console.log('✓ Nada a migrar: não há registro, AIMM antiga nem relatório no formato anterior que a migração junte.');
     for (const p of (r ? r.pendencias : [])) console.log(`  ⚠️  ${p}`);
     return;
   }
-  console.log(`AIMs dos tickets (${r.tickets.length}):`);
+  console.log(`AIMMs dos tickets (${r.tickets.length}):`);
   for (const t of r.tickets) console.log(`  + ${t.aim}  ${t.estado}${t.abertaNaEntrega ? ' · aberta na entrega' : ''}\n      ← ${t.fontes.join(' + ')}`);
-  console.log(`AIMs das sprints (${r.sprints.length}):`);
+  console.log(`AIMMs das sprints (${r.sprints.length}):`);
   for (const s of r.sprints) console.log(`  + ${s.aim}  ${s.tickets} ticket(s) ← relatório \`${s.fonte}\``);
   if (r.moldes.length) console.log(`Moldes: ${r.moldes.map((m) => `+ ${m}`).join(' · ')}`);
   console.log(`N3 com a ## Origem atualizada (${r.n3.length}):${r.n3.length ? `\n  ~ ${r.n3.join('\n  ~ ')}` : ' nenhum'}`);
@@ -807,7 +834,7 @@ function relata(r, c, simulacao) {
   }
   console.log(`\nConferência${simulacao ? ' (na cópia simulada)' : ''}:`);
   const ruins = c.aims.filter((a) => !a.ok);
-  console.log(`  validate-impact: ${c.aims.length - ruins.length}/${c.aims.length} AIM(s) bem-formada(s)`);
+  console.log(`  validate-impact: ${c.aims.length - ruins.length}/${c.aims.length} AIMM(s) bem-formada(s)`);
   for (const a of ruins) console.log(`    ✗ ${a.f}\n${a.out.split('\n').slice(1).map((l) => `      ${l.trim()}`).filter((l) => l.trim()).join('\n')}`);
   const resumo = (x) => x.out.split('\n').filter((l) => /^[✓✗]/.test(l.trim()))[0] || x.out.split('\n')[0];
   console.log(`  audit-trace-links: ${resumo(c.audit)}`);

@@ -1,17 +1,17 @@
 # PROMPT — Geração de SDD (Software Design Document)
 
 > **Modo**: DEV
-> **Entrada**: arquivos globais + N1s + N2s + N3s aprovados — no **modo alteração**, a AIM
-> do ticket + o delta dos N3 (`node scripts/delta-n3.mjs --aim …`) + os N3 atuais
+> **Entrada**: arquivos globais + N1s + N2s + N3s aprovados — no **modo alteração**, a AIMM
+> do ticket + o delta dos N3 (`node scripts/delta-n3.mjs --aimm …`) + os N3 atuais
 > **Saída**: SDD completo pronto para guiar a implementação — no modo alteração, o SDD de
 > alteração: só o que muda
 > **Pré-requisito**: todos os N3 da feature ou módulo a ser implementado
 > devem estar com `estado: especificado` no front-matter — CP1, CP2 e CP3 aprovados
 > na esteira; é o 📋 da seção *Esteira de checkpoints* do `modules/INDEX.md`
 > (`python3 scripts/gates.py status`). No modo alteração, o pré-requisito é o aval do PO
-> no escopo: a AIM do ticket em `escopo-aprovado` ou adiante, com `avalizado-por`
+> no escopo: a AIMM do ticket em `escopo-aprovado` ou adiante, com `avalizado-por`
 > **Onde salvar**: `arquitetura/sdd/SDD-[SIGLA]-[SFS].md` (um por Feature Set) — no modo
-> alteração, `arquitetura/sdd/SDD-AIM-<CHAVE>.md`. O `validate-doc` reconhece o SDD pelo
+> alteração, `arquitetura/sdd/SDD-AIMM-<CHAVE>.md`. O `validate-doc` reconhece o SDD pelo
 > título e confere as seções numeradas e a consolidação dos ❓ e 🏛️
 
 ---
@@ -26,9 +26,9 @@ O SDD não repete o que está nas specs — ele traduz as specs em decisões
 de design, estruturas de código e contratos técnicos que o dev pode
 seguir diretamente para implementar.
 
-> **Qual modo?** Feature **nova** — linha `criar` no `## Artefatos impactados` da AIM, ou
+> **Qual modo?** Feature **nova** — linha `criar` no `## Artefatos impactados` da AIMM, ou
 > N3 que não existe na `main` — vai para o **SDD completo** (abaixo). Feature que **já
-> existe** e muda — linha `alterar` na AIM — vai para o **modo alteração** (seção
+> existe** e muda — linha `alterar` na AIMM — vai para o **modo alteração** (seção
 > *MODO ALTERAÇÃO*, no fim deste prompt): o N3 é a foto completa da feature, e
 > redesenhá-la inteira por um campo novo no filtro gera retrabalho e risco de regressão.
 > Um ticket com as duas coisas gera um SDD de cada tipo. O `delta-n3.mjs` já separa:
@@ -677,11 +677,11 @@ esteira (`estado`, `gates`, `contagem`).
 ### Entrada
 
 ```text
-=== AIM DO TICKET ===
-[cole aqui analise-impacto/AIM-<CHAVE>.md — escopo avalizado pelo PO]
+=== AIMM DO TICKET ===
+[cole aqui analise-impacto/AIMM-<CHAVE>.md — escopo avalizado pelo PO]
 
 === DELTA DOS N3 ===
-[cole aqui a saída de: node scripts/delta-n3.mjs --aim analise-impacto/AIM-<CHAVE>.md --base main]
+[cole aqui a saída de: node scripts/delta-n3.mjs --aimm analise-impacto/AIMM-<CHAVE>.md --base main]
 
 === N3 ATUAIS ===
 [cole aqui os N3 com delta, inteiros — o contexto do que NÃO muda; a seção
@@ -711,9 +711,9 @@ esteira (`estado`, `gates`, `contagem`).
 ### Estrutura do SDD de alteração
 
 ```markdown
-# SDD de alteração — [AIM-<CHAVE>]: [título do ticket]
+# SDD de alteração — [AIMM-<CHAVE>]: [título do ticket]
 > Base: `main` ([sha]) → branch do ticket ([sha]) · delta gerado por `delta-n3.mjs`
-> AIM: [link] · estado [escopo-aprovado | em-execução] · avalizado por [PO]
+> AIMM: [link] · estado [escopo-aprovado | em-execução] · avalizado por [PO]
 
 ## 1. Escopo
 | Feature | N3 | Seções alteradas (do delta) |

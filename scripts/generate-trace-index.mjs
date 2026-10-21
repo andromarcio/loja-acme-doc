@@ -12,7 +12,7 @@
 //   - seção `## Implementação`  → arestas feature → repositório (kind: implementa)
 //   - `## Feature Sets` do N1   → hierarquia domínio → feature set (kind: contem)
 //   - `## Integrações …` do N1  → arestas domínio ↔ domínio (kind: integra)
-//   - `analise-impacto/AIM-*.md` → rótulo/URL das AIMs dos tickets (`tipo: ticket`)
+//   - `analise-impacto/AIMM-*.md` → rótulo/URL das AIMMs dos tickets (`tipo: ticket`)
 //
 // Uso:
 //   node scripts/generate-trace-index.mjs --root <instância> \
@@ -48,7 +48,7 @@ const splitRow = (r) => r.trim().replace(/^\|/, '').replace(/\|$/, '').split('|'
 const firstTitle = (lines) => (lines.find((l) => /^# /.test(l.trim())) || '').replace(/^#\s+/, '').trim();
 
 // Chave do ticket: a mesma leitura do trace-index (`keyOf` — o regex canônico, com
-// PDTIC, ou o link para a AIM do ticket). Antes este script tinha um regex próprio, sem
+// PDTIC, ou o link para a AIMM do ticket). Antes este script tinha um regex próprio, sem
 // PDTIC, e o índice não via os tickets nesse formato.
 const PLACEHOLDER_KEY_RE = /STRYx|ISSUE-N|EXP-…|\[chave\]/i;
 
@@ -135,10 +135,10 @@ for (const file of files) {
     product = { label: firstTitle(lines) || 'Visão de Produto', path: rel(file) };
     continue;
   }
-  // AIM do ticket (analise-impacto/AIM-<CHAVE>.md, `tipo: ticket`). A AIM da sprint e
+  // AIMM do ticket (analise-impacto/AIMM-<CHAVE>.md, `tipo: ticket`). A AIMM da sprint e
   // qualquer outro arquivo da pasta não viram nó: só o ticket é um lado do elo.
   // Ancorado na RAIZ da instância: um domínio chamado `analise-impacto` mora em
-  // `modules/analise-impacto/` e não pode ser confundido com a pasta das AIMs.
+  // `modules/analise-impacto/` e não pode ser confundido com a pasta das AIMMs.
   if (/^analise-impacto\//.test(rel(file))) {
     const fm = frontMatterCampos(lines);
     if ((fm.tipo || '').toLowerCase() === 'ticket' && fm.ticket && !PLACEHOLDER_KEY_RE.test(fm.ticket)) {
@@ -230,11 +230,11 @@ for (const f of features) {
   // hierarquia feature set → feature (cria o FS se o N1 não o listou)
   if (!nodes.has(f.fs)) addNode({ id: f.fs, type: 'featureset', label: fsName.get(f.fs) || f.fs, sub: `Feature Set · ${f.fs}`, domain: f.domain });
   addEdge(f.fs, f.id, 'contem');
-  // tickets (AIM) → feature
+  // tickets (AIMM) → feature
   for (const s of f.stories) {
     if (!nodes.has(s.id)) {
       const b = backlog.get(s.id);
-      addNode({ id: s.id, type: 'aim', label: b ? b.label : s.id, sub: `AIM · ${s.id}`, path: b ? b.path : '' });
+      addNode({ id: s.id, type: 'aim', label: b ? b.label : s.id, sub: `AIMM · ${s.id}`, path: b ? b.path : '' });
     }
     addEdge(s.id, f.id, 'origina', s.note || undefined);
   }
@@ -245,9 +245,9 @@ for (const f of features) {
   }
 }
 
-// AIMs de tickets ainda sem feature especificada (aparecem soltas — visão de pendência)
+// AIMMs de tickets ainda sem feature especificada (aparecem soltas — visão de pendência)
 for (const [key, b] of backlog) {
-  if (!nodes.has(key)) addNode({ id: key, type: 'aim', label: b.label, sub: `AIM · ${key}`, path: b.path });
+  if (!nodes.has(key)) addNode({ id: key, type: 'aim', label: b.label, sub: `AIMM · ${key}`, path: b.path });
 }
 
 // integração domínio ↔ domínio (consumidor depende deste domínio)

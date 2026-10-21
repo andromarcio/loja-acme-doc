@@ -267,6 +267,28 @@ estado: rascunho
                          [("STRY0000007", None, "rascunho")])
         self.assertEqual((data["features"], data["sprintAim"]), ([], None))
 
+    def test_delivery_reads_aimm_renamed_from_aim_and_rejects_duplicates(self):
+        old = "analise-impacto/AIM-STRY0000007.md"
+        new = "analise-impacto/AIMM-STRY0000007.md"
+        self.write(old, self.aim("STRY0000007", "em-análise"))
+        self.write("analise-impacto/AIM-STRY0000008.md", self.aim("STRY0000008", "rascunho"))
+        self.commit("Base")
+        base = self.git("rev-parse", "HEAD")
+        self.git("checkout", "--quiet", "-b", "historia/STRY0000007")
+        (self.root / old).rename(self.root / new)
+        self.write(new, self.aim("STRY0000007", "escopo-aprovado"))
+        self.commit("STRY0000007: migra para AIMM e aprova escopo")
+        data = dashboard.build_snapshot(self.root, base=base)["delivery"]
+        ticket = next(item for item in data["tickets"] if item["key"] == "STRY0000007")
+        self.assertEqual((ticket["path"], ticket["before"], ticket["after"]),
+                         (new, "em-análise", "escopo-aprovado"))
+        self.assertEqual(dashboard.aim_key(old), dashboard.aim_key(new))
+        self.assertIsNone(dashboard.aim_key("analise-impacto/_TEMPLATE_AIMM.md"))
+        self.assertIsNone(dashboard.aim_key(new.replace(".md", ".html")))
+        self.write(old, self.aim("STRY0000007", "em-análise"))
+        with self.assertRaisesRegex(ValueError, "AIMM duplicada"):
+            dashboard.build_snapshot(self.root, base=base)
+
 
 if __name__ == "__main__":
     unittest.main()

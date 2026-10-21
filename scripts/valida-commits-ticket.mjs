@@ -11,7 +11,7 @@
 //
 // A regra, no ASSUNTO do commit (a primeira linha — o corpo pode citar o que quiser):
 //   cadência `sprint`   → exatamente uma chave: a de um ticket, ou o id da sprint nos
-//                         commits da AIM da sprint (`AIM-<id>.md`);
+//                         commits da AIMM da sprint (`AIMM-<id>.md`);
 //   cadência `história` → exatamente a chave da própria branch (`historia/<CHAVE>`).
 // Vale para commit que toca `modules/`, `global/`, `qa/`, `prototypes/` ou
 // `analise-impacto/`. Exceção: commit marcado `[gerado]` no assunto que só toca artefato
@@ -19,10 +19,10 @@
 // dicionários) — esse não é de ticket nenhum, e o reverte-ticket manda regenerá-lo.
 //
 // Chave reconhecida: os formatos de ticket conhecidos (STRY…, ISSUE-…, PDTIC…, EXP-…) e a
-// de toda AIM da instância (`analise-impacto/AIM-<CHAVE>.md`) — o que cobre ferramenta
+// de toda AIMM da instância (`analise-impacto/AIMM-<CHAVE>.md`) — o que cobre ferramenta
 // nova e o id da sprint.
 //
-// No PR de checkpoint — de uma branch de trabalho (`ticket/<CHAVE>`, por exemplo) para a
+// No PR de checkpoint — de uma branch de trabalho (`checkpoint/<CHAVE>-<etapa>`, por exemplo) para a
 // `sprint/<id>` ou a `historia/<CHAVE>` —, a unidade é a da BASE: os commits que entram
 // nela seguem a regra dela. Assim o commit sem chave é recusado no próprio PR de
 // checkpoint, e não só no PR da sprint para a `main`, depois do merge.
@@ -85,7 +85,7 @@ for (const c of commits) {
     else if (outras.length) erros.push(`${curto}: cita também ${outras.map((k) => `\`${k}\``).join(', ')} — numa branch de história, o commit é só dela.`);
     continue;
   }
-  if (!chaves.length) erros.push(`${curto}: toca a spec sem citar a chave do ticket (ou \`${unidade.id}\`, nos commits da AIM da sprint).`);
+  if (!chaves.length) erros.push(`${curto}: toca a spec sem citar a chave do ticket (ou \`${unidade.id}\`, nos commits da AIMM da sprint).`);
   else if (chaves.length > 1) erros.push(`${curto}: cita ${chaves.map((k) => `\`${k}\``).join(', ')} — um commit, um ticket: separe, senão o revert de um arrasta o outro.`);
 }
 

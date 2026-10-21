@@ -9,7 +9,7 @@
 //            + gate SEMÂNTICO (validate-feature-semantics) em N3: o artefato nomeado
 //            como feature é mesmo uma feature? (engine/FEATURE-DEFINITION.md, FD-1…FD-12;
 //            só reprovação volta ao modelo — os avisos FD-10…FD-12 ficam de fora)
-//       F3 — rastreabilidade (audit-trace-links) em N3, AIM do ticket e INDEX.md:
+//       F3 — rastreabilidade (audit-trace-links) em N3, AIMM do ticket e INDEX.md:
 //            elo ticket↔feature só fecha quando os TRÊS lugares concordam.
 //       F6 — citação de dicionário (valida-citacoes-dicionario) em todo .md de global/ e
 //            modules/: `→ ver <X>-DICTIONARY: alvo` só vale se a entrada existir.
@@ -54,7 +54,7 @@ const REGRAS_CENARIOS = join(HERE, '..', 'valida-regras-cenarios.mjs'); // regra
 const CONTRATO_API = join(HERE, '..', 'valida-contrato-api.mjs'); // front-matter × API × ERROR-DICTIONARY × Campos
 const IDS_N3 = join(HERE, '..', 'ids-n3.mjs');
 
-// Só validamos artefatos de nível (N0–N3, DATA-MODEL). INDEX, AIMs, prompts,
+// Só validamos artefatos de nível (N0–N3, DATA-MODEL). INDEX, AIMMs, prompts,
 // scripts, README de projeto etc. passam batido. Padrões espelham LOCATION_RULES do validador.
 const ARTIFACT_PATTERNS = [
   /(^|\/)global\/N0_PRODUCT_VISION\.md$/,
@@ -69,7 +69,7 @@ const ARTIFACT_PATTERNS = [
 // Artefatos que participam do elo ticket↔feature — gravou um deles, o elo é auditado.
 const TRACE_PATTERNS = [
   N3_PATTERN,                                          // N3 (## Origem)
-  /(^|\/)analise-impacto\/AIM-[^/]+\.md$/,             // AIM do ticket (## Features)
+  /(^|\/)analise-impacto\/AIMM?-[^/]+\.md$/,             // AIMM do ticket (## Features)
   /(^|\/)modules\/INDEX\.md$/,                          // tabela consolidada
 ];
 
@@ -155,8 +155,8 @@ function main() {
       }
     }
 
-    // F8 — a enumeração de ALR e DER é dado: a planilha de entrega copia o bloco para as
-    // colunas Descrição, e a prosa misturava campo com comentário.
+    // F8 — a enumeração de ALR e DER sustenta a memória de cálculo;
+    // nomes de dados não se confundem com comentários da contagem.
     if (N3_PATTERN.test(path) && existsSync(ENUMERACAO)) {
       const en = spawnSync('node', [ENUMERACAO, file], { encoding: 'utf8' });
       if (en.status && en.status !== 0) {
@@ -209,7 +209,7 @@ function main() {
         problems.push(
           'GATE DE RASTREABILIDADE (audit-trace-links) encontrou elos inconsistentes envolvendo este artefato.\n' +
           'Se esta gravação faz parte de uma passada em andamento (3A/4A), termine de fechar o elo nos TRÊS\n' +
-          'lugares (## Origem do N3 + ## Features da AIM do ticket + linha do INDEX.md) — o gate sai ✓ ao final.\n' +
+          'lugares (## Origem do N3 + ## Features da AIMM do ticket + linha do INDEX.md) — o gate sai ✓ ao final.\n' +
           'Não declare a etapa concluída com elo unilateral.\n\n' +
           `${a.stdout || ''}${a.stderr || ''}`.trim(),
         );

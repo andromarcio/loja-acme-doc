@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.1 | prompt: init-instance | atualizado: 2026-10-17 -->
+<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
 # SIZING.md
 > Convenções de medição de tamanho funcional do sistema.
 > Fonte única de critérios para contagem APF e COSMIC.
@@ -286,7 +286,7 @@ Cada artefato N3 corresponde a uma única funcionalidade. Registre nele apenas a
 >
 > `| Consultar Empresa (combo) | — | ↪ [CRM-CTT-01](../contatos/f-pesquisar-contato.md) | — | — | — | — | 2026-09-27 |`
 >
-> O componente entre parênteses não entra na comparação: a mesma lista em combo numa tela e em autocomplete noutra é o mesmo PE. **A alteração vai para o PE:** a mudança na lista, venha do ticket de qualquer feature que a usa, é feita na linha contada — a recontagem, a `## Origem` e o Changelog são da feature onde o PE conta, que fica com a contagem pendente —, e as features que o reutilizam entram na AIM como regressão (o `generate-impact-draft` segue o `↪` nos dois sentidos). Se a mudança vale só para uma das telas, as listas deixam de ser iguais: a que mudou passa a contar a sua e declara a diferença (`> Distinto de …`). Se a feature onde o PE conta for deprecada, a contagem passa para uma das que o reutilizam. **Para saber se um PE já é contado:** `node scripts/valida-acessorio-tela.mjs --pe "<nome do PE>"` responde onde ele conta e quem o reutiliza; sem o `--pe`, a mesma checagem reprova o PE contado duas vezes e a referência que não acha o PE contado.
+> O componente entre parênteses não entra na comparação: a mesma lista em combo numa tela e em autocomplete noutra é o mesmo PE. **A alteração vai para o PE:** a mudança na lista, venha do ticket de qualquer feature que a usa, é feita na linha contada — a recontagem, a `## Origem` e o Changelog são da feature onde o PE conta, que fica com a contagem pendente —, e as features que o reutilizam entram na AIMM como regressão (o `generate-impact-draft` segue o `↪` nos dois sentidos). Se a mudança vale só para uma das telas, as listas deixam de ser iguais: a que mudou passa a contar a sua e declara a diferença (`> Distinto de …`). Se a feature onde o PE conta for deprecada, a contagem passa para uma das que o reutilizam. **Para saber se um PE já é contado:** `node scripts/valida-acessorio-tela.mjs --pe "<nome do PE>"` responde onde ele conta e quem o reutiliza; sem o `--pe`, a mesma checagem reprova o PE contado duas vezes e a referência que não acha o PE contado.
 
 > **Regra da consulta implícita**: um processo elementar exige que os dados
 > **atravessem a fronteira da aplicação**. Ao acionar *Editar* em uma linha da

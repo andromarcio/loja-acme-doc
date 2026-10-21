@@ -53,6 +53,8 @@ Vale para **todo** prompt de especificação (N0, 1A/1B, 2A, 3A/3B, 4A/4B, CRUD,
 
 ## Hierarquia de níveis
 
+**Branch e AIMM:** leia a Cadência no MASTER antes de abrir a AIMM. A branch de história é `historia/<CHAVE>` (ex.: `historia/STRY0000000`), com `analise-impacto/AIMM-<CHAVE>.md`; a de sprint é `sprint/<id>`, com a AIMM da sprint. No fluxo atual de sprint, PRs de um checkpoint podem usar uma branch temporária `checkpoint/<CHAVE>-<etapa>`; ela não é uma branch de história. Siga *Onde a AIMM vive* no `engine/prompts/PROMPT_AIMM.md`.
+
 **Identidade do N3:** a primeira numeração segue a jornada confirmada na ordem da tabela Features do N2, não a ordem de escrita dos N3s. Antes de gerar, use `scripts/ids-n3.mjs` em modo seco e, conferido, `--write`. Preserve qualquer ID já usado no N2/N3 e o registro `docqui:n3-ids`, inclusive no bottom-up e ao regenerar N2s. Novas features continuam após o maior reservado, sem reutilizar lacunas; mudar a jornada não renumera IDs. Procedimento: `engine/N3-IDS.md`. Conferência: `node scripts/ids-n3.mjs --check`.
 
 | Nível | Nome | Arquivo | Conteúdo |
@@ -210,8 +212,8 @@ Exemplos de estados por etapa:
 ```
 PROMPT_TRIAGEM → porta de entrada: dada uma necessidade (qualquer origem), descobre o que
                  já está documentado e roteia (criar 3A/2A/1A · alterar 4A/4B · lote IV→EX
-                 · ticket AIM). Não cria nem altera — só mostra e encaminha.
-PROMPT_AIM → analise-impacto/AIM-<CHAVE>.md (a AIM do ticket: transcreve o ticket, mapeia
+                 · ticket AIMM). Não cria nem altera — só mostra e encaminha.
+PROMPT_AIMM → analise-impacto/AIMM-<CHAVE>.md (a AIMM do ticket: transcreve o ticket, mapeia
              as features, deriva o changeset e leva o escopo ao aval do PO; origina ou
              altera os N3 e fecha a rastreabilidade ticket ↔ feature nos três lugares)
      ↓
@@ -286,7 +288,7 @@ Ao identificar a etapa/intenção da sessão, **leia o arquivo correspondente em
 | Gatilho da sessão | Prompt a ler |
 |---|---|
 | Necessidade nova (qualquer origem): descobrir o que já existe e decidir **criar × alterar** | `PROMPT_TRIAGEM.md` |
-| Ticket (ServiceNow, issue, experimento) — abrir a AIM (`analise-impacto/AIM-<CHAVE>.md`), mapear as features e levar o escopo ao aval do PO | `PROMPT_AIM.md` |
+| Ticket (ServiceNow, issue, experimento) — abrir a AIMM (`analise-impacto/AIMM-<CHAVE>.md`), mapear as features e levar o escopo ao aval do PO | `PROMPT_AIMM.md` |
 | CRUD padrão (cadastro): gerar N2 + N3 das 5 operações de uma vez | `PROMPT_CRUD.md` |
 | Wizard / assistente (processo guiado multi-etapas): gerar N2 + N3 da feature principal e auxiliares | `PROMPT_WIZARD.md` |
 | Extrair insumos desestruturados → base de conhecimento | `PROMPT_0_EXTRACTION.md` |
@@ -389,7 +391,7 @@ template do N3 (`engine/templates/modules/_template-dominio/_template-feature-se
 - Dependências
 - Implementação (item | repositório | caminho | branch/tag)
 
-Depois do `dev-only`: Origem — ticket(s) de origem, com o link da AIM *(só com ticket)* —, Changelog e o rodapé.
+Depois do `dev-only`: Origem — ticket(s) de origem, com o link da AIMM *(só com ticket)* —, Changelog e o rodapé.
 
 ---
 

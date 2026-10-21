@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
 ---
 id: CAT-CTG-04
 feature_set: CAT-CTG
@@ -154,9 +154,9 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 
 ## Origem
 
-| Ticket (AIM) | Tipo | Critérios cobertos |
+| Ticket (AIMM) | Tipo | Critérios cobertos |
 |---|---|---|
-| [`STRY0013170`](../../../analise-impacto/AIM-STRY0013170.md) | Criação | `CA-4` — categoria com produtos não pode ser excluída |
+| [`STRY0013170`](../../../analise-impacto/AIMM-STRY0013170.md) | Criação | `CA-4` — categoria com produtos não pode ser excluída |
 
 ## Changelog
 
@@ -164,3 +164,4 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Exclusão definitiva de categoria, com bloqueio por produtos vinculados (RC-09), derivada do cadastro, a partir do ticket fictício STRY0013170; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
+| 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |

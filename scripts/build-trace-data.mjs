@@ -6,7 +6,7 @@
 // já está nos .md:
 //
 //   cabeçalho do N3 (ID + título)        → nó feature (status/PF vêm do INDEX.md)
-//   seção ## Origem do N3                → aresta ticket (AIM) → feature (origina)
+//   seção ## Origem do N3                → aresta ticket (AIMM) → feature (origina)
 //   seção ## Implementação do N3         → aresta feature → repositório (implementa)
 //   árvore modules/ + N1/N2              → hierarquia                   (contem)
 //   ## Integrações com outros domínios   → aresta domínio → domínio     (integra)
@@ -275,8 +275,8 @@ for (const f of model.features.filter((x) => x.id)) {
   }
 }
 
-// --- AIMs dos tickets ----------------------------------------------------------
-// Rótulo: o `titulo` da AIM; descrição: o começo da transcrição do ticket (sem a
+// --- AIMMs dos tickets ----------------------------------------------------------
+// Rótulo: o `titulo` da AIMM; descrição: o começo da transcrição do ticket (sem a
 // citação que a apresenta).
 for (const s of model.stories.filter((x) => x.key)) {
   const lines = read(s.file).split(/\r?\n/);
@@ -289,12 +289,12 @@ for (const s of model.stories.filter((x) => x.key)) {
       .join(' ').replace(/\*\*/g, '');
     if (desc.length > 160) desc = `${desc.slice(0, 157)}…`;
   }
-  nodes.push({ id: s.key, type: 'aim', label, sub: `AIM · ${s.key}`, desc, path: s.path });
+  nodes.push({ id: s.key, type: 'aim', label, sub: `AIMM · ${s.key}`, desc, path: s.path });
 }
 nodes.push(...repoNodes.values());
 nodes.push(...codNodes.values());
 
-// Arestas cujo nó não existe (ex.: ticket citado mas sem AIM) são descartadas —
+// Arestas cujo nó não existe (ex.: ticket citado mas sem AIMM) são descartadas —
 // o audit-trace-links é quem acusa; o mapa só projeta o que existe.
 const nodeIds = new Set(nodes.map((n) => n.id));
 const finalEdges = edges.filter((e) => nodeIds.has(e.from) && nodeIds.has(e.to));

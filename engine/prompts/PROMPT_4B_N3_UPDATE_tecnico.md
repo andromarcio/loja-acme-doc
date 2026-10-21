@@ -225,14 +225,14 @@ Ao finalizar, informe obrigatoriamente:
 >    e o índice `global/DATA-MODEL.md` (`## Campos adicionados recentemente`; e
 >    `## Arquivos Lógicos (APF)` se a contagem do ALI mudou)
 > 2. Conferir a entrada técnica no topo do `## Changelog` do N3 e, se a mudança veio
->    de um ticket, o Changelog da AIM `analise-impacto/AIM-<CHAVE>.md` (PROMPT_4A, PASSO 7)
+>    de um ticket, o Changelog da AIMM `analise-impacto/AIMM-<CHAVE>.md` (PROMPT_4A, PASSO 7)
 > 3. Se a feature já estava ✅ `implementado`, a spec agora está à frente do código:
 >    declare o estado manual `estado: revisao-necessaria` no front-matter, rode
 >    `python3 scripts/gates.py promote --write` (o espelho da esteira mostra ⚠️) e leve
 >    o ⚠️ à coluna Status da linha da feature no `modules/INDEX.md` e na
->    `## Features` da AIM do ticket. Quem devolve o `estado` ao derivado dos gates
->    (`implementado`) é a entrega: o fechamento da AIM (skill `analise-impacto`, passo
->    7) — o `validate-impact` não deixa a AIM ir a `concluído` com a feature em
+>    `## Features` da AIMM do ticket. Quem devolve o `estado` ao derivado dos gates
+>    (`implementado`) é a entrega: o fechamento da AIMM (skill `analise-impacto`, passo
+>    7) — o `validate-impact` não deixa a AIMM ir a `concluído` com a feature em
 >    `revisao-necessaria`. Com a Cadência declarada no MASTER, isso acontece na branch da
 >    unidade de entrega, antes do merge (`valida-entrega.mjs`). Feature ainda não
 >    implementada não muda de estado: a esteira segue de onde estava.

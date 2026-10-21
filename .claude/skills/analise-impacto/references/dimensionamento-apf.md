@@ -21,7 +21,7 @@ A unidade da contagem é a **função** — um processo elementar (EE/SE/CE) ou 
 
 Não é convenção local. O CPM define o escopo do projeto de melhoria como o **conjunto** das funções adicionadas, alteradas e excluídas, e dimensiona o CHGA pelas funções alteradas "como elas são / serão após a implementação" — existe um único estado *depois* por função, então contar duas vezes é impossível por construção. O procedimento do manual diz o mesmo em forma operacional: uma complexidade antes e uma depois, por função (CPM 4.3.1, Parte 3, cap. 4 — *Projetos de Melhoria*).
 
-Isso inverte a ordem do trabalho: **os tickets dizem quais funções entram e por quê; a contagem vem depois, sobre os artefatos já consolidados.** A AIM de cada ticket guarda os fatos — que função foi tocada, o que mudou nela, que DER/RLR se mexeram —, e o PFB/PFL que ela mostra espelha o N3; o apurável é o da AIM da sprint, onde cada função entra uma vez. Nunca some as AIMs dos tickets: a função tocada por dois tickets aparece nas duas, e a soma a conta duas vezes.
+Isso inverte a ordem do trabalho: **os tickets dizem quais funções entram e por quê; a contagem vem depois, sobre os artefatos já consolidados.** A AIMM de cada ticket guarda os fatos — que função foi tocada, o que mudou nela, que DER/RLR se mexeram —, e o PFB/PFL que ela mostra espelha o N3; o apurável é o da AIMM da sprint, onde cada função entra uma vez. Nunca some as AIMMs dos tickets: a função tocada por dois tickets aparece nas duas, e a soma a conta duas vezes.
 
 **A chave de deduplicação é o processo elementar, não a feature.** Uma feature costuma absorver mais de um PE — a conciliação Feature ↔ PE do `SIZING.md` marca isso como `(+N)`. Dois itens que tocam a mesma feature em PEs diferentes são **duas** funções alteradas; deduplicar por feature subconta. O manual trata o caso simétrico — uma mudança em rotina comum que atinge vários PEs conta vários — e a leitura inversa vale igual: "as funções alteradas devem ser identificadas baseadas nos processos elementares que incorporam aquela lógica".
 
@@ -86,7 +86,7 @@ Não decida sozinho: levante a pergunta com o argumento de negócio explícito (
 
 ## Fechando o apurável
 
-O apurável é a `## Apurável da sprint` da AIM da sprint: Transações, Funções de dados e Total, em PFB e PFL. Quando a métrica precisa ver a natureza de cada origem, quebre as transações em linhas antes do subtotal:
+O apurável é a `## Apurável da sprint` da AIMM da sprint: Transações, Funções de dados e Total, em PFB e PFL. Quando a métrica precisa ver a natureza de cada origem, quebre as transações em linhas antes do subtotal:
 
 | | Natureza | PFB | PFL |
 |---|---|---|---|
@@ -102,7 +102,7 @@ Regras que mantêm essa tabela honesta:
 - **`(E)` em toda estimativa**, e no total que a contém. Diga quantos dos N pontos são estimados; é a primeira coisa que a métrica vai querer saber.
 - **Nada de "a contar" sem dizer o que falta.** Ou tem número, ou tem o motivo de não ter.
 - **Zero é um número válido** e precisa de justificativa. "Conta zero porque a entrega já está dentro de outra feature" é uma linha legítima; um zero mudo volta como pergunta.
-- **Confira a soma com script** depois de cada rodada de números. Contas de cabeça sobrevivem a revisões visuais. O `validate-impact` faz a conta da AIM da sprint — o Total contra as linhas de `## Alterações na spec, por Feature Set` e de `## Funções de dados alteradas`, e cada subtotal contra a sua —; a quebra por origem é sua: as linhas dela somam o subtotal de Transações.
+- **Confira a soma com script** depois de cada rodada de números. Contas de cabeça sobrevivem a revisões visuais. O `validate-impact` faz a conta da AIMM da sprint — o Total contra as linhas de `## Alterações na spec, por Feature Set` e de `## Funções de dados alteradas`, e cada subtotal contra a sua —; a quebra por origem é sua: as linhas dela somam o subtotal de Transações.
 
 ## Onde a estimativa pode viver
 

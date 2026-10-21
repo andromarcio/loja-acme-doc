@@ -7,17 +7,17 @@
 // `historia/<CHAVE>` ou `sprint/<id>`. O merge dela é a entrega, e é aqui que se confere
 // que a branch só leva o que foi entregue, e inteiro:
 //
-//   1. a AIM da unidade (`AIM-<CHAVE>.md` na história, `AIM-<id>.md` na sprint) existe,
-//      está `concluído` e passa no validate-impact — na sprint, conferida com as AIMs dos
+//   1. a AIMM da unidade (`AIMM-<CHAVE>.md` na história, `AIMM-<id>.md` na sprint) existe,
+//      está `concluído` e passa no validate-impact — na sprint, conferida com as AIMMs dos
 //      tickets (S1–S4); na história, com a reconciliação contra a base (--git-base);
-//   2. toda AIM de ticket que a branch trouxe está `concluído` e válida — o validate-impact
+//   2. toda AIMM de ticket que a branch trouxe está `concluído` e válida — o validate-impact
 //      exige cada feature dela no ESTADO FINAL da esteira (`implementado`; `especificado`
-//      no perfil `requisitos`) ou deprecada. AIM aberta é ticket não entregue: sai da
+//      no perfil `requisitos`) ou deprecada. AIMM aberta é ticket não entregue: sai da
 //      branch pelo `reverte-ticket.mjs` antes do merge;
 //   3. (sprint) todo arquivo de spec que a branch altera foi declarado por um ticket
 //      entregue (`## Artefatos impactados`), e todo artefato declarado foi alterado — o
 //      reconcilia do validate-impact, feito sobre a UNIÃO dos tickets: ticket a ticket,
-//      o arquivo de um seria desvio do outro. Ficam de fora as próprias AIMs e os
+//      o arquivo de um seria desvio do outro. Ficam de fora as próprias AIMMs e os
 //      artefatos regenerados por script.
 //
 // Fora de uma branch de unidade de entrega, ou sem a linha **Cadência** no MASTER: sai 0
@@ -32,6 +32,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { cadenciaDa, unidadeDaBranch, branchAtual, git, SPEC_RE, GERADO_RE } from './lib/instancia.mjs';
 import { frontMatterCampos } from './lib/trace-index.mjs';
+import { impactPath } from './lib/impact-files.mjs';
 
 const args = process.argv.slice(2);
 const opt = (n, d = null) => { const i = args.indexOf(n); return i >= 0 && args[i + 1] ? args[i + 1] : d; };
@@ -63,19 +64,19 @@ const valida = (rel, extra = []) => {
 const fmDe = (rel) => frontMatterCampos(readFileSync(join(ROOT, rel), 'utf8').split(/\r?\n/));
 const linhasDeErro = (out) => out.split('\n').filter((l) => /✗/.test(l)).map((l) => l.trim());
 
-// 1. A AIM da unidade.
-const aimDaUnidade = `analise-impacto/AIM-${unidade.id}.md`;
+// 1. A AIMM da unidade.
+const aimDaUnidade = impactPath(ROOT, unidade.id);
 if (!existsSync(join(ROOT, aimDaUnidade))) {
-  erros.push(`falta \`${aimDaUnidade}\` — a ${unidade.tipo === 'sprint' ? 'sprint' : 'história'} entra na main com a AIM dela.`);
+  erros.push(`falta \`${aimDaUnidade}\` — a ${unidade.tipo === 'sprint' ? 'sprint' : 'história'} entra na main com a AIMM dela.`);
 } else {
   const fm = fmDe(aimDaUnidade);
-  if (norm(fm.estado) !== 'concluido') erros.push(`\`${aimDaUnidade}\` está em \`${fm.estado || '—'}\` — o merge é a entrega: a AIM vai a \`concluído\` antes (skill analise-impacto).`);
+  if (norm(fm.estado) !== 'concluido') erros.push(`\`${aimDaUnidade}\` está em \`${fm.estado || '—'}\` — o merge é a entrega: a AIMM vai a \`concluído\` antes (skill analise-impacto).`);
   const v = valida(aimDaUnidade, unidade.tipo === 'historia' ? ['--git-base', BASE] : []);
   if (!v.ok) for (const l of linhasDeErro(v.out)) erros.push(`${aimDaUnidade}: ${l.replace(/^✗\s*/, '')}`);
 }
 
-// 2. As AIMs de ticket que a branch trouxe (na história, só a dela, já conferida acima).
-const aimsDeTicket = alterados.filter((f) => /^analise-impacto\/AIM-[^/]+\.md$/.test(f) && f !== aimDaUnidade)
+// 2. As AIMMs de ticket que a branch trouxe (na história, só a dela, já conferida acima).
+const aimsDeTicket = alterados.filter((f) => /^analise-impacto\/AIMM?-[^/]+\.md$/.test(f) && f !== aimDaUnidade)
   .filter((f) => norm(fmDe(f).tipo) === 'ticket');
 if (unidade.tipo === 'historia') {
   for (const f of aimsDeTicket) erros.push(`\`${f}\` é de outro ticket — a branch \`${branch}\` leva só a história ${unidade.id}.`);
@@ -118,4 +119,4 @@ if (erros.length) {
   console.log('\nA main só recebe o que foi entregue (MASTER → ## Cadência de entrega).');
   process.exit(1);
 }
-console.log(`✓ \`${branch}\` pode entrar na main: ${unidade.tipo === 'sprint' ? `AIM da sprint e ${entregues.length} ticket(s) entregue(s) concluídos, com a branch alterando só o que eles declaram` : `AIM ${unidade.id} concluída e reconciliada`}.`);
+console.log(`✓ \`${branch}\` pode entrar na main: ${unidade.tipo === 'sprint' ? `AIMM da sprint e ${entregues.length} ticket(s) entregue(s) concluídos, com a branch alterando só o que eles declaram` : `AIMM ${unidade.id} concluída e reconciliada`}.`);

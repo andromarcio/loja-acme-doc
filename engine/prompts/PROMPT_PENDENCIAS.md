@@ -2,20 +2,20 @@
 
 > **Quem participa**: Analista de Requisitos / PO / Tech Lead
 > **Insumo necessário**: `modules/INDEX.md`, a árvore `modules/**` (READMEs de
-> Feature Set + N3), as AIMs dos tickets (`analise-impacto/AIM-*.md`) e — se existir —
+> Feature Set + N3), as AIMMs dos tickets (`analise-impacto/AIMM-*.md`) e — se existir —
 > `modules/_triagem/*.md`
 > **Entrega**: a seção **`## Pendências de especificação`** do `modules/INDEX.md`
 > **regenerada** — duas tabelas (**Existência** / **Conteúdo**), cada item linkando
 > de volta à sua fonte
 >
 > **Quando rodar**: periodicamente (planning, antes de um release, após uma rodada
-> de **AIM**/**TR**/**3A**) ou sempre que quiser o painel único do que **falta especificar**
+> de **AIMM**/**TR**/**3A**) ou sempre que quiser o painel único do que **falta especificar**
 > **Próximo passo**: para cada pendência, rodar a rota indicada — **3A/CRUD/2A/1A**
 > (existência) ou **4A/4B/3B** (fechar a lacuna de conteúdo)
 >
 > ⚙️ **A seção é GERADA — nunca editada à mão.** Este prompt **varre as fontes e
 > espelha** o resultado numa seção delimitada por marcadores no INDEX. A fonte de
-> verdade continua **distribuída** (AIMs em `analise-impacto/`, READMEs de N2, N3 com ⚠️); o INDEX
+> verdade continua **distribuída** (AIMMs em `analise-impacto/`, READMEs de N2, N3 com ⚠️); o INDEX
 > apenas **consolida a visão**. Edições manuais dentro dos marcadores serão
 > sobrescritas na próxima execução — é o preço de não ter uma segunda fonte de verdade.
 
@@ -33,13 +33,13 @@ seção delimitada — e só **após confirmação**.
 
 | Tipo | O que é | De onde vem | Rota para resolver |
 |---|---|---|---|
-| **Existência** | falta o artefato — algo é conhecido como necessário mas **ainda não tem N3** | features na `## Features` da AIM de um ticket ainda "📋 A especificar"; features citadas num N2 (README) **sem** o `.md` correspondente; relatórios de triagem com veredito **Criar**; linhas do INDEX apontando para um N3 inexistente | **3A** *(ou **CRUD** se for cadastro completo)* · **2A**→3A *(feature set novo)* · **1A**→2A→3A *(domínio novo)* |
+| **Existência** | falta o artefato — algo é conhecido como necessário mas **ainda não tem N3** | features na `## Features` da AIMM de um ticket ainda "📋 A especificar"; features citadas num N2 (README) **sem** o `.md` correspondente; relatórios de triagem com veredito **Criar**; linhas do INDEX apontando para um N3 inexistente | **3A** *(ou **CRUD** se for cadastro completo)* · **2A**→3A *(feature set novo)* · **1A**→2A→3A *(domínio novo)* |
 | **Conteúdo** | o artefato **existe**, mas tem **lacunas em aberto** (⚠️ / ❓ / 🔍) aguardando esclarecimento | marcadores `⚠️` no corpo dos N3 e a lista de **Suposições** ao final de cada artefato (regra de condução #15); `❓`/`🔍` herdados de engenharia reversa | **4A**/**4B** *(manutenção)* ou **3B** *(se a passada técnica ainda está aberta)* |
 
 ### Princípios
 
 1. **A fonte manda; o INDEX espelha.** Todo item do painel é **rastreável** a uma
-   fonte (a AIM de um ticket, um N2, um N3). O INDEX **nunca** recebe uma pendência que não
+   fonte (a AIMM de um ticket, um N2, um N3). O INDEX **nunca** recebe uma pendência que não
    exista numa fonte — assim como o `CONTAGEM-PF.md` nunca recebe um número fora da fonte.
 2. **Não inventar, não estimar.** Se algo *parece* faltar mas você não consegue
    apontar a fonte que o evidencia, **não** registre como pendência — no máximo cite em
@@ -72,7 +72,7 @@ Nunca faça mais de uma pergunta por estado.
 
 - **No Claude Code (com ferramentas de arquivo):** **leia o repositório direto do
   disco** — não peça para colar nada. Varra `modules/INDEX.md`, a árvore `modules/**`
-  (READMEs de N2 e os `.md` de N3), `analise-impacto/AIM-*.md` e `modules/_triagem/*.md`
+  (READMEs de N2 e os `.md` de N3), `analise-impacto/AIMM-*.md` e `modules/_triagem/*.md`
   (se existir).
 - **No fluxo copy-paste / CLI:** use o que for colado na seção CONTEXTO DO PROJETO. Se
   faltar a árvore `modules/`, **sinalize com ⚠️** que o painel fica limitado ao que foi
@@ -91,8 +91,8 @@ Nunca faça mais de uma pergunta por estado.
 === READMEs de Feature Set (modules/[dom]/[fs]/README.md) ===
 [cole os N2 do escopo — a lista de features de cada um revela quais ainda não têm N3]
 
-=== analise-impacto/AIM-*.md ===
-[cole as AIMs dos tickets — o front-matter e a tabela `## Features` de cada uma]
+=== analise-impacto/AIMM-*.md ===
+[cole as AIMMs dos tickets — o front-matter e a tabela `## Features` de cada uma]
 
 === modules/_triagem/*.md *(opcional)* ===
 [cole os relatórios de triagem salvos, se houver — vereditos "Criar" ainda não atendidos]
@@ -107,13 +107,13 @@ Detecte o canal, declare o escopo (um domínio ou o sistema inteiro) e aguarde:
 
 - **No Claude Code:**
   > "Vou montar o painel de pendências. Tenho acesso ao repositório, então vou varrer o
-  > `INDEX.md`, a árvore `modules/`, as AIMs em `analise-impacto/` (e `_triagem/`, se houver) para
+  > `INDEX.md`, a árvore `modules/`, as AIMMs em `analise-impacto/` (e `_triagem/`, se houver) para
   > consolidar tudo que está **pendente de especificar**. Escopo: [domínio X / sistema
   > inteiro]. Posso iniciar a varredura?"
 - **No copy-paste/CLI:**
   > "Vou consolidar as pendências a partir do que você colou. Recebi: [lista].
   > Ausentes: [lista ou 'nenhum']. [Se faltar a árvore de N2: ⚠️ sem os READMEs dos
-  > Feature Sets a *existência* fica limitada às AIMs.] Posso iniciar?"
+  > Feature Sets a *existência* fica limitada às AIMMs.] Posso iniciar?"
 
 ---
 
@@ -125,10 +125,10 @@ Monte uma tabela interna (não exiba ainda), um registro por pendência, anotand
 **fonte** de cada uma.
 
 **Existência (falta N3):**
-- **AIMs dos tickets** — para cada `analise-impacto/AIM-<CHAVE>.md` de `tipo: ticket`,
+- **AIMMs dos tickets** — para cada `analise-impacto/AIMM-<CHAVE>.md` de `tipo: ticket`,
   leia a tabela `## Features`. Toda feature listada como "📋 A especificar" ou
   "*(a confirmar no 3A)*", ou cujo link aponta para um N3 que não existe, é uma
-  pendência de existência — origem = a chave do ticket (`STRYxxxxxxx`). A AIM da
+  pendência de existência — origem = a chave do ticket (`STRYxxxxxxx`). A AIMM da
   sprint (`tipo: sprint`) não entra: ela consolida o que já foi entregue.
 - **N2 sem N3** — em cada README de Feature Set, confronte as features listadas com os
   arquivos `.md` que existem na pasta do FS. Feature citada **sem** `.md` correspondente
@@ -151,7 +151,7 @@ Monte uma tabela interna (não exiba ainda), um registro por pendência, anotand
 
 **[Estado: CLASSIFICACAO]**
 
-1. **Deduplique** — a mesma pendência de existência pode aparecer na AIM de um ticket *e* num N2.
+1. **Deduplique** — a mesma pendência de existência pode aparecer na AIMM de um ticket *e* num N2.
    Funda numa única linha, listando **todas** as origens (ex.: `STRY0012345 · N2 Pedidos`).
 2. **Determine o nível e a rota** de cada pendência de existência (use a mesma lógica do
    PROMPT_TRIAGEM):
@@ -180,7 +180,7 @@ Apresente o painel **exatamente no formato que será gravado** (abaixo) e **pare
 
 | Item | Nível | Origem | Rota |
 |---|---|---|---|
-| Cancelar pedido | N3 | [`STRY0012345`](../analise-impacto/AIM-STRY0012345.md) · N2 Pedidos | 3A |
+| Cancelar pedido | N3 | [`STRY0012345`](../analise-impacto/AIMM-STRY0012345.md) · N2 Pedidos | 3A |
 | Relatórios gerenciais | N2 | [Pedidos](./pedidos/README.md) | 2A → 3A |
 
 ### Conteúdo (⚠️ em aberto)
@@ -261,7 +261,7 @@ Ao final, confirme o que mudou:
 
 ```
 [ ] Escopo declarado (domínio / sistema inteiro) e canal detectado
-[ ] AIMs dos tickets, READMEs de N2, N3 (⚠️) e triagem varridos
+[ ] AIMMs dos tickets, READMEs de N2, N3 (⚠️) e triagem varridos
 [ ] Pendências deduplicadas (origens fundidas numa linha)
 [ ] Existência separada de Conteúdo — nunca misturadas
 [ ] Cada item rastreável a uma fonte (nada inventado)

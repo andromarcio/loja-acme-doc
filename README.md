@@ -1,13 +1,19 @@
-<!-- docqui: 6.4.10 | prompt: ATUALIZACAO_VISUAL_PAGES | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.26 | prompt: MIGRA_AIMM_TICKET_LAYOUT | atualizado: 2026-10-20 -->
 # Loja ACME — demonstração do Docqui Caixa
 
-Instância de demonstração de uma **loja virtual fictícia**, no perfil **requisitos** e cadência **sprint**. O exemplo preenchido cobre quatro domínios — Catálogo, Vitrine, Vendas e Administração —, com 31 features em rascunho, cada uma ligada ao ticket fictício, à AIM, ao modelo de entidades e ao protótipo do seu Feature Set; **VND-CHK-01 — Calcular Frete** continua sendo o fio do roteiro. Os dados, tickets e valores são didáticos; não representam sistemas ou atendimentos reais da CAIXA.
+Instância de demonstração de uma **loja virtual fictícia**, no perfil **requisitos** e cadência **sprint**. O exemplo preenchido cobre quatro domínios — Catálogo, Vitrine, Vendas e Administração —, com 31 features em rascunho, cada uma ligada ao ticket fictício, à AIMM, ao modelo de entidades e ao protótipo do seu Feature Set; **VND-CHK-01 — Calcular Frete** continua sendo o fio do roteiro. Os dados, tickets e valores são didáticos; não representam sistemas ou atendimentos reais da CAIXA.
+
+**AIMM — Análise de Impacto de Mudança para Manutenção** é o nome adotado na CAIXA para o artefato, com arquivos `AIMM-*`. A compatibilidade com o formato anterior e com os endereços antigos dos relatórios e do visualizador é preservada. Chaves, estados, gates e branches `historia/*` e `sprint/*` não mudam.
+
+No menu principal do Pages, **Análises de impacto (AIMM)** abre o [índice das análises](analise-impacto/INDEX.md), com acesso aos relatórios dos tickets da instância.
+
+A geração Excel da contagem e a geração DOCX das especificações foram removidas. A contagem permanece nos N3, no DATA-MODEL, no consolidado Markdown e nas AIMMs, com os mesmos validadores. O HTML das AIMMs, o Pages e o simulador standalone continuam disponíveis.
 
 **Comece pelo [roteiro da demonstração](mentoria/README.md)** ou abra o [simulador](mentoria/simulador.html). A estrutura do Pages vem do `simpf-doc`, mas os requisitos, mapas e índices são exclusivos da Loja ACME.
 
 O Pages segue o modelo visual atual do SIMPF: marca Docqui no cabeçalho, busca no menu lateral, breadcrumb no topo, documentos em painel único e menu móvel. Os temas claro/escuro, **Inter** no texto e **JetBrains Mono** no código são definidos em `assets/css/docqui-theme.css`. A navegação da demonstração e o simulador são preservados. Os diagramas Mermaid usam o layout ELK, que vem no próprio `assets/vendor/mermaid.min.js` desde o Mermaid 12 (a loja usa a 12.1.0); o `index.html` fixa o estilo `classic` e a quebra de texto do fluxograma, que a 12 mudou, para manter o desenho de antes. As fontes têm alternativas locais caso o Google Fonts esteja indisponível.
 
-O **Dashboard de gestão** (`#__dashboard__`) mostra artefatos N1–N3, próximos checkpoints, revisão de contagem, branches e apoio, com filtro por domínio. Seus dados são gerados a partir **desta instância** por `python scripts/gera-dashboard.py` (PyYAML), integrado ao pipeline do Pages e aos previews de entrega. Nos previews de `sprint/*` e `historia/*`, o dashboard abre na visão **Esta sprint** (ou **Esta história**): os documentos que a branch mudou desde o ancestral comum com a base do PR, as features tocadas com o estado antes e agora e o próximo checkpoint, e os tickets, pelas chaves que os commits citam e pelas AIMs; a aba **Repositório inteiro** volta ao painel geral. Para gerá-la localmente numa branch de entrega: `python scripts/gera-dashboard.py --base origin/main`. O exemplo tem quatro N1, oito N2 e 31 N3 em rascunho: o painel não concede aprovação, não soma PF pendentes nem copia indicadores do SIMPF. Branches representam as refs do checkout, não uma consulta em tempo real ao GitHub.
+O **Dashboard de gestão** (`#__dashboard__`) mostra artefatos N1–N3, próximos checkpoints, revisão de contagem, branches e apoio, com filtro por domínio. Seus dados são gerados a partir **desta instância** por `python scripts/gera-dashboard.py` (PyYAML), integrado ao pipeline do Pages e aos previews de entrega. Nos previews de `sprint/*` e `historia/*`, o dashboard abre na visão **Esta sprint** (ou **Esta história**): os documentos que a branch mudou desde o ancestral comum com a base do PR, as features tocadas com o estado antes e agora e o próximo checkpoint, e os tickets, pelas chaves que os commits citam e pelas AIMMs; a aba **Repositório inteiro** volta ao painel geral. Para gerá-la localmente numa branch de entrega: `python scripts/gera-dashboard.py --base origin/main`. O exemplo tem quatro N1, oito N2 e 31 N3 em rascunho: o painel não concede aprovação, não soma PF pendentes nem copia indicadores do SIMPF. Branches representam as refs do checkout, não uma consulta em tempo real ao GitHub.
 
 Confira o visual com `python scripts/testa-visual-pages.py` (Playwright e Chromium/Edge, ou `SIM_BROWSER`): valida identidade, layout, temas, busca, menu móvel, diagramas, preservação do simulador e os destaques do preview de branch, com controles negativos.
 
@@ -21,7 +27,7 @@ Confira o visual com `python scripts/testa-visual-pages.py` (Playwright e Chromi
 | [Navegação](modules/vitrine/navegacao/README.md) → [Carrinho](modules/vendas/carrinho/README.md) → [Checkout](modules/vendas/checkout/README.md) | A jornada de compra atravessando domínios |
 | [Destaques](modules/vitrine/destaques/README.md) e [Gestão de Pedidos](modules/vendas/gestao-pedidos/README.md) | Período de vigência (RC-03) e cancelamento com motivo |
 | [Modelo de entidades](global/DATA-MODEL.md) e [diagrama ER](global/DIAGRAMA-ER.md) | Sete entidades em quatro domínios, sem camada física |
-| [AIMs](analise-impacto/INDEX.md) | Oito tickets fictícios, critérios e elos recíprocos |
+| [AIMMs](analise-impacto/INDEX.md) | Oito tickets fictícios, critérios e elos recíprocos |
 | [Protótipos](prototypes/INDEX.md) | Um fluxo navegável por Feature Set |
 | [Índice geral](modules/INDEX.md) | Rastreabilidade e esteira dos checkpoints |
 | [Backlog](mentoria/backlog.md) | Tickets do simulador para praticar a evolução |

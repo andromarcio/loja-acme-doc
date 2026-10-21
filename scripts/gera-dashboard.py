@@ -153,8 +153,8 @@ def changed_files(git_root, base):
 
 
 def aim_key(path):
-    """A chave da AIM (`analise-impacto/AIM-<CHAVE>.md`); None para modelo, HTML e o resto."""
-    match = re.fullmatch(r"analise-impacto/AIM-([^/]+)\.md", path or "")
+    """Chave da AIMM (ou AIM legada); None para modelo, HTML e outros arquivos."""
+    match = re.fullmatch(r"analise-impacto/AIMM?-([^/]+)\.md", path or "")
     return match[1].upper() if match else None
 
 
@@ -166,7 +166,7 @@ def aim_item(text, path):
                         text, re.MULTILINE)
     body = section[1] if section else ""
     return {
-        "key": Path(path).stem.removeprefix("AIM-"), "path": path, "kind": kind,
+        "key": aim_key(path), "path": path, "kind": kind,
         "title": str(meta.get("titulo") or ""), "state": str(meta.get("estado") or ""),
         "sprint": str(meta.get("sprint") or ""),
         "refs": sorted({key.upper() for key in STORY_KEY.findall(body)} if kind == "sprint" else set(FEATURE_ID.findall(body))),
@@ -186,9 +186,14 @@ def delivery_snapshot(root, git_root, branch, base, artifacts):
     previous = lambda path: git(git_root, "show", f"{base}:{path}")
     now = {item["path"]: item for item in artifacts}
     aims = {}
-    for file in sorted((root / "analise-impacto").glob("AIM-*.md")):
-        aim = aim_item(file.read_text(encoding="utf-8"), f"analise-impacto/{file.name}")
-        aims[aim["key"].upper()] = aim
+    for file in sorted((root / "analise-impacto").glob("*.md")):
+        path = f"analise-impacto/{file.name}"
+        key = aim_key(path)
+        if not key:
+            continue
+        if key in aims:
+            raise ValueError(f"AIMM duplicada para {key}: {aims[key]['path']} e {path}.")
+        aims[key] = aim_item(file.read_text(encoding="utf-8"), path)
     aims_before = {}
     for file in files:
         if file["status"] != "A" and aim_key(file["oldPath"]):

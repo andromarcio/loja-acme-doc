@@ -23,7 +23,7 @@ O modo ativo é sempre declarado no início de cada sessão. Nunca misture os do
 Toda resposta deve iniciar informando explicitamente o estado atual.
 Exemplos de estados por etapa:
 - Triagem de necessidade (PROMPT_TRIAGEM): `[INICIALIZACAO]` → `[LEITURA_NECESSIDADE]` → `[MAPEAMENTO_DOC]` → `[CRUZAMENTO]` → `[RECOMENDACAO]`
-- AIM do ticket (PROMPT_AIM): `[INICIALIZACAO]` → `[INTAKE_TICKET]` → `[ROTEAMENTO]` → `[ABERTURA_AIM]` → `[CHANGESET]` → `[AVAL]`
+- AIMM do ticket (PROMPT_AIMM): `[INICIALIZACAO]` → `[INTAKE_TICKET]` → `[ROTEAMENTO]` → `[ABERTURA_AIMM]` → `[CHANGESET]` → `[AVAL]`
 - Extração (PROMPT_0): `[INICIALIZACAO]` → `[ANALISE_BRUTA]` → `[ESTRUTURACAO_DOMINIOS]` → `[ESTRUTURACAO_DADOS]` → `[GERACAO_ARTEFATO_BASE]`
 - N0 Visão de Produto (PROMPT_N0): `[INICIALIZACAO]` → `[COLETA_PROPOSITO]` → `[COLETA_PERSONAS]` → `[COLETA_OBJETIVOS]` → `[COLETA_ESCOPO]` → `[COLETA_DOMINIOS]` → `[COLETA_PRINCIPIOS]` → `[GERACAO_ARTEFATO]`
 - N3 Negocial (PROMPT_3A): `[INICIALIZACAO]` → `[COLETA_VISAO]` → `[COLETA_CAMPOS]` → `[COLETA_REGRAS]` → `[COLETA_CENARIOS]` → `[COLETA_INTERFACE]` → `[GERACAO_ARTEFATO]`
@@ -189,8 +189,8 @@ Regras: Label PO nos negociais, Label Dev nos técnicos. Usar marcadores de impo
 
 ```
 PROMPT_TRIAGEM → porta de entrada: dada uma necessidade (qualquer origem), descobre o que
-                 já existe e roteia (criar 3A/2A/1A · alterar 4A/4B · lote IV→EX · ticket AIM)
-PROMPT_AIM → analise-impacto/AIM-<CHAVE>.md (entrada — a AIM do ticket: o que ele pede, o
+                 já existe e roteia (criar 3A/2A/1A · alterar 4A/4B · lote IV→EX · ticket AIMM)
+PROMPT_AIMM → analise-impacto/AIMM-<CHAVE>.md (entrada — a AIMM do ticket: o que ele pede, o
              que vai mudar com o aval do PO e, no fim, o que mudou; origina ou altera os N3)
 PROMPT_0  → modules/_base-conhecimento/[assunto].md (opcional — insumos desestruturados)
      ↓
@@ -266,7 +266,7 @@ mais de um artefato e você precisa saber o que já existe antes de criar ou alt
   branch depois do dev)
 
 **Fecho (visível)**: Origem — ticket(s) de origem (ServiceNow, issue, experimento), com o
-link da AIM, elo recíproco da `## Features` de `analise-impacto/AIM-<CHAVE>.md`; cada
+link da AIMM, elo recíproco da `## Features` de `analise-impacto/AIMM-<CHAVE>.md`; cada
 critério de aceite vira regra, cenário ou ambos (só com ticket) —, Changelog (ordem
 decrescente por data) e o rodapé.
 

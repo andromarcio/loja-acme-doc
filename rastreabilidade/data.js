@@ -4,9 +4,9 @@ window.TRACE_DATA = {
   "meta": {
     "system": "Loja ACME",
     "subtitle": "índice de rastreabilidade gerado por scripts/build-trace-data.mjs",
-    "generatedAt": "2026-10-18",
-    "engineVersion": "6.4.16",
-    "repo": "https://github.com/andromarcio/loja-acme-doc"
+    "generatedAt": "2026-10-20",
+    "engineVersion": "6.4.26",
+    "repo": "https://github.com/CAIXA-EFRS/loja-acme-doc.git"
   },
   "nodes": [
     {
@@ -475,65 +475,65 @@ window.TRACE_DATA = {
       "id": "STRY0013101",
       "type": "aim",
       "label": "Calcular frete no checkout",
-      "sub": "AIM · STRY0013101",
+      "sub": "AIMM · STRY0013101",
       "desc": "Como cliente, quero informar o CEP no checkout e ver o valor do frete, para saber quanto vou pagar pela entrega antes de fechar o pedido.",
-      "path": "analise-impacto/AIM-STRY0013101.md"
+      "path": "analise-impacto/AIMM-STRY0013101.md"
     },
     {
       "id": "STRY0013170",
       "type": "aim",
       "label": "Categorias de produtos",
-      "sub": "AIM · STRY0013170",
+      "sub": "AIMM · STRY0013170",
       "desc": "A equipe de vendas precisa organizar os produtos da loja em categorias, para que o cliente encontre o que procura: pesquisar, cadastrar, alterar, excluir e c…",
-      "path": "analise-impacto/AIM-STRY0013170.md"
+      "path": "analise-impacto/AIMM-STRY0013170.md"
     },
     {
       "id": "STRY0013175",
       "type": "aim",
       "label": "Navegar pela vitrine",
-      "sub": "AIM · STRY0013175",
+      "sub": "AIMM · STRY0013175",
       "desc": "Como visitante da loja, quero ver os destaques, pesquisar produtos e abrir a página de um produto, para encontrar o que quero comprar e saber quanto custa.",
-      "path": "analise-impacto/AIM-STRY0013175.md"
+      "path": "analise-impacto/AIMM-STRY0013175.md"
     },
     {
       "id": "STRY0013180",
       "type": "aim",
       "label": "Destaques da página inicial",
-      "sub": "AIM · STRY0013180",
+      "sub": "AIMM · STRY0013180",
       "desc": "A equipe de vendas precisa escolher quais produtos aparecem em destaque na página inicial da loja, com uma chamada, a ordem e o período em que cada destaque …",
-      "path": "analise-impacto/AIM-STRY0013180.md"
+      "path": "analise-impacto/AIMM-STRY0013180.md"
     },
     {
       "id": "STRY0013185",
       "type": "aim",
       "label": "Carrinho de compras",
-      "sub": "AIM · STRY0013185",
+      "sub": "AIMM · STRY0013185",
       "desc": "Como cliente, quero colocar produtos no carrinho, ver o que escolhi, mudar quantidades e tirar itens, para fechar a compra só com o que quero.",
-      "path": "analise-impacto/AIM-STRY0013185.md"
+      "path": "analise-impacto/AIMM-STRY0013185.md"
     },
     {
       "id": "STRY0013190",
       "type": "aim",
       "label": "Atendimento de pedidos",
-      "sub": "AIM · STRY0013190",
+      "sub": "AIMM · STRY0013190",
       "desc": "Como atendente, quero encontrar os pedidos dos clientes, ver o detalhe de cada um e cancelar um pedido quando o cliente pedir, registrando o motivo.",
-      "path": "analise-impacto/AIM-STRY0013190.md"
+      "path": "analise-impacto/AIMM-STRY0013190.md"
     },
     {
       "id": "STRY0013195",
       "type": "aim",
       "label": "Usuários da loja",
-      "sub": "AIM · STRY0013195",
+      "sub": "AIMM · STRY0013195",
       "desc": "O administrador precisa manter os usuários da loja — clientes, atendentes, gestores de catálogo e administradores — e tirar o acesso de quem não deve mais us…",
-      "path": "analise-impacto/AIM-STRY0013195.md"
+      "path": "analise-impacto/AIMM-STRY0013195.md"
     },
     {
       "id": "STRY0013200",
       "type": "aim",
       "label": "Faixas de frete",
-      "sub": "AIM · STRY0013200",
+      "sub": "AIMM · STRY0013200",
       "desc": "O administrador precisa manter as faixas de CEP atendidas e o valor do frete de cada uma, sem depender da equipe de sistemas para mudar a tabela.",
-      "path": "analise-impacto/AIM-STRY0013200.md"
+      "path": "analise-impacto/AIMM-STRY0013200.md"
     }
   ],
   "edges": [

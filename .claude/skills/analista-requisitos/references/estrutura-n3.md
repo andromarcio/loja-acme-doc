@@ -362,9 +362,9 @@ A coluna **Repositório** é preenchida **no 3B** (PASSO 5), com nomes que exist
 ## Origem
 <!-- Só se houver ticket de origem (ServiceNow, issue, experimento); senão, omita a seção. -->
 
-| Ticket (AIM) | Tipo | Critérios cobertos |
+| Ticket (AIMM) | Tipo | Critérios cobertos |
 |---|---|---|
-| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta feature realiza desses critérios] |
+| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIMM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta feature realiza desses critérios] |
 
 ---
 
@@ -374,6 +374,7 @@ A coluna **Repositório** é preenchida **no 3B** (PASSO 5), com nomes que exist
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico anterior preservado. |
 | [AAAA-MM-DD] | [autor] | Feature criada | [descrição] |
 
 ---

@@ -650,27 +650,27 @@ logAction({
 
 <!--
   Os tickets (história do ServiceNow, issue, experimento — ver MASTER.md → "Origem do
-  ticket") que originaram ou alteraram esta feature, cada um com o link para a sua AIM
-  (`analise-impacto/AIM-<CHAVE>.md`). Elo recíproco da seção `## Features` da AIM.
+  ticket") que originaram ou alteraram esta feature, cada um com o link para a sua AIMM
+  (`analise-impacto/AIMM-<CHAVE>.md`). Elo recíproco da seção `## Features` da AIMM.
   Relação M:N: uma feature pode atender a vários tickets; um ticket pode gerar várias
   features. A chave da ferramenta de origem é a fonte de verdade — não inventar IDs aqui.
 
   CARIMBO DE VERIFICAÇÃO (elo suspeito): após fechar/rever o elo, rode
   `node scripts/suspect-links.mjs --stamp --file <este arquivo>` — ele grava aqui
   um comentário `<!- - trace-verified: [chave] @ fingerprint - ->` por ticket.
-  Se a descrição ou os critérios do ticket mudarem na AIM depois disso,
+  Se a descrição ou os critérios do ticket mudarem na AIMM depois disso,
   `suspect-links` acusa o elo como suspeito (e `--mark` sinaliza ⚠️ no INDEX.md).
   Não editar os carimbos à mão. A consistência dos três lugares é provada por
   `scripts/audit-trace-links.mjs`.
 -->
 
-| Ticket (AIM) | Tipo | Critérios cobertos |
+| Ticket (AIMM) | Tipo | Critérios cobertos |
 |---|---|---|
-| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta feature realiza desses critérios] |
+| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIMM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta feature realiza desses critérios] |
 
 <!--
   A célula "Critérios cobertos" ABRE com as referências `CA-n` quando o ticket
-  numera os critérios (ver a linha de Numeração na AIM do ticket) — é delas que a
+  numera os critérios (ver a linha de Numeração na AIMM do ticket) — é delas que a
   contagem por sprint monta a rastreabilidade ticket › critério › feature.
   Formato: `CA-1, CA-4` seguido de travessão e da prosa do que a feature realiza.
   Quando a fonte NÃO numera, abra a célula com `—` e mantenha só a prosa: a
@@ -687,6 +687,7 @@ logAction({
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico anterior preservado. |
 | [AAAA-MM-DD] | [autor] | Feature criada | [descrição] |
 
 ---

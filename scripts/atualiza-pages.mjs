@@ -10,7 +10,7 @@
 // A ORDEM NÃO É ARBITRÁRIA — está declarada em PIPELINE e é o que este script
 // entrega de mais valioso:
 //   1. o espelho da esteira reescreve o modules/INDEX.md;
-//   2. o HTML das AIMs (analise-impacto/) nasce do .md;
+//   2. o HTML das AIMMs (analise-impacto/) nasce do .md;
 //   3. o mapa de features e o grafo leem os N3; o diagrama ER, os fragmentos do data-model;
 //   4. a ÁRVORE vem depois de tudo, porque embute o CONTEÚDO dos .md — inclusive o
 //      INDEX.md que o passo 1 acabou de reescrever. Rodar a árvore antes congela a
@@ -20,11 +20,10 @@
 // Uso (a partir da raiz da instância):
 //   node scripts/atualiza-pages.mjs              # roda o que se aplica a esta instância
 //   node scripts/atualiza-pages.mjs --dry        # só diz o que rodaria, sem escrever
-//   node scripts/atualiza-pages.mjs --com-docx   # inclui a geração dos .docx (lenta)
 //   node scripts/atualiza-pages.mjs --com-standalone  # inclui o site em arquivo único
 //   node scripts/atualiza-pages.mjs --com-dicionarios  # inclui o índice de uso (ALTERA specs)
 //
-// As instâncias divergem: nem todas têm standalone, .docx ou grafo de rastreabilidade.
+// As instâncias divergem: nem todas têm standalone ou grafo de rastreabilidade.
 // Cada passo declara como se detecta, e o que não se aplica é PULADO COM MOTIVO — um
 // passo silenciosamente ausente é indistinguível de um passo que falhou.
 
@@ -34,8 +33,12 @@ import { join } from 'node:path';
 
 const RAIZ = process.cwd();
 const args = new Set(process.argv.slice(2));
+const invalidos = [...args].filter(arg => !['--dry', '-n', '--com-dicionarios', '--com-standalone'].includes(arg));
+if (invalidos.length) {
+  console.error(`✗ Opção desconhecida: ${invalidos.join(', ')}.`);
+  process.exit(2);
+}
 const DRY = args.has('--dry') || args.has('-n');
-const COM_DOCX = args.has('--com-docx');
 const COM_DICIONARIOS = args.has('--com-dicionarios');
 const COM_STANDALONE = args.has('--com-standalone');
 
@@ -50,7 +53,7 @@ const PIPELINE = [
     cmd: ['python3', ['scripts/gates.py', 'promote', '--write']],
   },
   {
-    nome: 'HTML das AIMs (analise-impacto/)',
+    nome: 'HTML das AIMMs (analise-impacto/)',
     quando: () => tem('scripts/gera-html-impacto.mjs') && temPasta('analise-impacto'),
     porQueAqui: 'o .md é a fonte; o HTML é derivado e circula fora do editor',
     cmd: ['node', ['scripts/gera-html-impacto.mjs', 'analise-impacto/']],
@@ -97,13 +100,6 @@ const PIPELINE = [
     quando: () => tem('assets/generate-tree.js'),
     porQueAqui: 'DEPOIS de tudo que escreve .md — a árvore embute o conteúdo, não o caminho',
     cmd: ['node', ['assets/generate-tree.js']],
-  },
-  {
-    nome: 'Documentos .docx',
-    quando: () => COM_DOCX && tem('scripts/gera-docx.py'),
-    porQueAqui: 'lento e normalmente feito pelo CI — opt-in com --com-docx',
-    cmd: ['python3', ['scripts/gera-docx.py']],
-    puloPadrao: 'opt-in (--com-docx) — lento; o CI já gera a cada merge',
   },
   {
     nome: 'Site standalone (arquivo único)',

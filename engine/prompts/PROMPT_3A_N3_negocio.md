@@ -76,10 +76,10 @@ Regras da sessão:
 === N2 DO FEATURE SET *(opcional — omita se não existir ainda)* ===
 [cole aqui o README.md do Feature Set]
 
-=== AIM DO TICKET *(opcional — do PROMPT_AIM)* ===
-[cole aqui o conteúdo de analise-impacto/AIM-<CHAVE>.md — a AIM do ticket que
+=== AIMM DO TICKET *(opcional — do PROMPT_AIMM)* ===
+[cole aqui o conteúdo de analise-impacto/AIMM-<CHAVE>.md — a AIMM do ticket que
 originou esta feature. Quando presente, registre a chave do ticket na seção
-`## Origem` do N3, com o link da AIM, e analise cada critério de aceite: ele vira
+`## Origem` do N3, com o link da AIMM, e analise cada critério de aceite: ele vira
 regra de negócio, cenário ou ambos.]
 
 === IDENTIFICAÇÃO MANUAL *(preencher apenas no fluxo bottom-up, quando N1/N2 não existem)* ===
@@ -119,13 +119,13 @@ Verifique os insumos recebidos e bifurque:
 
 ---
 
-### AIM do ticket fornecida (se houver)
+### AIMM do ticket fornecida (se houver)
 
-Se a **AIM de um ticket** (`analise-impacto/AIM-<CHAVE>.md`) foi colada no
+Se a **AIMM de um ticket** (`analise-impacto/AIMM-<CHAVE>.md`) foi colada no
 contexto, o ticket é a **origem** desta feature. Antes de bifurcar entre Modo A/B:
 
 - Registre a **chave do ticket** para preencher a seção `## Origem` do N3, com o
-  link da AIM.
+  link da AIMM.
 - **Analise cada critério de aceite** e classifique-o — ele pode virar:
   - uma **regra de negócio**, se expressa uma **invariante** (*o quê* sempre vale);
   - um **`## Cenário`** (Gherkin), se descreve um **comportamento observável**
@@ -134,7 +134,7 @@ contexto, o ticket é a **origem** desta feature. Antes de bifurcar entre Modo A
 
   Isso garante o elo semântico ticket → spec (regra e/ou cenário), não só por ID.
 - Confirme com o usuário se esta sessão cobre **um critério, vários ou todos**
-  os do ticket (um ticket pode virar mais de uma feature — a `## Features` da AIM
+  os do ticket (um ticket pode virar mais de uma feature — a `## Features` da AIMM
   diz quais).
 
 > "Esta feature tem origem no ticket **[STRYxxxxxxx]**. Vou registrá-lo na
@@ -734,12 +734,12 @@ contagem:                           # status APF — independente dos gates; só
 ## Origem
 <!-- Incluir apenas se houver ticket de origem (ServiceNow, issue, experimento); senão, omitir a seção. -->
 
-| Ticket (AIM) | Tipo | Critérios cobertos |
+| Ticket (AIMM) | Tipo | Critérios cobertos |
 |---|---|---|
-| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta feature realiza desses critérios] |
+| [`STRYxxxxxxx | ISSUE-NNN | EXP-…`](../../../analise-impacto/AIMM-[CHAVE].md) | Criação / Alteração | `CA-1, CA-4` — [o que esta feature realiza desses critérios] |
 
 <!-- A célula abre com as referências `CA-n` quando o ticket numera os critérios
-     (linha de Numeração da AIM do ticket), seguidas de travessão e da prosa.
+     (linha de Numeração da AIMM do ticket), seguidas de travessão e da prosa.
      Quando a fonte não numera, abra com `—` e deixe só a prosa. Nunca invente
      número: é ele que a contagem por sprint entrega ao cliente. -->
 
@@ -751,6 +751,7 @@ contagem:                           # status APF — independente dos gates; só
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico anterior preservado. |
 | [data atual] | [Claude / autor] | Feature criada | N3 negocial gerado |
 
 ---

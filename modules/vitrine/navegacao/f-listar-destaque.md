@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.16 | prompt: PROMPT_3A_N3_negocio | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
 ---
 id: VIT-NAV-01
 feature_set: VIT-NAV
@@ -173,9 +173,9 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 
 ## Origem
 
-| Ticket (AIM) | Tipo | Critérios cobertos |
+| Ticket (AIMM) | Tipo | Critérios cobertos |
 |---|---|---|
-| [`STRY0013175`](../../../analise-impacto/AIM-STRY0013175.md) | Criação | `CA-1` — página inicial com os destaques vigentes, na ordem definida pela equipe de vendas |
+| [`STRY0013175`](../../../analise-impacto/AIMM-STRY0013175.md) | Criação | `CA-1` — página inicial com os destaques vigentes, na ordem definida pela equipe de vendas |
 
 ## Changelog
 
@@ -183,3 +183,4 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Página inicial com os destaques vigentes do ticket fictício STRY0013175, regras, cenários e estados de tela; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
+| 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |

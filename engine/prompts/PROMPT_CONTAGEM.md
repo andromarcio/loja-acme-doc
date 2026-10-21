@@ -67,8 +67,8 @@ permitida é o **portão de confirmação** antes de tocar o consolidado.
    as features impactadas por uma entrega —, cada feature sai com a **chave do ticket**
    e, se a fonte numerar os critérios de aceite, o **número do critério** (`CA-n`) que
    ela realiza. Os dois já estão na seção `## Origem` do N3; a contagem os repete, não
-   os reinventa. Fonte que não numera critérios → `—` na coluna do critério. A AIM da
-   sprint (`analise-impacto/AIM-<sprint>.md`) é escrita pela skill `analise-impacto`.
+   os reinventa. Fonte que não numera critérios → `—` na coluna do critério. A AIMM da
+   sprint (`analise-impacto/AIMM-<sprint>.md`) é escrita pela skill `analise-impacto`.
 
 4. **Unidade de contagem = a feature (N3) inteira (front + BFF), não o endpoint.**
    Ver `SIZING.md → Arquitetura BFF`.

@@ -13,7 +13,7 @@
 #   rastreabilidade→ audit-trace-links.mjs (elos nos 3 lugares) + suspect-links.mjs
 #                    (alvo mudou depois da verificação — carimbos trace-verified,
 #                    fingerprint de conteúdo: independe do histórico do git)
-#                    + validate-impact.mjs em toda analise-impacto/AIM-*.md (a AIM do
+#                    + validate-impact.mjs em toda analise-impacto/AIMM-*.md (a AIMM do
 #                    ticket e a da sprint, conferida com as dos tickets) + índice de
 #                    uso dos dicionários fresco
 #   aprovacao      → check-approval-trailers.mjs: commit que entra na main tocando
@@ -85,11 +85,11 @@ jobs:
         run: node scripts/audit-trace-links.mjs
       - name: elos suspeitos (alvo mudou após a verificação)
         run: node scripts/suspect-links.mjs
-      - name: AIMs (analise-impacto/AIM-*.md) bem-formadas
-        # a AIM de cada ticket e a de cada sprint; os templates começam com `_`
+      - name: AIMMs (analise-impacto/AIMM-*.md) bem-formadas
+        # a AIMM de cada ticket e a de cada sprint; os templates começam com `_`
         run: |
-          ris=$(git ls-files 'analise-impacto/AIM-*.md' || true)
-          if [ -z "$ris" ]; then echo "Nenhuma AIM ainda — ok."; else
+          ris=$(git ls-files 'analise-impacto/AIMM-*.md' 'analise-impacto/AIM-*.md')
+          if [ -z "$ris" ]; then echo "Nenhuma AIMM ainda — ok."; else
             for ri in $ris; do node scripts/validate-impact.mjs "$ri" --root .; done
           fi
       - name: índice de uso dos dicionários está fresco

@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
 ---
 id: ADM-USR-02
 feature_set: ADM-USR
@@ -191,9 +191,9 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 
 ## Origem
 
-| Ticket (AIM) | Tipo | Critérios cobertos |
+| Ticket (AIMM) | Tipo | Critérios cobertos |
 |---|---|---|
-| [`STRY0013195`](../../../analise-impacto/AIM-STRY0013195.md) | Criação | `CA-2` — cadastro com nome completo, e-mail e perfil, CPF e telefone opcionais, e-mail e CPF sem repetição |
+| [`STRY0013195`](../../../analise-impacto/AIMM-STRY0013195.md) | Criação | `CA-2` — cadastro com nome completo, e-mail e perfil, CPF e telefone opcionais, e-mail e CPF sem repetição |
 
 ## Changelog
 
@@ -201,3 +201,4 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Cadastro de usuário do ticket fictício STRY0013195, com e-mail e CPF únicos e o usuário nascendo ativo; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
+| 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |

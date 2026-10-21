@@ -3,8 +3,8 @@
 // registrado nas três fontes do elo:
 //
 //   1. `## Origem` de cada N3            (feature → tickets)
-//   2. `## Features` da AIM de cada      (ticket → features)
-//      ticket, `analise-impacto/AIM-<CHAVE>.md` (`tipo: ticket`)
+//   2. `## Features` da AIMM de cada      (ticket → features)
+//      ticket, `analise-impacto/AIMM-<CHAVE>.md` (`tipo: ticket`)
 //   3. `## Rastreabilidade: ticket → spec → código` do `modules/INDEX.md`
 //
 // Consumido por: audit-trace-links.mjs (consistência), suspect-links.mjs (carimbos
@@ -16,26 +16,27 @@ import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, dirname, resolve, relative } from 'node:path';
 import { createHash } from 'node:crypto';
 import { frontMatterEstado } from './front-matter.mjs';
+import { impactFiles, impactKey, resolveImpactFile } from './impact-files.mjs';
 
 // Chave do ticket de origem — plugável (1.6.0): ServiceNow (STRY…), issue (ISSUE-123)
 // ou experimento (EXP-…, letras/dígitos/hífen/underscore — sem ponto, para a chave não
 // engolir a extensão do arquivo). Prefixos fixos mantêm a detecção determinística; não
 // use `EXP` como SIGLA de domínio. Prefixos estreitos de propósito — um padrão Jira
 // genérico ([A-Z]+-\d+) colidiria com os IDs de feature (ex.: CAR-01). Chave em outro
-// formato (Jira `PRJ25001-49`) é reconhecida pelo link para a AIM do ticket
-// (`AIM-<CHAVE>.md` — ver `keyOf`). Projeto novo com prefixo próprio se acrescenta aqui.
+// formato (Jira `PRJ25001-49`) é reconhecida pelo link para a AIMM do ticket
+// (`AIMM-<CHAVE>.md` — ver `keyOf`). Projeto novo com prefixo próprio se acrescenta aqui.
 export const STORY_KEY_RE = /\b(?:STRY\d{4,}|ISSUE-\d{1,7}|PDTIC\d+-\d{1,7}|EXP-[A-Za-z0-9][A-Za-z0-9_-]*)\b/i;
 export const FEATURE_ID_RE = /\b[A-Z]{3}-[A-Z]{3}-\d{2}\b/;
 // Os ícones da legenda da esteira (modules/INDEX.md) — também os estados anteriores a
-// 📋 especificado: sem eles, "✏️ Rascunho" na AIM e "📝 …" no INDEX não se comparam.
+// 📋 especificado: sem eles, "✏️ Rascunho" na AIMM e "📝 …" no INDEX não se comparam.
 export const STATUS_ICONS = ['✏️', '📝', '🧱', '📋', '🔄', '✅', '⚠️', '❌'];
-// Estado do N3 → ícone (o mesmo ICONES do gates.py): é por ele que o Status da AIM se
+// Estado do N3 → ícone (o mesmo ICONES do gates.py): é por ele que o Status da AIMM se
 // compara com a fonte do ciclo de vida, o `estado` no front-matter do N3.
 export const ICONE_DO_ESTADO = {
   rascunho: '✏️', 'requisitos-aprovados': '📝', 'modelo-validado': '🧱', especificado: '📋',
   'em-desenvolvimento': '🔄', implementado: '✅', 'revisao-necessaria': '⚠️', deprecado: '❌',
 };
-// Feature que o ticket cria e que ainda não tem N3: o roteamento do PROMPT_AIM (passo 3)
+// Feature que o ticket cria e que ainda não tem N3: o roteamento do PROMPT_AIMM (passo 3)
 // a registra na `## Features` com o Status "📋 A especificar", e o 3A troca o Status ao
 // criá-la. Enquanto não existe N3 com o ID, é pendência, não inconsistência.
 export const A_ESPECIFICAR_RE = /\ba\s+especificar\b/i;
@@ -50,12 +51,13 @@ export function normalizeStoryKey(s) {
 }
 
 // Chave de uma célula da `## Origem` ou do INDEX: a do regex canônico ou, em qualquer
-// formato, a do link para a AIM do ticket (`…/analise-impacto/AIM-<CHAVE>.md`).
-export const AIM_LINK_RE = /(?:^|[\\/(])AIM-([A-Za-z0-9][A-Za-z0-9_.-]*?)\.md\b/;
+// formato, a do link para a AIMM do ticket (`…/analise-impacto/AIMM-<CHAVE>.md`).
+export const AIMM_LINK_RE = /(?:^|[\\/(])AIMM?-([A-Za-z0-9][A-Za-z0-9_.-]*?)\.md\b/;
+export const AIM_LINK_RE = AIMM_LINK_RE;
 export function keyOf(cell) {
   const k = normalizeStoryKey(cell);
   if (k) return k;
-  const m = String(cell || '').match(AIM_LINK_RE);
+  const m = String(cell || '').match(AIMM_LINK_RE);
   return m && !/^\[/.test(m[1]) ? m[1].toUpperCase() : null;
 }
 
@@ -111,14 +113,14 @@ export function stampsOf(sliceLines) {
 }
 
 // Fingerprint do carimbo trace-verified (suspect-links): sha256 do conteúdo sem as linhas
-// de carimbo — carimbar um artefato não muda o fingerprint dele. Da AIM do ticket entram
+// de carimbo — carimbar um artefato não muda o fingerprint dele. Da AIMM do ticket entram
 // só a `## Descrição do ticket` e os `## Critérios de aceite`: o resto dela muda a cada
 // versão sem mudar o que o ticket pede. Compartilhado com o migra-aim, que recarimba os
 // elos válidos depois de mudar o conteúdo dos arquivos.
 export const FINGERPRINT_SHORT = 12;
 export function fingerprintText(file, text) {
   let lines = String(text).split(/\r?\n/);
-  if (/(^|[\\/])analise-impacto[\\/]AIM-[^\\/]+\.md$/.test(file)) {
+  if (/(^|[\\/])analise-impacto[\\/]AIMM?-[^\\/]+\.md$/.test(file)) {
     lines = ['Descrição do ticket', 'Critérios de aceite'].flatMap((s) => (sectionSlice(lines, s) || { lines: [] }).lines);
   }
   const clean = lines.filter((l) => !new RegExp(STAMP_RE.source).test(l.trim()));
@@ -232,20 +234,19 @@ export function scanInstance(root) {
     model.features.push(feat);
   }
 
-  // --- AIMs dos tickets (analise-impacto/AIM-<CHAVE>.md, tipo: ticket) --------------
-  // A AIM da sprint (tipo: sprint) consolida tickets e não é um lado do elo; o '_'
+  // --- AIMMs dos tickets (analise-impacto/AIMM-<CHAVE>.md, tipo: ticket) --------------
+  // A AIMM da sprint (tipo: sprint) consolida tickets e não é um lado do elo; o '_'
   // exclui os templates.
   const aimDir = join(root, 'analise-impacto');
   if (isDir(aimDir)) {
-    for (const name of readdirSync(aimDir).sort()) {
-      if (!/^AIM-.+\.md$/.test(name)) continue;
+    for (const name of impactFiles(aimDir)) {
       const file = join(aimDir, name);
       let raw;
       try { raw = read(file); } catch { continue; }
       const lines = raw.split(/\r?\n/);
       const fm = frontMatterCampos(lines);
       if ((fm.tipo || '').toLowerCase() !== 'ticket') continue;
-      const key = (fm.ticket || name.replace(/^AIM-|\.md$/g, '')).toUpperCase();
+      const key = (fm.ticket || impactKey(name)).toUpperCase();
       const story = {
         kind: 'story', key, file, path: rel(file), title: fm.titulo || titleOf(lines),
         feats: [], links: [], stamps: [],
@@ -316,7 +317,7 @@ export function resolveLink(fromFile, target) {
   if (/[[\]]/.test(t)) return null; // placeholder de template
   const clean = t.split('#')[0];
   if (!clean) return null;
-  const abs = resolve(dirname(fromFile), clean);
+  const abs = resolveImpactFile(resolve(dirname(fromFile), clean));
   return { target: t, abs, exists: existsSync(abs) };
 }
 

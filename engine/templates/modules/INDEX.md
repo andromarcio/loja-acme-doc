@@ -14,18 +14,18 @@
 
 ## Rastreabilidade: ticket → spec → código
 
-| Ticket (AIM) | Feature | Domínio | Status | Contagem | PF | CFP | Repositórios |
+| Ticket (AIMM) | Feature | Domínio | Status | Contagem | PF | CFP | Repositórios |
 |---|---|---|---|---|---|---|---|
-| [`STRYxxxxxxx`](../analise-impacto/AIM-[CHAVE].md) | [[SIGLA]-[SFS]-[NN]: Nome da Feature](./[dominio]/[feature-set]/[feature].md) | [Domínio] | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRYxxxxxxx`](../analise-impacto/AIMM-[CHAVE].md) | [[SIGLA]-[SFS]-[NN]: Nome da Feature](./[dominio]/[feature-set]/[feature].md) | [Domínio] | ✏️ Rascunho | 📋 | — | — | — |
 
 <!--
   Ticket: chave do ticket que originou ou alterou a feature (seção "Origem" do N3),
-  com o link da AIM do ticket (`analise-impacto/AIM-<CHAVE>.md`).
+  com o link da AIMM do ticket (`analise-impacto/AIMM-<CHAVE>.md`).
   Uma feature pode ter mais de um ticket; um ticket, mais de uma feature.
   Status: o `estado` do front-matter do N3, com o ícone da legenda abaixo — um N3
     recém-gerado é ✏️ Rascunho. Avança com os gates (um PR por checkpoint, que
     regenera a seção Esteira de checkpoints); nunca se escreve adiantado. Vale o mesmo
-    na ## Features da AIM do ticket: o audit compara as duas.
+    na ## Features da AIMM do ticket: o audit compara as duas.
   PF: a opção CT (PROMPT_CONTAGEM, passo 5) o propaga depois da revisão — o 3B e o 4B
     contam só no N3. Ver critérios em global/SIZING.md.
   Contagem: status de contagem APF da feature — espelha `contagem.pendente` do
@@ -38,7 +38,7 @@
 
   GATES DETERMINÍSTICOS desta tabela:
   - `node scripts/audit-trace-links.mjs` prova que cada par ticket↔feature está
-    nos TRÊS lugares (## Origem do N3 + ## Features da AIM + esta linha)
+    nos TRÊS lugares (## Origem do N3 + ## Features da AIMM + esta linha)
     — roda no hook de gravação e no CI (engine/templates/ci/spec-guard.yml).
   - `node scripts/suspect-links.mjs --mark` troca o Status para ⚠️ Revisão necessária
     quando o outro lado do elo mudou depois da última verificação (carimbos
@@ -63,7 +63,7 @@ _Nenhuma feature com esteira de gates ainda._
 ## Pendências de especificação
 
 > ⚙️ **Seção gerada pelo PROMPT_PENDENCIAS (PD) — não editar à mão.**
-> Varre as fontes (AIMs em `analise-impacto/`, READMEs de N2, N3 com ⚠️) e espelha aqui o que está
+> Varre as fontes (AIMMs em `analise-impacto/`, READMEs de N2, N3 com ⚠️) e espelha aqui o que está
 > **pendente de especificar**. Edições manuais entre os marcadores são sobrescritas na
 > próxima execução. Reflete o estado em **[AAAA-MM-DD]** — rode o **PD** para atualizar.
 
@@ -73,7 +73,7 @@ _Nenhuma feature com esteira de gates ainda._
 
 | Item | Nível | Origem | Rota |
 |---|---|---|---|
-| [Cancelar pedido] | N3 | [`STRYxxxxxxx`](../analise-impacto/AIM-[CHAVE].md) · N2 [Feature Set] | 3A |
+| [Cancelar pedido] | N3 | [`STRYxxxxxxx`](../analise-impacto/AIMM-[CHAVE].md) · N2 [Feature Set] | 3A |
 
 ### Conteúdo (⚠️ em aberto)
 

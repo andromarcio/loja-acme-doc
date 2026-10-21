@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.16 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
 ---
 id: VIT-DST-04
 feature_set: VIT-DST
@@ -147,9 +147,9 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 
 ## Origem
 
-| Ticket (AIM) | Tipo | Critérios cobertos |
+| Ticket (AIMM) | Tipo | Critérios cobertos |
 |---|---|---|
-| [`STRY0013180`](../../../analise-impacto/AIM-STRY0013180.md) | Criação | `CA-4` — exclusão do destaque, que sai da página inicial |
+| [`STRY0013180`](../../../analise-impacto/AIMM-STRY0013180.md) | Criação | `CA-4` — exclusão do destaque, que sai da página inicial |
 
 ## Changelog
 
@@ -157,3 +157,4 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 |---|---|---|---|
 | 2026-10-18 | Claude | N3 criado | Exclusão definitiva de destaque do ticket fictício STRY0013180, sem vínculo a bloquear; o destaque sai da página inicial; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
+| 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |

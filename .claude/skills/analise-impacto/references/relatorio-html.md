@@ -1,4 +1,4 @@
-# A AIM em HTML
+# A AIMM em HTML
 
 O Markdown vive no repositório, em `analise-impacto/`, e é a versão versionada. O HTML é o que circula — é o que o PO abre, o que a métrica lê e o que vai para a chefia. Trate-o como entrega, não como subproduto.
 
@@ -7,7 +7,7 @@ O Markdown vive no repositório, em `analise-impacto/`, e é a versão versionad
 `scripts/gera-html-impacto.mjs` converte o `.md` em HTML no layout dos N3 — uma seção recolhível por `##`, paleta herdada do `index.html` da instância, KPI em cartão, título de item com chip de chave e badge de natureza, colunas de chave e de PF que não partem o valor. Rode-o, não reescreva à mão:
 
 ```bash
-node scripts/gera-html-impacto.mjs analise-impacto/AIM-SP05.md   # um arquivo
+node scripts/gera-html-impacto.mjs analise-impacto/AIMM-SP05.md   # um arquivo
 node scripts/gera-html-impacto.mjs analise-impacto/               # a pasta
 ```
 

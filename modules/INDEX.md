@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
 # Índice geral de módulos — Loja ACME
 > Exemplo preenchido de requisitos, ainda sem aprovação humana ou contagem revisada.
 
@@ -13,39 +13,39 @@
 
 ## Rastreabilidade: ticket → spec → código
 
-| Ticket (AIM) | Feature | Domínio | Status | Contagem | PF | CFP | Repositórios |
+| Ticket (AIMM) | Feature | Domínio | Status | Contagem | PF | CFP | Repositórios |
 |---|---|---|---|---|---|---|---|
-| [`STRY0013101`](../analise-impacto/AIM-STRY0013101.md) | [VND-CHK-01: Calcular Frete](vendas/checkout/f-calcular-frete.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013170`](../analise-impacto/AIM-STRY0013170.md) | [CAT-CTG-01: Pesquisar Categorias](catalogo/categorias/f-pesquisar-categoria.md) | Catálogo | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013170`](../analise-impacto/AIM-STRY0013170.md) | [CAT-CTG-02: Cadastrar Categoria](catalogo/categorias/f-cadastrar-categoria.md) | Catálogo | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013170`](../analise-impacto/AIM-STRY0013170.md) | [CAT-CTG-03: Editar Categoria](catalogo/categorias/f-editar-categoria.md) | Catálogo | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013170`](../analise-impacto/AIM-STRY0013170.md) | [CAT-CTG-04: Excluir Categoria](catalogo/categorias/f-excluir-categoria.md) | Catálogo | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013170`](../analise-impacto/AIM-STRY0013170.md) | [CAT-CTG-05: Visualizar Categoria](catalogo/categorias/f-visualizar-categoria.md) | Catálogo | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013175`](../analise-impacto/AIM-STRY0013175.md) | [VIT-NAV-01: Listar Destaques](vitrine/navegacao/f-listar-destaque.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013175`](../analise-impacto/AIM-STRY0013175.md) | [VIT-NAV-02: Pesquisar Produtos na Vitrine](vitrine/navegacao/f-pesquisar-produto-vitrine.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013175`](../analise-impacto/AIM-STRY0013175.md) | [VIT-NAV-03: Visualizar Produto na Vitrine](vitrine/navegacao/f-visualizar-produto-vitrine.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013180`](../analise-impacto/AIM-STRY0013180.md) | [VIT-DST-01: Pesquisar Destaques](vitrine/destaques/f-pesquisar-destaque.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013180`](../analise-impacto/AIM-STRY0013180.md) | [VIT-DST-02: Cadastrar Destaque](vitrine/destaques/f-cadastrar-destaque.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013180`](../analise-impacto/AIM-STRY0013180.md) | [VIT-DST-03: Editar Destaque](vitrine/destaques/f-editar-destaque.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013180`](../analise-impacto/AIM-STRY0013180.md) | [VIT-DST-04: Excluir Destaque](vitrine/destaques/f-excluir-destaque.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013180`](../analise-impacto/AIM-STRY0013180.md) | [VIT-DST-05: Visualizar Destaque](vitrine/destaques/f-visualizar-destaque.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013185`](../analise-impacto/AIM-STRY0013185.md) | [VND-CAR-01: Adicionar Item ao Carrinho](vendas/carrinho/f-adicionar-item-carrinho.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013185`](../analise-impacto/AIM-STRY0013185.md) | [VND-CAR-02: Listar Itens do Carrinho](vendas/carrinho/f-listar-item-carrinho.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013185`](../analise-impacto/AIM-STRY0013185.md) | [VND-CAR-03: Alterar Quantidade do Item](vendas/carrinho/f-alterar-quantidade-item.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013185`](../analise-impacto/AIM-STRY0013185.md) | [VND-CAR-04: Remover Item do Carrinho](vendas/carrinho/f-remover-item-carrinho.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013190`](../analise-impacto/AIM-STRY0013190.md) | [VND-PED-01: Pesquisar Pedidos](vendas/gestao-pedidos/f-pesquisar-pedido.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013190`](../analise-impacto/AIM-STRY0013190.md) | [VND-PED-02: Visualizar Pedido](vendas/gestao-pedidos/f-visualizar-pedido.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013190`](../analise-impacto/AIM-STRY0013190.md) | [VND-PED-03: Cancelar Pedido](vendas/gestao-pedidos/f-cancelar-pedido.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013195`](../analise-impacto/AIM-STRY0013195.md) | [ADM-USR-01: Pesquisar Usuários](administracao/usuarios/f-pesquisar-usuario.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013195`](../analise-impacto/AIM-STRY0013195.md) | [ADM-USR-02: Cadastrar Usuário](administracao/usuarios/f-cadastrar-usuario.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013195`](../analise-impacto/AIM-STRY0013195.md) | [ADM-USR-03: Editar Usuário](administracao/usuarios/f-editar-usuario.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013195`](../analise-impacto/AIM-STRY0013195.md) | [ADM-USR-04: Inativar Usuário](administracao/usuarios/f-inativar-usuario.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013195`](../analise-impacto/AIM-STRY0013195.md) | [ADM-USR-05: Visualizar Usuário](administracao/usuarios/f-visualizar-usuario.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013200`](../analise-impacto/AIM-STRY0013200.md) | [ADM-FRT-01: Pesquisar Faixas de Frete](administracao/faixas-frete/f-pesquisar-faixa-frete.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013200`](../analise-impacto/AIM-STRY0013200.md) | [ADM-FRT-02: Cadastrar Faixa de Frete](administracao/faixas-frete/f-cadastrar-faixa-frete.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013200`](../analise-impacto/AIM-STRY0013200.md) | [ADM-FRT-03: Editar Faixa de Frete](administracao/faixas-frete/f-editar-faixa-frete.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013200`](../analise-impacto/AIM-STRY0013200.md) | [ADM-FRT-04: Excluir Faixa de Frete](administracao/faixas-frete/f-excluir-faixa-frete.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
-| [`STRY0013200`](../analise-impacto/AIM-STRY0013200.md) | [ADM-FRT-05: Visualizar Faixa de Frete](administracao/faixas-frete/f-visualizar-faixa-frete.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013101`](../analise-impacto/AIMM-STRY0013101.md) | [VND-CHK-01: Calcular Frete](vendas/checkout/f-calcular-frete.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013170`](../analise-impacto/AIMM-STRY0013170.md) | [CAT-CTG-01: Pesquisar Categorias](catalogo/categorias/f-pesquisar-categoria.md) | Catálogo | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013170`](../analise-impacto/AIMM-STRY0013170.md) | [CAT-CTG-02: Cadastrar Categoria](catalogo/categorias/f-cadastrar-categoria.md) | Catálogo | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013170`](../analise-impacto/AIMM-STRY0013170.md) | [CAT-CTG-03: Editar Categoria](catalogo/categorias/f-editar-categoria.md) | Catálogo | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013170`](../analise-impacto/AIMM-STRY0013170.md) | [CAT-CTG-04: Excluir Categoria](catalogo/categorias/f-excluir-categoria.md) | Catálogo | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013170`](../analise-impacto/AIMM-STRY0013170.md) | [CAT-CTG-05: Visualizar Categoria](catalogo/categorias/f-visualizar-categoria.md) | Catálogo | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013175`](../analise-impacto/AIMM-STRY0013175.md) | [VIT-NAV-01: Listar Destaques](vitrine/navegacao/f-listar-destaque.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013175`](../analise-impacto/AIMM-STRY0013175.md) | [VIT-NAV-02: Pesquisar Produtos na Vitrine](vitrine/navegacao/f-pesquisar-produto-vitrine.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013175`](../analise-impacto/AIMM-STRY0013175.md) | [VIT-NAV-03: Visualizar Produto na Vitrine](vitrine/navegacao/f-visualizar-produto-vitrine.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013180`](../analise-impacto/AIMM-STRY0013180.md) | [VIT-DST-01: Pesquisar Destaques](vitrine/destaques/f-pesquisar-destaque.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013180`](../analise-impacto/AIMM-STRY0013180.md) | [VIT-DST-02: Cadastrar Destaque](vitrine/destaques/f-cadastrar-destaque.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013180`](../analise-impacto/AIMM-STRY0013180.md) | [VIT-DST-03: Editar Destaque](vitrine/destaques/f-editar-destaque.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013180`](../analise-impacto/AIMM-STRY0013180.md) | [VIT-DST-04: Excluir Destaque](vitrine/destaques/f-excluir-destaque.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013180`](../analise-impacto/AIMM-STRY0013180.md) | [VIT-DST-05: Visualizar Destaque](vitrine/destaques/f-visualizar-destaque.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013185`](../analise-impacto/AIMM-STRY0013185.md) | [VND-CAR-01: Adicionar Item ao Carrinho](vendas/carrinho/f-adicionar-item-carrinho.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013185`](../analise-impacto/AIMM-STRY0013185.md) | [VND-CAR-02: Listar Itens do Carrinho](vendas/carrinho/f-listar-item-carrinho.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013185`](../analise-impacto/AIMM-STRY0013185.md) | [VND-CAR-03: Alterar Quantidade do Item](vendas/carrinho/f-alterar-quantidade-item.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013185`](../analise-impacto/AIMM-STRY0013185.md) | [VND-CAR-04: Remover Item do Carrinho](vendas/carrinho/f-remover-item-carrinho.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013190`](../analise-impacto/AIMM-STRY0013190.md) | [VND-PED-01: Pesquisar Pedidos](vendas/gestao-pedidos/f-pesquisar-pedido.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013190`](../analise-impacto/AIMM-STRY0013190.md) | [VND-PED-02: Visualizar Pedido](vendas/gestao-pedidos/f-visualizar-pedido.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013190`](../analise-impacto/AIMM-STRY0013190.md) | [VND-PED-03: Cancelar Pedido](vendas/gestao-pedidos/f-cancelar-pedido.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013195`](../analise-impacto/AIMM-STRY0013195.md) | [ADM-USR-01: Pesquisar Usuários](administracao/usuarios/f-pesquisar-usuario.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013195`](../analise-impacto/AIMM-STRY0013195.md) | [ADM-USR-02: Cadastrar Usuário](administracao/usuarios/f-cadastrar-usuario.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013195`](../analise-impacto/AIMM-STRY0013195.md) | [ADM-USR-03: Editar Usuário](administracao/usuarios/f-editar-usuario.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013195`](../analise-impacto/AIMM-STRY0013195.md) | [ADM-USR-04: Inativar Usuário](administracao/usuarios/f-inativar-usuario.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013195`](../analise-impacto/AIMM-STRY0013195.md) | [ADM-USR-05: Visualizar Usuário](administracao/usuarios/f-visualizar-usuario.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013200`](../analise-impacto/AIMM-STRY0013200.md) | [ADM-FRT-01: Pesquisar Faixas de Frete](administracao/faixas-frete/f-pesquisar-faixa-frete.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013200`](../analise-impacto/AIMM-STRY0013200.md) | [ADM-FRT-02: Cadastrar Faixa de Frete](administracao/faixas-frete/f-cadastrar-faixa-frete.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013200`](../analise-impacto/AIMM-STRY0013200.md) | [ADM-FRT-03: Editar Faixa de Frete](administracao/faixas-frete/f-editar-faixa-frete.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013200`](../analise-impacto/AIMM-STRY0013200.md) | [ADM-FRT-04: Excluir Faixa de Frete](administracao/faixas-frete/f-excluir-faixa-frete.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013200`](../analise-impacto/AIMM-STRY0013200.md) | [ADM-FRT-05: Visualizar Faixa de Frete](administracao/faixas-frete/f-visualizar-faixa-frete.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
 
 **Total vigente: ainda não dimensionado.** A revisão CT preencherá os valores a partir da fonte.
 
@@ -97,9 +97,9 @@ Veja o [mapa de rastreabilidade](../rastreabilidade/index.html).
 
 | Item | Nível | Origem | Rota |
 |---|---|---|---|
-| Produtos — CAT-PRD | N2 | N1 Catálogo e ticket fictício STRY0013150 (exercício) | AIM → CR |
-| Prazo e resumo do pedido | N3 | Backlog STRY0013120 | AIM → 4A / 3A |
-| Cupom de desconto | N3 | Backlog STRY0013135 | AIM → 3A |
+| Produtos — CAT-PRD | N2 | N1 Catálogo e ticket fictício STRY0013150 (exercício) | AIMM → CR |
+| Prazo e resumo do pedido | N3 | Backlog STRY0013120 | AIMM → 4A / 3A |
+| Cupom de desconto | N3 | Backlog STRY0013135 | AIMM → 3A |
 | Confirmação do pedido e baixa de estoque | N3 | N1 Vendas e Carrinho (VND-CAR) | 3A |
 | Identificação na loja (entrar na conta e senha) | N2 | N1 Vitrine e N1 Administração | 2A |
 
@@ -145,4 +145,4 @@ flowchart LR
 | 📝 | requisitos-aprovados | CP1 aprovado pelo responsável real |
 | 📋 | especificado | CP1 e CP2 aprovados; estado final do perfil requisitos |
 
-A AIM e esta tabela espelham o estado do N3. O bloco da esteira é regenerado por `scripts/gates.py`, nunca preenchido manualmente.
+A AIMM e esta tabela espelham o estado do N3. O bloco da esteira é regenerado por `scripts/gates.py`, nunca preenchido manualmente.

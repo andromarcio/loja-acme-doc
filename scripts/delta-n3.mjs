@@ -7,7 +7,7 @@
 // pesquisa toda. O delta não se escreve à mão (divergiria do N3 na primeira correção):
 // deriva-se do git. O "antes" é o N3 na base; o "depois", o N3 na árvore de trabalho.
 //
-// Quais N3: os da AIM do ticket (`--aim`, linhas `N3` do `## Artefatos impactados`) ou os
+// Quais N3: os da AIMM do ticket (`--aim`, linhas `N3` do `## Artefatos impactados`) ou os
 // caminhos passados. Linha `criar` (ou N3 que não existe na base) é feature nova → SDD
 // completo, sem delta. Linha `deprecar` só é listada.
 //
@@ -19,37 +19,38 @@
 // o que entrou na main depois que a branch saiu não aparece como mudança do ticket.
 //
 // Uso (a partir da raiz da instância):
-//   node scripts/delta-n3.mjs --aim analise-impacto/AIM-<CHAVE>.md [--base main]
+//   node scripts/delta-n3.mjs --aim analise-impacto/AIMM-<CHAVE>.md [--base main]
 //   node scripts/delta-n3.mjs modules/<dom>/<fs>/f-<slug>.md … [--base main]
 //   (--root <inst> para rodar de fora da instância)
 
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { resolveImpactFile } from './lib/impact-files.mjs';
 
 const args = process.argv.slice(2);
 const opt = (n, d = null) => { const i = args.indexOf(n); return i !== -1 && args[i + 1] ? args[i + 1] : d; };
 const ROOT = opt('--root', process.cwd());
 const BASE = opt('--base', 'main');
-const AIM = opt('--aim');
-const COM_VALOR = ['--root', '--base', '--aim'];
+const AIMM = opt('--aimm') || opt('--aim');
+const COM_VALOR = ['--root', '--base', '--aimm', '--aim'];
 const caminhos = args.filter((a, k) => !a.startsWith('--') && !COM_VALOR.includes(args[k - 1]));
 
 const uso = () => {
-  console.error('Uso: node scripts/delta-n3.mjs --aim analise-impacto/AIM-<CHAVE>.md [--base main] [--root <inst>]\n' +
+  console.error('Uso: node scripts/delta-n3.mjs --aim analise-impacto/AIMM-<CHAVE>.md [--base main] [--root <inst>]\n' +
     '     node scripts/delta-n3.mjs <N3.md> … [--base main] [--root <inst>]');
   process.exit(2);
 };
-if (!AIM && !caminhos.length) uso();
+if (!AIMM && !caminhos.length) uso();
 
 const git = (...a) => spawnSync('git', ['-C', ROOT, ...a], { encoding: 'utf8' });
 const splitRow = (r) => r.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
 
 // ---- quais N3 ----------------------------------------------------------------
 const alvos = []; // { path, operacao }
-if (AIM) {
-  const f = join(ROOT, AIM);
-  if (!existsSync(f)) { console.error(`✗ AIM não encontrada: ${AIM}`); process.exit(2); }
+if (AIMM) {
+  const f = resolveImpactFile(join(ROOT, AIMM));
+  if (!existsSync(f)) { console.error(`✗ AIMM não encontrada: ${AIMM}`); process.exit(2); }
   const ls = readFileSync(f, 'utf8').split(/\r?\n/);
   const i = ls.findIndex((l) => l.trim() === '## Artefatos impactados');
   let cab = null;
@@ -65,7 +66,7 @@ if (AIM) {
     if (/[<>[\]]/.test(path)) continue; // linha de exemplo do template
     alvos.push({ path, operacao: col('operação').toLowerCase() || col('operacao').toLowerCase() });
   }
-  if (!alvos.length) { console.error(`✗ a AIM não tem linha \`N3\` no \`## Artefatos impactados\`: ${AIM}`); process.exit(2); }
+  if (!alvos.length) { console.error(`✗ a AIMM não tem linha \`N3\` no \`## Artefatos impactados\`: ${AIMM}`); process.exit(2); }
 }
 for (const p of caminhos) alvos.push({ path: p, operacao: '' });
 
@@ -150,7 +151,7 @@ function blocoDiff(antes, depois) {
 const head = git('rev-parse', '--short', 'HEAD').stdout.trim();
 const sujo = git('status', '--porcelain', '--', ...alvos.map((a) => a.path)).stdout.trim();
 console.log(`# Delta dos N3 — \`${BASE}\` (${BASE_SHA.slice(0, 7)}) → ${head}${sujo ? ' + árvore de trabalho' : ''}`);
-if (AIM) console.log(`\nAIM: \`${AIM}\``);
+if (AIMM) console.log(`\nAIMM: \`${AIMM}\``);
 
 let alterados = 0, novos = 0;
 for (const { path, operacao } of alvos) {
@@ -161,11 +162,11 @@ for (const { path, operacao } of alvos) {
   const nome = (fonte.match(/^# (.+)$/m) || [])[1] || '';
   console.log(`\n## \`${path}\`${id ? ` — ${id}` : ''}${nome ? ` — ${nome}` : ''}\n`);
 
-  if (operacao === 'deprecar') { console.log('Deprecada na AIM — sem design de alteração.'); continue; }
+  if (operacao === 'deprecar') { console.log('Deprecada na AIMM — sem design de alteração.'); continue; }
   if (!depoisMd) { console.log('✗ Não existe na árvore de trabalho.'); continue; }
   if (operacao === 'criar' || antesMd === null) {
     novos++;
-    console.log(`Feature **nova** (${antesMd === null ? 'não existe na base' : 'linha `criar` na AIM'}) → SDD completo, sem delta.`);
+    console.log(`Feature **nova** (${antesMd === null ? 'não existe na base' : 'linha `criar` na AIMM'}) → SDD completo, sem delta.`);
     continue;
   }
 

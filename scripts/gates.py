@@ -31,7 +31,7 @@ Perfil de escopo: a linha "**Perfil**: `requisitos`" do `global/MASTER.md`
 encurta a esteira ao lado negocial (requisitos → modelo-dados) e o CP2 entrega
 `especificado`; ausente/`completo` mantém os quatro checkpoints. Ver
 `ler_perfil`/`aplicar_perfil`. O estado em que a esteira da instância termina é o
-`estado_final()` — é ele que a AIM confere ao fechar (validate-impact).
+`estado_final()` — é ele que a AIMM confere ao fechar (validate-impact).
 
 Sem dependências além de PyYAML (pré-instalado nos runners; senão
 `pip install pyyaml`). Python 3.8+.
@@ -142,7 +142,7 @@ GATE_TO_ESTADO_PADRAO = {
 # desenvolvimento). Sem isso a esteira negocial terminava em `modelo-validado` —
 # "aguardando testes", uma espera que nenhum QA vem encerrar numa instância só de
 # requisitos —, e nenhuma feature aparecia como pronta. Espelhado no
-# `lib/instancia.mjs` (ESTADO_FINAL), que os scripts JS usam — a AIM no fechamento.
+# `lib/instancia.mjs` (ESTADO_FINAL), que os scripts JS usam — a AIMM no fechamento.
 ESTADO_POR_PERFIL = {
     "requisitos": {"modelo-dados": "especificado"},
     "completo": {},
@@ -232,7 +232,7 @@ def has_gates(meta) -> bool:
 
 
 def origem_chave(meta) -> str:
-    """Chave do ticket de origem do N3 (a AIM é `analise-impacto/AIM-<chave>.md`).
+    """Chave do ticket de origem do N3 (a AIMM é `analise-impacto/AIMM-<chave>.md`).
 
     Formato 1.6.0: bloco `origem: { tipo, chave }` (plugável — ServiceNow, issue,
     experimento). Legado ≤1.5.x: campo raso `servicenow:`. Placeholders de template

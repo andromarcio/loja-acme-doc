@@ -3,6 +3,7 @@ import { basename, dirname, join, relative, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { frontMatter } from './front-matter.mjs';
 import { FEATURE_ID_RE, splitRow } from './trace-index.mjs';
+import { impactFiles } from './impact-files.mjs';
 
 const LEDGER = /^<!-- docqui:n3-ids (.+) -->\r?$/gm;
 const validId = value => new RegExp(`^${FEATURE_ID_RE.source}$`).test(value) && !value.endsWith('-00');
@@ -184,7 +185,7 @@ export function planN3Ids(root, readme, { base = null } = {}) {
   }
   // Referências e histórico reservam números mesmo quando o N3 já foi retirado.
   const aims = join(root, 'analise-impacto');
-  const aimIds = existsSync(aims) ? readdirSync(aims).filter(name => /^AIM-.*\.md$/.test(name)).flatMap(name => idsIn(read(join(aims, name)))) : [];
+  const aimIds = impactFiles(aims).flatMap(name => idsIn(read(join(aims, name))));
   for (const id of [...idsIn(text), ...idsIn(read(join(root, 'modules', 'INDEX.md'))), ...aimIds]) {
     if (id.startsWith(current.id + '-') && validId(id)) {
       maxKnown.add(id);

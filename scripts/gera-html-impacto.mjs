@@ -230,7 +230,7 @@ function gera(caminhoMd, saida) {
   const marked = carregaMarked();
   const bruto = readFileSync(caminhoMd, 'utf8');
 
-  // tira o carimbo docqui e o front-matter — metadados internos, não conteúdo. Na AIM,
+  // tira o carimbo docqui e o front-matter — metadados internos, não conteúdo. Na AIMM,
   // o front-matter é a fonte única da ficha (ticket, ferramenta, link, sprint, estado):
   // ele vira as linhas `**Rótulo**: valor` que a ficha abaixo renderiza.
   let md = bruto.replace(/^﻿?(?:\s*<!--[\s\S]*?-->\s*)*/, '');
@@ -273,7 +273,7 @@ function gera(caminhoMd, saida) {
   // Jira/ServiceNow aparece. Descartá-la deixaria o HTML sem a rastreabilidade que
   // justifica o arquivo existir. Essa é renderizada.
   //
-  // Na AIM, a ficha sai do front-matter (acima). Nos demais documentos, distingue-se
+  // Na AIMM, a ficha sai do front-matter (acima). Nos demais documentos, distingue-se
   // pela forma: duas ou mais linhas `**Rótulo**: valor` entre o título e o primeiro `##`.
   const iPrimeira = md.search(/\n##\s+/);
   const iH1 = tituloM ? md.indexOf(tituloM[0]) + tituloM[0].length : 0;

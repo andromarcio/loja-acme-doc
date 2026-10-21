@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """migra-enumeracao.py — converte a enumeração de ALR e DER da memória de cálculo do N3,
-escrita em prosa, para o bloco ```json que a planilha de entrega lê (engine 5.0.0).
+escrita em prosa, para o bloco ```json conferido pelo validador da contagem.
 
 Por quê: a planilha copiava a enumeração em prosa para as colunas Descrição de DER e
 ALR, e a prosa misturava campo com comentário — o parêntese de anotação saía como parte
@@ -33,15 +33,78 @@ Uso (a partir da raiz da instância):
   python3 scripts/migra-enumeracao.py [N3 ou pasta ...] --write  # grava
   (sem caminho: todo modules/**/f-*.md · --data AAAA-MM-DD para a linha do Changelog)
 """
-import argparse, datetime, importlib.util, json, re, sys, unicodedata
+import argparse, datetime, json, re, sys, unicodedata
 from pathlib import Path
 
-# Os leitores de tabela e de seção são os da planilha — a mesma leitura, por construção.
-_spec = importlib.util.spec_from_file_location("planilha", Path(__file__).with_name("gera-planilha-contagem.py"))
-_pl = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(_pl)
-tabelas, col, secao, corpo_da_secao, chave_pe, enumeracao = (
-    _pl.tabelas, _pl.col, _pl.secao, _pl.corpo_da_secao, _pl.chave_pe, _pl.enumeracao)
+def celulas(linha):
+    return [c.strip() for c in linha.strip().strip("|").split("|")]
+
+def eh_separador(linha):
+    return re.fullmatch(r"\|[\s\-:|]+\|", linha.strip()) is not None
+
+def tabelas(linhas, ini, parar):
+    """Todas as tabelas a partir de `ini` até `parar`, como (cabeçalho, linhas)."""
+    out, cab, corpo = [], None, []
+    for linha in linhas[ini:]:
+        if parar(linha):
+            break
+        if not linha.strip().startswith("|"):
+            if cab is not None:
+                out.append((cab, corpo)); cab, corpo = None, []
+            continue
+        if eh_separador(linha):
+            continue
+        if cab is None:
+            cab = celulas(linha)
+        else:
+            corpo.append(celulas(linha))
+    if cab is not None:
+        out.append((cab, corpo))
+    return out
+
+def col(cab, *nomes):
+    for i, campo in enumerate(cab):
+        for nome in nomes:
+            if re.fullmatch(nome, campo, re.I):
+                return i
+    return -1
+
+def secao(linhas, titulo):
+    for i, linha in enumerate(linhas):
+        if re.fullmatch(rf"#{{2}}\s+{titulo}\s*", linha.strip()):
+            return i
+    return -1
+
+def corpo_da_secao(linhas, titulo):
+    i = secao(linhas, titulo)
+    if i < 0:
+        return []
+    fim = next((j for j in range(i + 1, len(linhas)) if re.match(r"##\s", linhas[j])), len(linhas))
+    return linhas[i + 1:fim]
+
+def chave_pe(texto):
+    return re.sub(r"\s+", " ", re.sub(r"[`*]", "", texto)).strip(" .;").casefold()
+
+def enumeracao(linhas):
+    """Blocos JSON da memória de cálculo, indexados pelo nome do PE."""
+    blocos, corpo, na_memoria, dentro = {}, [], False, False
+    for linha in linhas:
+        texto = linha.strip()
+        if re.match(r"###\s+Mem[óo]ria de c[áa]lculo", texto):
+            na_memoria = True
+        elif na_memoria and not dentro and texto == "```json":
+            dentro, corpo = True, []
+        elif dentro and texto == "```":
+            dentro = False
+            try:
+                bloco = json.loads("\n".join(corpo))
+            except ValueError:
+                continue
+            if isinstance(bloco, dict) and isinstance(bloco.get("pe"), str):
+                blocos[chave_pe(bloco["pe"])] = bloco
+        elif dentro:
+            corpo.append(linha)
+    return blocos
 
 # ── os leitores da memória em prosa, como a planilha os tinha até a 4.x ─────────────
 def memoria(linhas):
@@ -449,8 +512,8 @@ def grava(caminho, limpos, data):
     ic = secao(linhas, "Changelog")
     if ic >= 0:
         k = next((j for j in range(ic + 1, len(linhas)) if linhas[j].strip().startswith("|")), None)
-        if k is not None and k + 1 < len(linhas) and _pl.eh_separador(linhas[k + 1]):
-            cab = _pl.celulas(linhas[k])
+        if k is not None and k + 1 < len(linhas) and eh_separador(linhas[k + 1]):
+            cab = celulas(linhas[k])
             desc = (f"Enumeração de ALR e DER da memória de cálculo em bloco JSON ({len(limpos)} PE) — "
                     f"migra-enumeracao, engine 5.0.0; sem mudança de número")
             valor = lambda h: (data if re.match(r"data", h, re.I) else "migra-enumeracao" if re.match(r"autor", h, re.I)

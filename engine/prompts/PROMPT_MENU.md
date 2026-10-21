@@ -39,7 +39,7 @@ Leia o `global/MASTER.md` da instância e localize a linha `**Perfil**: \`…\``
   negocial, sem passadas técnicas nem código). **Oculte** as opções técnicas e de
   código: `R0`, `R1`, `R2`, `R3`, `R4`, `1B`, `3B`, `4B`, `5A`, `5B`, `SK`.
   **Mostre** a opção **`DM`** (data-model negocial — ver Fase 1). Todas as demais
-  (TR, AIM, 0, N0, 1A, 2A, CR, WZ, 3A, RT, DM, RV, AU, AT, PD, IV, EX, 4A, CT, NF,
+  (TR, AIMM, 0, N0, 1A, 2A, CR, WZ, 3A, RT, DM, RV, AU, AT, PD, IV, EX, 4A, CT, NF,
   6A–6D, B1, B2) permanecem. A esteira desta instância para em `modelo-dados`
   — o CP2 entrega `especificado`, o estado final dela (ver `scripts/gates.py`) —, então
   não ofereça rotas que dependam de `testes`/`codigo`.
@@ -69,7 +69,7 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 | # | Opção | O que faz |
 |---|---|---|
-| **TR** | Triar necessidade — o que já existe? | Recebe a necessidade em texto livre, descobre o que já está documentado e recomenda a rota: **criar** (3A/2A/1A), **alterar** (4A/4B), **lote** (IV→EX) ou abrir antes a AIM do ticket (AIM). Não cria nem altera nada — só mostra e roteia |
+| **TR** | Triar necessidade — o que já existe? | Recebe a necessidade em texto livre, descobre o que já está documentado e recomenda a rota: **criar** (3A/2A/1A), **alterar** (4A/4B), **lote** (IV→EX) ou abrir antes a AIMM do ticket (AIMM). Não cria nem altera nada — só mostra e roteia |
 
 ---
 
@@ -98,7 +98,7 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 | # | Opção | O que faz |
 |---|---|---|
 | **N0** | Especificar Visão de Produto | Levanta propósito, personas, objetivos, KPIs, escopo, domínios previstos e tom de voz e gera `global/N0_PRODUCT_VISION.md` — o documento de referência mais alto e ponto de partida do fluxo **top-down** |
-| **AIM** | Abrir a AIM de um ticket | Registra o ticket (ServiceNow, Jira, issue, experimento) na AIM — `analise-impacto/AIM-<CHAVE>.md` —, mapeia as features que ele cria ou altera e leva o changeset ao aval do PO. Ponto de entrada do processo, com rastreabilidade ticket → spec → código; depois da entrega, a skill `analise-impacto` fecha a AIM com o que foi alterado |
+| **AIMM** | Abrir a AIMM de um ticket | Registra o ticket (ServiceNow, Jira, issue, experimento) na AIMM — `analise-impacto/AIMM-<CHAVE>.md` —, mapeia as features que ele cria ou altera e leva o changeset ao aval do PO. Ponto de entrada do processo, com rastreabilidade ticket → spec → código; depois da entrega, a skill `analise-impacto` fecha a AIMM com o que foi alterado |
 | **0** | Extrair insumos brutos | Organiza transcrições, PDFs, rascunhos e anotações em uma base estruturada para usar nas próximas fases |
 
 ---
@@ -146,8 +146,8 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 |---|---|---|---|
 | **RV** | Revisar artefato (conformidade) | Analista / Tech Lead | Recebe **um** N0/N1/N2/N3/data-model, roda o gate determinístico e a revisão semântica (altitude, regra=invariante, fonte única de banco, canônicos, ⚠️) e devolve os itens a corrigir com severidade e rota — **não edita** |
 | **AU** | Deduplicar regras de negócio | Analista / Tech Lead | Varre N3s e detecta regras duplicadas, sobrepostas ou contraditórias entre features |
-| **AT** | Auditar elos ticket ↔ feature | Analista / Tech Lead | Varre `## Origem` dos N3, `## Features` das AIMs e o `INDEX.md`; detecta elos unilaterais, ausências no índice e órfãos — garante que o caminho inverso (ticket → features) está consistente |
-| **PD** | Painel de pendências (o que falta especificar) | Analista / PO / Tech Lead | Varre as AIMs (`analise-impacto/`), READMEs de N2 e os N3 (⚠️) e **regenera** a seção `## Pendências de especificação` do `INDEX.md` — separando **existência** (falta N3) de **conteúdo** (lacunas em aberto), cada item com a rota para resolver |
+| **AT** | Auditar elos ticket ↔ feature | Analista / Tech Lead | Varre `## Origem` dos N3, `## Features` das AIMMs e o `INDEX.md`; detecta elos unilaterais, ausências no índice e órfãos — garante que o caminho inverso (ticket → features) está consistente |
+| **PD** | Painel de pendências (o que falta especificar) | Analista / PO / Tech Lead | Varre as AIMMs (`analise-impacto/`), READMEs de N2 e os N3 (⚠️) e **regenera** a seção `## Pendências de especificação` do `INDEX.md` — separando **existência** (falta N3) de **conteúdo** (lacunas em aberto), cada item com a rota para resolver |
 | **IV** | Investigar artefatos (delta → pending_changes) | PO + Analista | Cruza requisitos/delta com o que já existe e classifica cada bloco em `create`, `modify` ou `keep`; gera `pending_changes.md` para aprovação humana |
 | **EX** | Executar alterações aprovadas | Analista / Dev | Lê o `pending_changes.md` revisado e executa o prompt correto para cada item aprovado — um por vez, com confirmação entre eles |
 
@@ -166,7 +166,7 @@ Olá! Sou o assistente de documentação. Escolha o que deseja fazer:
 
 | # | Opção | Audiência | O que faz |
 |---|---|---|---|
-| **5A** | Gerar SDD | Dev | Gera Software Design Document com arquitetura, pseudocódigo e sequência de implementação — feature nova; feature que já existe e muda (linha `alterar` na AIM) vai para o **modo alteração**: só o que o delta do N3 pede |
+| **5A** | Gerar SDD | Dev | Gera Software Design Document com arquitetura, pseudocódigo e sequência de implementação — feature nova; feature que já existe e muda (linha `alterar` na AIMM) vai para o **modo alteração**: só o que o delta do N3 pede |
 | **5B** | Gerar plano de testes (QA) | QA | Gera plano de testes E2E ou scripts Playwright/Cypress/Cucumber a partir do N3 |
 | **SK** | Exportar para o spec-kit | Dev | Exporta os N3 aprovados (`estado: especificado`) de um Feature Set para o workspace do GitHub spec-kit (`spec.md`, `plan.md`, `data-model.md`, `contracts/`) — rumo a código + testes |
 
@@ -234,7 +234,7 @@ apresente o que será necessário fornecer. Use a tabela abaixo.
 | **B2** | 1. N3s do Feature Set (todos) |
 | **B1** | 1. N2s do domínio (todos) · 2. modules/INDEX.md *(opcional, para mapear integrações)* · 3. N3s adicionais sem N2 *(opcional)* |
 | **N0** | 1. MASTER.md *(opcional — sigla, nome e descrição do produto; no Claude Code é lido do disco)* · 2. Descrição do produto em linguagem natural (problema, público, valor — coletada na sessão) · 3. modules/_base-conhecimento/[assunto].md *(opcional — saída do PROMPT_0)* |
-| **AIM** | 1. Chave do ticket + descrição + critérios de aceite *(à mão enquanto não há integração; via MCP quando houver)* · 2. modules/INDEX.md *(opcional — ajuda no roteamento)* · 3. N0_PRODUCT_VISION.md *(opcional)* |
+| **AIMM** | 1. Chave do ticket + descrição + critérios de aceite *(à mão enquanto não há integração; via MCP quando houver)* · 2. modules/INDEX.md *(opcional — ajuda no roteamento)* · 3. N0_PRODUCT_VISION.md *(opcional)* |
 | **0** | 1. N0_PRODUCT_VISION.md *(opcional)* · 2. Insumos brutos (texto livre, transcrição, PDF colado) |
 | **1A** | 1. MASTER.md |
 | **1B** | 1. MASTER.md · 2. DATA-MODEL.md · 3. API-PATTERNS.md · 4. N1 negocial aprovado |
@@ -246,13 +246,13 @@ apresente o que será necessário fornecer. Use a tabela abaixo.
 | **3B** | 1. MASTER.md · 2. DATA-MODEL do domínio · 3. API-PATTERNS.md · 4. ERROR-DICTIONARY.md · 5. FIELD-DICTIONARY.md · 6. RULES-DICTIONARY.md · 7. N1 · 8. N2 · 9. N3 negocial aprovado · 10. global/SIZING.md · 11. global/ALI-AIE-MAP.md *(contagem, passo 6)* |
 | **RV** | 1. O artefato a revisar (caminho no Claude Code, ou colado) · 2. global/DATA-MODEL.md + dicionários (FIELD/RULES/ERROR/MESSAGE) + N0/N1/N2 vizinhos *(sob demanda, para cruzamento)* |
 | **AU** | 1. RULES-DICTIONARY.md · 2. Trechos de regras transversais dos N1s relevantes · 3. N3s a varrer |
-| **AT** | 1. modules/INDEX.md *(no Claude Code é lido do disco)* · 2. AIMs dos tickets em `analise-impacto/AIM-*.md` (com a seção `## Features`) · 3. N3s a varrer (com a seção `## Origem`) |
-| **PD** | 1. modules/INDEX.md *(no Claude Code é lido do disco junto com a árvore `modules/`)* · 2. READMEs dos Feature Sets (N2) · 3. AIMs dos tickets em `analise-impacto/AIM-*.md` · 4. modules/_triagem/*.md *(opcional)* |
+| **AT** | 1. modules/INDEX.md *(no Claude Code é lido do disco)* · 2. AIMMs dos tickets em `analise-impacto/AIMM-*.md` (com a seção `## Features`) · 3. N3s a varrer (com a seção `## Origem`) |
+| **PD** | 1. modules/INDEX.md *(no Claude Code é lido do disco junto com a árvore `modules/`)* · 2. READMEs dos Feature Sets (N2) · 3. AIMMs dos tickets em `analise-impacto/AIMM-*.md` · 4. modules/_triagem/*.md *(opcional)* |
 | **IV** | 1. MASTER.md · 2. modules/INDEX.md · 3. RULES-DICTIONARY.md · 4. FIELD-DICTIONARY.md · 5. Delta / requisitos novos ou alterados · 6. Artefatos existentes afetados *(opcional — N3s, N2s relevantes)* |
 | **EX** | 1. MASTER.md · 2. pending_changes.md revisado · 3. Insumos específicos de cada item (coletados durante a execução) |
 | **4A** | 1. MASTER.md · 2. FIELD-DICTIONARY.md · 3. RULES-DICTIONARY.md · 4. N3 existente completo |
 | **4B** | 1. MASTER.md · 2. DATA-MODEL do domínio · 3. API-PATTERNS.md · 4. ERROR-DICTIONARY.md · 5. FIELD-DICTIONARY.md · 6. RULES-DICTIONARY.md · 7. N1 · 8. N2 · 9. N3 original completo · 10. N3 negocial atualizado (do 4A) · 11. global/SIZING.md · 12. global/ALI-AIE-MAP.md *(recontagem)* |
-| **5A** | 1. MASTER.md · 2. DESIGN-SYSTEM.md · 3. DATA-MODEL.md (índice) · 4. API-PATTERNS.md · 5. FIELD-DICTIONARY.md · 6. RULES-DICTIONARY.md · 7. N1(s) · 8. N2(s) · 9. N3(s) a implementar — **modo alteração**: 1. a AIM do ticket · 2. a saída de `node scripts/delta-n3.mjs --aim analise-impacto/AIM-<CHAVE>.md` · 3. os N3 com delta · 4. só os globais que o delta toca |
+| **5A** | 1. MASTER.md · 2. DESIGN-SYSTEM.md · 3. DATA-MODEL.md (índice) · 4. API-PATTERNS.md · 5. FIELD-DICTIONARY.md · 6. RULES-DICTIONARY.md · 7. N1(s) · 8. N2(s) · 9. N3(s) a implementar — **modo alteração**: 1. a AIMM do ticket · 2. a saída de `node scripts/delta-n3.mjs --aimm analise-impacto/AIMM-<CHAVE>.md` · 3. os N3 com delta · 4. só os globais que o delta toca |
 | **5B** | 1. FIELD-DICTIONARY.md · 2. RULES-DICTIONARY.md · 3. ERROR-DICTIONARY.md · 4. N3 completo |
 | **6A** | 1. DESIGN-SYSTEM.md · 2. N2 do Feature Set · 3. N3s das features *(opcional)* |
 | **6B** | 1. DESIGN-SYSTEM.md · 2. N3 da feature |
@@ -327,7 +327,7 @@ incluindo o controle de estados interno de cada prompt (INICIALIZACAO, COLETA_CA
 | AU | PROMPT_AUDIT_RULES_DEDUP.md |
 | AT | PROMPT_AUDIT_TRACE_LINKS.md |
 | PD | PROMPT_PENDENCIAS.md |
-| AIM | PROMPT_AIM.md |
+| AIMM | PROMPT_AIMM.md |
 | N0 | PROMPT_N0_VISAO.md |
 | 0 | PROMPT_0_EXTRACTION.md |
 | 1A | PROMPT_1A_N1_negocio.md |
@@ -401,4 +401,4 @@ Se um insumo obrigatório não estiver disponível, oriente como obtê-lo:
 | N2 do Feature Set | "Execute a opção **2A** para criar o N2 a partir do zero, ou **B2** para sintetizá-lo a partir dos N3s existentes." |
 | N3 negocial | "Execute a opção **3A** primeiro para criar a spec negocial desta feature." |
 | N3s para varredura (AU) | "Cole os arquivos N3 das features que deseja auditar. Não é obrigatório varrer o sistema inteiro de uma vez." |
-| AIMs/N3s para auditar elos (AT) | "Cole o `INDEX.md`, as AIMs de `analise-impacto/` e os N3 do escopo. No Claude Code, basta apontar o domínio — leio os arquivos do disco." |
+| AIMMs/N3s para auditar elos (AT) | "Cole o `INDEX.md`, as AIMMs de `analise-impacto/` e os N3 do escopo. No Claude Code, basta apontar o domínio — leio os arquivos do disco." |

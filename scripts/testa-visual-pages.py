@@ -249,14 +249,15 @@ class VisualPagesTest(unittest.TestCase):
           outros: [...document.querySelectorAll('#outrosFolder a')].map(a => a.textContent.trim()),
           texto: document.getElementById('sidebar').textContent,
         })""")
-        self.assertEqual(menu["fixos"], ["Dashboard de gestão", "Visão do Produto (N0)", "Mapa de Features (Árvore)"])
+        self.assertEqual(menu["fixos"], ["Dashboard de gestão", "Visão do Produto (N0)", "Mapa de Features (Árvore)",
+                                       "Análises de impacto (AIMM)"])
         self.assertEqual(menu["pastas"], ["fddFolder", "globalFolder", "prototypesFolder", "outrosFolder"])
-        self.assertEqual(menu["outros"], ["AIMs dos tickets", "Insumos de levantamento", "Roteiro da demonstração",
+        self.assertEqual(menu["outros"], ["Insumos de levantamento", "Roteiro da demonstração",
                                           "Simulador Docqui Caixa ↗", "Grafo de Rastreabilidade ↗"])
         self.assertNotIn("Início / Visão Geral", menu["texto"])
         self.assertNotIn("Artefatos de Suporte", menu["texto"])
         # Abrir um item de Outros expande a pasta; o Ctrl+K abre o menu e a busca.
-        self.page.evaluate("navigateTo('analise-impacto/INDEX.md')")
+        self.page.evaluate("navigateTo('mentoria/README.md')")
         self.assertTrue(self.page.locator("#outrosFolder").evaluate("d => d.open"))
         self.page.keyboard.press("Control+k")
         self.assertTrue(self.page.locator("#searchInput").is_visible())
@@ -264,6 +265,29 @@ class VisualPagesTest(unittest.TestCase):
         self.page.goto(self.base + "/index.html#" + FEATURE)
         self.page.locator("#documentContainer .doc-title").wait_for()
         self.assertEqual(self.page.locator("#documentContainer .doc-title").inner_text(), "Calcular Frete")
+
+    def test_impact_menu_opens_index_and_ticket_on_desktop_and_mobile(self):
+        for width in [1440, 390, 320]:
+            with self.subTest(width=width):
+                self.page.set_viewport_size({"width": width, "height": 900})
+                self.page.goto(self.base + "/index.html")
+                self.page.locator("#dashboardDomain").wait_for()
+                self.page.locator("#toggleSidebarBtn").click()
+                link = self.page.locator('#sidebar a[data-path="analise-impacto/INDEX.md"]')
+                self.assertEqual(link.count(), 1, "o acesso não pode ser duplicado em Outros")
+                self.assertEqual(self.page.locator('#outrosFolder a[data-path="analise-impacto/INDEX.md"]').count(), 0)
+                self.assertTrue(link.is_visible())
+                self.assertEqual(link.inner_text().strip(), "Análises de impacto (AIMM)")
+                link.click()
+                self.page.wait_for_url("**#analise-impacto/INDEX.md")
+                self.assertEqual(self.page.locator("#documentContainer h1").inner_text(), "Análises de Impacto — Loja ACME")
+                self.assertIn("active", link.get_attribute("class") or "")
+                reports = self.page.locator('#documentContainer a[href^="#analise-impacto/AIMM-"][href$=".md"]')
+                self.assertEqual(reports.count(), 8)
+                reports.first.click()
+                self.page.wait_for_url("**#analise-impacto/AIMM-STRY0013101.md")
+                self.assertEqual(self.page.locator("#documentContainer h1").inner_text(), "AIMM STRY0013101")
+                self.assertLessEqual(self.page.evaluate("document.documentElement.scrollWidth"), width)
 
     def test_diagrams_use_elk_layout(self):
         # Os diagramas saem no layout ELK, que vem no próprio Mermaid 12: as arestas do fluxo do
@@ -403,7 +427,7 @@ class VisualPagesTest(unittest.TestCase):
                     titulos.append(linha[3:].strip())
             return titulos
         genericos = ["global/N0_PRODUCT_VISION.md", "global/DATA-MODEL.md", "global/NFR.md",
-                     "analise-impacto/AIM-STRY0013101.md", "mentoria/README.md"]
+                     "analise-impacto/AIMM-STRY0013101.md", "mentoria/README.md"]
         espacos = []
         for rel in genericos + ["modules/vendas/README.md", "modules/vendas/checkout/README.md", FEATURE]:
             self.page.evaluate("(rel) => navigateTo(rel)", rel)
@@ -436,6 +460,17 @@ class VisualPagesTest(unittest.TestCase):
             self.page.evaluate("(r) => navigateTo(r)", rota)
             self.page.wait_for_timeout(300)
             self.assertFalse(self.page.evaluate("document.getElementById('documentContainer').classList.contains('doc-cards')"), rota)
+
+    def test_aimm_and_old_bookmarks(self):
+        old = "analise-impacto/AIM-STRY0013101"
+        current = "analise-impacto/AIMM-STRY0013101"
+        self.page.goto(self.base + "/index.html#" + old + ".md")
+        self.page.locator("#documentContainer h1").wait_for()
+        self.page.wait_for_url("**#" + current + ".md")
+        self.assertIn("AIMM STRY0013101", self.page.locator("#documentContainer h1").inner_text())
+        self.page.goto(self.base + "/" + old + ".html")
+        self.page.wait_for_url("**/" + current + ".html")
+        self.assertIn("AIMM STRY0013101", self.page.locator("h1").inner_text())
 
     def test_graph_and_simulator_preserved(self):
         self.page.goto(self.base + "/rastreabilidade/index.html")

@@ -1,15 +1,15 @@
 #!/usr/bin/env node
-// validate-impact.mjs — valida uma AIM (Análise de Impacto) e suas invariantes.
+// validate-impact.mjs — valida uma AIMM (Análise de Impacto) e suas invariantes.
 //
-// A AIM é o artefato do ticket (decisão do PO, 2026-09-28): um arquivo por ticket em
-// `analise-impacto/AIM-<CHAVE>.md`, versionado à medida que o ticket avança — aberto pelo
-// PROMPT_AIM com o ticket, o que ele VAI alterar e o aval do PO; fechado depois da entrega
-// pela skill analise-impacto com o que ele ALTEROU. A AIM da sprint
-// (`analise-impacto/AIM-<sprint>.md`) consolida os tickets entregues na sprint. Este
+// A AIMM é o artefato do ticket (decisão do PO, 2026-09-28): um arquivo por ticket em
+// `analise-impacto/AIMM-<CHAVE>.md`, versionado à medida que o ticket avança — aberto pelo
+// PROMPT_AIMM com o ticket, o que ele VAI alterar e o aval do PO; fechado depois da entrega
+// pela skill analise-impacto com o que ele ALTEROU. A AIMM da sprint
+// (`analise-impacto/AIMM-<sprint>.md`) consolida os tickets entregues na sprint. Este
 // validador é o contrato determinístico das duas: estrutura + cobertura + reconciliação.
 // Não julga o conteúdo.
 //
-// AIM do ticket (`tipo: ticket`):
+// AIMM do ticket (`tipo: ticket`):
 //   front-matter  `ticket` (a mesma chave do nome do arquivo) e `estado` da esteira:
 //                 rascunho → em-análise → escopo-aprovado → em-execução → concluído
 //   seções        Descrição do ticket · Critérios de aceite · Features · Artefatos
@@ -20,7 +20,7 @@
 //     C1  ao menos uma linha N3 (a feature-âncora)
 //     C2  linha `funcional`     → linha `QA`   (mudança funcional é testada)
 //     C3  linha `não-funcional` → linha `NFR` E linha `QA` (NFR verificável)
-//     AIM aberta na entrega (`aberta-na-entrega: true`): C2 e C3 viram aviso — não houve
+//     AIMM aberta na entrega (`aberta-na-entrega: true`): C2 e C3 viram aviso — não houve
 //     escopo prévio a cobrir. No perfil `requisitos`, a falta da linha QA (C2 e a metade
 //     QA do C3) é aviso: a esteira dele não tem o checkpoint de testes.
 //     Existência: `alterar` sobre arquivo que não existe é erro; `criar` sobre arquivo que
@@ -31,28 +31,27 @@
 //                   `## Reconciliação` preenchida — com conteúdo fora da citação de
 //                   instrução, que pode ficar —; e cada feature da `## Features` com N3
 //                   no ESTADO FINAL da esteira da instância — `implementado` no perfil
-//                   `completo`, `especificado` no `requisitos` — ou `deprecado`. A AIM e
+//                   `completo`, `especificado` no `requisitos` — ou `deprecado`. A AIMM e
 //                   o N3 têm máquinas de estado próprias (o ticket e a feature são N:N);
 //                   é aqui que elas se encontram: o ticket não está entregue enquanto
 //                   uma feature dele está em `revisao-necessaria`, em desenvolvimento
 //                   ou por especificar.
 //
-// AIM da sprint (`tipo: sprint`): `sprint` no front-matter; `## Tickets da sprint` e
-// `## Alterações na spec, por Feature Set` com linhas; e conferida com as AIMs dos tickets
+// AIMM da sprint (`tipo: sprint`): `sprint` no front-matter; `## Tickets da sprint` e
+// `## Alterações na spec, por Feature Set` com linhas; e conferida com as AIMMs dos tickets
 // da pasta (em `concluído` reprova; em `rascunho`, avisa):
-//     S1  os mesmos tickets — cada listado com a sua AIM, de `sprint:` igual; e toda AIM
-//         com `sprint:` igual, listada — com a AIM concluída;
+//     S1  os mesmos tickets — cada listado com a sua AIMM, de `sprint:` igual; e toda AIMM
+//         com `sprint:` igual, listada — com a AIMM concluída;
 //     S2  cada feature e cada função de dados UMA vez; a coluna Ticket só com tickets
 //         listados;
 //     S3  a visão final de cada ticket dentro da sprint, nos dois sentidos: a feature
 //         que ele alterou está na linha que cita a chave dele, e a linha que cita a chave
-//         está na visão final dele; cada `### ALI|AIE:` dele, em `## Funções de dados
-//         alteradas`; natureza incluída se algum ticket a incluiu, alterada se não
-//         (PFB/PFL diferente do ticket único é aviso: os dois espelham o N3);
+//         está na visão final dele; natureza incluída se algum ticket a incluiu, alterada
+//         se não;
 //     S4  o `## Apurável da sprint` como a soma das linhas — o Total sempre; Transações e
 //         Funções de dados, quando a tabela as traz. Sem a seção, na concluída, é aviso.
 //
-// Formato anterior à AIM única — registro `demandas/<chave>.md`, `impactos/AIM-AAAA-NNN.md`
+// Formato anterior à AIMM única — registro `demandas/<chave>.md`, `impactos/AIMM-AAAA-NNN.md`
 // do PROMPT_IMPACTO, relatório `ANALISE_IMPACTO_*.md` — reprova, com a instrução de migrar.
 //
 // Reconciliação (opcional):
@@ -61,19 +60,21 @@
 //   → declarado e não tocado = escopo não cumprido; tocado e não declarado = desvio.
 //
 // Uso:
-//   node scripts/validate-impact.mjs <analise-impacto/AIM-….md> [--root <inst>] [--touched …|--git-base …]
+//   node scripts/validate-impact.mjs <analise-impacto/AIMM-….md> [--root <inst>] [--touched …|--git-base …]
 
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, dirname, basename } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { scanInstance, featureById } from './lib/trace-index.mjs';
 import { perfilDa, ESTADO_FINAL } from './lib/instancia.mjs';
+import { impactFiles, impactKey, resolveImpactFile } from './lib/impact-files.mjs';
 
 const args = process.argv.slice(2);
 const opt = (n, d = null) => { const i = args.indexOf(n); return i !== -1 && args[i + 1] ? args[i + 1] : d; };
-const FILE = args.find((a, k) => !a.startsWith('--') && a.endsWith('.md') && !['--root', '--touched', '--git-base'].includes(args[k - 1]));
+const requested = args.find((a, k) => !a.startsWith('--') && a.endsWith('.md') && !['--root', '--touched', '--git-base'].includes(args[k - 1]));
+const FILE = requested && resolveImpactFile(requested);
 if (!FILE || !existsSync(FILE)) {
-  console.error('Uso: node scripts/validate-impact.mjs <analise-impacto/AIM-….md> [--root <inst>] [--touched …|--git-base …]');
+  console.error('Uso: node scripts/validate-impact.mjs <analise-impacto/AIMM-….md> [--root <inst>] [--touched …|--git-base …]');
   process.exit(2);
 }
 const ROOT = opt('--root', dirname(dirname(FILE)) || '.');
@@ -111,7 +112,7 @@ function frontMatter(ls) {
 const fm = frontMatter(lines);
 
 /* --------------------- formato anterior --------------------- */
-const MIGRE = 'o ticket agora tem uma AIM só, em `analise-impacto/AIM-<CHAVE>.md` — migre (CHANGELOG → 3.0.0, "AIM única")';
+const MIGRE = 'o ticket agora tem uma AIMM só, em `analise-impacto/AIMM-<CHAVE>.md` — migre (CHANGELOG → 3.0.0, "AIMM única")';
 if (basename(FILE).startsWith('ANALISE_IMPACTO_')) {
   errors.push(`relatório pós-entrega no formato anterior (\`ANALISE_IMPACTO_*\`): ${MIGRE}.`);
   sai();
@@ -121,7 +122,7 @@ if (/(^|[\\/])demandas[\\/]/.test(FILE)) {
   sai();
 }
 if (!fm.tipo && (fm['feature-ancora'] || fm['feature-âncora'] || fm.origem)) {
-  errors.push(`AIM no formato anterior (PROMPT_IMPACTO, \`feature-ancora\`/\`origem\`, sem \`tipo\`): ${MIGRE}.`);
+  errors.push(`AIMM no formato anterior (PROMPT_IMPACTO, \`feature-ancora\`/\`origem\`, sem \`tipo\`): ${MIGRE}.`);
   sai();
 }
 
@@ -158,7 +159,7 @@ const EXEMPLO = /\[[^\]]*\]|<(?:dom|fs|slug|CHAVE)>|SIGLA-SFS-NN/i; // placehold
 const conteudoForaDaCitacao = (s) => corpoDe(s).join('\n').replace(/<!--[\s\S]*?-->/g, '').split('\n')
   .filter((l) => l.trim() && !/^\s*>/.test(l));
 
-/* =========================== AIM da sprint =========================== */
+/* =========================== AIMM da sprint =========================== */
 if (tipo === 'sprint') {
   if (!fm.sprint || EXEMPLO.test(fm.sprint)) errors.push('front-matter sem `sprint:` (o rótulo da sprint).');
   for (const s of ['Tickets da sprint', 'Alterações na spec, por Feature Set']) {
@@ -168,18 +169,18 @@ if (tipo === 'sprint') {
   const feats = tabelasDe('Alterações na spec, por Feature Set').flatMap((t) => t.linhas)
     .filter((c) => ID_RE.test(c[0] || '') && !EXEMPLO.test(c.join(' ')));
   if (temSecao('Alterações na spec, por Feature Set') && !feats.length)
-    errors.push('`## Alterações na spec, por Feature Set` sem linha de feature — a AIM da sprint consolida as features entregues.');
+    errors.push('`## Alterações na spec, por Feature Set` sem linha de feature — a AIMM da sprint consolida as features entregues.');
   const conferidas = confereSprint(tickets);
   sai();
-  console.log(`  ✓ AIM da sprint bem-formada — ${tickets.length} ticket(s), ${feats.length} feature(s), conferida com ${conferidas} AIM(s) de ticket${warns.length ? `, ${warns.length} aviso(s)` : ''}.`);
+  console.log(`  ✓ AIMM da sprint bem-formada — ${tickets.length} ticket(s), ${feats.length} feature(s), conferida com ${conferidas} AIMM(s) de ticket${warns.length ? `, ${warns.length} aviso(s)` : ''}.`);
   process.exit(0);
 }
 
-// A AIM da sprint consolida as AIMs dos tickets (decisão do PO, 2026-09-28): os mesmos
-// tickets — os de `sprint:` igual, cada um com a sua AIM —, cada feature e cada função de
+// A AIMM da sprint consolida as AIMMs dos tickets (decisão do PO, 2026-09-28): os mesmos
+// tickets — os de `sprint:` igual, cada um com a sua AIMM —, cada feature e cada função de
 // dados UMA vez, a visão final de cada ticket concluído dentro dela, e o apurável como a
-// soma das linhas. Na AIM `concluído`, divergência reprova; em `rascunho`, a consolidação
-// está em curso e ela é aviso. Devolve quantas AIMs de ticket da sprint foram conferidas.
+// soma das linhas. Na AIMM `concluído`, divergência reprova; em `rascunho`, a consolidação
+// está em curso e ela é aviso. Devolve quantas AIMMs de ticket da sprint foram conferidas.
 function confereSprint(tickets) {
   const fechada = norm(fm.estado) === 'concluido';
   const acusa = (msg) => (fechada ? errors : warns).push(msg);
@@ -228,15 +229,15 @@ function confereSprint(tickets) {
   });
   const repetidos = (arr) => [...arr.reduce((m, x) => m.set(x, (m.get(x) || 0) + 1), new Map())].filter(([, n]) => n > 1);
   for (const [id, n] of repetidos(linhas.map((l) => l.id)))
-    acusa(`\`${id}\` aparece ${n} vezes em \`## Alterações na spec, por Feature Set\` — na AIM da sprint, cada feature entra uma vez (a coluna Ticket junta as chaves).`);
+    acusa(`\`${id}\` aparece ${n} vezes em \`## Alterações na spec, por Feature Set\` — na AIMM da sprint, cada feature entra uma vez (a coluna Ticket junta as chaves).`);
   for (const [nome, n] of repetidos(funcoes.map((f) => norm(f.nome))))
     acusa(`a função de dados \`${nome}\` aparece ${n} vezes em \`## Funções de dados alteradas\` — cada função entra uma vez.`);
   for (const l of linhas) for (const k of l.chaves)
     if (!listados.includes(k)) acusa(`\`${l.id}\` cita o ticket \`${k}\`, que não está em \`## Tickets da sprint\`.`);
 
-  // O que as AIMs dos tickets dizem: os mesmos tickets, nos dois sentidos.
+  // O que as AIMMs dos tickets dizem: os mesmos tickets, nos dois sentidos.
   const dir = dirname(FILE);
-  const aims = readdirSync(dir).filter((n) => /^AIM-.+\.md$/.test(n)).map((n) => {
+  const aims = impactFiles(dir).map((n) => {
     const ls = readFileSync(join(dir, n), 'utf8').split(/\r?\n/);
     const f = frontMatter(ls);
     return { n, ls, fm: f, k: String(f.ticket || '').trim().toUpperCase() };
@@ -246,16 +247,16 @@ function confereSprint(tickets) {
     if (!listados.includes(a.k)) acusa(`o ticket \`${a.k}\` tem \`sprint: ${rotulo}\` (\`${a.n}\`), mas não está em \`## Tickets da sprint\`.`);
   for (const k of listados) {
     const a = aims.find((x) => x.k === k);
-    if (!a) acusa(`ticket \`${k}\` sem AIM em \`${dir}/\` — a sprint consolida as AIMs dos tickets.`);
+    if (!a) acusa(`ticket \`${k}\` sem AIMM em \`${dir}/\` — a sprint consolida as AIMMs dos tickets.`);
     else if (norm(a.fm.sprint) !== norm(rotulo))
-      acusa(`o ticket \`${k}\` está em \`## Tickets da sprint\`, mas a AIM dele ${a.fm.sprint ? `diz \`sprint: ${a.fm.sprint}\`` : 'não diz a sprint'}.`);
+      acusa(`o ticket \`${k}\` está em \`## Tickets da sprint\`, mas a AIMM dele ${a.fm.sprint ? `diz \`sprint: ${a.fm.sprint}\`` : 'não diz a sprint'}.`);
   }
 
   // A visão final de cada ticket concluído, dentro da sprint.
-  const porFeature = new Map(); // id → [{ k, natureza, pfb, pfl }]
+  const porFeature = new Map(); // id → [{ k, natureza }]
   for (const a of daSprint) {
     if (norm(a.fm.estado) !== 'concluido') {
-      acusa(`a AIM do ticket \`${a.k}\` está em \`${a.fm.estado || '—'}\` — a sprint consolida a visão final dos tickets concluídos.`);
+      acusa(`a AIMM do ticket \`${a.k}\` está em \`${a.fm.estado || '—'}\` — a sprint consolida a visão final dos tickets concluídos.`);
       continue;
     }
     const finais = alteracoesDe(a.ls);
@@ -263,20 +264,14 @@ function confereSprint(tickets) {
       if (!porFeature.has(f.id)) porFeature.set(f.id, []);
       porFeature.get(f.id).push({ ...f, k: a.k });
       const l = linhas.find((x) => x.id === f.id);
-      if (!l) acusa(`\`${f.id}\` está na visão final da AIM de \`${a.k}\`, mas não em \`## Alterações na spec, por Feature Set\` da sprint.`);
+      if (!l) acusa(`\`${f.id}\` está na visão final da AIMM de \`${a.k}\`, mas não em \`## Alterações na spec, por Feature Set\` da sprint.`);
       else if (!l.chaves.includes(a.k)) acusa(`\`${f.id}\`: a coluna Ticket da sprint não cita \`${a.k}\`, que alterou a feature.`);
     }
     for (const l of linhas.filter((x) => x.chaves.includes(a.k)))
-      if (!finais.some((f) => f.id === l.id)) acusa(`\`${l.id}\` cita \`${a.k}\`, mas a visão final da AIM de \`${a.k}\` não tem a feature.`);
-    for (const h of a.ls.filter((x) => /^###\s+(ALI|AIE):/i.test(x.trim()))) {
-      const nome = h.trim().replace(/^###\s+(ALI|AIE):\s*/i, '').split(/\s+[—–]\s+/)[0].trim();
-      if (nome && !EXEMPLO.test(nome) && !funcoes.some((f) => norm(f.nome) === norm(nome)))
-        acusa(`a função de dados \`${nome}\` está na AIM de \`${a.k}\`, mas não em \`## Funções de dados alteradas\` da sprint.`);
-    }
+      if (!finais.some((f) => f.id === l.id)) acusa(`\`${l.id}\` cita \`${a.k}\`, mas a visão final da AIMM de \`${a.k}\` não tem a feature.`);
   }
-  // Natureza e PF da linha da sprint × os das AIMs. Incluída por um ticket da sprint, a
-  // feature entra nela como incluída, ainda que outro a tenha alterado depois. O PF só
-  // se compara com ticket único: com dois, a sprint soma os PE de ambos uma vez só.
+  // Natureza da linha da sprint × as AIMMs dos tickets. Incluída por um ticket da
+  // sprint, a feature entra nela como incluída, ainda que outro a tenha alterado depois.
   for (const l of linhas) {
     const fs = (porFeature.get(l.id) || []).filter((f) => l.chaves.includes(f.k));
     if (!fs.length) continue;
@@ -284,16 +279,12 @@ function confereSprint(tickets) {
       const espera = fs.some((f) => f.natureza === 'incluida') ? 'incluida' : 'alterada';
       const mostra = (v) => `\`${v === 'incluida' ? 'incluída' : v}\``;
       if (l.natureza !== espera)
-        acusa(`\`${l.id}\`: natureza ${mostra(l.natureza)} na sprint, mas ${fs.map((f) => `${mostra(f.natureza)} na AIM de \`${f.k}\``).join(', ')}${fs.length > 1 ? ` — a sprint diz ${mostra(espera)}` : ''}.`);
+        acusa(`\`${l.id}\`: natureza ${mostra(l.natureza)} na sprint, mas ${fs.map((f) => `${mostra(f.natureza)} na AIMM de \`${f.k}\``).join(', ')}${fs.length > 1 ? ` — a sprint diz ${mostra(espera)}` : ''}.`);
     }
-    const [f] = fs;
-    if (fs.length === 1 && l.chaves.length === 1
-      && ((f.pfb != null && l.pfb != null && f.pfb !== l.pfb) || (f.pfl != null && l.pfl != null && f.pfl !== l.pfl)))
-      warns.push(`\`${l.id}\`: PFB/PFL ${fmt(l.pfb)}/${fmt(l.pfl)} na sprint e ${fmt(f.pfb)}/${fmt(f.pfl)} na AIM de \`${f.k}\` — as duas espelham o N3.`);
   }
 
   // O apurável é a soma das linhas: o Total, sempre; Transações e Funções de dados, quando
-  // a tabela as traz — a do relatório anterior à AIM única, que o migra-aim preserva,
+  // a tabela as traz — a do relatório anterior à AIMM única, que o migra-aim preserva,
   // quebra as transações por origem ("Features alteradas…", "Features novas…").
   const ap = tabelasDe('Apurável da sprint')[0];
   if (!ap) {
@@ -323,18 +314,18 @@ function confereSprint(tickets) {
   return daSprint.length;
 }
 
-/* =========================== AIM do ticket =========================== */
+/* =========================== AIMM do ticket =========================== */
 const ESTADOS = ['rascunho', 'em-analise', 'escopo-aprovado', 'em-execucao', 'concluido'];
 const est = norm(fm.estado);
 if (!fm.estado) errors.push('front-matter sem `estado:` (rascunho|em-análise|escopo-aprovado|em-execução|concluído).');
-else if (!ESTADOS.includes(est)) errors.push(`\`estado: ${fm.estado}\` não é um estado válido da esteira da AIM.`);
+else if (!ESTADOS.includes(est)) errors.push(`\`estado: ${fm.estado}\` não é um estado válido da esteira da AIMM.`);
 const depoisDe = (e) => ESTADOS.indexOf(est) >= ESTADOS.indexOf(e);
 
 if (!fm.ticket || EXEMPLO.test(fm.ticket)) errors.push('front-matter sem `ticket:` (a chave na ferramenta de origem).');
 else {
-  const doNome = basename(FILE, '.md').replace(/^AIM-/, '');
-  if (!basename(FILE).startsWith('AIM-') || doNome.toLowerCase() !== fm.ticket.toLowerCase())
-    errors.push(`o arquivo deve se chamar \`AIM-${fm.ticket}.md\` (a chave do \`ticket:\`), não \`${basename(FILE)}\`.`);
+  const doNome = impactKey(basename(FILE));
+  if (!doNome || doNome.toLowerCase() !== fm.ticket.toLowerCase())
+    errors.push(`o arquivo deve se chamar \`AIMM-${fm.ticket}.md\` (a chave do \`ticket:\`), não \`${basename(FILE)}\`.`);
 }
 const naEntrega = norm(fm['aberta-na-entrega']) === 'true';
 
@@ -346,7 +337,7 @@ for (const s of ['Descrição do ticket', 'Critérios de aceite', 'Features', 'A
 // Features: o elo recíproco da `## Origem` dos N3.
 const features = tabelasDe('Features').flatMap((t) => t.linhas).filter((c) => ID_RE.test(c[0] || '') && !/SIGLA-SFS-NN/.test(c[0]));
 if (depoisDe('em-analise') && temSecao('Features') && !features.length)
-  errors.push('`## Features` sem feature — de `em-análise` em diante, a AIM diz quais N3 realizam o ticket.');
+  errors.push('`## Features` sem feature — de `em-análise` em diante, a AIMM diz quais N3 realizam o ticket.');
 
 /* ---------------------- changeset ---------------------- */
 const TIPOS = new Set(['N1', 'N2', 'N3', 'QA', 'DATA-MODEL', 'FIELD-DICT', 'RULES-DICT', 'MESSAGE-DICT', 'ERROR-DICT',
@@ -371,14 +362,14 @@ if (depoisDe('em-analise') && temSecao('Artefatos impactados')) {
       if (r.operacao === 'alterar' && !exists) errors.push(`\`${r.artefato}\` marcado \`alterar\` mas não existe — é \`criar\`?`);
       // Até o aval, `criar` sobre arquivo existente é suspeito — a linha devia ser `alterar`?
       // Da execução em diante, a passada criou o arquivo: em `em-execução` e `concluído` ele
-      // existe por construção, e o aviso seria ruído em toda AIM que criou algo.
+      // existe por construção, e o aviso seria ruído em toda AIMM que criou algo.
       if (r.operacao === 'criar' && exists && !depoisDe('em-execucao')) warns.push(`\`${r.artefato}\` marcado \`criar\` mas já existe — é \`alterar\`?`);
     }
   }
   const has = (pred) => rows.some(pred);
   const isFunc = (n) => n.startsWith('funcional');
   const isNF = (n) => n.includes('nao-funcional') || n.startsWith('nao');
-  const cobertura = (msg) => (naEntrega ? warns : errors).push(msg + (naEntrega ? ' (AIM aberta na entrega: aviso)' : ''));
+  const cobertura = (msg) => (naEntrega ? warns : errors).push(msg + (naEntrega ? ' (AIMM aberta na entrega: aviso)' : ''));
   // No perfil `requisitos` a esteira não tem o checkpoint de testes nem a opção 5B, e o
   // plano de testes fica com quem constrói: a falta da linha QA avisa. O NFR do C3
   // continua exigido nos dois perfis.
@@ -425,7 +416,7 @@ if (est === 'concluido') {
     const como = f.estado === 'revisao-necessaria'
       ? ' A alteração foi entregue? Volte o `estado` ao derivado dos gates, rode `python3 scripts/gates.py promote --write` e atualize o Status aqui.'
       : '';
-    errors.push(`\`${id}\` está em \`${f.estado || '—'}\` (${f.path}) — a AIM só fecha com cada feature no estado final da esteira desta instância, \`${alvo}\` (perfil \`${perfil}\`), ou \`deprecado\`.${como}`);
+    errors.push(`\`${id}\` está em \`${f.estado || '—'}\` (${f.path}) — a AIMM só fecha com cada feature no estado final da esteira desta instância, \`${alvo}\` (perfil \`${perfil}\`), ou \`deprecado\`.${como}`);
   }
 }
 
@@ -452,4 +443,4 @@ if (touched) {
 
 /* ------------------------------ saída ------------------------------ */
 sai();
-console.log(`  ✓ AIM bem-formada — ${fm.estado}, ${features.length} feature(s), ${rows.length} linha(s) no changeset${warns.length ? `, ${warns.length} aviso(s)` : ''}.`);
+console.log(`  ✓ AIMM bem-formada — ${fm.estado}, ${features.length} feature(s), ${rows.length} linha(s) no changeset${warns.length ? `, ${warns.length} aviso(s)` : ''}.`);

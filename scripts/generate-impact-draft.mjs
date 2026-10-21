@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// generate-impact-draft.mjs — o changeset derivado da AIM do ticket (PROMPT_AIM, passo 5).
+// generate-impact-draft.mjs — o changeset derivado da AIMM do ticket (PROMPT_AIMM, passo 5).
 //
-// A partir das features-âncora — as da `## Features` da AIM, ou as passadas com
+// A partir das features-âncora — as da `## Features` da AIMM, ou as passadas com
 // `--feature` —, DERIVA dos elos que já vivem nos artefatos a lista de documentos que o
 // ticket vai tocar: o changeset que o PO aprova ANTES de qualquer spec mudar. O que não
 // é derivável (sobretudo NFR e os limiares dos testes não-funcionais) fica como linha
@@ -21,34 +21,35 @@
 //                          feita onde ele conta; quem mais o usa é regressão (nos dois sentidos)
 //   NFR / teste NF       → NÃO derivável — linha `elicitar`
 //
-// Com `--aim`, grava as linhas na `## Artefatos impactados` da AIM: as que já estão lá
+// Com `--aim`, grava as linhas na `## Artefatos impactados` da AIMM: as que já estão lá
 // (elicitadas ou ajustadas à mão) ficam, as derivadas que faltam entram, e as linhas de
 // exemplo do template saem. Sem `--aim`, imprime a tabela na saída padrão.
 //
 // Uso:
-//   node scripts/generate-impact-draft.mjs --root <inst> --aim analise-impacto/AIM-<CHAVE>.md [--feature <ID|caminho>]…
+//   node scripts/generate-impact-draft.mjs --root <inst> --aim analise-impacto/AIMM-<CHAVE>.md [--feature <ID|caminho>]…
 //   node scripts/generate-impact-draft.mjs --root <inst> --feature <ID|caminho> [--feature …]
 
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
-import { join, relative, basename } from 'node:path';
+import { join, relative, basename, isAbsolute } from 'node:path';
 import { pesDoN3, chavePE, contado } from './lib/pe.mjs';
 import { perfilDa } from './lib/instancia.mjs';
+import { resolveImpactFile } from './lib/impact-files.mjs';
 
 const args = process.argv.slice(2);
 const opt = (n, d = null) => { const i = args.indexOf(n); return i !== -1 && args[i + 1] ? args[i + 1] : d; };
 const opts = (n) => args.flatMap((a, i) => (a === n && args[i + 1] ? [args[i + 1]] : []));
 const ROOT = opt('--root', '.');
-const AIM = opt('--aim');
+const AIMM = opt('--aimm') || opt('--aim');
 let FEATURES = opts('--feature');
-const USO = 'Uso: node scripts/generate-impact-draft.mjs --root <inst> --aim analise-impacto/AIM-<CHAVE>.md [--feature <ID|caminho>]…\n' +
+const USO = 'Uso: node scripts/generate-impact-draft.mjs --root <inst> --aim analise-impacto/AIMM-<CHAVE>.md [--feature <ID|caminho>]…\n' +
   '     node scripts/generate-impact-draft.mjs --root <inst> --feature <ID|caminho> [--feature …]';
 if (args.includes('--out') || args.includes('--id') || args.includes('--need')) {
-  console.error('✗ --out, --id e --need eram do PROMPT_IMPACTO: o changeset agora vai para a AIM do ticket (--aim).\n' + USO);
+  console.error('✗ --out, --id e --need eram do PROMPT_IMPACTO: o changeset agora vai para a AIMM do ticket (--aim).\n' + USO);
   process.exit(2);
 }
-const aimPath = AIM ? (existsSync(join(ROOT, AIM)) ? join(ROOT, AIM) : AIM) : null;
-if (AIM && !existsSync(aimPath)) { console.error(`✗ AIM não encontrada: ${AIM}`); process.exit(2); }
-if (!existsSync(join(ROOT, 'modules')) || (!AIM && !FEATURES.length)) { console.error(USO); process.exit(2); }
+const aimPath = AIMM ? resolveImpactFile(isAbsolute(AIMM) ? AIMM : join(ROOT, AIMM)) : null;
+if (AIMM && !existsSync(aimPath)) { console.error(`✗ AIMM não encontrada: ${AIMM}`); process.exit(2); }
+if (!existsSync(join(ROOT, 'modules')) || (!AIMM && !FEATURES.length)) { console.error(USO); process.exit(2); }
 
 /* --------------------------- helpers --------------------------- */
 const splitRow = (r) => r.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
@@ -77,7 +78,7 @@ const idOf = (raw) => {
 };
 // Título do N3 (a linha `# …`) — é o nome canônico da feature, não uma paráfrase.
 const nomeOf = (raw) => (raw.split(/\r?\n/).find((l) => /^#\s/.test(l)) || '').replace(/^#\s+/, '').trim();
-// `SIGLA-SFS-NN Nome da feature`: código sozinho não diz nada a quem lê a AIM,
+// `SIGLA-SFS-NN Nome da feature`: código sozinho não diz nada a quem lê a AIMM,
 // e obriga a abrir os N3 um a um só para saber do que se trata.
 const rotulo = (id) => (NOMES.get(id) ? `${id} — ${NOMES.get(id)}` : id);
 
@@ -90,12 +91,12 @@ const NOMES = new Map();
 for (const [p, r] of N3RAW) { const i = idOf(r); if (i) NOMES.set(i, nomeOf(r)); }
 const aimRaw = aimPath ? readFileSync(aimPath, 'utf8') : '';
 if (aimPath && !FEATURES.length) {
-  // As features da `## Features` da AIM — o elo recíproco da `## Origem` dos N3.
+  // As features da `## Features` da AIMM — o elo recíproco da `## Origem` dos N3.
   FEATURES = [...new Set((sectionSlice(aimRaw.split(/\r?\n/), 'Features') || [])
     .filter((l) => l.trim().startsWith('|'))
     .map((l) => (splitRow(l)[0] || '').match(/\b[A-Z]{3}-[A-Z]{3}-\d{2}\b/))
     .filter((m) => m && m[0] !== 'SIGLA-SFS-NN').map((m) => m[0]))];
-  if (!FEATURES.length) { console.error(`✗ ${AIM}: a \`## Features\` não tem feature — preencha o roteamento (PROMPT_AIM, passo 3) ou passe --feature.`); process.exit(1); }
+  if (!FEATURES.length) { console.error(`✗ ${AIMM}: a \`## Features\` não tem feature — preencha o roteamento (PROMPT_AIMM, passo 3) ou passe --feature.`); process.exit(1); }
 }
 const ancoras = [];
 const semN3 = [];
@@ -253,11 +254,11 @@ if (!aimPath) {
   process.exit(0);
 }
 
-// Grava na `## Artefatos impactados` da AIM: o que já está lá fica (menos o exemplo do
+// Grava na `## Artefatos impactados` da AIMM: o que já está lá fica (menos o exemplo do
 // template), e entra o que falta — a chave é artefato + seção.
 const ls = aimRaw.split(/\r?\n/);
 const ini = ls.findIndex((l) => l.trim() === '## Artefatos impactados');
-if (ini < 0) { console.error(`✗ ${AIM}: sem a seção \`## Artefatos impactados\`.`); process.exit(1); }
+if (ini < 0) { console.error(`✗ ${AIMM}: sem a seção \`## Artefatos impactados\`.`); process.exit(1); }
 let fim = ls.findIndex((l, k) => k > ini && /^##\s/.test(l.trim()));
 if (fim < 0) fim = ls.length;
 const tIni = ls.findIndex((l, k) => k > ini && k < fim && /^\|\s*Artefato\s*\|/.test(l.trim()));
@@ -273,4 +274,4 @@ const saida = tIni >= 0
   ? [...ls.slice(0, tIni), ...tabela, ...ls.slice(tFim + 1)]
   : [...ls.slice(0, fim), ...tabela, '', ...ls.slice(fim)];
 writeFileSync(aimPath, saida.join('\n'));
-console.error(`✓ ${AIM}: ${novas.length} linha(s) derivada(s) gravada(s) em \`## Artefatos impactados\` (${existentes.length} já estavam; âncoras: ${ancoras.map((p) => rotulo(idOf(N3RAW.get(p)) || relative(ROOT, p))).join(', ')}).`);
+console.error(`✓ ${AIMM}: ${novas.length} linha(s) derivada(s) gravada(s) em \`## Artefatos impactados\` (${existentes.length} já estavam; âncoras: ${ancoras.map((p) => rotulo(idOf(N3RAW.get(p)) || relative(ROOT, p))).join(', ')}).`);

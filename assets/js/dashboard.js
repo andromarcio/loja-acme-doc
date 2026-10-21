@@ -30,7 +30,7 @@
 
   // Visão da sprint (ou da história): nos previews de branch de entrega, o gera-dashboard.py
   // recebe a base e grava em `delivery` o que a branch mudou — documentos, features com o
-  // estado antes e agora, tickets pelas chaves dos commits e pelas AIMs.
+  // estado antes e agora, tickets pelas chaves dos commits e pelas AIMMs.
   const aimStates = {
     rascunho: 'Rascunho', 'em-análise': 'Em análise', 'escopo-aprovado': 'Escopo aprovado',
     'em-execução': 'Em execução', 'concluído': 'Concluído',
@@ -79,13 +79,13 @@
       shift(item.before?.state, item.after?.state, state => states[state] || state),
       item.after ? (item.after.nextGate ? esc(gates[item.after.nextGate]) : 'Esteira concluída') : '—']);
     const ticketRows = delivery.tickets.map(item => [
-      item.path ? link(item.path, `${item.key}${item.title ? ` — ${item.title}` : ''}`) : `${esc(item.key)}<br><small>sem AIM nesta branch</small>`,
+      item.path ? link(item.path, `${item.key}${item.title ? ` — ${item.title}` : ''}`) : `${esc(item.key)}<br><small>sem AIMM nesta branch</small>`,
       item.after == null && item.before == null ? '—' : shift(item.before, item.after, state => aimStates[state] || state),
       item.features.length ? item.features.map(named).join('<br>') : '—', item.commits]);
     const sprintAim = delivery.unit?.type !== 'sprint' ? ''
-      : delivery.sprintAim ? `<p>AIM da sprint: ${link(delivery.sprintAim.path, `AIM-${delivery.unit.id}`)} —
+      : delivery.sprintAim ? `<p>AIMM da sprint: ${link(delivery.sprintAim.path, `AIMM-${delivery.unit.id}`)} —
           ${shift(delivery.sprintAim.before, delivery.sprintAim.after, state => aimStates[state] || state)} · ${delivery.sprintAim.commits} commit(s).</p>`
-      : `<p>Ainda não há AIM da sprint (<code>analise-impacto/AIM-${esc(delivery.unit.id)}.md</code>); ela é aberta no planejamento.</p>`;
+      : `<p>Ainda não há AIMM da sprint (<code>analise-impacto/AIMM-${esc(delivery.unit.id)}.md</code>); ela é aberta no planejamento.</p>`;
     const groups = categories.map(([key, label]) => [label, spec.filter(file => file.category === key)])
       .filter(([, files]) => files.length).map(([label, files]) =>
         `<h3>${label} <small>(${files.length})</small></h3>${table(['Documento', 'Mudança', 'Linhas', 'Ticket'], files.map(documentRow), '')}`).join('');
@@ -99,15 +99,15 @@
       <div class="dashboard-stats">
         ${card('deliveryDocs', 'Documentos alterados', spec.length, `${site.length} arquivo(s) do site e de scripts à parte`)}
         ${card('deliveryFeatures', 'Features tocadas', touched.length, `${count('A') + count('C')} incluída(s) · ${count('M') + count('R') + count('T')} alterada(s) · ${count('D')} excluída(s)`)}
-        ${card('deliveryTickets', 'Tickets', delivery.tickets.length, `${delivery.tickets.filter(item => item.path).length} com AIM nesta branch`)}
+        ${card('deliveryTickets', 'Tickets', delivery.tickets.length, `${delivery.tickets.filter(item => item.path).length} com AIMM nesta branch`)}
         ${card('deliveryWaiting', 'Aguardando checkpoint', alive.filter(item => item.after.nextGate).length, 'Entre as features tocadas')}
         ${card('deliveryReady', 'Prontas para desenvolvimento', alive.filter(item => ['especificado', 'em-desenvolvimento', 'implementado'].includes(item.after.state)).length, 'Entre as features tocadas')}
         ${card('deliveryCommits', 'Commits', delivery.commits, `${delivery.commitsWithoutKey} sem chave de ticket`)}
       </div>
       ${section(`Features da ${word}`, table(['Feature', 'Ticket', 'Mudança', 'Estado', 'Próximo checkpoint'], featureRows,
         'Esta branch ainda não mexe em nenhum N3.'))}
-      ${section('Tickets', `${sprintAim}${table(['Ticket', 'AIM', 'Features', 'Commits'], ticketRows,
-        'Nenhum ticket citado nos commits, nas AIMs da branch ou na AIM da sprint.')}`)}
+      ${section('Tickets', `${sprintAim}${table(['Ticket', 'AIMM', 'Features', 'Commits'], ticketRows,
+        'Nenhum ticket citado nos commits, nas AIMMs da branch ou na AIMM da sprint.')}`)}
       ${section('Documentos alterados', `${groups || '<p class="dashboard-empty">Nenhum documento de especificação alterado.</p>'}
         ${site.length ? `<details class="dashboard-more"><summary>Site, scripts e engine (${site.length})</summary>
           ${table(['Arquivo', 'Mudança', 'Linhas', 'Ticket'], site.map(documentRow), '')}</details>` : ''}`)}
@@ -212,7 +212,7 @@
       ${section('Artefatos de apoio', `<div class="dashboard-stats">
         ${card('prototypes', 'Protótipos HTML', data.prototypes, 'Exclui a biblioteca de componentes')}
         ${card('dataModels', 'Fragmentos de dados', data.dataModels, 'global/data-models — sem o índice')}
-      </div><p>${link('analise-impacto/INDEX.md', 'AIMs dos tickets')} · ${link('global/CONTAGEM-PF.md', 'Consolidado de contagem')} · ${link('modules/INDEX.md', 'Índice dos módulos')}</p>`)}
+      </div><p>${link('analise-impacto/INDEX.md', 'AIMMs dos tickets')} · ${link('global/CONTAGEM-PF.md', 'Consolidado de contagem')} · ${link('modules/INDEX.md', 'Índice dos módulos')}</p>`)}
       ${section('Como interpretar o painel', definitions)}`;
     document.querySelectorAll('#dashboardDomain button[data-domain]').forEach(button => button.addEventListener('click', () => {
       render(data, button.dataset.domain, 'repositorio');
