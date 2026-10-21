@@ -102,7 +102,7 @@ Regras que mantêm essa tabela honesta:
 - **`(E)` em toda estimativa**, e no total que a contém. Diga quantos dos N pontos são estimados; é a primeira coisa que a métrica vai querer saber.
 - **Nada de "a contar" sem dizer o que falta.** Ou tem número, ou tem o motivo de não ter.
 - **Zero é um número válido** e precisa de justificativa. "Conta zero porque a entrega já está dentro de outra feature" é uma linha legítima; um zero mudo volta como pergunta.
-- **Confira a soma com script** depois de cada rodada de números. Contas de cabeça sobrevivem a revisões visuais. O `validate-impact` faz a conta da AIMM da sprint — o Total contra as linhas de `## Alterações na spec, por Feature Set` e de `## Funções de dados alteradas`, e cada subtotal contra a sua —; a quebra por origem é sua: as linhas dela somam o subtotal de Transações.
+- **Confira a soma com script** depois de cada rodada de números. Contas de cabeça sobrevivem a revisões visuais. O `validate-impact` faz a conta da AIMM da sprint — o Total contra as linhas de `## Alterações em funcionalidades por Agrupamento Funcional` e de `## Funções de dados alteradas`, e cada subtotal contra a sua —; a quebra por origem é sua: as linhas dela somam o subtotal de Transações.
 
 ## Onde a estimativa pode viver
 

@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: {{VERSION}} | prompt: PROMPT_AIMM | atualizado: {{YYYY-MM-DD}} -->
 ---
 tipo: ticket
 ticket: [STRYxxxxxxx | ISSUE-NNN | EXP-… | PDTIC…-NN]
@@ -20,7 +20,7 @@ aberta-em: [AAAA-MM-DD]
   A AIMM é VERSIONADA à medida que o ticket avança — o Changelog registra cada versão
   e o git guarda as anteriores:
 
-    rascunho         aberta: Descrição, Contexto, Critérios e Features (PROMPT_AIMM, passos 1–4)
+    rascunho         aberta: Descrição, Critérios e Features (PROMPT_AIMM, passos 1–4)
     em-análise       o que SERÁ alterado: Artefatos impactados, Alterações previstas (passo 5)
     escopo-aprovado  o PO avalizou o escopo (`avalizado-por`) — só então a spec muda (passo 6)
     em-execução      as passadas de spec e código, uma por linha do changeset
@@ -49,25 +49,13 @@ aberta-em: [AAAA-MM-DD]
   origem. Se a fonte enuncia no formato Como/quero/para, transcreva nesse formato; se
   enuncia em prosa, transcreva a prosa. NUNCA converta uma na outra nem componha um
   Como/quero/para que a fonte não tem — derivá-lo inventa persona e valor que ninguém
-  aprovou. O que você concluir a partir dela vai para `## Contexto`, marcado como sua
-  leitura.
+  aprovou. O que a fonte não diz se elicita com o PO e, até ele decidir, fica em
+  `## Decisões pendentes`.
 -->
 
 > Transcrição da descrição do ticket `[CHAVE]` na ferramenta de origem.
 
 [o texto da fonte, como está]
-
-## Contexto
-
-<!--
-  LEITURA DO ANALISTA, não transcrição e não solução. Em 1–3 frases, explique o problema
-  ou a oportunidade de negócio que conecta a descrição aos artefatos já existentes:
-  quem é afetado, qual limitação atual ou resultado esperado motivou o ticket e, quando
-  conhecido, que comportamento/documento publicado será impactado. Diferencie fato da
-  fonte de premissa ou hipótese; não invente regra, critério, persona ou decisão.
--->
-
-[1–3 frases: o problema ou a oportunidade que motiva o ticket, em linguagem de negócio. Identifique fatos da fonte e, se houver, premissas da análise.]
 
 ## Critérios de aceite
 
@@ -124,7 +112,7 @@ Scenario: [resultado esperado em linguagem de negócio]
 
 > O **changeset**: os artefatos de documentação que o ticket vai criar ou alterar,
 > aprovados pelo PO ANTES de qualquer um deles mudar. Linhas `derivado:` nascem dos elos
-> (`node scripts/generate-impact-draft.mjs --aim <este arquivo>`); linhas `elicitado`
+> (`node scripts/generate-impact-draft.mjs --aimm <este arquivo>`); linhas `elicitado`
 > vêm da passada do analista (NFR e limiares de teste não-funcional não são deriváveis).
 > Só documentação entra aqui — código e artefatos técnicos (SDD, migração, runbook)
 > derivam destes e ficam fora do aval.
@@ -143,7 +131,7 @@ Scenario: [resultado esperado em linguagem de negócio]
 > NFR · PATTERNS · API-PATTERNS · MÉTRICA · PROTÓTIPO · REPOSITÓRIO`.
 > Operação: `criar | alterar | deprecar`.
 
-## Alterações na spec, por Feature Set
+## Alterações em funcionalidades por Agrupamento Funcional
 
 <!--
   O DELTA FUNCIONAL, por Feature Set, uma linha por feature — as novas também.
@@ -182,7 +170,7 @@ Scenario: [resultado esperado em linguagem de negócio]
 
 - [mensagens, regras e campos canônicos novos ou alterados — ou "Nenhum."]
 
-## Decisões de produto pendentes
+## Decisões pendentes
 
 - [onde o ticket contradiz o publicado, ou falta uma escolha — e o que TRAVA se ela não for tomada; ou "Nenhuma."]
 
@@ -201,5 +189,5 @@ Scenario: [resultado esperado em linguagem de negócio]
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico anterior preservado. |
 | [AAAA-MM-DD] | [autor] | AIM aberta | ticket `[CHAVE]` registrado; features mapeadas |
-| 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |

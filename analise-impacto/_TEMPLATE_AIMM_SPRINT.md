@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: {{VERSION}} | prompt: analise-impacto | atualizado: {{YYYY-MM-DD}} -->
 ---
 tipo: sprint
 sprint: [rótulo da sprint na organização — SP07, APIS_PUBLICAS_262-266]
@@ -33,7 +33,7 @@ estado: rascunho          # rascunho → concluído (apurável fechado e conferi
 |---|---|---|---|
 | `[CHAVE]` | [AIMM-[CHAVE]](AIMM-[CHAVE].md) | `SIGLA-SFS-NN` **[Nome]** | [o que o ticket entregou, em uma frase] |
 
-## Alterações na spec, por Feature Set
+## Alterações em funcionalidades por Agrupamento Funcional
 
 <!--
   Uma linha por feature, cada uma UMA vez. Coluna Ticket: a(s) chave(s) em crase —
@@ -60,10 +60,10 @@ estado: rascunho          # rascunho → concluído (apurável fechado e conferi
 | **Total** | **[soma]** | **[soma]** |
 
 > O `validate-impact` confere a aritmética: o Total contra a soma das linhas de
-> `## Alterações na spec, por Feature Set` e de `## Funções de dados alteradas`, e cada
+> `## Alterações em funcionalidades por Agrupamento Funcional` e de `## Funções de dados alteradas`, e cada
 > subtotal contra a sua. Rode-o a cada rodada de números novos.
 
-## Decisões de produto pendentes
+## Decisões pendentes
 
 - [o que ainda depende de decisão, e o que trava — ou "Nenhuma."]
 
@@ -71,5 +71,5 @@ estado: rascunho          # rascunho → concluído (apurável fechado e conferi
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico anterior preservado. |
 | [AAAA-MM-DD] | [autor] | AIM da sprint | consolidação dos tickets da [sprint] |
-| 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |

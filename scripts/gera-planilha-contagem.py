@@ -10,7 +10,7 @@ A coluna do Jira vai no **fim** de propósito: o bloco anterior é o layout que 
 equipe de métrica já usa, e deslocar as colunas dela quebraria a conferência.
 A chave sai das AIMs (`analise-impacto/AIM-*.md`) — a mesma fonte que a auditoria por
 sprint usa: na AIM do ticket, o `ticket:` do front-matter É a chave e a
-`## Alterações na spec, por Feature Set` lista as features alcançadas; na AIM da sprint,
+`## Alterações em funcionalidades por Agrupamento Funcional` lista as features alcançadas; na AIM da sprint,
 a chave vem da coluna `Ticket`. Feature que nenhum ticket alcançou sai com `—`; feature
 alcançada por mais de um sai com as chaves separadas por espaço.
 
@@ -239,11 +239,11 @@ def processos(caminho):
 # A chave NÃO vive no N3 (lá mora a `## Origem`, que aponta para a AIM do ticket). Quem
 # liga feature a ticket, com a natureza (incluída/alterada), é a AIM (decisão do PO,
 # 2026-09-28): a do ticket — `analise-impacto/AIM-<CHAVE>.md` — lista na
-# `## Alterações na spec, por Feature Set` as features que ele alcançou; a da sprint
+# `## Alterações em funcionalidades por Agrupamento Funcional` as features que ele alcançou; a da sprint
 # consolida a entrega, inclusive o que foi entregue sem ticket. O `tipo` do
 # front-matter separa as duas, e o `ticket:` é a chave — sem adivinhar pelo nome.
 PASTA_AIM = "analise-impacto"
-SECAO_ALTERACOES = "Alterações na spec, por Feature Set"
+SECAO_ALTERACOES = "Alterações em funcionalidades por Agrupamento Funcional"
 SECAO_DADOS = "Funções de dados alteradas"
 # Chave de ticket: a mesma lista do STORY_KEY_RE de scripts/lib/trace-index.mjs
 # (STRY…, ISSUE-n, PDTIC…-n, EXP-…) mais o formato Jira (PRJ25001-49). Na coluna
@@ -294,7 +294,7 @@ def mapa_tickets(raiz):
     Duas fontes, porque nenhuma sozinha cobre a sprint:
 
       • a AIM do ticket — a chave é o `ticket:` do front-matter e a
-        `## Alterações na spec, por Feature Set` lista as features alcançadas;
+        `## Alterações em funcionalidades por Agrupamento Funcional` lista as features alcançadas;
       • a AIM da sprint — a única fonte das features **entregues sem ticket**:
         ler só as AIMs dos tickets deixa a planilha com features a menos, com a
         mesma cara de estar completa.

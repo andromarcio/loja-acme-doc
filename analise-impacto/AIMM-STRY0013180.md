@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.26 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 6.4.27 | prompt: MIGRA_AIMM | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013180
@@ -19,10 +19,6 @@ aberta-em: 2026-10-18
 > Transcrição do ticket fictício do backlog da demonstração; não é um registro do ServiceNow real.
 
 A equipe de vendas precisa escolher quais produtos aparecem em destaque na página inicial da loja, com uma chamada, a ordem e o período em que cada destaque fica no ar.
-
-## Contexto
-
-A equipe de vendas decide o que fica em evidência na página inicial e por quanto tempo, sem depender da equipe de sistemas. Esta AIMM documenta o exemplo didático preenchido, não um escopo avalizado ou uma entrega real.
 
 ## Critérios de aceite
 
@@ -66,7 +62,7 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `global/MESSAGE-DICTIONARY.md` | MESSAGE-DICT | alterar | Vitrine | funcional | Ordem inválida, destaque sobreposto e destaque encerrado | elicitado |
 | `prototypes/vitrine/destaques/flow.html` | PROTÓTIPO | criar | — | funcional | Pesquisa, cadastro, edição e visualização de destaques | derivado: espelho do N2 |
 
-## Alterações na spec, por Feature Set
+## Alterações em funcionalidades por Agrupamento Funcional
 
 ### Destaques
 
@@ -88,7 +84,7 @@ Modelo negocial de Destaque, sem alterações físicas ou contagem ALI/AIE. A si
 - RC-03 — Período de vigência recebe entrada trabalhada no RULES-DICTIONARY.
 - Mensagens de Vitrine: `VIT_ORDEM_INVALIDA`, `VIT_DESTAQUE_SOBREPOSTO` e `VIT_DESTAQUE_ENCERRADO`.
 
-## Decisões de produto pendentes
+## Decisões pendentes
 
 - O responsável real deve revisar o escopo e conduzir CP1/CP2 antes de qualquer entrega.
 - A contagem será feita via CT; nenhum PF foi estimado.
@@ -102,6 +98,7 @@ Não encerrada. Esta AIMM está em análise e não declara entrega, aprovação 
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-21 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: sem Contexto, alterações por Agrupamento Funcional, Decisões pendentes, nome abaixo do ID, entidades sem PF. |
 | 2026-10-20 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: nome abaixo do ID, entidades sem PF. |
 | 2026-10-18 | Claude | Demonstração | Ticket fictício e Feature Set Destaques preenchidos, com 5 features em rascunho, sem aval e com a contagem pendente. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |

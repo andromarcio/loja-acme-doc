@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.26 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 6.4.27 | prompt: MIGRA_AIMM | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013190
@@ -19,10 +19,6 @@ aberta-em: 2026-10-18
 > Transcrição do ticket fictício do backlog da demonstração; não é um registro do ServiceNow real.
 
 Como atendente, quero encontrar os pedidos dos clientes, ver o detalhe de cada um e cancelar um pedido quando o cliente pedir, registrando o motivo.
-
-## Contexto
-
-O atendente precisa localizar o pedido de um cliente e cancelá-lo durante o atendimento, deixando registrado o motivo. Esta AIMM documenta o exemplo didático preenchido, não um escopo avalizado ou uma entrega real.
 
 ## Critérios de aceite
 
@@ -57,7 +53,7 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `global/MESSAGE-DICTIONARY.md` | MESSAGE-DICT | alterar | Baseline; Vendas | funcional | Período inválido, registro não encontrado e mensagens do cancelamento | elicitado |
 | `prototypes/vendas/gestao-pedidos/flow.html` | PROTÓTIPO | criar | — | funcional | Pesquisa, detalhe e cancelamento do pedido | derivado: espelho do N2 |
 
-## Alterações na spec, por Feature Set
+## Alterações em funcionalidades por Agrupamento Funcional
 
 ### Gestão de Pedidos
 
@@ -76,7 +72,7 @@ Modelo negocial do Pedido com os dados do cancelamento, sem alterações física
 - Baseline: `NOT_FOUND` e `INVALID_PERIOD`.
 - Mensagens de Vendas: `VND_CANCELAR_CONFIRMACAO`, `VND_PEDIDO_CANCELADO` e `VND_PEDIDO_NAO_CANCELAVEL`.
 
-## Decisões de produto pendentes
+## Decisões pendentes
 
 - O responsável real deve revisar o escopo e conduzir CP1/CP2 antes de qualquer entrega.
 - A contagem será feita via CT; nenhum PF foi estimado.
@@ -90,6 +86,7 @@ Não encerrada. Esta AIMM está em análise e não declara entrega, aprovação 
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-21 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: sem Contexto, alterações por Agrupamento Funcional, Decisões pendentes, nome abaixo do ID, entidades sem PF. |
 | 2026-10-20 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: nome abaixo do ID, entidades sem PF. |
 | 2026-10-18 | Claude | Demonstração | Ticket fictício e Feature Set Gestão de Pedidos preenchidos, com 3 features em rascunho, sem aval e com a contagem pendente. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |

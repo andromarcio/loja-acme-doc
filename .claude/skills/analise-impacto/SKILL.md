@@ -85,7 +85,7 @@ Sempre confronte item a item e registre a reclassificação explicitamente — �
 
 Toda sprint fecha com uma contagem das features impactadas, e **cada feature carrega de onde veio**: a chave do ticket na ferramenta de origem e, quando a fonte numera os critérios de aceite, o número do critério que aquela feature realiza. É requisito de cliente, não enfeite — é o que permite conferir a contagem lado a lado com a ferramenta, critério por critério.
 
-O elo já existe nos artefatos: a coluna `Critérios cobertos` do `## Origem` de cada N3 abre com as referências `CA-n`, e a `## Features` da AIMM do ticket as espelha. A coluna `CA-n` da `## Alterações na spec, por Feature Set` as repete, para quem lê a contagem não precisar abrir os N3 um a um.
+O elo já existe nos artefatos: a coluna `Critérios cobertos` do `## Origem` de cada N3 abre com as referências `CA-n`, e a `## Features` da AIMM do ticket as espelha. A coluna `CA-n` da `## Alterações em funcionalidades por Agrupamento Funcional` as repete, para quem lê a contagem não precisar abrir os N3 um a um.
 
 Duas regras mantêm isso honesto:
 
@@ -129,13 +129,13 @@ Trabalhe nesta ordem. As seções de impacto da AIMM chegam aqui com a visão do
 
 **1. `## Features`.** A ponte entre o vocabulário do ticket e o da spec. Confira a tabela contra o que foi entregue: feature que a entrega tocou e não está lá entra agora — e o ticket entra na `## Origem` do N3, porque o elo é recíproco (o `audit-trace-links` confere). A reclassificação NOVA × alteração se decide aqui, feature a feature.
 
-**2. `## Alterações na spec, por Feature Set`.** Depois de aplicar o delta nos N3, registre o que **efetivamente entrou**. Agrupe por Feature Set e traga uma linha por feature — **incluindo as features novas**, senão quem lê vê só metade do trabalho. A primeira célula traz o ID e, **na linha abaixo**, o nome canônico da feature. Depois vêm os critérios cobertos (`CA-n`, ou `—` quando a fonte não numera), a natureza (`incluída`/`alterada`), o que mudou em relação ao comportamento anterior e a contagem de regras e cenários acrescentados. PFB/PFL não entram na AIMM do ticket: o número permanece no N3 e no consolidado. Para uma feature nova, proponha o ID pela numeração livre do Feature Set — rode o preflight da instância para não colidir — e reconcilie duplicatas: duas análises paralelas costumam propor features diferentes para a mesma entrega.
+**2. `## Alterações em funcionalidades por Agrupamento Funcional`.** Depois de aplicar o delta nos N3, registre o que **efetivamente entrou**. Agrupe por Feature Set e traga uma linha por feature — **incluindo as features novas**, senão quem lê vê só metade do trabalho. A primeira célula traz o ID e, **na linha abaixo**, o nome canônico da feature. Depois vêm os critérios cobertos (`CA-n`, ou `—` quando a fonte não numera), a natureza (`incluída`/`alterada`), o que mudou em relação ao comportamento anterior e a contagem de regras e cenários acrescentados. PFB/PFL não entram na AIMM do ticket: o número permanece no N3 e no consolidado. Para uma feature nova, proponha o ID pela numeração livre do Feature Set — rode o preflight da instância para não colidir — e reconcilie duplicatas: duas análises paralelas costumam propor features diferentes para a mesma entrega.
 
 **3. `## Entidades alteradas`.** Agrupe as alterações físicas pela entidade: migração → tabela/coleção e atributo → natureza → contraste. Registre coluna, relacionamento, restrição ou migração, com *Antes*/*Agora* quando existir estado anterior. **Não** classifique ALI/AIE, não informe RLR/DER e não inclua PF nesta seção: a contagem continua no DATA-MODEL, nos N3 e no consolidado.
 
 **4. `## Impacto em dicionários`.** Mensagens, regras e campos canônicos novos ou alterados.
 
-**5. `## Decisões de produto pendentes`.** Onde o ticket contradiz o publicado, ou falta uma escolha antes de reescrever. Cada decisão precisa dizer **o que trava** se não for tomada.
+**5. `## Decisões pendentes`.** Onde o ticket contradiz o publicado, ou falta uma escolha antes de reescrever. Cada decisão precisa dizer **o que trava** se não for tomada.
 
 **6. `## Reconciliação`.** O declarado no changeset × o efetivamente tocado: `node scripts/validate-impact.mjs analise-impacto/AIMM-<CHAVE>.md --git-base <base>`. Declarado e não tocado é escopo não cumprido; tocado e não declarado é desvio — os dois precisam de justificativa escrita. Na AIMM aberta na entrega, diga que não houve escopo prévio.
 
@@ -152,7 +152,7 @@ O `validate-impact` é o contrato do estado `concluído`: sem a `sprint`, sem um
 Fechadas as AIMMs dos tickets da sprint, escreva `analise-impacto/AIMM-<sprint>.md` a partir do `analise-impacto/_TEMPLATE_AIMM_SPRINT.md`. Ela não repete as AIMMs dos tickets — consolida:
 
 - **`## Tickets da sprint`** — um ticket por linha, com o link da sua AIMM e o que ele entregou, em uma frase. Os tickets são os de front-matter `sprint:` igual a esta.
-- **`## Alterações na spec, por Feature Set`** — uma linha por feature, **uma vez só**, com a(s) chave(s) do ticket na coluna Ticket. Feature entregue sem ticket na ferramenta entra aqui com `⚠️ sem ticket`: a AIMM da sprint é a única fonte dela.
+- **`## Alterações em funcionalidades por Agrupamento Funcional`** — uma linha por feature, **uma vez só**, com a(s) chave(s) do ticket na coluna Ticket. Feature entregue sem ticket na ferramenta entra aqui com `⚠️ sem ticket`: a AIMM da sprint é a única fonte dela.
 - **`## Funções de dados alteradas`** e **`## Apurável da sprint`** — cada função uma vez, e o total de transações e de funções de dados, em PFB e PFL.
 
 O `validate-impact` confere a AIMM da sprint com as AIMMs dos tickets da pasta: os mesmos tickets (cada listado com a sua AIMM, de `sprint:` igual, e toda AIMM com esse `sprint:` na lista), cada feature e cada função de dados da **sprint** uma vez, a visão final de cada ticket concluído dentro dela (a feature que ele alterou, na linha que cita a chave dele), a natureza — `incluída` se algum ticket da sprint incluiu a feature, ainda que outro a tenha alterado depois — e o apurável como a soma das linhas. As entidades da AIMM do ticket são descritivas e não carregam PF para a consolidação. Em `concluído`, divergência reprova; em `rascunho`, avisa. Por isso a AIMM da sprint se escreve **depois** de fechadas as dos tickets: é a consolidação delas, não uma segunda fonte.

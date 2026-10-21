@@ -13,7 +13,7 @@
 //   front-matter  `ticket` (a mesma chave do nome do arquivo) e `estado` da esteira:
 //                 rascunho → em-análise → escopo-aprovado → em-execução → concluído
 //   seções        Descrição do ticket · Critérios de aceite · Features · Artefatos
-//                 impactados · Alterações na spec, por Feature Set · Reconciliação ·
+//                 impactados · Alterações em funcionalidades por Agrupamento Funcional · Reconciliação ·
 //                 Changelog
 //   de em-análise em diante: a `## Features` com ao menos uma feature, e o changeset sem
 //                 linha de exemplo do template e com as invariantes de cobertura:
@@ -26,7 +26,7 @@
 //     Existência: `alterar` sobre arquivo que não existe é erro; `criar` sobre arquivo que
 //     já existe é aviso só até `escopo-aprovado` — depois, a execução o criou.
 //   escopo-aprovado|em-execução|concluído → `avalizado-por`
-//   concluído     → `sprint`; a visão final em `## Alterações na spec, por Feature Set`
+//   concluído     → `sprint`; a visão final em `## Alterações em funcionalidades por Agrupamento Funcional`
 //                   (linha com ID de feature, sem exemplo do template); a
 //                   `## Reconciliação` preenchida — com conteúdo fora da citação de
 //                   instrução, que pode ficar —; e cada feature da `## Features` com N3
@@ -38,7 +38,7 @@
 //                   ou por especificar.
 //
 // AIMM da sprint (`tipo: sprint`): `sprint` no front-matter; `## Tickets da sprint` e
-// `## Alterações na spec, por Feature Set` com linhas; e conferida com as AIMMs dos tickets
+// `## Alterações em funcionalidades por Agrupamento Funcional` com linhas; e conferida com as AIMMs dos tickets
 // da pasta (em `concluído` reprova; em `rascunho`, avisa):
 //     S1  os mesmos tickets — cada listado com a sua AIMM, de `sprint:` igual; e toda AIMM
 //         com `sprint:` igual, listada — com a AIMM concluída;
@@ -135,9 +135,15 @@ if (!['ticket', 'sprint'].includes(tipo)) {
 /* ----------------------------- apoio ----------------------------- */
 const ID_RE = /\b[A-Z]{3}-[A-Z]{3}-\d{2}\b/;
 const splitRow = (r) => r.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
-const temSecao = (s) => lines.some((l) => l.trim() === `## ${s}`);
+// O nome anterior de uma seção vale como o atual (migra-aimm-ticket-layout).
+const LEGADO = {
+  '## Alterações na spec, por Feature Set': '## Alterações em funcionalidades por Agrupamento Funcional',
+  '## Decisões de produto pendentes': '## Decisões pendentes',
+};
+const titulo = (l) => LEGADO[l.trim()] || l.trim();
+const temSecao = (s) => lines.some((l) => titulo(l) === `## ${s}`);
 const corpoDe = (s, ls = lines) => {
-  const i = ls.findIndex((l) => l.trim() === `## ${s}`);
+  const i = ls.findIndex((l) => titulo(l) === `## ${s}`);
   if (i < 0) return [];
   const out = [];
   for (let k = i + 1; k < ls.length && !/^##\s/.test(ls[k].trim()); k++) out.push(ls[k]);
@@ -155,6 +161,8 @@ const tabelasDe = (s, ls = lines) => {
   }
   return out;
 };
+for (const l of lines.filter((x) => LEGADO[x.trim()]))
+  warns.push(`\`${l.trim()}\` é o nome anterior de \`${LEGADO[l.trim()]}\` — rode \`node scripts/migra-aimm-ticket-layout.mjs\`.`);
 const EXEMPLO = /\[[^\]]*\]|<(?:dom|fs|slug|CHAVE)>|SIGLA-SFS-NN/i; // placeholder do template
 const conteudoForaDaCitacao = (s) => corpoDe(s).join('\n').replace(/<!--[\s\S]*?-->/g, '').split('\n')
   .filter((l) => l.trim() && !/^\s*>/.test(l));
@@ -162,14 +170,14 @@ const conteudoForaDaCitacao = (s) => corpoDe(s).join('\n').replace(/<!--[\s\S]*?
 /* =========================== AIMM da sprint =========================== */
 if (tipo === 'sprint') {
   if (!fm.sprint || EXEMPLO.test(fm.sprint)) errors.push('front-matter sem `sprint:` (o rótulo da sprint).');
-  for (const s of ['Tickets da sprint', 'Alterações na spec, por Feature Set']) {
+  for (const s of ['Tickets da sprint', 'Alterações em funcionalidades por Agrupamento Funcional']) {
     if (!temSecao(s)) errors.push(`falta a seção \`## ${s}\`.`);
   }
   const tickets = tabelasDe('Tickets da sprint').flatMap((t) => t.linhas).filter((c) => !EXEMPLO.test(c[0] || ''));
-  const feats = tabelasDe('Alterações na spec, por Feature Set').flatMap((t) => t.linhas)
+  const feats = tabelasDe('Alterações em funcionalidades por Agrupamento Funcional').flatMap((t) => t.linhas)
     .filter((c) => ID_RE.test(c[0] || '') && !EXEMPLO.test(c.join(' ')));
-  if (temSecao('Alterações na spec, por Feature Set') && !feats.length)
-    errors.push('`## Alterações na spec, por Feature Set` sem linha de feature — a AIMM da sprint consolida as features entregues.');
+  if (temSecao('Alterações em funcionalidades por Agrupamento Funcional') && !feats.length)
+    errors.push('`## Alterações em funcionalidades por Agrupamento Funcional` sem linha de feature — a AIMM da sprint consolida as features entregues.');
   const conferidas = confereSprint(tickets);
   sai();
   console.log(`  ✓ AIMM da sprint bem-formada — ${tickets.length} ticket(s), ${feats.length} feature(s), conferida com ${conferidas} AIMM(s) de ticket${warns.length ? `, ${warns.length} aviso(s)` : ''}.`);
@@ -205,7 +213,7 @@ function confereSprint(tickets) {
       if (!out.includes(k) && new RegExp(`(?<![\\w-])${esc(k)}(?![\\w-])`, 'i').test(s)) out.push(k);
     return out;
   };
-  const alteracoesDe = (ls) => tabelasDe('Alterações na spec, por Feature Set', ls).flatMap((t) => {
+  const alteracoesDe = (ls) => tabelasDe('Alterações em funcionalidades por Agrupamento Funcional', ls).flatMap((t) => {
     const iF = Math.max(col(t, /^feature$/), 0);
     const iT = col(t, /^(ticket|item do jira)$/);
     const iN = col(t, /^natureza$/);
@@ -229,7 +237,7 @@ function confereSprint(tickets) {
   });
   const repetidos = (arr) => [...arr.reduce((m, x) => m.set(x, (m.get(x) || 0) + 1), new Map())].filter(([, n]) => n > 1);
   for (const [id, n] of repetidos(linhas.map((l) => l.id)))
-    acusa(`\`${id}\` aparece ${n} vezes em \`## Alterações na spec, por Feature Set\` — na AIMM da sprint, cada feature entra uma vez (a coluna Ticket junta as chaves).`);
+    acusa(`\`${id}\` aparece ${n} vezes em \`## Alterações em funcionalidades por Agrupamento Funcional\` — na AIMM da sprint, cada feature entra uma vez (a coluna Ticket junta as chaves).`);
   for (const [nome, n] of repetidos(funcoes.map((f) => norm(f.nome))))
     acusa(`a função de dados \`${nome}\` aparece ${n} vezes em \`## Funções de dados alteradas\` — cada função entra uma vez.`);
   for (const l of linhas) for (const k of l.chaves)
@@ -264,7 +272,7 @@ function confereSprint(tickets) {
       if (!porFeature.has(f.id)) porFeature.set(f.id, []);
       porFeature.get(f.id).push({ ...f, k: a.k });
       const l = linhas.find((x) => x.id === f.id);
-      if (!l) acusa(`\`${f.id}\` está na visão final da AIMM de \`${a.k}\`, mas não em \`## Alterações na spec, por Feature Set\` da sprint.`);
+      if (!l) acusa(`\`${f.id}\` está na visão final da AIMM de \`${a.k}\`, mas não em \`## Alterações em funcionalidades por Agrupamento Funcional\` da sprint.`);
       else if (!l.chaves.includes(a.k)) acusa(`\`${f.id}\`: a coluna Ticket da sprint não cita \`${a.k}\`, que alterou a feature.`);
     }
     for (const l of linhas.filter((x) => x.chaves.includes(a.k)))
@@ -330,7 +338,7 @@ else {
 const naEntrega = norm(fm['aberta-na-entrega']) === 'true';
 
 for (const s of ['Descrição do ticket', 'Critérios de aceite', 'Features', 'Artefatos impactados',
-  'Alterações na spec, por Feature Set', 'Reconciliação', 'Changelog']) {
+  'Alterações em funcionalidades por Agrupamento Funcional', 'Reconciliação', 'Changelog']) {
   if (!temSecao(s)) errors.push(`falta a seção \`## ${s}\`.`);
 }
 
@@ -392,10 +400,10 @@ if (depoisDe('escopo-aprovado') && !fm['avalizado-por'])
   errors.push(`estado \`${fm.estado}\` exige front-matter \`avalizado-por\` (o aval do PO no escopo).`);
 if (est === 'concluido') {
   if (!fm.sprint) errors.push('estado `concluído` exige `sprint:` — a sprint em que o ticket foi entregue.');
-  const final = tabelasDe('Alterações na spec, por Feature Set').flatMap((t) => t.linhas)
+  const final = tabelasDe('Alterações em funcionalidades por Agrupamento Funcional').flatMap((t) => t.linhas)
     .filter((c) => ID_RE.test(c[0] || '') && !EXEMPLO.test(c.join(' ')));
   if (!final.length)
-    errors.push('estado `concluído` exige a visão final em `## Alterações na spec, por Feature Set` — o que foi alterado, uma linha por feature, sem o exemplo do template.');
+    errors.push('estado `concluído` exige a visão final em `## Alterações em funcionalidades por Agrupamento Funcional` — o que foi alterado, uma linha por feature, sem o exemplo do template.');
   // A instrução do template vem em citação (`> Preenchida no fechamento…`) e pode ficar;
   // o que conta é o conteúdo FORA dela (e fora de comentário).
   if (!conteudoForaDaCitacao('Reconciliação').length)
