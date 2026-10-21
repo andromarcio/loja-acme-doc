@@ -1,6 +1,6 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_PROTOTYPE_FLOW_FULL | atualizado: 2026-10-18 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # Protótipo de Fluxo: Faixas de Frete
-> Feature Set: Faixas de Frete — Major Feature Set: Administração
+> Agrupamento Funcional: Faixas de Frete — Domínio: Administração
 > Spec de referência: [../../../modules/administracao/faixas-frete/README.md](../../../modules/administracao/faixas-frete/README.md)
 
 ---

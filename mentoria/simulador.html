@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Gerado de docqui-caixa-engine, docs/simulador/index.html (versão 6.4.26), num arquivo único para abrir direto no navegador: o CSS, as imagens, o docs/config.js e o github.js vão embutidos. Não edite aqui; gere de novo a partir do engine. -->
+<!-- Gerado de docqui-caixa-engine, docs/simulador/index.html (versão 7.0.0), num arquivo único para abrir direto no navegador: o CSS, as imagens, o docs/config.js e o github.js vão embutidos. Não edite aqui; gere de novo a partir do engine. -->
 <html lang="pt-BR" data-theme="light">
 <head>
 <meta charset="utf-8">
@@ -1405,7 +1405,7 @@ th { font-weight: 600; color: var(--fg); background: var(--bg-2); font-size: 12.
      ⚠ ! avisa). fx guarda o estado: feat, aim, branch, commit, merge e
      "+ caminho" / "~ caminho" / "- caminho" para arquivos que nenhum
      bloco file/fix mostra.
-     Roteiro revisado para Docqui Caixa 6.4.26, nos dois perfis. Recapturados
+     Roteiro revisado para Docqui Caixa 7.0.0, nos dois perfis. Recapturados
      numa instância criada pelo init-instance, com os arquivos que os passos
      mostram: o bootstrap; os gates de gravação dos N1, N2, DM e N3 (com o F9
      de regras × cenários e, no completo, o F10 do contrato da API); o
@@ -1421,8 +1421,8 @@ th { font-weight: 600; color: var(--fg); background: var(--bg-2); font-size: 12.
      Na 6.4.3, global/ nasce conforme o perfil: 36 moldes em requisitos,
      sem os três catálogos técnicos, e 39 em completo; o engine sincronizado
      continua contendo os moldes dos dois perfis.
-     Na 6.4.4, a tabela de Features do N2 sai sem a coluna Prioridade, como
-     o template: a feature não tem mais prioridade nem MVP.
+     Na 6.4.4, a tabela de Funcionalidades do N2 sai sem a coluna Prioridade, como
+     o template: a funcionalidade não tem mais prioridade nem MVP.
      {{VERSION}} acompanha docs/config.js; ele não substitui a revisão do roteiro.
      ════════════════════════════════════════════════════════════════════════ -->
 <script type="text/plain" id="dados-arquivos">
@@ -1435,11 +1435,11 @@ VERSION :: Versão do Docqui Caixa sincronizado ({{VERSION}}). Todo artefato ger
 .github/README.md :: Passo a passo para adotar a esteira na instância.
 .github/pull_request_template.md :: Modelo do PR: o checkpoint e a chave do ticket.
 .github/workflows/gate-check.yml :: Status check que bloqueia o PR: ordem dos gates, um gate por PR, espelho do INDEX em dia e o artefato da etapa no mesmo PR.
-.github/workflows/spec-guard.yml :: A CI de cada PR: validate-doc, valida-regras-cenarios, valida-contrato-api, audit-trace-links, suspect-links, validate-impact, índices de uso dos dicionários e de features por repositório, e diagrama ER. No PR da branch de entrega, também valida-commits-ticket e, para a main, valida-entrega.
+.github/workflows/spec-guard.yml :: A CI de cada PR: validate-doc, valida-regras-cenarios, valida-contrato-api, audit-trace-links, suspect-links, validate-impact, índices de uso dos dicionários e de funcionalidades por repositório, e diagrama ER. No PR da branch de entrega, também valida-commits-ticket e, para a main, valida-entrega.
 .github/workflows/promote-estado.yml :: Rede de segurança depois do merge: acusa o espelho da esteira defasado no INDEX, sem push na main.
 .github/workflows/pages.yml :: Publica o site: a main na raiz e cada branch de entrega aberta em /sprint/<id>/ ou /historia/<CHAVE>/.
 global/MASTER.md :: Identidade do sistema (sigla, nome), arquétipo, **Perfil** e **Cadência**, convenções de IDs e de nomenclatura. Fonte única: o N0 repete a sigla daqui.
-global/N0_PRODUCT_VISION.md :: **N0 — Visão de Produto.** Por que o produto existe, para quem, objetivos, KPIs, o que está dentro e fora do escopo e os Major Feature Sets previstos. Opção N0. Mantido pela PO.
+global/N0_PRODUCT_VISION.md :: **N0 — Visão de Produto.** Por que o produto existe, para quem, objetivos, KPIs, o que está dentro e fora do escopo e os Domínios previstos. Opção N0. Mantido pela PO.
 global/DATA-MODEL.md :: Índice do modelo de dados: modelos por domínio, enums, campos recentes e os **Arquivos Lógicos (APF)**, onde se contam as funções de dados.
 global/FIELD-DICTIONARY.md :: Campos canônicos (CPF, CEP, e-mail…): validação e mensagem escritas uma vez. O N3 cita `→ ver FIELD-DICTIONARY: CEP` em vez de reescrever.
 global/RULES-DICTIONARY.md :: Regras de negócio canônicas `RC-NN`, citadas pelos N3 pelo ID.
@@ -1450,21 +1450,21 @@ global/SIZING.md :: Convenções de contagem APF (IFPUG CPM 4.3.1) e COSMIC: tab
 global/CONTAGEM-PF.md :: Consolidado da contagem: espelha a `## Métricas de tamanho` dos N3 e os ALI do DATA-MODEL. Nunca recebe número que não exista na fonte.
 global/ALI-AIE-MAP.md :: Registro dos ALI e AIE válidos e das entidades que os constituem.
 global/API-PATTERNS.md :: Padrões de API (versão na rota, envelope de resposta), conferidos pelo validate-doc na seção `## API` do N3.
-global/AUTHZ.md :: Modelo de autorização: a feature é o átomo de permissão.
+global/AUTHZ.md :: Modelo de autorização: a funcionalidade é o átomo de permissão.
 global/DESIGN-SYSTEM.md :: Padrões de interface usados pelos protótipos.
 global/PATTERNS.md :: Catálogo de padrões de projeto (Strategy, Repository…), consumido pelo SDD.
-global/VOCABULARY-OVERRIDES.md :: Ajustes de vocabulário da instância para o validate-feature-semantics: verbos e termos liberados ou proibidos.
+global/VOCABULARY-OVERRIDES.md :: Ajustes de vocabulário da instância para o valida-semantica-funcionalidade: verbos e termos liberados ou proibidos.
 global/gates-config.yml :: Papéis dos checkpoints desta instância. Padrão: PO, DBA/Arquiteto, QA, Tech Lead.
-modules/INDEX.md :: Visão consolidada: domínios, rastreabilidade ticket → feature → código, a **esteira de checkpoints** (gerada pelo gates.py) e as pendências (geradas pela opção PD). É espelho, não fonte.
+modules/INDEX.md :: Visão consolidada: domínios, rastreabilidade ticket → funcionalidade → código, a **esteira de checkpoints** (gerada pelo gates.py) e as pendências (geradas pela opção PD). É espelho, não fonte.
 modules/_base-conhecimento/_template-base-conhecimento.md :: Modelo para os insumos brutos organizados pela opção 0 (transcrições, PDFs, anotações).
 analise-impacto/_TEMPLATE_AIMM.md :: Modelo da AIMM do ticket.
 analise-impacto/_TEMPLATE_AIMM_SPRINT.md :: Modelo da AIMM da sprint.
-qa/README.md :: Convenção dos planos de teste: `qa/<domínio>/<feature-set>/<feature>.md`, o artefato do CP3. O plano segue o molde `engine/templates/qa/_template-plano.md`, lido no engine e não semeado: massa de teste, cobertura das regras (`<ID>/RN-NN` → teste) e pontos a resolver.
-repos/INDEX.md :: Inventário dos repositórios de código, por domínio e tipo (frontend, BFF, domínio, worker, integração, técnico). A feature declara o repositório na `## Implementação`, e ele precisa constar aqui. A seção gerada **Features por repositório** é o índice reverso: quais features mudam se um serviço mudar.
+qa/README.md :: Convenção dos planos de teste: `qa/<domínio>/<agrupamento-funcional>/<funcionalidade>.md`, o artefato do CP3. O plano segue o molde `engine/templates/qa/_template-plano.md`, lido no engine e não semeado: massa de teste, cobertura das regras (`<ID>/RN-NN` → teste) e pontos a resolver.
+repos/INDEX.md :: Inventário dos repositórios de código, por domínio e tipo (frontend, BFF, domínio, worker, integração, técnico). A funcionalidade declara o repositório na `## Implementação`, e ele precisa constar aqui. A seção gerada **Funcionalidades por repositório** é o índice reverso: quais funcionalidades mudam se um serviço mudar.
 repos/_template-repo.md :: Modelo da ficha de um repositório.
 prototypes/INDEX.md :: Índice dos protótipos HTML (opções 6A a 6D).
 prototypes/_biblioteca-ds/ :: Biblioteca do design system para os protótipos: tokens, componentes e o shell.
-engine/ :: Cópia sincronizada do engine: prompts, templates, FEATURE-DEFINITION, N3-IDS e recursos de publicação para comparar previews. Não se edita na instância; chega pelo `sync-instance`.
+engine/ :: Cópia sincronizada do engine: prompts, templates, DEFINICAO-FUNCIONALIDADE, N3-IDS e recursos de publicação para comparar previews. Não se edita na instância; chega pelo `sync-instance`.
 scripts/ :: Os validadores e geradores do engine, sincronizados. Rodam no hook, na CI e à mão.
 </script>
 
@@ -1472,24 +1472,24 @@ scripts/ :: Os validadores e geradores do engine, sincronizados. Rodam no hook, 
 preflight-spec.mjs :: sessão · F1 :: Panorama do que já existe e das reservas do N2, inclusive N3 ainda não escrito. Mostra o próximo número sem preencher lacunas; informativo, sempre sai 0.
 ids-n3.mjs :: N2 · ao gravar · CI :: Reserva IDs pela primeira jornada confirmada, em modo seco e --write; --check --base compara com a base do PR e recusa renumeração, remoção de reserva e conflitos. Vale nos dois perfis.
 validate-doc.mjs :: ao gravar · F2 · CI :: Estrutura de N0 a N3 e do data-model: título, subtítulo de nível, seções obrigatórias, a sigla do MASTER, o repositório da implementação.
-validate-feature-semantics.mjs :: ao gravar · F2 :: O N3 é mesmo uma feature? FD-1 a FD-9 reprovam (verbo, atomicidade, regra invariante, descrição da entrega); FD-10 a FD-12 e [MSG] avisam.
+valida-semantica-funcionalidade.mjs :: ao gravar · F2 :: O N3 é mesmo uma funcionalidade? FD-1 a FD-9 reprovam (verbo, atomicidade, regra invariante, descrição da entrega); FD-10 a FD-12 e [MSG] avisam.
 valida-citacoes-dicionario.mjs :: ao gravar · F6 :: Toda citação `→ ver <X>-DICTIONARY: alvo` tem entrada no dicionário.
-valida-fluxo-principal.mjs :: ao gravar · F7 :: Toda feature da tabela do N2 tem nó com o nome exato no `## Fluxo Principal`.
-audit-trace-links.mjs :: ao gravar · F3 · CI :: O elo ticket ↔ feature concorda nos três lugares (`## Origem` do N3, `## Features` da AIMM, INDEX), inclusive o Status.
+valida-fluxo-principal.mjs :: ao gravar · F7 :: Toda funcionalidade da tabela do N2 tem nó com o nome exato no `## Fluxo Principal`.
+audit-trace-links.mjs :: ao gravar · F3 · CI :: O elo ticket ↔ funcionalidade concorda nos três lugares (`## Origem` do N3, `## Funcionalidades` da AIMM, INDEX), inclusive o Status.
 valida-enumeracao-contagem.mjs :: ao gravar · F8 :: A memória de cálculo de cada processo elementar é um bloco JSON de nomes, do tamanho do ALR e do DER da tabela.
-valida-regras-cenarios.mjs :: ao gravar · F9 · CI :: Toda regra de negócio do N3 tem ID `RN-NN`, único na feature, e ao menos um cenário com a tag `@RN-NN` dela. Tag sem regra reprova; N3 sem ID nenhum (anterior à 6.3.0) e regra só com cenário técnico avisam.
+valida-regras-cenarios.mjs :: ao gravar · F9 · CI :: Toda regra de negócio do N3 tem ID `RN-NN`, único na funcionalidade, e ao menos um cenário com a tag `@RN-NN` dela. Tag sem regra reprova; N3 sem ID nenhum (anterior à 6.3.0) e regra só com cenário técnico avisam.
 valida-contrato-api.mjs :: ao gravar · F10 · CI :: Num N3 com `## API`: E1 endpoints, E2 e E3 códigos de erro × Mapeamento, E4 código fora do ERROR-DICTIONARY, E5 Label PO da tabela da API fora de `## Campos`, E6 HTTP diferente do dicionário. Sem `## API`, não há o que conferir.
-monta-contexto.mjs :: sessão · 3B · 5B · 5A :: O pacote de contexto da feature (ou, com `--fs`, do Feature Set): o N3 e, dos globais, só o que ele usa. O que é citado e não existe abre o pacote como ❓; com `--base`, traz o delta.
-generate-impact-draft.mjs :: AIMM · passo 5 :: Deriva o changeset dos elos das features do ticket e o grava na AIMM. Não valida.
-validate-impact.mjs :: AIMM · CI :: Estrutura da AIMM, invariantes C1 a C3, portões por estado (aval, fechamento, estado final das features) e a AIMM da sprint conferida com as dos tickets.
+monta-contexto.mjs :: sessão · 3B · 5B · 5A :: O pacote de contexto da funcionalidade (ou, com `--agrupamento`, do Agrupamento Funcional): o N3 e, dos globais, só o que ele usa. O que é citado e não existe abre o pacote como ❓; com `--base`, traz o delta.
+generate-impact-draft.mjs :: AIMM · passo 5 :: Deriva o changeset dos elos das funcionalidades do ticket e o grava na AIMM. Não valida.
+validate-impact.mjs :: AIMM · CI :: Estrutura da AIMM, invariantes C1 a C3, portões por estado (aval, fechamento, estado final das funcionalidades) e a AIMM da sprint conferida com as dos tickets.
 gates.py :: esteira · CI :: Máquina de estados dos checkpoints: ordem, um gate por PR, quem e quando, estado derivado, artefato da etapa. Regenera o espelho no INDEX.
 valida-contagem-consolidada.mjs :: contagem :: O CONTAGEM-PF espelha a contagem dos N3: o PF, a pendência e o papel de cada processo elementar.
 delta-n3.mjs :: alteração :: O que mudou em cada N3 da AIMM entre a main e a branch, por seção. É a entrada do SDD em modo alteração.
-valida-artefatos-previstos.mjs :: CI do código · CP4 :: O código cita o ID de cada feature implementada e, no caminho de volta, toda regra `RN-NN` aparece como `<ID>/RN-NN` num teste e todo código de `error_codes` aparece no código. Com `--repo nome=dir`, confere somente aquele serviço; `--repos-dir` confere os repositórios clonados lado a lado.
-gera-indice-repos.mjs :: publicação · CI :: Deriva a seção Features por repositório do `## Implementação` dos N3; `--check` reprova quando o índice está defasado.
+valida-artefatos-previstos.mjs :: CI do código · CP4 :: O código cita o ID de cada funcionalidade implementada e, no caminho de volta, toda regra `RN-NN` aparece como `<ID>/RN-NN` num teste e todo código de `error_codes` aparece no código. Com `--repo nome=dir`, confere somente aquele serviço; `--repos-dir` confere os repositórios clonados lado a lado.
+gera-indice-repos.mjs :: publicação · CI :: Deriva a seção Funcionalidades por repositório do `## Implementação` dos N3; `--check` reprova quando o índice está defasado.
 valida-commits-ticket.mjs :: branch de entrega · CI :: Cada commit que toca a spec cita uma chave só.
 reverte-ticket.mjs :: branch de entrega :: Tira da branch da sprint o ticket que não foi entregue, revertendo os commits que citam a chave.
-valida-entrega.mjs :: branch de entrega · CI :: O portão do merge na main: AIMMs concluídas, features no estado final da esteira e a branch alterando só o que os tickets entregues declaram.
+valida-entrega.mjs :: branch de entrega · CI :: O portão do merge na main: AIMMs concluídas, funcionalidades no estado final da esteira e a branch alterando só o que os tickets entregues declaram.
 monta-site-preview.mjs :: CI · Pages :: Publica snapshots de commits: main e branches de entrega, com seletor, base do PR, Ver alterações e comparação por palavra no próprio artefato. Sem PR, explicita a referência à main.
 atualiza-pages.mjs :: publicação :: Regenera na ordem certa o que o site deriva: espelho da esteira, índice de repositórios, HTML das AIMMs, diagrama ER, árvore.
 init-instance.mjs :: engine → instância :: Cria uma instância em branco, já sincronizada, com o Perfil e a Cadência no MASTER.
@@ -1505,16 +1505,16 @@ titulo: Como usar este simulador
 niveis: N0 N1 N2 N3
 quem: você
 --- intro
-O **Docqui Caixa** especifica software em quatro níveis, da visão de produto (N0) à feature descrita campo a campo (N3). Prompts conduzem a escrita; scripts conferem o resultado. Este simulador acompanha a equipe da **Loja Acme** do repositório vazio até a entrega de uma sprint com três histórias.
+O **Docqui Caixa** especifica software em quatro níveis, da visão de produto (N0) à funcionalidade descrita campo a campo (N3). Prompts conduzem a escrita; scripts conferem o resultado. Este simulador acompanha a equipe da **Loja Acme** do repositório vazio até a entrega de uma sprint com três histórias.
 
 Em cada passo você vê quem trabalha, que opção do menu roda, o arquivo que nasce ou muda e o validador que confere. Quando um validador reprova, você lê a saída real, aplica a correção e roda de novo.
 --- nota conceito
 | Nível | Pergunta que responde | Arquivo |
 |---|---|---|
 | **N0** · Visão de Produto | Por que este software existe? | `global/N0_PRODUCT_VISION.md` |
-| **N1** · Major Feature Set | Quais são as grandes áreas do sistema? | `modules/<dominio>/README.md` |
-| **N2** · Feature Set | O que o usuário faz em cada área? | `modules/<dominio>/<feature-set>/README.md` |
-| **N3** · Feature | Como funciona, em detalhe, cada funcionalidade? | `modules/<dominio>/<feature-set>/f-<verbo>-<entidade>.md` |
+| **N1** · Domínio | Quais são as grandes áreas do sistema? | `modules/<dominio>/README.md` |
+| **N2** · Agrupamento Funcional | O que o usuário faz em cada área? | `modules/<dominio>/<agrupamento-funcional>/README.md` |
+| **N3** · Funcionalidade | Como funciona, em detalhe, cada funcionalidade? | `modules/<dominio>/<agrupamento-funcional>/f-<verbo>-<entidade>.md` |
 --- nota dica
 O botão principal, embaixo à direita, avança: roda o próximo comando, aplica a próxima correção ou passa ao passo seguinte. As setas → e ← do teclado fazem o mesmo. **Instância**, no topo, abre o painel suspenso: clique num arquivo para ver o que ele é e o trecho mais recente. O painel começa oculto para o conteúdo ocupar a largura disponível. Arraste a divisória do roteiro para redimensioná-lo no desktop. **Mapa** mostra o processo inteiro, cada validador e cada arquivo global; em **Arquivos**, a rolagem é única para todas as seções. Para dar aula sem cliques, marque *mostrar o passo inteiro*.
 --- nota dica
@@ -1524,7 +1524,7 @@ O seletor **Perfil**, no topo, troca a instância de perfil a qualquer momento. 
 --- nota regra
 **Branches e AIMMs:** história usa `historia/STRY0000000` e `analise-impacto/AIMM-STRY0000000.md`; sprint usa `sprint/SP07` e `analise-impacto/AIMM-SP07.md`. A cadência no MASTER decide a unidade de entrega. Este simulador percorre uma **sprint**: PRs de um checkpoint usam `checkpoint/STRY0013101-cp1` com destino a `sprint/SP07`, não a branch de história. Pages publica `historia/*` e `sprint/*`; no environment **github-pages**, permita as duas além da `main`. Envie a branch ao remoto com ao menos um commit próprio e aguarde o deploy.
 --- nota conceito
-A equipe: **Ana** (PO), **Rui** (analista de requisitos), **Bruno** (DBA), **Lia** (QA) e **Caio** (Tech Lead). O **Claude** conduz os prompts; o hook `spec-guard` e a CI rodam os validadores. O roteiro foi revisado para **Docqui Caixa 6.4.26**: explicita `historia/*`, `sprint/*` e os PRs temporários `checkpoint/*`, além do N3 com a Superfície logo antes do Comportamento de tela e a Origem antes do Changelog, o N2 sem a coluna Prioridade, global conforme o perfil, reservas de IDs imutáveis e revisão de previews por palavra, regras `RN-NN`, cenários `@RN-NN`, contrato da API e caminho de volta até o teste. AIMM significa **Análise de Impacto de Mudança para Manutenção**; no ticket, Contexto é leitura do analista, nome da feature fica abaixo do ID e entidades não carregam PF. O selo acompanha a versão do engine; a revisão do roteiro é explícita. As capturas novas foram verificadas numa instância isolada; datas e hashes do enredo são didáticos, e trechos sem mudança mantêm a captura anterior.
+A equipe: **Ana** (PO), **Rui** (analista de requisitos), **Bruno** (DBA), **Lia** (QA) e **Caio** (Tech Lead). O **Claude** conduz os prompts; o hook `spec-guard` e a CI rodam os validadores. O roteiro foi revisado para **Docqui Caixa 7.0.0**: usa os níveis Domínio, Agrupamento Funcional e Funcionalidade, explicita `historia/*`, `sprint/*` e os PRs temporários `checkpoint/*`, além do N3 com a Superfície logo antes do Comportamento de tela e a Origem antes do Changelog, o N2 sem a coluna Prioridade, global conforme o perfil, reservas de IDs imutáveis e revisão de previews por palavra, regras `RN-NN`, cenários `@RN-NN`, contrato da API e caminho de volta até o teste. AIMM significa **Análise de Impacto de Mudança para Manutenção**; no ticket, Contexto é leitura do analista, nome da funcionalidade fica abaixo do ID e entidades não carregam PF. O selo acompanha a versão do engine; a revisão do roteiro é explícita. As capturas novas foram verificadas numa instância isolada; datas e hashes do enredo são didáticos, e trechos sem mudança mantêm a captura anterior.
 
 === init
 cap: A
@@ -1539,9 +1539,9 @@ $ node scripts/init-instance.mjs ../loja-doc --perfil completo --cadencia sprint
 ✓ 39 molde(s) seedado(s) em ../loja-doc · perfil: completo · cadência: sprint
 → puxando o engine canônico (sync-instance)...
 engine {{VERSION}} → instância ../loja-doc ((sem VERSION))
-247 arquivos canônicos · 0 em sincronia · 0 divergem · 247 faltam · 0 extras em engine/
+253 arquivos canônicos · 0 em sincronia · 0 divergem · 253 faltam · 0 extras em engine/
 (…)
-✓ 247 arquivo(s) replicado(s) do canônico.
+✓ 253 arquivo(s) replicado(s) do canônico.
 INDEX.md atualizado: /…/loja-doc/modules/INDEX.md
 
 ✓ Instância inicializada em /…/loja-doc
@@ -1556,9 +1556,9 @@ $ node scripts/init-instance.mjs ../loja-doc --perfil requisitos --cadencia spri
 ✓ 36 molde(s) seedado(s) em ../loja-doc · perfil: requisitos · cadência: sprint
 → puxando o engine canônico (sync-instance)...
 engine {{VERSION}} → instância ../loja-doc ((sem VERSION))
-247 arquivos canônicos · 0 em sincronia · 0 divergem · 247 faltam · 0 extras em engine/
+253 arquivos canônicos · 0 em sincronia · 0 divergem · 253 faltam · 0 extras em engine/
 (…)
-✓ 247 arquivo(s) replicado(s) do canônico.
+✓ 253 arquivo(s) replicado(s) do canônico.
 INDEX.md atualizado: /…/loja-doc/modules/INDEX.md
 
 ✓ Instância inicializada em /…/loja-doc
@@ -1574,7 +1574,7 @@ Próximos passos:
 | `global/` | os arquivos que valem para o sistema inteiro: MASTER, N0, DATA-MODEL, os quatro dicionários, NFR, SIZING, CONTAGEM-PF |
 | `modules/` | N1, N2 e N3, e o `INDEX.md` que espelha tudo |
 | `analise-impacto/` | as AIMMs, uma por ticket e uma por sprint (por enquanto só os modelos) |
-| `qa/` | planos de teste por feature, o artefato do CP3 |
+| `qa/` | planos de teste por funcionalidade, o artefato do CP3 |
 | `repos/` | o inventário dos repositórios de código, o artefato do CP4 |
 | `prototypes/` | protótipos HTML e a biblioteca do design system |
 | `.claude/settings.json` | registra o hook `spec-guard`, que roda os validadores a cada arquivo gravado |
@@ -1585,7 +1585,7 @@ Todos os arquivos estão na árvore do painel **Instância**, aberto pelo botão
 --- nota dica
 O bootstrap regenera o espelho do INDEX com a esteira do perfil e a data do dia. Para isso, é necessário `python3` com PyYAML; se faltar, o `init-instance` avisa e pede para rodar `python3 scripts/gates.py promote --write` antes do primeiro commit. Os templates já trazem os índices gerados dos dicionários e dos repositórios.
 --- nota conceito
-**Uma sigla, muitos repositórios.** O inventário agrupa os serviços por domínio de negócio, não cria um N1 por serviço. No perfil `completo`, o 3B preenche o repositório no N3; no `requisitos`, o 3A o preenche quando existe inventário, sem exigir código nem CP4. O mapa e os validadores percorrem os serviços disponíveis no disco além do par backend/frontend; repositório ausente gera aviso. `gera-indice-repos` responde quais features cada serviço realiza.
+**Uma sigla, muitos repositórios.** O inventário agrupa os serviços por domínio de negócio, não cria um N1 por serviço. No perfil `completo`, o 3B preenche o repositório no N3; no `requisitos`, o 3A o preenche quando existe inventário, sem exigir código nem CP4. O mapa e os validadores percorrem os serviços disponíveis no disco além do par backend/frontend; repositório ausente gera aviso. `gera-indice-repos` responde quais funcionalidades cada serviço realiza.
 --- nota@requisitos perfil
 Em `requisitos`, a pasta global nasce **sem API-PATTERNS.md, AUTHZ.md e PATTERNS.md**. O DATA-MODEL é negocial, sem estrutura física de banco; MASTER/NFR não apontam para os catálogos omitidos, e gates-config tem só CP1/CP2. Os dicionários, N0, design system, vocabulário e contagem continuam presentes. Os moldes técnicos permanecem no engine sincronizado, não como arquivos ativos de global.
 --- fx
@@ -1668,9 +1668,9 @@ O `global/MASTER.md` é o contexto global do sistema, e o `CLAUDE.md` da raiz o 
 | Nível | Formato | Exemplo |
 |---|---|---|
 | Ticket de origem (entrada) | chave da ferramenta de origem | `STRY0012345` |
-| Major Feature Set (N1) | `[SIGLA]` | `VND` |
-| Feature Set (N2) | `[SIGLA]-[SFS]` | `VND-CHK` |
-| Feature (N3) | `[SIGLA]-[SFS]-[NN]` | `VND-CHK-01` |
+| Domínio (N1) | `[SIGLA]` | `VND` |
+| Agrupamento Funcional (N2) | `[SIGLA]-[SAF]` | `VND-CHK` |
+| Funcionalidade (N3) | `[SIGLA]-[SAF]-[NN]` | `VND-CHK-01` |
 
 ### Origem do ticket (plugável)
 
@@ -1703,9 +1703,9 @@ O `global/MASTER.md` é o contexto global do sistema, e o `CLAUDE.md` da raiz o 
 | Nível | Formato | Exemplo |
 |---|---|---|
 | Ticket de origem (entrada) | chave da ferramenta de origem | `STRY0012345` |
-| Major Feature Set (N1) | `[SIGLA]` | `VND` |
-| Feature Set (N2) | `[SIGLA]-[SFS]` | `VND-CHK` |
-| Feature (N3) | `[SIGLA]-[SFS]-[NN]` | `VND-CHK-01` |
+| Domínio (N1) | `[SIGLA]` | `VND` |
+| Agrupamento Funcional (N2) | `[SIGLA]-[SAF]` | `VND-CHK` |
+| Funcionalidade (N3) | `[SIGLA]-[SAF]-[NN]` | `VND-CHK-01` |
 
 ### Origem do ticket (plugável)
 
@@ -1732,7 +1732,7 @@ niveis: N0
 quem: Ana (PO) · Claude
 prompt: N0 · PROMPT_N0_VISAO
 --- intro
-Ana abre a sessão e escolhe a opção **N0**. O prompt entrevista a PO, uma pergunta por vez: propósito, personas, objetivos, KPIs, o que está dentro e fora do escopo e os Major Feature Sets previstos. O resultado é o documento de referência mais alto do sistema: todo N1, N2 e N3 é confrontado com ele.
+Ana abre a sessão e escolhe a opção **N0**. O prompt entrevista a PO, uma pergunta por vez: propósito, personas, objetivos, KPIs, o que está dentro e fora do escopo e os Domínios previstos. O resultado é o documento de referência mais alto do sistema: todo N1, N2 e N3 é confrontado com ele.
 --- chat
 @Ana (PO): Opção N0. A Loja Acme existe porque o cliente compra por telefone e só descobre o frete e o prazo depois de fechar o pedido.
 @Claude: [Estado: ESCOPO] Entendi o propósito. O que fica **fora** do produto? Declarar isso agora evita que um N1 futuro extrapole a visão.
@@ -1765,9 +1765,9 @@ Comprar em poucos passos, com o frete e o prazo à vista antes de confirmar.
 
 - Marketplace de outros vendedores.
 
-## Major Feature Sets previstos (N1)
+## Domínios previstos (N1)
 
-| Major Feature Set | SIGLA | O que cuida |
+| Domínio | SIGLA | O que cuida |
 |---|---|---|
 | Vendas | VND | carrinho, frete e fechamento do pedido |
 | Catálogo | CAT | produtos, preços e estoque |
@@ -1819,15 +1819,15 @@ estado: rascunho
 
 ## Tickets da sprint
 
-| Ticket | AIMM | Features | Resumo |
+| Ticket | AIMM | Funcionalidades | Resumo |
 |---|---|---|---|
 | `STRY0013101` | [AIMM-STRY0013101](AIMM-STRY0013101.md) | `VND-CHK-01` **Calcular Frete** | frete pelo CEP no checkout |
 | `STRY0013120` | [AIMM-STRY0013120](AIMM-STRY0013120.md) | `VND-CHK-01` **Calcular Frete** · `VND-CHK-02` **Consultar Resumo do Pedido** | prazo de entrega estimado |
 | `STRY0013135` | [AIMM-STRY0013135](AIMM-STRY0013135.md) | `VND-CHK-03` **Aplicar Cupom** | cupom de desconto |
 
-## Alterações na spec, por Feature Set
+## Alterações na spec, por Agrupamento Funcional
 
-| Feature | Ticket | CA-n | Natureza | PFB | PFL |
+| Funcionalidade | Ticket | CA-n | Natureza | PFB | PFL |
 |---|---|---|---|---|---|
 | `VND-CHK-01` **Calcular Frete** | `STRY0013101` | CA-1, CA-2, CA-3 | incluída | 4 (E) | 4 (E) |
 --- term CI · spec-guard | pr
@@ -1836,7 +1836,7 @@ validate-impact — analise-impacto/AIMM-SP07.md
   ⚠️  ticket `STRY0013101` sem AIMM em `analise-impacto/` — a sprint consolida as AIMMs dos tickets.
   ⚠️  ticket `STRY0013120` sem AIMM em `analise-impacto/` — a sprint consolida as AIMMs dos tickets.
   ⚠️  ticket `STRY0013135` sem AIMM em `analise-impacto/` — a sprint consolida as AIMMs dos tickets.
-  ✓ AIMM da sprint bem-formada — 3 ticket(s), 1 feature(s), conferida com 0 AIMM(s) de ticket, 3 aviso(s).
+  ✓ AIMM da sprint bem-formada — 3 ticket(s), 1 funcionalidade(s), conferida com 0 AIMM(s) de ticket, 3 aviso(s).
 --- nota conceito
 Em `rascunho`, a divergência entre a AIMM da sprint e as dos tickets é **aviso**: a consolidação está em curso. Em `concluído`, a mesma divergência reprova. O `(E)` marca número estimado; ele só vira número de verdade quando a contagem for feita no N3.
 --- nota regra
@@ -1862,8 +1862,8 @@ CA-3 | Quando o cliente informa um CEP não atendido, o sistema avisa que não e
 --- chat
 @Rui (analista): Opção TR. Chegou o STRY0013101: calcular o frete pelo CEP no checkout. O que já existe sobre isso?
 @hook F1: ⚠️ PREFLIGHT DE ESPECIFICAÇÃO (obrigatório antes de gerar N1/N2/N3):
-1. Rode `node scripts/preflight-spec.mjs <dominio> [feature-set]` e leia o estado atual.
-2. Confronte N0 + modules/INDEX.md + o N1 do domínio + o N2 do Feature Set.
+1. Rode `node scripts/preflight-spec.mjs <dominio> [agrupamento-funcional]` e leia o estado atual.
+2. Confronte N0 + modules/INDEX.md + o N1 do domínio + o N2 do Agrupamento Funcional.
 3. Produza um bloco "Contexto verificado" ANTES de especificar — não recrie IDs nem pastas existentes.
 --- term Claude, a pedido do hook F1 | sessao
 $ node scripts/preflight-spec.mjs vendas checkout
@@ -1873,20 +1873,20 @@ $ node scripts/preflight-spec.mjs vendas checkout
 ══════════════════════════════════════════════════════════════
 
 N0 (Visão de Produto): ✔ existe (global/N0_PRODUCT_VISION.md)
-  Major Feature Sets previstos no N0:
+  Domínios previstos no N0:
     - VND · Vendas
     - CAT · Catálogo
 
 INDEX geral: ✔ modules/INDEX.md — ATUALIZE-O ao concluir
 
-Major Feature Sets especificados (N1) em modules/: 0
+Domínios especificados (N1) em modules/: 0
 
-⚠ Major Feature Set "vendas" não encontrado em modules/ (nem por pasta nem por sigla).
+⚠ Domínio "vendas" não encontrado em modules/ (nem por pasta nem por sigla).
   Fluxo bottom-up: o N1/N2 pode não existir ainda — confirme antes de criar pasta nova.
 --- chat
-@Claude: [Relatório de triagem] Não há nada documentado sobre frete: nenhum N1, N2 ou N3 em `modules/`. O N0 prevê o Major Feature Set **Vendas** (`VND`). A necessidade é de **criação** e vem de um ticket. Rota recomendada: **AIMM** (abrir a AIMM do ticket) → **1A** (N1 Vendas) → **2A** (N2 Checkout) → **3A** (o N3 da feature).
+@Claude: [Relatório de triagem] Não há nada documentado sobre frete: nenhum N1, N2 ou N3 em `modules/`. O N0 prevê o Domínio **Vendas** (`VND`). A necessidade é de **criação** e vem de um ticket. Rota recomendada: **AIMM** (abrir a AIMM do ticket) → **1A** (N1 Vendas) → **2A** (N2 Checkout) → **3A** (o N3 da funcionalidade).
 --- nota conceito
-O `preflight-spec` é a metade determinística da triagem: lista o que existe, os IDs tomados e o próximo número livre de cada Feature Set. A outra metade é julgamento (a necessidade é nova ou altera algo que existe?), e essa fica com o prompt e o analista.
+O `preflight-spec` é a metade determinística da triagem: lista o que existe, os IDs tomados e o próximo número livre de cada Agrupamento Funcional. A outra metade é julgamento (a necessidade é nova ou altera algo que existe?), e essa fica com o prompt e o analista.
 
 === t1-aim
 cap: C
@@ -1899,7 +1899,7 @@ A **AIMM** (Análise de Impacto de Mudança para Manutenção) é o único artef
 --- chat
 @Claude: [Estado: CAPTURA] Vou transcrever a descrição como ela está no ServiceNow. A fonte usa o formato Como/quero/para, então ele fica. A ferramenta numera os critérios de aceite?
 @Rui (analista): Numera: CA-1, CA-2 e CA-3.
-@Claude: [Estado: ROTEAMENTO] Os três critérios cabem numa feature só, que ainda não existe: `VND-CHK-01` — Calcular Frete, no Feature Set Checkout. Ela entra na `## Features` como *a confirmar no 3A*, com o status 📋 A especificar.
+@Claude: [Estado: ROTEAMENTO] Os três critérios cabem numa funcionalidade só, que ainda não existe: `VND-CHK-01` — Calcular Frete, no Agrupamento Funcional Checkout. Ela entra na `## Funcionalidades` como *a confirmar no 3A*, com o status 📋 A especificar.
 --- file analise-impacto/AIMM-STRY0013101.md | novo
 <!-- docqui: {{VERSION}} | prompt: PROMPT_AIMM | atualizado: 2026-10-06 -->
 ---
@@ -1940,13 +1940,13 @@ Scenario: frete calculado pelo CEP
 # ── CA-2 · CA-3: CEP inválido, CEP fora da área (…)
 ```
 
-## Features
+## Funcionalidades
 
-| Feature (N3) | Domínio · Feature Set | Operação | Critérios cobertos | Status |
+| Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
 » | `VND-CHK-01`: Calcular Frete *(a confirmar no 3A)* | Vendas · Checkout | Criação | `CA-1, CA-2, CA-3` | 📋 A especificar |
 --- nota regra
-**Transcrição, não formulação.** A descrição vai para a AIMM como está na ferramenta; o que o analista conclui vai para `## Contexto`. **Número de critério só existe se a fonte numerar**, e é o número dela: um `CA-n` inventado parece conferível e não é. A união dos `CA-n` das features é o conjunto de critérios do ticket, sem repetir nem faltar.
+**Transcrição, não formulação.** A descrição vai para a AIMM como está na ferramenta; o que o analista conclui vai para `## Contexto`. **Número de critério só existe se a fonte numerar**, e é o número dela: um `CA-n` inventado parece conferível e não é. A união dos `CA-n` das funcionalidades é o conjunto de critérios do ticket, sem repetir nem faltar.
 --- fx
 aim STRY0013101 rascunho
 feat VND-CHK-01 a-especificar | Calcular Frete
@@ -1962,11 +1962,11 @@ prompt: AIMM · PROMPT_AIMM, passo 5
 O **changeset** é a tabela `## Artefatos impactados`: os arquivos de documentação que o ticket vai criar ou alterar. Primeiro o derivador lê os elos que já existem nos artefatos. Depois o analista completa, com a PO, o que nenhum elo revela.
 --- term Claude, passo 5 do PROMPT_AIMM | aim
 $ node scripts/generate-impact-draft.mjs --root . --aimm analise-impacto/AIMM-STRY0013101.md
-✗ Nenhuma feature-âncora com N3: VND-CHK-01
+✗ Nenhuma funcionalidade-âncora com N3: VND-CHK-01
 --- nota conceito
-Reprovação esperada. O derivador segue elos, e uma feature que ainda não tem N3 não tem elo nenhum. Para feature nova, as linhas de criação entram à mão, com a proveniência `elicitado`. Na história 2 você vê o derivador trabalhar sobre uma feature que já existe.
+Reprovação esperada. O derivador segue elos, e uma funcionalidade que ainda não tem N3 não tem elo nenhum. Para funcionalidade nova, as linhas de criação entram à mão, com a proveniência `elicitado`. Na história 2 você vê o derivador trabalhar sobre uma funcionalidade que já existe.
 --- chat
-@Claude: [Estado: CHANGESET] Além do N3: o domínio Vendas e o Feature Set Checkout ainda não existem, então entram o N1 e o N2. O modelo de dados do domínio também é novo. A mudança tem impacto de desempenho, segurança ou auditoria?
+@Claude: [Estado: CHANGESET] Além do N3: o domínio Vendas e o Agrupamento Funcional Checkout ainda não existem, então entram o N1 e o N2. O modelo de dados do domínio também é novo. A mudança tem impacto de desempenho, segurança ou auditoria?
 @Ana (PO): O frete precisa aparecer em até 2 segundos, senão o cliente desiste.
 @Claude: Vira uma linha `NFR` com limiar mensurável: p95 < 2 s.
 --- file analise-impacto/AIMM-STRY0013101.md | alterado
@@ -1979,7 +1979,7 @@ Reprovação esperada. O derivador segue elos, e uma feature que ainda não tem 
 | Artefato | Tipo | Operação | Seção | Natureza | O quê | Proveniência |
 |---|---|---|---|---|---|---|
 | `modules/vendas/README.md` | N1 | criar | — | funcional | domínio Vendas, com Carrinho e Checkout | elicitado |
-| `modules/vendas/checkout/README.md` | N2 | criar | — | funcional | Feature Set Checkout | elicitado |
+| `modules/vendas/checkout/README.md` | N2 | criar | — | funcional | Agrupamento Funcional Checkout | elicitado |
 | `modules/vendas/checkout/f-calcular-frete.md` | N3 | criar | — | funcional | VND-CHK-01 — Calcular Frete | elicitado |
 | `global/data-models/vendas.md` | DATA-MODEL | criar | — | dados | Pedido e Tabela de Frete | elicitado |
 | `global/DATA-MODEL.md` | DATA-MODEL | alterar | Arquivos Lógicos | dados | os dois ALI do domínio | elicitado |
@@ -1996,7 +1996,7 @@ $ node scripts/validate-impact.mjs analise-impacto/AIMM-STRY0013101.md
 validate-impact — analise-impacto/AIMM-STRY0013101.md
   ⚠️  C2: há mudança `funcional` sem linha `QA` — no perfil `requisitos`, aviso: o plano de testes fica com quem constrói.
   ⚠️  C3: há mudança `não-funcional` sem linha `QA` — no perfil `requisitos`, aviso: o teste do NFR fica com quem constrói.
-  ✓ AIMM bem-formada — em-análise, 1 feature(s), 6 linha(s) no changeset, 2 aviso(s).
+  ✓ AIMM bem-formada — em-análise, 1 funcionalidade(s), 6 linha(s) no changeset, 2 aviso(s).
 --- nota regra
 O `validate-impact` não julga o conteúdo: garante que a AIMM é bem-formada para o estado em que diz estar. As três invariantes de cobertura: **C1**, ao menos uma linha `N3`; **C2**, mudança funcional tem linha `QA`; **C3**, mudança não-funcional tem `NFR` **e** `QA`. O N1 e o N2 entram no changeset como os demais: na entrega, a branch só pode alterar o que algum ticket declarou.
 --- nota@requisitos perfil
@@ -2009,7 +2009,7 @@ Uma linha de plano de testes cobre as duas invariantes: a mudança funcional (C2
 --- term@completo Claude, passo 6 do PROMPT_AIMM | aim
 $ node scripts/validate-impact.mjs analise-impacto/AIMM-STRY0013101.md
 validate-impact — analise-impacto/AIMM-STRY0013101.md
-  ✓ AIMM bem-formada — em-análise, 1 feature(s), 7 linha(s) no changeset.
+  ✓ AIMM bem-formada — em-análise, 1 funcionalidade(s), 7 linha(s) no changeset.
 --- fx
 aim STRY0013101 em-análise
 
@@ -2051,13 +2051,13 @@ O estado diz que o escopo foi aprovado; o front-matter precisa dizer por quem e 
 --- term@completo Claude, passo 6 do PROMPT_AIMM | aim
 $ node scripts/validate-impact.mjs analise-impacto/AIMM-STRY0013101.md
 validate-impact — analise-impacto/AIMM-STRY0013101.md
-  ✓ AIMM bem-formada — escopo-aprovado, 1 feature(s), 7 linha(s) no changeset.
+  ✓ AIMM bem-formada — escopo-aprovado, 1 funcionalidade(s), 7 linha(s) no changeset.
 --- term@requisitos Claude, passo 6 do PROMPT_AIMM | aim
 $ node scripts/validate-impact.mjs analise-impacto/AIMM-STRY0013101.md
 validate-impact — analise-impacto/AIMM-STRY0013101.md
   ⚠️  C2: há mudança `funcional` sem linha `QA` — no perfil `requisitos`, aviso: o plano de testes fica com quem constrói.
   ⚠️  C3: há mudança `não-funcional` sem linha `QA` — no perfil `requisitos`, aviso: o teste do NFR fica com quem constrói.
-  ✓ AIMM bem-formada — escopo-aprovado, 1 feature(s), 6 linha(s) no changeset, 2 aviso(s).
+  ✓ AIMM bem-formada — escopo-aprovado, 1 funcionalidade(s), 6 linha(s) no changeset, 2 aviso(s).
 --- nota conceito
 A partir daqui a AIMM fica `em-execução`, e as passadas rodam **uma por linha do changeset**: 1A para o N1, 2A para o N2, 3A para o N3, e assim por diante. Na CI, o `spec-guard` roda o `validate-impact` em toda AIMM a cada push.
 --- fx
@@ -2067,18 +2067,18 @@ commit docs(aim): changeset avalizado (ServiceNow STRY0013101)
 === t1-n1
 cap: C
 fase: visao
-titulo: N1 — o Major Feature Set Vendas
+titulo: N1 — o Domínio Vendas
 niveis: N1
 quem: Ana (PO) · Rui (analista) · Claude
 prompt: 1A · PROMPT_1A_N1_negocio
 --- intro
-O **1A** levanta, em linguagem de negócio, o que o domínio faz, o que ele **não** faz (e a quem isso pertence) e quais são os seus Feature Sets. É aqui que nascem as siglas: `VND` para o domínio e `VND-CHK` para o Feature Set Checkout. A sigla do domínio nunca muda depois.
+O **1A** levanta, em linguagem de negócio, o que o domínio faz, o que ele **não** faz (e a quem isso pertence) e quais são os seus Agrupamentos Funcionais. É aqui que nascem as siglas: `VND` para o domínio e `VND-CHK` para o Agrupamento Funcional Checkout. A sigla do domínio nunca muda depois.
 --- chat
-@Claude: [Contexto verificado] O N0 prevê `VND · Vendas`; não há N1 em `modules/`. A sigla `VND` está livre. Proponho dois Feature Sets: Carrinho (`VND-CAR`) e Checkout (`VND-CHK`). Ainda não há regra nem campo canônico a referenciar.
+@Claude: [Contexto verificado] O N0 prevê `VND · Vendas`; não há N1 em `modules/`. A sigla `VND` está livre. Proponho dois Agrupamentos Funcionais: Carrinho (`VND-CAR`) e Checkout (`VND-CHK`). Ainda não há regra nem campo canônico a referenciar.
 @Ana (PO): Pode seguir. O Carrinho fica para outra sprint; nesta só especificamos o Checkout.
 --- file modules/vendas/README.md | novo
 <!-- docqui: {{VERSION}} | prompt: PROMPT_1A | atualizado: 2026-10-07 -->
-# Major Feature Set: Vendas
+# Domínio: Vendas
 > **Nível 1** - Visão estratégica do domínio - `VND`
 
 ## Descrição
@@ -2089,9 +2089,9 @@ Vendas cuida do caminho do cliente entre escolher os produtos e fechar o pedido:
 |---|---|
 | Cadastrar produtos e preços | Catálogo |
 
-## Feature Sets
+## Agrupamentos Funcionais
 
-| Feature Set | Descrição | Features |
+| Agrupamento Funcional | Descrição | Funcionalidades |
 |---|---|---|
 | [**Carrinho**](./carrinho/README.md) <small>VND-CAR</small> | itens escolhidos antes de fechar a compra | 0 |
 | [**Checkout**](./checkout/README.md) <small>VND-CHK</small> | frete, resumo e confirmação do pedido | 1 |
@@ -2122,7 +2122,7 @@ Depois de aprovado o texto de negócio, o **1B** (técnico) completa as seções
 --- nota@requisitos perfil
 No perfil `requisitos` não há 1B. As entidades do domínio saem pela opção **DM**, em linguagem de negócio.
 --- nota conceito
-O Feature Set Carrinho está listado no N1 sem N2. Isso é uma **pendência de existência**: a opção **PD** (`PROMPT_PENDENCIAS`) a mostra no `modules/INDEX.md`, com a rota para resolvê-la (2A).
+O Agrupamento Funcional Carrinho está listado no N1 sem N2. Isso é uma **pendência de existência**: a opção **PD** (`PROMPT_PENDENCIAS`) a mostra no `modules/INDEX.md`, com a rota para resolvê-la (2A).
 --- fx
 aim STRY0013101 em-execução
 commit docs(VND): N1 Vendas (ServiceNow STRY0013101)
@@ -2130,25 +2130,25 @@ commit docs(VND): N1 Vendas (ServiceNow STRY0013101)
 === t1-n2
 cap: C
 fase: fs
-titulo: N2 — o Feature Set Checkout
+titulo: N2 — o Agrupamento Funcional Checkout
 niveis: N2
 quem: Ana (PO) · Claude
 prompt: 2A · PROMPT_2A_N2_negocio
 --- intro
-O N2 é **integralmente negocial**: a jornada principal, as features, as telas e as **permissões por perfil**. Na primeira atribuição, confirme com a PO a ordem da tabela Features antes de reservar os IDs. O N3 copia a reserva: a ordem de geração dos arquivos não decide a numeração. As permissões vivem só aqui.
+O N2 é **integralmente negocial**: a jornada principal, as funcionalidades, as telas e as **permissões por perfil**. Na primeira atribuição, confirme com a PO a ordem da tabela Funcionalidades antes de reservar os IDs. O N3 copia a reserva: a ordem de geração dos arquivos não decide a numeração. As permissões vivem só aqui.
 --- file modules/vendas/checkout/README.md | novo
 <!-- docqui: {{VERSION}} | prompt: PROMPT_2A | atualizado: 2026-10-07 -->
-# Feature Set: Checkout
-> **Nível 2** - Major Feature Set: Vendas - `VND-CHK`
+# Agrupamento Funcional: Checkout
+> **Nível 2** - Domínio: Vendas - `VND-CHK`
 
 ## Descrição
 Checkout é a etapa em que o cliente informa onde quer receber, vê quanto custa a entrega e confirma o pedido.
 
 **Não faz**: montar o carrinho (Carrinho) nem cobrar o pagamento.
 
-## Features
+## Funcionalidades
 
-| Feature | Descrição |
+| Funcionalidade | Descrição |
 |---|---|
 | [**Calcular Frete**](f-calcular-frete.md) | valor da entrega pelo CEP |
 
@@ -2160,19 +2160,19 @@ flowchart TD
     B --> C(["Pedido pronto para confirmar"])
 ```
 
-## Dependências entre features
+## Dependências entre funcionalidades
 
 - Calcular Frete precisa de um carrinho com ao menos um item.
 
 ## Telas
 
-| Tela | Rota sugerida | Features atendidas | Descrição |
+| Tela | Rota sugerida | Funcionalidades atendidas | Descrição |
 |---|---|---|---|
 | Checkout | `/checkout` | **Calcular Frete** | endereço, frete e resumo da compra |
 
 ## Permissões por perfil
 
-> **Fonte única de permissões** deste Feature Set. As features (N3) não tratam de
+> **Fonte única de permissões** deste Agrupamento Funcional. As funcionalidades (N3) não tratam de
 > perfis nem permissões — qualquer acesso novo ou diferente entra nesta matriz.
 
 Perfis: **Cliente**, **Atendente**.
@@ -2189,15 +2189,15 @@ Perfis: **Cliente**, **Atendente**.
 | 2026-10-07 | Ana (PO) | N2 criado | Gerado pelo PROMPT 2A (STRY0013101) |
 --- term à mão, depois de confirmar a jornada | demanda
 $ node scripts/ids-n3.mjs modules/vendas/checkout/README.md
-VND-CHK: 1 feature(s) na ordem da tabela; IDs existentes preservados.
+VND-CHK: 1 funcionalidade(s) na ordem da tabela; IDs existentes preservados.
   VND-CHK-01 — Calcular Frete [reservar no N2]
   Próximo número: VND-CHK-02 (sem reutilizar lacunas).
 Modo seco: nenhum arquivo alterado. Após conferir a jornada e o diff previsto, aplique com --write.
 --- nota regra
-Ana confirma **Calcular Frete** como a primeira feature da jornada. O modo seco não escreve; depois da conferência, Rui aplica a reserva. O comentário invisível mantém o ID e o caminho, inclusive se a feature sair da tabela depois.
+Ana confirma **Calcular Frete** como a primeira funcionalidade da jornada. O modo seco não escreve; depois da conferência, Rui aplica a reserva. O comentário invisível mantém o ID e o caminho, inclusive se a funcionalidade sair da tabela depois.
 --- term à mão, reserva confirmada | demanda
 $ node scripts/ids-n3.mjs modules/vendas/checkout/README.md --write
-VND-CHK: 1 feature(s) na ordem da tabela; IDs existentes preservados.
+VND-CHK: 1 funcionalidade(s) na ordem da tabela; IDs existentes preservados.
   VND-CHK-01 — Calcular Frete [reservar no N2]
   Próximo número: VND-CHK-02 (sem reutilizar lacunas).
 ✓ 1 N2 atualizado(s); nenhum N3 renumerado. Confira o diff antes do commit.
@@ -2205,7 +2205,7 @@ VND-CHK: 1 feature(s) na ordem da tabela; IDs existentes preservados.
 @ modules/vendas/checkout/README.md
 - <!-- docqui: {{VERSION}} | prompt: PROMPT_2A | atualizado: 2026-10-07 -->
 + <!-- docqui: {{VERSION}} | prompt: IDS_N3 | atualizado: 2026-10-16 -->
-  ## Features
+  ## Funcionalidades
 +
 + <!-- docqui:n3-ids {"version":1,"ids":{"VND-CHK-01":"f-calcular-frete.md"}} -->
 - | [**Calcular Frete**](f-calcular-frete.md) | valor da entrega pelo CEP |
@@ -2217,15 +2217,15 @@ VND-CHK: 1 feature(s) na ordem da tabela; IDs existentes preservados.
 + | 2026-10-16 | ids-n3 | IDs reservados | VND-CHK-01 — Calcular Frete; IDs imutáveis. |
 --- term hook spec-guard · identidade · F2 · F7 | gravar
 $ node scripts/ids-n3.mjs --check
-VND-CHK: 1 feature(s) na ordem da tabela; IDs existentes preservados.
+VND-CHK: 1 funcionalidade(s) na ordem da tabela; IDs existentes preservados.
   VND-CHK-01 — Calcular Frete [preservado]
-✓ 1 Feature Set(s) conferido(s).
+✓ 1 Agrupamento Funcional(s) conferido(s).
 $ node scripts/validate-doc.mjs modules/vendas/checkout/README.md
 ✓ [N2] modules/vendas/checkout/README.md
 $ node scripts/valida-fluxo-principal.mjs modules/vendas/checkout/README.md
-✓ 1 Feature Set(s) conferido(s) — todo "## Fluxo Principal" contempla as features da própria tabela.
+✓ 1 Agrupamento Funcional(s) conferido(s) — todo "## Fluxo Principal" contempla as funcionalidades da própria tabela.
 --- nota conceito
-O `validate-doc` cobra a estrutura; o `valida-fluxo-principal` (F7), o nome exato de cada feature no diagrama. O `ids-n3 --check` cobra as reservas: ID já usado não muda quando a jornada ou a ordem de geração muda. Ao regenerar o N2, preserve `docqui:n3-ids` e as linhas anteriores do Changelog. Na história 2 veremos o F7 e a proteção de identidade reprovarem.
+O `validate-doc` cobra a estrutura; o `valida-fluxo-principal` (F7), o nome exato de cada funcionalidade no diagrama. O `ids-n3 --check` cobra as reservas: ID já usado não muda quando a jornada ou a ordem de geração muda. Ao regenerar o N2, preserve `docqui:n3-ids` e as linhas anteriores do Changelog. Na história 2 veremos o F7 e a proteção de identidade reprovarem.
 --- fx
 commit docs(VND): N2 Checkout (ServiceNow STRY0013101)
 
@@ -2283,7 +2283,7 @@ O CEP aparece no **índice** do FIELD-DICTIONARY, mas o dicionário só detalha 
 + - **Label Dev**: `cep`
 + - **Tipo**: texto (8 dígitos, sem máscara no armazenamento)
 + - **Validação**: exatamente 8 dígitos numéricos.
-+ - **Em aberto (por feature)**: obrigatoriedade.
++ - **Em aberto (por funcionalidade)**: obrigatoriedade.
 + - **Mensagem**: "CEP inválido."
 --- term hook spec-guard · F6 | gravar
 $ node scripts/valida-citacoes-dicionario.mjs global/data-models/vendas.md
@@ -2302,13 +2302,13 @@ niveis: N3
 quem: Ana (PO) · Claude
 prompt: 3A · PROMPT_3A_N3_negocio
 --- intro
-O **3A** desdobra cada critério de aceite em regra de negócio (se é invariante), em cenário Gherkin (se é comportamento observável) ou nos dois. Cada regra ganha um ID `RN-NN`, sequencial na feature e nunca reaproveitado, e o cenário que a verifica leva a tag `@RN-NN` na linha logo acima do `Scenario:`. Ao gravar o N3, o hook roda de uma vez os gates de estrutura, de semântica, de citação, de regras × cenários e de rastreabilidade, e devolve todos os desvios juntos.
+O **3A** desdobra cada critério de aceite em regra de negócio (se é invariante), em cenário Gherkin (se é comportamento observável) ou nos dois. Cada regra ganha um ID `RN-NN`, sequencial na funcionalidade e nunca reaproveitado, e o cenário que a verifica leva a tag `@RN-NN` na linha logo acima do `Scenario:`. Ao gravar o N3, o hook roda de uma vez os gates de estrutura, de semântica, de citação, de regras × cenários e de rastreabilidade, e devolve todos os desvios juntos.
 --- chat
-@Claude: [Contexto verificado] `VND-CHK-01 — Calcular Frete` já está reservado no N2, ainda sem arquivo N3. Vou copiar esse ID; a próxima reserva será 02, não uma renumeração da feature. O CEP tem entrada canônica no FIELD-DICTIONARY e permissões ficam no N2. As regras desta feature começam em `RN-01`.
+@Claude: [Contexto verificado] `VND-CHK-01 — Calcular Frete` já está reservado no N2, ainda sem arquivo N3. Vou copiar esse ID; a próxima reserva será 02, não uma renumeração da funcionalidade. O CEP tem entrada canônica no FIELD-DICTIONARY e permissões ficam no N2. As regras desta funcionalidade começam em `RN-01`.
 --- term F1 · preflight antes de escrever o N3 | sessao
 $ node scripts/preflight-spec.mjs vendas checkout
-Major Feature Set alvo: vendas  [N1 ✔ VND — Vendas]
-    Feature Set: checkout  [N2 ✔ VND-CHK]
+Domínio alvo: vendas  [N1 ✔ VND — Vendas]
+    Agrupamento Funcional: checkout  [N2 ✔ VND-CHK]
         Jornada registrada no N2 (não confundir posição com ID):
           VND-CHK-01 — Calcular Frete
         → próximo NN livre neste FS: VND-CHK-02 (reservas incluídas; nunca preencha lacunas)
@@ -2316,7 +2316,7 @@ Major Feature Set alvo: vendas  [N1 ✔ VND — Vendas]
 <!-- docqui: {{VERSION}} | prompt: PROMPT_3A | atualizado: 2026-10-07 -->
 ---
 id: VND-CHK-01
-feature_set: VND-CHK
+agrupamento_funcional: VND-CHK
 dominio: VND
 entidade: Pedido
 origem:
@@ -2333,7 +2333,7 @@ contagem:
 ---
 
 # Calcular Frete
-> **Nível 3** - Feature Set: Checkout — Major Feature Set: Vendas - `VND-CHK-01`
+> **Nível 3** - Agrupamento Funcional: Checkout — Domínio: Vendas - `VND-CHK-01`
 
 ## Descrição
 
@@ -2413,7 +2413,7 @@ Botão Calcular ao lado do campo CEP, na tela de checkout.
 --- term@completo hook spec-guard · F2 · F6 · F9 · F3 | gravar
 $ node scripts/validate-doc.mjs modules/vendas/checkout/f-calcular-frete.md
 ✓ [N3] modules/vendas/checkout/f-calcular-frete.md
-$ node scripts/validate-feature-semantics.mjs modules/vendas/checkout/f-calcular-frete.md
+$ node scripts/valida-semantica-funcionalidade.mjs modules/vendas/checkout/f-calcular-frete.md
 ✗ [N3-sem] modules/vendas/checkout/f-calcular-frete.md
     - [FD-7] Regra carrega REAÇÃO do sistema ("- **RN-02** — CEP fora de todas as faixas não é atendido; caso contrár…") — regra é invariante ("o quê"); a reação (mensagem/bloqueio) vira cenário em "## Cenários".
 $ node scripts/valida-citacoes-dicionario.mjs modules/vendas/checkout/f-calcular-frete.md
@@ -2429,12 +2429,12 @@ $ node scripts/audit-trace-links.mjs
 ✗ audit-trace-links: 2 inconsistência(s) de rastreabilidade
     - 🟠 STRY0013101 ↔ VND-CHK-01: par consistente nos dois artefatos, mas SEM linha na tabela de rastreabilidade do INDEX.md.
     - 🟡 STRY0013101 ↔ VND-CHK-01: status divergente — 📋 na AIMM, ✏️ rascunho no N3 (modules/vendas/checkout/f-calcular-frete.md).
-  Regra: todo par ticket↔feature fecha nos TRÊS lugares na mesma passada
-  (## Origem do N3 + ## Features da AIMM do ticket + linha do INDEX.md).
+  Regra: todo par ticket↔funcionalidade fecha nos TRÊS lugares na mesma passada
+  (## Origem do N3 + ## Funcionalidades da AIMM do ticket + linha do INDEX.md).
 --- term@requisitos hook spec-guard · F2 · F6 · F9 · F3 | gravar
 $ node scripts/validate-doc.mjs modules/vendas/checkout/f-calcular-frete.md
 ✓ [N3] modules/vendas/checkout/f-calcular-frete.md
-$ node scripts/validate-feature-semantics.mjs modules/vendas/checkout/f-calcular-frete.md
+$ node scripts/valida-semantica-funcionalidade.mjs modules/vendas/checkout/f-calcular-frete.md
 ✗ [N3-sem] modules/vendas/checkout/f-calcular-frete.md
     - [FD-7] Regra carrega REAÇÃO do sistema ("- **RN-02** — CEP fora de todas as faixas não é atendido; caso contrár…") — regra é invariante ("o quê"); a reação (mensagem/bloqueio) vira cenário em "## Cenários".
 $ node scripts/valida-citacoes-dicionario.mjs modules/vendas/checkout/f-calcular-frete.md
@@ -2448,8 +2448,8 @@ $ node scripts/audit-trace-links.mjs
 ✗ audit-trace-links: 2 inconsistência(s) de rastreabilidade
     - 🟠 STRY0013101 ↔ VND-CHK-01: par consistente nos dois artefatos, mas SEM linha na tabela de rastreabilidade do INDEX.md.
     - 🟡 STRY0013101 ↔ VND-CHK-01: status divergente — 📋 na AIMM, ✏️ rascunho no N3 (modules/vendas/checkout/f-calcular-frete.md).
-  Regra: todo par ticket↔feature fecha nos TRÊS lugares na mesma passada
-  (## Origem do N3 + ## Features da AIMM do ticket + linha do INDEX.md).
+  Regra: todo par ticket↔funcionalidade fecha nos TRÊS lugares na mesma passada
+  (## Origem do N3 + ## Funcionalidades da AIMM do ticket + linha do INDEX.md).
 --- nota@requisitos perfil
 A citação do CEP já passa: a entrada canônica nasceu no passo do modelo de dados negocial.
 --- nota conceito
@@ -2484,24 +2484,24 @@ O CEP aparece no **índice** do FIELD-DICTIONARY, mas o dicionário só detalha 
 + - **Label Dev**: `cep`
 + - **Tipo**: texto (8 dígitos, sem máscara no armazenamento)
 + - **Validação**: exatamente 8 dígitos numéricos.
-+ - **Em aberto (por feature)**: obrigatoriedade.
++ - **Em aberto (por funcionalidade)**: obrigatoriedade.
 + - **Mensagem**: "CEP inválido."
 --- fix Fechar o elo nos três lugares
-O par ticket ↔ feature vive na `## Origem` do N3, na `## Features` da AIMM e na rastreabilidade do INDEX. O 3A fecha os três na mesma passada e regenera o espelho da esteira: `python3 scripts/gates.py promote --write`.
+O par ticket ↔ funcionalidade vive na `## Origem` do N3, na `## Funcionalidades` da AIMM e na rastreabilidade do INDEX. O 3A fecha os três na mesma passada e regenera o espelho da esteira: `python3 scripts/gates.py promote --write`.
 @ analise-impacto/AIMM-STRY0013101.md
 - | `VND-CHK-01`: Calcular Frete *(a confirmar no 3A)* | Vendas · Checkout | Criação | `CA-1, CA-2, CA-3` | 📋 A especificar |
 + | [`VND-CHK-01`: Calcular Frete](../modules/vendas/checkout/f-calcular-frete.md) | Vendas · Checkout | Criação | `CA-1, CA-2, CA-3` | ✏️ Rascunho |
 @ modules/INDEX.md
 + | [`STRY0013101`](../analise-impacto/AIMM-STRY0013101.md) | [VND-CHK-01: Calcular Frete](./vendas/checkout/f-calcular-frete.md) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
 --- term hook spec-guard · F2 · F6 · F9 · F3 | gravar
-$ node scripts/validate-feature-semantics.mjs modules/vendas/checkout/f-calcular-frete.md
+$ node scripts/valida-semantica-funcionalidade.mjs modules/vendas/checkout/f-calcular-frete.md
 ✓ [N3-sem] modules/vendas/checkout/f-calcular-frete.md
 $ node scripts/valida-citacoes-dicionario.mjs modules/vendas/checkout/f-calcular-frete.md
 ✓ 3 citação(ões) de dicionário conferida(s) — todas têm entrada.
 $ node scripts/valida-regras-cenarios.mjs modules/vendas/checkout/f-calcular-frete.md
 ✓ 1 N3 conferido(s): toda regra com ID tem cenário que a verifica.
 $ node scripts/audit-trace-links.mjs
-✓ audit-trace-links: elos ticket↔feature consistentes nas três fontes — 1 par(es), 1 AIMM(s), 1 feature(s).
+✓ audit-trace-links: elos ticket↔funcionalidade consistentes nas três fontes — 1 par(es), 1 AIMM(s), 1 funcionalidade(s).
 --- nota regra
 **Regra ≠ comportamento.** Uma regra de negócio é a invariante, o "o quê". A reação do sistema (não salva, exibe mensagem, bloqueia) é cenário. E "conforme o Design System" nunca é texto final: a mensagem sai do catálogo, com o texto literal.
 --- nota regra
@@ -2571,10 +2571,10 @@ INDEX.md atualizado: ./modules/INDEX.md
 $ node scripts/audit-trace-links.mjs
 ✗ audit-trace-links: 1 inconsistência(s) de rastreabilidade
     - 🟡 STRY0013101 ↔ VND-CHK-01: status divergente — ✏️ na AIMM, 📝 requisitos-aprovados no N3 (modules/vendas/checkout/f-calcular-frete.md).
-  Regra: todo par ticket↔feature fecha nos TRÊS lugares na mesma passada
-  (## Origem do N3 + ## Features da AIMM do ticket + linha do INDEX.md).
+  Regra: todo par ticket↔funcionalidade fecha nos TRÊS lugares na mesma passada
+  (## Origem do N3 + ## Funcionalidades da AIMM do ticket + linha do INDEX.md).
 --- fix Levar o novo status à AIMM e ao INDEX
-O espelho da esteira é gerado; a coluna **Status** da rastreabilidade, não. Ela muda à mão no INDEX e na `## Features` da AIMM, no mesmo PR do gate.
+O espelho da esteira é gerado; a coluna **Status** da rastreabilidade, não. Ela muda à mão no INDEX e na `## Funcionalidades` da AIMM, no mesmo PR do gate.
 @ analise-impacto/AIMM-STRY0013101.md
 - | [`VND-CHK-01`: Calcular Frete](…) | Vendas · Checkout | Criação | `CA-1, CA-2, CA-3` | ✏️ Rascunho |
 + | [`VND-CHK-01`: Calcular Frete](…) | Vendas · Checkout | Criação | `CA-1, CA-2, CA-3` | 📝 Requisitos aprovados |
@@ -2583,7 +2583,7 @@ O espelho da esteira é gerado; a coluna **Status** da rastreabilidade, não. El
 + | [`STRY0013101`](…) | [VND-CHK-01: Calcular Frete](…) | Vendas | 📝 Requisitos aprovados | 📋 | — | — | — |
 --- term CI · spec-guard | pr
 $ node scripts/audit-trace-links.mjs
-✓ audit-trace-links: elos ticket↔feature consistentes nas três fontes — 1 par(es), 1 AIMM(s), 1 feature(s).
+✓ audit-trace-links: elos ticket↔funcionalidade consistentes nas três fontes — 1 par(es), 1 AIMM(s), 1 funcionalidade(s).
 --- nota regra
 **Um gate por PR, com o artefato da etapa no mesmo PR.** Os motivos clássicos de reprovação do `gate-check`: gate pulado, mais de um gate no PR, `por` ou `em` vazios, `estado` diferente do derivado, espelho do INDEX defasado e, no CP3 e no CP4, o artefato da etapa ausente.
 --- fx
@@ -2604,17 +2604,17 @@ Com o texto de negócio aprovado, o dev roda o **3B**: completa o N3 com o que �
 $ node scripts/monta-contexto.mjs VND-CHK-01
 # Contexto — VND-CHK-01 — Calcular Frete
 
-> Gerado por `node scripts/monta-contexto.mjs VND-CHK-01` — não editar: a fonte é a instância. Traz o N3 e, de cada artefato global, só o que ele usa. A regra da feature se cita como `VND-CHK-01/RN-NN`.
+> Gerado por `node scripts/monta-contexto.mjs VND-CHK-01` — não editar: a fonte é a instância. Traz o N3 e, de cada artefato global, só o que ele usa. A regra da funcionalidade se cita como `VND-CHK-01/RN-NN`.
 
 **❓ Citado e não encontrado** — resolver antes de usar o pacote; nada aqui é para ser deduzido:
 
 - ❓ entidade "Pedido" sem seção no data-model
 - ❓ entidade "Tabela de Frete" sem seção no data-model
 
-## A feature — VND-CHK-01 — Calcular Frete
+## A funcionalidade — VND-CHK-01 — Calcular Frete
 (…)
 --- nota conceito
-No lugar de "cole aqui o FIELD-DICTIONARY, o RULES-DICTIONARY…", o `monta-contexto` junta o N3 e, de cada artefato global, só o que ele usa: a matriz de permissões do N2, as regras transversais do N1, as entidades do data-model que a feature toca e as entradas citadas dos dicionários. Os dois ❓ não são para deduzir: aqui eles são exatamente o que esta passada vai escrever, o fragmento físico do data-model de Vendas.
+No lugar de "cole aqui o FIELD-DICTIONARY, o RULES-DICTIONARY…", o `monta-contexto` junta o N3 e, de cada artefato global, só o que ele usa: a matriz de permissões do N2, as regras transversais do N1, as entidades do data-model que a funcionalidade toca e as entradas citadas dos dicionários. Os dois ❓ não são para deduzir: aqui eles são exatamente o que esta passada vai escrever, o fragmento físico do data-model de Vendas.
 --- file global/data-models/vendas.md | novo
 <!-- docqui: {{VERSION}} | prompt: PROMPT_3B | atualizado: 2026-10-09 -->
 # Data Model: Vendas
@@ -2653,7 +2653,7 @@ No lugar de "cole aqui o FIELD-DICTIONARY, o RULES-DICTIONARY…", o `monta-cont
 --- file modules/vendas/checkout/f-calcular-frete.md | alterado
 ---
 id: VND-CHK-01
-feature_set: VND-CHK
+agrupamento_funcional: VND-CHK
 dominio: VND
 entidade: Pedido
 » endpoints:
@@ -2704,9 +2704,9 @@ $ node scripts/valida-contrato-api.mjs modules/vendas/checkout/f-calcular-frete.
     E4 VND_CEP_NAO_ATENDIDO não existe no global/ERROR-DICTIONARY.md — registre-o lá (código novo é proposto com ⚠️ e aprovado).
     E5 linha 110: o campo da API aponta para "CEP", que não está em `## Campos`, `## Campos automáticos` nem `## Colunas do resultado` — corrija o Label PO ou use `—` se o campo é técnico.
 
-2 problema(s) em 1 N3. O front-matter espelha `## API` e `## Mapeamento de erros`; todo código existe no ERROR-DICTIONARY; todo campo da API aponta para um campo da feature.
+2 problema(s) em 1 N3. O front-matter espelha `## API` e `## Mapeamento de erros`; todo código existe no ERROR-DICTIONARY; todo campo da API aponta para um campo da funcionalidade.
 --- nota conceito
-O contrato é dado que o código copia, e o F10 confere que as partes que se espelham concordam. O **E4** pega o código de erro inventado no N3: a fonte única dos códigos, e do HTTP de cada um, é o ERROR-DICTIONARY. O **E5** pega o campo da API sem dono na feature: `CEP` não é um Label PO de `## Campos`; `CEP de entrega` é. `VALIDATION_ERROR` passa sem estar em `error_codes`: é um erro global do dicionário.
+O contrato é dado que o código copia, e o F10 confere que as partes que se espelham concordam. O **E4** pega o código de erro inventado no N3: a fonte única dos códigos, e do HTTP de cada um, é o ERROR-DICTIONARY. O **E5** pega o campo da API sem dono na funcionalidade: `CEP` não é um Label PO de `## Campos`; `CEP de entrega` é. `VALIDATION_ERROR` passa sem estar em `error_codes`: é um erro global do dicionário.
 --- fix Registrar o código e ligar o campo ao Label PO
 @ global/ERROR-DICTIONARY.md
   ## 2. Erros de Vendas
@@ -2716,7 +2716,7 @@ O contrato é dado que o código copia, e o F10 confere que as partes que se esp
 + | `cepEntrega` | string (8 dígitos) | sim | CEP de entrega |
 --- term hook spec-guard · F2 · F10 | gravar
 $ node scripts/valida-contrato-api.mjs modules/vendas/checkout/f-calcular-frete.md
-✓ 1 N3 conferido(s): o contrato da API concorda com o front-matter, o Mapeamento de erros, o ERROR-DICTIONARY e os campos da feature.
+✓ 1 N3 conferido(s): o contrato da API concorda com o front-matter, o Mapeamento de erros, o ERROR-DICTIONARY e os campos da funcionalidade.
 $ node scripts/validate-doc.mjs modules/vendas/checkout/f-calcular-frete.md
 ✓ [N3] modules/vendas/checkout/f-calcular-frete.md
 --- term Claude, fecho do 3B | demanda
@@ -2738,9 +2738,9 @@ niveis: N3
 quem: Bruno (DBA) · Rui (analista)
 prompt: gate modelo-dados
 --- intro@completo
-Bruno (DBA) revisa o modelo físico. O PR toca `global/data-models/`, e o CODEOWNERS o convoca. Aprovado o gate `modelo-dados`, a feature vai a 🧱 `modelo-validado` e passa a aguardar os testes.
+Bruno (DBA) revisa o modelo físico. O PR toca `global/data-models/`, e o CODEOWNERS o convoca. Aprovado o gate `modelo-dados`, a funcionalidade vai a 🧱 `modelo-validado` e passa a aguardar os testes.
 --- intro@requisitos
-Bruno (DBA/Arquiteto) revisa o modelo negocial. No perfil `requisitos`, o CP2 é o **último** checkpoint: aprovado o gate `modelo-dados`, a feature vai direto a 📋 `especificado`, o estado final da esteira, pronta para quem vai construir.
+Bruno (DBA/Arquiteto) revisa o modelo negocial. No perfil `requisitos`, o CP2 é o **último** checkpoint: aprovado o gate `modelo-dados`, a funcionalidade vai direto a 📋 `especificado`, o estado final da esteira, pronta para quem vai construir.
 --- file modules/vendas/checkout/f-calcular-frete.md | alterado
 ---
 id: VND-CHK-01
@@ -2756,11 +2756,11 @@ $ python3 scripts/gates.py check --base origin/sprint/SP07
 ✔ Esteira de gates: todas as transições são válidas.
   • modules/vendas/checkout/f-calcular-frete.md: estado → modelo-validado
 $ python3 scripts/gates.py status
-| Feature | Origem | Estado | Situação |
+| Funcionalidade | Origem | Estado | Situação |
 |---|---|---|---|
 | `VND-CHK-01` ([spec](./vendas/checkout/f-calcular-frete.md)) | STRY0013101 | 🧱 modelo-validado | aguardando **testes** (QA) |
 
-**0** de **1** feature(s) prontas para desenvolvimento.
+**0** de **1** funcionalidade(s) prontas para desenvolvimento.
 --- term@requisitos CI · gate-check | esteira
 $ python3 scripts/gates.py check --base origin/sprint/SP07
 ❌ Esteira de gates: transição inválida
@@ -2780,11 +2780,11 @@ $ python3 scripts/gates.py check --base origin/sprint/SP07
 ✔ Esteira de gates: todas as transições são válidas.
   • modules/vendas/checkout/f-calcular-frete.md: estado → especificado
 $ python3 scripts/gates.py status
-| Feature | Origem | Estado | Situação |
+| Funcionalidade | Origem | Estado | Situação |
 |---|---|---|---|
 | `VND-CHK-01` ([spec](./vendas/checkout/f-calcular-frete.md)) | STRY0013101 | 📋 especificado | 📋 pronto para desenvolvimento |
 
-**1** de **1** feature(s) prontas para desenvolvimento.
+**1** de **1** funcionalidade(s) prontas para desenvolvimento.
 --- nota conceito
 "Os requisitos estão prontos para implementar?" deixa de ser reunião e vira consulta: **pronto para dev** ⇔ `estado == especificado`. A seção *Esteira de checkpoints* do `modules/INDEX.md` é o espelho dessa consulta, regenerado pelo `gates.py promote --write` no mesmo PR, e o Status na AIMM e no INDEX acompanha.
 --- fx@completo
@@ -2806,7 +2806,7 @@ niveis: N3
 quem: Rui (analista) · Claude
 prompt: CT · PROMPT_CONTAGEM
 --- intro
-A contagem de Pontos de Função (IFPUG CPM 4.3.1) se faz **na feature**: a seção `## Métricas de tamanho` do N3, com a `### Memória de cálculo` que a sustenta. As funções de dados se contam no `global/DATA-MODEL.md`. Só depois os números são espelhados em `global/CONTAGEM-PF.md` e no INDEX. O consolidado nunca recebe um número que não exista na fonte.
+A contagem de Pontos de Função (IFPUG CPM 4.3.1) se faz **na funcionalidade**: a seção `## Métricas de tamanho` do N3, com a `### Memória de cálculo` que a sustenta. As funções de dados se contam no `global/DATA-MODEL.md`. Só depois os números são espelhados em `global/CONTAGEM-PF.md` e no INDEX. O consolidado nunca recebe um número que não exista na fonte.
 --- file modules/vendas/checkout/f-calcular-frete.md | alterado
 ## Métricas de tamanho
 
@@ -2847,12 +2847,12 @@ $ node scripts/valida-enumeracao-contagem.mjs modules/vendas/checkout/f-calcular
 --- file global/CONTAGEM-PF.md | alterado
 ## 1. Funções de Transação — Processos Elementares (PE)
 
-| # | Feature (N3) | Papel | Domínio | Tipo | ALR | DER | Complexidade | PF | Data | Status | Observação |
+| # | Funcionalidade (N3) | Papel | Domínio | Tipo | ALR | DER | Complexidade | PF | Data | Status | Observação |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 » | VND-CHK-01 | [Calcular Frete](../modules/vendas/checkout/f-calcular-frete.md) | principal | Vendas | SE | 2 | 5 | Média | 5 | 2026-10-10 | ✅ | |
 --- term à mão, depois de contar | contagem
 $ node scripts/valida-contagem-consolidada.mjs
-1 feature(s) contada(s) no N3 · 1 no consolidado
+1 funcionalidade(s) contada(s) no N3 · 1 no consolidado
 0 pendente(s) no front-matter · 0 em ## Pendências de contagem
 
 ✗ 2 divergência(s) de PF — a fonte manda; o consolidado a espelha:
@@ -2875,7 +2875,7 @@ O consolidado copia o N3, nunca o contrário. E a coluna **Contagem** do INDEX a
 + | [`STRY0013101`](…) | [VND-CHK-01: Calcular Frete](…) | Vendas | … | ✅ | 4 | — | — |
 --- term à mão, depois de contar | contagem
 $ node scripts/valida-contagem-consolidada.mjs
-1 feature(s) contada(s) no N3 · 1 no consolidado
+1 funcionalidade(s) contada(s) no N3 · 1 no consolidado
 0 pendente(s) no front-matter · 0 em ## Pendências de contagem
 ✓ O consolidado espelha a fonte.
 --- nota conceito
@@ -2988,12 +2988,12 @@ niveis: N3
 quem: Caio (Tech Lead) · Claude
 prompt: 5A · PROMPT_SDD
 --- intro
-Com a feature em 📋 `especificado`, o **5A** gera o SDD (design, pseudocódigo, sequência de implementação) em `arquitetura/sdd/`, na stack declarada no MASTER, e o time implementa. Antes disso o 5A recusa: é o mesmo critério do status check. O commit e o PR de código citam a feature e o ticket, e cada teste herda a regra que verifica: `VND-CHK-01/RN-NN` no nome. No CP4, o caminho de volta confere que isso chegou ao código.
+Com a funcionalidade em 📋 `especificado`, o **5A** gera o SDD (design, pseudocódigo, sequência de implementação) em `arquitetura/sdd/`, na stack declarada no MASTER, e o time implementa. Antes disso o 5A recusa: é o mesmo critério do status check. O commit e o PR de código citam a funcionalidade e o ticket, e cada teste herda a regra que verifica: `VND-CHK-01/RN-NN` no nome. No CP4, o caminho de volta confere que isso chegou ao código.
 --- chat
-@Caio (Tech Lead): Opção 5A para o Feature Set Checkout.
-@Claude: [Estado: ESCOPO] `VND-CHK-01` — Calcular Frete está 📋 especificado (CP1, CP2 e CP3 aprovados). Feature nova: gero o SDD completo, sem delta. Monto o contexto do Feature Set inteiro: N1, N2, entidades e dicionários entram uma vez.
+@Caio (Tech Lead): Opção 5A para o Agrupamento Funcional Checkout.
+@Claude: [Estado: ESCOPO] `VND-CHK-01` — Calcular Frete está 📋 especificado (CP1, CP2 e CP3 aprovados). Funcionalidade nova: gero o SDD completo, sem delta. Monto o contexto do Agrupamento Funcional inteiro: N1, N2, entidades e dicionários entram uma vez.
 --- term Claude, entrada do 5A | demanda
-$ node scripts/monta-contexto.mjs --fs VND-CHK --out /tmp/contexto-VND-CHK.md
+$ node scripts/monta-contexto.mjs --agrupamento VND-CHK --out /tmp/contexto-VND-CHK.md
 ✓ /tmp/contexto-VND-CHK.md: contexto de VND-CHK — 6 parte(s).
 --- term à mão, no repositório loja-api | pr
 $ git commit -m "feat(VND-CHK-01): cálculo de frete por faixa de CEP (ServiceNow STRY0013101)"
@@ -3028,23 +3028,23 @@ $ node scripts/validate-doc.mjs modules/vendas/checkout/f-calcular-frete.md
 ✓ [N3] modules/vendas/checkout/f-calcular-frete.md
 --- term publicação · índice reverso | demanda
 $ node scripts/gera-indice-repos.mjs
-✓ repos/INDEX.md: "Features por repositório" escrita — 1 repositório(s) com feature · 0 sem · 0 fora do inventário.
+✓ repos/INDEX.md: "Funcionalidades por repositório" escrita — 1 repositório(s) com funcionalidade · 0 sem · 0 fora do inventário.
 $ node scripts/gera-indice-repos.mjs --check
-✓ repos/INDEX.md: índice de repositórios em dia (1 repositório(s) com feature · 0 sem · 0 fora do inventário).
+✓ repos/INDEX.md: índice de repositórios em dia (1 repositório(s) com funcionalidade · 0 sem · 0 fora do inventário).
 --- nota conceito
-O índice **Features por repositório** liga `loja-api` a `VND-CHK-01` — Calcular Frete. Ele nasce do N3, não é preenchido à mão. Após mudar a `## Implementação`, regenere-o: a CI usa `--check`, e o `atualiza-pages` também o regenera.
+O índice **Funcionalidades por repositório** liga `loja-api` a `VND-CHK-01` — Calcular Frete. Ele nasce do N3, não é preenchido à mão. Após mudar a `## Implementação`, regenere-o: a CI usa `--check`, e o `atualiza-pages` também o regenera.
 --- term à mão, no loja-api, antes de aprovar o CP4 (é o que a CI dele roda) | pr
 $ node ../loja-doc/scripts/valida-artefatos-previstos.mjs --doc-root ../loja-doc --repo loja-api=.
-Verificando 1 feature(s) contra: loja-api
+Verificando 1 funcionalidade(s) contra: loja-api
 
 VND-CHK-01 (modules/vendas/checkout/f-calcular-frete.md):
   ✗ VND-CHK-01/RN-02: nenhum teste cita a regra — o teste do cenário @RN-02 leva `VND-CHK-01/RN-02` na tag ou no nome.
   ✗ VND_CEP_NAO_ATENDIDO: código de erro de `error_codes` que nenhum arquivo de código usa.
 
 ❌ 2 artefato(s) previsto(s) sem implementação correspondente.
-   Cada feature `implementado` precisa que o código referencie o ID dela nos repositórios declarados, que toda regra RN-NN tenha teste (`<ID>/RN-NN`) e que todo código de error_codes esteja no código.
+   Cada funcionalidade `implementado` precisa que o código referencie o ID dela nos repositórios declarados, que toda regra RN-NN tenha teste (`<ID>/RN-NN`) e que todo código de error_codes esteja no código.
 --- nota conceito
-O `valida-artefatos-previstos` é o CP4 mecânico. Ele roda na CI do repositório de **código**, com o de documentação ao lado, e confere, para cada feature `implementado`: que o código cita o ID (`@ExigeFuncionalidade("VND-CHK-01")`, uma migração, um cabeçalho de contrato); e o **caminho de volta**, o que a spec declara como dado: cada regra `RN-NN` aparece como `VND-CHK-01/RN-NN` num arquivo de teste, e cada código de `error_codes` aparece num arquivo de código (o teste não conta). Aqui, o teste do CEP fora da área citava o código de erro no nome, mas não a regra, e o serviço lançava um código que o N3 não declara.
+O `valida-artefatos-previstos` é o CP4 mecânico. Ele roda na CI do repositório de **código**, com o de documentação ao lado, e confere, para cada funcionalidade `implementado`: que o código cita o ID (`@ExigeFuncionalidade("VND-CHK-01")`, uma migração, um cabeçalho de contrato); e o **caminho de volta**, o que a spec declara como dado: cada regra `RN-NN` aparece como `VND-CHK-01/RN-NN` num arquivo de teste, e cada código de `error_codes` aparece num arquivo de código (o teste não conta). Aqui, o teste do CEP fora da área citava o código de erro no nome, mas não a regra, e o serviço lançava um código que o N3 não declara.
 --- fix O teste herda a regra; o serviço usa o código do contrato
 O nome do teste leva a regra que o cenário `@RN-02` verifica, como o plano do CP3 já dizia. O serviço lança o código que o N3 e o ERROR-DICTIONARY declaram, não um nome local.
 @ (loja-api) src/test/checkout/frete/FreteServiceTest.java
@@ -3055,7 +3055,7 @@ O nome do teste leva a regra que o cenário `@RN-02` verifica, como o plano do C
 + .orElseThrow(() -> Erro.negocio("VND_CEP_NAO_ATENDIDO"));
 --- term à mão, no loja-api, antes de aprovar o CP4 (é o que a CI dele roda) | pr
 $ node ../loja-doc/scripts/valida-artefatos-previstos.mjs --doc-root ../loja-doc --repo loja-api=.
-Verificando 1 feature(s) contra: loja-api
+Verificando 1 funcionalidade(s) contra: loja-api
 
 
 ✓ Todo artefato previsto tem código correspondente.
@@ -3087,24 +3087,24 @@ CA-3 | Quando o cliente abre o resumo antes de confirmar, o resumo mostra o praz
 --- term Claude, a pedido do hook F1 | sessao
 $ node scripts/preflight-spec.mjs vendas checkout
 N0 (Visão de Produto): ✔ existe (global/N0_PRODUCT_VISION.md)
-  Major Feature Sets previstos no N0:
+  Domínios previstos no N0:
     - VND · Vendas
     - CAT · Catálogo
 
 INDEX geral: ✔ modules/INDEX.md — ATUALIZE-O ao concluir
 
-Major Feature Sets especificados (N1) em modules/: 1
+Domínios especificados (N1) em modules/: 1
 
-Major Feature Set alvo: vendas  [N1 ✔ VND — Vendas]
-    Feature Set: checkout  [N2 ✔ VND-CHK]
+Domínio alvo: vendas  [N1 ✔ VND — Vendas]
+    Agrupamento Funcional: checkout  [N2 ✔ VND-CHK]
         - f-calcular-frete.md  `VND-CHK-01`
         → próximo NN livre neste FS: VND-CHK-02
 --- chat
-@Claude: [Relatório de triagem] O mesmo ticket tem duas rotas. **CA-1 e CA-2** mudam o cálculo que já existe em `VND-CHK-01` — Calcular Frete: é **alteração** (4A para o negócio, 4B para o técnico). **CA-3** pede uma consulta que não existe: é **criação** de `VND-CHK-02` — Consultar Resumo do Pedido (3A). O N2 Checkout ganha uma feature. Primeiro, a AIMM do ticket.
+@Claude: [Relatório de triagem] O mesmo ticket tem duas rotas. **CA-1 e CA-2** mudam o cálculo que já existe em `VND-CHK-01` — Calcular Frete: é **alteração** (4A para o negócio, 4B para o técnico). **CA-3** pede uma consulta que não existe: é **criação** de `VND-CHK-02` — Consultar Resumo do Pedido (3A). O N2 Checkout ganha uma funcionalidade. Primeiro, a AIMM do ticket.
 --- nota@requisitos perfil
 No perfil `requisitos`, a rota de alteração é só o **4A**: o 4B pertence ao fluxo técnico e não aparece no menu.
 --- nota regra
-**"Nova" para o ticket não é "nova" para a spec.** A reclassificação é feita feature a feature, por escrito, porque muda quem faz o trabalho e quanto se conta: função alterada vale 50% do tamanho; incluída, 100%.
+**"Nova" para o ticket não é "nova" para a spec.** A reclassificação é feita funcionalidade a funcionalidade, por escrito, porque muda quem faz o trabalho e quanto se conta: função alterada vale 50% do tamanho; incluída, 100%.
 
 === t2-aim
 cap: D
@@ -3152,34 +3152,34 @@ De onde veio cada linha: o **N3** do cabeçalho `Nível 3` da âncora; o **QA**,
 --- chat@completo
 @Claude: [Estado: CHANGESET] Passada com a PO. O FIELD-DICTIONARY é só candidato: não surge campo canônico novo. A rota da API é a mesma, só a resposta ganha o prazo: o API-PATTERNS não muda. A mudança tem impacto de desempenho, segurança ou auditoria?
 @Ana (PO): Não. O prazo vem no mesmo cálculo do frete.
-@Claude: Então podo as linhas do FIELD-DICTIONARY, do API-PATTERNS e do NFR, e acrescento à mão o que o derivador não vê: o N2 Checkout, o N3 da feature nova e o plano de testes dela.
+@Claude: Então podo as linhas do FIELD-DICTIONARY, do API-PATTERNS e do NFR, e acrescento à mão o que o derivador não vê: o N2 Checkout, o N3 da funcionalidade nova e o plano de testes dela.
 --- chat@requisitos
 @Claude: [Estado: CHANGESET] Passada com a PO. O FIELD-DICTIONARY é só candidato: não surge campo canônico novo. A mudança tem impacto de desempenho, segurança ou auditoria?
 @Ana (PO): Não. O prazo vem no mesmo cálculo do frete.
-@Claude: Então podo as linhas do FIELD-DICTIONARY e do NFR, e acrescento à mão o que o derivador não vê: o N2 Checkout e o N3 da feature nova.
+@Claude: Então podo as linhas do FIELD-DICTIONARY e do NFR, e acrescento à mão o que o derivador não vê: o N2 Checkout e o N3 da funcionalidade nova.
 --- fix@completo Podar e completar o changeset
 @ analise-impacto/AIMM-STRY0013120.md
 - | `global/FIELD-DICTIONARY.md` | FIELD-DICT | alterar | — | dados | revisar entrada (candidato — só toca se surgir campo/chave canônica) | derivado: referência no N3 |
 - | `global/API-PATTERNS.md` | API-PATTERNS | alterar | — | derivado | conferir conformidade da(s) rota(s) nova(s) com as diretrizes | derivado: ## API |
 - | `global/NFR.md` | NFR | alterar | — | não-funcional | ⚠️ elicitar: a mudança tem impacto de desempenho/segurança/auditoria/disponibilidade? | elicitar (analista) |
-+ | `modules/vendas/checkout/README.md` | N2 | alterar | Features/Fluxo/Telas | funcional | nova feature no Feature Set | elicitado |
++ | `modules/vendas/checkout/README.md` | N2 | alterar | Funcionalidades/Fluxo/Telas | funcional | nova funcionalidade no Agrupamento Funcional | elicitado |
 + | `modules/vendas/checkout/f-consultar-resumo-do-pedido.md` | N3 | criar | — | funcional | VND-CHK-02 — Consultar Resumo do Pedido | elicitado |
 + | `qa/vendas/checkout/consultar-resumo-do-pedido.md` | QA | criar | — | funcional | plano E2E do resumo | elicitado |
 --- fix@requisitos Podar e completar o changeset
 @ analise-impacto/AIMM-STRY0013120.md
 - | `global/FIELD-DICTIONARY.md` | FIELD-DICT | alterar | — | dados | revisar entrada (candidato — só toca se surgir campo/chave canônica) | derivado: referência no N3 |
 - | `global/NFR.md` | NFR | alterar | — | não-funcional | ⚠️ elicitar: a mudança tem impacto de desempenho/segurança/auditoria/disponibilidade? | elicitar (analista) |
-+ | `modules/vendas/checkout/README.md` | N2 | alterar | Features/Fluxo/Telas | funcional | nova feature no Feature Set | elicitado |
++ | `modules/vendas/checkout/README.md` | N2 | alterar | Funcionalidades/Fluxo/Telas | funcional | nova funcionalidade no Agrupamento Funcional | elicitado |
 + | `modules/vendas/checkout/f-consultar-resumo-do-pedido.md` | N3 | criar | — | funcional | VND-CHK-02 — Consultar Resumo do Pedido | elicitado |
 --- term@completo Claude, passo 6 do PROMPT_AIMM (com o aval da Ana) | aim
 $ node scripts/validate-impact.mjs analise-impacto/AIMM-STRY0013120.md
 validate-impact — analise-impacto/AIMM-STRY0013120.md
-  ✓ AIMM bem-formada — escopo-aprovado, 2 feature(s), 9 linha(s) no changeset.
+  ✓ AIMM bem-formada — escopo-aprovado, 2 funcionalidade(s), 9 linha(s) no changeset.
 --- term@requisitos Claude, passo 6 do PROMPT_AIMM (com o aval da Ana) | aim
 $ node scripts/validate-impact.mjs analise-impacto/AIMM-STRY0013120.md
 validate-impact — analise-impacto/AIMM-STRY0013120.md
   ⚠️  C2: há mudança `funcional` sem linha `QA` — no perfil `requisitos`, aviso: o plano de testes fica com quem constrói.
-  ✓ AIMM bem-formada — escopo-aprovado, 2 feature(s), 6 linha(s) no changeset, 1 aviso(s).
+  ✓ AIMM bem-formada — escopo-aprovado, 2 funcionalidade(s), 6 linha(s) no changeset, 1 aviso(s).
 --- nota regra
 **Poda** também é elicitação: linha candidata que a análise concluiu que não muda sai do changeset. Ficar com ela gera "declarado mas não tocado" na reconciliação.
 --- fx
@@ -3254,20 +3254,20 @@ O **4A** aplica a mudança num N3 que já existe: mostra o que muda, avalia o im
 --- term hook spec-guard · F2 · F9 · F3 | gravar
 $ node scripts/validate-doc.mjs modules/vendas/checkout/f-calcular-frete.md
 ✓ [N3] modules/vendas/checkout/f-calcular-frete.md
-$ node scripts/validate-feature-semantics.mjs modules/vendas/checkout/f-calcular-frete.md
+$ node scripts/valida-semantica-funcionalidade.mjs modules/vendas/checkout/f-calcular-frete.md
 ✓ [N3-sem] modules/vendas/checkout/f-calcular-frete.md
     ! [MSG] Texto do cenário não corresponde à chave do marcador (VND_PRAZO_POR_EMAIL): "CEP inválido." — atualize o texto ou o marcador (o catálogo é a fonte única).
 $ node scripts/valida-regras-cenarios.mjs modules/vendas/checkout/f-calcular-frete.md
 ✓ 1 N3 conferido(s): toda regra com ID tem cenário que a verifica.
 $ node scripts/audit-trace-links.mjs
 ✗ audit-trace-links: 1 inconsistência(s) de rastreabilidade
-    - 🔴 STRY0013120 ↔ VND-CHK-01: elo UNILATERAL — consta na ## Features de analise-impacto/AIMM-STRY0013120.md, falta na ## Origem de modules/vendas/checkout/f-calcular-frete.md.
+    - 🔴 STRY0013120 ↔ VND-CHK-01: elo UNILATERAL — consta na ## Funcionalidades de analise-impacto/AIMM-STRY0013120.md, falta na ## Origem de modules/vendas/checkout/f-calcular-frete.md.
   Informativos (não reprovam):
-    - ⚫ STRY0013120 ↔ VND-CHK-02: feature a especificar na ## Features de analise-impacto/AIMM-STRY0013120.md — ainda sem N3 (rota 3A); o elo fecha quando o 3A a criar.
-  Regra: todo par ticket↔feature fecha nos TRÊS lugares na mesma passada
-  (## Origem do N3 + ## Features da AIMM do ticket + linha do INDEX.md).
+    - ⚫ STRY0013120 ↔ VND-CHK-02: funcionalidade a especificar na ## Funcionalidades de analise-impacto/AIMM-STRY0013120.md — ainda sem N3 (rota 3A); o elo fecha quando o 3A a criar.
+  Regra: todo par ticket↔funcionalidade fecha nos TRÊS lugares na mesma passada
+  (## Origem do N3 + ## Funcionalidades da AIMM do ticket + linha do INDEX.md).
 --- nota conceito
-Dois achados de natureza diferente. O **[MSG]** é aviso: o marcador `# ← MESSAGE-DICTIONARY: <CHAVE>` vale para o cenário **seguinte**, e por isso fica nas linhas antes do `Scenario:`, junto da tag. Escrito dentro do cenário, ele vazou para "CEP inválido". O **🔴** reprova: o ticket lista a feature, mas a `## Origem` do N3 não lista o ticket. O F9 passa: a regra nova já nasceu com o cenário que a verifica.
+Dois achados de natureza diferente. O **[MSG]** é aviso: o marcador `# ← MESSAGE-DICTIONARY: <CHAVE>` vale para o cenário **seguinte**, e por isso fica nas linhas antes do `Scenario:`, junto da tag. Escrito dentro do cenário, ele vazou para "CEP inválido". O **🔴** reprova: o ticket lista a funcionalidade, mas a `## Origem` do N3 não lista o ticket. O F9 passa: a regra nova já nasceu com o cenário que a verifica.
 --- fix Marcador antes do cenário, e o elo nos três lugares
 @ modules/vendas/checkout/f-calcular-frete.md
   ## Origem
@@ -3285,15 +3285,15 @@ Dois achados de natureza diferente. O **[MSG]** é aviso: o marcador `# ← MESS
 @ modules/INDEX.md
 + | [`STRY0013120`](../analise-impacto/AIMM-STRY0013120.md) | [VND-CHK-01: Calcular Frete](./vendas/checkout/f-calcular-frete.md) | Vendas | … | 📋 | 4 | — | — |
 --- term hook spec-guard · F2 · F9 · F3 | gravar
-$ node scripts/validate-feature-semantics.mjs modules/vendas/checkout/f-calcular-frete.md
+$ node scripts/valida-semantica-funcionalidade.mjs modules/vendas/checkout/f-calcular-frete.md
 ✓ [N3-sem] modules/vendas/checkout/f-calcular-frete.md
 $ node scripts/valida-regras-cenarios.mjs modules/vendas/checkout/f-calcular-frete.md
 ✓ 1 N3 conferido(s): toda regra com ID tem cenário que a verifica.
 $ node scripts/audit-trace-links.mjs
-✓ audit-trace-links: elos ticket↔feature consistentes nas três fontes — 3 par(es), 2 AIMM(s), 1 feature(s).
-    - ⚫ STRY0013120 ↔ VND-CHK-02: feature a especificar na ## Features de analise-impacto/AIMM-STRY0013120.md — ainda sem N3 (rota 3A); o elo fecha quando o 3A a criar.
+✓ audit-trace-links: elos ticket↔funcionalidade consistentes nas três fontes — 3 par(es), 2 AIMM(s), 1 funcionalidade(s).
+    - ⚫ STRY0013120 ↔ VND-CHK-02: funcionalidade a especificar na ## Funcionalidades de analise-impacto/AIMM-STRY0013120.md — ainda sem N3 (rota 3A); o elo fecha quando o 3A a criar.
 --- nota dica
-**E se a feature fosse anterior à 6.3.0?** Num N3 cujas regras ainda são `1.`, `2.`, sem ID, o F9 só avisa. O 4A é a hora de migrar, feature a feature: `node scripts/migra-regras-rn.mjs <N3>` mostra, em simulação, o ID que cada regra recebe, na ordem atual, e lista regras e cenários lado a lado; com `--aplicar`, grava e acrescenta a linha no Changelog. Ele não marca cenário: dizer qual cenário verifica qual regra é análise. Até a marcação, o F9 reprova o N3 migrado.
+**E se a funcionalidade fosse anterior à 6.3.0?** Num N3 cujas regras ainda são `1.`, `2.`, sem ID, o F9 só avisa. O 4A é a hora de migrar, funcionalidade a funcionalidade: `node scripts/migra-regras-rn.mjs <N3>` mostra, em simulação, o ID que cada regra recebe, na ordem atual, e lista regras e cenários lado a lado; com `--aplicar`, grava e acrescenta a linha no Changelog. Ele não marca cenário: dizer qual cenário verifica qual regra é análise. Até a marcação, o F9 reprova o N3 migrado.
 --- fx
 aim STRY0013120 em-execução
 commit docs(VND-CHK-01): prazo de entrega — 4A (ServiceNow STRY0013120)
@@ -3354,7 +3354,7 @@ $ node scripts/validate-doc.mjs global/data-models/vendas.md
 $ node scripts/validate-doc.mjs modules/vendas/checkout/f-calcular-frete.md
 ✓ [N3] modules/vendas/checkout/f-calcular-frete.md
 $ node scripts/valida-contrato-api.mjs modules/vendas/checkout/f-calcular-frete.md
-✓ 1 N3 conferido(s): o contrato da API concorda com o front-matter, o Mapeamento de erros, o ERROR-DICTIONARY e os campos da feature.
+✓ 1 N3 conferido(s): o contrato da API concorda com o front-matter, o Mapeamento de erros, o ERROR-DICTIONARY e os campos da funcionalidade.
 --- nota conceito
 O campo novo da resposta aponta para `Prazo de entrega`, o Label PO que o 4A pôs em `## Campos`: o F10 confere essa ligação. Se o 4B tivesse escrito só `Prazo`, o E5 reprovaria, como no 3B. A rota não mudou, e por isso `endpoints` fica como está.
 --- term CI · gate-check | esteira
@@ -3363,7 +3363,7 @@ Nenhum N3 com gates alterado — nada a validar. ✔
 $ python3 scripts/gates.py promote --write
 INDEX.md atualizado: ./modules/INDEX.md
 --- nota regra
-Os estados manuais (`em-desenvolvimento`, `revisao-necessaria`, `deprecado`) são os únicos que não derivam dos gates. **Quem devolve a feature ao estado derivado é a entrega**: o fechamento da AIMM do ticket. O `validate-impact` não deixa a AIMM ir a `concluído` com a feature em `revisao-necessaria`. Você vai ver isso acontecer no capítulo da entrega.
+Os estados manuais (`em-desenvolvimento`, `revisao-necessaria`, `deprecado`) são os únicos que não derivam dos gates. **Quem devolve a funcionalidade ao estado derivado é a entrega**: o fechamento da AIMM do ticket. O `validate-impact` não deixa a AIMM ir a `concluído` com a funcionalidade em `revisao-necessaria`. Você vai ver isso acontecer no capítulo da entrega.
 --- fx
 feat VND-CHK-01 revisao-necessaria
 ~ modules/INDEX.md
@@ -3379,19 +3379,19 @@ quem: Ana (PO) · Claude
 prompt: 3A · PROMPT_3A_N3_negocio
 --- intro
 O CA-3 vira **VND-CHK-02 — Consultar Resumo do Pedido**, um modal aberto a partir do checkout. Antes de escrever o N3, inclua sua linha sem ID no N2 e reserve o próximo número. A reserva existente de **VND-CHK-01 — Calcular Frete** é preservada. O 3A copia 02 e fecha o elo nos três lugares.
---- fix Incluir a nova feature no N2 antes de escrever o N3
+--- fix Incluir a nova funcionalidade no N2 antes de escrever o N3
 @ modules/vendas/checkout/README.md
   | [**Calcular Frete**](f-calcular-frete.md) <small>VND-CHK-01</small> | valor da entrega pelo CEP |
 + | [**Consultar Resumo do Pedido**](f-consultar-resumo-do-pedido.md) | itens, frete e prazo antes de confirmar |
---- term à mão · reserva da nova feature | demanda
+--- term à mão · reserva da nova funcionalidade | demanda
 $ node scripts/ids-n3.mjs modules/vendas/checkout/README.md
-VND-CHK: 2 feature(s) na ordem da tabela; IDs existentes preservados.
+VND-CHK: 2 funcionalidade(s) na ordem da tabela; IDs existentes preservados.
   VND-CHK-01 — Calcular Frete [preservado]
   VND-CHK-02 — Consultar Resumo do Pedido [reservar no N2]
   Próximo número: VND-CHK-03 (sem reutilizar lacunas).
 Modo seco: nenhum arquivo alterado. Após conferir a jornada e o diff previsto, aplique com --write.
 $ node scripts/ids-n3.mjs modules/vendas/checkout/README.md --write
-VND-CHK: 2 feature(s) na ordem da tabela; IDs existentes preservados.
+VND-CHK: 2 funcionalidade(s) na ordem da tabela; IDs existentes preservados.
   VND-CHK-01 — Calcular Frete [preservado]
   VND-CHK-02 — Consultar Resumo do Pedido [reservar no N2]
   Próximo número: VND-CHK-03 (sem reutilizar lacunas).
@@ -3406,7 +3406,7 @@ VND-CHK: 2 feature(s) na ordem da tabela; IDs existentes preservados.
 <!-- docqui: {{VERSION}} | prompt: PROMPT_3A | atualizado: 2026-10-11 -->
 ---
 id: VND-CHK-02
-feature_set: VND-CHK
+agrupamento_funcional: VND-CHK
 entidade: Pedido
 origem:
   tipo: servicenow
@@ -3415,7 +3415,7 @@ estado: rascunho
 ---
 
 # Consultar Resumo do Pedido
-> **Nível 3** - Feature Set: Checkout — Major Feature Set: Vendas - `VND-CHK-02`
+> **Nível 3** - Agrupamento Funcional: Checkout — Domínio: Vendas - `VND-CHK-02`
 
 ## Descrição
 
@@ -3459,13 +3459,13 @@ Feature: Consultar Resumo do Pedido
 --- term hook spec-guard · F2 · F9 | gravar
 $ node scripts/validate-doc.mjs modules/vendas/checkout/f-consultar-resumo-do-pedido.md
 ✗ [N3] modules/vendas/checkout/f-consultar-resumo-do-pedido.md
-    - Feature de pesquisa/listagem sem a seção "## Colunas do resultado" (tabela dos campos exibidos no resultado da busca).
-$ node scripts/validate-feature-semantics.mjs modules/vendas/checkout/f-consultar-resumo-do-pedido.md
+    - Funcionalidade de pesquisa/listagem sem a seção "## Colunas do resultado" (tabela dos campos exibidos no resultado da busca).
+$ node scripts/valida-semantica-funcionalidade.mjs modules/vendas/checkout/f-consultar-resumo-do-pedido.md
 ✓ [N3-sem] modules/vendas/checkout/f-consultar-resumo-do-pedido.md
 $ node scripts/valida-regras-cenarios.mjs modules/vendas/checkout/f-consultar-resumo-do-pedido.md
 ✓ 1 N3 conferido(s): toda regra com ID tem cenário que a verifica.
 --- nota conceito
-O verbo decide o tipo da feature. **Consultar**, **Pesquisar**, **Listar** e **Buscar** são features de consulta, e o validador cobra a tabela do que aparece no resultado. A nomenclatura vem do MASTER: *Listar* para lista sem filtro, *Pesquisar* para lista com filtro. O ID da regra é da feature: a `RN-01` daqui é `VND-CHK-02/RN-01` fora do N3, e não se confunde com a `VND-CHK-01/RN-01`.
+O verbo decide o tipo da funcionalidade. **Consultar**, **Pesquisar**, **Listar** e **Buscar** são funcionalidades de consulta, e o validador cobra a tabela do que aparece no resultado. A nomenclatura vem do MASTER: *Listar* para lista sem filtro, *Pesquisar* para lista com filtro. O ID da regra é da funcionalidade: a `RN-01` daqui é `VND-CHK-02/RN-01` fora do N3, e não se confunde com a `VND-CHK-01/RN-01`.
 --- fix Declarar as colunas do resultado
 @ modules/vendas/checkout/f-consultar-resumo-do-pedido.md
 + ## Colunas do resultado
@@ -3476,11 +3476,11 @@ O verbo decide o tipo da feature. **Consultar**, **Pesquisar**, **Listar** e **B
 + | Valor do frete | cadastro | — |
 + | Prazo prometido | cadastro | — |
 --- file modules/vendas/checkout/README.md | alterado
-## Features
+## Funcionalidades
 
 <!-- docqui:n3-ids {"version":1,"ids":{"VND-CHK-01":"f-calcular-frete.md","VND-CHK-02":"f-consultar-resumo-do-pedido.md"}} -->
 
-| Feature | Descrição |
+| Funcionalidade | Descrição |
 |---|---|
 | [**Calcular Frete**](f-calcular-frete.md) <small>VND-CHK-01</small> | valor e prazo da entrega pelo CEP |
 » | [**Consultar Resumo do Pedido**](f-consultar-resumo-do-pedido.md) <small>VND-CHK-02</small> | itens, frete e prazo antes de confirmar |
@@ -3495,7 +3495,7 @@ flowchart TD
 
 ## Telas
 
-| Tela | Rota sugerida | Features atendidas | Descrição |
+| Tela | Rota sugerida | Funcionalidades atendidas | Descrição |
 |---|---|---|---|
 | Checkout | `/checkout` | **Calcular Frete** <small>VND-CHK-01</small> | endereço, frete e resumo da compra |
 
@@ -3509,13 +3509,13 @@ flowchart TD
 $ node scripts/validate-doc.mjs modules/vendas/checkout/f-consultar-resumo-do-pedido.md
 ✓ [N3] modules/vendas/checkout/f-consultar-resumo-do-pedido.md
 $ node scripts/valida-fluxo-principal.mjs modules/vendas/checkout/README.md
-✗ modules/vendas/checkout/README.md — 1 de 2 feature(s) fora do "## Fluxo Principal":
+✗ modules/vendas/checkout/README.md — 1 de 2 funcionalidade(s) fora do "## Fluxo Principal":
     - Consultar Resumo do Pedido
 
-1 Feature Set(s) com o diagrama desatualizado. Acrescente um nó com o nome EXATO da feature (mesmo texto de "## Features") em "## Fluxo Principal" e rode de novo.
+1 Agrupamento Funcional(s) com o diagrama desatualizado. Acrescente um nó com o nome EXATO da funcionalidade (mesmo texto de "## Funcionalidades") em "## Fluxo Principal" e rode de novo.
 --- nota conceito
-O `## Fluxo Principal` e a tabela de features nascem juntos no 2A. A feature que chega depois, pelo 3A, entra na tabela, e o diagrama fica para trás. É exatamente esse esquecimento que o F7 pega.
---- fix Pôr a feature no Fluxo Principal e nas Permissões
+O `## Fluxo Principal` e a tabela de funcionalidades nascem juntos no 2A. A funcionalidade que chega depois, pelo 3A, entra na tabela, e o diagrama fica para trás. É exatamente esse esquecimento que o F7 pega.
+--- fix Pôr a funcionalidade no Fluxo Principal e nas Permissões
 @ modules/vendas/checkout/README.md
       A(["Cliente com itens no carrinho"]) --> B["Calcular Frete"]
 -     B --> C(["Pedido pronto para confirmar"])
@@ -3536,28 +3536,28 @@ O `## Fluxo Principal` e a tabela de features nascem juntos no 2A. A feature que
 + | [`STRY0013120`](…) | [VND-CHK-02: Consultar Resumo do Pedido](…) | Vendas | ✏️ Rascunho | 📋 | — | — | — |
 --- term hook spec-guard · F2 · F7 · F3 | gravar
 $ node scripts/valida-fluxo-principal.mjs modules/vendas/checkout/README.md
-✓ 1 Feature Set(s) conferido(s) — todo "## Fluxo Principal" contempla as features da própria tabela.
+✓ 1 Agrupamento Funcional(s) conferido(s) — todo "## Fluxo Principal" contempla as funcionalidades da própria tabela.
 $ node scripts/validate-doc.mjs modules/vendas/checkout/README.md
 ✓ [N2] modules/vendas/checkout/README.md
 $ node scripts/ids-n3.mjs modules/vendas/checkout/README.md --check
-VND-CHK: 2 feature(s) na ordem da tabela; IDs existentes preservados.
+VND-CHK: 2 funcionalidade(s) na ordem da tabela; IDs existentes preservados.
   VND-CHK-01 — Calcular Frete [preservado]
   VND-CHK-02 — Consultar Resumo do Pedido [preservado]
-✓ 1 Feature Set(s) conferido(s).
+✓ 1 Agrupamento Funcional(s) conferido(s).
 $ node scripts/audit-trace-links.mjs
-✓ audit-trace-links: elos ticket↔feature consistentes nas três fontes — 3 par(es), 2 AIMM(s), 2 feature(s).
+✓ audit-trace-links: elos ticket↔funcionalidade consistentes nas três fontes — 3 par(es), 2 AIMM(s), 2 funcionalidade(s).
 --- nota regra
-**Mudar a jornada não muda a identidade.** Rui tenta trocar o ID de **VND-CHK-01 — Calcular Frete** para 99 no N2, no registro e no N3. Mesmo tornando esses lugares coerentes entre si, o histórico continua reservando 01 para essa feature. A CI compara com a base do PR; em uma conferência local, HEAD abaixo é o último commit válido, anterior à tentativa.
+**Mudar a jornada não muda a identidade.** Rui tenta trocar o ID de **VND-CHK-01 — Calcular Frete** para 99 no N2, no registro e no N3. Mesmo tornando esses lugares coerentes entre si, o histórico continua reservando 01 para essa funcionalidade. A CI compara com a base do PR; em uma conferência local, HEAD abaixo é o último commit válido, anterior à tentativa.
 --- file modules/vendas/checkout/f-calcular-frete.md | trecho de identidade; restante do N3 preservado
 ---
 id: VND-CHK-01
-feature_set: VND-CHK
+agrupamento_funcional: VND-CHK
 dominio: VND
 entidade: Pedido
 ---
 # Calcular Frete
-> **Nível 3** - Feature Set: Checkout — Major Feature Set: Vendas - `VND-CHK-01`
---- fix Tentativa incorreta: renumerar uma feature já existente
+> **Nível 3** - Agrupamento Funcional: Checkout — Domínio: Vendas - `VND-CHK-01`
+--- fix Tentativa incorreta: renumerar uma funcionalidade já existente
 @ modules/vendas/checkout/README.md
 - <!-- docqui:n3-ids {"version":1,"ids":{"VND-CHK-01":"f-calcular-frete.md","VND-CHK-02":"f-consultar-resumo-do-pedido.md"}} -->
 + <!-- docqui:n3-ids {"version":1,"ids":{"VND-CHK-99":"f-calcular-frete.md","VND-CHK-02":"f-consultar-resumo-do-pedido.md"}} -->
@@ -3568,8 +3568,8 @@ entidade: Pedido
 @ modules/vendas/checkout/f-calcular-frete.md
 - id: VND-CHK-01
 + id: VND-CHK-99
-- > **Nível 3** - Feature Set: Checkout — Major Feature Set: Vendas - `VND-CHK-01`
-+ > **Nível 3** - Feature Set: Checkout — Major Feature Set: Vendas - `VND-CHK-99`
+- > **Nível 3** - Agrupamento Funcional: Checkout — Domínio: Vendas - `VND-CHK-01`
++ > **Nível 3** - Agrupamento Funcional: Checkout — Domínio: Vendas - `VND-CHK-99`
 --- term guard de identidade · base anterior à tentativa | pr
 $ node scripts/ids-n3.mjs modules/vendas/checkout/README.md --check --base HEAD
 ✗ /…/loja-doc/modules/vendas/checkout/README.md: Reserva atual: f-calcular-frete.md já tem o ID imutável VND-CHK-01, não VND-CHK-99.
@@ -3588,14 +3588,14 @@ Reserva imutável VND-CHK-01 foi removida do registro docqui:n3-ids.
 @ modules/vendas/checkout/f-calcular-frete.md
 - id: VND-CHK-99
 + id: VND-CHK-01
-- > **Nível 3** - Feature Set: Checkout — Major Feature Set: Vendas - `VND-CHK-99`
-+ > **Nível 3** - Feature Set: Checkout — Major Feature Set: Vendas - `VND-CHK-01`
+- > **Nível 3** - Agrupamento Funcional: Checkout — Domínio: Vendas - `VND-CHK-99`
++ > **Nível 3** - Agrupamento Funcional: Checkout — Domínio: Vendas - `VND-CHK-01`
 --- term guard de identidade · correção conferida | pr
 $ node scripts/ids-n3.mjs modules/vendas/checkout/README.md --check --base HEAD
-VND-CHK: 2 feature(s) na ordem da tabela; IDs existentes preservados.
+VND-CHK: 2 funcionalidade(s) na ordem da tabela; IDs existentes preservados.
   VND-CHK-01 — Calcular Frete [preservado]
   VND-CHK-02 — Consultar Resumo do Pedido [preservado]
-✓ 1 Feature Set(s) conferido(s).
+✓ 1 Agrupamento Funcional(s) conferido(s).
 --- nota dica
 O atalho **GitHub: Identidade imutável** mostra a mesma tentativa num PR para a sprint. Depois de corrigir, a tabela pode mudar de ordem, mas **VND-CHK-01 — Calcular Frete** e **VND-CHK-02 — Consultar Resumo do Pedido** mantêm seus IDs. Um número retirado também não volta a ficar livre.
 --- fx
@@ -3605,17 +3605,17 @@ commit docs(VND-CHK-02): Consultar Resumo do Pedido — 3A (ServiceNow STRY00131
 === t2-esteira
 cap: D
 fase: ct
-titulo: A esteira da feature nova e a recontagem
+titulo: A esteira da funcionalidade nova e a recontagem
 niveis: N3
 quem@completo: Ana (PO) · Bruno (DBA) · Lia (QA) · Rui (analista)
 quem@requisitos: Ana (PO) · Bruno (DBA) · Rui (analista)
 prompt: CT · PROMPT_CONTAGEM
 --- intro@completo
-`VND-CHK-02` — Consultar Resumo do Pedido atravessa a esteira como a primeira feature: CP1 (PO), CP2 (DBA) e CP3 (QA), um PR por checkpoint. O plano do resumo segue o mesmo molde, com o teste `VND-CHK-02/RN-01`, e o de `VND-CHK-01` — Calcular Frete ganha o teste de `VND-CHK-01/RN-04`. Enquanto isso, o **CT** fecha a pendência de contagem que o 4A abriu em `VND-CHK-01` — Calcular Frete e conta a feature nova.
+`VND-CHK-02` — Consultar Resumo do Pedido atravessa a esteira como a primeira funcionalidade: CP1 (PO), CP2 (DBA) e CP3 (QA), um PR por checkpoint. O plano do resumo segue o mesmo molde, com o teste `VND-CHK-02/RN-01`, e o de `VND-CHK-01` — Calcular Frete ganha o teste de `VND-CHK-01/RN-04`. Enquanto isso, o **CT** fecha a pendência de contagem que o 4A abriu em `VND-CHK-01` — Calcular Frete e conta a funcionalidade nova.
 --- intro@requisitos
-`VND-CHK-02` — Consultar Resumo do Pedido atravessa a esteira: CP1 (PO) e CP2 (DBA), que a deixa em 📋 `especificado`. A opção **DM** leva os atributos novos ao modelo negocial: o prazo na Tabela de Frete e no Pedido. O **CT** fecha a pendência de contagem que o 4A abriu em `VND-CHK-01` — Calcular Frete e conta a feature nova.
+`VND-CHK-02` — Consultar Resumo do Pedido atravessa a esteira: CP1 (PO) e CP2 (DBA), que a deixa em 📋 `especificado`. A opção **DM** leva os atributos novos ao modelo negocial: o prazo na Tabela de Frete e no Pedido. O **CT** fecha a pendência de contagem que o 4A abriu em `VND-CHK-01` — Calcular Frete e conta a funcionalidade nova.
 --- file global/CONTAGEM-PF.md | alterado
-| # | Feature (N3) | Papel | Domínio | Tipo | ALR | DER | Complexidade | PF | Data | Status | Observação |
+| # | Funcionalidade (N3) | Papel | Domínio | Tipo | ALR | DER | Complexidade | PF | Data | Status | Observação |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 » | VND-CHK-01 | [Calcular Frete](../modules/vendas/checkout/f-calcular-frete.md) | principal | Vendas | SE | 2 | 5 | Baixa | 4 | 2026-10-12 | ✅ | |
 » | VND-CHK-02 | [Consultar Resumo do Pedido](../modules/vendas/checkout/f-consultar-resumo-do-pedido.md) | principal | Vendas | CE | 1 | 6 | Baixa | 3 | 2026-10-12 | ✅ | |
@@ -3623,27 +3623,27 @@ prompt: CT · PROMPT_CONTAGEM
 $ node scripts/valida-enumeracao-contagem.mjs modules/vendas/
 ✓ 2 N3 conferido(s): a enumeração de ALR e DER de cada processo elementar medido é um bloco válido, do tamanho da tabela.
 $ node scripts/valida-contagem-consolidada.mjs
-2 feature(s) contada(s) no N3 · 2 no consolidado
+2 funcionalidade(s) contada(s) no N3 · 2 no consolidado
 0 pendente(s) no front-matter · 0 em ## Pendências de contagem
 ✓ O consolidado espelha a fonte.
 --- nota conceito
 `VND-CHK-01` — Calcular Frete ganhou um DER (o prazo de entrega): de 4 para 5. Uma saída externa com ALR 2 e até 5 DER continua **Baixa, 4 PF**. A variação é zero, e mesmo assim a revisão era obrigatória: é ela que fecha o `contagem.pendente` que o 4A abriu. `VND-CHK-02` — Consultar Resumo do Pedido é uma consulta externa com ALR 1 e DER 6: Baixa, 3 PF. Nos ALI, Pedido e Tabela de Frete ganharam um DER cada e seguem em 7 PF.
 --- term@completo CI · gate-check | esteira
 $ python3 scripts/gates.py status
-| Feature | Origem | Estado | Situação |
+| Funcionalidade | Origem | Estado | Situação |
 |---|---|---|---|
 | `VND-CHK-01` ([spec](./vendas/checkout/f-calcular-frete.md)) | STRY0013101 | ⚠️ revisao-necessaria | — |
 | `VND-CHK-02` ([spec](./vendas/checkout/f-consultar-resumo-do-pedido.md)) | STRY0013120 | 📋 especificado | 📋 pronto para desenvolvimento |
 
-**1** de **2** feature(s) prontas para desenvolvimento.
+**1** de **2** funcionalidade(s) prontas para desenvolvimento.
 --- term@requisitos CI · gate-check | esteira
 $ python3 scripts/gates.py status
-| Feature | Origem | Estado | Situação |
+| Funcionalidade | Origem | Estado | Situação |
 |---|---|---|---|
 | `VND-CHK-01` ([spec](./vendas/checkout/f-calcular-frete.md)) | STRY0013101 | 📋 especificado | 📋 pronto para desenvolvimento |
 | `VND-CHK-02` ([spec](./vendas/checkout/f-consultar-resumo-do-pedido.md)) | STRY0013120 | 📋 especificado | 📋 pronto para desenvolvimento |
 
-**2** de **2** feature(s) prontas para desenvolvimento.
+**2** de **2** funcionalidade(s) prontas para desenvolvimento.
 --- nota@requisitos perfil
 No perfil `requisitos`, a alteração não tira `VND-CHK-01` — Calcular Frete do estado final: não há código a ficar para trás, e o 4A não mexe na esteira.
 --- fx@completo
@@ -3679,7 +3679,7 @@ niveis: N3
 quem: Caio (Tech Lead) · Claude
 prompt: 5A · PROMPT_SDD
 --- intro
-O N3 é a foto completa da feature. Numa alteração pequena, o SDD não deve redesenhar o cálculo de frete inteiro. O `delta-n3` deriva do git **o que mudou em cada N3** da AIMM, seção a seção, entre a base e a árvore de trabalho. É a entrada do 5A em modo alteração. Feature nova vai para o SDD completo.
+O N3 é a foto completa da funcionalidade. Numa alteração pequena, o SDD não deve redesenhar o cálculo de frete inteiro. O `delta-n3` deriva do git **o que mudou em cada N3** da AIMM, seção a seção, entre a base e a árvore de trabalho. É a entrada do 5A em modo alteração. Funcionalidade nova vai para o SDD completo.
 --- term Claude, entrada do 5A | demanda
 $ node scripts/delta-n3.mjs --aimm analise-impacto/AIMM-STRY0013120.md
 # Delta dos N3 — `main` (e5716b4) → 6bee254
@@ -3688,16 +3688,16 @@ AIMM: `analise-impacto/AIMM-STRY0013120.md`
 
 ## `modules/vendas/checkout/f-calcular-frete.md` — VND-CHK-01 — Calcular Frete
 
-Feature **nova** (não existe na base) → SDD completo, sem delta.
+Funcionalidade **nova** (não existe na base) → SDD completo, sem delta.
 
 ## `modules/vendas/checkout/f-consultar-resumo-do-pedido.md` — VND-CHK-02 — Consultar Resumo do Pedido
 
-Feature **nova** (não existe na base) → SDD completo, sem delta.
+Funcionalidade **nova** (não existe na base) → SDD completo, sem delta.
 
 ---
 0 N3 com delta · 2 nova(s) (SDD completo) · 2 no total.
 --- nota conceito
-Sem `--base`, a base é a `main`. Na cadência `sprint`, a `main` ainda não tem `VND-CHK-01` — Calcular Frete: a feature nasceu nesta mesma sprint, e contra a `main` o delta diria que ela é nova. A base certa é a versão que o código já implementou, o commit do CP4 do STRY0013101 (`5e47488`).
+Sem `--base`, a base é a `main`. Na cadência `sprint`, a `main` ainda não tem `VND-CHK-01` — Calcular Frete: a funcionalidade nasceu nesta mesma sprint, e contra a `main` o delta diria que ela é nova. A base certa é a versão que o código já implementou, o commit do CP4 do STRY0013101 (`5e47488`).
 --- term Claude, entrada do 5A | demanda
 $ node scripts/delta-n3.mjs --aimm analise-impacto/AIMM-STRY0013120.md --base 5e47488
 # Delta dos N3 — `5e47488` (5e47488) → 6bee254
@@ -3732,7 +3732,7 @@ Sem alteração: front-matter · (cabeçalho) · Superfície · Campos automáti
 (…)
 ## `modules/vendas/checkout/f-consultar-resumo-do-pedido.md` — VND-CHK-02 — Consultar Resumo do Pedido
 
-Feature **nova** (não existe na base) → SDD completo, sem delta.
+Funcionalidade **nova** (não existe na base) → SDD completo, sem delta.
 
 ---
 1 N3 com delta · 1 nova(s) (SDD completo) · 2 no total.
@@ -3746,7 +3746,7 @@ $ git commit -m "feat(VND-CHK-01): prazo de entrega por faixa de CEP (ServiceNow
 $ git commit -m "feat(VND-CHK-02): resumo do pedido com frete e prazo (ServiceNow STRY0013120)"
 [main a51f3c0] feat(VND-CHK-02): resumo do pedido com frete e prazo (ServiceNow STRY0013120)
 --- nota conceito
-`VND-CHK-02` — Consultar Resumo do Pedido passa pelo CP4 como a primeira feature e chega a ✅ `implementado`. `VND-CHK-01` — Calcular Frete continua em ⚠️: a spec segue à frente do código até a entrega, e é o fechamento da AIMM que a devolve ao estado derivado.
+`VND-CHK-02` — Consultar Resumo do Pedido passa pelo CP4 como a primeira funcionalidade e chega a ✅ `implementado`. `VND-CHK-01` — Calcular Frete continua em ⚠️: a spec segue à frente do código até a entrega, e é o fechamento da AIMM que a devolve ao estado derivado.
 --- fx
 feat VND-CHK-02 implementado
 ~ modules/vendas/checkout/f-consultar-resumo-do-pedido.md
@@ -3765,14 +3765,14 @@ A terceira história pede cupom de desconto. Rui abre a AIMM, o changeset é ava
 Como cliente, quero aplicar um cupom de desconto no checkout, para pagar menos pelo pedido.
 CA-1 | Quando o cliente aplica um cupom válido, o total mostra o desconto.
 --- nota regra
-O cupom entra entre o cálculo do frete e o resumo na apresentação da jornada, mas recebe 03: os números 01 e 02 já pertencem às features existentes. A nova posição não autoriza renumerar o resumo para 03.
+O cupom entra entre o cálculo do frete e o resumo na apresentação da jornada, mas recebe 03: os números 01 e 02 já pertencem às funcionalidades existentes. A nova posição não autoriza renumerar o resumo para 03.
 --- fix Incluir a linha do cupom sem mexer nos IDs existentes
 @ modules/vendas/checkout/README.md
   | [**Calcular Frete**](f-calcular-frete.md) <small>VND-CHK-01</small> | valor e prazo da entrega pelo CEP |
 + | [**Aplicar Cupom**](f-aplicar-cupom.md) | desconto no checkout |
 --- term à mão · reserva confirmada depois do modo seco | demanda
 $ node scripts/ids-n3.mjs modules/vendas/checkout/README.md --write
-VND-CHK: 3 feature(s) na ordem da tabela; IDs existentes preservados.
+VND-CHK: 3 funcionalidade(s) na ordem da tabela; IDs existentes preservados.
   VND-CHK-01 — Calcular Frete [preservado]
   VND-CHK-03 — Aplicar Cupom [reservar no N2]
   VND-CHK-02 — Consultar Resumo do Pedido [preservado]
@@ -3849,7 +3849,7 @@ Cada preview leva `preview.json` e `_docqui/changes.json`; a raiz leva `previews
 --- nota conceito
 **Exemplo de revisão por palavra em uma célula do N2.** O ticket do prazo altera a descrição de Calcular Frete: o comparador realça só o trecho novo, sem pintar o contexto igual. A mesma regra vale para parágrafos, listas e código. Aqui os trechos destacados são representados em negrito; no Pages recebem a marcação de inclusão/remoção.
 
-| Visão | Descrição da feature |
+| Visão | Descrição da funcionalidade |
 |---|---|
 | Base do PR | valor da entrega pelo CEP |
 | Preview · destaque ligado | valor **e prazo** da entrega pelo CEP |
@@ -3972,9 +3972,9 @@ ticket: STRY0013101
 avalizado-por: "Ana (PO), 2026-10-07"
 ---
 
-## Features
+## Funcionalidades
 
-| Feature (N3) | Domínio · Feature Set | Operação | Critérios cobertos | Status |
+| Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
 | [`VND-CHK-01`: Calcular Frete](../modules/vendas/checkout/f-calcular-frete.md) | Vendas · Checkout | Criação | `CA-1, CA-2, CA-3` | ✅ Implementado |
 
@@ -3983,11 +3983,11 @@ avalizado-por: "Ana (PO), 2026-10-07"
 (… as sete linhas avalizadas …)
 » | `global/CONTAGEM-PF.md` | MÉTRICA | alterar | — | derivado | contagem de Calcular Frete | elicitado |
 
-## Alterações na spec, por Feature Set
+## Alterações na spec, por Agrupamento Funcional
 
 ### Checkout
 
-| Feature | CA-n | Natureza | Mudança | Regras | Cenários |
+| Funcionalidade | CA-n | Natureza | Mudança | Regras | Cenários |
 |---|---|---|---|---|---|
 » | `VND-CHK-01`<br>**Calcular Frete** | CA-1, CA-2, CA-3 | incluída | **Inclusão** do cálculo de frete. *Antes* o frete era cotado por telefone. *Agora* o cliente o calcula pelo CEP no checkout. | +3 | +3 |
 
@@ -4012,9 +4012,9 @@ ticket: STRY0013101
 avalizado-por: "Ana (PO), 2026-10-07"
 ---
 
-## Features
+## Funcionalidades
 
-| Feature (N3) | Domínio · Feature Set | Operação | Critérios cobertos | Status |
+| Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
 | [`VND-CHK-01`: Calcular Frete](../modules/vendas/checkout/f-calcular-frete.md) | Vendas · Checkout | Criação | `CA-1, CA-2, CA-3` | 📋 Especificado |
 
@@ -4023,11 +4023,11 @@ avalizado-por: "Ana (PO), 2026-10-07"
 (… as seis linhas avalizadas …)
 » | `global/CONTAGEM-PF.md` | MÉTRICA | alterar | — | derivado | contagem de Calcular Frete | elicitado |
 
-## Alterações na spec, por Feature Set
+## Alterações na spec, por Agrupamento Funcional
 
 ### Checkout
 
-| Feature | CA-n | Natureza | Mudança | Regras | Cenários |
+| Funcionalidade | CA-n | Natureza | Mudança | Regras | Cenários |
 |---|---|---|---|---|---|
 » | `VND-CHK-01`<br>**Calcular Frete** | CA-1, CA-2, CA-3 | incluída | **Inclusão** do cálculo de frete. *Antes* o frete era cotado por telefone. *Agora* o cliente o calcula pelo CEP no checkout. | +3 | +3 |
 
@@ -4046,12 +4046,12 @@ avalizado-por: "Ana (PO), 2026-10-07"
 --- term@completo skill analise-impacto | aim
 $ node scripts/validate-impact.mjs analise-impacto/AIMM-STRY0013101.md
 validate-impact — analise-impacto/AIMM-STRY0013101.md
-  ✗ `VND-CHK-01` está em `revisao-necessaria` (modules/vendas/checkout/f-calcular-frete.md) — a AIMM só fecha com cada feature no estado final da esteira desta instância, `implementado` (perfil `completo`), ou `deprecado`. A alteração foi entregue? Volte o `estado` ao derivado dos gates, rode `python3 scripts/gates.py promote --write` e atualize o Status aqui.
+  ✗ `VND-CHK-01` está em `revisao-necessaria` (modules/vendas/checkout/f-calcular-frete.md) — a AIMM só fecha com cada funcionalidade no estado final da esteira desta instância, `implementado` (perfil `completo`), ou `deprecado`. A alteração foi entregue? Volte o `estado` ao derivado dos gates, rode `python3 scripts/gates.py promote --write` e atualize o Status aqui.
 
 1 erro(s), 0 aviso(s).
 --- nota@completo regra
 `VND-CHK-01` — Calcular Frete foi alterada pelo STRY0013120 nesta mesma sprint e está em ⚠️ desde o 4B. A única saída do ⚠️ é a entrega: o código do prazo foi para produção junto, então o `estado` volta ao derivado dos gates (✅ `implementado`), o espelho é regenerado e o Status muda na AIMM do STRY0013120 e no INDEX.
---- fix@completo Devolver a feature ao estado final
+--- fix@completo Devolver a funcionalidade ao estado final
 @ modules/vendas/checkout/f-calcular-frete.md
 - estado: revisao-necessaria
 + estado: implementado
@@ -4066,7 +4066,7 @@ $ python3 scripts/gates.py promote --write
 INDEX.md atualizado: ./modules/INDEX.md
 $ node scripts/validate-impact.mjs analise-impacto/AIMM-STRY0013101.md
 validate-impact — analise-impacto/AIMM-STRY0013101.md
-  ✓ AIMM bem-formada — concluído, 1 feature(s), 8 linha(s) no changeset.
+  ✓ AIMM bem-formada — concluído, 1 funcionalidade(s), 8 linha(s) no changeset.
 $ node scripts/verifica-texto-corrido.mjs analise-impacto/AIMM-STRY0013101.md
 ✓ Nenhuma quebra dura de parágrafo encontrada.
 --- term@requisitos skill analise-impacto | aim
@@ -4074,11 +4074,11 @@ $ node scripts/validate-impact.mjs analise-impacto/AIMM-STRY0013101.md
 validate-impact — analise-impacto/AIMM-STRY0013101.md
   ⚠️  C2: há mudança `funcional` sem linha `QA` — no perfil `requisitos`, aviso: o plano de testes fica com quem constrói.
   ⚠️  C3: há mudança `não-funcional` sem linha `QA` — no perfil `requisitos`, aviso: o teste do NFR fica com quem constrói.
-  ✓ AIMM bem-formada — concluído, 1 feature(s), 7 linha(s) no changeset, 2 aviso(s).
+  ✓ AIMM bem-formada — concluído, 1 funcionalidade(s), 7 linha(s) no changeset, 2 aviso(s).
 $ node scripts/verifica-texto-corrido.mjs analise-impacto/AIMM-STRY0013101.md
 ✓ Nenhuma quebra dura de parágrafo encontrada.
 --- nota regra
-**A coluna Mudança diz o que mudou e de quê**, não descreve a feature. Abre com o verbo (Inclusão, Alteração, Restrição, Remoção, Correção) e traz o contraste *Antes* … *Agora* …. E toda feature aparece com o ID **e** o nome: `VND-CHK-01` sozinho não diz nada a quem lê.
+**A coluna Mudança diz o que mudou e de quê**, não descreve a funcionalidade. Abre com o verbo (Inclusão, Alteração, Restrição, Remoção, Correção) e traz o contraste *Antes* … *Agora* …. E toda funcionalidade aparece com o ID **e** o nome: `VND-CHK-01` sozinho não diz nada a quem lê.
 --- nota conceito
 A reconciliação é o registro de auditoria do ticket. Aqui ela pegou um desvio real: a contagem do STRY0013101 regravou o `CONTAGEM-PF.md` sem que ele estivesse no changeset. Toda divergência é justificada por escrito antes do merge.
 --- fx@completo
@@ -4102,7 +4102,7 @@ Rui muda o estado para `concluído` e roda o validador antes de escrever o resto
 $ node scripts/validate-impact.mjs analise-impacto/AIMM-STRY0013120.md
 validate-impact — analise-impacto/AIMM-STRY0013120.md
   ✗ estado `concluído` exige `sprint:` — a sprint em que o ticket foi entregue.
-  ✗ estado `concluído` exige a visão final em `## Alterações na spec, por Feature Set` — o que foi alterado, uma linha por feature, sem o exemplo do template.
+  ✗ estado `concluído` exige a visão final em `## Alterações na spec, por Agrupamento Funcional` — o que foi alterado, uma linha por funcionalidade, sem o exemplo do template.
   ✗ estado `concluído` exige `## Reconciliação` preenchida (declarado × tocado) — escreva o resultado fora da citação de instrução.
 
 3 erro(s), 0 aviso(s).
@@ -4111,17 +4111,17 @@ $ node scripts/validate-impact.mjs analise-impacto/AIMM-STRY0013120.md
 validate-impact — analise-impacto/AIMM-STRY0013120.md
   ⚠️  C2: há mudança `funcional` sem linha `QA` — no perfil `requisitos`, aviso: o plano de testes fica com quem constrói.
   ✗ estado `concluído` exige `sprint:` — a sprint em que o ticket foi entregue.
-  ✗ estado `concluído` exige a visão final em `## Alterações na spec, por Feature Set` — o que foi alterado, uma linha por feature, sem o exemplo do template.
+  ✗ estado `concluído` exige a visão final em `## Alterações na spec, por Agrupamento Funcional` — o que foi alterado, uma linha por funcionalidade, sem o exemplo do template.
   ✗ estado `concluído` exige `## Reconciliação` preenchida (declarado × tocado) — escreva o resultado fora da citação de instrução.
 
 3 erro(s), 1 aviso(s).
 --- fix Escrever a visão final
-Uma linha por feature, **inclusive a nova**, com os critérios, a natureza, a mudança e o PF lido do N3. As funções de dados, com o tamanho antes e depois no título.
+Uma linha por funcionalidade, **inclusive a nova**, com os critérios, a natureza, a mudança e o PF lido do N3. As funções de dados, com o tamanho antes e depois no título.
 @ analise-impacto/AIMM-STRY0013120.md
 + sprint: SP07
-  ## Alterações na spec, por Feature Set
+  ## Alterações na spec, por Agrupamento Funcional
   ### Checkout
-  | Feature | CA-n | Natureza | Mudança | Regras | Cenários |
+  | Funcionalidade | CA-n | Natureza | Mudança | Regras | Cenários |
 + | `VND-CHK-01`<br>**Calcular Frete** | CA-1, CA-2 | alterada | **Inclusão** do prazo estimado. *Antes* o cálculo devolvia só o valor do frete. *Agora* devolve também o prazo em dias úteis, e avisa quando a faixa do CEP não tem prazo. | +1 | +1 |
 + | `VND-CHK-02` **Consultar Resumo do Pedido** | CA-3 | incluída | **Inclusão** da consulta. *Antes* não havia resumo com o prazo prometido. *Agora* o cliente o consulta antes de confirmar. | +1 | +1 | 3 | 3 |
   ## Entidades alteradas
@@ -4132,20 +4132,20 @@ Uma linha por feature, **inclusive a nova**, com os critérios, a natureza, a mu
 --- term@completo skill analise-impacto | aim
 $ node scripts/validate-impact.mjs analise-impacto/AIMM-STRY0013120.md
 validate-impact — analise-impacto/AIMM-STRY0013120.md
-  ✓ AIMM bem-formada — concluído, 2 feature(s), 9 linha(s) no changeset.
+  ✓ AIMM bem-formada — concluído, 2 funcionalidade(s), 9 linha(s) no changeset.
 $ node scripts/audit-trace-links.mjs
-✓ audit-trace-links: elos ticket↔feature consistentes nas três fontes — 3 par(es), 2 AIMM(s), 2 feature(s).
+✓ audit-trace-links: elos ticket↔funcionalidade consistentes nas três fontes — 3 par(es), 2 AIMM(s), 2 funcionalidade(s).
 --- nota@completo conceito
-A feature alterada já voltou ao estado final no fechamento do STRY0013101, e o Status desta AIMM mudou junto: as duas features estão em ✅ `implementado`.
+A funcionalidade alterada já voltou ao estado final no fechamento do STRY0013101, e o Status desta AIMM mudou junto: as duas funcionalidades estão em ✅ `implementado`.
 --- term@requisitos skill analise-impacto | aim
 $ node scripts/validate-impact.mjs analise-impacto/AIMM-STRY0013120.md
 validate-impact — analise-impacto/AIMM-STRY0013120.md
   ⚠️  C2: há mudança `funcional` sem linha `QA` — no perfil `requisitos`, aviso: o plano de testes fica com quem constrói.
-  ✓ AIMM bem-formada — concluído, 2 feature(s), 6 linha(s) no changeset, 1 aviso(s).
+  ✓ AIMM bem-formada — concluído, 2 funcionalidade(s), 6 linha(s) no changeset, 1 aviso(s).
 $ node scripts/audit-trace-links.mjs
-✓ audit-trace-links: elos ticket↔feature consistentes nas três fontes — 3 par(es), 2 AIMM(s), 2 feature(s).
+✓ audit-trace-links: elos ticket↔funcionalidade consistentes nas três fontes — 3 par(es), 2 AIMM(s), 2 funcionalidade(s).
 --- nota@requisitos perfil
-No perfil `requisitos` a feature alterada nunca saiu de 📋 `especificado`. O validador cobra `especificado` de cada feature da AIMM, e as duas já estão lá.
+No perfil `requisitos` a funcionalidade alterada nunca saiu de 📋 `especificado`. O validador cobra `especificado` de cada funcionalidade da AIMM, e as duas já estão lá.
 --- fx@completo
 aim STRY0013120 concluído
 commit docs(aim): AIMM concluída (ServiceNow STRY0013120)
@@ -4160,7 +4160,7 @@ titulo: A AIMM da sprint: cada função conta uma vez
 quem: Rui (analista) · Claude
 prompt: skill analise-impacto
 --- intro
-A AIMM da sprint consolida os tickets entregues e é o documento que a equipe de métricas audita. Ela não repete as AIMMs dos tickets: traz cada feature e cada função de dados **uma vez**, com as chaves dos tickets na coluna Ticket. Na primeira versão, Rui copia a natureza e os números das AIMMs dos tickets.
+A AIMM da sprint consolida os tickets entregues e é o documento que a equipe de métricas audita. Ela não repete as AIMMs dos tickets: traz cada funcionalidade e cada função de dados **uma vez**, com as chaves dos tickets na coluna Ticket. Na primeira versão, Rui copia a natureza e os números das AIMMs dos tickets.
 --- file analise-impacto/AIMM-SP07.md | alterado
 ---
 tipo: sprint
@@ -4171,14 +4171,14 @@ entrega: 2026-10-17
 
 ## Tickets da sprint
 
-| Ticket | AIMM | Features | Resumo |
+| Ticket | AIMM | Funcionalidades | Resumo |
 |---|---|---|---|
 | `STRY0013101` | [AIMM-STRY0013101](AIMM-STRY0013101.md) | `VND-CHK-01` **Calcular Frete** | frete pelo CEP no checkout |
 | `STRY0013120` | [AIMM-STRY0013120](AIMM-STRY0013120.md) | `VND-CHK-01` **Calcular Frete** · `VND-CHK-02` **Consultar Resumo do Pedido** | prazo de entrega estimado no frete e no resumo |
 
-## Alterações na spec, por Feature Set
+## Alterações na spec, por Agrupamento Funcional
 
-| Feature | Ticket | CA-n | Natureza | PFB | PFL |
+| Funcionalidade | Ticket | CA-n | Natureza | PFB | PFL |
 |---|---|---|---|---|---|
 » | `VND-CHK-01` **Calcular Frete** | `STRY0013101` | CA-1, CA-2, CA-3 | alterada | 4 | 2 |
 | `VND-CHK-02` **Consultar Resumo do Pedido** | `STRY0013120` | CA-3 | incluída | 3 | 3 |
@@ -4202,7 +4202,7 @@ entrega: 2026-10-17
 $ node scripts/validate-impact.mjs analise-impacto/AIMM-SP07.md
 validate-impact — analise-impacto/AIMM-SP07.md
   ✗ a função de dados `pedido` aparece 2 vezes em `## Funções de dados alteradas` — cada função entra uma vez.
-  ✗ `VND-CHK-01`: a coluna Ticket da sprint não cita `STRY0013120`, que alterou a feature.
+  ✗ `VND-CHK-01`: a coluna Ticket da sprint não cita `STRY0013120`, que alterou a funcionalidade.
   ✗ `VND-CHK-01`: natureza `alterada` na sprint, mas `incluída` na AIMM de `STRY0013101`.
   ✗ `## Apurável da sprint`, linha Total: 28 / 21, mas a soma dá 28 / 22,5.
 
@@ -4211,7 +4211,7 @@ validate-impact — analise-impacto/AIMM-SP07.md
 | Armadilha | Por que reprova |
 |---|---|
 | `VND-CHK-01` como `alterada` | o STRY0013101 a **incluiu** nesta sprint. Incluída na sprint, ela entra como incluída, ainda que outro ticket a tenha alterado depois |
-| só `STRY0013101` na coluna Ticket | o STRY0013120 também alterou a feature; a coluna junta as chaves |
+| só `STRY0013101` na coluna Ticket | o STRY0013120 também alterou a funcionalidade; a coluna junta as chaves |
 | Pedido duas vezes | a unidade da contagem é a função, não o ticket: cada função entra uma vez |
 | Total 28 / 21 | a soma das linhas dá 28 / 22,5, e o apurável certo nem é esse |
 --- fix Consolidar: uma linha por função, a natureza da sprint, a soma conferida
@@ -4228,7 +4228,7 @@ validate-impact — analise-impacto/AIMM-SP07.md
 --- term skill analise-impacto | aim
 $ node scripts/validate-impact.mjs analise-impacto/AIMM-SP07.md
 validate-impact — analise-impacto/AIMM-SP07.md
-  ✓ AIMM da sprint bem-formada — 2 ticket(s), 2 feature(s), conferida com 2 AIMM(s) de ticket.
+  ✓ AIMM da sprint bem-formada — 2 ticket(s), 2 funcionalidade(s), conferida com 2 AIMM(s) de ticket.
 --- nota regra
 **Somar as AIMMs dos tickets conta duas vezes.** O STRY0013101 vale 18 PFB (Calcular Frete 4, Pedido 7, Tabela de Frete 7) e o STRY0013120 vale 21 PFB (Calcular Frete 4, Consultar Resumo do Pedido 3, Pedido 7, Tabela de Frete 7): 39 somados. O apurável da sprint é **21 PFB e 21 PFL**: quatro funções, uma vez cada, todas incluídas nesta sprint.
 --- fx
@@ -4284,7 +4284,7 @@ $ node scripts/valida-commits-ticket.mjs --base origin/main
 $ node scripts/valida-entrega.mjs --base origin/main
 ✓ `sprint/SP07` pode entrar na main: AIMM da sprint e 2 ticket(s) entregue(s) concluídos, com a branch alterando só o que eles declaram.
 --- nota conceito
-No mesmo PR, o `gate-check` confere a esteira **commit a commit**: na branch da sprint, cada PR de checkpoint mesclado aprovou um gate só, na ordem. Comparada de uma vez com a `main`, a branch pareceria aprovar dois gates juntos em cada feature.
+No mesmo PR, o `gate-check` confere a esteira **commit a commit**: na branch da sprint, cada PR de checkpoint mesclado aprovou um gate só, na ordem. Comparada de uma vez com a `main`, a branch pareceria aprovar dois gates juntos em cada funcionalidade.
 --- term CI na main, depois do merge | pr
 $ node scripts/check-approval-trailers.mjs
 ✓ 9f3c2a1 aprovado por: Ana (PO) (Merge pull request #30 from acme/sprint/SP07)
@@ -4296,19 +4296,19 @@ $ git fetch origin && git rev-list --count origin/main..origin/sprint/SP07
 --- file@completo modules/INDEX.md | alterado
 ## Esteira de checkpoints (gates)
 
-| Feature | Origem | Estado | Situação |
+| Funcionalidade | Origem | Estado | Situação |
 |---|---|---|---|
 | `VND-CHK-01` ([spec](./vendas/checkout/f-calcular-frete.md)) | STRY0013101 | ✅ implementado | ✅ implementado |
 | `VND-CHK-02` ([spec](./vendas/checkout/f-consultar-resumo-do-pedido.md)) | STRY0013120 | ✅ implementado | ✅ implementado |
 --- file@requisitos modules/INDEX.md | alterado
 ## Esteira de checkpoints (gates)
 
-| Feature | Origem | Estado | Situação |
+| Funcionalidade | Origem | Estado | Situação |
 |---|---|---|---|
 | `VND-CHK-01` ([spec](./vendas/checkout/f-calcular-frete.md)) | STRY0013101 | 📋 especificado | 📋 pronto para desenvolvimento |
 | `VND-CHK-02` ([spec](./vendas/checkout/f-consultar-resumo-do-pedido.md)) | STRY0013120 | 📋 especificado | 📋 pronto para desenvolvimento |
 
-**2** de **2** feature(s) prontas para desenvolvimento.
+**2** de **2** funcionalidade(s) prontas para desenvolvimento.
 --- fx
 branch main
 commit Merge sprint/SP07: entrega da SP07 (Approved-by: Ana)
@@ -4320,25 +4320,25 @@ titulo: O que vimos, e quando cada validador entra
 niveis: N0 N1 N2 N3
 quem: você
 --- intro
-Da instância vazia à sprint entregue: um N0, um N1, um N2, duas features no estado final, três AIMMs de ticket (uma revertida para a SP08) e uma AIMM da sprint conferida com elas. O **Mapa**, no topo, junta tudo numa grade de fases e camadas de validação, com um atalho para cada passo.
+Da instância vazia à sprint entregue: um N0, um N1, um N2, duas funcionalidades no estado final, três AIMMs de ticket (uma revertida para a SP08) e uma AIMM da sprint conferida com elas. O **Mapa**, no topo, junta tudo numa grade de fases e camadas de validação, com um atalho para cada passo.
 --- nota conceito
 | Momento | Quem confere | O que pega |
 |---|---|---|
 | ao pedir especificação | hook F1 · `preflight-spec` | ID ou pasta que já existe |
 | antes de escrever N3, ao gravar N2/N3 e na CI | `ids-n3` · modo seco / `--write` / `--check --base` | reserva pela primeira jornada; recusa renumeração, reserva removida e reutilização de números |
-| ao gravar N0 a N3 e o data-model | hook F2 · `validate-doc`, `validate-feature-semantics` | sigla divergente, regra com reação, consulta sem colunas do resultado, repositório fora do inventário |
-| ao gravar | hook F6 · F7 · F8 | citação de dicionário sem entrada, feature fora do fluxo do N2, memória de cálculo fora do formato |
+| ao gravar N0 a N3 e o data-model | hook F2 · `validate-doc`, `valida-semantica-funcionalidade` | sigla divergente, regra com reação, consulta sem colunas do resultado, repositório fora do inventário |
+| ao gravar | hook F6 · F7 · F8 | citação de dicionário sem entrada, funcionalidade fora do fluxo do N2, memória de cálculo fora do formato |
 | ao gravar o N3, e na CI | hook F9 · `valida-regras-cenarios` | regra sem ID, ID repetido, tag sem regra, regra sem o cenário `@RN-NN` que a verifica |
-| ao gravar o N3 com `## API`, e na CI | hook F10 · `valida-contrato-api` | código de erro fora do ERROR-DICTIONARY, campo da API sem Label PO da feature, front-matter que não espelha a API (só no perfil `completo`, onde o 3B escreve a API) |
-| antes de desenhar, testar ou implementar | `monta-contexto` | o que a feature cita e não existe, como ❓, no lugar do "cole aqui" |
+| ao gravar o N3 com `## API`, e na CI | hook F10 · `valida-contrato-api` | código de erro fora do ERROR-DICTIONARY, campo da API sem Label PO da funcionalidade, front-matter que não espelha a API (só no perfil `completo`, onde o 3B escreve a API) |
+| antes de desenhar, testar ou implementar | `monta-contexto` | o que a funcionalidade cita e não existe, como ❓, no lugar do "cole aqui" |
 | ao gravar N3, AIMM ou INDEX | hook F3 · `audit-trace-links` | elo unilateral, linha faltando no INDEX, Status divergente |
-| no changeset e a cada estado da AIMM | `generate-impact-draft`, `validate-impact` | C1 a C3, aval ausente, fechamento incompleto, feature fora do estado final, AIMM da sprint que diverge dos tickets |
+| no changeset e a cada estado da AIMM | `generate-impact-draft`, `validate-impact` | C1 a C3, aval ausente, fechamento incompleto, funcionalidade fora do estado final, AIMM da sprint que diverge dos tickets |
 | a cada checkpoint, e no PR da sprint commit a commit | `gates.py` no `gate-check` | gate pulado, dois gates no PR (ou no commit), `por` ou `em` vazios, estado não derivado, artefato da etapa ausente |
 | depois de contar | `valida-contagem-consolidada` | consolidado que não espelha o N3 |
 | a cada push na branch de entrega | `valida-commits-ticket` | commit com duas chaves |
-| no merge | `valida-entrega` | AIMM aberta, feature fora do estado final, arquivo que nenhum ticket entregue declara |
-| na CI do código, no CP4 | `valida-artefatos-previstos` | código sem o ID da feature e, no caminho de volta, regra sem teste `<ID>/RN-NN` e código de erro só no teste (perfil `completo`) |
-| ao publicar e na CI | `gera-indice-repos`, `--check` | índice de features por repositório que não espelha a Implementação do N3 |
+| no merge | `valida-entrega` | AIMM aberta, funcionalidade fora do estado final, arquivo que nenhum ticket entregue declara |
+| na CI do código, no CP4 | `valida-artefatos-previstos` | código sem o ID da funcionalidade e, no caminho de volta, regra sem teste `<ID>/RN-NN` e código de erro só no teste (perfil `completo`) |
+| ao publicar e na CI | `gera-indice-repos`, `--check` | índice de funcionalidades por repositório que não espelha a Implementação do N3 |
 | ao publicar o Pages | `monta-site-preview` + metadados dos PRs | snapshot do commit, base do PR, ancestral comum e comparação por palavra; não publica edições locais |
 --- nota conceito
 | | Perfil `completo` | Perfil `requisitos` |
@@ -4347,7 +4347,7 @@ Da instância vazia à sprint entregue: um N0, um N1, um N2, duas features no es
 | Modelo de dados | físico, na passada técnica (3B) | negocial, na opção DM |
 | Checkpoints | CP1 → CP2 → CP3 → CP4 | CP1 → CP2 |
 | Estado final | ✅ `implementado` | 📋 `especificado` |
-| Alterar feature pronta | 4A e 4B; a feature fica em ⚠️ até a entrega | 4A; a feature segue em 📋 |
+| Alterar funcionalidade pronta | 4A e 4B; a funcionalidade fica em ⚠️ até a entrega | 4A; a funcionalidade segue em 📋 |
 | Fechar a AIMM e mesclar | exige `implementado` | exige `especificado` |
 | Plano de testes | 5B, com gate (CP3), no molde do engine, com massa de teste e um teste por regra | fica com quem constrói: a AIMM não o declara, e o C2 só avisa |
 | Regras e cenários (F9) | reprova regra sem cenário `@RN-NN` | o mesmo: a regra com ID é requisito |
@@ -4375,8 +4375,8 @@ const CAPS = {
   G: 'Recapitular',
 };
 const FASES = [
-  ['prep', '0 · Preparação'], ['entrada', '1 · Entrada'], ['visao', '2 · Visão e domínio'], ['fs', '3 · Feature Set'],
-  ['n3', '4 · Feature (N3)'], ['alt', '5 · Alteração'], ['ct', '6 · Contagem'], ['dev', '7 · Desenvolvimento'], ['entrega', '8 · Entrega'],
+  ['prep', '0 · Preparação'], ['entrada', '1 · Entrada'], ['visao', '2 · Visão e domínio'], ['fs', '3 · Agrupamento Funcional'],
+  ['n3', '4 · Funcionalidade (N3)'], ['alt', '5 · Alteração'], ['ct', '6 · Contagem'], ['dev', '7 · Desenvolvimento'], ['entrega', '8 · Entrega'],
 ];
 const CAMADAS = [
   ['sessao', 'Na sessão', 'hooks ao pedir e antes de comandos'],
@@ -4406,11 +4406,11 @@ const MENU = [
   ['Ponto de partida', [['TR', 'Triar necessidade']]],
   ['Sistema legado', [['R0', 'Mapear repositórios', 'c'], ['R1', 'Extrair specs do código', 'c'], ['R2', 'DATA-MODEL a partir de SQL', 'c'], ['R3', 'Converter doc existente', 'c'], ['R4', 'Extrair PATTERNS do código', 'c'], ['B2', 'Sintetizar N2 a partir dos N3'], ['B1', 'Sintetizar N1 a partir dos N2']]],
   ['Fase 0 · Visão e preparação', [['N0', 'Visão de Produto'], ['AIMM', 'Abrir a AIMM de um ticket'], ['0', 'Extrair insumos brutos']]],
-  ['Fase 1 · Major Feature Set (N1)', [['1A', 'Domínio — negócio'], ['1B', 'Domínio — técnico', 'c'], ['DM', 'Modelo de dados negocial', 'r']]],
-  ['Fase 2 · Feature Set (N2)', [['2A', 'Feature Set — negócio'], ['CR', 'CRUD padrão'], ['WZ', 'Wizard']]],
-  ['Fase 3 · Feature (N3)', [['3A', 'Feature — negócio'], ['RT', 'Reunião → artefatos'], ['3B', 'Feature — técnico', 'c']]],
-  ['Auditoria', [['RV', 'Revisar artefato'], ['AU', 'Deduplicar regras'], ['AT', 'Auditar elos ticket ↔ feature'], ['PD', 'Painel de pendências'], ['IV', 'Investigar delta'], ['EX', 'Executar alterações']]],
-  ['Fase 4 · Manutenção', [['4A', 'Atualizar feature — negócio'], ['4B', 'Atualizar feature — técnico', 'c']]],
+  ['Fase 1 · Domínio (N1)', [['1A', 'Domínio — negócio'], ['1B', 'Domínio — técnico', 'c'], ['DM', 'Modelo de dados negocial', 'r']]],
+  ['Fase 2 · Agrupamento Funcional (N2)', [['2A', 'Agrupamento Funcional — negócio'], ['CR', 'CRUD padrão'], ['WZ', 'Wizard']]],
+  ['Fase 3 · Funcionalidade (N3)', [['3A', 'Funcionalidade — negócio'], ['RT', 'Reunião → artefatos'], ['3B', 'Funcionalidade — técnico', 'c']]],
+  ['Auditoria', [['RV', 'Revisar artefato'], ['AU', 'Deduplicar regras'], ['AT', 'Auditar elos ticket ↔ funcionalidade'], ['PD', 'Painel de pendências'], ['IV', 'Investigar delta'], ['EX', 'Executar alterações']]],
+  ['Fase 4 · Manutenção', [['4A', 'Atualizar funcionalidade — negócio'], ['4B', 'Atualizar funcionalidade — técnico', 'c']]],
   ['Fase 5 · Implementação', [['5A', 'Gerar SDD', 'c'], ['5B', 'Plano de testes (QA)', 'c'], ['SK', 'Exportar ao spec-kit', 'c']]],
   ['Métricas, NFR e protótipos', [['CT', 'Contar/recontar PF'], ['NF', 'Adicionar/ajustar NFR'], ['6A–6D', 'Protótipos de fluxo e de estado']]],
 ];
@@ -4845,12 +4845,12 @@ function descArquivo(path) {
     if (path === 'global/gates-config.yml') return 'Papéis dos checkpoints deste perfil: CP1 (PO/Negócio) e CP2 (DBA/Arquiteto).';
   }
   if (ARQ.has(path)) return ARQ.get(path);
-  if (/^modules\/[^/]+\/README\.md$/.test(path)) return '**N1 — Major Feature Set.** O que o domínio faz e o que não faz, os Feature Sets com as siglas, regras transversais e integrações. Opções 1A (negócio) e 1B (técnico).';
-  if (/^modules\/[^/]+\/[^/]+\/README\.md$/.test(path)) return '**N2 — Feature Set.** A jornada, as features, as telas e as permissões. Antes do N3, ids-n3 reserva a primeira sequência confirmada; preserve o registro docqui:n3-ids e os IDs já usados. Integralmente negocial. Opção 2A.';
-  if (/^modules\/.+\/f-[^/]+\.md$/.test(path)) return '**N3 — Feature.** Campos, regras de negócio, cenários Gherkin e comportamento de tela. O front-matter carrega a esteira (`estado` + `gates`) e a pendência de contagem. Opções 3A/3B, 4A/4B e CT.';
+  if (/^modules\/[^/]+\/README\.md$/.test(path)) return '**N1 — Domínio.** O que o domínio faz e o que não faz, os Agrupamentos Funcionais com as siglas, regras transversais e integrações. Opções 1A (negócio) e 1B (técnico).';
+  if (/^modules\/[^/]+\/[^/]+\/README\.md$/.test(path)) return '**N2 — Agrupamento Funcional.** A jornada, as funcionalidades, as telas e as permissões. Antes do N3, ids-n3 reserva a primeira sequência confirmada; preserve o registro docqui:n3-ids e os IDs já usados. Integralmente negocial. Opção 2A.';
+  if (/^modules\/.+\/f-[^/]+\.md$/.test(path)) return '**N3 — Funcionalidade.** Campos, regras de negócio, cenários Gherkin e comportamento de tela. O front-matter carrega a esteira (`estado` + `gates`) e a pendência de contagem. Opções 3A/3B, 4A/4B e CT.';
   if (/^analise-impacto\/AIMM-SP/.test(path)) return '**AIMM da sprint.** Consolida os tickets entregues, conta cada função uma vez e traz o apurável que a equipe de métricas audita.';
   if (/^analise-impacto\/AIMM-/.test(path)) return '**AIMM do ticket.** O que o ticket pede, o changeset que a PO avaliza e, no fechamento, o que mudou, com entidades alteradas sem PF e a reconciliação. Opção AIMM; o fechamento é da skill analise-impacto.';
-  if (/^qa\//.test(path)) return 'Plano de testes da feature: converte os Cenários do N3 em roteiro E2E. Artefato do CP3 (opção 5B).';
+  if (/^qa\//.test(path)) return 'Plano de testes da funcionalidade: converte os Cenários do N3 em roteiro E2E. Artefato do CP3 (opção 5B).';
   if (/^global\/data-models\//.test(path)) return st.perfil === 'requisitos'
     ? 'Fragmento **negocial** do data-model do domínio: entidades, atributos em Label PO e relacionamentos, sem camada física. Opção DM; aprovado no CP2.'
     : 'Fragmento do data-model do domínio: entidades com Label PO, Label Dev, campo banco e tipo, e os ALI do domínio. Passada técnica (3B); aprovado no CP2.';
@@ -4902,7 +4902,7 @@ function renderInst(lista) {
   $('#inst').innerHTML =
     '<h2>Instância loja-doc <small>ao fim do passo</small></h2><div class="ficha"><div><span>branch</span><span class="branch">' + esc(E.branch) + '</span></div><div><span>perfil</span><code>' + esc(st.perfil) + '</code></div><div><span>cadência</span><code>sprint</code></div></div>' +
     '<h2>Arquivos <small>clique para ver</small></h2>' + (vis.length ? '<div class="arvore">' + arv(raiz, '') + '</div>' : '<div class="vazio">repositório vazio</div>') +
-    '<h2>Esteira por feature <small>' + gates.join(' → ') + '</small></h2>' + (feats ? '<div class="feats">' + feats + '</div>' : '<div class="vazio">nenhuma feature ainda</div>') +
+    '<h2>Esteira por funcionalidade <small>' + gates.join(' → ') + '</small></h2>' + (feats ? '<div class="feats">' + feats + '</div>' : '<div class="vazio">nenhuma funcionalidade ainda</div>') +
     '<h2>AIMMs</h2>' + (aims ? '<div class="aims">' + aims + '</div>' : '<div class="vazio">nenhuma AIMM ainda</div>') +
     '<h2>Commits <small>mais recentes</small></h2>' + (commits ? '<ul class="commits">' + commits + '</ul>' : '<div class="vazio">nenhum commit ainda</div>');
   st.ultimoE = E;
@@ -5174,7 +5174,7 @@ window.DOKU_CONFIG = {
   /* Versão do engine, no selo ao lado do nome (toda página) e na página inicial.
      Espelha o VERSION da raiz, que o site — servido só de docs/ — não alcança. No
      release, troque os dois no mesmo commit: o eval 40 reprova a divergência. */
-  version: "6.4.26",
+  version: "7.0.0",
 
   /* Páginas renomeadas: o endereço antigo (link, favorito) leva ao novo. */
   redirects: {
@@ -5203,9 +5203,9 @@ window.DOKU_CONFIG = {
           icon: "layers",
           children: [
             { title: "N0 — Visão de Produto", page: "n0" },
-            { title: "N1 — Major Feature Set", page: "n1" },
-            { title: "N2 — Feature Set", page: "n2" },
-            { title: "N3 — Feature", page: "n3" },
+            { title: "N1 — Domínio", page: "n1" },
+            { title: "N2 — Agrupamento Funcional", page: "n2" },
+            { title: "N3 — Funcionalidade", page: "n3" },
           ],
         },
         { title: "Negócio e Técnico", page: "negocio-tecnico", icon: "split" },
@@ -5275,13 +5275,13 @@ window.DOKU_CONFIG = {
     { id: 'cp1', passo: 't1-cp1', numero: 12, titulo: 'CP1 — requisitos de VND-CHK-01 — Calcular Frete', revisor: 'Ana (PO)', ticket: 'STRY0013101', arquivos: [FRETE, INDEX, AIM1], gate: 'requisitos', estado: 'requisitos-aprovados', problema: 'Dois gates no mesmo PR; modelo-dados sem por/em, antes da aprovação dos requisitos.', correcao: 'Retirar a aprovação antecipada de modelo-dados, manter só requisitos e atualizar Status na AIMM e no INDEX.' },
     { id: 'cp2', passo: 't1-cp2', numero: 14, titulo: 'CP2 — modelo de VND-CHK-01 — Calcular Frete', revisor: 'Bruno (DBA/Arquiteto)', ticket: 'STRY0013101', arquivos: [FRETE, MODELO, 'global/DATA-MODEL.md', INDEX, AIM1], gate: 'modelo-dados', estado: 'modelo-validado' },
     { id: 'cp3', passo: 't1-qa', numero: 15, titulo: 'CP3 — testes de VND-CHK-01 — Calcular Frete', perfil: 'completo', revisor: 'Lia (QA)', ticket: 'STRY0013101', arquivos: [FRETE, 'qa/vendas/checkout/calcular-frete.md', INDEX, AIM1], gate: 'testes', estado: 'especificado', problema: 'O PR aprova testes, mas não inclui o plano em qa/.', correcao: 'Trazer o plano de testes no mesmo PR do gate, para o CODEOWNERS convocar a QA.' },
-    { id: 'codigo1', passo: 't1-dev', numero: 20, titulo: 'Código — VND-CHK-01 — Calcular Frete', perfil: 'completo', repo: 'loja-api', base: 'main', head: 'feature/STRY0013101-frete', revisor: 'Caio (Tech Lead)', aprovador: CAIO, ticket: 'STRY0013101', arquivos: ['src/checkout/frete/FreteService.java', 'src/test/checkout/frete/FreteServiceTest.java'], codigo: true, descricao: 'PR do repositório de código. Cada teste leva no nome a regra que verifica (VND-CHK-01/RN-NN). A revisão da implementação não substitui o PR do CP4 no repositório de docs.' },
+    { id: 'codigo1', passo: 't1-dev', numero: 20, titulo: 'Código — VND-CHK-01 — Calcular Frete', perfil: 'completo', repo: 'loja-api', base: 'main', head: 'funcionalidade/STRY0013101-frete', revisor: 'Caio (Tech Lead)', aprovador: CAIO, ticket: 'STRY0013101', arquivos: ['src/checkout/frete/FreteService.java', 'src/test/checkout/frete/FreteServiceTest.java'], codigo: true, descricao: 'PR do repositório de código. Cada teste leva no nome a regra que verifica (VND-CHK-01/RN-NN). A revisão da implementação não substitui o PR do CP4 no repositório de docs.' },
     { id: 'cp4', passo: 't1-dev', numero: 21, titulo: 'CP4 — registro de VND-CHK-01 — Calcular Frete', perfil: 'completo', revisor: 'Caio (Tech Lead)', ticket: 'STRY0013101', arquivos: [FRETE, 'repos/INDEX.md', INDEX, AIM1], gate: 'codigo', estado: 'implementado', problema: 'loja-api ainda não está no inventário repos/INDEX.md.', correcao: 'Registrar loja-api em repos/, preencher a Implementação do N3 e regenerar o índice de repositórios.' },
-    { id: 'ids', passo: 't2-3a', numero: 23, titulo: 'Identidade imutável — VND-CHK-01 — Calcular Frete', revisor: 'Ana (PO)', ticket: 'STRY0013120', arquivos: [CHECKOUT, FRETE], problema: 'ids-n3: VND-CHK-01 já pertence a Calcular Frete; trocar para VND-CHK-99 no N2, no registro e no N3 continua sendo renumeração.', correcao: 'Restaurar VND-CHK-01 — Calcular Frete, preservar as reservas e manter VND-CHK-02 — Consultar Resumo do Pedido. A ordem de apresentação não muda IDs.', descricao: 'A nova feature recebe 02. A tentativa de renumerar a existente para 99 é recusada pela identidade comparada com a base do PR, mesmo com os arquivos alterados juntos.' },
+    { id: 'ids', passo: 't2-3a', numero: 23, titulo: 'Identidade imutável — VND-CHK-01 — Calcular Frete', revisor: 'Ana (PO)', ticket: 'STRY0013120', arquivos: [CHECKOUT, FRETE], problema: 'ids-n3: VND-CHK-01 já pertence a Calcular Frete; trocar para VND-CHK-99 no N2, no registro e no N3 continua sendo renumeração.', correcao: 'Restaurar VND-CHK-01 — Calcular Frete, preservar as reservas e manter VND-CHK-02 — Consultar Resumo do Pedido. A ordem de apresentação não muda IDs.', descricao: 'A nova funcionalidade recebe 02. A tentativa de renumerar a existente para 99 é recusada pela identidade comparada com a base do PR, mesmo com os arquivos alterados juntos.' },
     { id: 'cp1-resumo', passo: 't2-esteira', numero: 24, titulo: 'CP1 — requisitos de VND-CHK-02 — Consultar Resumo do Pedido', revisor: 'Ana (PO)', ticket: 'STRY0013120', arquivos: [RESUMO, INDEX, AIM2], gate: 'requisitos', estado: 'requisitos-aprovados' },
     { id: 'cp2-resumo', passo: 't2-esteira', numero: 25, titulo: 'CP2 — modelo de VND-CHK-02 — Consultar Resumo do Pedido', revisor: 'Bruno (DBA/Arquiteto)', ticket: 'STRY0013120', arquivos: [RESUMO, MODELO, 'global/DATA-MODEL.md', INDEX, AIM2], gate: 'modelo-dados', estado: 'modelo-validado' },
     { id: 'cp3-resumo', passo: 't2-esteira', numero: 26, titulo: 'CP3 — testes de VND-CHK-02 — Consultar Resumo do Pedido', perfil: 'completo', revisor: 'Lia (QA)', ticket: 'STRY0013120', arquivos: [RESUMO, 'qa/vendas/checkout/consultar-resumo-do-pedido.md', INDEX, AIM2], gate: 'testes', estado: 'especificado' },
-    { id: 'codigo2', passo: 't2-dev', numero: 22, titulo: 'Código — prazo e resumo do pedido', perfil: 'completo', repo: 'loja-api', base: 'main', head: 'feature/STRY0013120-prazo', revisor: 'Caio (Tech Lead)', aprovador: CAIO, ticket: 'STRY0013120', arquivos: ['src/checkout/frete/FreteService.java', 'src/checkout/pedido/ResumoService.java', 'src/test/checkout/frete/FreteServiceTest.java', 'src/test/checkout/pedido/ResumoServiceTest.java'], codigo: true, descricao: 'O diff implementa o delta de VND-CHK-01 — Calcular Frete e a nova VND-CHK-02 — Consultar Resumo do Pedido, com um teste por regra nova.' },
+    { id: 'codigo2', passo: 't2-dev', numero: 22, titulo: 'Código — prazo e resumo do pedido', perfil: 'completo', repo: 'loja-api', base: 'main', head: 'funcionalidade/STRY0013120-prazo', revisor: 'Caio (Tech Lead)', aprovador: CAIO, ticket: 'STRY0013120', arquivos: ['src/checkout/frete/FreteService.java', 'src/checkout/pedido/ResumoService.java', 'src/test/checkout/frete/FreteServiceTest.java', 'src/test/checkout/pedido/ResumoServiceTest.java'], codigo: true, descricao: 'O diff implementa o delta de VND-CHK-01 — Calcular Frete e a nova VND-CHK-02 — Consultar Resumo do Pedido, com um teste por regra nova.' },
     { id: 'cp4-resumo', passo: 't2-dev', numero: 28, titulo: 'CP4 — registro de VND-CHK-02 — Consultar Resumo do Pedido', perfil: 'completo', revisor: 'Caio (Tech Lead)', ticket: 'STRY0013120', arquivos: [RESUMO, 'repos/INDEX.md', INDEX, AIM2], gate: 'codigo', estado: 'implementado' },
     { id: 'entrega', passo: 'merge', numero: 30, titulo: 'Entrega da sprint SP07', base: 'main', head: 'sprint/SP07', revisor: 'Ana (PO)', aprovador: ANA, ticket: 'SP07', entrega: true, arquivos: ['analise-impacto/AIMM-SP07.md', AIM1, AIM2, FRETE, RESUMO, INDEX, 'global/CONTAGEM-PF.md'], descricao: 'AIMMs concluídas, dois tickets entregues e cupom retirado da branch. Este é o mesmo PR #30 aberto como draft no planejamento, agora pronto para revisão e entrega.' },
   ];
@@ -5322,9 +5322,9 @@ window.DOKU_CONFIG = {
       const classe = falha ? 'gh-error' : estado.checks === 'pending' ? 'gh-wait' : 'gh-ok';
       const mensagem = falha ? (cena.draft ? 'Entrega ainda em planejamento; merge bloqueado.' : cena.problema)
         : estado.checks === 'pending' ? 'Aguardando execução dos checks simulados.'
-        : nome === 'ids-n3 --check --base' ? 'IDs existentes e reservas preservados; nova feature usa o próximo número, sem renumerar.'
+        : nome === 'ids-n3 --check --base' ? 'IDs existentes e reservas preservados; nova funcionalidade usa o próximo número, sem renumerar.'
         : nome === 'spec-guard' ? 'validate-doc, identidade imutável (ids-n3), regras × cenários (valida-regras-cenarios), contrato da API (valida-contrato-api), elos e AIMMs: aprovados na simulação.'
-        : nome === 'valida-artefatos-previstos' ? 'Nenhuma feature implementado neste PR: o caminho de volta (<ID>/RN-NN nos testes, error_codes no código) roda quando o CP4 a marcar.'
+        : nome === 'valida-artefatos-previstos' ? 'Nenhuma funcionalidade implementada neste PR: o caminho de volta (<ID>/RN-NN nos testes, error_codes no código) roda quando o CP4 a marcar.'
         : 'Validação simulada aprovada.';
       return '<div class="gh-check"><span class="' + classe + '">' + (falha ? '✗' : estado.checks === 'pending' ? '○' : '✓') + '</span><div><strong>' + esc(nome) + '</strong><small>' + esc(mensagem) + '</small></div></div>';
     }).join('');
@@ -5357,7 +5357,7 @@ window.DOKU_CONFIG = {
         const ledger = value => '<!-- docqui:n3-ids ' + JSON.stringify({ version: 1, ids: {
           [value]: 'f-calcular-frete.md', 'VND-CHK-02': 'f-consultar-resumo-do-pedido.md',
         } }) + ' -->';
-        return ['  ## Features', '- ' + ledger('VND-CHK-01'), '+ ' + ledger(id),
+        return ['  ## Funcionalidades', '- ' + ledger('VND-CHK-01'), '+ ' + ledger(id),
           (corrigido ? '  ' : '+ ') + '| Calcular Frete | ' + id + ' |',
           '+ | Consultar Resumo do Pedido | VND-CHK-02 |'];
       }
@@ -5391,7 +5391,7 @@ window.DOKU_CONFIG = {
       return testes.map(n => '+ @Test @DisplayName("' + n + '")');
     }
     if (path === 'repos/INDEX.md') return ['+ | loja-api | https://git.acme/loja-api | Vendas | domínio | API do checkout | Java | Caio |'];
-    if (path.startsWith('src/')) return ['+ // Feature e ticket identificados no commit e no PR', '+ // ' + cena.ticket + ': implementação do comportamento especificado', '+ // Trecho didático; não é código executável da Loja Acme.'];
+    if (path.startsWith('src/')) return ['+ // Funcionalidade e ticket identificados no commit e no PR', '+ // ' + cena.ticket + ': implementação do comportamento especificado', '+ // Trecho didático; não é código executável da Loja Acme.'];
     if (cena.gate && (path === INDEX || path.startsWith('analise-impacto/'))) {
       const resumo = cena.arquivos.includes(RESUMO);
       const feature = resumo ? 'VND-CHK-02: Consultar Resumo do Pedido' : 'VND-CHK-01: Calcular Frete';
@@ -5404,10 +5404,10 @@ window.DOKU_CONFIG = {
       const defasado = cena.id === 'cp1' && !corrigido;
       return (path === INDEX ? ['  ## Esteira de checkpoints', ...(defasado
         ? ['  ' + espelho(anterior)] : ['- ' + espelho(anterior), '+ ' + espelho(novo)])] : [])
-        .concat(['  ## ' + (path === INDEX ? 'Rastreabilidade' : 'Features')], defasado
+        .concat(['  ## ' + (path === INDEX ? 'Rastreabilidade' : 'Funcionalidades')], defasado
           ? ['  ' + linha(anterior)] : ['- ' + linha(anterior), '+ ' + linha(novo)]);
     }
-    if (path.startsWith('analise-impacto/')) return cena.entrega ? ['- estado: em-execução', '+ estado: concluído', '+ Entrega reconciliada com as features no estado final.'] : ['+ Ticket: ' + cena.ticket, '+ Status das features espelhado do N3; changeset e critérios de aceite conferidos.'];
+    if (path.startsWith('analise-impacto/')) return cena.entrega ? ['- estado: em-execução', '+ estado: concluído', '+ Entrega reconciliada com as funcionalidades no estado final.'] : ['+ Ticket: ' + cena.ticket, '+ Status das funcionalidades espelhado do N3; changeset e critérios de aceite conferidos.'];
     return ['+ ' + (path === INDEX ? 'Espelho da esteira e Status de rastreabilidade atualizados no mesmo PR.' : 'Artefato do checkpoint incluído e revisado.')];
   }
 

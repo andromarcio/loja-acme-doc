@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.26 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013185
@@ -35,9 +35,9 @@ O cliente precisa chegar ao checkout só com o que quer comprar, na quantidade q
 | CA-3 | O cliente muda a quantidade de um item, sem passar da quantidade em estoque. |
 | CA-4 | O cliente remove um item do carrinho. |
 
-## Features
+## Funcionalidades
 
-| Feature (N3) | Domínio · Feature Set | Operação | Critérios cobertos | Status |
+| Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
 | [`VND-CAR-01`: Adicionar Item ao Carrinho](../modules/vendas/carrinho/f-adicionar-item-carrinho.md) | Vendas · Carrinho | Criação | `CA-1` | ✏️ Rascunho |
 | [`VND-CAR-02`: Listar Itens do Carrinho](../modules/vendas/carrinho/f-listar-item-carrinho.md) | Vendas · Carrinho | Criação | `CA-2` | ✏️ Rascunho |
@@ -50,13 +50,13 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 
 | Artefato | Tipo | Operação | Seção | Natureza | O quê | Proveniência |
 |---|---|---|---|---|---|---|
-| `modules/vendas/README.md` | N1 | alterar | Feature Sets; Regras transversais | funcional | Carrinho especificado; o pedido aberto é o carrinho | elicitado |
+| `modules/vendas/README.md` | N1 | alterar | Agrupamentos Funcionais; Regras transversais | funcional | Carrinho especificado; o pedido aberto é o carrinho | elicitado |
 | `modules/vendas/carrinho/README.md` | N2 | criar | — | funcional | Jornada do carrinho, telas e permissões | elicitado |
 | `modules/vendas/carrinho/f-adicionar-item-carrinho.md` | N3 | criar | — | funcional | VND-CAR-01 — Adicionar Item ao Carrinho | derivado: âncora |
 | `modules/vendas/carrinho/f-listar-item-carrinho.md` | N3 | criar | — | funcional | VND-CAR-02 — Listar Itens do Carrinho | derivado: âncora |
 | `modules/vendas/carrinho/f-alterar-quantidade-item.md` | N3 | criar | — | funcional | VND-CAR-03 — Alterar Quantidade do Item | derivado: âncora |
 | `modules/vendas/carrinho/f-remover-item-carrinho.md` | N3 | criar | — | funcional | VND-CAR-04 — Remover Item do Carrinho | derivado: âncora |
-| `modules/vendas/checkout/README.md` | N2 | alterar | Dependências entre features | funcional | Calcular Frete passa a depender de VND-CAR-01 — Adicionar Item ao Carrinho | elicitado |
+| `modules/vendas/checkout/README.md` | N2 | alterar | Dependências entre funcionalidades | funcional | Calcular Frete passa a depender de VND-CAR-01 — Adicionar Item ao Carrinho | elicitado |
 | `global/DATA-MODEL.md` | DATA-MODEL | alterar | Modelos por domínio; Relacionamentos | funcional | ItemPedido e os relacionamentos com Produto e Usuario | elicitado |
 | `global/data-models/vendas.md` | DATA-MODEL | alterar | Pedido; ItemPedido | funcional | ItemPedido; Pedido com Cliente, situação Aberto e CEP informado no checkout | elicitado |
 | `global/FIELD-DICTIONARY.md` | FIELD-DICT | alterar | Quantidade | funcional | Novo campo canônico Quantidade | elicitado |
@@ -64,16 +64,16 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `prototypes/vendas/carrinho/flow.html` | PROTÓTIPO | criar | — | funcional | Página do produto e carrinho | derivado: espelho do N2 |
 | `prototypes/vendas/checkout/flow.html` | PROTÓTIPO | alterar | Notas do protótipo | funcional | Os itens do pedido passam a vir do Carrinho especificado | elicitado |
 
-## Alterações na spec, por Feature Set
+## Alterações na spec, por Agrupamento Funcional
 
 ### Carrinho
 
-| Feature | CA-n | Natureza | Mudança | Regras | Cenários |
+| Funcionalidade | CA-n | Natureza | Mudança | Regras | Cenários |
 | --- | --- | --- | --- | --- | --- |
-| `VND-CAR-01`<br>**Adicionar Item ao Carrinho** | CA-1 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: pôr um produto no carrinho, na quantidade escolhida. | +5 | +10 |
-| `VND-CAR-02`<br>**Listar Itens do Carrinho** | CA-2 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: ver os itens, os subtotais e o total dos itens. | +5 | +7 |
-| `VND-CAR-03`<br>**Alterar Quantidade do Item** | CA-3 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: mudar a quantidade de um item do carrinho. | +3 | +8 |
-| `VND-CAR-04`<br>**Remover Item do Carrinho** | CA-4 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: tirar um item do carrinho. | +2 | +5 |
+| `VND-CAR-01`<br>**Adicionar Item ao Carrinho** | CA-1 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: pôr um produto no carrinho, na quantidade escolhida. | +5 | +10 |
+| `VND-CAR-02`<br>**Listar Itens do Carrinho** | CA-2 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: ver os itens, os subtotais e o total dos itens. | +5 | +7 |
+| `VND-CAR-03`<br>**Alterar Quantidade do Item** | CA-3 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: mudar a quantidade de um item do carrinho. | +3 | +8 |
+| `VND-CAR-04`<br>**Remover Item do Carrinho** | CA-4 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: tirar um item do carrinho. | +2 | +5 |
 
 ## Entidades alteradas
 
@@ -102,3 +102,4 @@ Não encerrada. Esta AIMM está em análise e não declara entrega, aprovação 
 | 2026-10-20 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: nome abaixo do ID, entidades sem PF. |
 | 2026-10-18 | Claude | Demonstração | Ticket fictício e Feature Set Carrinho preenchidos, com 4 features em rascunho, sem aval e com a contagem pendente. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

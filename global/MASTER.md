@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # MASTER.md
 > Arquivo de contexto global, independente do módulo ou nível em trabalho.
 > No Claude Code é carregado automaticamente a cada sessão via o `CLAUDE.md` da
@@ -19,7 +19,7 @@
 > sigla diverge desta. A descrição de uma frase aqui é o resumo; o `## Propósito` do N0 a desenvolve.
 >
 > A **sigla do sistema** (5 letras) identifica o produto como um todo e é **distinta** da
-> `[SIGLA]` de **domínio** (3 letras, usada nos IDs `[SIGLA]-[SFS]-[NN]`) descrita
+> `[SIGLA]` de **domínio** (3 letras, usada nos IDs `[SIGLA]-[SAF]-[NN]`) descrita
 > na seção *Identificadores únicos* abaixo.
 
 ---
@@ -41,10 +41,10 @@
 | `ml-dados` | Pipelines de dados/ML: preparação, treino, avaliação, serving | N2: `Telas`/`Permissões por perfil` opcionais · N3: superfície típica `CLI`/`Job/Pipeline` com `## Execução e operação` no lugar de `## Comportamento de tela` · data-model pode usar o fragmento de **artefatos** (dataset/cache/checkpoint) · protótipos e APF opcionais (APF pressupõe transações de negócio) · engenharia reversa pela **Trilha B** do `PROMPT_REVERSE_ENGINEERING` |
 | `cli-biblioteca` | Ferramentas de linha de comando, SDKs e bibliotecas | Igual a `ml-dados`, sem a ênfase em artefatos de dados — superfície típica `CLI`/`API` |
 
-> A superfície de **cada feature** continua sendo declarada no `## Superfície` do N3 —
-> o arquétipo dá o padrão do produto (e o validador usa a superfície da feature, não o
+> A superfície de **cada funcionalidade** continua sendo declarada no `## Superfície` do N3 —
+> o arquétipo dá o padrão do produto (e o validador usa a superfície da funcionalidade, não o
 > arquétipo, para exigir `Comportamento de tela` vs `Execução e operação`). Um produto
-> `transacional` pode ter features `Job` (ex.: *gerar cobrança mensal*) e um `ml-dados`
+> `transacional` pode ter funcionalidades `Job` (ex.: *gerar cobrança mensal*) e um `ml-dados`
 > pode ter uma tela de acompanhamento.
 
 ---
@@ -89,7 +89,7 @@
 
 | Cadência | Quando usar | Branch | Merge na `main` |
 |---|---|---|---|
-| `história` | Cada história é implementada e aprovada sozinha — desenvolvimento por agentes, com o humano aprovando cada entrega | `historia/<CHAVE>`, com a AIMM do ticket | a história entregue: a AIMM `concluído` e as features no estado final da esteira |
+| `história` | Cada história é implementada e aprovada sozinha — desenvolvimento por agentes, com o humano aprovando cada entrega | `historia/<CHAVE>`, com a AIMM do ticket | a história entregue: a AIMM `concluído` e as funcionalidades no estado final da esteira |
 | `sprint` | A entrega é a sprint — o caso mais comum em times com cerimônias de sprint | `sprint/<id>`, com a AIMM da sprint (`AIMM-<id>.md`, aberta no planejamento) e as AIMMs dos tickets planejados | a sprint fechada com o relatório de entrega: só os tickets entregues — os que ficaram são retirados com `node scripts/reverte-ticket.mjs <CHAVE>` e voltam na próxima sprint |
 
 > Na cadência `sprint`, todo commit que toca a spec (`modules/`, `global/`, `qa/`, `prototypes/`, `analise-impacto/`) cita **uma** chave — a do ticket, ou o id da sprint nos commits da AIMM da sprint. É o que permite tirar uma história da branch sem arrastar outra (`node scripts/valida-commits-ticket.mjs`). Os requisitos da sprint em andamento ficam consultáveis no preview do site (`/sprint/<id>/`) até o merge.
@@ -111,15 +111,15 @@ Cada nível da hierarquia de documentação possui um ID único para rastreabili
 | Nível | Formato | Exemplo |
 |---|---|---|
 | Ticket de origem (entrada) | chave da **ferramenta de origem** — externa, **não gerada aqui**; é a fonte de verdade do ticket. Tipos suportados: `servicenow` (`STRY…`), `issue` (`ISSUE-…`), `experimento` (`EXP-…`) — ver *Origem do ticket* abaixo | `STRY0012345` · `ISSUE-482` · `EXP-2026-003` |
-| Major Feature Set (N1) | `[SIGLA]` — sigla do domínio (sempre 3 letras maiúsculas) definida na criação do domínio | `CRM` |
-| Feature Set (N2) | `[SIGLA]-[SFS]` — sigla do domínio + sigla do Feature Set (sempre 3 letras maiúsculas) | `CRM-CLI` |
-| Feature (N3) | `[SIGLA]-[SFS]-[NN]` — 2 dígitos sequenciais dentro do Feature Set | `CRM-CLI-01` |
+| Domínio (N1) | `[SIGLA]` — sigla do domínio (sempre 3 letras maiúsculas) definida na criação do domínio | `CRM` |
+| Agrupamento Funcional (N2) | `[SIGLA]-[SAF]` — sigla do domínio + sigla do Agrupamento Funcional (sempre 3 letras maiúsculas) | `CRM-CLI` |
+| Funcionalidade (N3) | `[SIGLA]-[SAF]-[NN]` — 2 dígitos sequenciais dentro do Agrupamento Funcional | `CRM-CLI-01` |
 
 **Regras:**
 - O ticket entra pela ferramenta de origem; o framework **referencia** a chave (nunca cria ID próprio para o ticket), abre a AIMM do ticket em `analise-impacto/AIMM-<CHAVE>.md` e registra a chave na seção `## Origem` do N3
 - A sigla do domínio é definida uma única vez na criação do N1 e nunca alterada
-- A sigla do Feature Set é definida **no N1** (ao listar os Feature Sets do domínio) e **reutilizada** pelo N2; é única dentro do domínio e nunca reutilizada após exclusão; deriva do nome do Feature Set (ex.: Usuários → `USR`)
-- A numeração de Features é sequencial dentro do Feature Set e não reutilizada após exclusão
+- A sigla do Agrupamento Funcional é definida **no N1** (ao listar os Agrupamentos Funcionais do domínio) e **reutilizada** pelo N2; é única dentro do domínio e nunca reutilizada após exclusão; deriva do nome do Agrupamento Funcional (ex.: Usuários → `USR`)
+- A numeração de Funcionalidades é sequencial dentro do Agrupamento Funcional e não reutilizada após exclusão
 - O ID fica no cabeçalho de cada artefato, logo abaixo da linha `**Nível X**`
 
 ### Origem do ticket (plugável)
@@ -149,17 +149,17 @@ Todo desenvolvimento começa por um ticket na ferramenta de origem e é rastreá
 ```
 Ticket ([tipo] [chave] — ex.: ServiceNow STRYxxxxxxx, issue ISSUE-123, experimento EXP-…)
    └─ AIMM (analise-impacto/AIMM-<CHAVE>.md)  ← o que o ticket pede, vai mudar e mudou
-        └─ N3 Feature (SIGLA-SFS-NN)  ← seção "Origem" guarda a chave e o link da AIMM
-             └─ Código (commit/PR)    ← referencia a feature e o ticket
+        └─ N3 Funcionalidade (SIGLA-SAF-NN)  ← seção "Origem" guarda a chave e o link da AIMM
+             └─ Código (commit/PR)    ← referencia a funcionalidade e o ticket
 ```
 
-- **Ticket → N3**: a chave de origem é registrada na seção `## Origem` de cada feature, com o link da AIMM; o elo recíproco é a `## Features` da AIMM (`analise-impacto/AIMM-<CHAVE>.md`). Cada critério de aceite é analisado e vira uma regra de negócio, um `## Cenário` (Gherkin) ou ambos — rastreabilidade semântica, não só por ID.
-- **Critério de aceite → N3** *(quando a fonte numera)*: a coluna `Critérios cobertos` do `## Origem` abre com as referências `CA-n`, no mesmo número que a ferramenta de origem usa. É o elo que a **contagem por sprint** exige: cada feature impactada sai com a chave do ticket **e** o número do critério. Quando a fonte não numera os critérios, a coluna sai `—` e a rastreabilidade fica só pela chave — não se inventa número.
+- **Ticket → N3**: a chave de origem é registrada na seção `## Origem` de cada funcionalidade, com o link da AIMM; o elo recíproco é a `## Funcionalidades` da AIMM (`analise-impacto/AIMM-<CHAVE>.md`). Cada critério de aceite é analisado e vira uma regra de negócio, um `## Cenário` (Gherkin) ou ambos — rastreabilidade semântica, não só por ID.
+- **Critério de aceite → N3** *(quando a fonte numera)*: a coluna `Critérios cobertos` do `## Origem` abre com as referências `CA-n`, no mesmo número que a ferramenta de origem usa. É o elo que a **contagem por sprint** exige: cada funcionalidade impactada sai com a chave do ticket **e** o número do critério. Quando a fonte não numera os critérios, a coluna sai `—` e a rastreabilidade fica só pela chave — não se inventa número.
 ---
 
-## Nomenclatura de features
+## Nomenclatura de funcionalidades
 
-Features são nomeadas sempre no **infinitivo**, seguindo o padrão:
+Funcionalidades são nomeadas sempre no **infinitivo**, seguindo o padrão:
 
 **`Verbo + Entidade + Complemento (quando necessário)`**
 
@@ -176,7 +176,7 @@ Features são nomeadas sempre no **infinitivo**, seguindo o padrão:
 - Sempre infinitivo — nunca substantivo (`Cadastro de Cliente` ❌) nem gerúndio (`Cadastrando Cliente` ❌)
 - Listagens que exibem apenas a lista, sem opções de filtro → verbo **Listar**
 - Listagens que possuem campos de filtro ou busca → verbo **Pesquisar**
-- Complemento é opcional — usar apenas quando necessário para distinguir features de mesma entidade
+- Complemento é opcional — usar apenas quando necessário para distinguir funcionalidades de mesma entidade
 
 ---
 
@@ -220,5 +220,5 @@ Entidades e atributos são nomeados em **português**. O `global/DATA-MODEL.md` 
 | `global/MESSAGE-DICTIONARY.md` | Mensagens de UI genéricas + baseline de validação |
 | `global/ERROR-DICTIONARY.md` | Fonte única de códigos de erro |
 | `global/DESIGN-SYSTEM.md` | Padrões de UI |
-| `global/VOCABULARY-OVERRIDES.md` | *(opcional)* Ajustes de vocabulário desta instância (verbos/termos — ver FEATURE-DEFINITION) |
+| `global/VOCABULARY-OVERRIDES.md` | *(opcional)* Ajustes de vocabulário desta instância (verbos/termos — ver DEFINICAO-FUNCIONALIDADE) |
 | `global/gates-config.yml` | *(opcional)* Papéis dos checkpoints CP1–CP2 desta instância (ver `scripts/gates.py`) |

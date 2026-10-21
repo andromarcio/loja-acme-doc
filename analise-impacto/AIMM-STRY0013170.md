@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.26 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013170
@@ -36,9 +36,9 @@ A equipe de vendas organiza os produtos sem depender da equipe de sistemas, e o 
 | CA-4 | Categoria com produtos não pode ser excluída. |
 | CA-5 | A equipe consulta os dados de uma categoria e quantos produtos ela tem. |
 
-## Features
+## Funcionalidades
 
-| Feature (N3) | Domínio · Feature Set | Operação | Critérios cobertos | Status |
+| Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
 | [`CAT-CTG-01`: Pesquisar Categorias](../modules/catalogo/categorias/f-pesquisar-categoria.md) | Catálogo · Categorias | Criação | `CA-1` | ✏️ Rascunho |
 | [`CAT-CTG-02`: Cadastrar Categoria](../modules/catalogo/categorias/f-cadastrar-categoria.md) | Catálogo · Categorias | Criação | `CA-2` | ✏️ Rascunho |
@@ -64,17 +64,17 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `global/MESSAGE-DICTIONARY.md` | MESSAGE-DICT | alterar | Catálogo | funcional | Nome duplicado, exclusão bloqueada e confirmação de inativação | elicitado |
 | `prototypes/catalogo/categorias/flow.html` | PROTÓTIPO | criar | — | funcional | Fluxo da pesquisa com os modais de cadastro, edição e visualização | derivado: espelho do N2 |
 
-## Alterações na spec, por Feature Set
+## Alterações na spec, por Agrupamento Funcional
 
 ### Categorias
 
-| Feature | CA-n | Natureza | Mudança | Regras | Cenários |
+| Funcionalidade | CA-n | Natureza | Mudança | Regras | Cenários |
 | --- | --- | --- | --- | --- | --- |
-| `CAT-CTG-01`<br>**Pesquisar Categorias** | CA-1 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: encontrar categorias por nome e situação. | +3 | +9 |
-| `CAT-CTG-02`<br>**Cadastrar Categoria** | CA-2 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: incluir uma categoria com nome único. | +2 | +9 |
-| `CAT-CTG-03`<br>**Editar Categoria** | CA-3 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: alterar a descrição e a situação; o nome não muda. | +2 | +9 |
-| `CAT-CTG-04`<br>**Excluir Categoria** | CA-4 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: remover uma categoria que não tem produtos. | +2 | +6 |
-| `CAT-CTG-05`<br>**Visualizar Categoria** | CA-5 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: ver todos os dados e quantos produtos a categoria tem. | +1 | +5 |
+| `CAT-CTG-01`<br>**Pesquisar Categorias** | CA-1 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: encontrar categorias por nome e situação. | +3 | +9 |
+| `CAT-CTG-02`<br>**Cadastrar Categoria** | CA-2 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: incluir uma categoria com nome único. | +2 | +9 |
+| `CAT-CTG-03`<br>**Editar Categoria** | CA-3 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: alterar a descrição e a situação; o nome não muda. | +2 | +9 |
+| `CAT-CTG-04`<br>**Excluir Categoria** | CA-4 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: remover uma categoria que não tem produtos. | +2 | +6 |
+| `CAT-CTG-05`<br>**Visualizar Categoria** | CA-5 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: ver todos os dados e quantos produtos a categoria tem. | +1 | +5 |
 
 ## Entidades alteradas
 
@@ -103,3 +103,4 @@ Não encerrada. Esta AIMM está em análise e não declara entrega, aprovação 
 | 2026-10-20 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: nome abaixo do ID, entidades sem PF. |
 | 2026-10-18 | Claude | Demonstração | Ticket fictício e Feature Set Categorias preenchidos, com 5 features em rascunho, sem aval e com a contagem pendente. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

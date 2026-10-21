@@ -16,8 +16,8 @@
   var TYPES = {
     produto:    { label: "Visão de Produto (N0)", color: "var(--t-produto)", shape: "rect", r: 16 },
     dominio:    { label: "Domínios (N1)",         color: "var(--t-dominio)", shape: "circle", r: 15 },
-    featureset: { label: "Feature Sets (N2)",     color: "var(--t-featureset)", shape: "circle", r: 12 },
-    feature:    { label: "Features (N3)",         color: "var(--s-spec)", shape: "circle", r: 10, byStatus: true },
+    featureset: { label: "Agrupamentos Funcionais (N2)",     color: "var(--t-featureset)", shape: "circle", r: 12 },
+    feature:    { label: "Funcionalidades (N3)",         color: "var(--s-spec)", shape: "circle", r: 10, byStatus: true },
     historia:   { label: "Histórias",             color: "var(--t-historia)", shape: "rect", r: 11 },
     repo:       { label: "Código",                color: "var(--t-repo)", shape: "rect", r: 11 },
   };
@@ -444,7 +444,7 @@
 
     var totalPf = DATA.nodes.reduce(function (a, n) { return a + (n.status !== "deprecado" && n.pf ? n.pf : 0); }, 0);
     document.getElementById("stats").innerHTML =
-      stat(DATA.nodes.filter(function(n){return n.type==="feature";}).length, "Features (N3)") +
+      stat(DATA.nodes.filter(function(n){return n.type==="feature";}).length, "Funcionalidades (N3)") +
       stat(DATA.nodes.filter(function(n){return n.type==="historia";}).length, "Histórias") +
       stat(DATA.edges.filter(function(e){return e.kind==="origina";}).length, "Elos de rastro") +
       stat(totalPf, "PF vigente");

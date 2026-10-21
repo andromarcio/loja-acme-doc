@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.26 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013195
@@ -36,9 +36,9 @@ O administrador controla quem acessa a loja e com que perfil, sem perder o hist�
 | CA-4 | O usuário inativado perde o acesso, mas continua nos pedidos; o administrador não pode inativar o próprio usuário. |
 | CA-5 | O administrador consulta todos os dados de um usuário. |
 
-## Features
+## Funcionalidades
 
-| Feature (N3) | Domínio · Feature Set | Operação | Critérios cobertos | Status |
+| Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
 | [`ADM-USR-01`: Pesquisar Usuários](../modules/administracao/usuarios/f-pesquisar-usuario.md) | Administração · Usuários | Criação | `CA-1` | ✏️ Rascunho |
 | [`ADM-USR-02`: Cadastrar Usuário](../modules/administracao/usuarios/f-cadastrar-usuario.md) | Administração · Usuários | Criação | `CA-2` | ✏️ Rascunho |
@@ -65,17 +65,17 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `global/MESSAGE-DICTIONARY.md` | MESSAGE-DICT | alterar | Administração | funcional | Duplicidades, último administrador e inativação | elicitado |
 | `prototypes/administracao/usuarios/flow.html` | PROTÓTIPO | criar | — | funcional | Pesquisa, cadastro, edição, visualização e inativação | derivado: espelho do N2 |
 
-## Alterações na spec, por Feature Set
+## Alterações na spec, por Agrupamento Funcional
 
 ### Usuários
 
-| Feature | CA-n | Natureza | Mudança | Regras | Cenários |
+| Funcionalidade | CA-n | Natureza | Mudança | Regras | Cenários |
 | --- | --- | --- | --- | --- | --- |
-| `ADM-USR-01`<br>**Pesquisar Usuários** | CA-1 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: encontrar usuários por nome, e-mail, perfil e situação. | +3 | +7 |
-| `ADM-USR-02`<br>**Cadastrar Usuário** | CA-2 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: incluir um usuário com e-mail único e perfil. | +3 | +11 |
-| `ADM-USR-03`<br>**Editar Usuário** | CA-3 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: alterar os dados e o perfil, sem mudar o e-mail. | +4 | +10 |
-| `ADM-USR-04`<br>**Inativar Usuário** | CA-4 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: tirar o acesso de um usuário, mantendo o histórico. | +4 | +8 |
-| `ADM-USR-05`<br>**Visualizar Usuário** | CA-5 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: ver todos os dados de um usuário. | +2 | +6 |
+| `ADM-USR-01`<br>**Pesquisar Usuários** | CA-1 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: encontrar usuários por nome, e-mail, perfil e situação. | +3 | +7 |
+| `ADM-USR-02`<br>**Cadastrar Usuário** | CA-2 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: incluir um usuário com e-mail único e perfil. | +3 | +11 |
+| `ADM-USR-03`<br>**Editar Usuário** | CA-3 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: alterar os dados e o perfil, sem mudar o e-mail. | +4 | +10 |
+| `ADM-USR-04`<br>**Inativar Usuário** | CA-4 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: tirar o acesso de um usuário, mantendo o histórico. | +4 | +8 |
+| `ADM-USR-05`<br>**Visualizar Usuário** | CA-5 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: ver todos os dados de um usuário. | +2 | +6 |
 
 ## Entidades alteradas
 
@@ -103,3 +103,4 @@ Não encerrada. Esta AIMM está em análise e não declara entrega, aprovação 
 | 2026-10-20 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: nome abaixo do ID, entidades sem PF. |
 | 2026-10-18 | Claude | Demonstração | Ticket fictício e Feature Set Usuários preenchidos, com 5 features em rascunho, sem aval e com a contagem pendente. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

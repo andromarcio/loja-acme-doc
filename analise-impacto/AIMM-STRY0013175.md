@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.26 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013175
@@ -34,9 +34,9 @@ A pessoa que visita a loja precisa achar o produto e o preço sem se identificar
 | CA-2 | O visitante pesquisa produtos por parte do nome e pode filtrar por categoria; produtos de categoria inativa não aparecem. |
 | CA-3 | Ao abrir um produto, o sistema mostra nome, descrição, categoria e preço; o produto sem estoque aparece como esgotado. |
 
-## Features
+## Funcionalidades
 
-| Feature (N3) | Domínio · Feature Set | Operação | Critérios cobertos | Status |
+| Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
 | [`VIT-NAV-01`: Listar Destaques](../modules/vitrine/navegacao/f-listar-destaque.md) | Vitrine · Navegação | Criação | `CA-1` | ✏️ Rascunho |
 | [`VIT-NAV-02`: Pesquisar Produtos na Vitrine](../modules/vitrine/navegacao/f-pesquisar-produto-vitrine.md) | Vitrine · Navegação | Criação | `CA-2` | ✏️ Rascunho |
@@ -56,15 +56,15 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `global/MESSAGE-DICTIONARY.md` | MESSAGE-DICT | alterar | Vitrine | funcional | Selo de esgotado, página sem destaques e produto indisponível | elicitado |
 | `prototypes/vitrine/navegacao/flow.html` | PROTÓTIPO | criar | — | funcional | Página inicial, busca e página do produto | derivado: espelho do N2 |
 
-## Alterações na spec, por Feature Set
+## Alterações na spec, por Agrupamento Funcional
 
 ### Navegação
 
-| Feature | CA-n | Natureza | Mudança | Regras | Cenários |
+| Funcionalidade | CA-n | Natureza | Mudança | Regras | Cenários |
 | --- | --- | --- | --- | --- | --- |
-| `VIT-NAV-01`<br>**Listar Destaques** | CA-1 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: ver os produtos em destaque na página inicial. | +5 | +7 |
-| `VIT-NAV-02`<br>**Pesquisar Produtos na Vitrine** | CA-2 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: encontrar produtos por nome e por categoria. | +5 | +11 |
-| `VIT-NAV-03`<br>**Visualizar Produto na Vitrine** | CA-3 | incluída | **Inclusão** da feature. *Antes*: não havia N3. *Agora*: ver a página do produto, com preço e disponibilidade. | +4 | +7 |
+| `VIT-NAV-01`<br>**Listar Destaques** | CA-1 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: ver os produtos em destaque na página inicial. | +5 | +7 |
+| `VIT-NAV-02`<br>**Pesquisar Produtos na Vitrine** | CA-2 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: encontrar produtos por nome e por categoria. | +5 | +11 |
+| `VIT-NAV-03`<br>**Visualizar Produto na Vitrine** | CA-3 | incluída | **Inclusão** da funcionalidade. *Antes*: não havia N3. *Agora*: ver a página do produto, com preço e disponibilidade. | +4 | +7 |
 
 ## Entidades alteradas
 
@@ -92,3 +92,4 @@ Não encerrada. Esta AIMM está em análise e não declara entrega, aprovação 
 | 2026-10-20 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: nome abaixo do ID, entidades sem PF. |
 | 2026-10-18 | Claude | Demonstração | Ticket fictício e Feature Set Navegação preenchidos, com 3 features em rascunho, sem aval e com a contagem pendente. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

@@ -1,5 +1,5 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_1A_N1_negocio | atualizado: 2026-10-18 -->
-# Major Feature Set: Vitrine
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+# Domínio: Vitrine
 > **Nível 1** - Visão estratégica do domínio - `VIT`
 
 ## Descrição
@@ -14,9 +14,9 @@ Responde pelo que a pessoa vê ao visitar a Loja ACME: os destaques da página i
 | Montar o carrinho e fechar a compra | Vendas |
 | Identificar a pessoa que visita (entrar na conta) | Não especificado no exemplo |
 
-## Feature Sets
+## Agrupamentos Funcionais
 
-| Feature Set | Descrição | Features |
+| Agrupamento Funcional | Descrição | Funcionalidades |
 |---|---|---|
 | [**Navegação**](navegacao/README.md) <small>VIT-NAV</small> | Destaques, busca e página do produto para quem visita a loja | 3 |
 | [**Destaques**](destaques/README.md) <small>VIT-DST</small> | Escolha dos produtos em evidência na página inicial | 5 |
@@ -42,5 +42,6 @@ Nenhum outro domínio altera dados da Vitrine.
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-18 | Claude | N1 criado | Vitrine com Navegação e Destaques especificados; exemplo em rascunho. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |
 
 *Links: [Navegação](navegacao/README.md) · [Destaques](destaques/README.md) · [INDEX geral](../INDEX.md)*

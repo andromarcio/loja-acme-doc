@@ -1,6 +1,6 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_PROTOTYPE_FLOW_FULL | atualizado: 2026-10-18 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # Protótipo de Fluxo: Destaques
-> Feature Set: Destaques — Major Feature Set: Vitrine
+> Agrupamento Funcional: Destaques — Domínio: Vitrine
 > Spec de referência: [../../../modules/vitrine/destaques/README.md](../../../modules/vitrine/destaques/README.md)
 
 ---

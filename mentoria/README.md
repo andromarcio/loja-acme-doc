@@ -1,18 +1,18 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # Demonstração — Loja ACME
 
 Esta instância é um exemplo preenchido do perfil **requisitos**, pronto para apresentar o método e praticar os checkpoints. O [simulador](simulador.html) mostra o processo completo; selecione **requisitos** no topo.
 
 ## O que já está preenchido
 
-Quatro Major Feature Sets estão preenchidos, em rascunho, com 31 features:
+Quatro Domínios estão preenchidos, em rascunho, com 31 funcionalidades:
 
 - **Catálogo** (`CAT`): Categorias (`CAT-CTG`), CRUD completo com cadastro, edição e visualização em modal. Produtos (`CAT-PRD`) fica planejado: é o exercício STRY0013150.
 - **Vitrine** (`VIT`): Navegação (`VIT-NAV`), aberta a quem visita, e Destaques (`VIT-DST`), CRUD completo com período de vigência.
 - **Vendas** (`VND`): Carrinho (`VND-CAR`), Checkout (`VND-CHK`), com **VND-CHK-01 — Calcular Frete**, e Gestão de Pedidos (`VND-PED`).
 - **Administração** (`ADM`): Usuários (`ADM-USR`), CRUD com inativação no lugar da exclusão, e Faixas de Frete (`ADM-FRT`), CRUD da tabela que o Calcular Frete usa.
 
-Cada Feature Set nasceu de um ticket fictício (STRY0013101 e STRY0013170 a STRY0013200, no [backlog](backlog.md)), tem a sua AIMM e o seu protótipo de fluxo, e cada feature está ligada ao ticket nos três lugares: a N3, a AIMM e o INDEX. O modelo de entidades tem Categoria, Produto, Destaque, Pedido, ItemPedido, TabelaFrete e Usuario, com massa fictícia; os dicionários têm as entradas canônicas que as features citam, como CEP, Quantidade e RC-09 — Registro vinculado não pode ser excluído.
+Cada Agrupamento Funcional nasceu de um ticket fictício (STRY0013101 e STRY0013170 a STRY0013200, no [backlog](backlog.md)), tem a sua AIMM e o seu protótipo de fluxo, e cada funcionalidade está ligada ao ticket nos três lugares: a N3, a AIMM e o INDEX. O modelo de entidades tem Categoria, Produto, Destaque, Pedido, ItemPedido, TabelaFrete e Usuario, com massa fictícia; os dicionários têm as entradas canônicas que as funcionalidades citam, como CEP, Quantidade e RC-09 — Registro vinculado não pode ser excluído.
 
 Nenhum gate foi aprovado. A existência do material não equivale a aprovação da PO ou do DBA. Ana, Rui e Bruno são personagens do simulador, não usuários que deram aprovação neste repositório.
 
@@ -25,7 +25,7 @@ Nenhum gate foi aprovado. A existência do material não equivale a aprovação 
 5. Abra o modelo de entidades e a entrada CEP no FIELD-DICTIONARY; nenhum schema de banco é necessário.
 6. Compare dois CRUDs completos: Categorias, em modal, e Faixas de Frete, em telas próprias. As cinco operações nascem do Cadastrar; a exclusão bloqueada cita a regra canônica RC-09, e Usuários troca a exclusão pela inativação.
 7. Siga as relações entre domínios: a faixa mantida em Faixas de Frete é a que o Calcular Frete usa, a categoria inativada no Catálogo some da Vitrine e o carrinho é o pedido aberto que a Gestão de Pedidos acompanha depois de confirmado.
-8. Mostre os mapas de features e rastreabilidade, o diagrama ER e o INDEX com a esteira ainda em rascunho.
+8. Mostre os mapas de funcionalidades e rastreabilidade, o diagrama ER e o INDEX com a esteira ainda em rascunho.
 9. No simulador, percorra CP1 e CP2. No repositório real, esses passos exigem responsáveis reais, um checkpoint por PR e regeneração do espelho.
 
 ## Praticar sem alterar o ponto de partida
@@ -38,8 +38,8 @@ Antes de usar a CI como trilha de aprovação, substitua os times de exemplo de 
 
 O [backlog](backlog.md) preserva os tickets fictícios do simulador. STRY0013120 introduz prazo de entrega e resumo; STRY0013135 introduz cupom. Use AIMM → 4A/3A, atualize o N2 e feche os elos nos três lugares. A contagem de PF é uma atividade separada: execute CT a partir do N3, sem copiar os totais da apresentação.
 
-Nesta loja maior, as AIMMs da SP07 alcançam mais artefatos do que no simulador: o prazo do STRY0013120 entra na TabelaFrete e, com ela, nas Faixas de Frete (`ADM-FRT`). Os IDs VND-CHK-02 e VND-CHK-03 continuam livres para o resumo do pedido e o cupom, como no simulador. O STRY0013150 cria o Feature Set Produtos sobre o N1 Catálogo e precisa dizer o que o "retirar de venda" muda na Vitrine, nos Destaques e no Carrinho.
+Nesta loja maior, as AIMMs da SP07 alcançam mais artefatos do que no simulador: o prazo do STRY0013120 entra na TabelaFrete e, com ela, nas Faixas de Frete (`ADM-FRT`). Os IDs VND-CHK-02 e VND-CHK-03 continuam livres para o resumo do pedido e o cupom, como no simulador. O STRY0013150 cria o Agrupamento Funcional Produtos sobre o N1 Catálogo e precisa dizer o que o "retirar de venda" muda na Vitrine, nos Destaques e no Carrinho.
 
 ## Limites do material
 
-As mensagens de carrinho vazio e os estados de tela são complementos didáticos ao ticket inicial, não requisitos aprovados. Os protótipos de fluxo, um por Feature Set e listados no [manifesto](../prototypes/INDEX.md), estão em rascunho, sem aprovação; não há implementação, testes de código ou dados reais. Os arquivos em branco herdados do bootstrap são referências para exercícios futuros, não funcionalidades implementadas.
+As mensagens de carrinho vazio e os estados de tela são complementos didáticos ao ticket inicial, não requisitos aprovados. Os protótipos de fluxo, um por Agrupamento Funcional e listados no [manifesto](../prototypes/INDEX.md), estão em rascunho, sem aprovação; não há implementação, testes de código ou dados reais. Os arquivos em branco herdados do bootstrap são referências para exercícios futuros, não funcionalidades implementadas.

@@ -1,7 +1,7 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 id: CAT-CTG-01
-feature_set: CAT-CTG
+agrupamento_funcional: CAT-CTG
 dominio: CAT
 entidade: Categoria
 data_model_ref: data-models/catalogo.md#categoria
@@ -24,7 +24,7 @@ contagem:
 ---
 
 # Pesquisar Categorias
-> **Nível 3** - Feature Set: Categorias — Major Feature Set: Catálogo - `CAT-CTG-01`
+> **Nível 3** - Agrupamento Funcional: Categorias — Domínio: Catálogo - `CAT-CTG-01`
 
 ## Descrição
 
@@ -133,7 +133,7 @@ Feature: Pesquisar Categorias
 
 | Label PO | Valor | Quando |
 |---|---|---|
-| — | Nenhum campo é preenchido automaticamente nesta feature | — |
+| — | Nenhum campo é preenchido automaticamente nesta funcionalidade | — |
 
 ## Superfície
 
@@ -145,7 +145,7 @@ Feature: Pesquisar Categorias
 
 ### Onde fica
 
-A Pesquisa de Categorias é a tela de entrada do Feature Set, com o card de filtros (Nome da categoria e Situação) acima da tabela de resultado. O botão **Cadastrar categoria** fica no topo da lista e abre CAT-CTG-02 — Cadastrar Categoria em modal; em cada linha, os ícones de visualizar, editar e excluir acionam CAT-CTG-05 — Visualizar Categoria, CAT-CTG-03 — Editar Categoria e CAT-CTG-04 — Excluir Categoria.
+A Pesquisa de Categorias é a tela de entrada do Agrupamento Funcional, com o card de filtros (Nome da categoria e Situação) acima da tabela de resultado. O botão **Cadastrar categoria** fica no topo da lista e abre CAT-CTG-02 — Cadastrar Categoria em modal; em cada linha, os ícones de visualizar, editar e excluir acionam CAT-CTG-05 — Visualizar Categoria, CAT-CTG-03 — Editar Categoria e CAT-CTG-04 — Excluir Categoria.
 
 ### Estados da tela
 
@@ -172,7 +172,7 @@ A Pesquisa de Categorias é a tela de entrada do Feature Set, com o card de filt
 |---|---|---|---|---|---|---|---|
 | Pesquisar Categorias | principal | — | — | — | — | — | — |
 
-A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
+A contagem está pendente e deve nascer da análise desta funcionalidade via CT, com memória de cálculo.
 
 ## Origem
 
@@ -187,3 +187,4 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 | 2026-10-18 | Claude | N3 criado | Pesquisa de categorias derivada do cadastro, a partir do ticket fictício STRY0013170, com filtros, colunas, regras e cenários; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

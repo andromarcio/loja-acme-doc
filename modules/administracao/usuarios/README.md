@@ -1,6 +1,6 @@
-<!-- docqui: 6.4.10 | prompt: IDS_N3 | atualizado: 2026-10-18 -->
-# Feature Set: Usuários
-> **Nível 2** - Major Feature Set: Administração - `ADM-USR`
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+# Agrupamento Funcional: Usuários
+> **Nível 2** - Domínio: Administração - `ADM-USR`
 
 ## Descrição
 
@@ -8,11 +8,11 @@ Reúne as operações de manutenção dos usuários da loja: pesquisar, cadastra
 
 **Não faz**: definir senha, dar o primeiro acesso nem reativar um usuário inativo; o autocadastro do cliente na loja também não está especificado.
 
-## Features
+## Funcionalidades
 
 <!-- docqui:n3-ids {"version":1,"ids":{"ADM-USR-01":"f-pesquisar-usuario.md","ADM-USR-02":"f-cadastrar-usuario.md","ADM-USR-03":"f-editar-usuario.md","ADM-USR-04":"f-inativar-usuario.md","ADM-USR-05":"f-visualizar-usuario.md"}} -->
 
-| Feature | Descrição |
+| Funcionalidade | Descrição |
 |---|---|
 | [**Pesquisar Usuários**](f-pesquisar-usuario.md) <small>ADM-USR-01</small> | Encontrar usuários por nome, e-mail, perfil e situação |
 | [**Cadastrar Usuário**](f-cadastrar-usuario.md) <small>ADM-USR-02</small> | Incluir um usuário com e-mail único e perfil |
@@ -37,7 +37,7 @@ flowchart TD
     F --> Z
 ```
 
-## Dependências entre features
+## Dependências entre funcionalidades
 
 - **Pesquisar Usuários** é o ponto de entrada; **Cadastrar Usuário** independe das demais.
 - **Editar Usuário**, **Inativar Usuário** e **Visualizar Usuário** exigem um usuário existente, alcançado pela pesquisa; editar e inativar exigem um usuário ativo.
@@ -45,7 +45,7 @@ flowchart TD
 
 ## Telas
 
-| Tela | Rota sugerida | Features atendidas | Descrição |
+| Tela | Rota sugerida | Funcionalidades atendidas | Descrição |
 |---|---|---|---|
 | Pesquisa de Usuários | `/administracao/usuarios` | **Pesquisar Usuários** <small>ADM-USR-01</small><br>**Inativar Usuário** <small>ADM-USR-04</small> | Filtros e lista dos usuários; origem das ações |
 | Cadastrar Usuário | `/administracao/usuarios/novo` | **Cadastrar Usuário** <small>ADM-USR-02</small> | Formulário de cadastro |
@@ -54,7 +54,7 @@ flowchart TD
 
 ## Permissões por perfil
 
-> **Fonte única de permissões** deste Feature Set. As features (N3) não tratam de perfis nem permissões; qualquer acesso novo ou diferente entra nesta matriz.
+> **Fonte única de permissões** deste Agrupamento Funcional. As funcionalidades (N3) não tratam de perfis nem permissões; qualquer acesso novo ou diferente entra nesta matriz.
 
 Perfis: **Administrador**, **Atendente**, **Gestor de catálogo**, **Cliente**.
 
@@ -73,5 +73,6 @@ Perfis: **Administrador**, **Atendente**, **Gestor de catálogo**, **Cliente**.
 |---|---|---|---|
 | 2026-10-18 | ids-n3 | IDs reservados | Registro dos IDs existentes, sem renumeração; IDs imutáveis. |
 | 2026-10-18 | Claude | N2 criado | CRUD de Usuários gerado pelo PROMPT CRUD a partir do ticket fictício STRY0013195; a exclusão é lógica (Inativar Usuário); sem aprovação de checkpoint. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |
 
 *Links: [N1 Administração](../README.md) · [INDEX geral](../../INDEX.md)*

@@ -1,7 +1,7 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 id: ADM-USR-03
-feature_set: ADM-USR
+agrupamento_funcional: ADM-USR
 dominio: ADM
 entidade: Usuario
 data_model_ref: data-models/administracao.md#usuario
@@ -24,7 +24,7 @@ contagem:
 ---
 
 # Editar Usuário
-> **Nível 3** - Feature Set: Usuários — Major Feature Set: Administração - `ADM-USR-03`
+> **Nível 3** - Agrupamento Funcional: Usuários — Domínio: Administração - `ADM-USR-03`
 
 ## Descrição
 
@@ -143,7 +143,7 @@ Feature: Editar Usuário
 
 | Label PO | Valor | Quando |
 |---|---|---|
-| — | Nenhum campo é preenchido automaticamente nesta feature | — |
+| — | Nenhum campo é preenchido automaticamente nesta funcionalidade | — |
 
 ## Superfície
 
@@ -184,7 +184,7 @@ A tela Editar Usuário abre pelo ícone editar na linha de um usuário ativo da 
 |---|---|---|---|---|---|---|---|
 | Editar Usuário | principal | — | — | — | — | — | — |
 
-A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
+A contagem está pendente e deve nascer da análise desta funcionalidade via CT, com memória de cálculo.
 
 ## Origem
 
@@ -199,3 +199,4 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 | 2026-10-18 | Claude | N3 criado | Edição de usuário do ticket fictício STRY0013195, derivada do cadastro, com o e-mail imutável e a garantia de ao menos um administrador ativo; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

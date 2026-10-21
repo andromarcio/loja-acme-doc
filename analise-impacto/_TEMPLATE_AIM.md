@@ -1,4 +1,4 @@
-<!-- docqui: {{VERSION}} | prompt: PROMPT_AIM | atualizado: {{YYYY-MM-DD}} -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: [STRYxxxxxxx | ISSUE-NNN | EXP-… | PDTIC…-NN]
@@ -20,7 +20,7 @@ aberta-em: [AAAA-MM-DD]
   A AIM é VERSIONADA à medida que o ticket avança — o Changelog registra cada versão
   e o git guarda as anteriores:
 
-    rascunho         aberta: Descrição, Contexto, Critérios e Features (PROMPT_AIM, passos 1–4)
+    rascunho         aberta: Descrição, Contexto, Critérios e Funcionalidades (PROMPT_AIM, passos 1–4)
     em-análise       o que SERÁ alterado: Artefatos impactados, Alterações previstas (passo 5)
     escopo-aprovado  o PO avalizou o escopo (`avalizado-por`) — só então a spec muda (passo 6)
     em-execução      as passadas de spec e código, uma por linha do changeset
@@ -85,32 +85,32 @@ Scenario: [resultado esperado em linguagem de negócio]
   Then [resultado observável]
 ```
 
-## Features
+## Funcionalidades
 
 <!--
-  As features (N3) que realizam o ticket. Relação M:N: um ticket pode ser realizado por
-  várias features, e uma feature atende a vários tickets. É o elo recíproco da
+  As funcionalidades (N3) que realizam o ticket. Relação M:N: um ticket pode ser realizado por
+  várias funcionalidades, e uma funcionalidade atende a vários tickets. É o elo recíproco da
   `## Origem` de cada N3 — os dois lados precisam dizer o mesmo, e o
   `audit-trace-links` confere. Preencha no roteamento (PROMPT_AIM, passo 3) e mantenha
-  o Status em dia (o ícone do `estado` do N3, da legenda do modules/INDEX.md). Feature
+  o Status em dia (o ícone do `estado` do N3, da legenda do modules/INDEX.md). Funcionalidade
   que o ticket cria e que ainda não tem N3: nome proposto, *(a confirmar no 3A)* e o
   Status `📋 A especificar` — o `audit-trace-links` a trata como pendência até o 3A
   criá-la e trocar o Status.
 
-  A união dos `CA-n` das features é o conjunto de critérios do ticket: nenhum repetido
-  entre features, nenhum faltando. Critério sobrando é feature que falta; critério
-  repetido é fronteira mal traçada entre duas features.
+  A união dos `CA-n` das funcionalidades é o conjunto de critérios do ticket: nenhum repetido
+  entre funcionalidades, nenhum faltando. Critério sobrando é funcionalidade que falta; critério
+  repetido é fronteira mal traçada entre duas funcionalidades.
 
   CARIMBO DE VERIFICAÇÃO (elo suspeito): depois de fechar ou rever o elo, rode
   `node scripts/suspect-links.mjs --stamp --file <este arquivo>` — ele grava aqui um
-  comentário `<!- - trace-verified: [ID da feature] @ fingerprint - ->` por feature. Se
+  comentário `<!- - trace-verified: [ID da funcionalidade] @ fingerprint - ->` por funcionalidade. Se
   a Descrição ou os Critérios mudarem depois disso, o `suspect-links` acusa o elo como
   suspeito. Não edite os carimbos à mão.
 -->
 
-| Feature (N3) | Domínio · Feature Set | Operação | Critérios cobertos | Status |
+| Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
-| [`SIGLA-SFS-NN`: Nome da Feature](../modules/[dominio]/[feature-set]/f-[slug].md) | [Major Feature Set] · [Feature Set] | Criação / Alteração | `CA-1, CA-3` | ✏️ Rascunho |
+| [`SIGLA-SAF-NN`: Nome da Funcionalidade](../modules/[dominio]/[agrupamento-funcional]/f-[slug].md) | [Domínio] · [Agrupamento Funcional] | Criação / Alteração | `CA-1, CA-3` | ✏️ Rascunho |
 
 ## Artefatos impactados
 
@@ -135,26 +135,26 @@ Scenario: [resultado esperado em linguagem de negócio]
 > NFR · PATTERNS · API-PATTERNS · MÉTRICA · PROTÓTIPO · REPOSITÓRIO`.
 > Operação: `criar | alterar | deprecar`.
 
-## Alterações na spec, por Feature Set
+## Alterações na spec, por Agrupamento Funcional
 
 <!--
-  O DELTA FUNCIONAL, por Feature Set, uma linha por feature — as novas também.
+  O DELTA FUNCIONAL, por Agrupamento Funcional, uma linha por funcionalidade — as novas também.
   Até a entrega, é o PREVISTO: a mudança que o ticket pede, e o PF estimado com `(E)`.
   No fechamento, é o que FOI aplicado nos N3, e o PFB/PFL vem da `## Métricas de
   tamanho` de cada N3 — a tabela espelha o N3, nunca o antecede.
 
   Coluna Mudança: abra com o verbo da mudança (Inclusão, Alteração, Restrição, Remoção,
   Correção) e traga o contraste: *Antes* … *Agora* … — não descreva o estado atual da
-  feature, diga o que mudou e de quê.
+  funcionalidade, diga o que mudou e de quê.
   Natureza: `incluída` (a função não existia — PFL = 100% do PFB) ou `alterada` (existia
   e mudou — PFL = 50%). É lida pela planilha de entrega.
 -->
 
-### [Feature Set]
+### [Agrupamento Funcional]
 
-| Feature | CA-n | Natureza | Mudança | Regras | Cenários | PFB | PFL |
+| Funcionalidade | CA-n | Natureza | Mudança | Regras | Cenários | PFB | PFL |
 |---|---|---|---|---|---|---|---|
-| `SIGLA-SFS-NN` **[Nome da Feature]** | CA-1 | alterada | **[Verbo]** de [o quê]. *Antes* [como era]. *Agora* [como fica]. | +1 | +2 | [PF] | [PF] |
+| `SIGLA-SAF-NN` **[Nome da Funcionalidade]** | CA-1 | alterada | **[Verbo]** de [o quê]. *Antes* [como era]. *Agora* [como fica]. | +1 | +2 | [PF] | [PF] |
 
 ## Funções de dados alteradas
 
@@ -196,3 +196,4 @@ Scenario: [resultado esperado em linguagem de negócio]
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | [AAAA-MM-DD] | [autor] | AIM aberta | ticket `[CHAVE]` registrado; features mapeadas |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

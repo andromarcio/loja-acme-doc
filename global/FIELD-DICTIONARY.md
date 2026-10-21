@@ -1,6 +1,6 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # FIELD-DICTIONARY.md
-> Dicionário de **campos canônicos** — campos que se repetem em várias features
+> Dicionário de **campos canônicos** — campos que se repetem em várias funcionalidades
 > com a mesma semântica de validação (CPF, e-mail, telefone…).
 >
 > Registrá-los **uma vez** evita reespecificar validações em cada N3 e garante
@@ -37,7 +37,7 @@
 | URL | url | texto | formato de URL válido (http/https) |
 | Quantidade | quantidade | número inteiro | inteiro maior ou igual a 1 |
 
-> Parâmetros sempre deixados em aberto para a feature: **obrigatoriedade** e **unicidade**.
+> Parâmetros sempre deixados em aberto para a funcionalidade: **obrigatoriedade** e **unicidade**.
 
 ---
 
@@ -54,7 +54,7 @@
 - **Label Dev**: `cpf`
 - **Tipo**: texto (11 dígitos, sem máscara no armazenamento)
 - **Validação**: exatamente 11 dígitos numéricos; dígitos verificadores válidos.
-- **Em aberto (por feature)**: obrigatoriedade; unicidade (ex.: único por organização).
+- **Em aberto (por funcionalidade)**: obrigatoriedade; unicidade (ex.: único por organização).
 - **Mensagem**: "CPF inválido." (→ ver MESSAGE-DICTIONARY se houver variação)
 
 ```gherkin
@@ -78,7 +78,7 @@ Scenario: CPF com quantidade de dígitos diferente de 11
 - **Label Dev**: `cep`
 - **Tipo**: texto (8 dígitos, sem máscara no exemplo)
 - **Validação**: exatamente oito dígitos numéricos.
-- **Em aberto (por feature)**: obrigatoriedade.
+- **Em aberto (por funcionalidade)**: obrigatoriedade.
 - **Mensagem**: "CEP inválido."
 
 ```gherkin
@@ -96,7 +96,7 @@ Scenario: CEP com quantidade de dígitos inválida
 - **Label Dev**: `telefone`
 - **Tipo**: texto (DDD + número, sem máscara no armazenamento)
 - **Validação**: DDD de dois dígitos seguido do número, com 10 ou 11 dígitos no total.
-- **Em aberto (por feature)**: obrigatoriedade.
+- **Em aberto (por funcionalidade)**: obrigatoriedade.
 - **Mensagem**: "Telefone inválido."
 
 ```gherkin
@@ -115,7 +115,7 @@ Scenario: Telefone com quantidade de dígitos inválida
 - **Label Dev**: `email`
 - **Tipo**: texto
 - **Validação**: formato de e-mail válido (`local@dominio.tld`).
-- **Em aberto (por feature)**: obrigatoriedade; unicidade.
+- **Em aberto (por funcionalidade)**: obrigatoriedade; unicidade.
 - **Mensagem**: "E-mail inválido."
 
 ```gherkin
@@ -134,7 +134,7 @@ Scenario: E-mail em formato inválido
 - **Label Dev**: `senha`
 - **Tipo**: texto (armazenado com hash — nunca em texto puro)
 - **Validação**: política mínima (ex.: 8+ caracteres, com letra e número). Defina os parâmetros no MASTER/NFR de segurança.
-- **Em aberto (por feature)**: política exata; confirmação de senha.
+- **Em aberto (por funcionalidade)**: política exata; confirmação de senha.
 - **Mensagem**: "A senha não atende aos requisitos de segurança."
 
 ```gherkin
@@ -153,7 +153,7 @@ Scenario: Senha abaixo da política mínima
 - **Label Dev**: `valor`
 - **Tipo**: decimal (2 casas)
 - **Validação**: ≥ 0; no máximo 2 casas decimais.
-- **Em aberto (por feature)**: limite máximo; se aceita zero.
+- **Em aberto (por funcionalidade)**: limite máximo; se aceita zero.
 - **Mensagem**: "Informe um valor válido."
 
 ```gherkin
@@ -172,7 +172,7 @@ Scenario: Valor negativo
 - **Label Dev**: `nomeCompleto`
 - **Tipo**: texto
 - **Validação**: nome e sobrenome separados por espaço; de 5 a 100 caracteres.
-- **Em aberto (por feature)**: obrigatoriedade.
+- **Em aberto (por funcionalidade)**: obrigatoriedade.
 - **Mensagem**: "Informe nome e sobrenome."
 
 ```gherkin
@@ -191,7 +191,7 @@ Scenario: Nome sem sobrenome
 - **Label Dev**: definido pelo contexto (ex.: `inicioVigencia`)
 - **Tipo**: data
 - **Validação**: igual ou posterior à data atual.
-- **Em aberto (por feature)**: obrigatoriedade; se vale também na edição de um registro que já começou.
+- **Em aberto (por funcionalidade)**: obrigatoriedade; se vale também na edição de um registro que já começou.
 - **Mensagem**: "Informe uma data igual ou posterior a hoje."
 
 ```gherkin
@@ -210,7 +210,7 @@ Scenario: Data anterior a hoje
 - **Label Dev**: `quantidade`
 - **Tipo**: número inteiro
 - **Validação**: inteiro maior ou igual a 1.
-- **Em aberto (por feature)**: limite máximo (ex.: a quantidade em estoque).
+- **Em aberto (por funcionalidade)**: limite máximo (ex.: a quantidade em estoque).
 - **Mensagem**: "Informe uma quantidade válida."
 
 ```gherkin
@@ -225,7 +225,7 @@ Scenario: Quantidade menor que 1
 
 ## Como adicionar um campo canônico
 
-Um campo vira canônico quando aparece, com a **mesma semântica de validação**, em **2+ features**. Para promovê-lo:
+Um campo vira canônico quando aparece, com a **mesma semântica de validação**, em **2+ funcionalidades**. Para promovê-lo:
 
 1. Adicione uma linha ao **Índice** (Label PO, Label Dev, Tipo, resumo).
 2. Crie a **entrada** completa (validação, parâmetros em aberto, mensagem, cenários).

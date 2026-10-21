@@ -1522,7 +1522,7 @@
                 <circle cx="18" cy="18" r="3"></circle>
                 <path d="M6 9v12M18 9a9 9 0 0 0-9 9"></path>
               </svg>
-              Mapa de Features (Árvore)
+              Mapa de Funcionalidades (Árvore)
             </a>
           </li>
           <li class="nav-item-fixed">
@@ -1600,7 +1600,7 @@
           </div>
         </details>
 
-        <!-- Outros: o que não é Dashboard, Visão do Produto, Mapa de Features, Análises de impacto nem as árvores -->
+        <!-- Outros: o que não é Dashboard, Visão do Produto, Mapa de Funcionalidades, Análises de impacto nem as árvores -->
         <details class="nav-folder" id="outrosFolder">
           <summary>
             <div class="nav-folder-title">
@@ -1679,7 +1679,7 @@
 <!-- Dados do repositório gerados por assets/generate-tree.js -->
 <script src="assets/tree.js"></script>
 
-<!-- Dados do mapa de features se existirem -->
+<!-- Dados do mapa de funcionalidades se existirem -->
 <script src="assets/mapa-data.js"></script>
 <script>
   ['assets/dashboard-data.js', 'assets/js/dashboard.js'].forEach(src => {
@@ -1898,7 +1898,7 @@
     if (!content) return "";
     const match = content.match(/^#\s+(.+)$/m);
     if (!match) return "";
-    return match[1].replace(/^\s*(Major Feature Set|Domínio|Dominio|Feature Set|Data[\s-]Model)\s*[:\-—]*\s*/i, '').replace(/`/g, '').trim();
+    return match[1].replace(/^\s*(Major Feature Set|Domínio|Dominio|Agrupamento Funcional|Feature Set|Data[\s-]Model)\s*[:\-—]*\s*/i, '').replace(/`/g, '').trim();
   }
 
   // Formatar data em dd/mm/aaaa
@@ -1996,7 +1996,7 @@
       }
     });
 
-    // No menu, os N3 de cada Feature Set seguem a ordem do ID (VND-CHK-01, -02…), não a do
+    // No menu, os N3 de cada Agrupamento Funcional seguem a ordem do ID (VND-CHK-01, -02…), não a do
     // nome do arquivo; o N3 sem ID vai para o fim, na ordem do caminho.
     Object.values(domains).forEach(dom => Object.values(dom.featureSets).forEach(fs => {
       fs.features.sort((a, b) => (!a.id - !b.id) || a.id.localeCompare(b.id, 'pt', { numeric: true }));
@@ -2357,7 +2357,7 @@
       return;
     }
 
-    // Se for tela interativa do Mapa de Features
+    // Se for tela interativa do Mapa de Funcionalidades
     if (filePath === '__mapa__') {
       renderMapaView();
       return;
@@ -2432,7 +2432,7 @@
     container.classList.add('doc-cards');
     container.innerHTML = html;
 
-    // Link para arquivo que NÃO é .md — o protótipo da feature, uma planilha, um
+    // Link para arquivo que NÃO é .md — o protótipo da funcionalidade, uma planilha, um
     // PDF. Duas coisas precisam acontecer aqui, e nenhuma é automática:
     //
     //  1. O href do markdown é relativo AO ARQUIVO ('../../../prototypes/…'),
@@ -2559,7 +2559,7 @@
         html += ` <span class="breadcrumb-sep">/</span> <a href="#${dom.readme}" onclick="navigateTo('${dom.readme}'); return false;">Domínio: ${dom.title}</a>`;
       }
       if (fs) {
-        html += ` <span class="breadcrumb-sep">/</span> <a href="#${fs.readme}" onclick="navigateTo('${fs.readme}'); return false;">Feature Set: ${fs.title}</a>`;
+        html += ` <span class="breadcrumb-sep">/</span> <a href="#${fs.readme}" onclick="navigateTo('${fs.readme}'); return false;">Agrupamento Funcional: ${fs.title}</a>`;
       }
     }
 
@@ -2567,7 +2567,7 @@
     bar.innerHTML = html;
   }
 
-  // Template Especial para Features Nível 3 (Clean, FDD, sem linhas em títulos)
+  // Template Especial para Funcionalidades Nível 3 (Clean, FDD, sem linhas em títulos)
   // "Métricas de tamanho" sem nada contado: nenhuma célula de Tipo, ALR, DER, Complexidade
   // ou PF preenchida e nenhuma Memória de cálculo. A linha de PF 0 (PE descartado) e a de PE
   // reutilizado (↪) contam como preenchidas, e tabela sem essas colunas não é julgada vazia.
@@ -2798,7 +2798,7 @@
       if (/^m[ée]tricas de tamanho$/i.test(secTitle) && metricasVazia(secBody)) return;
 
       // Remover rodapés em itálico de metadados
-      secBody = secBody.replace(/\*Feature Set:[\s\S]*$/i, '').trim();
+      secBody = secBody.replace(/\*(?:Agrupamento Funcional|Feature Set):[\s\S]*$/i, '').trim();
       secBody = secBody.replace(/\*Links:[\s\S]*$/i, '').trim();
 
       // Formatar datas dd/mm/aaaa no Changelog
@@ -2818,7 +2818,7 @@
 
       // Badges do changelog
       if (isChangelog) {
-        parsedSec = parsedSec.replace(/<td>(Aval do PO|Requisitos aprovados|Saneamento|Catalogação|Correção|Ajuste|Feature criada)(.*?)<\/td>/g, (m, p1, p2) => {
+        parsedSec = parsedSec.replace(/<td>(Aval do PO|Requisitos aprovados|Saneamento|Catalogação|Correção|Ajuste|Feature criada|Funcionalidade criada)(.*?)<\/td>/g, (m, p1, p2) => {
           let color = '';
           if (p1 === 'Aval do PO' || p1 === 'Requisitos aprovados') color = 'style="background:#ECFDF5; color:#047857;"';
           else if (p1 === 'Correção') color = 'style="background:#FFFBEB; color:#B45309;"';
@@ -2855,7 +2855,7 @@
               <polyline points="2 17 12 22 22 17"></polyline>
               <polyline points="2 12 12 17 22 12"></polyline>
             </svg>
-            Nível 3 · Feature
+            Nível 3 · Funcionalidade
           </span>
           <span class="badge badge-id" onclick="copyId('${idCode}')" title="Clique para copiar">
             ${idCode}
@@ -2869,7 +2869,7 @@
         <h1 class="doc-title">${title}</h1>
         <div class="doc-hierarchy-info">
           <span><strong>Nível 3</strong></span> &bull; 
-          <span>Feature Set: <strong>${fsName}</strong></span> &bull; 
+          <span>Agrupamento Funcional: <strong>${fsName}</strong></span> &bull; 
           <span>Domínio: <strong>${domName}</strong></span>
         </div>
 
@@ -2902,7 +2902,7 @@
       ${sectionsHtml}
 
       <footer class="doc-footer">
-        <div>Feature Set: <strong>${fsName}</strong> &bull; Domínio: <strong>${domName}</strong></div>
+        <div>Agrupamento Funcional: <strong>${fsName}</strong> &bull; Domínio: <strong>${domName}</strong></div>
         <div><a href="#__dashboard__" onclick="navigateTo('__dashboard__'); return false;">Voltar ao Início</a></div>
       </footer>
     `;
@@ -2910,7 +2910,7 @@
     return html;
   }
 
-  // Template para Feature Sets Nível 2 (Cards modulares, Hero card e Fluxo Mermaid)
+  // Template para Agrupamentos Funcionais Nível 2 (Cards modulares, Hero card e Fluxo Mermaid)
   function renderN2FeatureSetTemplate(path, title, frontmatter, md) {
     const parts = path.split('/');
     const dom = fddStructure[parts[1]];
@@ -2956,7 +2956,7 @@
       const secTitle = secTitleMatch[1].trim();
       let secContent = secClean.replace(/^##\s+.+$/m, '').trim();
 
-      // Ajustar links relativos para features N3 (ex: [Nome](f-pesquisar...md) -> navigateTo('modules/dom/fs/f-pesquisar...md'))
+      // Ajustar links relativos para funcionalidades N3 (ex: [Nome](f-pesquisar...md) -> navigateTo('modules/dom/fs/f-pesquisar...md'))
       secContent = secContent.replace(/href="(?!\/|#|http)(f-[^"]+\.md)"/g, `href="#modules/${parts[1]}/${parts[2]}/$1" onclick="navigateTo('modules/${parts[1]}/${parts[2]}/$1'); return false;"`);
       secContent = secContent.replace(/\]\((f-[^\)]+\.md)\)/g, `](#modules/${parts[1]}/${parts[2]}/$1)`);
 
@@ -2974,7 +2974,7 @@
 
       // Ícones para cada seção
       let icon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>`;
-      if (secTitle.toLowerCase().includes('feature')) {
+      if (/funcionalidade|feature/.test(secTitle.toLowerCase())) {
         icon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>`;
       } else if (secTitle.toLowerCase().includes('fluxo')) {
         icon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="18" r="3"></circle><path d="M6 9v12M18 9a9 9 0 0 0-9 9"></path></svg>`;
@@ -3012,7 +3012,7 @@
               <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
               <polyline points="2 17 12 22 22 17"></polyline>
             </svg>
-            Nível 2 · Feature Set
+            Nível 2 · Agrupamento Funcional
           </span>
           <span class="badge badge-id" onclick="copyId('${idCode}')" title="Clique para copiar">
             ${idCode}
@@ -3057,7 +3057,7 @@
       ${sectionsHtml}
 
       <footer class="doc-footer">
-        <div>Domínio: <strong>${domName}</strong> &bull; Feature Set: <strong>${fsName}</strong></div>
+        <div>Domínio: <strong>${domName}</strong> &bull; Agrupamento Funcional: <strong>${fsName}</strong></div>
         <div><a href="#__dashboard__" onclick="navigateTo('__dashboard__'); return false;">Voltar ao Início</a></div>
       </footer>
     `;
@@ -3097,7 +3097,7 @@
       const secTitle = secTitleMatch[1].trim();
       let secContent = secClean.replace(/^##\s+.+$/m, '').trim();
 
-      // Ajustar links relativos para feature sets N2
+      // Ajustar links relativos para agrupamentos funcionais N2
       secContent = secContent.replace(/href="(?!\/|#|http)\.?\/?([^"]+\/README\.md)"/g, `href="#modules/${parts[1]}/$1" onclick="navigateTo('modules/${parts[1]}/$1'); return false;"`);
       secContent = secContent.replace(/\]\(\.?\/?([^\)]+\/README\.md)\)/g, `](#modules/${parts[1]}/$1)`);
 
@@ -3111,7 +3111,7 @@
       renderedSec = renderedSec.replace(/\| (\d{4}-\d{2}-\d{2}) \|/g, (match, d) => `| ${formatDateBR(d)} |`);
 
       let icon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>`;
-      if (secTitle.toLowerCase().includes('feature set')) {
+      if (/agrupamentos funcionais|feature set/.test(secTitle.toLowerCase())) {
         icon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>`;
       } else if (secTitle.toLowerCase().includes('regras')) {
         icon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline></svg>`;
@@ -3325,7 +3325,7 @@
   }
 
   // ============================================================================
-  // TELA INTERATIVA: MAPA DE FEATURES (FDD CANVAS)
+  // TELA INTERATIVA: MAPA DE FUNCIONALIDADES (FDD CANVAS)
   // ============================================================================
   function mmEsc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
@@ -3354,14 +3354,14 @@
 
   function renderMapaView() {
     currentFilePath = '__mapa__';
-    updateBreadcrumbs('__mapa__', 'Mapa de Features');
+    updateBreadcrumbs('__mapa__', 'Mapa de Funcionalidades');
     const container = document.getElementById('documentContainer');
     const M = globalThis.MAPA_FEATURES;
 
     if (!M) {
       container.innerHTML = `
         <div class="doc-section">
-          <h2 class="doc-title" style="font-size:18px;">Mapa de features indisponível</h2>
+          <h2 class="doc-title" style="font-size:18px;">Mapa de funcionalidades indisponível</h2>
           <p style="color:var(--text-muted); margin-top:8px;">O arquivo <code>assets/mapa-data.js</code> não foi carregado.</p>
         </div>
       `;
@@ -3378,14 +3378,14 @@
           <div class="mm-top">
             <div class="mm-top-row">
               <div class="mm-product">
-                <div class="mm-product-name">${mmEsc(M.produto.nome)} <small>· Mapa de features</small></div>
+                <div class="mm-product-name">${mmEsc(M.produto.nome)} <small>· Mapa de funcionalidades</small></div>
                 ${prodOpen}
               </div>
               <div class="mm-right">
                 <div class="mm-controls">
                   <span class="mm-kpi" id="mm-kpi-dom">— domínios</span>
-                  <span class="mm-kpi" id="mm-kpi-fs">— feature sets</span>
-                  <span class="mm-kpi" id="mm-kpi-feat">— features</span>
+                  <span class="mm-kpi" id="mm-kpi-fs">— agrupamentos funcionais</span>
+                  <span class="mm-kpi" id="mm-kpi-feat">— funcionalidades</span>
                   <span class="mm-kpi" id="mm-kpi-gap">— cobertura</span>
                   <span class="mm-search">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -3408,11 +3408,11 @@
                 </div>
               </div>
             </div>
-            <p class="mm-product-desc"><strong>Domínios</strong> (N1) → <strong>feature sets</strong> (N2) → <strong>features</strong> (N3). Clique num nó para abrir ou fechar; <strong>abrir</strong> leva ao artefato.</p>
+            <p class="mm-product-desc"><strong>Domínios</strong> (N1) → <strong>agrupamentos funcionais</strong> (N2) → <strong>funcionalidades</strong> (N3). Clique num nó para abrir ou fechar; <strong>abrir</strong> leva ao artefato.</p>
             <div class="mm-legend">
               <span class="lg"><span class="sw" style="border-left-color:#005CA9"></span> N1 · Domínio</span>
-              <span class="lg"><span class="sw" style="border-left-color:#2E86C1"></span> N2 · Feature set</span>
-              <span class="lg"><span class="sw" style="border-left-color:#7C93A8"></span> N3 · Feature</span>
+              <span class="lg"><span class="sw" style="border-left-color:#2E86C1"></span> N2 · Agrupamento funcional</span>
+              <span class="lg"><span class="sw" style="border-left-color:#7C93A8"></span> N3 · Funcionalidade</span>
               <span class="lg"><span class="mm-status st-em-desenvolvimento"></span> requisitos aprovados / implementado</span>
               <span class="lg"><span class="mm-status st-rascunho"></span> rascunho</span>
             </div>
@@ -3428,7 +3428,7 @@
 
     const doms = M.dominios.map(function (d) {
       if (!d.fss.length) {
-        const gfoot = '<div class="mm-foot"><span class="mm-gap-badge">sem feature sets — a especificar</span>' + mmOpenLink(d.path) + '</div>';
+        const gfoot = '<div class="mm-foot"><span class="mm-gap-badge">sem agrupamentos funcionais — a especificar</span>' + mmOpenLink(d.path) + '</div>';
         return mmCard('lvl-n1 mm-gap', 'lacuna a especificar ' + d.sigla + ' ' + d.nome + ' ' + d.desc, 'N1 · ' + mmEsc(d.sigla), d.nome, d.desc, gfoot, '', true);
       }
       const fss = d.fss.map(function (fs) {
@@ -3441,18 +3441,18 @@
             + mmOpenLink(f.path) + '</div>';
           return mmCard('lvl-n3', f.id + ' ' + f.nome + ' ' + f.desc, 'N3 · ' + mmEsc(f.id), f.nome, f.desc, foot, '', true);
         }).join('');
-        const foot = '<div class="mm-foot"><span class="mm-count">' + fs.feats.length + ' feature' + (fs.feats.length === 1 ? '' : 's') + '</span>' + mmOpenLink(fs.path) + '<span class="mm-caret">▸</span></div>';
+        const foot = '<div class="mm-foot"><span class="mm-count">' + fs.feats.length + ' funcionalidade' + (fs.feats.length === 1 ? '' : 's') + '</span>' + mmOpenLink(fs.path) + '<span class="mm-caret">▸</span></div>';
         return mmCard('lvl-n2', fs.sigla + ' ' + fs.nome + ' ' + fs.desc, 'N2 · ' + mmEsc(fs.sigla), fs.nome, fs.desc, foot, feats, false);
       }).join('');
-      const foot = '<div class="mm-foot"><span class="mm-count">' + d.fss.length + ' feature set' + (d.fss.length === 1 ? '' : 's') + '</span>' + mmOpenLink(d.path) + '<span class="mm-caret">▸</span></div>';
+      const foot = '<div class="mm-foot"><span class="mm-count">' + d.fss.length + ' agrupamento funcional' + (d.fss.length === 1 ? '' : 's') + '</span>' + mmOpenLink(d.path) + '<span class="mm-caret">▸</span></div>';
       return mmCard('lvl-n1', d.sigla + ' ' + d.nome + ' ' + d.desc, 'N1 · ' + mmEsc(d.sigla), d.nome, d.desc, foot, fss, false);
     }).join('');
 
     document.getElementById('mm-canvas').innerHTML = doms;
 
     document.getElementById('mm-kpi-dom').textContent = M.kpi.dominios + ' domínios';
-    document.getElementById('mm-kpi-fs').textContent = M.kpi.fss + ' feature sets';
-    document.getElementById('mm-kpi-feat').textContent = M.kpi.feats + ' features';
+    document.getElementById('mm-kpi-fs').textContent = M.kpi.fss + ' agrupamentos funcionais';
+    document.getElementById('mm-kpi-feat').textContent = M.kpi.feats + ' funcionalidades';
     const _gaps = (M.kpi.fssVazios || 0) + (M.kpi.domsVazios || 0);
     const _kg = document.getElementById('mm-kpi-gap');
     if (_kg) {

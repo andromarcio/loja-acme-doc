@@ -2,7 +2,7 @@
 
 Os tickets abaixo fazem o papel do ServiceNow: é daqui que você copia a descrição e os critérios de aceite para a AIMM de cada ticket, **como estão escritos** — transcrição, não formulação. O mentor faz o papel da PO: é com ele que você elicita o que o ticket não diz e é ele quem avaliza o escopo.
 
-Os três primeiros formam a sprint SP07 e são os mesmos do simulador (`mentoria/simulador.html`). Os dois seguintes são para praticar sem o roteiro do simulador. Os da última seção já estão especificados no exemplo, em rascunho: servem de consulta, para comparar cada ticket com a AIMM e as features que ele originou.
+Os três primeiros formam a sprint SP07 e são os mesmos do simulador (`mentoria/simulador.html`). Os dois seguintes são para praticar sem o roteiro do simulador. Os da última seção já estão especificados no exemplo, em rascunho: servem de consulta, para comparar cada ticket com a AIMM e as funcionalidades que ele originou.
 
 ## Sprint SP07
 
@@ -48,7 +48,7 @@ Este ticket **não será entregue** na SP07: no fechamento, o mentor avisa, e vo
 | CA-2 | Não pode haver dois produtos com o mesmo nome. |
 | CA-3 | O produto retirado de venda não aparece mais na loja, mas continua nos pedidos antigos. |
 
-O que este ticket exercita: o Feature Set Produtos (`CAT-PRD`), planejado no N1 Catálogo, pela opção **CR** (CRUD padrão), e a fronteira entre "retirar de venda" e "excluir". A entidade Produto já existe no modelo de entidades, porque a Vitrine, os Destaques e o Carrinho a leem: o "retirar de venda" do CA-3 muda o que essas features mostram e aceitam, e a AIMM tem de dizer quais delas o ticket altera.
+O que este ticket exercita: o Agrupamento Funcional Produtos (`CAT-PRD`), planejado no N1 Catálogo, pela opção **CR** (CRUD padrão), e a fronteira entre "retirar de venda" e "excluir". A entidade Produto já existe no modelo de entidades, porque a Vitrine, os Destaques e o Carrinho a leem: o "retirar de venda" do CA-3 muda o que essas funcionalidades mostram e aceitam, e a AIMM tem de dizer quais delas o ticket altera.
 
 ### STRY0013165 — Frete grátis
 
@@ -62,11 +62,11 @@ Critérios de aceite (como estão no ticket, sem numeração):
 - mensagem avisando que o frete é grátis
 - CEP não atendido continua não atendido, mesmo acima de R$ 200,00
 
-O que este ticket exercita: alteração de uma feature que já existe (4A), regra de negócio que é invariante e reação que vira cenário, mensagem nova no MESSAGE-DICTIONARY e, sobretudo, a **numeração**: a fonte não numera os critérios, então a AIMM declara isso e a coluna `CA-n` sai `—`. Número inventado não vale.
+O que este ticket exercita: alteração de uma funcionalidade que já existe (4A), regra de negócio que é invariante e reação que vira cenário, mensagem nova no MESSAGE-DICTIONARY e, sobretudo, a **numeração**: a fonte não numera os critérios, então a AIMM declara isso e a coluna `CA-n` sai `—`. Número inventado não vale.
 
 ## Já especificados no exemplo
 
-Cada ticket abaixo tem a sua AIMM em `analise-impacto/` e originou um Feature Set inteiro, em rascunho, sem aprovação e com a contagem pendente.
+Cada ticket abaixo tem a sua AIMM em `analise-impacto/` e originou um Agrupamento Funcional inteiro, em rascunho, sem aprovação e com a contagem pendente.
 
 ### STRY0013170 — Categorias de produtos
 

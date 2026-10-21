@@ -1,4 +1,4 @@
-<!-- docqui: {{VERSION}} | prompt: {{PROMPT_ID}} | atualizado: {{YYYY-MM-DD}} -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # PATTERNS.md — Catálogo de Padrões de Projeto
 
 > Catálogo **canônico** dos padrões de projeto (design patterns) que o sistema
@@ -6,9 +6,9 @@
 > o análogo do `DESIGN-SYSTEM.md` para o código de back-end e front-end.
 >
 > **Quem mantém**: arquiteto / tech lead. **Atualização**: quando um padrão novo
-> é adotado ou um existente muda — **não** a cada feature.
+> é adotado ou um existente muda — **não** a cada funcionalidade.
 > **Quem consome**: o `PROMPT_SDD` lê este arquivo e **referencia** as entradas
-> em vez de reinventar a solução a cada feature; o dev segue o catálogo ao implementar.
+> em vez de reinventar a solução a cada funcionalidade; o dev segue o catálogo ao implementar.
 >
 > ℹ️ **Template do kit** — a lista abaixo é uma **baseline recomendada**; mantenha
 > só os padrões que o seu sistema realmente usa e ajuste a coluna *Realização na
@@ -24,7 +24,7 @@
 
 ## 1. O que entra aqui — e o que NÃO entra
 
-Este arquivo registra **padrões de projeto**: soluções estruturais reutilizáveis para um problema recorrente de design (Strategy, Repository, Facade, …). Cada entrada dá ao agente/dev um **vocabulário compartilhado** e uma realização única — para que a *feature 1* e a *feature 8* resolvam a mesma variabilidade do mesmo jeito.
+Este arquivo registra **padrões de projeto**: soluções estruturais reutilizáveis para um problema recorrente de design (Strategy, Repository, Facade, …). Cada entrada dá ao agente/dev um **vocabulário compartilhado** e uma realização única — para que a *funcionalidade 1* e a *funcionalidade 8* resolvam a mesma variabilidade do mesmo jeito.
 
 **NÃO entra aqui** (mora em outro lugar):
 
@@ -46,7 +46,7 @@ Este arquivo registra **padrões de projeto**: soluções estruturais reutilizá
 ## 2. Como o SDD consome este catálogo
 
 - No `PROMPT_SDD` §2.2 (*Padrão arquitetural adotado*) e nas seções de design (serviços, repositórios, componentes), **referencie** a entrada: `→ ver PATTERNS.md: [Padrão]` — não redescreva a mecânica do padrão.
-- Se o design de uma feature exigir um padrão **ainda não catalogado**, o SDD o propõe como decisão 🏛️ e **sinaliza para promoção** a este arquivo (a decisão de adotar é de arquitetura, como no FIELD/RULES-DICTIONARY).
+- Se o design de uma funcionalidade exigir um padrão **ainda não catalogado**, o SDD o propõe como decisão 🏛️ e **sinaliza para promoção** a este arquivo (a decisão de adotar é de arquitetura, como no FIELD/RULES-DICTIONARY).
 - Divergir do catálogo é permitido, mas é **decisão 🏛️ explícita** com justificativa.
 
 ---

@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.10 | prompt: PROMPT_CRUD | atualizado: 2026-10-18 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # MESSAGE-DICTIONARY.md
 > Dicionário de **mensagens de UI** que a pessoa usuária lê — e o **baseline** de
 > validação (obrigatório, formato, sucesso, estados de tela).
@@ -18,7 +18,7 @@
 
 ## Baseline de validação
 
-> Mensagens genéricas reutilizadas por qualquer campo/feature. Ajuste o texto ao
+> Mensagens genéricas reutilizadas por qualquer campo/funcionalidade. Ajuste o texto ao
 > tom de voz definido no N0. Use o marcador `# ← MESSAGE-DICTIONARY: BASELINE`
 > nos cenários em vez de reescrevê-las.
 

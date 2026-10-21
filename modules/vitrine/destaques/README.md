@@ -1,6 +1,6 @@
-<!-- docqui: 6.4.10 | prompt: IDS_N3 | atualizado: 2026-10-18 -->
-# Feature Set: Destaques
-> **Nível 2** - Major Feature Set: Vitrine - `VIT-DST`
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+# Agrupamento Funcional: Destaques
+> **Nível 2** - Domínio: Vitrine - `VIT-DST`
 
 ## Descrição
 
@@ -8,11 +8,11 @@ Reúne as operações de manutenção dos destaques da página inicial: pesquisa
 
 **Não faz**: mostrar os destaques a quem visita a loja (Navegação › Listar Destaques) nem alterar o preço ou o estoque do produto (Catálogo).
 
-## Features
+## Funcionalidades
 
 <!-- docqui:n3-ids {"version":1,"ids":{"VIT-DST-01":"f-pesquisar-destaque.md","VIT-DST-02":"f-cadastrar-destaque.md","VIT-DST-03":"f-editar-destaque.md","VIT-DST-04":"f-excluir-destaque.md","VIT-DST-05":"f-visualizar-destaque.md"}} -->
 
-| Feature | Descrição |
+| Funcionalidade | Descrição |
 |---|---|
 | [**Pesquisar Destaques**](f-pesquisar-destaque.md) <small>VIT-DST-01</small> | Encontrar destaques por produto e situação |
 | [**Cadastrar Destaque**](f-cadastrar-destaque.md) <small>VIT-DST-02</small> | Pôr um produto em destaque, com chamada, ordem e vigência |
@@ -37,15 +37,15 @@ flowchart TD
     F --> Z
 ```
 
-## Dependências entre features
+## Dependências entre funcionalidades
 
 - **Pesquisar Destaques** é o ponto de entrada; **Cadastrar Destaque** independe das demais e escolhe um produto do [Catálogo](../../catalogo/README.md).
 - **Editar Destaque**, **Excluir Destaque** e **Visualizar Destaque** exigem um destaque existente, alcançado pela pesquisa.
-- Os destaques vigentes aparecem em **Listar Destaques** <small>VIT-NAV-01</small>, do Feature Set [Navegação](../navegacao/README.md).
+- Os destaques vigentes aparecem em **Listar Destaques** <small>VIT-NAV-01</small>, do Agrupamento Funcional [Navegação](../navegacao/README.md).
 
 ## Telas
 
-| Tela | Rota sugerida | Features atendidas | Descrição |
+| Tela | Rota sugerida | Funcionalidades atendidas | Descrição |
 |---|---|---|---|
 | Pesquisa de Destaques | `/vitrine/destaques` | **Pesquisar Destaques** <small>VIT-DST-01</small><br>**Excluir Destaque** <small>VIT-DST-04</small> | Filtros e lista dos destaques; origem das ações |
 | Cadastrar Destaque | `/vitrine/destaques/novo` | **Cadastrar Destaque** <small>VIT-DST-02</small> | Formulário de cadastro |
@@ -54,7 +54,7 @@ flowchart TD
 
 ## Permissões por perfil
 
-> **Fonte única de permissões** deste Feature Set. As features (N3) não tratam de perfis nem permissões; qualquer acesso novo ou diferente entra nesta matriz.
+> **Fonte única de permissões** deste Agrupamento Funcional. As funcionalidades (N3) não tratam de perfis nem permissões; qualquer acesso novo ou diferente entra nesta matriz.
 
 Perfis: **Gestor de catálogo**, **Administrador**.
 
@@ -72,5 +72,6 @@ Perfis: **Gestor de catálogo**, **Administrador**.
 |---|---|---|---|
 | 2026-10-18 | ids-n3 | IDs reservados | Registro dos IDs existentes, sem renumeração; IDs imutáveis. |
 | 2026-10-18 | Claude | N2 criado | CRUD de Destaques gerado pelo PROMPT CRUD a partir do ticket fictício STRY0013180, com telas próprias; sem aprovação de checkpoint. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |
 
 *Links: [N1 Vitrine](../README.md) · [INDEX geral](../../INDEX.md)*

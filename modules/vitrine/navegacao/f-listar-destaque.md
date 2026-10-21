@@ -1,7 +1,7 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 id: VIT-NAV-01
-feature_set: VIT-NAV
+agrupamento_funcional: VIT-NAV
 dominio: VIT
 entidade: Destaque
 data_model_ref: data-models/vitrine.md#destaque
@@ -24,7 +24,7 @@ contagem:
 ---
 
 # Listar Destaques
-> **Nível 3** - Feature Set: Navegação — Major Feature Set: Vitrine - `VIT-NAV-01`
+> **Nível 3** - Agrupamento Funcional: Navegação — Domínio: Vitrine - `VIT-NAV-01`
 
 ## Descrição
 
@@ -125,11 +125,11 @@ Feature: Listar Destaques
 
 | Label PO | Valor | Quando |
 |---|---|---|
-| — | Nenhum campo é preenchido automaticamente nesta feature | — |
+| — | Nenhum campo é preenchido automaticamente nesta funcionalidade | — |
 
 ## Dados lidos e gravados
 
-| Entidade | Papel | Por que a feature a toca |
+| Entidade | Papel | Por que a funcionalidade a toca |
 |---|---|---|
 | Categoria | lê | A situação da categoria do produto decide se o destaque aparece (RN-03) |
 
@@ -169,7 +169,7 @@ Os destaques ocupam o corpo da página inicial (`/`), abaixo do campo de busca, 
 |---|---|---|---|---|---|---|---|
 | Listar Destaques | principal | — | — | — | — | — | — |
 
-A contagem está pendente e deve nascer da análise desta feature via CT, com memória de cálculo.
+A contagem está pendente e deve nascer da análise desta funcionalidade via CT, com memória de cálculo.
 
 ## Origem
 
@@ -184,3 +184,4 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 | 2026-10-18 | Claude | N3 criado | Página inicial com os destaques vigentes do ticket fictício STRY0013175, regras, cenários e estados de tela; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |
