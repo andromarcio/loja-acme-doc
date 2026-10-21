@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Gerado de docqui-caixa-engine, docs/simulador/index.html (versão 7.0.0), num arquivo único para abrir direto no navegador: o CSS, as imagens, o docs/config.js e o github.js vão embutidos. Não edite aqui; gere de novo a partir do engine. -->
+<!-- Gerado de docqui-caixa-engine, docs/simulador/index.html (versão 7.1.0), num arquivo único para abrir direto no navegador: o CSS, as imagens, o docs/config.js e o github.js vão embutidos. Não edite aqui; gere de novo a partir do engine. -->
 <html lang="pt-BR" data-theme="light">
 <head>
 <meta charset="utf-8">
@@ -1405,7 +1405,7 @@ th { font-weight: 600; color: var(--fg); background: var(--bg-2); font-size: 12.
      ⚠ ! avisa). fx guarda o estado: feat, aim, branch, commit, merge e
      "+ caminho" / "~ caminho" / "- caminho" para arquivos que nenhum
      bloco file/fix mostra.
-     Roteiro revisado para Docqui Caixa 7.0.0, nos dois perfis. Recapturados
+     Roteiro revisado para Docqui Caixa 7.1.0, nos dois perfis. Recapturados
      numa instância criada pelo init-instance, com os arquivos que os passos
      mostram: o bootstrap; os gates de gravação dos N1, N2, DM e N3 (com o F9
      de regras × cenários e, no completo, o F10 do contrato da API); o
@@ -1524,7 +1524,7 @@ O seletor **Perfil**, no topo, troca a instância de perfil a qualquer momento. 
 --- nota regra
 **Branches e AIMMs:** história usa `historia/STRY0000000` e `analise-impacto/AIMM-STRY0000000.md`; sprint usa `sprint/SP07` e `analise-impacto/AIMM-SP07.md`. A cadência no MASTER decide a unidade de entrega. Este simulador percorre uma **sprint**: PRs de um checkpoint usam `checkpoint/STRY0013101-cp1` com destino a `sprint/SP07`, não a branch de história. Pages publica `historia/*` e `sprint/*`; no environment **github-pages**, permita as duas além da `main`. Envie a branch ao remoto com ao menos um commit próprio e aguarde o deploy.
 --- nota conceito
-A equipe: **Ana** (PO), **Rui** (analista de requisitos), **Bruno** (DBA), **Lia** (QA) e **Caio** (Tech Lead). O **Claude** conduz os prompts; o hook `spec-guard` e a CI rodam os validadores. O roteiro foi revisado para **Docqui Caixa 7.0.0**: usa os níveis Domínio, Agrupamento Funcional e Funcionalidade, explicita `historia/*`, `sprint/*` e os PRs temporários `checkpoint/*`, além do N3 com a Superfície logo antes do Comportamento de tela e a Origem antes do Changelog, o N2 sem a coluna Prioridade, global conforme o perfil, reservas de IDs imutáveis e revisão de previews por palavra, regras `RN-NN`, cenários `@RN-NN`, contrato da API e caminho de volta até o teste. AIMM significa **Análise de Impacto de Mudança para Manutenção**; no ticket, Contexto é leitura do analista, nome da funcionalidade fica abaixo do ID e entidades não carregam PF. O selo acompanha a versão do engine; a revisão do roteiro é explícita. As capturas novas foram verificadas numa instância isolada; datas e hashes do enredo são didáticos, e trechos sem mudança mantêm a captura anterior.
+A equipe: **Ana** (PO), **Rui** (analista de requisitos), **Bruno** (DBA), **Lia** (QA) e **Caio** (Tech Lead). O **Claude** conduz os prompts; o hook `spec-guard` e a CI rodam os validadores. O roteiro foi revisado para **Docqui Caixa 7.1.0**: usa os níveis Domínio, Agrupamento Funcional e Funcionalidade, a AIMM do ticket sem Contexto, com as Decisões pendentes e as Alterações em funcionalidades por Agrupamento Funcional, explicita `historia/*`, `sprint/*` e os PRs temporários `checkpoint/*`, além do N3 com a Superfície logo antes do Comportamento de tela e a Origem antes do Changelog, o N2 sem a coluna Prioridade, global conforme o perfil, reservas de IDs imutáveis e revisão de previews por palavra, regras `RN-NN`, cenários `@RN-NN`, contrato da API e caminho de volta até o teste. AIMM significa **Análise de Impacto de Mudança para Manutenção**; no ticket, Contexto é leitura do analista, nome da funcionalidade fica abaixo do ID e entidades não carregam PF. O selo acompanha a versão do engine; a revisão do roteiro é explícita. As capturas novas foram verificadas numa instância isolada; datas e hashes do enredo são didáticos, e trechos sem mudança mantêm a captura anterior.
 
 === init
 cap: A
@@ -1825,7 +1825,7 @@ estado: rascunho
 | `STRY0013120` | [AIMM-STRY0013120](AIMM-STRY0013120.md) | `VND-CHK-01` **Calcular Frete** · `VND-CHK-02` **Consultar Resumo do Pedido** | prazo de entrega estimado |
 | `STRY0013135` | [AIMM-STRY0013135](AIMM-STRY0013135.md) | `VND-CHK-03` **Aplicar Cupom** | cupom de desconto |
 
-## Alterações na spec, por Agrupamento Funcional
+## Alterações em funcionalidades por Agrupamento Funcional
 
 | Funcionalidade | Ticket | CA-n | Natureza | PFB | PFL |
 |---|---|---|---|---|---|
@@ -1923,10 +1923,6 @@ aberta-em: 2026-10-06
 
 Como cliente, quero informar o CEP no checkout e ver o valor do frete, para saber quanto vou pagar pela entrega antes de fechar o pedido.
 
-## Contexto
-
-Hoje o frete é cotado por telefone; sem ele no site, o cliente desiste ou liga.
-
 ## Critérios de aceite
 
 > **Numeração**: a fonte numera os critérios — `CA-n` é o número da própria ferramenta
@@ -1946,7 +1942,7 @@ Scenario: frete calculado pelo CEP
 |---|---|---|---|---|
 » | `VND-CHK-01`: Calcular Frete *(a confirmar no 3A)* | Vendas · Checkout | Criação | `CA-1, CA-2, CA-3` | 📋 A especificar |
 --- nota regra
-**Transcrição, não formulação.** A descrição vai para a AIMM como está na ferramenta; o que o analista conclui vai para `## Contexto`. **Número de critério só existe se a fonte numerar**, e é o número dela: um `CA-n` inventado parece conferível e não é. A união dos `CA-n` das funcionalidades é o conjunto de critérios do ticket, sem repetir nem faltar.
+**Transcrição, não formulação.** A descrição vai para a AIMM como está na ferramenta; o que ela não diz se elicita com o PO e, até ele decidir, fica em `## Decisões pendentes`. **Número de critério só existe se a fonte numerar**, e é o número dela: um `CA-n` inventado parece conferível e não é. A união dos `CA-n` das funcionalidades é o conjunto de critérios do ticket, sem repetir nem faltar.
 --- fx
 aim STRY0013101 rascunho
 feat VND-CHK-01 a-especificar | Calcular Frete
@@ -3983,7 +3979,7 @@ avalizado-por: "Ana (PO), 2026-10-07"
 (… as sete linhas avalizadas …)
 » | `global/CONTAGEM-PF.md` | MÉTRICA | alterar | — | derivado | contagem de Calcular Frete | elicitado |
 
-## Alterações na spec, por Agrupamento Funcional
+## Alterações em funcionalidades por Agrupamento Funcional
 
 ### Checkout
 
@@ -4023,7 +4019,7 @@ avalizado-por: "Ana (PO), 2026-10-07"
 (… as seis linhas avalizadas …)
 » | `global/CONTAGEM-PF.md` | MÉTRICA | alterar | — | derivado | contagem de Calcular Frete | elicitado |
 
-## Alterações na spec, por Agrupamento Funcional
+## Alterações em funcionalidades por Agrupamento Funcional
 
 ### Checkout
 
@@ -4102,7 +4098,7 @@ Rui muda o estado para `concluído` e roda o validador antes de escrever o resto
 $ node scripts/validate-impact.mjs analise-impacto/AIMM-STRY0013120.md
 validate-impact — analise-impacto/AIMM-STRY0013120.md
   ✗ estado `concluído` exige `sprint:` — a sprint em que o ticket foi entregue.
-  ✗ estado `concluído` exige a visão final em `## Alterações na spec, por Agrupamento Funcional` — o que foi alterado, uma linha por funcionalidade, sem o exemplo do template.
+  ✗ estado `concluído` exige a visão final em `## Alterações em funcionalidades por Agrupamento Funcional` — o que foi alterado, uma linha por funcionalidade, sem o exemplo do template.
   ✗ estado `concluído` exige `## Reconciliação` preenchida (declarado × tocado) — escreva o resultado fora da citação de instrução.
 
 3 erro(s), 0 aviso(s).
@@ -4111,7 +4107,7 @@ $ node scripts/validate-impact.mjs analise-impacto/AIMM-STRY0013120.md
 validate-impact — analise-impacto/AIMM-STRY0013120.md
   ⚠️  C2: há mudança `funcional` sem linha `QA` — no perfil `requisitos`, aviso: o plano de testes fica com quem constrói.
   ✗ estado `concluído` exige `sprint:` — a sprint em que o ticket foi entregue.
-  ✗ estado `concluído` exige a visão final em `## Alterações na spec, por Agrupamento Funcional` — o que foi alterado, uma linha por funcionalidade, sem o exemplo do template.
+  ✗ estado `concluído` exige a visão final em `## Alterações em funcionalidades por Agrupamento Funcional` — o que foi alterado, uma linha por funcionalidade, sem o exemplo do template.
   ✗ estado `concluído` exige `## Reconciliação` preenchida (declarado × tocado) — escreva o resultado fora da citação de instrução.
 
 3 erro(s), 1 aviso(s).
@@ -4119,7 +4115,7 @@ validate-impact — analise-impacto/AIMM-STRY0013120.md
 Uma linha por funcionalidade, **inclusive a nova**, com os critérios, a natureza, a mudança e o PF lido do N3. As funções de dados, com o tamanho antes e depois no título.
 @ analise-impacto/AIMM-STRY0013120.md
 + sprint: SP07
-  ## Alterações na spec, por Agrupamento Funcional
+  ## Alterações em funcionalidades por Agrupamento Funcional
   ### Checkout
   | Funcionalidade | CA-n | Natureza | Mudança | Regras | Cenários |
 + | `VND-CHK-01`<br>**Calcular Frete** | CA-1, CA-2 | alterada | **Inclusão** do prazo estimado. *Antes* o cálculo devolvia só o valor do frete. *Agora* devolve também o prazo em dias úteis, e avisa quando a faixa do CEP não tem prazo. | +1 | +1 |
@@ -4176,7 +4172,7 @@ entrega: 2026-10-17
 | `STRY0013101` | [AIMM-STRY0013101](AIMM-STRY0013101.md) | `VND-CHK-01` **Calcular Frete** | frete pelo CEP no checkout |
 | `STRY0013120` | [AIMM-STRY0013120](AIMM-STRY0013120.md) | `VND-CHK-01` **Calcular Frete** · `VND-CHK-02` **Consultar Resumo do Pedido** | prazo de entrega estimado no frete e no resumo |
 
-## Alterações na spec, por Agrupamento Funcional
+## Alterações em funcionalidades por Agrupamento Funcional
 
 | Funcionalidade | Ticket | CA-n | Natureza | PFB | PFL |
 |---|---|---|---|---|---|
@@ -5174,7 +5170,7 @@ window.DOKU_CONFIG = {
   /* Versão do engine, no selo ao lado do nome (toda página) e na página inicial.
      Espelha o VERSION da raiz, que o site — servido só de docs/ — não alcança. No
      release, troque os dois no mesmo commit: o eval 40 reprova a divergência. */
-  version: "7.0.0",
+  version: "7.1.0",
 
   /* Páginas renomeadas: o endereço antigo (link, favorito) leva ao novo. */
   redirects: {

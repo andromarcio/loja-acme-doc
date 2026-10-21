@@ -1,4 +1,4 @@
-<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+<!-- docqui: 7.1.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013185
@@ -19,10 +19,6 @@ aberta-em: 2026-10-18
 > Transcrição do ticket fictício do backlog da demonstração; não é um registro do ServiceNow real.
 
 Como cliente, quero colocar produtos no carrinho, ver o que escolhi, mudar quantidades e tirar itens, para fechar a compra só com o que quero.
-
-## Contexto
-
-O cliente precisa chegar ao checkout só com o que quer comprar, na quantidade que existe em estoque. Esta AIMM documenta o exemplo didático preenchido, não um escopo avalizado ou uma entrega real.
 
 ## Critérios de aceite
 
@@ -64,7 +60,7 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `prototypes/vendas/carrinho/flow.html` | PROTÓTIPO | criar | — | funcional | Página do produto e carrinho | derivado: espelho do N2 |
 | `prototypes/vendas/checkout/flow.html` | PROTÓTIPO | alterar | Notas do protótipo | funcional | Os itens do pedido passam a vir do Carrinho especificado | elicitado |
 
-## Alterações na spec, por Agrupamento Funcional
+## Alterações em funcionalidades por Agrupamento Funcional
 
 ### Carrinho
 
@@ -84,7 +80,7 @@ Modelo negocial de ItemPedido e do Pedido aberto, sem alterações físicas ou c
 - Quantidade vira campo canônico no FIELD-DICTIONARY (usado em VND-CAR-01 e VND-CAR-03).
 - Mensagens de Vendas: `VND_PRODUTO_ESGOTADO`, `VND_ESTOQUE_INSUFICIENTE`, `VND_ITEM_ADICIONADO`, `VND_QUANTIDADE_ATUALIZADA`, `VND_ITEM_REMOVIDO`, `VND_CARRINHO_SEM_ITENS` e `VND_ESTOQUE_REDUZIDO`.
 
-## Decisões de produto pendentes
+## Decisões pendentes
 
 - O responsável real deve revisar o escopo e conduzir CP1/CP2 antes de qualquer entrega.
 - A contagem será feita via CT; nenhum PF foi estimado.
@@ -99,6 +95,7 @@ Não encerrada. Esta AIMM está em análise e não declara entrega, aprovação 
 
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
+| 2026-10-21 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: sem Contexto, alterações por Agrupamento Funcional, Decisões pendentes, nome abaixo do ID, entidades sem PF. |
 | 2026-10-20 | Docqui Caixa | Ajuste | Layout da AIMM do ticket: nome abaixo do ID, entidades sem PF. |
 | 2026-10-18 | Claude | Demonstração | Ticket fictício e Feature Set Carrinho preenchidos, com 4 features em rascunho, sem aval e com a contagem pendente. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |

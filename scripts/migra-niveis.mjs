@@ -13,6 +13,8 @@ import { scanInstance, fingerprintText, STAMP_RE } from './lib/trace-index.mjs';
 // Palavra solta: não faz parte de identificador (features.json, featureSet, model.features, mapa-features).
 const solta = (palavra) => new RegExp(`(?<![\\w.$-])${palavra}(?![\\w-]|\\.\\w)`, 'g');
 const REGRAS = [
+  // A seção da AIMM vai direto ao nome da 7.1.0 (a 7.0.0 a chamou de "Alterações na spec, por Agrupamento Funcional").
+  [/Alterações na spec, por (?:Feature Set|Agrupamento Funcional)/g, 'Alterações em funcionalidades por Agrupamento Funcional'],
   [/FEATURE-DEFINITION/g, 'DEFINICAO-FUNCIONALIDADE'],
   [/_template-feature-set/g, '_template-agrupamento-funcional'],
   [/_template-feature\b/g, '_template-funcionalidade'],
@@ -86,7 +88,8 @@ export function convertDocument(text, name, version, date) {
   let output = converteDocumento(original, name);
   if (output === original) return text;
   const changelog = output.match(/^## Changelog\s*$/m);
-  if (changelog) {
+  // Uma linha por artefato: rodar de novo (depois de um merge que trouxe texto antigo) não repete o registro.
+  if (changelog && !output.slice(changelog.index).includes('| Terminologia | Níveis em português:')) {
     const lines = output.split('\n');
     const head = output.slice(0, changelog.index).split('\n').length - 1;
     const sep = lines.findIndex((line, i) => i > head && /^\|[\s:|-]+\|$/.test(line.trim()));
@@ -133,7 +136,9 @@ function main() {
     const rel = relative(root, file).replace(/\\/g, '/');
     if (basename(file) === 'CHANGELOG.md' || /(?:^|\/)novidades\.md$/.test(rel)) continue;
     const before = readFileSync(file, 'utf8');
-    const after = convertDocument(before, basename(file), version, date);
+    // Molde (_TEMPLATE_*, _template-*): o Changelog dele é linha-modelo, não histórico — converte
+    // inteiro, sem carimbo nem linha nova, como os moldes do engine.
+    const after = /^_template/i.test(basename(file)) ? converteTexto(before) : convertDocument(before, basename(file), version, date);
     if (after !== before) changes.push({ file, before, after });
   }
   // O texto do N3 mudou: o carimbo trace-verified que batia com a impressão antiga passa à nova.

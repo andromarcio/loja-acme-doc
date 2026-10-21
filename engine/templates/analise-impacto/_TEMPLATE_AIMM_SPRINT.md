@@ -33,7 +33,7 @@ estado: rascunho          # rascunho → concluído (apurável fechado e conferi
 |---|---|---|---|
 | `[CHAVE]` | [AIMM-[CHAVE]](AIMM-[CHAVE].md) | `SIGLA-SAF-NN` **[Nome]** | [o que o ticket entregou, em uma frase] |
 
-## Alterações na spec, por Agrupamento Funcional
+## Alterações em funcionalidades por Agrupamento Funcional
 
 <!--
   Uma linha por funcionalidade, cada uma UMA vez. Coluna Ticket: a(s) chave(s) em crase —
@@ -60,10 +60,10 @@ estado: rascunho          # rascunho → concluído (apurável fechado e conferi
 | **Total** | **[soma]** | **[soma]** |
 
 > O `validate-impact` confere a aritmética: o Total contra a soma das linhas de
-> `## Alterações na spec, por Agrupamento Funcional` e de `## Funções de dados alteradas`, e cada
+> `## Alterações em funcionalidades por Agrupamento Funcional` e de `## Funções de dados alteradas`, e cada
 > subtotal contra a sua. Rode-o a cada rodada de números novos.
 
-## Decisões de produto pendentes
+## Decisões pendentes
 
 - [o que ainda depende de decisão, e o que trava — ou "Nenhuma."]
 

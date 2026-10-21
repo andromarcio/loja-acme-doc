@@ -29,11 +29,11 @@
 //   --hoje           a data do Changelog da migração (padrão: hoje).
 //
 // De onde vem cada parte da AIMM do ticket:
-//   registro   → Descrição do ticket (transcrição intacta), Contexto, Critérios de aceite,
+//   registro   → Descrição do ticket (transcrição intacta), Critérios de aceite,
 //                Features (Operação e Critérios lidos da `## Origem` do N3), Changelog
 //   AIMM antiga (`origem:` = a chave) → Artefatos impactados, Reconciliação,
 //                `avalizado-por`, estado, Changelog
-//   relatório  → Alterações na spec, Funções de dados, Dicionários, Decisões, `sprint`;
+//   relatório  → Alterações em funcionalidades, Funções de dados, Dicionários, Decisões, `sprint`;
 //                a seção 1 (detalhe por item) vai para debaixo das Features
 //   Estado: com relatório, `concluído` (`aberta-na-entrega: true` se não havia AIMM
 //   antiga); só com a AIMM antiga, o estado dela; só com o registro, `rascunho`.
@@ -409,7 +409,6 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
     const reg = t.registro;
     const rp = t.relatorio;
     const secReg = (re) => (reg ? juntaSecoes(secaoDe(reg.partes, re)) : []);
-    const secAims = (re) => t.aims.flatMap((a) => juntaSecoes(secaoDe(a.partes, re)));
     const secRel = (re) => (rp ? juntaSecoes(secaoDe(rp.partes, re)) : []);
 
     // Front-matter.
@@ -445,7 +444,6 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
     if (!reg) pend(`${rel(raiz, arqAim)}: sem registro do ticket — transcreva a Descrição e os Critérios de aceite da ferramenta de origem.`);
     let crits = secReg(/^criterios de aceite/).map((l) => (/^\s*>\s*\*\*Numera/.test(l) ? l.replace(/chave da demanda/g, 'chave do ticket') : l));
     if (!crits.length) crits = ['> ⚠️ Migrada sem o registro do ticket: transcreva aqui os critérios de aceite da ferramenta de origem.'];
-    const contexto = secReg(/^contexto/).length ? secReg(/^contexto/) : secAims(/^necessidade/);
 
     // Features.
     const cabFeat = ['Feature (N3)', 'Domínio · Feature Set', 'Operação', 'Critérios cobertos', 'Status'];
@@ -579,7 +577,7 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
     ].filter((c) => { const k = c.join('|'); if (vistosCl.has(k)) return false; vistosCl.add(k); return true; });
 
     if (estado === 'concluído' && !aval) pend(`${rel(raiz, arqAim)}: concluída sem \`avalizado-por\` — use --avalizado-por "<quem>" ou preencha à mão (o validador cobra).`);
-    if (estado === 'concluído' && !rp) pend(`${rel(raiz, arqAim)}: concluída na AIMM antiga, sem relatório — falta a visão final (\`## Alterações na spec, por Feature Set\`), que a skill analise-impacto escreve.`);
+    if (estado === 'concluído' && !rp) pend(`${rel(raiz, arqAim)}: concluída na AIMM antiga, sem relatório — falta a visão final (\`## Alterações em funcionalidades por Agrupamento Funcional\`), que a skill analise-impacto escreve.`);
     if (estado === 'concluído' && !sprint) pend(`${rel(raiz, arqAim)}: concluída sem \`sprint\` — o relatório não dizia; preencha à mão (o validador cobra).`);
 
     const texto = [
@@ -587,15 +585,14 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
       `estado: ${estado}`, `aberta-na-entrega: ${abertaNaEntrega}`, `sprint: ${valorFm(sprint)}`, `avalizado-por: ${valorFm(aval)}`,
       `aberta-em: ${abertaEm}`, '---', '', `# AIMM ${K}`, '',
       '## Descrição do ticket', '', ...descricao, '',
-      '## Contexto', '', ...contexto, ...(contexto.length ? [''] : []),
       '## Critérios de aceite', '', ...crits, '',
       '## Features', '', ...renderTabela(cabFeat, linhasFeat), '@@CARIMBOS_FEATURES@@',
       ...(textoFeatures.length ? ['', ...textoFeatures] : []), ...(detalhe.length ? ['', ...detalhe] : []), '',
       '## Artefatos impactados', '', ...renderTabela(cabCs, cs), '',
-      '## Alterações na spec, por Feature Set', '', ...layoutTicket(alteracoes), ...(alteracoes.length ? [''] : []),
+      '## Alterações em funcionalidades por Agrupamento Funcional', '', ...layoutTicket(alteracoes), ...(alteracoes.length ? [''] : []),
       '## Entidades alteradas', '', ...dados, ...(dados.length ? [''] : []),
       '## Impacto em dicionários', '', ...dicionarios, ...(dicionarios.length ? [''] : []),
-      '## Decisões de produto pendentes', '', ...decisoes, ...(decisoes.length ? [''] : []),
+      '## Decisões pendentes', '', ...decisoes, ...(decisoes.length ? [''] : []),
       ...extras.flatMap((x) => [`## ${x.titulo}`, '', `> Migrada de \`${x.origem}\`.`, '', ...x.corpo, '']),
       '## Reconciliação', '', ...reconc, ...(reconc.length ? [''] : []),
       '## Changelog', '', ...renderTabela(['Data', 'Autor', 'Tipo', 'Descrição'], cl), '',
@@ -637,10 +634,10 @@ function migrar(raiz, { avalizadoPor, relatoriosExtras, hoje }) {
       '---', 'tipo: sprint', `sprint: ${valorFm(label)}`, `entrega: ${valorFm(ag.entrega)}`, 'estado: concluído', '---', '',
       `# AIMM ${label}`, '',
       '## Tickets da sprint', '', ...renderTabela(['Ticket', 'AIMM', 'Features', 'Resumo'], linhasTk), '',
-      '## Alterações na spec, por Feature Set', '', ...alteracoes, '',
+      '## Alterações em funcionalidades por Agrupamento Funcional', '', ...alteracoes, '',
       '## Funções de dados alteradas', '', ...dados, ...(dados.length ? [''] : []),
       ...extras.flatMap((x) => [`## ${x.titulo}`, '', ...x.corpo, '']),
-      '## Decisões de produto pendentes', '', ...decisoes, ...(decisoes.length ? [''] : []),
+      '## Decisões pendentes', '', ...decisoes, ...(decisoes.length ? [''] : []),
       '## Changelog', '', ...renderTabela(['Data', 'Autor', 'Tipo', 'Descrição'],
         [[OPCOES.hoje, 'migra-aim', 'AIMM da sprint migrada', `relatório agregado \`${rel(raiz, ag.file)}\` → AIMM da sprint`]]), '',
     ].join('\n');

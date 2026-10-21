@@ -249,7 +249,7 @@ class VisualPagesTest(unittest.TestCase):
           outros: [...document.querySelectorAll('#outrosFolder a')].map(a => a.textContent.trim()),
           texto: document.getElementById('sidebar').textContent,
         })""")
-        self.assertEqual(menu["fixos"], ["Dashboard de gestão", "Visão do Produto (N0)", "Mapa de Features (Árvore)",
+        self.assertEqual(menu["fixos"], ["Dashboard de gestão", "Visão do Produto (N0)", "Mapa de Funcionalidades (Árvore)",
                                        "Análises de impacto (AIMM)"])
         self.assertEqual(menu["pastas"], ["fddFolder", "globalFolder", "prototypesFolder", "outrosFolder"])
         self.assertEqual(menu["outros"], ["Insumos de levantamento", "Roteiro da demonstração",
@@ -283,7 +283,7 @@ class VisualPagesTest(unittest.TestCase):
                 self.assertEqual(self.page.locator("#documentContainer h1").inner_text(), "Análises de Impacto — Loja ACME")
                 self.assertIn("active", link.get_attribute("class") or "")
                 reports = self.page.locator('#documentContainer a[href^="#analise-impacto/AIMM-"][href$=".md"]')
-                self.assertEqual(reports.count(), 8)
+                self.assertEqual(reports.count(), 9)
                 reports.first.click()
                 self.page.wait_for_url("**#analise-impacto/AIMM-STRY0013101.md")
                 self.assertEqual(self.page.locator("#documentContainer h1").inner_text(), "AIMM STRY0013101")
@@ -479,8 +479,8 @@ class VisualPagesTest(unittest.TestCase):
             self.page.evaluate("(theme) => document.documentElement.dataset.theme = theme", theme)
             self.assertEqual(self.page.evaluate("getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()"), bg)
         data = self.page.evaluate("window.TRACE_DATA")
-        self.assertEqual(len(data["nodes"]), 53)
-        self.assertEqual(len(data["edges"]), 79)
+        self.assertEqual(len(data["nodes"]), 54)
+        self.assertEqual(len(data["edges"]), 84)
         self.assertTrue(any(n["id"] == "VND-CHK-01" for n in data["nodes"]))
         # O visualizador legado nao reconhece o no aim; erro confirmado no HEAD anterior.
         self.assertEqual(self.errors, ["Cannot read properties of undefined (reading 'r')"])
@@ -627,7 +627,7 @@ class VisualPagesTest(unittest.TestCase):
                 self.page.locator(".dashboard-views").wait_for()
                 self.assertEqual(self.page.locator('.dashboard-views [aria-pressed="true"]').inner_text(), "Esta sprint")
                 panel = lambda title: self.page.locator(".dashboard-panel", has=self.page.get_by_role("heading", name=title, exact=True))
-                rows = panel("Features da sprint").locator("tbody tr")
+                rows = panel("Funcionalidades da sprint").locator("tbody tr")
                 self.assertEqual(rows.count(), 1)
                 self.assertEqual(rows.first.locator("td").all_inner_texts()[:3], ["VND-CHK-01 — Calcular Frete", "STRY0013120", "Alterada"])
                 self.assertEqual(self.page.locator('[data-metric="deliveryCommits"] > strong').inner_text(), "1")
