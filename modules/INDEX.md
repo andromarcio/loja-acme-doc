@@ -46,6 +46,11 @@
 | [`STRY0013200`](../analise-impacto/AIMM-STRY0013200.md) | [ADM-FRT-03: Editar Faixa de Frete](administracao/faixas-frete/f-editar-faixa-frete.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
 | [`STRY0013200`](../analise-impacto/AIMM-STRY0013200.md) | [ADM-FRT-04: Excluir Faixa de Frete](administracao/faixas-frete/f-excluir-faixa-frete.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
 | [`STRY0013200`](../analise-impacto/AIMM-STRY0013200.md) | [ADM-FRT-05: Visualizar Faixa de Frete](administracao/faixas-frete/f-visualizar-faixa-frete.md) | Administração | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013205`](../analise-impacto/AIMM-STRY0013205.md) | [CAT-CTG-02: Cadastrar Categoria](catalogo/categorias/f-cadastrar-categoria.md) | Catálogo | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013205`](../analise-impacto/AIMM-STRY0013205.md) | [CAT-CTG-03: Editar Categoria](catalogo/categorias/f-editar-categoria.md) | Catálogo | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013205`](../analise-impacto/AIMM-STRY0013205.md) | [CAT-CTG-04: Excluir Categoria](catalogo/categorias/f-excluir-categoria.md) | Catálogo | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013205`](../analise-impacto/AIMM-STRY0013205.md) | [CAT-CTG-05: Visualizar Categoria](catalogo/categorias/f-visualizar-categoria.md) | Catálogo | ✏️ Rascunho | 📋 | — | — | — |
+| [`STRY0013205`](../analise-impacto/AIMM-STRY0013205.md) | [VIT-NAV-02: Pesquisar Produtos na Vitrine](vitrine/navegacao/f-pesquisar-produto-vitrine.md) | Vitrine | ✏️ Rascunho | 📋 | — | — | — |
 
 **Total vigente: ainda não dimensionado.** A revisão CT preencherá os valores a partir da fonte.
 

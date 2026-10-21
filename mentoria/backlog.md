@@ -2,7 +2,7 @@
 
 Os tickets abaixo fazem o papel do ServiceNow: é daqui que você copia a descrição e os critérios de aceite para a AIMM de cada ticket, **como estão escritos** — transcrição, não formulação. O mentor faz o papel da PO: é com ele que você elicita o que o ticket não diz e é ele quem avaliza o escopo.
 
-Os três primeiros formam a sprint SP07 e são os mesmos do simulador (`mentoria/simulador.html`). Os dois seguintes são para praticar sem o roteiro do simulador. Os da última seção já estão especificados no exemplo, em rascunho: servem de consulta, para comparar cada ticket com a AIMM e as features que ele originou.
+Os três primeiros formam a sprint SP07 e são os mesmos do simulador (`mentoria/simulador.html`). Os dois seguintes são para praticar sem o roteiro do simulador. Os da última seção já estão especificados no exemplo, em rascunho: servem de consulta, para comparar cada ticket com a AIMM e as features que ele originou. O STRY0013205 tem só a AIMM, em análise e sem aval: mostra o que uma alteração no modelo de entidades leva para a AIMM antes de qualquer feature mudar.
 
 ## Sprint SP07
 
@@ -63,6 +63,23 @@ Critérios de aceite (como estão no ticket, sem numeração):
 - CEP não atendido continua não atendido, mesmo acima de R$ 200,00
 
 O que este ticket exercita: alteração de uma feature que já existe (4A), regra de negócio que é invariante e reação que vira cenário, mensagem nova no MESSAGE-DICTIONARY e, sobretudo, a **numeração**: a fonte não numera os critérios, então a AIMM declara isso e a coluna `CA-n` sai `—`. Número inventado não vale.
+
+## AIMM em análise
+
+### STRY0013205 — Subcategorias
+
+> A equipe de vendas precisa dividir as categorias em subcategorias — por exemplo, Canecas e Garrafas dentro de Cozinha —, para que o cliente refine a busca sem que a lista de categorias cresça sem ordem. Basta um nível: uma subcategoria não tem subcategorias.
+
+| Critério | Descrição |
+|---|---|
+| CA-1 | Ao cadastrar uma categoria, a equipe pode escolher a categoria superior, entre as categorias que não são subcategorias. |
+| CA-2 | Ao editar uma categoria, a equipe pode trocar ou retirar a categoria superior; uma categoria que tem subcategorias não pode passar a ser subcategoria. |
+| CA-3 | Duas subcategorias da mesma categoria superior não podem ter o mesmo nome; com categorias superiores diferentes, podem. |
+| CA-4 | Categoria com subcategorias não pode ser excluída. |
+| CA-5 | Ao consultar uma categoria, a equipe vê a categoria superior e as subcategorias dela. |
+| CA-6 | Na vitrine, ao filtrar a busca por uma categoria, aparecem também os produtos das subcategorias dela. |
+
+O que este ticket exercita: a seção `## Entidades alteradas` da AIMM. O ticket não cria feature; altera cinco e muda a entidade Categoria — um atributo novo, um relacionamento da categoria com ela mesma e a regra de nome único, que deixa de valer para todas as categorias. No perfil `requisitos`, a alteração é descrita em Label PO, sem tabela nem coluna de banco.
 
 ## Já especificados no exemplo
 

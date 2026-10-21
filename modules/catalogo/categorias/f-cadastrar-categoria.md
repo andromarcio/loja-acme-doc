@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.22 | prompt: MIGRA_AIMM | atualizado: 2026-10-20 -->
+<!-- docqui: 6.4.27 | prompt: PROMPT_AIMM | atualizado: 2026-10-21 -->
 ---
 id: CAT-CTG-02
 feature_set: CAT-CTG
@@ -171,6 +171,7 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 | Ticket (AIMM) | Tipo | Critérios cobertos |
 |---|---|---|
 | [`STRY0013170`](../../../analise-impacto/AIMM-STRY0013170.md) | Criação | `CA-2` — cadastro com nome e descrição opcional, sem nomes repetidos |
+| [`STRY0013205`](../../../analise-impacto/AIMM-STRY0013205.md) | Alteração | `CA-1, CA-3` — categoria superior no cadastro e nome único entre as categorias com a mesma categoria superior (AIMM em análise, sem aval da PO) |
 
 ## Changelog
 
@@ -179,3 +180,4 @@ A contagem está pendente e deve nascer da análise desta feature via CT, com me
 | 2026-10-18 | Claude | N3 criado | Cadastro de categoria em modal, fonte canônica do CRUD, a partir do ticket fictício STRY0013170; gates sem aprovação e contagem pendente. |
 | 2026-10-18 | Claude | Ajuste | Seções reordenadas: a Superfície vai para antes da seção Comportamento de tela e a Origem vai para antes da seção Changelog. Nenhuma regra, cenário ou campo muda. |
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
+| 2026-10-21 | Claude | Origem | Ticket `STRY0013205` registrado na Origem: a AIMM está em análise e ainda não muda campos, regras ou cenários. |
