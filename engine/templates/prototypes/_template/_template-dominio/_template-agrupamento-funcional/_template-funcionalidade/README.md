@@ -1,6 +1,6 @@
 # Protótipos de Estado: [Nome da Funcionalidade]
 > Funcionalidade: [Nome] — Agrupamento Funcional: [Nome] — Domínio: [Nome]
-> Spec de referência: [../../../../modules/[dom]/[fs]/[funcionalidade].md](../../../../modules/[dom]/[fs]/[funcionalidade].md)
+> Spec de referência: [../../../../modules/[dom]/[af]/[funcionalidade].md](../../../../modules/[dom]/[af]/[funcionalidade].md)
 
 ---
 
@@ -62,4 +62,4 @@
 
 ---
 
-*Links: [N3 da spec](../../../../modules/[dom]/[fs]/[funcionalidade].md) · [Fluxo do Agrupamento Funcional](../README.md) · [Índice de protótipos](../../../INDEX.md)*
+*Links: [N3 da spec](../../../../modules/[dom]/[af]/[funcionalidade].md) · [Fluxo do Agrupamento Funcional](../README.md) · [Índice de protótipos](../../../INDEX.md)*

@@ -109,7 +109,7 @@ qualquer coleta de mudança.
   confirmação:
   > "Encontrei esta funcionalidade:
   > - **Funcionalidade:** [nome] (`[ID]`)
-  > - **Caminho:** `modules/[dom]/[fs]/[feat].md`
+  > - **Caminho:** `modules/[dom]/[af]/[func].md`
   > - **Descrição:** [1º parágrafo da ## Descrição — a entrega]
   > - **Campos:** [lista curta dos Label PO]
   >

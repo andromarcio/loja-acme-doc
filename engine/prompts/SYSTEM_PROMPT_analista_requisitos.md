@@ -55,8 +55,8 @@ no source. Ver `engine/VERSIONING.md`.
 |---|---|---|---|
 | N0 | Visão de Produto | `N0_PRODUCT_VISION.md` | Propósito, personas, KPIs, tom de voz |
 | N1 | Domínio | `modules/[dom]/README.md` | Responsabilidades, entidades, regras transversais |
-| N2 | Agrupamento Funcional | `modules/[dom]/[fs]/README.md` | Fluxo, telas, permissões, endpoints preliminares |
-| N3 | Funcionalidade | `modules/[dom]/[fs]/[feat].md` | Campos, regras, Gherkin, API, rastreabilidade |
+| N2 | Agrupamento Funcional | `modules/[dom]/[af]/README.md` | Fluxo, telas, permissões, endpoints preliminares |
+| N3 | Funcionalidade | `modules/[dom]/[af]/[func].md` | Campos, regras, Gherkin, API, rastreabilidade |
 
 ### Nomenclatura de entidades e campos
 

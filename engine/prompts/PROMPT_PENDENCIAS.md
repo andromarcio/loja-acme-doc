@@ -88,7 +88,7 @@ Nunca faça mais de uma pergunta por estado.
 === modules/INDEX.md ===
 [cole o índice — em especial a tabela `## Rastreabilidade: ticket → spec → código`]
 
-=== READMEs de Agrupamento Funcional (modules/[dom]/[fs]/README.md) ===
+=== READMEs de Agrupamento Funcional (modules/[dom]/[af]/README.md) ===
 [cole os N2 do escopo — a lista de funcionalidades de cada um revela quais ainda não têm N3]
 
 === analise-impacto/AIMM-*.md ===
@@ -132,7 +132,7 @@ Monte uma tabela interna (não exiba ainda), um registro por pendência, anotand
   sprint (`tipo: sprint`) não entra: ela consolida o que já foi entregue.
 - **N2 sem N3** — em cada README de Agrupamento Funcional, confronte as funcionalidades listadas com os
   arquivos `.md` que existem na pasta do FS. Funcionalidade citada **sem** `.md` correspondente
-  = pendência de existência — origem = o N2 (`modules/[dom]/[fs]/README.md`).
+  = pendência de existência — origem = o N2 (`modules/[dom]/[af]/README.md`).
 - **INDEX órfão** — linhas da tabela de rastreabilidade do INDEX cujo link de N3 aponta
   para um arquivo **inexistente** = pendência de existência — origem = o INDEX.
 - **Triagem (se houver)** — relatórios em `_triagem/` com veredito **Criar** cujo

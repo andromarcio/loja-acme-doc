@@ -109,13 +109,13 @@ PROMPT_4A que motivou esta sessão).
 
 **2. Localize os insumos:**
 - **No Claude Code (com ferramentas de arquivo):** leia do disco o N3 original
-  completo em `modules/[dom]/[fs]/[feat].md` e o `global/data-models/[dominio].md`
+  completo em `modules/[dom]/[af]/[func].md` e o `global/data-models/[dominio].md`
   correspondente. Não peça para colar.
 - **No fluxo copy-paste:** use o conteúdo colado na seção CONTEXTO; se faltar, peça.
 
 **3. Apresente e confirme** antes de avançar:
 > "Vou atualizar a parte técnica de:
-> - **Funcionalidade:** [nome] (`[ID]`) — `modules/[dom]/[fs]/[feat].md`
+> - **Funcionalidade:** [nome] (`[ID]`) — `modules/[dom]/[af]/[func].md`
 > - **Data-model:** `global/data-models/[dominio].md`
 >
 > Confirma estes arquivos como base? Posso iniciar a análise de breaking changes?"
