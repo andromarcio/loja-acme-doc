@@ -213,7 +213,7 @@ Adicione a linha que falta no lado recíproco, espelhando o lado existente.
 
 Se falta na **AIMM do ticket** (`analise-impacto/AIMM-<CHAVE>.md`), em `## Funcionalidades`:
 ```diff
-+ | [`[ID]`: Nome da Funcionalidade](../modules/[dominio]/[fs]/[arquivo].md) | [Domínio] · [FS] | Criação / Alteração | [`CA-n`] | [status] |
++ | [`[ID]`: Nome da Funcionalidade](../modules/[dominio]/[fs]/[arquivo].md) | [Domínio] · [Agrupamento Funcional] | Criação / Alteração | [`CA-n`] | [status] |
 ```
 
 Se falta na **`## Origem`** do N3:

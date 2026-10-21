@@ -20,7 +20,7 @@ aberta-em: [AAAA-MM-DD]
   A AIMM é VERSIONADA à medida que o ticket avança — o Changelog registra cada versão
   e o git guarda as anteriores:
 
-    rascunho         aberta: Descrição, Contexto, Critérios e Funcionalidades (PROMPT_AIMM, passos 1–4)
+    rascunho         aberta: Descrição, Critérios e Funcionalidades (PROMPT_AIMM, passos 1–4)
     em-análise       o que SERÁ alterado: Artefatos impactados, Alterações previstas (passo 5)
     escopo-aprovado  o PO avalizou o escopo (`avalizado-por`) — só então a spec muda (passo 6)
     em-execução      as passadas de spec e código, uma por linha do changeset
@@ -131,7 +131,7 @@ Scenario: [resultado esperado em linguagem de negócio]
 > NFR · PATTERNS · API-PATTERNS · MÉTRICA · PROTÓTIPO · REPOSITÓRIO`.
 > Operação: `criar | alterar | deprecar`.
 
-## Alterações na spec, por Agrupamento Funcional
+## Alterações em funcionalidades por Agrupamento Funcional
 
 <!--
   O DELTA FUNCIONAL, por Agrupamento Funcional, uma linha por funcionalidade — as novas também.

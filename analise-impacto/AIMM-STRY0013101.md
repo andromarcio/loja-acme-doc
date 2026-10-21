@@ -1,4 +1,4 @@
-<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+<!-- docqui: 7.1.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013101
@@ -50,7 +50,7 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `global/FIELD-DICTIONARY.md` | FIELD-DICT | alterar | CEP | funcional | Validação canônica de CEP | elicitado |
 | `global/MESSAGE-DICTIONARY.md` | MESSAGE-DICT | alterar | Vendas | funcional | Mensagens literais de entrega | elicitado |
 
-## Alterações na spec, por Agrupamento Funcional
+## Alterações em funcionalidades por Agrupamento Funcional
 
 ### Checkout
 

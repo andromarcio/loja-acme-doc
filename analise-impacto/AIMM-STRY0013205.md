@@ -1,4 +1,4 @@
-<!-- docqui: 6.4.27 | prompt: PROMPT_AIMM | atualizado: 2026-10-21 -->
+<!-- docqui: 7.1.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013205
@@ -33,9 +33,9 @@ A equipe de vendas precisa dividir as categorias em subcategorias — por exempl
 | CA-5 | Ao consultar uma categoria, a equipe vê a categoria superior e as subcategorias dela. |
 | CA-6 | Na vitrine, ao filtrar a busca por uma categoria, aparecem também os produtos das subcategorias dela. |
 
-## Features
+## Funcionalidades
 
-| Feature (N3) | Domínio · Feature Set | Operação | Critérios cobertos | Status |
+| Funcionalidade (N3) | Domínio · Agrupamento Funcional | Operação | Critérios cobertos | Status |
 |---|---|---|---|---|
 | [`CAT-CTG-02`: Cadastrar Categoria](../modules/catalogo/categorias/f-cadastrar-categoria.md) | Catálogo · Categorias | Alteração | `CA-1, CA-3` | ✏️ Rascunho |
 | [`CAT-CTG-03`: Editar Categoria](../modules/catalogo/categorias/f-editar-categoria.md) | Catálogo · Categorias | Alteração | `CA-2` | ✏️ Rascunho |
@@ -54,7 +54,7 @@ O changeset abaixo é a previsão do analista, ainda sem o aval da PO. As linhas
 | `modules/catalogo/categorias/f-excluir-categoria.md` | N3 | alterar | Regras/Cenários/Dados lidos e gravados | funcional | Exclusão bloqueada também pelas subcategorias | derivado: âncora |
 | `modules/catalogo/categorias/f-visualizar-categoria.md` | N3 | alterar | Campos/Cenários | funcional | Mostrar a categoria superior e a lista de subcategorias | derivado: âncora |
 | `modules/vitrine/navegacao/f-pesquisar-produto-vitrine.md` | N3 | alterar | Regras/Cenários | funcional | O filtro por categoria inclui os produtos das subcategorias | derivado: âncora |
-| `modules/catalogo/categorias/README.md` | N2 | alterar | Features/Dependências entre features | funcional | Descrições de Editar e Excluir e a dependência das subcategorias | elicitado |
+| `modules/catalogo/categorias/README.md` | N2 | alterar | Funcionalidades/Dependências entre funcionalidades | funcional | Descrições de Editar e Excluir e a dependência das subcategorias | elicitado |
 | `modules/catalogo/README.md` | N1 | alterar | Integrações com outros domínios | funcional | A Vitrine passa a ler a Categoria superior | elicitado |
 | `global/data-models/catalogo.md` | DATA-MODEL | alterar | Categoria/Relacionamentos | dados | Atributo Categoria superior, relacionamento da Categoria com ela mesma e o nome único por categoria superior | derivado: ## Campos → coluna |
 | `global/DATA-MODEL.md` | DATA-MODEL | alterar | Relacionamentos | dados | Linha do relacionamento da Categoria com ela mesma, 1 — N | elicitado |
@@ -67,7 +67,7 @@ O changeset abaixo é a previsão do analista, ainda sem o aval da PO. As linhas
 
 ### Categorias
 
-| Feature | CA-n | Natureza | Mudança | Regras | Cenários |
+| Funcionalidade | CA-n | Natureza | Mudança | Regras | Cenários |
 |---|---|---|---|---|---|
 | `CAT-CTG-02`<br>**Cadastrar Categoria** | CA-1, CA-3 | alterada | **Inclusão** da categoria superior e **Alteração** do nome único. *Antes*: toda categoria era de primeiro nível, e o nome era único entre todas as categorias. *Agora*: a equipe pode escolher a categoria superior entre as que não são subcategorias, e o nome é único entre as categorias com a mesma categoria superior. | +1 | +3 |
 | `CAT-CTG-03`<br>**Editar Categoria** | CA-2 | alterada | **Inclusão** da troca da categoria superior. *Antes*: a edição alterava só a descrição e a situação. *Agora*: também troca ou retira a categoria superior, e uma categoria com subcategorias não pode passar a ser subcategoria. | +2 | +3 |
@@ -76,7 +76,7 @@ O changeset abaixo é a previsão do analista, ainda sem o aval da PO. As linhas
 
 ### Navegação
 
-| Feature | CA-n | Natureza | Mudança | Regras | Cenários |
+| Funcionalidade | CA-n | Natureza | Mudança | Regras | Cenários |
 |---|---|---|---|---|---|
 | `VIT-NAV-02`<br>**Pesquisar Produtos na Vitrine** | CA-6 | alterada | **Alteração** do filtro por categoria. *Antes*: o filtro trazia só os produtos da categoria escolhida. *Agora*: traz também os produtos das subcategorias dela. | +1 | +1 |
 
@@ -126,3 +126,4 @@ Nenhuma alteração de atributo: o produto continua com uma única Categoria, qu
 |---|---|---|---|
 | 2026-10-21 | Claude | Em análise | Changeset derivado e podado; alterações previstas nas 5 features e na entidade Categoria, em Label PO, sem aval da PO. |
 | 2026-10-21 | Claude | AIMM aberta | Ticket fictício `STRY0013205` registrado a partir do backlog da demonstração; 5 features mapeadas, todas alteradas. |
+| 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

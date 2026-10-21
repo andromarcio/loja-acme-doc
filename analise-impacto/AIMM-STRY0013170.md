@@ -1,4 +1,4 @@
-<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+<!-- docqui: 7.1.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013170
@@ -60,7 +60,7 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `global/MESSAGE-DICTIONARY.md` | MESSAGE-DICT | alterar | Catálogo | funcional | Nome duplicado, exclusão bloqueada e confirmação de inativação | elicitado |
 | `prototypes/catalogo/categorias/flow.html` | PROTÓTIPO | criar | — | funcional | Fluxo da pesquisa com os modais de cadastro, edição e visualização | derivado: espelho do N2 |
 
-## Alterações na spec, por Agrupamento Funcional
+## Alterações em funcionalidades por Agrupamento Funcional
 
 ### Categorias
 

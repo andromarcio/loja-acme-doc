@@ -79,7 +79,7 @@ O que este ticket exercita: alteração de uma funcionalidade que já existe (4A
 | CA-5 | Ao consultar uma categoria, a equipe vê a categoria superior e as subcategorias dela. |
 | CA-6 | Na vitrine, ao filtrar a busca por uma categoria, aparecem também os produtos das subcategorias dela. |
 
-O que este ticket exercita: a seção `## Entidades alteradas` da AIMM. O ticket não cria feature; altera cinco e muda a entidade Categoria — um atributo novo, um relacionamento da categoria com ela mesma e a regra de nome único, que deixa de valer para todas as categorias. No perfil `requisitos`, a alteração é descrita em Label PO, sem tabela nem coluna de banco.
+O que este ticket exercita: a seção `## Entidades alteradas` da AIMM. O ticket não cria funcionalidade; altera cinco e muda a entidade Categoria — um atributo novo, um relacionamento da categoria com ela mesma e a regra de nome único, que deixa de valer para todas as categorias. No perfil `requisitos`, a alteração é descrita em Label PO, sem tabela nem coluna de banco.
 
 ## Já especificados no exemplo
 

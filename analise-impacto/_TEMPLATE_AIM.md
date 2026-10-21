@@ -131,7 +131,7 @@ Scenario: [resultado esperado em linguagem de negócio]
 > NFR · PATTERNS · API-PATTERNS · MÉTRICA · PROTÓTIPO · REPOSITÓRIO`.
 > Operação: `criar | alterar | deprecar`.
 
-## Alterações na spec, por Agrupamento Funcional
+## Alterações em funcionalidades por Agrupamento Funcional
 
 <!--
   O DELTA FUNCIONAL, por Agrupamento Funcional, uma linha por funcionalidade — as novas também.
@@ -192,5 +192,5 @@ Scenario: [resultado esperado em linguagem de negócio]
 | Data | Autor | Tipo | Descrição |
 |---|---|---|---|
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico anterior preservado. |
-| [AAAA-MM-DD] | [autor] | AIM aberta | ticket `[CHAVE]` registrado; features mapeadas |
+| [AAAA-MM-DD] | [autor] | AIM aberta | ticket `[CHAVE]` registrado; funcionalidades mapeadas |
 | 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |

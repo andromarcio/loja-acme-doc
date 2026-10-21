@@ -1,4 +1,4 @@
-<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+<!-- docqui: 7.1.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013200
@@ -60,7 +60,7 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `global/MESSAGE-DICTIONARY.md` | MESSAGE-DICT | alterar | Administração | funcional | Região duplicada, intervalo inválido, sobreposição, exclusão bloqueada e aviso de edição | elicitado |
 | `prototypes/administracao/faixas-frete/flow.html` | PROTÓTIPO | criar | — | funcional | Pesquisa, cadastro, edição, visualização e exclusão de faixas | derivado: espelho do N2 |
 
-## Alterações na spec, por Agrupamento Funcional
+## Alterações em funcionalidades por Agrupamento Funcional
 
 ### Faixas de Frete
 

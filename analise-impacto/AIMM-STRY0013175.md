@@ -1,4 +1,4 @@
-<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+<!-- docqui: 7.1.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013175
@@ -52,7 +52,7 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `global/MESSAGE-DICTIONARY.md` | MESSAGE-DICT | alterar | Vitrine | funcional | Selo de esgotado, página sem destaques e produto indisponível | elicitado |
 | `prototypes/vitrine/navegacao/flow.html` | PROTÓTIPO | criar | — | funcional | Página inicial, busca e página do produto | derivado: espelho do N2 |
 
-## Alterações na spec, por Agrupamento Funcional
+## Alterações em funcionalidades por Agrupamento Funcional
 
 ### Navegação
 

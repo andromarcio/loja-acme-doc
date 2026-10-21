@@ -1,4 +1,4 @@
-<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+<!-- docqui: 7.1.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013180
@@ -62,7 +62,7 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `global/MESSAGE-DICTIONARY.md` | MESSAGE-DICT | alterar | Vitrine | funcional | Ordem inválida, destaque sobreposto e destaque encerrado | elicitado |
 | `prototypes/vitrine/destaques/flow.html` | PROTÓTIPO | criar | — | funcional | Pesquisa, cadastro, edição e visualização de destaques | derivado: espelho do N2 |
 
-## Alterações na spec, por Agrupamento Funcional
+## Alterações em funcionalidades por Agrupamento Funcional
 
 ### Destaques
 

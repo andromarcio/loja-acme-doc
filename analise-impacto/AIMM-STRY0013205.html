@@ -246,7 +246,7 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 
     </div>
   </details>
-  <details class="doc-section" id="features" open>
+  <details class="doc-section" id="funcionalidades" open>
     <summary class="section-header">
       <span class="section-title">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -254,7 +254,7 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
           <line x1="3" y1="9" x2="21" y2="9"></line>
           <line x1="9" y1="21" x2="9" y2="9"></line>
         </svg>
-        Features
+        Funcionalidades
       </span>
       <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <polyline points="6 9 12 15 18 9"></polyline>
@@ -264,8 +264,8 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 <div class="table-container"><table class="custom-table">
 <thead>
 <tr>
-<th>Feature (N3)</th>
-<th>Domínio · Feature Set</th>
+<th>Funcionalidade (N3)</th>
+<th>Domínio · Agrupamento Funcional</th>
 <th class="col-id">Operação</th>
 <th>Critérios cobertos</th>
 <th class="col-id">Status</th>
@@ -387,7 +387,7 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 <td><code>modules/catalogo/categorias/README.md</code></td>
 <td>N2</td>
 <td class="col-id">alterar</td>
-<td>Features/Dependências entre features</td>
+<td>Funcionalidades/Dependências entre funcionalidades</td>
 <td class="col-id">funcional</td>
 <td>Descrições de Editar e Excluir e a dependência das subcategorias</td>
 <td>elicitado</td>
@@ -478,7 +478,7 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 <div class="table-container"><table class="custom-table">
 <thead>
 <tr>
-<th class="col-nome">Feature</th>
+<th>Funcionalidade</th>
 <th class="col-id">CA-n</th>
 <th class="col-id">Natureza</th>
 <th class="col-prosa">Mudança</th>
@@ -487,7 +487,7 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 </tr>
 </thead>
 <tbody><tr>
-<td class="col-nome"><code>CAT-CTG-02</code><br><strong>Cadastrar Categoria</strong></td>
+<td><code>CAT-CTG-02</code><br><strong>Cadastrar Categoria</strong></td>
 <td class="col-id">CA-1, CA-3</td>
 <td class="col-id">alterada</td>
 <td class="col-prosa"><strong>Inclusão</strong> da categoria superior e <strong>Alteração</strong> do nome único. <em>Antes</em>: toda categoria era de primeiro nível, e o nome era único entre todas as categorias. <em>Agora</em>: a equipe pode escolher a categoria superior entre as que não são subcategorias, e o nome é único entre as categorias com a mesma categoria superior.</td>
@@ -495,7 +495,7 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 <td class="col-id">+3</td>
 </tr>
 <tr>
-<td class="col-nome"><code>CAT-CTG-03</code><br><strong>Editar Categoria</strong></td>
+<td><code>CAT-CTG-03</code><br><strong>Editar Categoria</strong></td>
 <td class="col-id">CA-2</td>
 <td class="col-id">alterada</td>
 <td class="col-prosa"><strong>Inclusão</strong> da troca da categoria superior. <em>Antes</em>: a edição alterava só a descrição e a situação. <em>Agora</em>: também troca ou retira a categoria superior, e uma categoria com subcategorias não pode passar a ser subcategoria.</td>
@@ -503,7 +503,7 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 <td class="col-id">+3</td>
 </tr>
 <tr>
-<td class="col-nome"><code>CAT-CTG-04</code><br><strong>Excluir Categoria</strong></td>
+<td><code>CAT-CTG-04</code><br><strong>Excluir Categoria</strong></td>
 <td class="col-id">CA-4</td>
 <td class="col-id">alterada</td>
 <td class="col-prosa"><strong>Restrição</strong> da exclusão. <em>Antes</em>: só os produtos vinculados bloqueavam a exclusão. <em>Agora</em>: as subcategorias também bloqueiam, pela mesma RC-09 — Registro vinculado não pode ser excluído.</td>
@@ -511,7 +511,7 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 <td class="col-id">+1</td>
 </tr>
 <tr>
-<td class="col-nome"><code>CAT-CTG-05</code><br><strong>Visualizar Categoria</strong></td>
+<td><code>CAT-CTG-05</code><br><strong>Visualizar Categoria</strong></td>
 <td class="col-id">CA-5</td>
 <td class="col-id">alterada</td>
 <td class="col-prosa"><strong>Inclusão</strong> da hierarquia na consulta. <em>Antes</em>: a consulta mostrava os dados da categoria e quantos produtos ela tem. <em>Agora</em>: mostra também a categoria superior e a lista de subcategorias.</td>
@@ -523,7 +523,7 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 <div class="table-container"><table class="custom-table">
 <thead>
 <tr>
-<th class="col-nome">Feature</th>
+<th>Funcionalidade</th>
 <th class="col-id">CA-n</th>
 <th class="col-id">Natureza</th>
 <th class="col-prosa">Mudança</th>
@@ -532,7 +532,7 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 </tr>
 </thead>
 <tbody><tr>
-<td class="col-nome"><code>VIT-NAV-02</code><br><strong>Pesquisar Produtos na Vitrine</strong></td>
+<td><code>VIT-NAV-02</code><br><strong>Pesquisar Produtos na Vitrine</strong></td>
 <td class="col-id">CA-6</td>
 <td class="col-id">alterada</td>
 <td class="col-prosa"><strong>Alteração</strong> do filtro por categoria. <em>Antes</em>: o filtro trazia só os produtos da categoria escolhida. <em>Agora</em>: traz também os produtos das subcategorias dela.</td>
@@ -703,6 +703,12 @@ Escreva o resultado abaixo desta citação — ela é instrução e pode ficar.<
 <td>Claude</td>
 <td>AIMM aberta</td>
 <td>Ticket fictício <code>STRY0013205</code> registrado a partir do backlog da demonstração; 5 features mapeadas, todas alteradas.</td>
+</tr>
+<tr>
+<td>21/10/2026</td>
+<td>Docqui Caixa</td>
+<td>Terminologia</td>
+<td>Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado.</td>
 </tr>
 </tbody></table></div>
 

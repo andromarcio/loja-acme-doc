@@ -110,8 +110,8 @@ Apresente o relatório no formato abaixo e pergunte:
 #### Grupo 1 — [título descritivo da regra]
 | Tipo | Funcionalidade | Trecho da regra |
 |---|---|---|
-| 🔴 Duplicata | `[dominio/fs/feature.md]` | "[texto da regra]" |
-| 🔴 Duplicata | `[dominio/fs/feature.md]` | "[texto da regra]" |
+| 🔴 Duplicata | `[dominio/agrupamento-funcional/funcionalidade.md]` | "[texto da regra]" |
+| 🔴 Duplicata | `[dominio/agrupamento-funcional/funcionalidade.md]` | "[texto da regra]" |
 
 **Sugestão**: [consolidar no RULES-DICTIONARY / mover para N1 do domínio X / manter no N3 com referência cruzada]
 

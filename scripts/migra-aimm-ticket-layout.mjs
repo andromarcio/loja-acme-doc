@@ -45,7 +45,16 @@ function migrate(text, version, date) {
   const kind = String(fm.tipo || '').toLowerCase(), ticket = kind === 'ticket';
   if (!ticket && kind !== 'sprint') return text;
   let changed = false;
-  const alterations = section(lines, 'Alterações na spec, por Agrupamento Funcional');
+  const context = ticket ? section(lines, 'Contexto') : null;
+  if (context) { lines.splice(context.start, context.end - context.start); changed = true; }
+  // Nomes anteriores da seção: o da 6.4.26 e o da 7.0.0.
+  for (const nome of ['Alterações na spec, por Feature Set', 'Alterações na spec, por Agrupamento Funcional']) {
+    const oldAlterations = section(lines, nome);
+    if (oldAlterations) { lines[oldAlterations.start] = '## Alterações em funcionalidades por Agrupamento Funcional'; changed = true; }
+  }
+  const oldDecisions = section(lines, 'Decisões de produto pendentes');
+  if (oldDecisions) { lines[oldDecisions.start] = '## Decisões pendentes'; changed = true; }
+  const alterations = ticket ? section(lines, 'Alterações em funcionalidades por Agrupamento Funcional') : null;
   if (alterations) {
     const headerIndex = lines.findIndex((line, index) => index > alterations.start && index < alterations.end && line.trim().startsWith('|') && !isSeparator(line));
     if (headerIndex >= 0) {

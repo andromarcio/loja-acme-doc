@@ -33,7 +33,7 @@ PROTÓTIPO`. O código (repositórios) e os artefatos técnicos (SDD, migração
 
 | Estado | O que a AIMM tem | Quem escreve |
 |---|---|---|
-| `rascunho` | Descrição do ticket, Contexto, Critérios de aceite e Funcionalidades | este prompt, passos 1–4 |
+| `rascunho` | Descrição do ticket, Critérios de aceite e Funcionalidades | este prompt, passos 1–4 |
 | `em-análise` | + o que **será** alterado: Artefatos impactados e Alterações previstas | este prompt, passo 5 |
 | `escopo-aprovado` | + `avalizado-por` — o aval do PO | este prompt, passo 6 |
 | `em-execução` | as passadas de spec e código, uma por linha do changeset | 3A/4A/4B, NFR, QA… (disparadas no passo 6) |
@@ -273,7 +273,7 @@ Scenario: [resultado esperado]
 |---|---|---|---|---|---|---|
 | `modules/<dom>/<fs>/f-<slug>.md` | N3 | alterar | Campos/Regras/Cenários | funcional | [o que muda] | derivado: âncora |
 
-## Alterações na spec, por Agrupamento Funcional
+## Alterações em funcionalidades por Agrupamento Funcional
 
 ### [Agrupamento Funcional]
 
@@ -352,7 +352,7 @@ Depois, a **passada dimensional** com o PO/analista — o derivador **não adivi
 4. **Poda**: remova linhas `candidato` que a análise concluiu que **não** mudam.
 
 Marque as linhas acrescentadas com Proveniência `elicitado`. Preencha também a previsão
-em **Alterações na spec, por Agrupamento Funcional** (uma linha por funcionalidade, com o ID e o nome em
+em **Alterações em funcionalidades por Agrupamento Funcional** (uma linha por funcionalidade, com o ID e o nome em
 linhas separadas, e a mudança pedida), **Entidades alteradas** (sem PF), **Impacto em
 dicionários** e **Decisões pendentes**. Mude `estado:` para `em-análise` e registre a versão no
 Changelog.

@@ -1,4 +1,4 @@
-<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+<!-- docqui: 7.1.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 ---
 tipo: ticket
 ticket: STRY0013185
@@ -60,7 +60,7 @@ O changeset abaixo descreve o pacote didático. Não há aval de PO registrado; 
 | `prototypes/vendas/carrinho/flow.html` | PROTÓTIPO | criar | — | funcional | Página do produto e carrinho | derivado: espelho do N2 |
 | `prototypes/vendas/checkout/flow.html` | PROTÓTIPO | alterar | Notas do protótipo | funcional | Os itens do pedido passam a vir do Carrinho especificado | elicitado |
 
-## Alterações na spec, por Agrupamento Funcional
+## Alterações em funcionalidades por Agrupamento Funcional
 
 ### Carrinho
 
