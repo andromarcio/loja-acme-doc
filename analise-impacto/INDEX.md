@@ -1,4 +1,4 @@
-<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+<!-- docqui: 7.1.0 | prompt: PROMPT_AIMM | atualizado: 2026-10-21 -->
 # Análises de Impacto — Loja ACME
 
 | Ticket | AIMM | Funcionalidade | Estado |
@@ -11,5 +11,6 @@
 | STRY0013190 | [Atendimento de pedidos](AIMM-STRY0013190.md) | VND-PED-01 a VND-PED-03 — Gestão de Pedidos | Em análise; N3 em rascunho |
 | STRY0013195 | [Usuários da loja](AIMM-STRY0013195.md) | ADM-USR-01 a ADM-USR-05 — Usuários (CRUD com inativação) | Em análise; N3 em rascunho |
 | STRY0013200 | [Faixas de frete](AIMM-STRY0013200.md) | ADM-FRT-01 a ADM-FRT-05 — Faixas de Frete (CRUD) | Em análise; N3 em rascunho |
+| STRY0013205 | [Subcategorias](AIMM-STRY0013205.md) | CAT-CTG-02 a CAT-CTG-05 — Categorias (CRUD); VIT-NAV-02 — Pesquisar Produtos na Vitrine | Em análise, sem aval; os N3 só registram a Origem |
 
 Os tickets ainda não especificados estão no [backlog da demonstração](../mentoria/backlog.md), como exercícios. Não há AIMM de sprint concluída nem entrega registrada.
