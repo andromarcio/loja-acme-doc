@@ -1,4 +1,4 @@
-<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-23 -->
 # MESSAGE-DICTIONARY.md
 > Dicionário de **mensagens de UI** que a pessoa usuária lê — e o **baseline** de
 > validação (obrigatório, formato, sucesso, estados de tela).
@@ -60,8 +60,12 @@
 
 | Chave | Situação | Texto literal |
 |---|---|---|
-| `CAT_CATEGORIA_DUPLICADA` | Nome de categoria já usado por outra categoria | "Já existe uma categoria com este nome." |
+| `CAT_CATEGORIA_DUPLICADA` | Nome já usado na mesma Categoria superior, inclusive sem superior; cadastro ou mudança de superior na edição (⚠️ proposta STRY0013205) | "Já existe uma categoria com este nome nesta categoria superior." |
 | `CAT_CATEGORIA_COM_PRODUTOS` | Exclusão de uma categoria que tem produtos (RC-09 — Registro vinculado não pode ser excluído) | "Não é possível excluir: existem produtos vinculados a este registro." |
+| `CAT_CATEGORIA_COM_SUBCATEGORIAS` | Exclusão de categoria com subcategorias, ativas ou inativas (RC-09; ⚠️ proposta STRY0013205) | "Não é possível excluir: existem subcategorias vinculadas a este registro." |
+| `CAT_SUPERIOR_COM_SUBCATEGORIAS` | Atribuição de superior a categoria que tem subcategorias (⚠️ proposta STRY0013205) | "Uma categoria com subcategorias não pode ter categoria superior." |
+| `CAT_SUPERIOR_INVALIDA` | Superior é a própria categoria, uma subcategoria ou não existe mais (⚠️ proposta STRY0013205) | "Selecione uma categoria superior de primeiro nível, diferente da própria categoria." |
+| `CAT_SEM_SUBCATEGORIAS` | Lista de subcategorias vazia na ficha (⚠️ proposta STRY0013205) | "Nenhuma subcategoria cadastrada." |
 | `CAT_INATIVAR_COM_PRODUTOS` | Confirmação ao inativar uma categoria que tem produtos | "Os produtos desta categoria deixarão de aparecer na vitrine. Deseja continuar?" |
 
 ### Vitrine
@@ -154,8 +158,12 @@ Ao escrever cenários/telas em um N3:
 | `ADM_USUARIO_JA_INATIVO` | `ADM-USR-04` |
 | `BASELINE` | `ADM-FRT-01` · `ADM-FRT-02` · `ADM-FRT-03` · `ADM-FRT-04` · `ADM-FRT-05` · `ADM-USR-01` · `ADM-USR-02` · `ADM-USR-03` · `ADM-USR-04` · `ADM-USR-05` · `CAT-CTG-01` · `CAT-CTG-02` · `CAT-CTG-03` · `CAT-CTG-04` · `CAT-CTG-05` · `VIT-DST-01` · `VIT-DST-02` · `VIT-DST-03` · `VIT-DST-04` · `VIT-DST-05` · `VND-CAR-01` · `VND-CAR-02` · `VND-CAR-03` · `VND-CAR-04` · `VND-CHK-01` · `VND-PED-01` · `VND-PED-02` · `VND-PED-03` |
 | `CAT_CATEGORIA_COM_PRODUTOS` | `CAT-CTG-04` |
-| `CAT_CATEGORIA_DUPLICADA` | `CAT-CTG-02` |
+| `CAT_CATEGORIA_COM_SUBCATEGORIAS` | `CAT-CTG-04` |
+| `CAT_CATEGORIA_DUPLICADA` | `CAT-CTG-02` · `CAT-CTG-03` |
 | `CAT_INATIVAR_COM_PRODUTOS` | `CAT-CTG-03` |
+| `CAT_SEM_SUBCATEGORIAS` | `CAT-CTG-05` |
+| `CAT_SUPERIOR_COM_SUBCATEGORIAS` | `CAT-CTG-03` |
+| `CAT_SUPERIOR_INVALIDA` | `CAT-CTG-02` · `CAT-CTG-03` |
 | `EMPTY_SEARCH` | `VIT-NAV-02` |
 | `ERROR_STATE` | `VIT-NAV-01` · `VIT-NAV-02` · `VIT-NAV-03` |
 | `MIN_LENGTH` | `VIT-NAV-02` |

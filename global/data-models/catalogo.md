@@ -1,4 +1,4 @@
-<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-23 -->
 # Data Model: Catálogo
 > **Modelo de entidades (negocial)** — entidades, atributos e relacionamentos de negócio, sem camada física.
 
@@ -8,8 +8,9 @@
 
 | Atributo (Label PO) | Tipo | Obrigatório | Notas |
 |---|---|---|---|
-| Nome da categoria | texto | sim | Único entre as categorias; até 40 caracteres |
+| Nome da categoria | texto | sim | Até 40 caracteres; único entre categorias com a mesma Categoria superior, inclusive sem superior, ativas ou inativas, ignorando maiúsculas e acentos; imutável após cadastro |
 | Descrição | texto | não | Até 200 caracteres |
+| Categoria superior | seleção → Categoria | não | Referência a categoria de primeiro nível, ativa ou inativa, diferente da própria; sem valor significa primeiro nível; categoria com subcategorias não pode receber superior |
 | Situação | lista (Ativa, Inativa) | sim | Nasce Ativa; os produtos de uma categoria inativa não aparecem na vitrine |
 | Data de cadastro | data | automático | Registrada ao cadastrar a categoria |
 
@@ -28,6 +29,9 @@
 ## Relacionamentos
 
 - **Categoria** [1 — N] **Produto** — uma categoria agrupa vários produtos; todo produto pertence a uma única categoria.
+- **Categoria** [0..1 — 0..N] **Categoria** — cada categoria tem zero ou uma Categoria superior; uma superior pode ter zero ou várias subcategorias. Um único nível: uma subcategoria não pode ter subcategorias. Não admite autorreferência, ciclos ou exclusão de categoria com subcategorias. Trocar ou retirar a superior respeita a unicidade do nome no destino.
+
+A situação não se propaga pelo autorrelacionamento: superior inativa mantém subcategorias e suas situações. Na vitrine, só a situação da categoria diretamente vinculada ao produto determina sua exibição; uma subcategoria ativa permanece elegível mesmo com a superior inativa (proposta da STRY0013205, sem aval da PO).
 
 ### Dados da demonstração
 
@@ -53,3 +57,14 @@
 | Almofada ACME estampada | Decoração | R$ 69,90 | 12 |
 
 O Boné está esgotado; a Almofada não aparece na vitrine porque Decoração está inativa; Brinquedos não tem produtos e é a única categoria que pode ser excluída.
+
+#### Variação da massa — STRY0013205
+
+Sem alterar a massa base acima, os cenários de hierarquia e o simulador de Categorias podem acrescentar:
+
+| Categoria | Categoria superior | Situação | Produtos diretos |
+|---|---|---|---|
+| Canecas | Cozinha | Ativa | 0 |
+| Garrafas | Cozinha | Ativa | 0 |
+
+Nos cenários que explicitam reclassificação, a caneca passa de Cozinha para Canecas e a garrafa pode passar para Garrafas, sem criar produtos nem mudar preço ou estoque. Cada cenário explicita mudanças de situação; os demais continuam usando a massa base. A quantidade exibida na ficha conta somente produtos diretos.

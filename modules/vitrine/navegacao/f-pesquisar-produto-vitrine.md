@@ -1,4 +1,4 @@
-<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-23 -->
 ---
 id: VIT-NAV-02
 agrupamento_funcional: VIT-NAV
@@ -36,9 +36,13 @@ A pessoa digita o termo no campo de busca da página inicial ou da própria tela
 
 - **RN-01** — A busca encontra os produtos cujo nome contém o termo informado, sem diferenciar maiúsculas, minúsculas e acentos.
 - **RN-02** — Quando informado, o termo de busca tem ao menos 2 caracteres.
-- **RN-03** — Só aparecem produtos de categorias ativas. → ver N1 Vitrine: Regras transversais de negócio: 1
+- **RN-03** — Só aparecem produtos cuja categoria diretamente vinculada está ativa. A situação da superior não se propaga: superior inativa não oculta produtos de subcategorias ativas nem altera a situação delas; subcategoria inativa nunca expõe seus produtos, mesmo com superior ativa. → ver N1 Vitrine: Regras transversais de negócio: 1
 - **RN-04** — Produto com quantidade em estoque zero aparece com o selo de esgotado. → ver N1 Vitrine: Regras transversais de negócio: 2
 - **RN-05** — Sem termo e sem categoria, o resultado traz todos os produtos de categorias ativas.
+- **RN-06** — Filtrar por categoria de primeiro nível inclui seus produtos diretos e os das suas subcategorias, sempre respeitando RN-03 e o termo de busca, sem duplicar produtos. Filtrar por subcategoria inclui somente os produtos dela.
+- **RN-07** — O filtro lista categorias de primeiro nível ativas e subcategorias ativas, estas logo abaixo da superior com o caminho "Cozinha › Canecas". Superior inativa não é opção selecionável, mas suas subcategorias ativas continuam listadas com o caminho completo. Os nomes de primeiro nível e os de suas subcategorias seguem ordem A–Z em cada grupo; o caminho também identifica a categoria nos resultados quando for subcategoria.
+
+**Decisão proposta para STRY0013205 (sem aval da PO)**: o filtro lista as subcategorias para refinar a busca, inclusive quando a superior está inativa. A elegibilidade do produto depende apenas da situação da categoria diretamente vinculada, sem inativação em cascata.
 
 ## Cenários
 
@@ -61,9 +65,46 @@ Feature: Pesquisar Produtos na Vitrine
     When a pessoa pesquisa "ceramica"
     Then o sistema mostra "Caneca de cerâmica ACME 300 ml"
 
-  Scenario: Filtro só por categoria, sem termo
+  @RN-06
+  Scenario: Filtro só por categoria, sem termo, com produtos diretos
     When a pessoa escolhe a categoria "Cozinha" sem informar termo
     Then o sistema mostra "Caneca de cerâmica ACME 300 ml" e "Garrafa térmica ACME 500 ml"
+
+  @RN-03 @RN-06
+  Scenario: Filtro pela superior inclui produtos diretos e de subcategorias
+    Given que nesta variação da massa "Caneca de cerâmica ACME 300 ml" pertence a "Canecas", subcategoria ativa de "Cozinha"
+    And que "Garrafa térmica ACME 500 ml" continua diretamente em "Cozinha"
+    When a pessoa escolhe a categoria "Cozinha" sem informar termo
+    Then o sistema mostra a caneca e a garrafa uma única vez cada
+    And não mostra produtos de outras categorias
+
+  @RN-06 @RN-07
+  Scenario: Refinar por subcategoria
+    Given que nesta variação da massa a caneca pertence a "Canecas" e a garrafa a "Garrafas", ambas subcategorias ativas de "Cozinha"
+    When a pessoa escolhe "Cozinha › Canecas" no filtro
+    Then o sistema mostra somente "Caneca de cerâmica ACME 300 ml"
+    And mostra "Cozinha › Canecas" como categoria do resultado
+
+  @RN-06
+  Scenario: Termo e superior combinados
+    Given que nesta variação da massa a caneca pertence à subcategoria ativa "Canecas" de "Cozinha"
+    When a pessoa pesquisa "ceramica" e escolhe "Cozinha"
+    Then o sistema mostra somente "Caneca de cerâmica ACME 300 ml"
+
+  @RN-03 @RN-07
+  Scenario: Superior inativa com subcategoria ativa
+    Given que nesta variação da massa "Cozinha" está inativa, "Canecas" está ativa e a caneca pertence a "Canecas"
+    When a pessoa abre o filtro de categoria
+    Then não pode selecionar "Cozinha", mas pode selecionar "Cozinha › Canecas"
+    When pesquisa "acme" sem filtro de categoria
+    Then a caneca aparece e os produtos diretamente vinculados a "Cozinha" não aparecem
+
+  @RN-03 @RN-06
+  Scenario: Subcategoria inativa não expõe produtos pela superior
+    Given que nesta variação da massa a caneca pertence a "Canecas" inativa, subcategoria de "Cozinha" ativa
+    When a pessoa escolhe "Cozinha"
+    Then não mostra a caneca, mas mantém os produtos de categorias ativas abrangidas pelo filtro
+    And "Cozinha › Canecas" não é oferecida no filtro
 
   @RN-05
   Scenario: Todos os produtos à venda
@@ -92,8 +133,10 @@ Feature: Pesquisar Produtos na Vitrine
     Then o sistema exibe "Nenhum resultado para a busca."
 
   Scenario: Categoria inativa fora do filtro
+    Given que a variação da massa inclui "Canecas" e "Garrafas" ativas sob "Cozinha"
     When a pessoa abre o filtro de categoria
-    Then o sistema oferece "Acessórios", "Brinquedos", "Cozinha", "Papelaria" e "Vestuário"
+    Then o sistema oferece as categorias de primeiro nível "Acessórios", "Brinquedos", "Cozinha", "Papelaria" e "Vestuário"
+    And oferece "Cozinha › Canecas" e "Cozinha › Garrafas" logo abaixo de "Cozinha"
     And não oferece "Decoração"
 
   # Estados especiais
@@ -120,10 +163,10 @@ Feature: Pesquisar Produtos na Vitrine
 | Label PO | Entidade | Preenchimento | Edição | Tipo | Obrigatório | Validação |
 |---|---|---|---|---|---|---|
 | Busca (filtro) | Produto | entrada do usuário | editável | texto | não | Parte do nome do produto; ao menos 2 caracteres quando informado |
-| Categoria (filtro) | Categoria | entrada do usuário | editável | seleção → Categoria | não | carga: lista completa; apenas categorias ativas |
+| Categoria (filtro) | Categoria | entrada do usuário | editável | seleção → Categoria | não | carga: lista completa de categorias ativas, inclusive subcategorias com caminho; superior inclui produtos diretos e das subcategorias ativas |
 | Ordenar por (filtro) | dado de código | entrada do usuário | editável | lista (Nome A–Z, Menor preço, Maior preço) | não | Padrão: Nome A–Z |
 | Nome do produto (resultado) | Produto | exibido do cadastro | somente leitura | texto | não | Como cadastrado no Catálogo |
-| Categoria (resultado) | Categoria | exibido do cadastro | somente leitura | texto | não | Nome da categoria do produto |
+| Categoria (resultado) | Categoria | exibido do cadastro | somente leitura | texto | não | Nome da categoria do produto; para subcategoria, caminho "Superior › Subcategoria" |
 | Preço (resultado) | Produto | exibido do cadastro | somente leitura | valor | não | → ver FIELD-DICTIONARY: Valor monetário |
 | Disponibilidade (resultado) | derivado ↓ | calculado | somente leitura | texto | não | Selo "Esgotado" quando o produto não tem estoque |
 
@@ -170,6 +213,8 @@ A tela de resultado da busca (`/produtos`) tem no topo o mesmo campo de busca da
 | Erro de servidor | Mostrar "Não foi possível carregar os dados." no lugar dos cards |
 | Sucesso | Mostrar os cards na ordenação escolhida — Nome A–Z quando não se escolhe outra —, com o total de produtos encontrados |
 | Empty state | Mostrar "Nenhum resultado para a busca." quando nada atende ao termo e à categoria |
+| Filtro por superior | Mostrar produtos diretos e das subcategorias ativas; subcategoria escolhida restringe aos produtos dela |
+| Superior inativa | Não oferecer a superior no filtro; manter subcategorias ativas com caminho completo, sem ocultar seus produtos |
 | Produto esgotado | O card do produto sem estoque mostra o selo "Esgotado" e continua levando à página do produto |
 
 ## Critérios de sucesso
@@ -177,8 +222,9 @@ A tela de resultado da busca (`/produtos`) tem no topo o mesmo campo de busca da
 | # | Critério mensurável | Origem |
 |---|---|---|
 | SC-01 | A busca "acme" retorna os 8 produtos de categorias ativas e nenhum produto de categoria inativa | CA-2, RN-01 e RN-03 |
-| SC-02 | O filtro "Cozinha" retorna só os 2 produtos dessa categoria | CA-2 |
+| SC-02 | O filtro "Cozinha" retorna os 2 produtos da massa base e também produtos de Canecas/Garrafas quando nela vinculados e ativos, sem duplicar nem incluir outras categorias ou produtos de subcategorias inativas | STRY0013205 CA-6, RN-03 e RN-06 |
 | SC-03 | Nenhuma busca é feita com termo de 1 caractere | RN-02 |
+| SC-04 | Subcategorias ativas aparecem no filtro com caminho e refinam o resultado aos próprios produtos; superior inativa não é selecionável nem oculta subcategorias ativas | RN-03 e RN-07 |
 
 ## Métricas de tamanho
 
@@ -204,3 +250,4 @@ A contagem está pendente e deve nascer da análise desta funcionalidade via CT,
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
 | 2026-10-21 | Claude | Origem | Ticket `STRY0013205` registrado na Origem: a AIMM está em análise e ainda não muda campos, regras ou cenários. |
 | 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |
+| 2026-10-23 | Copilot | Alteração | STRY0013205: filtro abrange subcategorias, opções e resultados com caminho; situação da superior não se propaga; regras, cenários e SC-02 atualizados como proposta em rascunho. |

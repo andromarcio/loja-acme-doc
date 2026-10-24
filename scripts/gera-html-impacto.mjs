@@ -34,7 +34,22 @@ function carregaMarked() {
     process.exit(1);
   }
   const mod = require(vendor);
-  return mod.marked ?? mod;
+  const marked = mod.marked ?? mod;
+  const renderer = new marked.Renderer();
+  const link = renderer.link;
+  const image = renderer.image;
+  // Markdown não é HTML confiável; entidades no esquema também podem ocultar javascript:.
+  const urlSegura = (href) => /^(?:https?:|mailto:)/i.test(href)
+    || !/[:&\\\u0000-\u0020\u007f]/.test(href.split(/[/?#]/, 1)[0]);
+  renderer.html = ({ text }) => /^<br\s*\/?>$/i.test(text) ? '<br>' : escapa(text);
+  renderer.link = function (token) {
+    return urlSegura(token.href) ? link.call(this, token) : this.parser.parseInline(token.tokens);
+  };
+  renderer.image = function (token) {
+    return urlSegura(token.href) ? image.call(this, token) : escapa(token.text);
+  };
+  marked.setOptions({ renderer });
+  return marked;
 }
 
 // ── paleta: herda o :root do visualizador da instância ──
@@ -195,7 +210,9 @@ function renderSecao(marked, titulo, corpo) {
   html = html.replace(/<p>@@KPI(\d+)@@<\/p>/g, (_, i) => kpis[Number(i)] ?? '');
   html = html.replace(/<h3[^>]*>([\s\S]*?)<\/h3>/g, (bruto, dentro) => {
     const cru = dentro.replace(/<code>/g, '`').replace(/<\/code>/g, '`').replace(/<[^>]+>/g, '')
-      .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+      .replace(/&(amp|lt|gt|quot|#39);/g, (_, entidade) => ({
+        amp: '&', lt: '<', gt: '>', quot: '"', '#39': "'",
+      })[entidade]);
     return tituloDeItem(cru) ?? bruto;
   });
   html = fixaColunasAtomicas(html);

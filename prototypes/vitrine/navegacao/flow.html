@@ -100,11 +100,6 @@
                   <label class="dsc-field-label" for="categoria">Categoria <span class="dsc-text-muted" style="font-weight:400">(opcional)</span></label>
                   <select class="dsc-select" id="categoria" onchange="pesquisar()">
                     <option value="">Todas as categorias</option>
-                    <option>Acessórios</option>
-                    <option>Brinquedos</option>
-                    <option>Cozinha</option>
-                    <option>Papelaria</option>
-                    <option>Vestuário</option>
                   </select>
                 </div>
               </div>
@@ -146,6 +141,8 @@
             <li>O Boné está sem estoque: aparece com o selo "Esgotado" e o botão "Adicionar ao carrinho" fica indisponível.</li>
             <li>A quantidade e o botão "Adicionar ao carrinho" da página do produto são de VND-CAR-01 — Adicionar Item ao Carrinho; o botão leva ao protótipo do Carrinho.</li>
             <li>As descrições dos produtos são ilustrativas; a Caneta não tem descrição, para mostrar a página sem esse bloco.</li>
+            <li>STRY0013205: o filtro lista todas as categorias ativas, com o caminho das subcategorias. Selecionar Cozinha inclui seus produtos diretos e os das subcategorias ativas; inativar a superior não oculta uma filha ativa.</li>
+            <li>Canecas e Garrafas, em Cozinha, são estrutura suplementar sem produtos. A massa original continua nas categorias diretas originais.</li>
           </ul>
           <div class="dsc-field" style="margin-top:12px;max-width:360px">
             <label class="dsc-field-label" for="simulacao">Simular estado <span class="dsc-text-muted" style="font-weight:400">(controle do protótipo, não faz parte da tela)</span></label>
@@ -190,6 +187,16 @@
       { id: 'ecobag', nome: 'Ecobag ACME de lona', categoria: 'Acessórios', preco: 34.90, estoque: 60, descricao: 'Sacola retornável de lona crua.' },
       { id: 'chaveiro', nome: 'Chaveiro ACME de metal', categoria: 'Acessórios', preco: 14.90, estoque: 75, descricao: 'Chaveiro de metal com a marca ACME.' }
     ];
+    var CATEGORIAS = [
+      { id: 1, nome: 'Cozinha', situacao: 'Ativa' },
+      { id: 2, nome: 'Vestuário', situacao: 'Ativa' },
+      { id: 3, nome: 'Papelaria', situacao: 'Ativa' },
+      { id: 4, nome: 'Acessórios', situacao: 'Ativa' },
+      { id: 5, nome: 'Decoração', situacao: 'Inativa' },
+      { id: 6, nome: 'Brinquedos', situacao: 'Ativa' },
+      { id: 7, nome: 'Canecas', superior: 1, situacao: 'Ativa' },
+      { id: 8, nome: 'Garrafas', superior: 1, situacao: 'Ativa' }
+    ];
     // Destaques vigentes em 18/10/2026, já na ordem de exibição
     var DESTAQUES = [
       { produto: 'garrafa', chamada: 'Café quente o dia todo' },
@@ -202,6 +209,35 @@
     var ICONE_ERRO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
 
     function porId(id) { return PRODUTOS.filter(function (p) { return p.id === id; })[0]; }
+    function categoriaPorId(id) { return CATEGORIAS.find(function (c) { return c.id === id; }); }
+    function categoriaDoProduto(p) {
+      return p.categoriaId != null ? categoriaPorId(p.categoriaId) : CATEGORIAS.find(function (c) { return !c.superior && c.nome === p.categoria; });
+    }
+    function produtoVisivel(p) {
+      var c = p && categoriaDoProduto(p);
+      return !!c && c.situacao === 'Ativa';
+    }
+    function caminhoCategoria(c) {
+      var superior = c && categoriaPorId(c.superior);
+      return c ? (superior ? superior.nome + ' › ' : '') + c.nome : '—';
+    }
+    function preencherCategorias() {
+      var campo = document.getElementById('categoria');
+      var selecionada = campo.value;
+      campo.replaceChildren(new Option('Todas as categorias', ''));
+      CATEGORIAS.filter(function (c) { return c.situacao === 'Ativa'; })
+        .sort(function (a, b) { return caminhoCategoria(a).localeCompare(caminhoCategoria(b), 'pt-BR'); })
+        .forEach(function (c) { campo.add(new Option(caminhoCategoria(c), String(c.id))); });
+      campo.value = selecionada;
+    }
+    function correspondeCategoria(p, filtro) {
+      var c = categoriaDoProduto(p);
+      var selecionada = categoriaPorId(Number(filtro));
+      return !filtro || !!selecionada && !!c && (c.id === selecionada.id || (!selecionada.superior && c.superior === selecionada.id));
+    }
+    function escapar(texto) {
+      return String(texto).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
+    }
     function moeda(v) { return 'R$&nbsp;' + v.toFixed(2).replace('.', ','); }
     function normaliza(t) { return t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
     function selo(p) { return p.estoque === 0 ? ' <span class="dsc-tag dsc-tag--sm dsc-tag--danger">Esgotado</span>' : ''; }
@@ -216,8 +252,9 @@
     }
     function cardProduto(p, chamada) {
       return '<div><section class="dsc-card" style="height:100%">' +
-        (chamada ? '<p class="dsc-caption dsc-text-primary" style="margin:0 0 4px">' + chamada + '</p>' : '<p class="dsc-caption dsc-text-muted" style="margin:0 0 4px">' + p.categoria + '</p>') +
-        '<h3 class="dsc-title-sm" style="margin:0 0 8px">' + p.nome + selo(p) + '</h3>' +
+        (chamada ? '<p class="dsc-caption dsc-text-primary" style="margin:0 0 4px">' + escapar(chamada) + '</p>' : '') +
+        '<p class="dsc-caption dsc-text-muted" style="margin:0 0 4px">' + escapar(caminhoCategoria(categoriaDoProduto(p))) + '</p>' +
+        '<h3 class="dsc-title-sm" style="margin:0 0 8px">' + escapar(p.nome) + selo(p) + '</h3>' +
         '<p class="dsc-body" style="margin:0 0 12px"><strong>' + moeda(p.preco) + '</strong></p>' +
         '<button class="dsc-btn dsc-btn--sm dsc-btn--outline" onclick="abrirProduto(\'' + p.id + '\')">Ver produto</button>' +
         '</section></div>';
@@ -240,7 +277,9 @@
         if (estado === 'falha') { estadoTela('destaques', '⚠️', 'Não foi possível carregar', 'Não foi possível carregar os dados.'); return; }
         if (estado === 'sem-destaques') { estadoTela('destaques', '🛍️', 'Sem destaques', 'Nenhum destaque no momento. Use a busca para encontrar produtos.'); return; }
         var html = '<div class="dsc-grid-3">';
-        DESTAQUES.forEach(function (d) { html += cardProduto(porId(d.produto), d.chamada); });
+        var destaques = DESTAQUES.filter(function (d) { return produtoVisivel(porId(d.produto)); });
+        if (!destaques.length) { estadoTela('destaques', '🛍️', 'Sem destaques', 'Nenhum destaque no momento. Use a busca para encontrar produtos.'); return; }
+        destaques.forEach(function (d) { html += cardProduto(porId(d.produto), d.chamada); });
         document.getElementById('destaques').innerHTML = html + '</div>';
       }
       if (imediato) { desenha(); return; }
@@ -258,6 +297,7 @@
     function abrirBusca(termo, categoria) {
       showScreen('screen-busca');
       document.getElementById('busca').value = termo;
+      preencherCategorias();
       document.getElementById('categoria').value = categoria;
       erroNoCampo('f-busca', '');
       pesquisar();
@@ -279,7 +319,7 @@
         btn.classList.remove('is-loading'); btn.disabled = false;
         if (estado === 'falha') { estadoTela('resultado', '⚠️', 'Não foi possível carregar', 'Não foi possível carregar os dados.'); return; }
         var lista = PRODUTOS.filter(function (p) {
-          return (!termo || normaliza(p.nome).indexOf(normaliza(termo)) >= 0) && (!categoria || p.categoria === categoria);
+          return produtoVisivel(p) && (!termo || normaliza(p.nome).indexOf(normaliza(termo)) >= 0) && correspondeCategoria(p, categoria);
         });
         lista.sort(function (a, b) {
           if (ordem === 'menor') return a.preco - b.preco;
@@ -304,19 +344,19 @@
       setTimeout(function () {
         if (estado === 'falha') { estadoTela('produto', '⚠️', 'Não foi possível carregar', 'Não foi possível carregar os dados.'); return; }
         var p = porId(id);
-        if (!p) { estadoTela('produto', '🚫', 'Produto indisponível', 'Este produto não está disponível na loja.'); return; }
+        if (!produtoVisivel(p)) { estadoTela('produto', '🚫', 'Produto indisponível', 'Este produto não está disponível na loja.'); return; }
         document.getElementById('bc-produto').textContent = p.nome;
         var esgotado = p.estoque === 0;
         var html =
-          '<div class="dsc-page-header"><h1 class="dsc-page-title">' + p.nome + '</h1>' +
-          '<p class="dsc-page-subtitle">' + p.categoria + '</p></div>' +
+          '<div class="dsc-page-header"><h1 class="dsc-page-title">' + escapar(p.nome) + '</h1>' +
+          '<p class="dsc-page-subtitle">' + escapar(caminhoCategoria(categoriaDoProduto(p))) + '</p></div>' +
           '<div class="dsc-row">' +
             '<div class="dsc-col-7"><section class="dsc-card">' +
               '<div class="dsc-row">' +
-                '<div class="dsc-col-6"><div class="dsc-lv"><span class="dsc-lv-label">Categoria</span><span class="dsc-lv-value">' + p.categoria + '</span></div></div>' +
+                '<div class="dsc-col-6"><div class="dsc-lv"><span class="dsc-lv-label">Categoria</span><span class="dsc-lv-value">' + escapar(caminhoCategoria(categoriaDoProduto(p))) + '</span></div></div>' +
                 '<div class="dsc-col-6"><div class="dsc-lv"><span class="dsc-lv-label">Disponibilidade</span><span class="dsc-lv-value">' + (esgotado ? '<span class="dsc-tag dsc-tag--danger">Esgotado</span>' : '<span class="dsc-tag dsc-tag--success">Em estoque</span>') + '</span></div></div>' +
               '</div>' +
-              (p.descricao ? '<hr class="dsc-divider"><h2 class="dsc-card-title">Descrição</h2><p class="dsc-body" style="margin:0">' + p.descricao + '</p>' : '') +
+              (p.descricao ? '<hr class="dsc-divider"><h2 class="dsc-card-title">Descrição</h2><p class="dsc-body" style="margin:0">' + escapar(p.descricao) + '</p>' : '') +
             '</section></div>' +
             '<div class="dsc-col-5"><section class="dsc-card">' +
               '<p class="dsc-caption dsc-text-muted" style="margin:0 0 4px">Preço</p>' +
@@ -349,6 +389,7 @@
       abrirInicio();
     }
 
+    preencherCategorias();
     abrirInicio(true);
   </script>
 </body>

@@ -1,4 +1,4 @@
-<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-23 -->
 # Agrupamento Funcional: Categorias
 > **Nível 2** - Domínio: Catálogo - `CAT-CTG`
 
@@ -15,10 +15,10 @@ Reúne as operações de manutenção das categorias de produtos: pesquisar, cad
 | Funcionalidade | Descrição |
 |---|---|
 | [**Pesquisar Categorias**](f-pesquisar-categoria.md) <small>CAT-CTG-01</small> | Encontrar categorias por nome e situação |
-| [**Cadastrar Categoria**](f-cadastrar-categoria.md) <small>CAT-CTG-02</small> | Incluir uma categoria com nome único |
-| [**Editar Categoria**](f-editar-categoria.md) <small>CAT-CTG-03</small> | Alterar a descrição e a situação; o nome não muda |
-| [**Excluir Categoria**](f-excluir-categoria.md) <small>CAT-CTG-04</small> | Remover uma categoria que não tem produtos |
-| [**Visualizar Categoria**](f-visualizar-categoria.md) <small>CAT-CTG-05</small> | Ver todos os dados e quantos produtos a categoria tem |
+| [**Cadastrar Categoria**](f-cadastrar-categoria.md) <small>CAT-CTG-02</small> | Incluir categoria ou subcategoria, com nome único por superior |
+| [**Editar Categoria**](f-editar-categoria.md) <small>CAT-CTG-03</small> | Alterar descrição, situação e superior; o nome não muda e categoria com subcategorias não recebe superior |
+| [**Excluir Categoria**](f-excluir-categoria.md) <small>CAT-CTG-04</small> | Remover categoria sem produtos nem subcategorias |
+| [**Visualizar Categoria**](f-visualizar-categoria.md) <small>CAT-CTG-05</small> | Ver dados, superior, subcategorias e quantidade de produtos diretos |
 
 ## Fluxo Principal
 
@@ -42,6 +42,7 @@ flowchart TD
 - **Pesquisar Categorias** é o ponto de entrada; **Cadastrar Categoria** independe das demais.
 - **Editar Categoria**, **Excluir Categoria** e **Visualizar Categoria** exigem uma categoria existente, alcançada pela pesquisa.
 - **Excluir Categoria** depende de a categoria não ter produtos (Produto, do Catálogo). A categoria com produtos sai da vitrine ao ser inativada em **Editar Categoria**.
+- **Cadastrar Categoria** e **Editar Categoria** consultam as categorias de primeiro nível para a superior, em um único nível de subcategorias. **Excluir Categoria** também depende de não haver subcategorias; seus vínculos podem ser retirados ou trocados em **Editar Categoria**, respeitando a unicidade do nome no destino.
 
 ## Telas
 
@@ -70,5 +71,6 @@ Perfis: **Gestor de catálogo**, **Administrador**.
 | 2026-10-18 | ids-n3 | IDs reservados | Registro dos IDs existentes, sem renumeração; IDs imutáveis. |
 | 2026-10-18 | Claude | N2 criado | CRUD de Categorias gerado pelo PROMPT CRUD a partir do ticket fictício STRY0013170; cadastro, edição e visualização em modal; sem aprovação de checkpoint. |
 | 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |
+| 2026-10-23 | Copilot | Alteração | STRY0013205: descrições e dependências do cadastro, edição, exclusão e consulta com subcategorias, sem aprovar gates. |
 
 *Links: [N1 Catálogo](../README.md) · [INDEX geral](../../INDEX.md)*

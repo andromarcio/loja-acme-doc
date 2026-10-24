@@ -282,7 +282,7 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 <td><a href="../modules/catalogo/categorias/f-editar-categoria.md"><code>CAT-CTG-03</code>: Editar Categoria</a></td>
 <td>Catálogo · Categorias</td>
 <td class="col-id">Alteração</td>
-<td><code>CA-2</code></td>
+<td><code>CA-2, CA-3</code></td>
 <td class="col-id">✏️ Rascunho</td>
 </tr>
 <tr>
@@ -326,6 +326,7 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
     </summary>
     <div class="section-body markdown-body">
 <p>O changeset abaixo é a previsão do analista, ainda sem o aval da PO. As linhas derivadas que a análise concluiu que não mudam saíram: a vitrine.md (a busca não muda o Destaque), o FIELD-DICTIONARY (nenhum campo canônico novo), o RULES-DICTIONARY (a RC-09 — Registro vinculado não pode ser excluído só ganha parâmetro, no N3) e o NFR (a busca com as subcategorias segue as qualidades vigentes).</p>
+<p>Em 2026-10-23, a proposta foi incorporada às fontes documentais e aos protótipos para revisão, por solicitação desta história. Isso não constitui aval da PO: a AIMM continua <strong>em-análise</strong>, os cinco N3 continuam <strong>✏️ Rascunho</strong>, os gates seguem sem aprovação e a contagem via CT permanece pendente.</p>
 <div class="table-container"><table class="custom-table">
 <thead>
 <tr>
@@ -353,7 +354,7 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 <td class="col-id">alterar</td>
 <td>Campos/Regras/Cenários</td>
 <td class="col-id">funcional</td>
-<td>Trocar ou retirar a categoria superior; categoria com subcategorias não vira subcategoria</td>
+<td>Trocar ou retirar a superior; bloquear autorreferência, segundo nível e conflito de nome no destino; categoria com subcategorias não vira subcategoria</td>
 <td>derivado: âncora</td>
 </tr>
 <tr>
@@ -416,8 +417,17 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 <td class="col-id">alterar</td>
 <td>Relacionamentos</td>
 <td class="col-id">dados</td>
-<td>Linha do relacionamento da Categoria com ela mesma, 1 — N</td>
+<td>Autorrelacionamento opcional da Categoria, 0..1 — 0..N, em um único nível</td>
 <td>elicitado</td>
+</tr>
+<tr>
+<td><code>global/DIAGRAMA-ER.md</code></td>
+<td>DATA-MODEL</td>
+<td class="col-id">alterar</td>
+<td>Catálogo</td>
+<td class="col-id">derivado</td>
+<td>Regenerar o autorrelacionamento a partir do fragmento negocial</td>
+<td>derivado: modelo</td>
 </tr>
 <tr>
 <td><code>global/CONTAGEM-PF.md</code></td>
@@ -456,6 +466,8 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 <td>derivado: ## Superfície (Tela própria)</td>
 </tr>
 </tbody></table></div>
+<p><strong>Derivados de publicação</strong>: regenerar <code>analise-impacto/AIMM-STRY0013205.html</code>, <code>assets/tree.js</code>, <code>assets/mapa-data.js</code>, <code>rastreabilidade/data.js</code>, o espelho em <code>modules/INDEX.md</code> e <code>assets/dashboard-data.js</code> pelos scripts canônicos, sem edição manual. O espelho pode permanecer sem diff quando os gates não mudam.</p>
+<p><strong>Correção de infraestrutura da história</strong>: recuperar <code>scripts/</code>, <code>engine/publication/</code> e a definição semântica <code>engine/DEFINICAO-FUNCIONALIDADE.md</code> do histórico desta instância para executar os checks e a geração. Alinhar a cadência em <code>global/MASTER.md</code> e sua apresentação no <code>README.md</code> à branch <code>historia/STRY0013205</code> exigida pelo escopo; não constitui aprovação nem entrega na <code>main</code>.</p>
 
     </div>
   </details>
@@ -492,31 +504,31 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 <td class="col-id">alterada</td>
 <td class="col-prosa"><strong>Inclusão</strong> da categoria superior e <strong>Alteração</strong> do nome único. <em>Antes</em>: toda categoria era de primeiro nível, e o nome era único entre todas as categorias. <em>Agora</em>: a equipe pode escolher a categoria superior entre as que não são subcategorias, e o nome é único entre as categorias com a mesma categoria superior.</td>
 <td class="col-id">+1</td>
-<td class="col-id">+3</td>
+<td class="col-id">+4</td>
 </tr>
 <tr>
 <td><code>CAT-CTG-03</code><br><strong>Editar Categoria</strong></td>
-<td class="col-id">CA-2</td>
+<td class="col-id">CA-2, CA-3</td>
 <td class="col-id">alterada</td>
-<td class="col-prosa"><strong>Inclusão</strong> da troca da categoria superior. <em>Antes</em>: a edição alterava só a descrição e a situação. <em>Agora</em>: também troca ou retira a categoria superior, e uma categoria com subcategorias não pode passar a ser subcategoria.</td>
-<td class="col-id">+2</td>
+<td class="col-prosa"><strong>Inclusão</strong> da troca ou retirada de superior, mantendo o nome imutável. Bloquear superior para categoria com subcategorias, autorreferência, segundo nível e nome repetido no destino, inclusive ao retirar a superior.</td>
 <td class="col-id">+3</td>
+<td class="col-id">+7</td>
 </tr>
 <tr>
 <td><code>CAT-CTG-04</code><br><strong>Excluir Categoria</strong></td>
 <td class="col-id">CA-4</td>
 <td class="col-id">alterada</td>
-<td class="col-prosa"><strong>Restrição</strong> da exclusão. <em>Antes</em>: só os produtos vinculados bloqueavam a exclusão. <em>Agora</em>: as subcategorias também bloqueiam, pela mesma RC-09 — Registro vinculado não pode ser excluído.</td>
+<td class="col-prosa"><strong>Restrição</strong> da exclusão. <em>Antes</em>: só os produtos vinculados bloqueavam a exclusão. <em>Agora</em>: as subcategorias também bloqueiam, pela mesma RC-09 — Registro vinculado não pode ser excluído, inclusive ao confirmar.</td>
 <td class="col-id">+1</td>
-<td class="col-id">+1</td>
+<td class="col-id">+2</td>
 </tr>
 <tr>
 <td><code>CAT-CTG-05</code><br><strong>Visualizar Categoria</strong></td>
 <td class="col-id">CA-5</td>
 <td class="col-id">alterada</td>
-<td class="col-prosa"><strong>Inclusão</strong> da hierarquia na consulta. <em>Antes</em>: a consulta mostrava os dados da categoria e quantos produtos ela tem. <em>Agora</em>: mostra também a categoria superior e a lista de subcategorias.</td>
-<td class="col-id">0</td>
-<td class="col-id">+2</td>
+<td class="col-prosa"><strong>Inclusão</strong> da hierarquia na consulta. <em>Antes</em>: a consulta mostrava os dados da categoria e quantos produtos ela tem. <em>Agora</em>: mostra também a categoria superior e as subcategorias, com estados vazios e sem somar produtos indiretos.</td>
+<td class="col-id">+1</td>
+<td class="col-id">+3</td>
 </tr>
 </tbody></table></div>
 <h3>Navegação</h3>
@@ -535,9 +547,9 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 <td><code>VIT-NAV-02</code><br><strong>Pesquisar Produtos na Vitrine</strong></td>
 <td class="col-id">CA-6</td>
 <td class="col-id">alterada</td>
-<td class="col-prosa"><strong>Alteração</strong> do filtro por categoria. <em>Antes</em>: o filtro trazia só os produtos da categoria escolhida. <em>Agora</em>: traz também os produtos das subcategorias dela.</td>
-<td class="col-id">+1</td>
-<td class="col-id">+1</td>
+<td class="col-prosa"><strong>Alteração</strong> do filtro por categoria. Inclui produtos diretos e de subcategorias ativas, oferece subcategorias com caminho e não propaga a situação da superior.</td>
+<td class="col-id">+2</td>
+<td class="col-id">+5</td>
 </tr>
 </tbody></table></div>
 
@@ -577,9 +589,9 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
 </tr>
 <tr>
 <td>—</td>
-<td>Categoria [1 — N] Categoria</td>
+<td>Categoria [0..1 — 0..N] Categoria</td>
 <td class="col-id">relacionamento incluído</td>
-<td class="col-prosa"><strong>Inclusão</strong> do relacionamento da categoria com ela mesma, de um nível só. <em>Antes</em>: a Categoria só se relacionava com o Produto. <em>Agora</em>: uma categoria de primeiro nível agrupa várias subcategorias, e uma subcategoria não tem subcategorias.</td>
+<td class="col-prosa"><strong>Inclusão</strong> do autorrelacionamento opcional, de um nível só. Uma categoria tem zero ou uma superior; uma superior agrupa zero ou várias subcategorias. Sem autorreferência ou ciclos; uma subcategoria não tem subcategorias.</td>
 </tr>
 <tr>
 <td>—</td>
@@ -609,8 +621,8 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
     </summary>
     <div class="section-body markdown-body">
 <ul>
-<li>Mensagens de Catálogo novas, propostas com ⚠️: <code>CAT_CATEGORIA_COM_SUBCATEGORIAS</code>, para a exclusão bloqueada pelas subcategorias, e <code>CAT_SUPERIOR_COM_SUBCATEGORIAS</code>, para a categoria com subcategorias escolhida como subcategoria.</li>
-<li><code>CAT_CATEGORIA_DUPLICADA</code> muda o texto, porque o nome deixa de ser único entre todas as categorias: de &quot;Já existe uma categoria com este nome.&quot; para um texto que diga que o nome já existe na mesma categoria superior.</li>
+<li>Mensagens de Catálogo novas, propostas com ⚠️: <code>CAT_CATEGORIA_COM_SUBCATEGORIAS</code>, para exclusão; <code>CAT_SUPERIOR_COM_SUBCATEGORIAS</code>, para categoria com subcategorias escolhida como subcategoria; <code>CAT_SUPERIOR_INVALIDA</code>, para superior inexistente, autorreferência ou segundo nível; <code>CAT_SEM_SUBCATEGORIAS</code>, para lista vazia na ficha.</li>
+<li><code>CAT_CATEGORIA_DUPLICADA</code> muda de &quot;Já existe uma categoria com este nome.&quot; para &quot;Já existe uma categoria com este nome nesta categoria superior.&quot;, inclusive no primeiro nível e ao mover ou retirar a superior.</li>
 <li>A RC-09 — Registro vinculado não pode ser excluído não muda no RULES-DICTIONARY: em CAT-CTG-04 — Excluir Categoria, ganha a Categoria como segunda entidade vinculada.</li>
 </ul>
 
@@ -632,10 +644,10 @@ details[open] > .section-header .chevron { transform: rotate(180deg); }
     </summary>
     <div class="section-body markdown-body">
 <ul>
-<li>A PO ainda não avalizou o escopo: nenhum N3, data-model ou dicionário muda antes do aval, e o ticket entra na próxima sprint pela branch <code>sprint/&lt;id&gt;</code>.</li>
-<li>Subcategoria de uma categoria inativa: o ticket não diz se os produtos dela continuam na vitrine. Sem a decisão, VIT-NAV-02 — Pesquisar Produtos na Vitrine não fecha a regra de categorias ativas.</li>
-<li>Mover uma subcategoria, na edição, para uma categoria superior que já tem uma subcategoria com o mesmo nome: o ticket só fala do cadastro (CA-3). A proposta é bloquear, com a mesma mensagem do nome repetido.</li>
-<li>Nomes repetidos entre categorias superiores diferentes: os seletores de categoria (cadastro, edição e vitrine) precisam mostrar o caminho, como &quot;Cozinha › Canecas&quot;. Falta a PO confirmar o formato.</li>
+<li>A PO ainda não avalizou o escopo. Os documentos foram alterados como proposta revisável da história, sem aprovação de gates ou mudança de status; a entrega permanece pendente.</li>
+<li>Proposta explícita para categoria superior inativa: sua situação não se propaga. Subcategoria ativa mantém seus produtos na vitrine; produtos de categoria diretamente inativa continuam excluídos. A superior inativa não pode ser selecionada no filtro, mas as subcategorias ativas podem.</li>
+<li>Trocar ou retirar a superior, na edição, é bloqueado se o destino já tiver categoria de mesmo nome, ignorando maiúsculas e acentos e considerando inativas. Mantém o nome imutável e usa a mesma mensagem de duplicidade.</li>
+<li>O filtro da vitrine oferece subcategorias com o caminho &quot;Cozinha › Canecas&quot;, também usado nos resultados; cadastro e edição oferecem somente superiores de primeiro nível, cujos nomes já são únicos. O formato e a regra de inatividade seguem propostos, sem aval da PO.</li>
 <li>A Pesquisa de Categorias (CAT-CTG-01 — Pesquisar Categorias) não está no ticket. Se ela deve mostrar a categoria superior ou filtrar por ela, é critério novo, a pedir na ferramenta de origem.</li>
 <li>A contagem será feita pelo CT; nenhum PF foi estimado.</li>
 </ul>
@@ -709,6 +721,18 @@ Escreva o resultado abaixo desta citação — ela é instrução e pode ficar.<
 <td>Docqui Caixa</td>
 <td>Terminologia</td>
 <td>Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado.</td>
+</tr>
+<tr>
+<td>23/10/2026</td>
+<td>Copilot</td>
+<td>Alteração</td>
+<td>STRY0013205 incorporada aos cinco N3, modelo negocial, mensagens e protótipos como proposta; CA-3 também na edição, decisões de filtro e inatividade explicitadas, mantendo em-análise e contagem pendente. Regeneração dos derivados bloqueada pela ausência de scripts neste checkout.</td>
+</tr>
+<tr>
+<td>23/10/2026</td>
+<td>Copilot</td>
+<td>Correção</td>
+<td>Restaurados os validadores e geradores canônicos do commit <code>7569391</code>, anterior à remoção de ferramentas no commit-base; regenerados HTML, ER, índices, rastreabilidade e dashboard. O espelho de gates já estava atualizado; nenhum gate ou PF foi aprovado ou preenchido.</td>
 </tr>
 </tbody></table></div>
 

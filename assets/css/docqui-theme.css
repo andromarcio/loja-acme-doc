@@ -585,3 +585,14 @@ code, pre, kbd, #documentContainer code, #documentContainer pre,
     display: none;
   }
 }
+.changes-view .docqui-change {
+  min-width: 0;
+}
+
+#documentContainer.changes-view .docqui-diff {
+  max-width: 100%;
+  background: var(--bg-subtle);
+  color: var(--text);
+  border-color: var(--border);
+  font-family: var(--font-mono);
+}

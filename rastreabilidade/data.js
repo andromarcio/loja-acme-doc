@@ -4,9 +4,9 @@ window.TRACE_DATA = {
   "meta": {
     "system": "Loja ACME",
     "subtitle": "índice de rastreabilidade gerado por scripts/build-trace-data.mjs",
-    "generatedAt": "2026-10-21",
+    "generatedAt": "2026-10-23",
     "engineVersion": "7.2.0",
-    "repo": "https://github.com/andromarcio/loja-acme-doc"
+    "repo": "http://localhost:26831/CAIXA-EFRS/loja-acme-doc"
   },
   "nodes": [
     {
@@ -248,7 +248,7 @@ window.TRACE_DATA = {
       "pf": null,
       "sub": "Funcionalidade · CAT-CTG-02",
       "domain": "CAT",
-      "desc": "Permite que o gestor de catálogo cadastre uma nova categoria de produtos, com nome único e uma descrição opcional, que passa a existir como ativa no catálogo.",
+      "desc": "Permite que o gestor de catálogo cadastre uma categoria de produtos de primeiro nível ou uma subcategoria, com nome único entre as categorias com a mesma cat…",
       "path": "modules/catalogo/categorias/f-cadastrar-categoria.md"
     },
     {
@@ -259,7 +259,7 @@ window.TRACE_DATA = {
       "pf": null,
       "sub": "Funcionalidade · CAT-CTG-03",
       "domain": "CAT",
-      "desc": "Permite que o gestor de catálogo altere a descrição e a situação de uma categoria, mantendo o nome; ao inativá-la, os produtos dela saem da vitrine sem sair …",
+      "desc": "Permite que o gestor de catálogo altere a descrição, a situação e a categoria superior de uma categoria, mantendo o nome; ao inativá-la, os produtos diretame…",
       "path": "modules/catalogo/categorias/f-editar-categoria.md"
     },
     {
@@ -270,7 +270,7 @@ window.TRACE_DATA = {
       "pf": null,
       "sub": "Funcionalidade · CAT-CTG-04",
       "domain": "CAT",
-      "desc": "Permite que o gestor de catálogo exclua definitivamente uma categoria que não tem produtos, tirando-a do catálogo.",
+      "desc": "Permite que o gestor de catálogo exclua definitivamente uma categoria que não tem produtos nem subcategorias, tirando-a do catálogo.",
       "path": "modules/catalogo/categorias/f-excluir-categoria.md"
     },
     {
@@ -292,7 +292,7 @@ window.TRACE_DATA = {
       "pf": null,
       "sub": "Funcionalidade · CAT-CTG-05",
       "domain": "CAT",
-      "desc": "Permite que o gestor de catálogo visualize todos os dados de uma categoria e quantos produtos ela tem, sem alterar nada.",
+      "desc": "Permite que o gestor de catálogo visualize todos os dados de uma categoria, sua categoria superior, suas subcategorias e quantos produtos diretamente vincula…",
       "path": "modules/catalogo/categorias/f-visualizar-categoria.md"
     },
     {
@@ -620,7 +620,7 @@ window.TRACE_DATA = {
       "from": "VIT",
       "to": "CAT",
       "kind": "integra",
-      "note": "lê Produto (Nome do produto, Descrição, Preço, Quantidade em estoque, Categoria) e Categoria (Nome da categoria, Situação)"
+      "note": "lê Produto (Nome do produto, Descrição, Preço, Quantidade em estoque, Categoria) e Categoria (Nome da categoria, Situação, Categoria superior)"
     },
     {
       "from": "VND",
@@ -776,7 +776,7 @@ window.TRACE_DATA = {
       "from": "STRY0013205",
       "to": "CAT-CTG-03",
       "kind": "origina",
-      "note": "`CA-2` — trocar ou retirar a categoria superior (AIMM em análise, sem aval da PO"
+      "note": "`CA-2, CA-3` — trocar ou retirar a categoria superior, sem hierarquia inválida n"
     },
     {
       "from": "CAT-CTG",

@@ -186,7 +186,7 @@ function loadEntidades(file) {
           //   `## Entidade: \`Contrato\` — NAME \`Contrato\``  e  `## Contrato`
           const mE = l.match(/^##\s+Entidade:\s*`?([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ ]*)`?/);
           if (mE) { out.push(mE[1].trim()); continue; }
-          const m = l.match(/^##\s+([A-ZÀ-Ú][A-Za-zÀ-ÿ]*(?:\s*[A-ZÀ-Ú][A-Za-zÀ-ÿ]*)*)\s*$/);
+          const m = l.match(/^##\s+([A-ZÀ-Ú][A-Za-zÀ-ÿ]*(?:\s+[A-ZÀ-Ú][A-Za-zÀ-ÿ]*)*)\s*$/);
           if (m) out.push(m[1].trim());
         }
       }

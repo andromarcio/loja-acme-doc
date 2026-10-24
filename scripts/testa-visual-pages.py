@@ -641,6 +641,32 @@ class VisualPagesTest(unittest.TestCase):
                 main_page.locator("#dashboardDomain").wait_for()
                 self.assertEqual(main_page.locator(".dashboard-views").count(), 0)
                 main_page.close()
+                self.page.get_by_role("link", name="Ver alterações", exact=True).click()
+                self.page.locator("#documentContainer.changes-view h1").wait_for()
+                self.assertTrue(self.page.url.endswith("#__changes__"))
+                self.assertTrue(self.page.locator(".brand__docqui").is_visible())
+                self.assertEqual(self.page.locator(".sidebar__search #searchInput").count(), 1)
+                self.assertEqual(self.page.locator("#breadcrumbBar").inner_text().split("/")[-1].strip(), "Alterações para aprovação")
+                for width in [1440, 390, 320]:
+                    self.page.set_viewport_size({"width": width, "height": 900})
+                    for theme in ["light", "dark"]:
+                        self.page.evaluate("(theme) => document.documentElement.dataset.theme = theme", theme)
+                        self.page.wait_for_function("document.documentElement.scrollWidth <= innerWidth")
+                        self.assertEqual(self.page.locator("#documentContainer h1").evaluate(
+                            "el => getComputedStyle(el).borderBottomWidth"), "4px")
+                self.page.locator("#documentContainer").get_by_role("link", name=FEATURE, exact=True).first.click()
+                self.page.wait_for_url("**/sprint/demo/index.html#" + FEATURE)
+                self.page.locator("#documentContainer .doc-title").wait_for()
+                self.page.goto(preview.replace("index.html", "_docqui/changes.html") + "#file-0")
+                self.page.wait_for_url("**/index.html#__changes__#file-0")
+                self.page.locator("#documentContainer #file-0").wait_for()
+                self.assertTrue(self.page.locator("#brandLink").is_visible())
+                self.context.route("**/_docqui/changes.html", lambda route: route.fulfill(status=404, body="missing"))
+                self.page.goto(preview + "#__changes__")
+                self.page.locator("#documentContainer [role=alert]").wait_for()
+                self.assertIn("HTTP 404", self.page.locator("#documentContainer").inner_text())
+                self.assertNotIn("Nenhuma alteração", self.page.locator("#documentContainer").inner_text())
+                self.context.unroute("**/_docqui/changes.html")
                 # Controle negativo: sem a comparação card a card, o Markdown corrido da base não
                 # alinha com os cards e as marcas saem do lugar.
                 def without_cards(route):

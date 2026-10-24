@@ -30,8 +30,8 @@ tabela vem do front-matter `origem: { tipo, chave }` (legado: `servicenow:`).
 Perfil de escopo: a linha "**Perfil**: `requisitos`" do `global/MASTER.md`
 encurta a esteira ao lado negocial (requisitos → modelo-dados) e o CP2 entrega
 `especificado`; nele, o CP1 e o CP2 podem ser aprovados juntos, num PR só (o N3
-e o modelo de entidades na mesma revisão). Ausente/`completo` mantém os quatro
-checkpoints, um por PR. Ver
+e o modelo de entidades na mesma revisão). Perfil ausente ou desconhecido usa
+`requisitos`; `completo` explícito mantém os quatro checkpoints, um por PR. Ver
 `ler_perfil`/`aplicar_perfil`. O estado em que a esteira da instância termina é o
 `estado_final()` — é ele que a AIMM confere ao fechar (validate-impact).
 
@@ -64,7 +64,7 @@ GATE_ORDER = ["requisitos", "modelo-dados", "testes", "codigo"]
 
 # Perfil de escopo da instância (global/MASTER.md, linha "**Perfil**: `…`").
 # `requisitos` (só requisitos + data-model) para a esteira em modelo-dados;
-# `completo` (default) mantém os quatro checkpoints. Ausente/ilegível → completo.
+# `completo` explícito mantém os quatro checkpoints. Ausente/ilegível → requisitos.
 PERFIS = {"requisitos", "completo"}
 ESTEIRA_POR_PERFIL = {
     "requisitos": ["requisitos", "modelo-dados"],
@@ -103,16 +103,16 @@ def carregar_papeis(root: str):
 
 def ler_perfil(root: str) -> str:
     """Perfil de escopo da instância, lido de global/MASTER.md (mesma linha que
-    o validate-doc lê para o arquétipo). Ausente/desconhecido → 'completo'."""
+    o validate-doc lê para o arquétipo). Ausente/desconhecido → 'requisitos'."""
     path = os.path.join(root, "global", "MASTER.md")
     try:
         with open(path, encoding="utf-8") as fh:
             texto = fh.read()
     except OSError:
-        return "completo"
-    m = re.search(r"\*\*Perfil\*\*\s*:?\s*`?([a-z][a-z-]*)`?", texto, re.IGNORECASE)
-    val = m.group(1).lower() if m else None
-    return val if val in PERFIS else "completo"
+        return "requisitos"
+    m = re.search(r"\*\*Perfil\*\*\s*:?\s*`?([^`\n|]+?)`?\s*(?:$|\n|—|\|)", texto, re.IGNORECASE | re.MULTILINE)
+    val = m.group(1).strip().lower() if m else None
+    return val if val in PERFIS else "requisitos"
 
 
 def aplicar_perfil(root: str) -> str:

@@ -31,7 +31,7 @@ export function previewNav(previews, info, home, review = false) {
   </details></div>
   <span class="docqui-preview__state">${info ? 'Em revisão · ainda não aprovado na main' : 'main · versão entregue'}</span>
   ${info ? `<span>Base: <strong>${esc(info.base)}</strong>${info.baseSource === 'fallback-main' ? ' (sem PR aberto; comparação com main)' : ''} · ${info.commit.slice(0, 12)}</span>
-  ${prLink(info.pr)} <a href="${review ? 'changes.html' : '_docqui/changes.html'}">Ver alterações</a>` : ''}
+  ${prLink(info.pr)} <a href="${review ? '../' : ''}index.html#__changes__">Ver alterações</a>` : ''}
   ${info && !review ? '<label><input type="checkbox" data-docqui-inline-toggle checked>Destacar alterações</label><span data-docqui-inline-status role="status" aria-live="polite">Selecione um artefato para comparar.</span>' : ''}
   ${review ? '<a href="../index.html">Consultar artefatos</a>' : ''}
 </nav>`;
@@ -40,11 +40,19 @@ export function previewNav(previews, info, home, review = false) {
 export function changesPage(previews, info, files, home, siteDir, assetVersion = '') {
   const statuses = { A: 'Incluído', M: 'Alterado', D: 'Excluído', R: 'Renomeado', C: 'Copiado', T: 'Tipo alterado' };
   const count = status => files.filter(f => f.status === status).length;
-  const summary = files.map((f, i) => `<li><a href="#file-${i}">${esc(f.path)}</a> — ${statuses[f.status] || esc(f.status)}</li>`).join('');
+  const fileLink = file => {
+    const prefix = siteDir === '.' ? '' : siteDir.replace(/\\/g, '/').replace(/\/$/, '') + '/';
+    if (file.status === 'D' || !file.path.startsWith(prefix)) return null;
+    const path = file.path.slice(prefix.length);
+    return /\.md$/i.test(path) ? `../index.html#${urlPath(path)}` : `../${urlPath(path)}`;
+  };
+  const summary = files.map((f, i) => {
+    const href = fileLink(f);
+    return `<li>${href ? `<a href="${esc(href)}">${esc(f.path)}</a>` : esc(f.path)} — ${statuses[f.status] || esc(f.status)}
+      · <a href="#file-${i}">Ver diferença</a></li>`;
+  }).join('');
   const sections = files.map((f, i) => {
-    const sitePrefix = siteDir === '.' ? '' : siteDir.replace(/\\/g, '/').replace(/\/$/, '') + '/';
-    const visible = f.status !== 'D' && f.path.startsWith(sitePrefix);
-    const href = visible ? `../${urlPath(f.path.slice(sitePrefix.length))}` : null;
+    const href = fileLink(f);
     const patch = patchLines(f.patch).map(line =>
       `<span class="docqui-diff__${line.kind}">${esc(line.text)}</span>`).join('\n');
     return `<section id="file-${i}" class="docqui-change">
@@ -67,5 +75,7 @@ Mudanças que chegaram à base depois da separação não são atribuídas ao ti
 Linhas: +${files.reduce((n, f) => n + f.added, 0)} / −${files.reduce((n, f) => n + f.removed, 0)}.</p>
 <p>Verde e sinal +: inclusão. Vermelho e sinal −: remoção. Cabeçalhos @@ indicam as linhas antes/depois.</p>
 ${files.length ? `<ul>${summary}</ul>${sections}` : '<p>Nenhuma alteração em relação à base do PR.</p>'}
-</main><script src="preview.js?v=${assetVersion}" defer></script></body></html>`;
+</main><script>
+location.replace('../index.html#__changes__' + (location.hash ? '#' + location.hash.slice(1) : ''));
+</script><noscript>Abra a comparação no visualizador do Pages pelo link Ver alterações.</noscript></body></html>`;
 }

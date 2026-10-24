@@ -58,6 +58,15 @@ Para o Pages, selecione **GitHub Actions** como fonte e permita `main`, `sprint/
 
 ## Comandos locais
 
+Esta instância inclui em `scripts/` os validadores usados por `gate-check.yml`,
+`promote-estado.yml` e `spec-guard.yml`, com suas dependências em `scripts/lib/`,
+copiados do `docqui-caixa-engine`. Os workflows existentes foram preservados.
+Para atualizar esse conjunto, use as versões canônicas do engine e inclua também
+as dependências dos scripts. As ferramentas de publicação do Pages e as extensões
+locais de dashboard citadas no README da raiz não fazem parte deste conjunto.
+
+O `spec-guard` usa Node.js 20; os workflows de gates usam Python 3.x com PyYAML.
+
 ```bash
 python scripts/gates.py status                 # esteira (readiness) de todas as funcionalidades
 python scripts/gates.py promote --write        # regenera a seção no INDEX.md

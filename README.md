@@ -1,7 +1,7 @@
 <!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
 # Loja ACME — demonstração do Docqui Caixa
 
-Instância de demonstração de uma **loja virtual fictícia**, no perfil **requisitos** e cadência **sprint**. O exemplo preenchido cobre quatro domínios — Catálogo, Vitrine, Vendas e Administração —, com 31 funcionalidades — 25 especificadas e 6 em rascunho —, cada uma ligada ao ticket fictício, à AIMM, ao modelo de entidades e ao protótipo do seu Agrupamento Funcional; **VND-CHK-01 — Calcular Frete** continua sendo o fio do roteiro. Os dados, tickets e valores são didáticos; não representam sistemas ou atendimentos reais da CAIXA.
+Instância de demonstração de uma **loja virtual fictícia**, no perfil **requisitos** e cadência **história**. O exemplo preenchido cobre quatro domínios — Catálogo, Vitrine, Vendas e Administração —, com 31 funcionalidades — 25 especificadas e 6 em rascunho —, cada uma ligada ao ticket fictício, à AIMM, ao modelo de entidades e ao protótipo do seu Agrupamento Funcional; **VND-CHK-01 — Calcular Frete** continua sendo o fio do roteiro. Os dados, tickets e valores são didáticos; não representam sistemas ou atendimentos reais da CAIXA.
 
 **AIMM — Análise de Impacto de Mudança para Manutenção** é o nome adotado na CAIXA para o artefato, com arquivos `AIMM-*`. A compatibilidade com o formato anterior e com os endereços antigos dos relatórios e do visualizador é preservada. Chaves, estados, gates e branches `historia/*` e `sprint/*` não mudam.
 
@@ -16,6 +16,10 @@ O Pages segue o modelo visual atual do SIMPF: marca Docqui no cabeçalho, busca 
 O **Dashboard de gestão** (`#__dashboard__`) mostra artefatos N1–N3, próximos checkpoints, revisão de contagem, branches e apoio, com filtro por domínio. Seus dados são gerados a partir **desta instância** por `python scripts/gera-dashboard.py` (PyYAML), integrado ao pipeline do Pages e aos previews de entrega. Nos previews de `sprint/*` e `historia/*`, o dashboard abre na visão **Esta sprint** (ou **Esta história**): os documentos que a branch mudou desde o ancestral comum com a base do PR, as funcionalidades tocadas com o estado antes e agora e o próximo checkpoint, e os tickets, pelas chaves que os commits citam e pelas AIMMs; a aba **Repositório inteiro** volta ao painel geral. Para gerá-la localmente numa branch de entrega: `python scripts/gera-dashboard.py --base origin/main`. O exemplo tem quatro N1, oito N2 e 31 N3 em rascunho: o painel não concede aprovação, não soma PF pendentes nem copia indicadores do SIMPF. Branches representam as refs do checkout, não uma consulta em tempo real ao GitHub.
 
 Confira o visual com `python scripts/testa-visual-pages.py` (Playwright e Chromium/Edge, ou `SIM_BROWSER`): valida identidade, layout, temas, busca, menu móvel, diagramas, preservação do simulador e os destaques do preview de branch, com controles negativos.
+
+Nos previews, **Ver alterações** abre `index.html#__changes__`, dentro da mesma casca do Pages, com cabeçalho, menu, breadcrumb e tema. Na lista, o nome de um arquivo Markdown abre o documento no visualizador da mesma branch; **Ver diferença** rola até o diff correspondente. Arquivos excluídos não oferecem link para uma versão inexistente. Links antigos de `_docqui/changes.html` redirecionam para a rota nova, preservando a âncora. A comparação não concede aprovação e uma falha de carregamento é explicitamente informada.
+
+O contrato de links do comparador é conferido por `node --test scripts/test-pages-review.mjs`, e a regressão `test_branch_preview_highlights_inside_cards` confere a página integrada, a mesma branch, o redirecionamento antigo e o erro de carregamento no navegador.
 
 | Artefato | O que demonstra |
 |---|---|
@@ -35,7 +39,7 @@ Confira o visual com `python scripts/testa-visual-pages.py` (Playwright e Chromi
 
 ## Estado da demonstração
 
-O exemplo está **preenchido e, em parte, especificado**: 25 das 31 funcionalidades têm o CP1 e o CP2 aprovados juntos por Andro Márcio em 2026-10-21 (📋 especificado). Ficam em rascunho **VND-CHK-01 — Calcular Frete**, o fio do roteiro, e as cinco que a STRY0013205 ainda vai alterar, CAT-CTG-02 a CAT-CTG-05 e VIT-NAV-02. Nenhuma implementação foi declarada e a contagem de Pontos de Função continua pendente. As personas Ana, Rui e Bruno do simulador não são aprovadores reais deste repositório. A cópia didática da `main` não é um registro de specs entregues; nas evoluções, use branches `sprint/<id>` e siga a esteira real.
+O exemplo está **preenchido e, em parte, especificado**: 25 das 31 funcionalidades têm o CP1 e o CP2 aprovados juntos por Andro Márcio em 2026-10-21 (📋 especificado). Ficam em rascunho **VND-CHK-01 — Calcular Frete**, o fio do roteiro, e as cinco alteradas pela proposta STRY0013205, CAT-CTG-02 a CAT-CTG-05 e VIT-NAV-02. Nenhuma implementação foi declarada e a contagem de Pontos de Função continua pendente. As personas Ana, Rui e Bruno do simulador não são aprovadores reais deste repositório. A cópia didática da `main` não é um registro de specs entregues; nesta história, use `historia/STRY0013205`, conforme a cadência `história` declarada no MASTER, e siga a esteira real.
 
 ## Executar e atualizar o Pages
 
@@ -54,6 +58,8 @@ Abra `http://127.0.0.1:8080`. O pipeline canônico usa o comando `python3`; no W
 No GitHub, configure **Settings → Pages → Source: GitHub Actions**. O workflow publica a `main` e os previews de branches de entrega; no ambiente `github-pages`, permita `main`, `sprint/*` e `historia/*`. No topo de cada versão do site, o seletor **Branch** troca entre a `main` e as branches abertas, mantendo o documento aberto; nos previews, **Ver alterações** lista o que a branch muda em relação à base do PR, e **Destacar alterações** marca, dentro de cada card, só o que mudou — o removido riscado, o incluído destacado. O repositório é [CAIXA-EFRS/loja-acme-doc](https://github.com/CAIXA-EFRS/loja-acme-doc).
 
 Os arquivos de `engine/`, `scripts/` e `.claude/skills/` são sincronizados pelo `scripts/sync-instance.mjs` do engine, não por cópia manual. Depois de alterar Markdown, regenere os derivados; nunca copie `assets/tree.js`, `assets/mapa-data.js` ou `rastreabilidade/data.js` de outro sistema.
+
+**Recuperação das ferramentas (STRY0013205)**: os scripts de validação e publicação e os recursos de `engine/publication/` foram restaurados do commit `7569391913fca2e3776f55441ed54907655a9e2b` desta instância, anterior à remoção no commit `4efbe47`. Eles devem permanecer versionados: os workflows dependem deles. Essa recuperação preserva as adaptações locais abaixo e não substitui a sincronização pelo engine em atualizações futuras.
 
 **Adaptações locais de publicação**: `atualiza-pages.mjs` usa o `build-trace-data.mjs` existente para preservar os caminhos dos N2. Preserve esse ajuste ao sincronizar enquanto não estiver incorporado ao engine. A interface do grafo abre os documentos no visualizador local, inclusive nos previews.
 

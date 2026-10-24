@@ -1,4 +1,4 @@
-<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-23 -->
 # Domínio: Catálogo
 > **Nível 1** - Visão estratégica do domínio - `CAT`
 
@@ -32,7 +32,7 @@ Responde pelos produtos que a Loja ACME vende e pelas categorias que os organiza
 
 | Domínio | O que consome | Como |
 |---|---|---|
-| Vitrine | Produto (Nome do produto, Descrição, Preço, Quantidade em estoque, Categoria) e Categoria (Nome da categoria, Situação) | Consulta ao cadastro, ao mostrar os destaques, a busca e a página do produto |
+| Vitrine | Produto (Nome do produto, Descrição, Preço, Quantidade em estoque, Categoria) e Categoria (Nome da categoria, Situação, Categoria superior) | Consulta ao cadastro; na busca, inclui produtos das subcategorias e identifica o caminho. A situação da superior não se propaga às subcategorias |
 | Vendas | Produto (Nome do produto, Preço, Quantidade em estoque) | Consulta ao cadastro, ao adicionar e alterar itens do carrinho |
 
 ### Escrita — domínios que criam ou alteram dados deste domínio

@@ -1,4 +1,4 @@
-<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-23 -->
 ---
 id: CAT-CTG-05
 agrupamento_funcional: CAT-CTG
@@ -28,13 +28,14 @@ contagem:
 
 ## Descrição
 
-Permite que o gestor de catálogo visualize todos os dados de uma categoria e quantos produtos ela tem, sem alterar nada.
+Permite que o gestor de catálogo visualize todos os dados de uma categoria, sua categoria superior, suas subcategorias e quantos produtos diretamente vinculados ela tem, sem alterar nada.
 
 Na Pesquisa de Categorias, o gestor aciona o ícone de visualizar da linha; a ficha abre em modal, só para leitura, e fecha pelo botão **Fechar**.
 
 ## Regras de negócio
 
-- **RN-01** — A quantidade de produtos é o número de produtos vinculados à categoria, esgotados inclusive.
+- **RN-01** — A quantidade de produtos é o número de produtos diretamente vinculados à categoria, esgotados inclusive; não soma os produtos das subcategorias.
+- **RN-02** — Exibir a Categoria superior da categoria consultada ou "—" se for de primeiro nível. Listar as subcategorias diretamente vinculadas à categoria consultada (não as irmãs), ativas e inativas, por nome A–Z, com a situação de cada uma. Uma subcategoria não tem subcategorias; lista vazia mostra "Nenhuma subcategoria cadastrada.".
 
 ## Cenários
 
@@ -61,6 +62,29 @@ Feature: Visualizar Categoria
     When o gestor aciona visualizar na linha "Jardinagem"
     Then o sistema mostra "—" em Descrição
 
+  @RN-02
+  Scenario: Categoria de primeiro nível com subcategorias
+    Given que "Cozinha" tem as subcategorias "Canecas" ativa e "Garrafas" inativa
+    When o gestor aciona visualizar na linha "Cozinha"
+    Then o sistema mostra "—" em Categoria superior
+    And lista em Subcategorias "Canecas" com situação "Ativa" e "Garrafas" com situação "Inativa", nessa ordem
+
+  @RN-02
+  # ← MESSAGE-DICTIONARY: CAT_SEM_SUBCATEGORIAS
+  Scenario: Consulta de subcategoria
+    Given que "Canecas" é subcategoria de "Cozinha"
+    When o gestor aciona visualizar na linha "Canecas"
+    Then o sistema mostra "Cozinha" em Categoria superior
+    And mostra "Nenhuma subcategoria cadastrada." em Subcategorias
+    And não lista as irmãs de "Canecas"
+
+  @RN-02
+  # ← MESSAGE-DICTIONARY: CAT_SEM_SUBCATEGORIAS
+  Scenario: Categoria de primeiro nível sem subcategorias
+    When o gestor aciona visualizar na linha "Brinquedos", que não tem superior nem subcategorias
+    Then o sistema mostra "—" em Categoria superior
+    And mostra "Nenhuma subcategoria cadastrada." em Subcategorias
+
   # Restrições de acesso
   # ← MESSAGE-DICTIONARY: BASELINE
   Scenario: Tentativa sem acesso à funcionalidade
@@ -82,6 +106,8 @@ Feature: Visualizar Categoria
 | Label PO | Entidade | Preenchimento | Edição | Tipo | Obrigatório | Validação |
 |---|---|---|---|---|---|---|
 | Nome da categoria | Categoria | exibido do cadastro | somente leitura | texto | — | — |
+| Categoria superior | Categoria | exibido do cadastro | somente leitura | texto | — | Nome da superior ou "—" quando não houver |
+| Subcategorias | Categoria | exibido do cadastro | somente leitura | lista | — | Nome e Situação das subcategorias diretas, ativas e inativas, em nome A–Z; vazia mostra "Nenhuma subcategoria cadastrada." |
 | Descrição | Categoria | exibido do cadastro | somente leitura | texto | — | Vazia aparece como "—" |
 | Situação | Categoria | exibido do cadastro | somente leitura | lista (Ativa, Inativa) | — | — |
 | Data de cadastro | Categoria | exibido do cadastro | somente leitura | data | — | — |
@@ -118,7 +144,8 @@ A ficha abre em modal sobre a Pesquisa de Categorias, pelo ícone de visualizar 
 | Inicial | Modal com os dados da categoria, só para leitura |
 | Loading | Mostrar "Carregando…" no lugar dos dados enquanto carrega |
 | Erro de servidor | Mostrar "Não foi possível carregar os dados." no modal |
-| Sucesso | Mostrar todos os campos e a quantidade de produtos |
+| Sucesso | Mostrar todos os campos, a superior (ou "—"), as subcategorias com situação e a quantidade de produtos diretos |
+| Sem subcategorias | Manter a ficha e mostrar "Nenhuma subcategoria cadastrada." na lista; não é erro |
 | Registro inexistente | Mostrar "Registro não encontrado." e voltar à pesquisa |
 
 ## Critérios de sucesso
@@ -127,6 +154,7 @@ A ficha abre em modal sobre a Pesquisa de Categorias, pelo ícone de visualizar 
 |---|---|---|
 | SC-01 | A quantidade de produtos da ficha confere com os produtos vinculados à categoria, esgotados inclusive | CA-5 e RN-01 |
 | SC-02 | Nenhum dado da categoria pode ser alterado a partir da ficha | CA-5 |
+| SC-03 | A ficha mostra a superior ou "—" e todas as subcategorias da categoria consultada, ativas e inativas, ordenadas por nome; sem subcategorias, mostra a mensagem de lista vazia | STRY0013205 CA-5 e RN-02 |
 
 ## Métricas de tamanho
 
@@ -152,3 +180,4 @@ A contagem está pendente e deve nascer da análise desta funcionalidade via CT,
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
 | 2026-10-21 | Claude | Origem | Ticket `STRY0013205` registrado na Origem: a AIMM está em análise e ainda não muda campos, regras ou cenários. |
 | 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |
+| 2026-10-23 | Copilot | Alteração | STRY0013205: superior e lista de subcategorias com situação na ficha, estados vazios, cenários e critérios; contagem de produtos diretos e rascunho preservados. |

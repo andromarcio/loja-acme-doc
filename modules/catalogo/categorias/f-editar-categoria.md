@@ -1,4 +1,4 @@
-<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-21 -->
+<!-- docqui: 7.0.0 | prompt: MIGRA_NIVEIS | atualizado: 2026-10-23 -->
 ---
 id: CAT-CTG-03
 agrupamento_funcional: CAT-CTG
@@ -28,14 +28,17 @@ contagem:
 
 ## Descrição
 
-Permite que o gestor de catálogo altere a descrição e a situação de uma categoria, mantendo o nome; ao inativá-la, os produtos dela saem da vitrine sem sair do catálogo.
+Permite que o gestor de catálogo altere a descrição, a situação e a categoria superior de uma categoria, mantendo o nome; ao inativá-la, os produtos diretamente vinculados a ela saem da vitrine sem sair do catálogo. Subcategorias mantêm a própria situação; seus produtos continuam visíveis se elas estiverem ativas, mesmo com a superior inativa (VIT-NAV-02).
 
-Na Pesquisa de Categorias, o gestor aciona o ícone de editar da linha; no modal, o nome aparece só para leitura, e ele altera a descrição ou a situação e aciona **Salvar**. Se inativar uma categoria que tem produtos, confirma antes de salvar.
+Na Pesquisa de Categorias, o gestor aciona o ícone de editar da linha; no modal, o nome aparece só para leitura, e ele altera a descrição, a situação ou a Categoria superior e aciona **Salvar**. Pode trocar ou retirar a superior. Se inativar uma categoria que tem produtos diretamente vinculados, confirma antes de salvar.
 
 ## Regras de negócio
 
 - **RN-01** — O nome da categoria não muda depois do cadastro.
 - **RN-02** — Uma categoria inativa mantém os seus produtos. → ver N1 Catálogo: Regras transversais de negócio: 2
+- **RN-03** — Categoria superior pode ser trocada ou retirada; a seleção oferece somente categorias de primeiro nível, ativas ou inativas, exceto a própria categoria. Não admite autorreferência nem um segundo nível de subcategorias; a elegibilidade é conferida novamente ao salvar.
+- **RN-04** — Uma categoria com subcategorias não pode passar a ser subcategoria: Categoria superior fica desabilitada, com "Uma categoria com subcategorias não pode ter categoria superior.". Tentativas de atribuição ao salvar também são bloqueadas.
+- **RN-05** — Trocar ou retirar a superior não pode gerar nome repetido na categoria superior de destino, inclusive entre categorias de primeiro nível. Considerar categorias ativas ou inativas, ignorar maiúsculas e acentos e desconsiderar a própria categoria na comparação. O nome permanece imutável (RN-01).
 
 ## Cenários
 
@@ -103,6 +106,66 @@ Feature: Editar Categoria
     Then o Nome da categoria "Cozinha" aparece somente para leitura
     And não há campo para alterá-lo
 
+  @RN-03 @RN-05
+  Scenario: Trocar a categoria superior sem conflito
+    Given que "Canecas" é subcategoria de "Cozinha" e não existe "Canecas" em "Decoração"
+    When o gestor edita "Canecas", escolhe "Decoração" em Categoria superior e aciona "Salvar"
+    Then o sistema exibe "Registro salvo com sucesso."
+    And "Canecas" passa a ser subcategoria de "Decoração", sem mudar o nome
+
+  @RN-03 @RN-05
+  Scenario: Retirar a categoria superior sem conflito
+    Given que "Canecas" é subcategoria de "Cozinha" e não há categoria de primeiro nível chamada "Canecas"
+    When o gestor edita "Canecas", escolhe "Sem categoria superior" e aciona "Salvar"
+    Then o sistema exibe "Registro salvo com sucesso."
+    And "Canecas" passa a ser categoria de primeiro nível
+
+  @RN-04
+  # ← MESSAGE-DICTIONARY: CAT_SUPERIOR_COM_SUBCATEGORIAS
+  Scenario: Categoria com subcategorias não pode escolher superior
+    Given que "Cozinha" tem a subcategoria "Canecas"
+    When o gestor abre a edição de "Cozinha"
+    Then Categoria superior está desabilitada e sem superior
+    And o sistema exibe "Uma categoria com subcategorias não pode ter categoria superior."
+    And permite alterar Descrição e Situação
+
+  @RN-03
+  # ← MESSAGE-DICTIONARY: CAT_SUPERIOR_INVALIDA
+  Scenario: Superior inválida não é aceita
+    Given que o gestor tenta atribuir como superior a própria categoria, uma subcategoria ou uma categoria excluída
+    When o gestor aciona "Salvar"
+    Then o sistema exibe abaixo de Categoria superior "Selecione uma categoria superior de primeiro nível, diferente da própria categoria."
+    And não salva a alteração
+
+  @RN-04
+  # ← MESSAGE-DICTIONARY: CAT_SUPERIOR_COM_SUBCATEGORIAS
+  Scenario: Categoria ganhou subcategorias enquanto era editada
+    Given que a categoria em edição ganhou uma subcategoria após abrir o modal
+    When o gestor escolhe uma Categoria superior e aciona "Salvar"
+    Then o sistema exibe "Uma categoria com subcategorias não pode ter categoria superior."
+    And não salva a alteração
+
+  @RN-05
+  # ← MESSAGE-DICTIONARY: CAT_CATEGORIA_DUPLICADA
+  Scenario Outline: Mudança de superior com nome repetido
+    Given que "Xícaras" é subcategoria de "Cozinha"
+    And que existe uma categoria inativa "xicaras" em <destino>
+    When o gestor edita "Xícaras", escolhe <selecao> em Categoria superior e aciona "Salvar"
+    Then o sistema exibe abaixo de Categoria superior "Já existe uma categoria com este nome nesta categoria superior."
+    And "Xícaras" continua vinculada a "Cozinha", sem mudar o nome
+
+    Examples:
+      | destino       | selecao                |
+      | "Decoração"   | "Decoração"            |
+      | primeiro nível | "Sem categoria superior" |
+
+  @RN-05
+  Scenario: Salvar sem trocar a superior não conflita com a própria categoria
+    Given que "Canecas" é subcategoria de "Cozinha" e não tem irmã de mesmo nome
+    When o gestor altera apenas a Descrição de "Canecas" e aciona "Salvar"
+    Then o sistema exibe "Registro salvo com sucesso."
+    And mantém "Cozinha" como superior
+
   # Restrições de acesso
   # ← MESSAGE-DICTIONARY: BASELINE
   Scenario: Tentativa sem acesso à funcionalidade
@@ -132,6 +195,7 @@ Feature: Editar Categoria
 | Nome da categoria | Categoria | exibido do cadastro | imutável | texto | — | Não muda depois do cadastro |
 | Descrição | Categoria | entrada do usuário | editável | texto | não | Até 200 caracteres |
 | Situação | Categoria | entrada do usuário | editável | lista (Ativa, Inativa) | sim | Inativar uma categoria com produtos pede confirmação |
+| Categoria superior | Categoria | entrada do usuário | editável, salvo quando tem subcategorias | seleção → Categoria | não | Somente primeiro nível, exceto a própria categoria; vazia retira a superior; validar unicidade do nome no destino |
 
 ## Campos automáticos
 
@@ -144,6 +208,7 @@ Feature: Editar Categoria
 | Entidade | Papel | Por que a funcionalidade a toca |
 |---|---|---|
 | Produto | lê | Saber se a categoria tem produtos, para pedir a confirmação ao inativá-la (RN-02) |
+| Categoria | lê e grava | Ler superiores elegíveis, subcategorias e nomes no destino; gravar ou retirar a Categoria superior (RN-03 a RN-05) |
 
 ## Superfície
 
@@ -155,13 +220,15 @@ Feature: Editar Categoria
 
 ### Onde fica
 
-A edição abre em modal sobre a Pesquisa de Categorias, pelo ícone de editar da linha. O modal mostra o Nome da categoria como rótulo e valor, sem campo de entrada, e os campos Descrição e Situação já preenchidos, com os botões **Cancelar** e **Salvar**. A confirmação de inativação é uma caixa de diálogo sobre o modal.
+A edição abre em modal sobre a Pesquisa de Categorias, pelo ícone de editar da linha. O modal mostra o Nome da categoria como rótulo e valor, sem campo de entrada, e os campos Descrição, Situação e Categoria superior já preenchidos, com os botões **Cancelar** e **Salvar**. A seleção inclui **Sem categoria superior**, para retirar o vínculo. A confirmação de inativação é uma caixa de diálogo sobre o modal.
 
 ### Estados da tela
 
 | Estado | Comportamento |
 |---|---|
-| Inicial | Modal com Descrição e Situação preenchidas com os dados atuais e o nome só para leitura |
+| Inicial | Modal com Descrição, Situação e Categoria superior atuais (ou **Sem categoria superior**) e o nome só para leitura |
+| Com subcategorias | Categoria superior desabilitada; mostrar "Uma categoria com subcategorias não pode ter categoria superior."; os demais campos editáveis continuam disponíveis |
+| Sem superiores elegíveis | Seleção apenas com **Sem categoria superior** |
 | Loading | Mostrar "Carregando…" no botão **Salvar** e evitar novo acionamento enquanto salva |
 | Erro de validação | Mostrar a mensagem literal abaixo do campo; o modal continua aberto |
 | Erro de servidor | Mostrar "Ocorreu um erro. Tente novamente." no modal, mantendo os dados informados |
@@ -176,6 +243,9 @@ A edição abre em modal sobre a Pesquisa de Categorias, pelo ícone de editar d
 | SC-01 | Nenhuma edição altera o nome de uma categoria | CA-3 e RN-01 |
 | SC-02 | A categoria inativada mantém o mesmo número de produtos que tinha antes | CA-3 e RN-02 |
 | SC-03 | Toda inativação de categoria com produtos passa pela confirmação antes de ser salva | CA-3 |
+| SC-04 | Trocar ou retirar a superior atualiza o vínculo sem alterar o nome e sem autorreferência ou segundo nível de subcategorias | STRY0013205 CA-2 e RN-03 |
+| SC-05 | Nenhuma categoria com subcategorias recebe superior, inclusive se o vínculo surgiu durante a edição | STRY0013205 CA-2 e RN-04 |
+| SC-06 | Nenhuma troca ou retirada de superior gera nome repetido no destino, inclusive contra inativas e ignorando maiúsculas e acentos | STRY0013205 CA-3 e RN-05 |
 
 ## Métricas de tamanho
 
@@ -190,7 +260,7 @@ A contagem está pendente e deve nascer da análise desta funcionalidade via CT,
 | Ticket (AIMM) | Tipo | Critérios cobertos |
 |---|---|---|
 | [`STRY0013170`](../../../analise-impacto/AIMM-STRY0013170.md) | Criação | `CA-3` — alteração da descrição e da situação, sem mudar o nome; categoria inativa fora da vitrine |
-| [`STRY0013205`](../../../analise-impacto/AIMM-STRY0013205.md) | Alteração | `CA-2` — trocar ou retirar a categoria superior (AIMM em análise, sem aval da PO) |
+| [`STRY0013205`](../../../analise-impacto/AIMM-STRY0013205.md) | Alteração | `CA-2, CA-3` — trocar ou retirar a categoria superior, sem hierarquia inválida nem nome repetido no destino (AIMM em análise, sem aval da PO) |
 
 ## Changelog
 
@@ -201,3 +271,4 @@ A contagem está pendente e deve nascer da análise desta funcionalidade via CT,
 | 2026-10-20 | Docqui Caixa | Terminologia | Adoção de AIMM; histórico e chave preservados. |
 | 2026-10-21 | Claude | Origem | Ticket `STRY0013205` registrado na Origem: a AIMM está em análise e ainda não muda campos, regras ou cenários. |
 | 2026-10-21 | Docqui Caixa | Terminologia | Níveis em português: Domínio, Agrupamento Funcional e Funcionalidade; histórico preservado. |
+| 2026-10-23 | Copilot | Alteração | STRY0013205: troca e retirada de superior, bloqueios de hierarquia e unicidade no destino, mantendo nome imutável; cenários, estados e critérios atualizados, ainda em rascunho. |

@@ -64,7 +64,9 @@ jobs:
         run: pip install pyyaml
 
       - name: Verificar indicadores do dashboard
-        run: python -m unittest discover -s scripts -p "test_dashboard.py"
+        run: |
+          python -m unittest discover -s scripts -p "test_verifica_dashboard.py"
+          python scripts/verifica-dashboard.py
 
       - name: Ler as bases dos PRs de entrega
         uses: actions/github-script@v7

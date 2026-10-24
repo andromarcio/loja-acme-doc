@@ -30,6 +30,7 @@ erDiagram
   Categoria {
     Nome_da_categoria texto
     Descrição texto
+    Categoria_superior seleção FK
     Situação lista
     Data_de_cadastro data
   }
@@ -40,6 +41,7 @@ erDiagram
     Quantidade_em_estoque número
     Categoria seleção FK
   }
+  Categoria |o--o{ Categoria : "Categoria_superior"
   Categoria ||--o{ Produto : "Categoria"
 ```
 

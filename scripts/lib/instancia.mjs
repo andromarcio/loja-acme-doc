@@ -28,10 +28,10 @@ function linhaDoMaster(root, rotulo) {
   return m ? semAcento(m[1]) : null;
 }
 
-// Ausente ou desconhecido → `completo` (o mesmo default do gates.py).
+// Ausente ou desconhecido → `requisitos` (o mesmo default do gates.py).
 export function perfilDa(root) {
   const v = linhaDoMaster(root, 'Perfil');
-  return v === 'requisitos' ? 'requisitos' : 'completo';
+  return v === 'completo' ? 'completo' : 'requisitos';
 }
 
 // `historia` | `sprint` | null (não declarada).

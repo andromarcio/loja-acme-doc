@@ -1702,6 +1702,7 @@
   document.getElementById('brandLink').title = APP_NAME;
 
   let currentFilePath = "";
+  let changesRequest = 0;
   let fddStructure = {};
 
   // Inicializar Marked com renderizador customizado
@@ -2328,12 +2329,13 @@
       }
     }
     currentFilePath = filePath;
+    changesRequest++;
     // Nos previews de branch, o comparador desfaz o que marcou antes de o conteúdo trocar.
     const documento = document.getElementById('documentContainer');
     delete documento.dataset.docquiSource;
     delete documento.dataset.docquiSourceRoot;
     document.dispatchEvent(new CustomEvent('docqui:artifact-reset'));
-    documento.classList.remove('dashboard-view', 'doc-cards');
+    documento.classList.remove('dashboard-view', 'doc-cards', 'changes-view');
 
     // Atualizar item ativo na sidebar e expandir ancestrais
     document.querySelectorAll('.feature-item, .nav-item-fixed a, .nav-folder summary').forEach(el => {
@@ -2354,6 +2356,11 @@
     if (filePath === '__dashboard__') {
       updateBreadcrumbs(filePath, 'Dashboard de gestão');
       renderDashboard();
+      return;
+    }
+    if (filePath === '__changes__') {
+      updateBreadcrumbs(filePath, 'Alterações para aprovação');
+      renderChanges(changesRequest);
       return;
     }
 
@@ -2542,6 +2549,41 @@
     document.dispatchEvent(new CustomEvent('docqui:artifact', {
       detail: { path, root: 'repository', element: container },
     }));
+  }
+
+  async function renderChanges(request) {
+    const container = document.getElementById('documentContainer');
+    container.classList.add('changes-view');
+    container.innerHTML = '<p role="status">Carregando alterações…</p>';
+    const source = new URL('_docqui/changes.html', location.href);
+    try {
+      const response = await fetch(source, { cache: 'no-cache' });
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      const parsed = new DOMParser().parseFromString(await response.text(), 'text/html');
+      const main = parsed.querySelector('main.docqui-review__content');
+      if (!main) throw new Error('A comparação não contém o conteúdo esperado.');
+      if (request !== changesRequest || currentFilePath !== '__changes__') return;
+      main.querySelectorAll('a[href]').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href.startsWith('#')) {
+          link.href = '#__changes__#' + href.slice(1);
+        } else {
+          link.href = new URL(href, source).href;
+        }
+      });
+      container.replaceChildren(...main.childNodes);
+      const anchor = location.hash.split('#')[2];
+      if (anchor) container.querySelector('[id="' + CSS.escape(decodeURIComponent(anchor)) + '"]')
+        ?.scrollIntoView({ block: 'start' });
+    } catch (error) {
+      if (request !== changesRequest || currentFilePath !== '__changes__') return;
+      console.error('Não foi possível carregar a comparação.', error);
+      const message = document.createElement('p');
+      message.setAttribute('role', 'alert');
+      message.textContent = 'Não foi possível carregar as alterações: ' + error.message
+        + '. A comparação está disponível nos previews de branches; na main, consulte os artefatos entregues.';
+      container.replaceChildren(message);
+    }
   }
 
   function updateBreadcrumbs(path, title, frontmatter) {
@@ -3809,7 +3851,7 @@
     let alvo = rawHash, ancora = '';
     if (ult > 0) {
       const candidato = rawHash.slice(0, ult);
-      if (typeof repoFiles !== 'undefined' && repoFiles.includes(candidato)) {
+      if (candidato === '__changes__' || typeof repoFiles !== 'undefined' && repoFiles.includes(candidato)) {
         alvo = candidato;
         ancora = rawHash.slice(ult + 1);
       }

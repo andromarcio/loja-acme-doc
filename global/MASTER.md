@@ -85,7 +85,9 @@
   vive na branch da unidade de entrega e se consulta no preview do site.
 -->
 
-- **Cadência**: `sprint`
+- **Cadência**: `história`
+
+A STRY0013205 é revisada na branch `historia/STRY0013205`, conforme o escopo solicitado. A configuração desta instância acompanha essa unidade de entrega; o PR de trabalho para a história não conclui checkpoint nem autoriza sua entrega na `main`.
 
 | Cadência | Quando usar | Branch | Merge na `main` |
 |---|---|---|---|
