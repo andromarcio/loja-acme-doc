@@ -1925,17 +1925,18 @@
     const globalFiles = [];
     const prototypeFiles = [];
 
-    // Modelos em branco do framework (`_template-*`, `_TEMPLATE_*`) moram no
-    // repositório de propósito — são a partida de um artefato novo — mas não são
-    // documentação e não entram no menu. O mesmo corte já valia para os domínios
-    // `modules/_*` e para o `_TEMPLATE_IMPACTO`; aqui ele passa a valer em todas as
-    // seções. Nenhuma pasta `_` é cortada por ser `_`: `prototypes/_capturas` e
-    // `prototypes/_biblioteca-ds` são conteúdo e continuam visíveis.
-    const eModeloEmBranco = (caminho) =>
-      caminho.split('/').some(parte => parte.toLowerCase().startsWith('_template'));
+    // Fora do menu: toda pasta que começa com `_` (decisão do PO, 2026-11-02) — os modelos
+    // em branco (`_template-*`), a `modules/_base-conhecimento`, a `prototypes/_biblioteca-ds`
+    // e as `prototypes/_capturas` — e os modelos em branco soltos (`_TEMPLATE_*`). Os arquivos
+    // continuam no repositório e abrem pelos links dos documentos.
+    const foraDoMenu = (caminho) => {
+      const partes = caminho.split('/');
+      return partes.slice(0, -1).some(parte => parte.startsWith('_'))
+        || partes.some(parte => parte.toLowerCase().startsWith('_template'));
+    };
 
     repoFiles.forEach(file => {
-      if (eModeloEmBranco(file)) return;
+      if (foraDoMenu(file)) return;
       if (file.startsWith('modules/')) {
         const parts = file.split('/');
         // Ocultar arquivos soltos em modules/ (ex: modules/INDEX.md)
@@ -2120,8 +2121,6 @@
     'global/N0_PRODUCT_VISION.md': 'Visão do Produto (N0)',
     'global/NFR.md': 'Requisitos Não Funcionais (NFR)',
     'global/RULES-DICTIONARY.md': 'Dicionário de Regras de Negócio',
-    'global/SIZING.md': 'Dimensionamento (Sizing)',
-    'global/VOCABULARY-OVERRIDES.md': 'Sobrescrita de Vocabulário',
     'global/data-models/contratos-fabricas.md': 'Contratos e Fábricas',
     'global/data-models/parametrizacao.md': 'Parametrização',
     'prototypes/design-fdd-proposal.html': 'Proposta de Design FDD',

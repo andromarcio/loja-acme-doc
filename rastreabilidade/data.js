@@ -4,9 +4,9 @@ window.TRACE_DATA = {
   "meta": {
     "system": "Loja ACME",
     "subtitle": "índice de rastreabilidade gerado por scripts/build-trace-data.mjs",
-    "generatedAt": "2026-10-23",
+    "generatedAt": "2026-11-02",
     "engineVersion": "7.2.0",
-    "repo": "http://localhost:26831/CAIXA-EFRS/loja-acme-doc"
+    "repo": "https://github.com/andromarcio/loja-acme-doc"
   },
   "nodes": [
     {

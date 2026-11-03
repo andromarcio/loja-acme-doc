@@ -59,4 +59,4 @@ Nenhuma revisão realizada.
 
 ## Links
 
-[SIZING.md](SIZING.md) · [DATA-MODEL.md](DATA-MODEL.md) · [INDEX geral](../modules/INDEX.md)
+[DATA-MODEL.md](DATA-MODEL.md) · [INDEX geral](../modules/INDEX.md)

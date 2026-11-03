@@ -33,4 +33,4 @@ status `pendente`; complete o detalhamento quando o domínio for especificado. -
 ---
 
 ## Links
-[DATA-MODEL.md](./DATA-MODEL.md) · [SIZING.md](./SIZING.md) · [INDEX geral](../modules/INDEX.md)
+[DATA-MODEL.md](./DATA-MODEL.md) · [INDEX geral](../modules/INDEX.md)
