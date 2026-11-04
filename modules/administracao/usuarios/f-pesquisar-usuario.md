@@ -28,7 +28,7 @@ contagem:
 
 ## Descrição
 
-Permite que o administrador pesquise os usuários da loja por nome, e-mail, perfil e situação, vendo de cada um o perfil e se está ativo.
+Permite que o administrador pesquise os usuários da loja por nome, e-mail, perfil e situação, vendo de cada um o perfil e se está ativo ou não.
 
 Ao abrir a Pesquisa de Usuários, o administrador já vê os usuários ativos; para filtrar, informa parte do nome ou do e-mail, escolhe um perfil ou uma situação e aciona **Pesquisar**. De cada linha, abre a visualização, a edição ou a inativação do usuário.
 
